@@ -1,0 +1,14 @@
+SceneManager:
+	Responsible for deciding which objects are to be drawn.
+	draw(camera):
+		Optimally draws objects.
+
+ObjectManager:
+	Responsible for storing and destroying objects.
+
+ConfigManager:
+	Responsibile for loading and paring configuration files.
+
+AssetsManager:
+
+LogManager:
