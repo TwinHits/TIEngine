@@ -3,13 +3,15 @@
 
 #include "../templates/Singleton.h"
 
-class SceneManager : public Singleton
+class SceneManager : public Singleton<SceneManager>
 {
 	public:
-		SceneManager();
-		~SceneManager();
 		void draw();
+		~SceneManager();
 	private:
+		SceneManager();
+		SceneManager(const SceneManager&);
+		void operator=(const SceneManager&);
 };
 
 #endif

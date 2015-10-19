@@ -1,7 +1,6 @@
 #include "SceneManager.h"
 
 SceneManager::SceneManager()
-	: Singleton()
 {
 
 }
