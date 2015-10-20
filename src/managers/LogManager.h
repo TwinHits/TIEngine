@@ -22,6 +22,8 @@ class LogManager: public Singleton<LogManager>
 
 		std::ofstream log;
 
+		LogManager(const LogManager&);
+		void operator=(const LogManager&);
 };
 
 #endif
