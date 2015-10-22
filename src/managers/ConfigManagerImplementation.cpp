@@ -1,8 +1,8 @@
 #include <fstream>
-#include <iostream>
 #include <sstream>
 
 #include "ConfigManager.h"
+#include "LogManager.h"
 
 ConfigManager::ConfigManager() 
 {
@@ -23,7 +23,7 @@ void ConfigManager::loadConfig()
 	config.open("config.ini");
 	if (!config)
 	{
-		std::cout << "Error: Could not open config file." << std::endl;
+		LogManager::logCrashFile("Could not find config.ini");
 		return;
 	}	
 
