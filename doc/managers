@@ -10,5 +10,9 @@ ConfigManager:
 	Responsibile for loading and paring configuration files.
 
 AssetsManager:
-
+ l
 LogManager:
+	Responsible for outputting data into the log files. Can designate differetn
+		logging types and levels.
+	Responsible for ouputting a 'crashlog' for any errors before log is
+		established.
