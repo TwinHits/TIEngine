@@ -19,7 +19,7 @@ void LogManager::setLogFile(const std::string& debugLogPath)
 	log.open(debugLogPath + "debug.log");
 	if (!log)
 	{
-		std::cout << "ERROR: Could not open debug.log" << std::endl;
+		logCrashFile("Could not open " + debugLogPath + "debug.log.");
 		return;
 	}
 }
@@ -50,4 +50,18 @@ void LogManager::logInfo(const std::string& message)
 {
 	std::cout << message << std::endl;
 	log << "[" << getTime() << "]" << " INFO: " << message << std::endl;
+}
+
+void LogManager::logCrashFile(const std::string& message)
+{
+	//call for errors that occur before Config is opened
+	std::ofstream crashLog;
+	crashLog.open("crash.log");
+
+	if (crashLog)
+	{
+		crashLog << "[" << getTime() << "]" << "CRASH: " << message << std::endl;
+		crashLog.close();
+	}
+
 }

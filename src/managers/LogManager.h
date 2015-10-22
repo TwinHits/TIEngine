@@ -13,6 +13,8 @@ class LogManager: public Singleton<LogManager>
 		void logWarn(const std::string& message);
 		void logInfo(const std::string& message);
 
+		void logCrashFile(const std::string& message);
+
 		LogManager();
 		~LogManager();
 
