@@ -13,14 +13,14 @@ class LogManager: public Singleton<LogManager>
 		void logWarn(const std::string& message);
 		void logInfo(const std::string& message);
 
-		void logCrashFile(const std::string& message);
+		static void logCrashFile(const std::string& message);
 
 		LogManager();
 		~LogManager();
 
 	private:
 		void setLogFile(const std::string& debugLogPath);
-		std::string getTime();
+		static std::string getTime();
 
 		std::ofstream log;
 

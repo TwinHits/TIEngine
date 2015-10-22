@@ -1,4 +1,3 @@
-#include <iostream>
 #include <ctime>
 
 #include "ConfigManager.h"
@@ -48,7 +47,6 @@ void LogManager::logWarn(const std::string& message)
 
 void LogManager::logInfo(const std::string& message)
 {
-	std::cout << message << std::endl;
 	log << "[" << getTime() << "]" << " INFO: " << message << std::endl;
 }
 
@@ -59,8 +57,7 @@ void LogManager::logCrashFile(const std::string& message)
 	crashLog.open("crash.log");
 
 	if (crashLog)
-	{
-		crashLog << "[" << getTime() << "]" << "CRASH: " << message << std::endl;
+	{ crashLog << "[" << getTime() << "]" << "CRASH: " << message << std::endl;
 		crashLog.close();
 	}
 
