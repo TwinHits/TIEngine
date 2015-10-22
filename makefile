@@ -1,12 +1,12 @@
 COMPILER = g++
 STANDARD = -std=c++11
 DEBUG = -g -Wall -Werror
-OBJECTS = bin/scenemanager.o bin/logmanager.o bin/main.o
+OBJECTS = bin/configmanager.o bin/scenemanager.o bin/logmanager.o bin/main.o 
 FLAGS = ${COMPILER} ${STANDARD} ${DEBUG}
 
 all: tiengine
 
-tiengine: main scenemanager logmanager
+tiengine: configmanager logmanager scenemanager main
 	${FLAGS} ${OBJECTS} -o bin/tiengine
 
 main:
@@ -17,6 +17,9 @@ scenemanager:
 
 logmanager:
 	${FLAGS} -c src/managers/LogManagerImplementation.cpp -o bin/logmanager.o
+
+configmanager:
+	${FLAGS} -c src/managers/ConfigManagerImplementation.cpp -o bin/configmanager.o
 
 clean:
 	rm bin/*.o bin/tiengine
