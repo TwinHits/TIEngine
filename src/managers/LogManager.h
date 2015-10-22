@@ -9,15 +9,15 @@
 class LogManager: public Singleton<LogManager>
 {
 	public:
-		void logError(std::string error);
-		void logWarn(std::string warn);
-		void logInfo(std::string info);
+		void logError(const std::string& message);
+		void logWarn(const std::string& message);
+		void logInfo(const std::string& message);
 
 		LogManager();
 		~LogManager();
 
 	private:
-		void setLogFile();
+		void setLogFile(const std::string& debugLogPath);
 		std::string getTime();
 
 		std::ofstream log;

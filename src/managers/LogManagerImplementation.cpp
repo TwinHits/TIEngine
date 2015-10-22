@@ -1,20 +1,22 @@
 #include <iostream>
 #include <ctime>
 
+#include "ConfigManager.h"
 #include "LogManager.h"
 
 LogManager::LogManager() 
 {
-	setLogFile();	
+	std::shared_ptr<ConfigManager> configmanager = ConfigManager::Instance();
+	setLogFile(configmanager->getConfigValue("debugLogPath"));	
 }
 LogManager::~LogManager()
 {
 	log.close();
 }
 
-void LogManager::setLogFile()
+void LogManager::setLogFile(const std::string& debugLogPath)
 {
-	log.open("bin/logs/debug.log");
+	log.open(debugLogPath + "debug.log");
 	if (!log)
 	{
 		std::cout << "ERROR: Could not open debug.log" << std::endl;
@@ -34,17 +36,18 @@ std::string LogManager::getTime()
 	return std::string(buffer);
 }
 
-void LogManager::logError(std::string error)
+void LogManager::logError(const std::string& message)
 {
-	log << "[" << getTime() << "]" << " ERROR: " << error << std::endl;
+	log << "[" << getTime() << "]" << " ERROR: " << message << std::endl;
 }
 
-void LogManager::logWarn(std::string error)
+void LogManager::logWarn(const std::string& message)
 {
-	log << "[" << getTime() << "]" << " WARN: " << error << std::endl;
+	log << "[" << getTime() << "]" << " WARN: " << message << std::endl;
 }
 
-void LogManager::logInfo(std::string error)
+void LogManager::logInfo(const std::string& message)
 {
-	log << "[" << getTime() << "]" << " INFO: " << error << std::endl;
+	std::cout << message << std::endl;
+	log << "[" << getTime() << "]" << " INFO: " << message << std::endl;
 }
