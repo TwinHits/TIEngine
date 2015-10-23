@@ -23,7 +23,7 @@ void ConfigManager::loadConfig()
 	config.open("config.ini");
 	if (!config)
 	{
-		LogManager::logCrashFile("Could not find config.ini");
+		LogManager::logCrashFile("Could not find config.ini.");
 		return;
 	}	
 
