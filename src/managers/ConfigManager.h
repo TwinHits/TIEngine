@@ -19,7 +19,6 @@ class ConfigManager: public Singleton<ConfigManager>
 		void loadConfig();
 		void parseConfig(std::ifstream& config);
 
-		std::string debugLogPath;
 		std::map<std::string, std::string> configValues;
 
 		ConfigManager(const ConfigManager&);
