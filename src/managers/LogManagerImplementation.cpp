@@ -15,7 +15,7 @@ LogManager::~LogManager()
 
 void LogManager::setLogFile(const std::string& debugLogPath)
 {
-	log.open(debugLogPath + "debug.log");
+	log.open(debugLogPath + "debug.log", std::ios_base::app);
 	if (!log)
 	{
 		logCrashFile("Could not open " + debugLogPath + "debug.log.");
