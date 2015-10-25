@@ -13,6 +13,10 @@ ConfigManager::~ConfigManager() {}
 
 const std::string& ConfigManager::getConfigValue(const std::string& key)
 {
+	if (configValues.find(key) == configValues.end())
+	{
+		LogManager::Instance()->logError("Could not load config value '" + key + "'.");
+	} 
 	return configValues[key];
 }
 
@@ -21,9 +25,9 @@ void ConfigManager::loadConfig()
 	std::ifstream config;
 
 	config.open("config.ini");
-	if (!config)
+	if (!config.is_open())
 	{
-		LogManager::logCrashFile("Could not find config.ini.");
+		LogManager::Instance()->logError("Could not find config.ini.");
 		return;
 	}	
 
