@@ -1,25 +1,29 @@
 COMPILER = g++
 STANDARD = -std=c++11
 DEBUG = -g -Wall -Werror
-OBJECTS = bin/configmanager.o bin/scenemanager.o bin/logmanager.o bin/main.o 
+OBJPATH = bin/objs
+OBJECTS = ${OBJPATH}/configmanager.o ${OBJPATH}/scenemanager.o ${OBJPATH}/logmanager.o ${OBJPATH}/assetsmanager.o ${OBJPATH}/main.o
 FLAGS = ${COMPILER} ${STANDARD} ${DEBUG}
 
 all: tiengine
 
-tiengine: configmanager logmanager scenemanager main
+tiengine: configmanager logmanager scenemanager assetsmanager main
 	${FLAGS} ${OBJECTS} -o bin/tiengine
 
 main:
-	${FLAGS} -c src/main.cpp -o bin/main.o
+	${FLAGS} -c src/main.cpp -o ${OBJPATH}/main.o
 
 scenemanager:
-	${FLAGS} -c src/managers/SceneManagerImplementation.cpp -o bin/scenemanager.o
+	${FLAGS} -c src/managers/SceneManagerImplementation.cpp -o ${OBJPATH}/scenemanager.o
 
 logmanager:
-	${FLAGS} -c src/managers/LogManagerImplementation.cpp -o bin/logmanager.o
+	${FLAGS} -c src/managers/LogManagerImplementation.cpp -o ${OBJPATH}/logmanager.o
 
 configmanager:
-	${FLAGS} -c src/managers/ConfigManagerImplementation.cpp -o bin/configmanager.o
+	${FLAGS} -c src/managers/ConfigManagerImplementation.cpp -o ${OBJPATH}/configmanager.o
+
+assetsmanager:
+	${FLAGS} -c src/managers/AssetsManagerImplementation.cpp -o ${OBJPATH}/assetsmanager.o
 
 clean:
-	rm bin/*.o bin/tiengine
+	rm bin/objs/*.o
