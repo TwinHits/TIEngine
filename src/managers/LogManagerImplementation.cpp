@@ -1,24 +1,22 @@
 #include <ctime>
 
-#include "ConfigManager.h"
 #include "LogManager.h"
 
 LogManager::LogManager() 
 {
-	std::shared_ptr<ConfigManager> configmanager = ConfigManager::Instance();
-	setLogFile(configmanager->getConfigValue("debugLogPath"));	
+	setLogFile();	
 }
 LogManager::~LogManager()
 {
 	log.close();
 }
 
-void LogManager::setLogFile(const std::string& debugLogPath)
+void LogManager::setLogFile()
 {
-	log.open(debugLogPath + "debug.log", std::ios_base::app);
-	if (!log)
+	log.open("logs/debug.log", std::ios_base::app);
+	if (!log.is_open())
 	{
-		logCrashFile("Could not open " + debugLogPath + "debug.log.");
+		logError("Could not open logs/debug.log.");
 		return;
 	}
 }
@@ -48,17 +46,4 @@ void LogManager::logWarn(const std::string& message)
 void LogManager::logInfo(const std::string& message)
 {
 	log << "[" << getTime() << "]" << " INFO: " << message << std::endl;
-}
-
-void LogManager::logCrashFile(const std::string& message)
-{
-	//call for errors that occur before Config is opened
-	std::ofstream crashLog;
-	crashLog.open("crash.log");
-
-	if (crashLog)
-	{ crashLog << "[" << getTime() << "]" << "CRASH: " << message << std::endl;
-		crashLog.close();
-	}
-
 }
