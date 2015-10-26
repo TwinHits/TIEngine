@@ -1,8 +1,6 @@
 #ifndef SINGLETON_H
 #define SINGLETON_H
 
-#include <memory>
-
 template <typename T>
 class Singleton
 {
@@ -16,8 +14,8 @@ class Singleton
 	protected:
 		Singleton() {}
 		Singleton(const Singleton& S) {}
-		~Singleton() {}
 		void operator=(const Singleton& S) {}
+		~Singleton() {}
 };
 
 #endif
