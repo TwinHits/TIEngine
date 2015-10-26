@@ -4,17 +4,11 @@
 
 int main()
 {
-	std::shared_ptr<SceneManager> scenemanager1 = SceneManager::Instance();
-	std::shared_ptr<SceneManager> scenemanager2 = SceneManager::Instance();
+	auto scenemanager = SceneManager::Instance();
+	auto scenemanager2 = SceneManager::Instance();
 
-	if (scenemanager1 == scenemanager2) 
-	{
-		std::cout << "true" << std::endl;
-	}
-	else
-	{
-		std::cout << "false" << std::endl;
-	}
+	std::cout << scenemanager << std::endl;
+	std::cout << scenemanager2 << std::endl;
 
 	return 0;
 }
