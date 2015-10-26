@@ -1,6 +1,8 @@
 #include <fstream>
 #include <sstream>
 
+#include "../templates/StringToNumber.h"
+
 #include "ConfigManager.h"
 #include "LogManager.h"
 
@@ -10,15 +12,6 @@ ConfigManager::ConfigManager()
 }
 
 ConfigManager::~ConfigManager() {}
-
-const std::string& ConfigManager::getConfigValue(const std::string& key)
-{
-	if (configValues.find(key) == configValues.end())
-	{
-		LogManager::Instance()->logError("Could not load config value '" + key + "'.");
-	} 
-	return configValues[key];
-}
 
 void ConfigManager::loadConfig()
 {
@@ -44,11 +37,15 @@ void ConfigManager::parseConfig(std::ifstream& config)
 		std::stringstream fileline(line);
 		std::string key;
 		std::string value;
+
 		if (std::getline(fileline, key, '='))
 		{
 			std::getline(fileline, value);	
-			configValues[key] = value;
+			if (key == "assetsPath") assetsPath = value;
+			if (key == "loggingLevel") loggingLevel = StringToNumber(value);
 		}
 	}
 }
 
+const std::string& ConfigManager::getAssetsPath() { return assetsPath; }
+const int& ConfigManager::getLoggingLevel() { return loggingLevel; }

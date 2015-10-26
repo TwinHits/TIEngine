@@ -12,14 +12,17 @@ class ConfigManager: public Singleton<ConfigManager>
 	public:
 		ConfigManager();
 		~ConfigManager();
-
-		const std::string& getConfigValue(const std::string& key);
-
+		
+		const std::string& getAssetsPath();
+		const int& getLoggingLevel();
+			
 	private:
 		void loadConfig();
 		void parseConfig(std::ifstream& config);
 
-		std::map<std::string, std::string> configValues;
+		//Configurable Values
+		std::string assetsPath;
+		int loggingLevel;
 
 		ConfigManager(const ConfigManager&);
 		void operator=(const ConfigManager&);
