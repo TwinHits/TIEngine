@@ -43,9 +43,9 @@ void ConfigManager::parseConfig(std::ifstream& config)
 			std::getline(fileline, value);	
 
 			//To add a configurable value, add type to header and register here
-			if (key == "debugLogPath") { debugLogPath = value; }
-			if (key == "assetsPath") { assetsPath = value; }
-			if (key == "debugLogLevel") { debugLogLevel = StringToNumber(value); }
+			if (key == "DebugLogPath") { debugLogPath = value; }
+			if (key == "AssetsPath") { assetsPath = value; }
+			if (key == "DebugLogLevel") { debugLogLevel = StringToNumber(value); }
 		}
 	}
 }
