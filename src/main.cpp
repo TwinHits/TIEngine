@@ -1,14 +1,16 @@
 #include <iostream>
 
+#include "managers/LogManager.h"
+#include "managers/ConfigManager.h"
+#include "managers/AssetsManager.h"
 #include "managers/SceneManager.h"
 
 int main()
 {
-	auto scenemanager = SceneManager::Instance();
-	auto scenemanager2 = SceneManager::Instance();
-
-	std::cout << scenemanager << std::endl;
-	std::cout << scenemanager2 << std::endl;
-
+	//auto logmanager = LogManager::Instance();
+	//auto configmanager = ConfigManager::Instance();
+	//auto assetsmanager = AssetsManager::Instance();
+	//auto scenemanager = SceneManager::Instance();
+	
 	return 0;
 }

@@ -1,7 +1,7 @@
-#include "../templates/LocalTime.h"
-
 #include "LogManager.h"
 #include "ConfigManager.h"
+
+#include "../utilities/LocalTime.h"
 
 LogManager::LogManager() 
 {

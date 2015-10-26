@@ -1,4 +1,3 @@
 Singleton:
-
-StringToNumber:
-	Make templates for any number type
+	Templated Singleton class that allows classes to inherit Singleton like
+attributes.

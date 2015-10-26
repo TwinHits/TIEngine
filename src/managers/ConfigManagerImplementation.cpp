@@ -1,10 +1,10 @@
 #include <fstream>
 #include <sstream>
 
-#include "../templates/StringToNumber.h"
-
 #include "ConfigManager.h"
 #include "LogManager.h"
+
+#include "../utilities/StringToNumber.h"
 
 ConfigManager::ConfigManager() 
 {

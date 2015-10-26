@@ -1,0 +1,5 @@
+StringToNumber(std::string s): 
+	Converts a std::string to an integer.
+
+LocalTime():
+	Returns the local time as a string.
