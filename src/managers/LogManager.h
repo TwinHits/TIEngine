@@ -17,8 +17,6 @@ class LogManager: public Singleton<LogManager>
 		~LogManager();
 
 	private:
-		void setLogFile();
-
 		std::ofstream log;
 
 		LogManager(const LogManager&);

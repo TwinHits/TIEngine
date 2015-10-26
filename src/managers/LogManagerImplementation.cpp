@@ -5,21 +5,15 @@
 
 LogManager::LogManager() 
 {
-	setLogFile();	
+	log.open(ConfigManager::Instance()->getDebugLogPath() + "debug.log", std::ios_base::app);
+	if (!log.is_open())
+	{
+		logError("Could not open '" + ConfigManager::Instance()->getDebugLogPath() + "'.");
+	}
 }
 LogManager::~LogManager()
 {
 	log.close();
-}
-
-void LogManager::setLogFile()
-{
-	log.open(ConfigManager::Instance()->getDebugLogPath() + "debug.log", std::ios_base::app);
-	if (!log.is_open())
-	{
-		logError("Could not open logs/debug.log.");
-		return;
-	}
 }
 
 void LogManager::logError(const std::string& message)
