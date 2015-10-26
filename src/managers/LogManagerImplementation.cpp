@@ -1,4 +1,4 @@
-#include <ctime>
+#include "../templates/LocalTime.h"
 
 #include "LogManager.h"
 #include "ConfigManager.h"
@@ -22,32 +22,20 @@ void LogManager::setLogFile()
 	}
 }
 
-std::string LogManager::getTime()
-{
-
-	auto t = std::time(nullptr);
-	auto local = std::localtime(&t);
-
-	char buffer[30];
-	std::strftime(buffer, 30,"%c", local);
-
-	return std::string(buffer);
-}
-
 void LogManager::logError(const std::string& message)
 {
 	if (ConfigManager::Instance()->getDebugLogLevel() > 0)
-		log << "[" << getTime() << "]" << " ERROR: " << message << std::endl;
+		log << "[" << LocalTime() << "]" << " ERROR: " << message << std::endl;
 }
 
 void LogManager::logWarn(const std::string& message)
 {
 	if (ConfigManager::Instance()->getDebugLogLevel() > 1)
-		log << "[" << getTime() << "]" << " WARN: " << message << std::endl;
+		log << "[" << LocalTime() << "]" << " WARN: " << message << std::endl;
 }
 
 void LogManager::logInfo(const std::string& message)
 {
 	if (ConfigManager::Instance()->getDebugLogLevel() > 2)
-		log << "[" << getTime() << "]" << " INFO: " << message << std::endl;
+		log << "[" << LocalTime() << "]" << " INFO: " << message << std::endl;
 }

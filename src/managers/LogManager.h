@@ -18,7 +18,6 @@ class LogManager: public Singleton<LogManager>
 
 	private:
 		void setLogFile();
-		std::string getTime();
 
 		std::ofstream log;
 
