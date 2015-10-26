@@ -6,7 +6,7 @@
 
 AssetsManager::AssetsManager()
 {
-	assetsPath = ConfigManager::Instance()->getConfigValue("assetsPath");
+	assetsPath = ConfigManager::Instance()->getAssetsPath();
 }
 
 AssetsManager::~AssetsManager() {}
