@@ -1,6 +1,7 @@
 #include <ctime>
 
 #include "LogManager.h"
+#include "ConfigManager.h"
 
 LogManager::LogManager() 
 {
@@ -13,7 +14,7 @@ LogManager::~LogManager()
 
 void LogManager::setLogFile()
 {
-	log.open("logs/debug.log", std::ios_base::app);
+	log.open(ConfigManager::Instance()->getDebugLogPath() + "debug.log", std::ios_base::app);
 	if (!log.is_open())
 	{
 		logError("Could not open logs/debug.log.");
@@ -35,15 +36,18 @@ std::string LogManager::getTime()
 
 void LogManager::logError(const std::string& message)
 {
-	log << "[" << getTime() << "]" << " ERROR: " << message << std::endl;
+	if (ConfigManager::Instance()->getDebugLogLevel() > 0)
+		log << "[" << getTime() << "]" << " ERROR: " << message << std::endl;
 }
 
 void LogManager::logWarn(const std::string& message)
 {
-	log << "[" << getTime() << "]" << " WARN: " << message << std::endl;
+	if (ConfigManager::Instance()->getDebugLogLevel() > 1)
+		log << "[" << getTime() << "]" << " WARN: " << message << std::endl;
 }
 
 void LogManager::logInfo(const std::string& message)
 {
-	log << "[" << getTime() << "]" << " INFO: " << message << std::endl;
+	if (ConfigManager::Instance()->getDebugLogLevel() > 2)
+		log << "[" << getTime() << "]" << " INFO: " << message << std::endl;
 }
