@@ -41,11 +41,15 @@ void ConfigManager::parseConfig(std::ifstream& config)
 		if (std::getline(fileline, key, '='))
 		{
 			std::getline(fileline, value);	
-			if (key == "assetsPath") assetsPath = value;
-			if (key == "loggingLevel") loggingLevel = StringToNumber(value);
+
+			//To add a configurable value, add type to header and register here
+			if (key == "debugLogPath") { debugLogPath = value; }
+			if (key == "assetsPath") { assetsPath = value; }
+			if (key == "debugLogLevel") { debugLogLevel = StringToNumber(value); }
 		}
 	}
 }
 
+const std::string& ConfigManager::getDebugLogPath() { return debugLogPath; }
 const std::string& ConfigManager::getAssetsPath() { return assetsPath; }
-const int& ConfigManager::getLoggingLevel() { return loggingLevel; }
+const int& ConfigManager::getDebugLogLevel() { return debugLogLevel; }
