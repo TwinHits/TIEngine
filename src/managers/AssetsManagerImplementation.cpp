@@ -13,19 +13,13 @@ AssetsManager::~AssetsManager() {}
 
 const std::string& AssetsManager::getTexture(const std::string& t)
 {
-	if (false)
-	{
-		LogManager::Instance()->logError("Cannot open texture " + t + ".");
-	}
+	LogManager::Instance()->logError("Cannot open texture " + t + ".");
 	return t;
 }
 
 const std::string& AssetsManager::getAudio(const std::string& a)
 {
-	if (false)
-	{
-		LogManager::Instance()->logError("Cannot open audio " + a  + ".");
-	}
+	LogManager::Instance()->logError("Cannot open audio " + a  + ".");
 	return a;
 }
 
