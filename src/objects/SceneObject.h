@@ -11,12 +11,15 @@ class SceneObject
 		~SceneObject();
 		void operator=(const SceneObject&);
 
-		const sf::Sprite& getSprite();
 		void setDraw(bool b);
+
+		const sf::Sprite& getSprite();
+		unsigned long getId();
 		
 	private:
 		sf::Sprite sprite;
 		bool draw = false;
+		unsigned long id;
 };
 
 #endif
