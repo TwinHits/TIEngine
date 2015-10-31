@@ -10,20 +10,22 @@ WindowManager::~WindowManager()
 	}
 }
 
-void WindowManager::addWindow(int id)
+sf::RenderWindow& WindowManager::addWindow(unsigned long id)
 {
 	if (playerWindows.find(id) == playerWindows.end())
 	{
 		playerWindows[id] = new sf::RenderWindow(sf::VideoMode(800, 600), "My window");
 		LogManager::Instance()->logInfo("Added window '" + std::to_string(id) + "'.");
+		return *playerWindows[id];
 	}
 	else
 	{
-		LogManager::Instance()->logWarn("Window '" + std::to_string(id) + "' already exists, doing nothing.");
+		LogManager::Instance()->logError("Hash collison! Window '" + std::to_string(id) + "' already exists, returning existing.");
+		return *playerWindows[id];
 	}
 }
 
-void WindowManager::rmWindow(int id)
+void WindowManager::rmWindow(unsigned long id)
 {
 	if (playerWindows.find(id) != playerWindows.end())
 	{
@@ -36,7 +38,7 @@ void WindowManager::rmWindow(int id)
 	}
 }
 
-sf::RenderWindow& WindowManager::getWindow(int id)
+sf::RenderWindow& WindowManager::getWindow(unsigned long id)
 {
 	if (playerWindows.find(id) != playerWindows.end())
 	{

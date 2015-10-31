@@ -11,21 +11,22 @@ PlayerManager::~PlayerManager()
 	}	
 }
 
-void PlayerManager::addPlayer(int id)
+const Player& PlayerManager::addPlayer(unsigned long id)
 {
 	if (players.find(id) == players.end())
 	{
 		players[id] = new Player(id);
 		LogManager::Instance()->logInfo("Added player '" + std::to_string(id) + "'.");
-		WindowManager::Instance()->addWindow(id);
+		return *players[id];
 	}
 	else 
 	{
-		LogManager::Instance()->logWarn("Player '" + std::to_string(id) + "' already exists, doing nothing.");
+		LogManager::Instance()->logWarn("Hash collison! Player '" + std::to_string(id) + "' already exists, returning existing.");
+		return *players[id];
 	}	
 }
 
-void PlayerManager::rmPlayer(int id)
+void PlayerManager::rmPlayer(unsigned long id)
 {
 	WindowManager::Instance()->rmWindow(id);
 	if (players.find(id) != players.end())
@@ -39,7 +40,7 @@ void PlayerManager::rmPlayer(int id)
 	}
 }
 
-const Player& PlayerManager::getPlayer(int id)
+const Player& PlayerManager::getPlayer(unsigned long id)
 {
 	if (players.find(id) != players.end())
 	{
