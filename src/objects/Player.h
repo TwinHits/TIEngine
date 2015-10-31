@@ -4,9 +4,13 @@
 class Player
 {
 	public:
-		Player();
+		Player(int id);
 		~Player();
+
+		int getId() const;
 	private:	
+		int id;
+
 		Player(const Player&);
 		void operator=(const Player&);
 };
