@@ -9,15 +9,15 @@
 class PlayerManager : public Singleton<PlayerManager>
 {
 	public:
-		void addPlayer();
-		void rmPlayer();
+		void addPlayer(int id);
+		void rmPlayer(int id);
 
 		const Player& getPlayer(int id);
 
 		PlayerManager();
 		~PlayerManager();
 	private:
-		std::Map<int, Player*> players;
+		std::map<int, Player*> players;
 
 		PlayerManager(const PlayerManager&);
 		void operator=(const PlayerManager&);
