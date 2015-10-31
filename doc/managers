@@ -26,7 +26,10 @@ SceneObjectManager:
 	Responisble for storing and deleting objects that are not players.
 
 PlayerManager:
-	Responsible for storing and deleting objecst that are players.
+	Responsible for storing and deleting objects that are players.
 
 EventsManager:
 	Responsible for interpreting event loop inputs
+
+WindowManager:
+	Responsible for distribuing references to windows by player
