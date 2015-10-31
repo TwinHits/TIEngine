@@ -6,7 +6,7 @@
 class SceneObject
 {
 	public:
-		SceneObject();
+		SceneObject(unsigned long id);
 		SceneObject(const SceneObject&);
 		~SceneObject();
 		void operator=(const SceneObject&);

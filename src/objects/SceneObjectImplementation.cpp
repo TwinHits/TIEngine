@@ -1,10 +1,8 @@
 #include "SceneObject.h"
 
-#include "../managers/HashManager.h"
-
-SceneObject::SceneObject()
+SceneObject::SceneObject(unsigned long id)
 {
-	id = HashManager::Instance()->getNewHash();	
+	this->id = id;	
 }
 
 SceneObject::SceneObject(const SceneObject&) {}

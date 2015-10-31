@@ -1,4 +1,4 @@
-#ifndef SCENEOBJECTMANAGER_H
+#ifndef SCENEOBJECTMANAGER_H 
 #define SCENEOBJECTMANAGER_H
 
 #include <map>
@@ -9,13 +9,14 @@
 class SceneObjectManager : public Singleton<SceneObjectManager>
 {
 	public:
-		void addSceneObject();
-		const SceneObject& getSceneObject(int id);
+		const SceneObject& addSceneObject();
+		const SceneObject& getSceneObject(unsigned long id);
+		void rmSceneObject(unsigned long id);
 
 		SceneObjectManager();
 		~SceneObjectManager();
 	private:
-		std::map<int, SceneObject> SceneObjects;
+		std::map<unsigned long, SceneObject*> sceneObjects;
 		
 		SceneObjectManager(const SceneObjectManager&);
 		void operator=(const SceneObjectManager&);
