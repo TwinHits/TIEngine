@@ -13,19 +13,41 @@ PlayerManager::~PlayerManager()
 
 void PlayerManager::addPlayer(int id)
 {
-	players[id] = new Player(id);
-	LogManager::Instance()->logInfo("Added player '" + std::to_string(id) + "'.");
-	WindowManager::Instance()->addWindow(id);
+	if (players.find(id) == players.end())
+	{
+		players[id] = new Player(id);
+		LogManager::Instance()->logInfo("Added player '" + std::to_string(id) + "'.");
+		WindowManager::Instance()->addWindow(id);
+	}
+	else 
+	{
+		LogManager::Instance()->logWarn("Player '" + std::to_string(id) + "' already exists, doing nothing.");
+	}	
 }
 
 void PlayerManager::rmPlayer(int id)
 {
 	WindowManager::Instance()->rmWindow(id);
-	delete players[id];
-	LogManager::Instance()->logInfo("Deleted player '" + std::to_string(id) + "'.");
+	if (players.find(id) != players.end())
+	{
+		delete players[id];
+		LogManager::Instance()->logInfo("Deleted player '" + std::to_string(id) + "'.");
+	}
+	else 
+	{
+		LogManager::Instance()->logWarn("Player '" + std::to_string(id) + "' does not exist, doing nothing.");
+	}
 }
 
 const Player& PlayerManager::getPlayer(int id)
 {
-	return *players[id];
+	if (players.find(id) != players.end())
+	{
+		return *players[id];
+	}
+	else 
+	{
+		LogManager::Instance()->logError("Player '" + std::to_string(id) + "' does not exist, segfaulting.");
+		return *players[id];
+	}
 }

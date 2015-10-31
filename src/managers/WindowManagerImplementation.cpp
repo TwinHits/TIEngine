@@ -12,17 +12,39 @@ WindowManager::~WindowManager()
 
 void WindowManager::addWindow(int id)
 {
-	playerWindows[id] = new sf::RenderWindow(sf::VideoMode(800, 600), "My window");
-	LogManager::Instance()->logInfo("Added window '" + std::to_string(id) + "'.");
+	if (playerWindows.find(id) == playerWindows.end())
+	{
+		playerWindows[id] = new sf::RenderWindow(sf::VideoMode(800, 600), "My window");
+		LogManager::Instance()->logInfo("Added window '" + std::to_string(id) + "'.");
+	}
+	else
+	{
+		LogManager::Instance()->logWarn("Window '" + std::to_string(id) + "' already exists, doing nothing.");
+	}
 }
 
 void WindowManager::rmWindow(int id)
 {
-	delete playerWindows[id];
-	LogManager::Instance()->logInfo("Deleted window '" + std::to_string(id) + "'.");
+	if (playerWindows.find(id) != playerWindows.end())
+	{
+		delete playerWindows[id];
+		LogManager::Instance()->logInfo("Deleted window '" + std::to_string(id) + "'.");
+	}
+	else
+	{
+		LogManager::Instance()->logWarn("Window '" + std::to_string(id) + "' does not exist, doing nothing.");
+	}
 }
 
 sf::RenderWindow& WindowManager::getWindow(int id)
 {
-	return *playerWindows[id];
+	if (playerWindows.find(id) != playerWindows.end())
+	{
+		return *playerWindows[id];
+	}
+	else
+	{
+		LogManager::Instance()->logError("Window '" + std::to_string(id) + "' does not exist, segaulting.");
+		return *playerWindows[id];
+	}
 }
