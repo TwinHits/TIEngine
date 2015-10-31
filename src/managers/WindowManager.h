@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "../templates/Singleton.h"
+#include "../objects/Player.h"
 
 class WindowManager : public Singleton<WindowManager>
 {

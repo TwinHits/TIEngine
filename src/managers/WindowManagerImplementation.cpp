@@ -10,11 +10,6 @@ WindowManager::~WindowManager()
 	}
 }
 
-sf::RenderWindow& WindowManager::getWindow(int id)
-{
-	return *playerWindows[id];
-}
-
 void WindowManager::addWindow(int id)
 {
 	playerWindows[id] = new sf::RenderWindow(sf::VideoMode(800, 600), "My window");
@@ -23,6 +18,11 @@ void WindowManager::addWindow(int id)
 
 void WindowManager::rmWindow(int id)
 {
-	LogManager::Instance()->logInfo("Removed window '" + std::to_string(id) + "'.");
 	delete playerWindows[id];
+	LogManager::Instance()->logInfo("Deleted window '" + std::to_string(id) + "'.");
+}
+
+sf::RenderWindow& WindowManager::getWindow(int id)
+{
+	return *playerWindows[id];
 }
