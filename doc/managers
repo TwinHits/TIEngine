@@ -3,11 +3,9 @@ SceneManager:
 	draw(camera):
 		Optimally draws objects.
 
-ObjectManager:
-	Responsible for storing and destroying objects.
-
 ConfigManager:
-	Responsibile for loading and paring configuration files.
+	Responsibile for loading and parsing configuration files into explicitly
+		typed data members with get() functions.
 
 AssetsManager:
 	returns asset refernce when requested by type.
@@ -15,6 +13,20 @@ AssetsManager:
 LogManager:
 	Responsible for outputting data into the log files. Can designate different
 		logging types and levels.
-	Responsible for ouputting a 'crashlog' for any errors before log is
-		established.
-	FIle value keys should be case insensitive
+			3: Errors, Warns, and Info.
+			2: Errors, and Warns.
+			1: Errors.
+	Config value keys should be case insensitive
+
+Database Manager:
+	Responsible for establishing connection to database and providing data when
+		requested.
+
+SceneObjectManager:
+	Responisble for storing and deleting objects that are not players.
+
+PlayerManager:
+	Responsible for storing and deleting objecst that are players.
+
+EventsManager:
+	Responsible for interpreting event loop inputs
