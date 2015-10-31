@@ -5,11 +5,11 @@ OBJPATH = bin/objs
 LIBS = -lsfml-graphics -lsfml-window -lsfml-system
 FLAGS = ${COMPILER} ${STANDARD} ${DEBUG}
 
-OBJECTS = ${OBJPATH}/configmanager.o ${OBJPATH}/scenemanager.o ${OBJPATH}/logmanager.o ${OBJPATH}/assetsmanager.o ${OBJPATH}/sceneobjectmanager.o ${OBJPATH}/windowmanager.o ${OBJPATH}/sceneobject.o ${OBJPATH}/playermanager.o ${OBJPATH}/player.o ${OBJPATH}/main.o
+OBJECTS = ${OBJPATH}/configmanager.o ${OBJPATH}/scenemanager.o ${OBJPATH}/logmanager.o ${OBJPATH}/assetsmanager.o ${OBJPATH}/sceneobjectmanager.o ${OBJPATH}/windowmanager.o ${OBJPATH}/sceneobject.o ${OBJPATH}/playermanager.o ${OBJPATH}/hashmanager.o ${OBJPATH}/player.o ${OBJPATH}/main.o
 
 all: tiengine
 
-tiengine: configmanager logmanager scenemanager assetsmanager sceneobjectmanager windowmanager playermanager sceneobject player  main
+tiengine: configmanager logmanager scenemanager assetsmanager sceneobjectmanager windowmanager playermanager hashmanager sceneobject player main
 	${FLAGS} ${OBJECTS} ${LIBS} -o bin/tiengine 
 
 main:
@@ -36,6 +36,9 @@ sceneobjectmanager:
 
 playermanager:
 	${FLAGS} -c src/managers/PlayerManagerImplementation.cpp -o ${OBJPATH}/playermanager.o
+
+hashmanager:
+	${FLAGS} -c src/managers/HashManagerImplementation.cpp -o ${OBJPATH}/hashmanager.o
 
 #Objects
 sceneobject:
