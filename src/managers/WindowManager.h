@@ -12,7 +12,7 @@ class WindowManager : public Singleton<WindowManager>
 {
 	public:
 		sf::RenderWindow& getWindow(unsigned long id);
-		sf::RenderWindow& addWindow(unsigned long id);
+		sf::RenderWindow& addWindow();
 		void rmWindow(unsigned long id);
 
 		WindowManager();

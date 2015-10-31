@@ -1,4 +1,5 @@
 #include "WindowManager.h"
+#include "HashManager.h"
 #include "LogManager.h"
 
 WindowManager::WindowManager() {}
@@ -10,8 +11,9 @@ WindowManager::~WindowManager()
 	}
 }
 
-sf::RenderWindow& WindowManager::addWindow(unsigned long id)
+sf::RenderWindow& WindowManager::addWindow()
 {
+	unsigned long id = HashManager::Instance()->getNewHash();
 	if (playerWindows.find(id) == playerWindows.end())
 	{
 		playerWindows[id] = new sf::RenderWindow(sf::VideoMode(800, 600), "My window");
@@ -20,8 +22,8 @@ sf::RenderWindow& WindowManager::addWindow(unsigned long id)
 	}
 	else
 	{
-		LogManager::Instance()->logError("Hash collison! Window '" + std::to_string(id) + "' already exists, returning existing.");
-		return *playerWindows[id];
+		LogManager::Instance()->logWarn("Hash collison! Window '" + std::to_string(id) + "' already exists, recursively rehashing.");
+		return addWindow();
 	}
 }
 

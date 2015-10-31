@@ -1,5 +1,5 @@
 #include "PlayerManager.h"
-#include "WindowManager.h"
+#include "HashManager.h"
 #include "LogManager.h"
 
 PlayerManager::PlayerManager() {}
@@ -11,8 +11,9 @@ PlayerManager::~PlayerManager()
 	}	
 }
 
-const Player& PlayerManager::addPlayer(unsigned long id)
+const Player& PlayerManager::addPlayer()
 {
+	unsigned long id = HashManager::Instance()->getNewHash();
 	if (players.find(id) == players.end())
 	{
 		players[id] = new Player(id);
@@ -21,14 +22,13 @@ const Player& PlayerManager::addPlayer(unsigned long id)
 	}
 	else 
 	{
-		LogManager::Instance()->logWarn("Hash collison! Player '" + std::to_string(id) + "' already exists, returning existing.");
-		return *players[id];
+		LogManager::Instance()->logWarn("Hash collison! Player '" + std::to_string(id) + "' already exists, recursively rehashing.");
+		return addPlayer();
 	}	
 }
 
 void PlayerManager::rmPlayer(unsigned long id)
 {
-	WindowManager::Instance()->rmWindow(id);
 	if (players.find(id) != players.end())
 	{
 		delete players[id];

@@ -9,7 +9,7 @@
 class PlayerManager : public Singleton<PlayerManager>
 {
 	public:
-		const Player& addPlayer(unsigned long id);
+		const Player& addPlayer();
 		void rmPlayer(unsigned long id);
 
 		const Player& getPlayer(unsigned long id);
