@@ -3,7 +3,7 @@ OBJ_FILES = ${addprefix bin/objs/,${notdir ${CPP_FILES:.cpp=.o}}}
 CC_FLAGS = -g -Wall -Werror -std=c++11
 LD_FLAGS = -lsfml-graphics -lsfml-window -lsfml-system
 
-tiengine: ${OBJ_FILES}
+bin/tiengine: ${OBJ_FILES}
 	g++ -o $@ $^ ${LD_FLAGS}
 
 bin/objs/%.o: src/%.cpp
@@ -17,3 +17,4 @@ bin/objs/%.o: src/objects/%.cpp
 
 clean:
 	rm bin/objs/*.o
+	rm bin/tiengine
