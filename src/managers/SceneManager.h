@@ -6,7 +6,7 @@
 class SceneManager : public Singleton<SceneManager>
 {
 	public:
-		void draw();
+		void render();
 		~SceneManager();
 		SceneManager();
 	private:
