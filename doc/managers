@@ -18,15 +18,12 @@ LogManager:
 			1: Errors.
 	Config value keys should be case insensitive
 
-Database Manager:
-	Responsible for establishing connection to database and providing data when
-		requested.
-
 SceneObjectManager:
 	Responisble for storing and deleting objects that are not players.
 
 PlayerManager:
 	Responsible for storing and deleting objects that are players.
+	Implicitedly creates a window for every player.
 
 EventsManager:
 	Responsible for interpreting event loop inputs
