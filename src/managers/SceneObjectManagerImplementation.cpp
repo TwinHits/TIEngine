@@ -38,3 +38,8 @@ void SceneObjectManager::rmSceneObject(unsigned long id)
 		LogManager::Instance()->logError("SceneObject '" + std::to_string(id) + "' does not exist, doing nothing.");	
 	}
 }
+
+const std::map<unsigned long, SceneObject*>& SceneObjectManager::getAllSceneObjects()
+{
+	return sceneObjects;
+}

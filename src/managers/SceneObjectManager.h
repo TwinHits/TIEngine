@@ -10,8 +10,10 @@ class SceneObjectManager : public Singleton<SceneObjectManager>
 {
 	public:
 		const SceneObject& addSceneObject();
-		const SceneObject& getSceneObject(unsigned long id);
 		void rmSceneObject(unsigned long id);
+		
+		const SceneObject& getSceneObject(unsigned long id);
+		const std::map<unsigned long, SceneObject*>& getAllSceneObjects();
 
 		SceneObjectManager();
 		~SceneObjectManager();
