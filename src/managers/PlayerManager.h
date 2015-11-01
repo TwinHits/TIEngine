@@ -13,6 +13,7 @@ class PlayerManager : public Singleton<PlayerManager>
 		void rmPlayer(unsigned long id);
 
 		const Player& getPlayer(unsigned long id);
+		const std::map<unsigned long, Player*>& getAllPlayers();
 
 		PlayerManager();
 		~PlayerManager();

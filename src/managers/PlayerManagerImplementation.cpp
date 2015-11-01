@@ -52,3 +52,8 @@ const Player& PlayerManager::getPlayer(unsigned long id)
 		return *players[id];
 	}
 }
+
+const std::map<unsigned long, Player*>& PlayerManager::getAllPlayers()
+{
+	return players;
+}
