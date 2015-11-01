@@ -11,6 +11,7 @@ const SceneObject& SceneObjectManager::addSceneObject()
 	if (sceneObjects.find(id) == sceneObjects.end())
 	{		
 		sceneObjects[id] = new SceneObject(id);
+		LogManager::Instance()->logInfo("Added SceneObject '" + std::to_string(id) + "'.");
 		return *sceneObjects[id];
 	}
 	else
