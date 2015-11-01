@@ -6,15 +6,15 @@
 class SceneObject
 {
 	public:
+		void setDraw(bool b);
+
+		const sf::Sprite& getSprite() const;
+		unsigned long getId() const;
+
 		SceneObject(unsigned long id);
 		SceneObject(const SceneObject&);
 		~SceneObject();
 		void operator=(const SceneObject&);
-
-		void setDraw(bool b);
-
-		const sf::Sprite& getSprite();
-		unsigned long getId();
 		
 	private:
 		sf::Sprite sprite;

@@ -11,6 +11,6 @@ void SceneObject::operator=(const SceneObject&) {}
 
 void SceneObject::setDraw(bool b) { draw = b; }
 
-const sf::Sprite& SceneObject::getSprite() { return sprite; }
-unsigned long SceneObject::getId() { return id; }
+const sf::Sprite& SceneObject::getSprite() const { return sprite; }
+unsigned long SceneObject::getId() const { return id; }
 
