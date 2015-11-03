@@ -1,19 +1,15 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <SFML/Graphics.hpp>
-
 class Player
 {
 	public:
-		Player(int id);
+		Player(unsigned long id);
 		~Player();
 
-		int getId() const;
-		sf::RenderWindow& getWindow() const;
+		unsigned long getId() const;
 	private:	
-		int id;
-		sf::RenderWindow* window;
+		unsigned long id;
 
 		Player(const Player&);
 		void operator=(const Player&);

@@ -2,15 +2,13 @@
 
 #include "Player.h"
 
-Player::Player(int id) 
+Player::Player(unsigned long id) 
 {
 	this->id = id;
-	window = &WindowManager::Instance()->addWindow();
 }
-
-int Player::getId() const { return id; }
-sf::RenderWindow& Player::getWindow() const { return *window; }
-
 Player::~Player() {}
+
+unsigned long Player::getId() const { return id; }
+
 Player::Player(const Player&) {}
 void Player::operator=(const Player&) {}

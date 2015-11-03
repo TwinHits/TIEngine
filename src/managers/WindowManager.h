@@ -3,24 +3,25 @@
 
 #include <map>
 
-#include <SFML/Graphics.hpp>
-
 #include "../templates/Singleton.h"
 #include "../objects/Player.h"
+#include "../objects/RenderWindow.h"
 
 class WindowManager : public Singleton<WindowManager>
 {
 	public:
-		sf::RenderWindow& getWindow(unsigned long id);
-		sf::RenderWindow& addWindow();
+		RenderWindow& getWindow(unsigned long id);
+		RenderWindow& addWindow();
 		void rmWindow(unsigned long id);
+
+		const std::map<unsigned long, RenderWindow*>& getAllWindows();
 
 		WindowManager();
 		~WindowManager();
 
 	private:
 		
-		std::map<unsigned long, sf::RenderWindow*> playerWindows;
+		std::map<unsigned long, RenderWindow*> windows;
 
 		WindowManager(const WindowManager&);
 		void operator=(const WindowManager&);
