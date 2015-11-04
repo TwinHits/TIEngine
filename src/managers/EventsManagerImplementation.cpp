@@ -1,6 +1,8 @@
 #include <iostream>
 
 #include "EventsManager.h"
+#include "WindowManager.h"
+#include "LogManager.h"
 
 EventsManager::EventsManager()
 {
@@ -47,21 +49,32 @@ EventsManager::EventsManager()
 }
 EventsManager::~EventsManager() {}
 
-void EventsManager::processInput(const sf::Event& event)
+void EventsManager::processInput()
 {
 	//1) How do I condfigure a link to a function? 
 	//2) How can I register a function without modifyting the eventmanager src
 	//code?
-	//3) How does the event manager know which window/player/object to operate
-	//on?
-
-	switch (event.type)
+	
+	sf::Event event;
+	while (WindowManager::Instance()->getWindow().pollEvent(event))
 	{
-		case sf::Event::KeyPressed:
-			std::cout << keyBinds[event.key.code] << std::endl;
-			break;	
-		default:
-			break;
+		switch (event.type)
+		{
+			case sf::Event::Closed:
+				WindowManager::Instance()->getWindow().close();
+				break;
+			case sf::Event::KeyPressed:
+				switch (event.key.code)
+				{
+					case sf::Keyboard::Escape:
+						WindowManager::Instance()->getWindow().close();
+						break;
+					default:
+						std::cout << keyBinds[event.key.code] << std::endl;
+						break;	
+				}
+			default:
+				break;
+		}
 	}
-
 }

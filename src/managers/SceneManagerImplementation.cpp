@@ -8,17 +8,13 @@ SceneManager::~SceneManager() {}
 
 void SceneManager::render()
 {		
-	const std::map<unsigned long, RenderWindow*>& windows = WindowManager::Instance()->getAllWindows();
+	sf::RenderWindow& window = WindowManager::Instance()->getWindow();
 	const std::map<unsigned long, SceneObject*>& sceneObjects = SceneObjectManager::Instance()->getAllSceneObjects();
 
-	for (auto w = windows.begin(); w != windows.end(); ++w)
+	window.clear();
+	for (auto so = sceneObjects.begin(); so != sceneObjects.end(); ++so)
 	{
-		w->second->clear();
-		for (auto so = sceneObjects.begin(); so != sceneObjects.end(); ++so)
-		{
-			w->second->draw(so->second->getSprite());
-		}
-		w->second->display();
+		window.draw(so->second->getSprite());
 	}
-	
+	window.display();
 }

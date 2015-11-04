@@ -10,7 +10,7 @@
 class EventsManager : public Singleton<EventsManager>
 {
 	public:
-		void processInput(const sf::Event& event);
+		void processInput();
 
 		EventsManager();
 		~EventsManager();
