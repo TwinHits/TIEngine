@@ -52,22 +52,24 @@ EventsManager::~EventsManager() {}
 void EventsManager::processInput()
 {
 	//1) How do I condfigure a link to a function? 
-	//2) How can I register a function without modifyting the eventmanager src
-	//code?
+	//2) How can I register a function without modifyting the eventmanager src code?
 	
 	sf::Event event;
-	while (WindowManager::Instance()->getWindow().pollEvent(event))
+	sf::RenderWindow& window = WindowManager::Instance()->getWindow();
+	while (window.pollEvent(event))
 	{
 		switch (event.type)
 		{
 			case sf::Event::Closed:
-				WindowManager::Instance()->getWindow().close();
+				window.close();
+				LogManager::Instance()->logInfo("Window closed by user.");
 				break;
 			case sf::Event::KeyPressed:
 				switch (event.key.code)
 				{
 					case sf::Keyboard::Escape:
-						WindowManager::Instance()->getWindow().close();
+						window.close();
+						LogManager::Instance()->logInfo("Window closed by user.");
 						break;
 					default:
 						std::cout << keyBinds[event.key.code] << std::endl;

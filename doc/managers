@@ -9,6 +9,8 @@ ConfigManager:
 
 AssetsManager:
 	returns asset refernce when requested by type.
+	validate resource
+	Viewing mode?
 
 LogManager:
 	Responsible for outputting data into the log files. Can designate different
@@ -29,4 +31,5 @@ EventsManager:
 	Responsible for interpreting event loop inputs
 
 WindowManager:
-	Responsible for distribuing references to windows by player
+	Responsible for giving singleton like features to the single window
+reference.

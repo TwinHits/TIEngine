@@ -1,19 +1,22 @@
 #include "managers/LogManager.h"
 #include "managers/PlayerManager.h"
+#include "managers/WindowManager.h"
 #include "managers/SceneObjectManager.h"
 #include "managers/SceneManager.h"
+#include "managers/EventsManager.h"
 
 int main()
 {
-	PlayerManager::Instance()->addPlayer();
+	LogManager::Instance()->logInfo("Program starting.");
 	SceneObjectManager::Instance()->addSceneObject();
+	sf::RenderWindow& window = WindowManager::Instance()->addWindow();
 
-	while (true)
+	while (window.isOpen())
 	{
-		//ProcessInput
-		//UpdateGameState
+		EventsManager::Instance()->processInput();
+		//update gamestate
 		SceneManager::Instance()->render();		
 	}
 
-	return 0;
+	LogManager::Instance()->logInfo("Program ended successfully.");
 }
