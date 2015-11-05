@@ -11,6 +11,8 @@ class SceneObject
 		const sf::Sprite& getSprite() const;
 		unsigned long getId() const;
 
+		void update();
+
 		SceneObject(unsigned long id);
 		SceneObject(const SceneObject&);
 		~SceneObject();

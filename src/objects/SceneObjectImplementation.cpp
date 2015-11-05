@@ -14,3 +14,7 @@ void SceneObject::setDraw(bool b) { draw = b; }
 const sf::Sprite& SceneObject::getSprite() const { return sprite; }
 unsigned long SceneObject::getId() const { return id; }
 
+void SceneObject::update()
+{
+	
+}
