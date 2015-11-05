@@ -1,5 +1,3 @@
-#include <string>
-
 #include "AssetsManager.h"
 #include "ConfigManager.h"
 #include "LogManager.h"

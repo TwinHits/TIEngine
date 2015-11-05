@@ -33,3 +33,13 @@ EventsManager:
 WindowManager:
 	Responsible for giving singleton like features to the single window
 reference.
+
+Messages:
+	Each sceneobject broadcasts messages to every other sceneobject. O(nN)
+	Each object knows which messages they ignore and which they operate on.
+	When an object must do a thing, it puts the thing into it's queue.
+	Each update, it looks at each thing in it's queue and checks if its
+requirements are filled.
+	If so, it removes it from the queue.
+	This lets the object do more than one thing at once.
+	Individual commands are expected to know their dependencies on other things.

@@ -51,7 +51,7 @@ EventsManager::~EventsManager() {}
 
 void EventsManager::processInput()
 {
-	//1) How do I condfigure a link to a function? 
+	//1) How do I configure a link to a function? 
 	//2) How can I register a function without modifyting the eventmanager src code?
 	
 	sf::Event event;

@@ -8,15 +8,17 @@
 int main()
 {
 	LogManager::Instance()->logInfo("Program starting.");
-	SceneObjectManager::Instance()->addSceneObject();
 	sf::RenderWindow& window = WindowManager::Instance()->addWindow();
+
+	PlayerManager::Instance()->addPlayer();
+	SceneObjectManager::Instance()->addSceneObject();
 
 	while (window.isOpen())
 	{
 		EventsManager::Instance()->processInput();
-		//update gamestate
+		SceneObjectManager::Instance()->updateGameState();
 		SceneManager::Instance()->render();		
 	}
 
-	LogManager::Instance()->logInfo("Program ended successfully.");
+	LogManager::Instance()->logInfo("Program ended.");
 }

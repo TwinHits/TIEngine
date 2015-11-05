@@ -7,6 +7,7 @@ class SceneManager : public Singleton<SceneManager>
 {
 	public:
 		void render();
+
 		~SceneManager();
 		SceneManager();
 	private:

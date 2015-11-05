@@ -3,8 +3,6 @@
 
 #include <map>
 
-#include <SFML/Graphics.hpp>
-
 #include "../templates/Singleton.h"
 
 class EventsManager : public Singleton<EventsManager>
