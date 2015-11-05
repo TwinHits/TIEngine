@@ -3,7 +3,13 @@
 #include "LogManager.h"
 
 SceneObjectManager::SceneObjectManager() {}
-SceneObjectManager::~SceneObjectManager() {}
+SceneObjectManager::~SceneObjectManager() 
+{
+	for (auto so = sceneObjects.begin(); so != sceneObjects.end(); ++so)
+	{
+		rmSceneObject(so->second->getId());
+	}
+}
 
 const SceneObject& SceneObjectManager::addSceneObject()
 {
@@ -42,4 +48,12 @@ void SceneObjectManager::rmSceneObject(unsigned long id)
 const std::map<unsigned long, SceneObject*>& SceneObjectManager::getAllSceneObjects()
 {
 	return sceneObjects;
+}
+
+void SceneObjectManager::updateGameState()
+{
+	for (auto so = sceneObjects.begin(); so != sceneObjects.end(); ++so)
+	{
+			so->second->update();
+	}
 }

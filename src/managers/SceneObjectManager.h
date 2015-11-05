@@ -15,6 +15,8 @@ class SceneObjectManager : public Singleton<SceneObjectManager>
 		const SceneObject& getSceneObject(unsigned long id);
 		const std::map<unsigned long, SceneObject*>& getAllSceneObjects();
 
+		void updateGameState();
+
 		SceneObjectManager();
 		~SceneObjectManager();
 	private:
