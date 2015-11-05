@@ -11,13 +11,13 @@ sf::RenderWindow& WindowManager::addWindow()
 {
 	if (window == nullptr)
 	{
-		window = new sf::RenderWindow();
-		window->create(sf::VideoMode(800, 600), "My window");
+		window = new sf::RenderWindow(sf::VideoMode(800, 600), "Twin Ion Engine");
 		LogManager::Instance()->logInfo("Opened window.");
 		return getWindow();
 	}
 	else
 	{
+		LogManager::Instance()->logWarn("Client attempted to open a second window. Returning existing.");
 		return getWindow();
 	}
 }
