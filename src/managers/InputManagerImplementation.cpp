@@ -1,10 +1,10 @@
 #include <iostream>
 
-#include "EventsManager.h"
+#include "InputManager.h"
 #include "WindowManager.h"
 #include "LogManager.h"
 
-EventsManager::EventsManager()
+InputManager::InputManager()
 {
 	/*
 	keyBinds[sf::Keyboard::0] = 0;
@@ -47,9 +47,9 @@ EventsManager::EventsManager()
 	keyBinds[sf::Keyboard::Escape] = 36;
 
 }
-EventsManager::~EventsManager() {}
+InputManager::~InputManager() {}
 
-void EventsManager::processInput()
+void InputManager::processInput()
 {
 	//1) How do I configure a link to a function? 
 	//2) How can I register a function without modifyting the eventmanager src code?

@@ -5,18 +5,18 @@
 
 #include "../templates/Singleton.h"
 
-class EventsManager : public Singleton<EventsManager>
+class InputManager : public Singleton<InputManager>
 {
 	public:
 		void processInput();
 
-		EventsManager();
-		~EventsManager();
+		InputManager();
+		~InputManager();
 	private:
 		std::map<unsigned int, unsigned int> keyBinds;
 
-		EventsManager(const EventsManager&);
-		void operator=(const EventsManager&);
+		InputManager(const InputManager&);
+		void operator=(const InputManager&);
 };
 
 #endif

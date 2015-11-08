@@ -1,9 +1,11 @@
+#include <iostream>
+
 #include "managers/LogManager.h"
 #include "managers/PlayerManager.h"
 #include "managers/WindowManager.h"
 #include "managers/SceneObjectManager.h"
 #include "managers/SceneManager.h"
-#include "managers/EventsManager.h"
+#include "managers/InputManager.h"
 
 int main()
 {
@@ -15,7 +17,7 @@ int main()
 
 	while (window.isOpen())
 	{
-		EventsManager::Instance()->processInput();
+		InputManager::Instance()->processInput();
 		SceneObjectManager::Instance()->updateGameState();
 		SceneManager::Instance()->render();		
 	}
