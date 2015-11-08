@@ -1,8 +1,11 @@
 #include "SceneObject.h"
 
+#include "../managers/TimeManager.h"
+
 SceneObject::SceneObject(unsigned long id)
 {
 	this->id = id;	
+	this->clock = TimeManager::Instance()->addClock();
 }
 
 SceneObject::SceneObject(const SceneObject&) {}

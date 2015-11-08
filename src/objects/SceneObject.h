@@ -21,6 +21,9 @@ class SceneObject
 	private:
 		sf::Sprite sprite;
 		bool draw = false;
+		
+		sf::Clock clock;
+
 		unsigned long id;
 };
 
