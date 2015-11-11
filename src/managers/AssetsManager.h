@@ -2,20 +2,29 @@
 #define ASSETSMANAGER_H
 
 #include <string>
+#include <map>
+
+#include <SFML/Graphics.hpp>
+#include <boost/filesystem.hpp>
 
 #include "../templates/Singleton.h"
 
 class AssetsManager: public Singleton<AssetsManager>
 {
 	public:
-		const std::string& getTexture(const std::string&);
-		const std::string& getAudio(const std::string&);
+		const sf::Texture& getTexture(unsigned long id);
+		unsigned long getAudio(unsigned long id);
 
 		AssetsManager();	
 		~AssetsManager();
 
 	private:
-		std::string assetsPath;
+		boost::filesystem::path texturesPath;
+		boost::filesystem::path audioPath;
+
+		void parseAssets();
+
+		std::map<unsigned long, sf::Texture> textures;
 
 		AssetsManager(const AssetsManager&);
 		void operator=(const AssetsManager&);

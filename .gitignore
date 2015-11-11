@@ -1,3 +1,6 @@
 bin/*
 logs/*
 tiengine
+test*
+doc/todo.txt
+assets/

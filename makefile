@@ -1,7 +1,7 @@
 CPP_FILES = ${wildcard src/managers/*.cpp} ${wildcard src/objects/*.cpp} ${wildcard src/*.cpp}
 OBJ_FILES = ${addprefix bin/objs/,${notdir ${CPP_FILES:.cpp=.o}}}
 CC_FLAGS = -g -Wall -Werror -std=c++11
-LD_FLAGS = -lsfml-graphics -lsfml-window -lsfml-system
+LD_FLAGS = -lsfml-graphics -lsfml-window -lsfml-system -lboost_filesystem -lboost_system
 
 bin/tiengine: ${OBJ_FILES}
 	g++ -o $@ $^ ${LD_FLAGS}
