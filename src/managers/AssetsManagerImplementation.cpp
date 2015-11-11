@@ -22,15 +22,22 @@ const sf::Texture& AssetsManager::getTexture(unsigned long id)
 	}
 	else
 	{
-		LogManager::Instance()->logError("Cannot open texture '" + std::to_string(id) + "'.");
+		LogManager::Instance()->logError("Cannot open audio '" + std::to_string(id) + "'.");
 		return textures[id];
 	}
 }
 
-unsigned long AssetsManager::getAudio(unsigned long id)
+const std::string& AssetsManager::getAudio(unsigned long id)
 {
-	LogManager::Instance()->logError("Cannot open audio '" + std::to_string(id) + "'.");
-	return id;
+	if (audio.find(id) != audio.end())
+	{
+		return audio[id];
+	}
+	else
+	{
+		LogManager::Instance()->logError("Cannot open audio '" + std::to_string(id) + "'.");
+		return audio[id];
+	}
 }
 
 void AssetsManager::parseAssets()
@@ -44,4 +51,11 @@ void AssetsManager::parseAssets()
 		LogManager::Instance()->logInfo("Loaded texture '" + i.path().string() + "'.");
 	}
 
+	for (boost::filesystem::directory_entry& i : boost::filesystem::directory_iterator(audioPath))
+	{
+		unsigned long id = HashManager::Instance()->getNewHash();
+		std::string a = "a sound file";
+		audio[id] = a;
+		LogManager::Instance()->logInfo("Loaded audio '" + i.path().string() + "'.");
+	}
 }

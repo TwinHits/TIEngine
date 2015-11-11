@@ -13,7 +13,7 @@ class AssetsManager: public Singleton<AssetsManager>
 {
 	public:
 		const sf::Texture& getTexture(unsigned long id);
-		unsigned long getAudio(unsigned long id);
+		const std::string& getAudio(unsigned long id);
 
 		AssetsManager();	
 		~AssetsManager();
@@ -25,6 +25,7 @@ class AssetsManager: public Singleton<AssetsManager>
 		void parseAssets();
 
 		std::map<unsigned long, sf::Texture> textures;
+		std::map<unsigned long, std::string> audio; 
 
 		AssetsManager(const AssetsManager&);
 		void operator=(const AssetsManager&);
