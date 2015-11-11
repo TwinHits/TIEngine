@@ -11,7 +11,7 @@ sf::RenderWindow& WindowManager::addWindow()
 {
 	if (window == nullptr)
 	{
-		window = new sf::RenderWindow(sf::VideoMode(800, 600), "Twin Ion Engine");
+		window = new sf::RenderWindow(sf::VideoMode(800, 600), "Twin Ion Engine 800x600");
 		LogManager::Instance()->logInfo("Opened window.");
 		return getWindow();
 	}
