@@ -16,6 +16,8 @@ class SceneObject
 		void receiveMessage(const Message& msg);
 		void update();
 
+		void action();
+
 		SceneObject(unsigned long id);
 		SceneObject(const SceneObject&);
 		~SceneObject();
