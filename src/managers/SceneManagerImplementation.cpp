@@ -19,7 +19,8 @@ void SceneManager::render()
 	window.clear();
 	for (auto so = sceneObjects.begin(); so != sceneObjects.end(); ++so)
 	{
-		window.draw(so->second->getSprite());
+		if (so->second->getDraw())
+			window.draw(so->second->getSprite());
 	}
 	window.display();
 

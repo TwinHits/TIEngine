@@ -12,6 +12,7 @@ class SceneObject
 
 		const sf::Sprite& getSprite() const;
 		unsigned long getId() const;
+		bool getDraw();
 
 		void receiveMessage(const Message& msg);
 		void update();
@@ -25,7 +26,7 @@ class SceneObject
 		
 	private:
 		sf::Sprite sprite;
-		bool draw = false;
+		bool draw = true;
 		
 		sf::Clock clock;
 
