@@ -1,6 +1,7 @@
 #include "SceneObject.h"
 
 #include "../managers/TimeManager.h"
+#include "../managers/MessageManager.h"
 
 SceneObject::SceneObject(unsigned long id)
 {
@@ -8,16 +9,24 @@ SceneObject::SceneObject(unsigned long id)
 	this->clock = TimeManager::Instance()->addClock();
 }
 
-SceneObject::SceneObject(const SceneObject&) {}
-SceneObject::~SceneObject() {}
-void SceneObject::operator=(const SceneObject&) {}
+void SceneObject::update()
+{
+	
+}
+
+void SceneObject::receiveMessage(const Message& msg)
+{
+	switch (msg.value)
+	{
+		default:
+				
+			break;
+	}	
+}
 
 void SceneObject::setDraw(bool b) { draw = b; }
 
 const sf::Sprite& SceneObject::getSprite() const { return sprite; }
 unsigned long SceneObject::getId() const { return id; }
 
-void SceneObject::update()
-{
-	
-}
+SceneObject::~SceneObject() {}

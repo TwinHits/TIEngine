@@ -3,6 +3,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "../objects/Message.h"
+
 class SceneObject
 {
 	public:
@@ -11,6 +13,7 @@ class SceneObject
 		const sf::Sprite& getSprite() const;
 		unsigned long getId() const;
 
+		void receiveMessage(const Message& msg);
 		void update();
 
 		SceneObject(unsigned long id);
