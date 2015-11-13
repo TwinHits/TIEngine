@@ -47,6 +47,7 @@ void AssetsManager::parseAssets()
 		unsigned long id = HashManager::Instance()->getNewHash();
 		sf::Texture t;
 		t.loadFromFile(i.path().string());
+		t.setSmooth(true);
 		textures[id] = t;
 		LogManager::Instance()->logInfo("Loaded texture '" + i.path().string() + "'.");
 	}
