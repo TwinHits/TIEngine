@@ -5,6 +5,8 @@
 
 #include "../objects/Message.h"
 
+class Message;
+
 class SceneObject
 {
 	public:

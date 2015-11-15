@@ -19,11 +19,10 @@ void SceneObject::update()
 
 void SceneObject::receiveMessage(const Message& msg)
 {
-	switch (msg.value)
+	switch (msg.type)
 	{
-		case 123:
-			if (this->id == 4)
-				std::cout << "success!" << std::endl;
+		case Message::Move:
+			break;
 		default:
 			break;
 	}
@@ -31,8 +30,8 @@ void SceneObject::receiveMessage(const Message& msg)
 
 void SceneObject::action()
 {
-	Message msg;
-	msg.value = 123;
+	Message msg(*this, *this);
+	msg.type = Message::Move;
 	MessageManager::Instance()->sendMessage(msg);
 }
 
