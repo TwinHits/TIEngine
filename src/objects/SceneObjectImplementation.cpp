@@ -1,10 +1,9 @@
-#include <iostream>
-
 #include "SceneObject.h"
 #include "Message.h"
 
 #include "../managers/TimeManager.h"
 #include "../managers/MessageManager.h"
+#include "../managers/LogManager.h"
 
 SceneObject::SceneObject(unsigned long id)
 {
@@ -19,20 +18,33 @@ void SceneObject::update()
 
 void SceneObject::receiveMessage(const Message& msg)
 {
-	switch (msg.type)
+	if (msg.receiver == *this)
 	{
-		case Message::Move:
-			break;
-		default:
-			break;
+		switch (msg.type)
+		{
+			case Message::Move:
+					LogManager::Instance()->logInfo("Sucessful message receieved");
+				break;
+			default:
+				break;
+		}
 	}
 }
-
-void SceneObject::action()
+void SceneObject::action(const SceneObject& target)
 {
-	Message msg(*this, *this);
+	Message msg(*this, target);
 	msg.type = Message::Move;
 	MessageManager::Instance()->sendMessage(msg);
+}
+
+bool SceneObject::operator==(const SceneObject& rhs) const 
+{
+	return this->getId() == rhs.getId();
+}
+
+bool SceneObject::operator!=(const SceneObject& rhs) const
+{
+	return this->getId() != rhs.getId();
 }
 
 void SceneObject::setDraw(bool b) { draw = b; }
@@ -42,5 +54,5 @@ unsigned long SceneObject::getId() const { return id; }
 bool SceneObject::getDraw() { return draw; }
 
 SceneObject::~SceneObject() {}
-SceneObject::SceneObject(const SceneObject&) {}
 
+void SceneObject::operator=(const SceneObject&) {}

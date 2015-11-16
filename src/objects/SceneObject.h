@@ -19,12 +19,14 @@ class SceneObject
 		void receiveMessage(const Message& msg);
 		void update();
 
-		void action();
+		void action(const SceneObject& target);
 
 		SceneObject(unsigned long id);
-		SceneObject(const SceneObject&);
 		~SceneObject();
+
 		void operator=(const SceneObject&);
+		bool operator==(const SceneObject& rhs) const;
+		bool operator!=(const SceneObject& rhs) const;
 		
 	private:
 		sf::Sprite sprite;

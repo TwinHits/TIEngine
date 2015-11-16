@@ -29,7 +29,7 @@ class Message
 
 		union 
 		{
-	//Registry of the possible messages?
+			//Registry of the possible messages?
 			MoveMsg move;
 		};
 
