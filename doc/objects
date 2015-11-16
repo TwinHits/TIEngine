@@ -1,6 +1,0 @@
-SceneObject:
-	An object that is not a player and is a sprite. 
-	SendMessage(msg): Every object sends out messages every frame with
-			information that other objects can act on
-	GetMessage(msg): Every object is listening for certain messages every frame that they
-			are to act on
