@@ -1,45 +1,92 @@
-SceneManager:
-	Responsible for deciding which objects are to be drawn.
-	draw(camera):
-		Optimally draws objects.
+Singleton<SceneManager>
+	Instance():
+		Calls a reference to the manager. Creates, if not yet done.
+	void render():
+		Calls draw() on all SceneObjects.
+	int getFPS():		
+		Returns the math'd frames per second based on time of last frame.
 
-ConfigManager:
-	Responsibile for loading and parsing configuration files into explicitly
-		typed data members with get() functions.
 
-AssetsManager:
-	returns asset refernce when requested by type.
-	validate resource
-	Viewing mode?
+Singleton<ConfigManager>:
+	Instance():
+		Calls a reference to the manager. Creates, if not yet done.
+	const std::string& getDebugLogPath():
+		Returns path to logs directory. Default: ""
+	const std::string& getAssetsPath():
+		Returns path to assets directory. Default: ""
+	const int& getDebugLogLevel():
+		Returns logging level. Default: "3"
+	
 
-LogManager:
-	Responsible for outputting data into the log files. Can designate different
-		logging types and levels.
-			3: Errors, Warns, and Info.
-			2: Errors, and Warns.
-			1: Errors.
-	Config value keys should be case insensitive
+Singleton<AssetsManager>:
+	Instance():
+		Calls a reference to the manager. Creates, if not yet done.
+	const sf::Texture& getTexture(unsigned long id):
+		Returns texture by id.
+	const std::string& getAudio(unsigned long id)
+		Returns audio by id. Incomplete.
 
-SceneObjectManager:
-	Responisble for storing and deleting objects that are not players.
 
-PlayerManager:
-	Responsible for storing and deleting objects that are players.
-	Implicitedly creates a window for every player.
+Singleton<LogManager>:
+	Instance():
+		Calls a reference to the manager. Creates, if not yet done.
+	void logError(const std::string& message):
+		Logs an error in the debuglog log.
+	void logWarn(const std::string& message):
+		Logs a warning in the debuglog log.
+	void logInfo(const std::string& message):
+		Logs a info in the debuglog log.
 
-EventsManager:
-	Responsible for interpreting event loop inputs
 
-WindowManager:
-	Responsible for giving singleton like features to the single window
-reference.
+Singleton<SceneObjectManager>:
+	Instance():
+		Calls a reference to the manager. Creates, if not yet done.
+	const SceneObject& addSceneObject():
+		Adds and returns a SceneObject.
+	void rmSceneObject& getSceneObject(unsigned long id):
+		Removes SceneObject by id.
+	const SceneObject& getSceneObject(unsigned long id):
+		Returns SceneObject by id.
+	const std::map<unsigned long, SceneObject*>& getAllSceneObjects():
+		Returns map of all SceneObjects[unsigned long id].
+	void updateGameState():
+		Calls update on all SceneObjects.
 
-Messages:
-	Each sceneobject broadcasts messages to every other sceneobject. O(nN)
-	Each object knows which messages they ignore and which they operate on.
-	When an object must do a thing, it puts the thing into it's queue.
-	Each update, it looks at each thing in it's queue and checks if its
-requirements are filled.
-	If so, it removes it from the queue.
-	This lets the object do more than one thing at once.
-	Individual commands are expected to know their dependencies on other things.
+
+Singleton<PlayerManager>:
+	Instance():
+		Calls a reference to the manager. Creates, if not yet done.
+	const Player& addPlayer():
+		Adds and returns a Player.	
+	void rmPlayer(unsigned long id):
+		Removes a player by id.
+	const Player& getPlayer(unsigned long id):
+		Returns player by id.
+	const std::map<unsigned long, Player*>&  getAllPlayers():
+		Returns map of all Player[unsigned long id]
+
+
+Singleton<InputManager>:
+	Instance():
+		Calls a reference to the manager. Creates, if not yet done.
+	void processInput():
+		Polls window managed by WindowManager for events and sends appropriate
+		message. Incomplete.
+
+
+Singleton<WindowManager>:
+	Instance():
+		Calls a reference to the manager. Creates, if not yet done.
+	sf::RenderWindow& addWindow():
+		Adds and returns sf::RenderWindow. If exists, returns existing.
+	sf::RenderWindow& getWindow():
+		Gets sf::RenderWindow.
+	void rmWindow():
+		Removes sf::RenderWindow.
+
+
+Singleton<MessageManager>:
+	Instance():
+		Calls a reference to the manager. Creates, if not yet done.
+	void sendMessage():
+		Sends class Message to all SceneObjects.
