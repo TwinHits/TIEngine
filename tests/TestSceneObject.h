@@ -6,6 +6,10 @@
 class TestSceneObject : public SceneObject
 {
 	public:
+		void update();
+		void receiveMessage(const Message& msg);
+		void testAction(const SceneObject& target);
+
 		TestSceneObject(unsigned long id);
 		~TestSceneObject();
 	private:

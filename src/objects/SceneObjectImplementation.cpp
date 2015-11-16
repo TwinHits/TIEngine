@@ -11,32 +11,6 @@ SceneObject::SceneObject(unsigned long id)
 	this->clock = TimeManager::Instance()->addClock();
 }
 
-void SceneObject::update()
-{
-	
-}
-
-void SceneObject::receiveMessage(const Message& msg)
-{
-	if (msg.receiver == *this)
-	{
-		switch (msg.type)
-		{
-			case Message::Move:
-					LogManager::Instance()->logInfo("Sucessful message receieved");
-				break;
-			default:
-				break;
-		}
-	}
-}
-void SceneObject::action(const SceneObject& target)
-{
-	Message msg(*this, target);
-	msg.type = Message::Move;
-	MessageManager::Instance()->sendMessage(msg);
-}
-
 bool SceneObject::operator==(const SceneObject& rhs) const 
 {
 	return this->getId() == rhs.getId();

@@ -10,16 +10,14 @@ class Message;
 class SceneObject
 {
 	public:
+		virtual void receiveMessage(const Message& msg) = 0;
+		virtual void update() = 0;
+
 		void setDraw(bool b);
 
 		const sf::Sprite& getSprite() const;
 		unsigned long getId() const;
 		bool getDraw();
-
-		void receiveMessage(const Message& msg);
-		void update();
-
-		void action(const SceneObject& target);
 
 		SceneObject(unsigned long id);
 		~SceneObject();
@@ -30,11 +28,9 @@ class SceneObject
 		
 	private:
 		sf::Sprite sprite;
-		bool draw = true;
-		
 		sf::Clock clock;
-
 		unsigned long id;
+		bool draw = true;
 };
 
 #endif
