@@ -11,14 +11,16 @@ SceneObjectManager::~SceneObjectManager()
 	}
 }
 
-void SceneObjectManager::addSceneObject(SceneObject* so)
+const SceneObject& SceneObjectManager::addSceneObject(SceneObject* so)
 {
 	sceneObjects[so->getId()] = so;
 	LogManager::Instance()->logInfo("Added SceneObject '" + std::to_string(so->getId()) + "'.");
+	return getSceneObject(so->getId());
 }
 
 const SceneObject& SceneObjectManager::getSceneObject(unsigned long id)
 {
+	//Bounds checking needed
 	return *sceneObjects[id];
 }
 
