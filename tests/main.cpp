@@ -1,11 +1,11 @@
-#include "managers/LogManager.h"
-#include "managers/PlayerManager.h"
-#include "managers/WindowManager.h"
-#include "managers/SceneObjectManager.h"
-#include "managers/SceneManager.h"
-#include "managers/InputManager.h"
+#include "../src/managers/LogManager.h"
+#include "../src/managers/PlayerManager.h"
+#include "../src/managers/WindowManager.h"
+#include "../src/managers/SceneObjectManager.h"
+#include "../src/managers/SceneManager.h"
+#include "../src/managers/InputManager.h"
 
-#include "../tests/TestSceneObjectFactory.h"
+#include "TestSceneObjectFactory.h"
 
 int main()
 {
