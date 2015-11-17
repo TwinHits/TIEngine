@@ -10,7 +10,7 @@ class TestSceneObject : public SceneObject
 		void receiveMessage(const Message& msg);
 		void testAction(unsigned long target);
 
-		TestSceneObject(unsigned long id);
+		TestSceneObject();
 		~TestSceneObject();
 	private:
 

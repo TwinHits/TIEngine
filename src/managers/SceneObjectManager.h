@@ -9,7 +9,7 @@
 class SceneObjectManager : public Singleton<SceneObjectManager>
 {
 	public:
-		const SceneObject& addSceneObject();
+		void addSceneObject(SceneObject* so);
 		void rmSceneObject(unsigned long id);
 		
 		const SceneObject& getSceneObject(unsigned long id);

@@ -10,6 +10,9 @@ class Message;
 class SceneObject
 {
 	public:
+		SceneObject();
+		virtual ~SceneObject();
+
 		virtual void receiveMessage(const Message& msg);// = 0;
 		virtual void update();// = 0;
 
@@ -18,9 +21,6 @@ class SceneObject
 		const sf::Sprite& getSprite() const;
 		unsigned long getId() const;
 		bool getDraw();
-
-		SceneObject(unsigned long id);
-		virtual ~SceneObject();
 
 		void operator=(const SceneObject&);
 		bool operator==(const SceneObject& rhs) const;

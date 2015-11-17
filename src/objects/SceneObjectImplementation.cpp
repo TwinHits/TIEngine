@@ -4,10 +4,11 @@
 #include "../managers/TimeManager.h"
 #include "../managers/MessageManager.h"
 #include "../managers/LogManager.h"
+#include "../managers/HashManager.h"
 
-SceneObject::SceneObject(unsigned long id)
+SceneObject::SceneObject()
 {
-	this->id = id;	
+	this->id = HashManager::Instance()->getNewHash();	
 	this->clock = TimeManager::Instance()->addClock();
 }
 
