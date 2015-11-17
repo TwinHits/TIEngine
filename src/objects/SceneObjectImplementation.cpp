@@ -30,3 +30,6 @@ bool SceneObject::getDraw() { return draw; }
 SceneObject::~SceneObject() {}
 
 void SceneObject::operator=(const SceneObject&) {}
+
+void SceneObject::receiveMessage(const Message& msg) {}
+void SceneObject::update() {}

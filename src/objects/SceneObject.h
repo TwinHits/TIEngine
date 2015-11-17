@@ -10,8 +10,8 @@ class Message;
 class SceneObject
 {
 	public:
-		virtual void receiveMessage(const Message& msg) = 0;
-		virtual void update() = 0;
+		virtual void receiveMessage(const Message& msg);// = 0;
+		virtual void update();// = 0;
 
 		void setDraw(bool b);
 
@@ -20,7 +20,7 @@ class SceneObject
 		bool getDraw();
 
 		SceneObject(unsigned long id);
-		~SceneObject();
+		virtual ~SceneObject();
 
 		void operator=(const SceneObject&);
 		bool operator==(const SceneObject& rhs) const;
