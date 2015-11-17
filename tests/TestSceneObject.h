@@ -8,7 +8,7 @@ class TestSceneObject : public SceneObject
 	public:
 		void update();
 		void receiveMessage(const Message& msg);
-		void testAction(const SceneObject& target);
+		void testAction(unsigned long target);
 
 		TestSceneObject(unsigned long id);
 		~TestSceneObject();

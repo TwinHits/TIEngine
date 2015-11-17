@@ -11,9 +11,9 @@ TestSceneObject::~TestSceneObject()
 {
 }
 
-void TestSceneObject::testAction(const SceneObject& target)
+void TestSceneObject::testAction(unsigned long target)
 {
-	Message msg(*this, target);
+	Message msg(this->getId, target);
 	msg.type = Message::Move;
 	MessageManager::Instance()->sendMessage(msg);
 }
@@ -25,12 +25,12 @@ void TestSceneObject::update()
 
 void TestSceneObject::receiveMessage(const Message& msg)
 {
-	if (msg.receiver == *this)
+	if (msg.receiver == this->getId())
 	{
 		switch (msg.type)
 		{
 			case Message::Move:
-					LogManager::Instance()->logInfo("Sucessful message receieved");
+					LogManager::Instance()->logInfo("Sucessful 'Move' message receieved");
 				break;
 			default:
 				break;
