@@ -8,7 +8,8 @@ class SceneObject;
 class Message 
 {
 	public:
-		Message(const SceneObject& s, const SceneObject& r);
+		Message(unsigned long s, unsigned long r);
+		Message(unsigned long s);
 
 		struct MoveMsg 
 		{
@@ -24,8 +25,8 @@ class Message
 		};
 		
 		MessageType type;
-		const SceneObject& sender;
-		const SceneObject& receiver;
+		unsigned long senderId;
+		unsigned long receiverId;	
 
 		union 
 		{
