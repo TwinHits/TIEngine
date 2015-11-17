@@ -1,2 +1,9 @@
 gTest Testing
 Exception Handling
+
+sendMessage overload for no target. 
+sendMessage by Id instead of reference.
+
+typedef unsigned long GlobalID;
+
+Move id generation to SceneObject constructor.

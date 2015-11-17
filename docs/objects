@@ -10,3 +10,7 @@ requirements are filled.
 	If so, it removes it from the queue.
 	This lets the object do more than one thing at once.
 	Individual commands are expected to know their dependencies on other things.
+
+Message:
+
+Player:
