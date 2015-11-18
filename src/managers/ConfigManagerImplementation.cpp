@@ -1,3 +1,7 @@
+#include <iostream>
+
+#include <boost/filesystem.hpp>
+
 #include "ConfigManager.h"
 #include "LogManager.h"
 
@@ -12,18 +16,21 @@ ConfigManager::~ConfigManager() {}
 
 void ConfigManager::loadConfig()
 {
-	std::ifstream config;
-
-	config.open("config.ini");
-	if (!config.is_open())
+	auto configPath = boost::filesystem::path("config.ini");
+	if (exists(configPath))
 	{
-		LogManager::Instance()->logError("Could not find config.ini.");
-		return;
-	}	
+		std::ifstream config;
 
-	parseConfig(config);
+		config.open("config.ini");
+		if (!config.is_open())
+		{
+			return;
+		}	
 
-	config.close();
+		parseConfig(config);
+
+		config.close();
+	}
 }
 
 void ConfigManager::parseConfig(std::ifstream& config)
