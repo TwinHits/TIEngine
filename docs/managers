@@ -21,9 +21,9 @@ Singleton<ConfigManager>:
 Singleton<AssetsManager>:
 	Instance():
 		Calls a reference to the manager. Creates, if not yet done.
-	const sf::Texture& getTexture(unsigned long id):
+	const sf::Texture& getTexture(GlobalId id):
 		Returns texture by id.
-	const std::string& getAudio(unsigned long id)
+	const std::string& getAudio(GlobalId id)
 		Returns audio by id. Incomplete.
 
 
@@ -43,12 +43,12 @@ Singleton<SceneObjectManager>:
 		Calls a reference to the manager. Creates, if not yet done.
 	const SceneObject& addSceneObject():
 		Adds and returns a SceneObject.
-	void rmSceneObject& getSceneObject(unsigned long id):
+	void rmSceneObject& getSceneObject(GlobalId id):
 		Removes SceneObject by id.
-	const SceneObject& getSceneObject(unsigned long id):
+	const SceneObject& getSceneObject(GlobalId id):
 		Returns SceneObject by id.
-	const std::map<unsigned long, SceneObject*>& getAllSceneObjects():
-		Returns map of all SceneObjects[unsigned long id].
+	const std::map<GlobalId, SceneObject*>& getAllSceneObjects():
+		Returns map of all SceneObjects[GlobalId id].
 	void updateGameState():
 		Calls update on all SceneObjects.
 
@@ -58,12 +58,12 @@ Singleton<PlayerManager>:
 		Calls a reference to the manager. Creates, if not yet done.
 	const Player& addPlayer():
 		Adds and returns a Player.	
-	void rmPlayer(unsigned long id):
+	void rmPlayer(GlobalId id):
 		Removes a player by id.
-	const Player& getPlayer(unsigned long id):
+	const Player& getPlayer(GlobalId id):
 		Returns player by id.
-	const std::map<unsigned long, Player*>&  getAllPlayers():
-		Returns map of all Player[unsigned long id]
+	const std::map<GlobalId, Player*>&  getAllPlayers():
+		Returns map of all Player[GlobalId id]
 
 
 Singleton<InputManager>:
@@ -90,3 +90,18 @@ Singleton<MessageManager>:
 		Calls a reference to the manager. Creates, if not yet done.
 	void sendMessage():
 		Sends class Message to all SceneObjects.
+
+Singleton<HashManager>:
+	Instance():
+		Returns a reference to the manager. Creates, if not yet done.
+	unisnged long getNewHash():
+		Increments counter and returns new unique id.
+	void setSeed(GlobalId int):
+		Sets seed to some number.
+
+Singleton<TimeManager>:
+	Instance():
+		Returns a reference to the manager. Creates, if not yet done.
+	const sf::Clock& addClock():
+		Adds a clock to the map, and returns a reference to it.
+	

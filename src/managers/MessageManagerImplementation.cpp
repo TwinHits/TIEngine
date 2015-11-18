@@ -6,9 +6,16 @@ MessageManager::~MessageManager() {}
 
 void MessageManager::sendMessage(Message msg) 
 {
-	auto objs = SceneObjectManager::Instance()->getAllSceneObjects();
-	for (auto so = objs.begin(); so != objs.end(); ++so)
+	if (msg.receiverId != 0)
 	{
-		so->second->receiveMessage(msg);
+		SceneObjectManager::Instance()->getSceneObject(msg.receiverId).receiveMessage(msg);
+	}
+	else if (msg.receiverId == 0)
+	{
+		auto sobjs = SceneObjectManager::Instance()->getAllSceneObjects();
+		for (auto so = sobjs.begin(); so != sobjs.end(); ++so)
+		{
+			so->second->receiveMessage(msg);
+		}
 	}
 }

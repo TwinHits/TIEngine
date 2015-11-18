@@ -11,7 +11,7 @@ TestSceneObject::~TestSceneObject()
 {
 }
 
-void TestSceneObject::testAction(unsigned long target) const
+void TestSceneObject::testAction(GlobalId target) const
 {
 	Message msg(this->getId(), target);
 	msg.type = Message::Move;

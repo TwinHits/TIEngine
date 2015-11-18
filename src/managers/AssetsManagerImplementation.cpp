@@ -14,7 +14,7 @@ AssetsManager::AssetsManager()
 
 AssetsManager::~AssetsManager() {}
 
-const sf::Texture& AssetsManager::getTexture(unsigned long id)
+const sf::Texture& AssetsManager::getTexture(GlobalId id)
 {
 	if (textures.find(id) != textures.end())
 	{
@@ -27,7 +27,7 @@ const sf::Texture& AssetsManager::getTexture(unsigned long id)
 	}
 }
 
-const std::string& AssetsManager::getAudio(unsigned long id)
+const std::string& AssetsManager::getAudio(GlobalId id)
 {
 	if (audio.find(id) != audio.end())
 	{
@@ -44,7 +44,7 @@ void AssetsManager::parseAssets()
 {
 	for (boost::filesystem::directory_entry& i : boost::filesystem::directory_iterator(texturesPath))
 	{
-		unsigned long id = HashManager::Instance()->getNewHash();
+		GlobalId id = HashManager::Instance()->getNewHash();
 		sf::Texture t;
 		t.loadFromFile(i.path().string());
 		t.setSmooth(true);
@@ -54,7 +54,7 @@ void AssetsManager::parseAssets()
 
 	for (boost::filesystem::directory_entry& i : boost::filesystem::directory_iterator(audioPath))
 	{
-		unsigned long id = HashManager::Instance()->getNewHash();
+		GlobalId id = HashManager::Instance()->getNewHash();
 		std::string a = "a sound file";
 		audio[id] = a;
 		LogManager::Instance()->logInfo("Loaded audio '" + i.path().string() + "'.");

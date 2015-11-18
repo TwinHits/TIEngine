@@ -1,12 +1,13 @@
 #include "Message.h"
 #include "SceneObject.h"
+#include "GlobalId.h"
 
-Message::Message(unsigned long s, unsigned long r)
+Message::Message(GlobalId s, GlobalId r)
 {
 	this->senderId = s;
 	this->receiverId = r;
 }
-Message::Message(unsigned long s)
+Message::Message(GlobalId s)
 {
 	this->senderId = s;
 	this->receiverId = 0;

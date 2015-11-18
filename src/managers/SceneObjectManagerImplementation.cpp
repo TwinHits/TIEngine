@@ -18,13 +18,19 @@ const SceneObject& SceneObjectManager::addSceneObject(SceneObject* so)
 	return getSceneObject(so->getId());
 }
 
-const SceneObject& SceneObjectManager::getSceneObject(unsigned long id)
+const SceneObject& SceneObjectManager::getSceneObject(GlobalId id)
 {
-	//Bounds checking needed
-	return *sceneObjects[id];
+	if (sceneObjects.find(id) != sceneObjects.end())
+	{
+		return *sceneObjects[id];
+	}
+	else 
+	{
+		return *sceneObjects[id];
+	}
 }
 
-void SceneObjectManager::rmSceneObject(unsigned long id)
+void SceneObjectManager::rmSceneObject(GlobalId id)
 {
 	if (sceneObjects.find(id) != sceneObjects.end())
 	{
@@ -37,7 +43,7 @@ void SceneObjectManager::rmSceneObject(unsigned long id)
 	}
 }
 
-const std::map<unsigned long, SceneObject*>& SceneObjectManager::getAllSceneObjects()
+const std::map<GlobalId, SceneObject*>& SceneObjectManager::getAllSceneObjects()
 {
 	return sceneObjects;
 }

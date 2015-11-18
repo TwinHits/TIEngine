@@ -7,13 +7,15 @@
 #include <SFML/Graphics.hpp>
 #include <boost/filesystem.hpp>
 
+#include "../objects/GlobalId.h"
+
 #include "../templates/Singleton.h"
 
 class AssetsManager: public Singleton<AssetsManager>
 {
 	public:
-		const sf::Texture& getTexture(unsigned long id);
-		const std::string& getAudio(unsigned long id);
+		const sf::Texture& getTexture(GlobalId id);
+		const std::string& getAudio(GlobalId id);
 
 		AssetsManager();	
 		~AssetsManager();
@@ -24,8 +26,8 @@ class AssetsManager: public Singleton<AssetsManager>
 
 		void parseAssets();
 
-		std::map<unsigned long, sf::Texture> textures;
-		std::map<unsigned long, std::string> audio; 
+		std::map<GlobalId, sf::Texture> textures;
+		std::map<GlobalId, std::string> audio; 
 
 		AssetsManager(const AssetsManager&);
 		void operator=(const AssetsManager&);

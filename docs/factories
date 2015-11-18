@@ -4,3 +4,4 @@ object class from SceneObject, and a factory from SceneObjectFactory.
 	The SceneObjectFactory class is templated and has a create function that
 passes and allocated T pointer to ObjectManager. ObjectManager is only responsible for
 storing and deleting objects at shut down, not for creation.
+	Overrides of .create() must call create() with no parameters.

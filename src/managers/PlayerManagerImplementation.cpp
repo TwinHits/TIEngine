@@ -13,7 +13,7 @@ PlayerManager::~PlayerManager()
 
 const Player& PlayerManager::addPlayer()
 {
-	unsigned long id = HashManager::Instance()->getNewHash();
+	GlobalId id = HashManager::Instance()->getNewHash();
 	if (players.find(id) == players.end())
 	{
 		players[id] = new Player(id);
@@ -27,7 +27,7 @@ const Player& PlayerManager::addPlayer()
 	}	
 }
 
-void PlayerManager::rmPlayer(unsigned long id)
+void PlayerManager::rmPlayer(GlobalId id)
 {
 	if (players.find(id) != players.end())
 	{
@@ -40,7 +40,7 @@ void PlayerManager::rmPlayer(unsigned long id)
 	}
 }
 
-const Player& PlayerManager::getPlayer(unsigned long id)
+const Player& PlayerManager::getPlayer(GlobalId id)
 {
 	if (players.find(id) != players.end())
 	{
@@ -53,7 +53,7 @@ const Player& PlayerManager::getPlayer(unsigned long id)
 	}
 }
 
-const std::map<unsigned long, Player*>& PlayerManager::getAllPlayers()
+const std::map<GlobalId, Player*>& PlayerManager::getAllPlayers()
 {
 	return players;
 }

@@ -1,15 +1,17 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include "GlobalId.h"
+
 class Player
 {
 	public:
-		Player(unsigned long id);
+		Player(GlobalId id);
 		~Player();
 
-		unsigned long getId() const;
+		GlobalId getId() const;
 	private:	
-		unsigned long id;
+		GlobalId id;
 
 		Player(const Player&);
 		void operator=(const Player&);

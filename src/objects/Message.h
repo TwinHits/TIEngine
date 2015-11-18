@@ -4,12 +4,13 @@
 class SceneObject;
 
 #include "SceneObject.h"
+#include "GlobalId.h"
 
 class Message 
 {
 	public:
-		Message(unsigned long s, unsigned long r);
-		Message(unsigned long s);
+		Message(GlobalId s, GlobalId r);
+		Message(GlobalId s);
 
 		struct MoveMsg 
 		{
@@ -25,8 +26,8 @@ class Message
 		};
 		
 		MessageType type;
-		unsigned long senderId;
-		unsigned long receiverId;	
+		GlobalId senderId;
+		GlobalId receiverId;	
 
 		union 
 		{

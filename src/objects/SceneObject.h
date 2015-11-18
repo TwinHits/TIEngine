@@ -3,7 +3,8 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "../objects/Message.h"
+#include "Message.h"
+#include "GlobalId.h"
 
 class Message;
 
@@ -13,13 +14,13 @@ class SceneObject
 		SceneObject();
 		virtual ~SceneObject();
 
-		virtual void receiveMessage(const Message& msg);// = 0;
+		virtual void receiveMessage(const Message& msg) const;// = 0;
 		virtual void update();// = 0;
 
 		void setDraw(bool b);
 
 		const sf::Sprite& getSprite() const;
-		unsigned long getId() const;
+		GlobalId getId() const;
 		bool getDraw();
 
 		void operator=(const SceneObject&);
@@ -29,7 +30,7 @@ class SceneObject
 	private:
 		sf::Sprite sprite;
 		sf::Clock clock;
-		unsigned long id;
+		GlobalId id;
 		bool draw = true;
 };
 

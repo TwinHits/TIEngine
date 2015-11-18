@@ -3,6 +3,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "../objects/GlobalId.h"
+
 #include "../templates/Singleton.h"
 
 class TimeManager : public Singleton<TimeManager>
@@ -14,7 +16,7 @@ class TimeManager : public Singleton<TimeManager>
 		~TimeManager();
 
 	private:
-		std::map<unsigned long, sf::Clock> clocks;
+		std::map<GlobalId, sf::Clock> clocks;
 
 		TimeManager(const TimeManager&);
 		void operator=(const TimeManager&);
