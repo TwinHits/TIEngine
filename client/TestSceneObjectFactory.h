@@ -1,7 +1,7 @@
 #ifndef TESTOBJECTFACTORY_H
 #define TESTOBJECTFACTORY_H
 
-#include "../src/templates/Factory.h"
+#include "../src/TIEngine.h"
 
 #include "TestSceneObject.h"
 

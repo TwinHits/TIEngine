@@ -1,7 +1,7 @@
 #ifndef TESTSCENEOBJECT_H
 #define TESTSCENEOBJECT_H
 
-#include "../src/objects/SceneObject.h"
+#include "../src/TIEngine.h"
 
 class TestSceneObject : public SceneObject
 {
