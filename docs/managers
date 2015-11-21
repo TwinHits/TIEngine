@@ -94,8 +94,10 @@ Singleton<MessageManager>:
 Singleton<HashManager>:
 	Instance():
 		Returns a reference to the manager. Creates, if not yet done.
-	unisnged long getNewHash():
+	GlobalId getNewGlobalId():
 		Increments counter and returns new unique id.
+	unsigned long getHash(const std::string);
+		Returns hashed value of given string.
 	void setSeed(GlobalId int):
 		Sets seed to some number.
 
@@ -105,3 +107,18 @@ Singleton<TimeManager>:
 	const sf::Clock& addClock():
 		Adds a clock to the map, and returns a reference to it.
 	
+
+Singleton<StringManager>:
+	Instance():
+		Returns a reference to the manager. Creates, if not yet done
+	const std::string getString(const std::string&):
+		Returns localized version of string for defined displayLanguage.
+		Default: EN.
+	const std::string getString(const std::string&, Language l):	
+		Returns localized version of string for given language.	
+	void addString(const std::string&):
+		Adds string as registered string for defined userLanguage).
+	void addString(const std::string&, Language, const std::string&):
+		Adds string2 as a localization in Language to string1.
+	void setDisplayLanguage(Language):
+		Sets language of strings returned by getString.
