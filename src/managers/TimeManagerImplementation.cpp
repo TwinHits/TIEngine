@@ -7,7 +7,7 @@ TimeManager::~TimeManager() {}
 
 const sf::Clock& TimeManager::addClock() 
 {
-	GlobalId id = HashManager::Instance()->getNewHash();
+	GlobalId id = HashManager::Instance()->getNewGlobalId();
 	if (clocks.find(id) == clocks.end())
 	{
 		sf::Clock clock;

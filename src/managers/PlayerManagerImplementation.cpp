@@ -13,7 +13,7 @@ PlayerManager::~PlayerManager()
 
 const Player& PlayerManager::addPlayer()
 {
-	GlobalId id = HashManager::Instance()->getNewHash();
+	GlobalId id = HashManager::Instance()->getNewGlobalId();
 	if (players.find(id) == players.end())
 	{
 		players[id] = new Player(id);

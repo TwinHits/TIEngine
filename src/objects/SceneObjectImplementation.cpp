@@ -8,7 +8,7 @@
 
 SceneObject::SceneObject()
 {
-	this->id = HashManager::Instance()->getNewHash();	
+	this->id = HashManager::Instance()->getNewGlobalId();	
 	this->clock = TimeManager::Instance()->addClock();
 }
 

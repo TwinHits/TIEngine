@@ -3,10 +3,14 @@
 
 #include "../templates/Singleton.h"
 
+#include "../objects/GlobalId.h"
+
 class HashManager : public Singleton<HashManager>
 {
 	public:
-		unsigned long getNewHash();
+		GlobalId getNewGlobalId();
+		unsigned long getHash(const std::string& s);
+
 		void setSeed(unsigned long seed);
 
 		HashManager();
