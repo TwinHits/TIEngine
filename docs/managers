@@ -119,6 +119,8 @@ Singleton<StringManager>:
 	void addString(const std::string&):
 		Adds string as registered string for defined userLanguage).
 	void addString(const std::string&, Language, const std::string&):
-		Adds string2 as a localization in Language to string1.
+		Adds string2 as a localization in Language to string1. If hash of
+		string1 does not exist, adds string1 as displayLangauge localization, and
+		string2 as l localizaton.
 	void setDisplayLanguage(Language):
 		Sets language of strings returned by getString.

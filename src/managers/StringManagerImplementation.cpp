@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "StringManager.h"
 #include "LogManager.h"
 #include "HashManager.h"
@@ -52,6 +54,7 @@ const std::string& StringManager::getString(const std::string& s, Language l)
 void StringManager::addString(const std::string& defaultString)
 {
 	unsigned long hash = HashManager::Instance()->getHash(defaultString);
+	std::cout << hash << std::endl;
 	if (locals.find(hash) == locals.end())
 	{
 		locals[hash][displayLanguage] = defaultString;
@@ -68,12 +71,20 @@ void StringManager::addString(const std::string& defaultString, Language l, cons
 	unsigned long hash = HashManager::Instance()->getHash(defaultString);
 	if (locals.find(hash) == locals.end())
 	{
+		locals[hash][displayLanguage] = defaultString;
 		locals[hash][l] = localizedString;
 	}
 	else if (locals.find(hash) != locals.end())
 	{
-		LogManager::Instance()->logWarn("Overriding localization for '" + std::to_string(l) + "' for '" + defaultString + "'.");
-		locals[hash][l] = localizedString;
+		if (locals[hash].find(l) == locals[hash].end())
+		{
+			locals[hash][l] = localizedString;
+		}
+		else 
+		{
+			LogManager::Instance()->logWarn("Overriding localization for '" + std::to_string(l) + "' for '" + defaultString + "'.");
+			locals[hash][l] = localizedString;
+		}
 	}
 }
 
