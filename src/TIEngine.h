@@ -12,12 +12,18 @@
 #ifndef TIENGINE_H
 #define TIENGINE_H
 
-	#include "managers/WindowManager.h"
-	#include "managers/SceneObjectManager.h"
-	#include "managers/SceneManager.h"
+	#include "managers/AssetsManager.h"
+	#include "managers/ConfigManager.h"
+	#include "managers/HashManager.h"
 	#include "managers/InputManager.h"
-
-	#include "objects/SceneObject.h"
+	#include "managers/LogManager.h"
+	#include "managers/MessageManager.h"
+	#include "managers/PlayerManager.h"
+	#include "managers/SceneManager.h"
+	#include "managers/SceneObjectManager.h"
+	#include "managers/StringManager.h"
+	#include "managers/TimeManager.h"
+	#include "managers/WindowManager.h"
 
 	#include "templates/Factory.h"
 
