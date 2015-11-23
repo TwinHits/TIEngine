@@ -1,4 +1,4 @@
-int StringToNumber(std::string s): 
+int StringToInt(std::string s): 
 	Converts a std::string to an integer.
 
 std::string LocalTime():

@@ -5,7 +5,7 @@
 #include "ConfigManager.h"
 #include "LogManager.h"
 
-#include "../utilities/StringToNumber.h"
+#include "../utilities/StringToInt.h"
 
 ConfigManager::ConfigManager() 
 {
@@ -47,7 +47,7 @@ void ConfigManager::parseConfig(std::ifstream& config)
 
 			if (key == "DebugLogPath") { debugLogPath = value; }
 			if (key == "AssetsPath") { assetsPath = value; }
-			if (key == "DebugLogLevel") { debugLogLevel = StringToNumber(value); }
+			if (key == "DebugLogLevel") { debugLogLevel = StringToInt(value); }
 			if (key == "defaultDisplayLanguage") { defaultDisplayLanguage = parseLanguage(value); }
 		}
 	}

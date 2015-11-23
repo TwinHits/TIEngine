@@ -4,7 +4,7 @@
 #include <string>
 #include <sstream>
 
-int StringToNumber(std::string& s)
+int StringToInt(std::string& s)
 {
 	std::stringstream ss(s);
 	int num;
