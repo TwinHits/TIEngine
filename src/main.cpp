@@ -1,7 +1,5 @@
-#include "managers/WindowManager.h"
-#include "managers/SceneObjectManager.h"
-#include "managers/SceneManager.h"
-#include "managers/InputManager.h"
+
+#include "../../TIEngine/src/TIEngine.h"
 
 int main()
 {
