@@ -1,4 +1,0 @@
-This is a learning tool to create a game engine for SFML so that users can plug
-in assets and rules to create a game. This is mostly to create and use managers
-and singletons, and effectively design a system of passing messages back and
-forth using C++11.

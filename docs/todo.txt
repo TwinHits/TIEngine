@@ -1,4 +1,0 @@
-gTest Testing
-Exception Handling
-
-sendMessage overload for no target. 
