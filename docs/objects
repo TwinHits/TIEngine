@@ -1,16 +1,17 @@
-SceneObject:
-	An object that is not a player and is a sprite. 
-	SendMessage(msg): Every object sends out messages every frame with
-			information that other objects can act on
-	GetMessage(msg): Every object is listening for certain messages every frame that they
-			are to act on
-	When an object must do a thing, it puts the thing into it's queue.
-	Each update, it looks at each thing in it's queue and checks if its
-requirements are filled.
-	If so, it removes it from the queue.
-	This lets the object do more than one thing at once.
-	Individual commands are expected to know their dependencies on other things.
+class SceneObject():
+	An object that can be drawn
+	sendMessage(msg): Every object can create and send messages. everyone = 0,
+		target = id
+	receiveMessage(msg): Every object can recieve messages every frame.
+		When an object must do a thing, it puts the thing into it's queue.
+		Each update, it looks at each thing in it's queue and checks if its
+			requirements are filled.
+		If so, it removes it from the queue.
+		This lets the object do more than one thing at once.
+		Individual commands are expected to know their dependencies on other things.
 
-Message:
+class Message(): A vehicle for sending messages between objects.
+	SenderId: The object that sends the message.
+	recieverId: The targer object that recieves the message. If =, then all
 
-Player:
+class Player(): A player object.

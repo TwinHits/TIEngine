@@ -1,13 +1,2 @@
-Should window and player be intrinsically linked? is it reasoable that a player
-would NOT have a window associated with them?
-	Yes, if a player is not a human.
-
-Whats the difference between a client and a server? Or, more to the end point,
-am I making a single player engine or a multiplayer engine?
-
-I think I'm making a single player engine, multiplayer can be next time.
-
 How can I make a configurable key binding system?
-
-Prototype based object creation.
 
