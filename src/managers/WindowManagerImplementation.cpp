@@ -7,11 +7,11 @@ WindowManager::~WindowManager()
 	rmWindow();
 }
 
-sf::RenderWindow& WindowManager::addWindow()
+sf::RenderWindow& WindowManager::addWindow(sf::VideoMode mode, const std::string& title, int style, const sf::ContextSettings& settings)
 {
 	if (window == nullptr)
 	{
-		window = new sf::RenderWindow(sf::VideoMode(800, 600), "Twin Ion Engine 800x600");
+		this->window = new sf::RenderWindow(mode, title, style, settings);
 		LogManager::Instance()->logInfo("Opened window.");
 		return getWindow();
 	}
@@ -24,9 +24,9 @@ sf::RenderWindow& WindowManager::addWindow()
 
 void WindowManager::rmWindow()
 {
-	if (window != nullptr)
+	if (this->window != nullptr)
 	{
-		delete window;
+		delete this->window;
 	}
 }
 
