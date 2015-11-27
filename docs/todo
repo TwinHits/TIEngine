@@ -8,3 +8,6 @@ Database Manager
 Physics library
 SoundBuffer format issues
 
+Change int to boost std portable integer header
+Add namespace TIE to everything
+Change StringManager to use a special string class that returns the right localization based on the StringManagers's set localization.

@@ -4,6 +4,8 @@
 #include "WindowManager.h"
 #include "LogManager.h"
 
+using namespace TIE;
+
 InputManager::InputManager()
 {
 	/*

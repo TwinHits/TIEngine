@@ -2,6 +2,8 @@
 #include "HashManager.h"
 #include "LogManager.h"
 
+using namespace TIE;
+
 TimeManager::TimeManager() {}
 TimeManager::~TimeManager() {}
 

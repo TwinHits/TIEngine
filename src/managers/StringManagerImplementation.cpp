@@ -5,6 +5,8 @@
 #include "HashManager.h"
 #include "ConfigManager.h"
 
+using namespace TIE;
+
 StringManager::StringManager()
 {
 	this->displayLanguage = ConfigManager::Instance()->getDefaultDisplayLanguage();

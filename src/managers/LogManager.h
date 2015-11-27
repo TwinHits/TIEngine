@@ -6,21 +6,26 @@
 
 #include "../templates/Singleton.h"
 
-class LogManager: public Singleton<LogManager>
+namespace TIE
 {
-	public:
-		void logError(const std::string& message);
-		void logWarn(const std::string& message);
-		void logInfo(const std::string& message);
 
-		LogManager();
-		~LogManager();
+	class LogManager: public Singleton<LogManager>
+	{
+		public:
+			void logError(const std::string& message);
+			void logWarn(const std::string& message);
+			void logInfo(const std::string& message);
+	
+			LogManager();
+			~LogManager();
 
-	private:
-		std::ofstream log;
+		private:
+			std::ofstream log;
 
-		LogManager(const LogManager&);
-		void operator=(const LogManager&);
-};
+			LogManager(const LogManager&);
+			void operator=(const LogManager&);
+	};
+
+}
 
 #endif

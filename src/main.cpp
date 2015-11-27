@@ -4,12 +4,12 @@
 int main()
 {
 	//Minimum render loop
-	sf::RenderWindow& window = WindowManager::Instance()->addWindow();
+	sf::RenderWindow& window = TIE::WindowManager::Instance()->addWindow();
 
 	while (window.isOpen())
 	{
-		InputManager::Instance()->processInput();
-		SceneObjectManager::Instance()->updateGameState();
-		SceneManager::Instance()->render();		
+		TIE::InputManager::Instance()->processInput();
+		TIE::SceneObjectManager::Instance()->updateGameState();
+		TIE::SceneManager::Instance()->render();		
 	}
 }

@@ -6,6 +6,8 @@
 #include "SceneObject.h"
 #include "Message.h"
 
+using namespace TIE;
+
 SceneObject::SceneObject()
 {
 	this->id = HashManager::Instance()->getNewGlobalId();	

@@ -1,6 +1,8 @@
 #include "WindowManager.h"
 #include "LogManager.h"
 
+using namespace TIE;
+
 WindowManager::WindowManager() {}
 WindowManager::~WindowManager() 
 {

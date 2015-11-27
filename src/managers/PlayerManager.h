@@ -8,22 +8,27 @@
 #include "../objects/Player.h"
 #include "../objects/GlobalId.h"
 
-class PlayerManager : public Singleton<PlayerManager>
+namespace TIE
 {
-	public:
-		const Player& addPlayer();
-		void rmPlayer(GlobalId id);
 
-		const Player& getPlayer(GlobalId id);
-		const std::map<GlobalId, Player*>& getAllPlayers();
+	class PlayerManager : public Singleton<PlayerManager>
+	{
+		public:
+			const Player& addPlayer();
+			void rmPlayer(GlobalId id);
 
-		PlayerManager();
-		~PlayerManager();
-	private:
-		std::map<GlobalId, Player*> players;
+			const Player& getPlayer(GlobalId id);
+			const std::map<GlobalId, Player*>& getAllPlayers();
 
-		PlayerManager(const PlayerManager&);
-		void operator=(const PlayerManager&);
-};
+			PlayerManager();
+			~PlayerManager();
+		private:
+			std::map<GlobalId, Player*> players;
+	
+			PlayerManager(const PlayerManager&);
+			void operator=(const PlayerManager&);
+	};
 
+}
+	
 #endif

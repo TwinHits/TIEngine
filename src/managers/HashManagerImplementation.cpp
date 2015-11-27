@@ -3,6 +3,8 @@
 #include "HashManager.h"
 #include "LogManager.h"
 
+using namespace TIE;
+
 HashManager::HashManager() {}
 HashManager::~HashManager() {}
 

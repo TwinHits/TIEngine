@@ -3,6 +3,8 @@
 #include "Player.h"
 #include "GlobalId.h"
 
+using namespace TIE;
+
 Player::Player(GlobalId id) 
 {
 	this->id = id;

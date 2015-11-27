@@ -1,6 +1,8 @@
 #include "SceneObjectManager.h"
 #include "LogManager.h"
 
+using namespace TIE;
+
 SceneObjectManager::SceneObjectManager() {}
 
 SceneObjectManager::~SceneObjectManager() 

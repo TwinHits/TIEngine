@@ -7,20 +7,23 @@
 
 #include "../templates/Singleton.h"
 
-class TimeManager : public Singleton<TimeManager>
+namespace TIE
 {
-	public:
-		const sf::Clock& addClock();	
 
-		TimeManager();
-		~TimeManager();
+	class TimeManager : public Singleton<TimeManager>
+	{
+		public:
+			const sf::Clock& addClock();	
 
-	private:
-		std::map<GlobalId, sf::Clock> clocks;
+			TimeManager();
+			~TimeManager();
 
-		TimeManager(const TimeManager&);
-		void operator=(const TimeManager&);
+		private:
+			std::map<GlobalId, sf::Clock> clocks;
 
-};
+			TimeManager(const TimeManager&);
+			void operator=(const TimeManager&);
+	};
+}
 
 #endif

@@ -3,6 +3,8 @@
 
 #include "../managers/SceneObjectManager.h"
 
+using namespace TIE;
+
 template<typename T>
 class Factory
 {

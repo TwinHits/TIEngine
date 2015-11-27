@@ -2,6 +2,8 @@
 #include "HashManager.h"
 #include "LogManager.h"
 
+using namespace TIE;
+
 PlayerManager::PlayerManager() {}
 PlayerManager::~PlayerManager() 
 {	

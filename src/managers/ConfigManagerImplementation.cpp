@@ -7,6 +7,8 @@
 
 #include "../utilities/StringToInt.h"
 
+using namespace TIE;
+
 ConfigManager::ConfigManager() 
 {
 	loadConfig();

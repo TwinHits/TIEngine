@@ -6,32 +6,39 @@
 #include "Message.h"
 #include "GlobalId.h"
 
-class Message;
 
-class SceneObject
+
+namespace TIE
 {
-	public:
-		SceneObject();
-		virtual ~SceneObject();
 
-		virtual void receiveMessage(const Message& msg) const;// = 0;
-		virtual void update();// = 0;
+	class Message;
 
-		void setDraw(bool b);
+	class SceneObject
+	{
+		public:
+			SceneObject();
+			virtual ~SceneObject();
+	
+			virtual void receiveMessage(const Message& msg) const;// = 0;
+			virtual void update();// = 0;
 
-		const sf::Sprite& getSprite() const;
-		GlobalId getId() const;
-		bool getDraw();
+			void setDraw(bool b);
 
-		void operator=(const SceneObject&);
-		bool operator==(const SceneObject& rhs) const;
-		bool operator!=(const SceneObject& rhs) const;
+			const sf::Sprite& getSprite() const;
+			GlobalId getId() const;
+			bool getDraw();
+
+			void operator=(const SceneObject&);
+			bool operator==(const SceneObject& rhs) const;
+			bool operator!=(const SceneObject& rhs) const;
 		
-	private:
-		sf::Sprite sprite;
-		sf::Clock clock;
-		GlobalId id;
-		bool draw = true;
-};
+		protected:
+			sf::Sprite sprite;
+			sf::Clock clock;
+			GlobalId id;
+			bool draw = true;
+	};
+
+}
 
 #endif

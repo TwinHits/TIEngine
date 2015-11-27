@@ -3,6 +3,8 @@
 
 #include "../utilities/LocalTime.h"
 
+using namespace TIE;
+
 LogManager::LogManager() 
 {
 	log.open(ConfigManager::Instance()->getDebugLogPath() + "debug.log", std::ios_base::app);

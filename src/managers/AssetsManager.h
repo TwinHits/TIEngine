@@ -12,28 +12,33 @@
 
 #include "../templates/Singleton.h"
 
-class AssetsManager: public Singleton<AssetsManager>
+namespace TIE
 {
-	public:
-		const sf::Texture& getTexture(GlobalId);
-		const sf::Texture& getTexture(const std::string&);
-		const sf::SoundBuffer& getAudio(GlobalId);
-		const sf::SoundBuffer& getAudio(const std::string&);
 
-		AssetsManager();	
-		~AssetsManager();
+	class AssetsManager: public Singleton<AssetsManager>
+	{
+		public:
+			const sf::Texture& getTexture(GlobalId);
+			const sf::Texture& getTexture(const std::string&);
+			const sf::SoundBuffer& getAudio(GlobalId);
+			const sf::SoundBuffer& getAudio(const std::string&);
+	
+			AssetsManager();	
+			~AssetsManager();
 
-	private:
-		boost::filesystem::path texturesPath;
-		boost::filesystem::path audioPath;
+		private:
+			boost::filesystem::path texturesPath;
+			boost::filesystem::path audioPath;
 
-		void parseAssets();
+			void parseAssets();
 
-		std::map<GlobalId, sf::Texture> textures;
-		std::map<GlobalId, sf::SoundBuffer> audio; 
+			std::map<GlobalId, sf::Texture> textures;
+			std::map<GlobalId, sf::SoundBuffer> audio; 
 
-		AssetsManager(const AssetsManager&);
-		void operator=(const AssetsManager&);
-};
+			AssetsManager(const AssetsManager&);
+			void operator=(const AssetsManager&);
+	};
+
+}
 
 #endif

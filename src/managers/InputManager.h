@@ -5,18 +5,22 @@
 
 #include "../templates/Singleton.h"
 
-class InputManager : public Singleton<InputManager>
+namespace TIE
 {
-	public:
-		void processInput();
 
-		InputManager();
-		~InputManager();
-	private:
-		std::map<unsigned int, unsigned int> keyBinds;
+	class InputManager : public Singleton<InputManager>
+	{
+		public:
+			void processInput();
 
-		InputManager(const InputManager&);
-		void operator=(const InputManager&);
-};
+			InputManager();
+			~InputManager();
+		private:
+			std::map<unsigned int, unsigned int> keyBinds;
+	
+			InputManager(const InputManager&);
+			void operator=(const InputManager&);
+	};
 
+}
 #endif

@@ -3,6 +3,8 @@
 #include "SceneObjectManager.h"
 #include "TimeManager.h"
 
+using namespace TIE;
+
 SceneManager::SceneManager() 
 {
 	this->clock = TimeManager::Instance()->addClock();

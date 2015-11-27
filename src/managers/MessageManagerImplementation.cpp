@@ -1,6 +1,8 @@
 #include "MessageManager.h"
 #include "SceneObjectManager.h"
 
+using namespace TIE;
+
 MessageManager::MessageManager() {}
 MessageManager::~MessageManager() {}
 

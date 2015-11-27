@@ -7,22 +7,27 @@
 
 #include "../templates/Singleton.h"
 
-class WindowManager : public Singleton<WindowManager>
+namespace TIE
 {
-	public:
-		sf::RenderWindow& addWindow(sf::VideoMode mode=sf::VideoMode(800, 600), const std::string& title="Twin Ion Engine", int style=sf::Style::Default, const sf::ContextSettings& settings=sf::ContextSettings());
-		sf::RenderWindow& getWindow();
-		void rmWindow();
 
-		WindowManager();
-		~WindowManager();
+	class WindowManager : public Singleton<WindowManager>
+	{
+		public:
+			sf::RenderWindow& addWindow(sf::VideoMode mode=sf::VideoMode(800, 600), const std::string& title="Twin Ion Engine", int style=sf::Style::Default, const sf::ContextSettings& settings=sf::ContextSettings());
+			sf::RenderWindow& getWindow();
+			void rmWindow();
 
-	private:
+			WindowManager();
+			~WindowManager();
+
+		private:
 		
-		sf::RenderWindow* window;
+			sf::RenderWindow* window;
 
-		WindowManager(const WindowManager&);
-		void operator=(const WindowManager&);
-};
+			WindowManager(const WindowManager&);
+			void operator=(const WindowManager&);
+	};
+
+}
 
 #endif

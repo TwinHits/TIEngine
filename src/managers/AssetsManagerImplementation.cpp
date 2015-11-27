@@ -3,6 +3,8 @@
 #include "LogManager.h"
 #include "HashManager.h"
 
+using namespace TIE;
+
 AssetsManager::AssetsManager()
 {
 	std::string assetsPath = ConfigManager::Instance()->getAssetsPath();

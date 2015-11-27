@@ -77,13 +77,12 @@ Singleton<InputManager>:
 Singleton<WindowManager>:
 	Instance():
 		Calls a reference to the manager. Creates, if not yet done.
-	sf::RenderWindow& addWindow():
+	sf::RenderWindow& addWindow(VideoMode mode, const String &title, Uint32 style=Style::Default, const ContextSettings &settings=ContextSettings())):
 		Adds and returns sf::RenderWindow. If exists, returns existing.
 	sf::RenderWindow& getWindow():
 		Gets sf::RenderWindow.
 	void rmWindow():
 		Removes sf::RenderWindow.
-
 
 Singleton<MessageManager>:
 	Instance():
@@ -107,7 +106,6 @@ Singleton<TimeManager>:
 	const sf::Clock& addClock():
 		Adds a clock to the map, and returns a reference to it.
 	
-
 Singleton<StringManager>:
 	Instance():
 		Returns a reference to the manager. Creates, if not yet done
