@@ -9,7 +9,7 @@ class HashManager : public Singleton<HashManager>
 {
 	public:
 		GlobalId getNewGlobalId();
-		unsigned long getHash(const std::string& s);
+		GlobalId getHash(const std::string& s);
 
 		void setSeed(unsigned long seed);
 
@@ -17,7 +17,7 @@ class HashManager : public Singleton<HashManager>
 		~HashManager();
 
 	private:
-		unsigned long seed = 0;
+		GlobalId seed = 0;
 
 		HashManager(const HashManager&);
 		void operator=(const HashManager&);

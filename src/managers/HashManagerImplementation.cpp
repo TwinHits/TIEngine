@@ -6,7 +6,7 @@
 HashManager::HashManager() {}
 HashManager::~HashManager() {}
 
-unsigned long HashManager::getNewGlobalId()
+GlobalId HashManager::getNewGlobalId()
 {
 	++seed;
 	return seed;
@@ -18,7 +18,7 @@ void HashManager::setSeed(unsigned long seed)
 	LogManager::Instance()->logInfo("Hash Seed set to '" + std::to_string(seed) + "'.");
 }
 
-unsigned long HashManager::getHash(const std::string& s)
+GlobalId HashManager::getHash(const std::string& s)
 {
 	return std::hash<std::string>()(s);
 }
