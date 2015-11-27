@@ -22,8 +22,8 @@ const sf::Texture& AssetsManager::getTexture(GlobalId id)
 	}
 	else
 	{
-		LogManager::Instance()->logError("Cannot open audio '" + std::to_string(id) + "'.");
-		return textures[id];
+		LogManager::Instance()->logError("Cannot open texture "  + std::to_string(id) + "'.");
+		return textures[HashManager::Instance()->getHash("missing_texture.png")];
 	}
 }
 
@@ -59,7 +59,7 @@ void AssetsManager::parseAssets()
 		sf::Texture t;
 		t.loadFromFile(i.path().string());
 		t.setSmooth(true);
-		GlobalId id = HashManager::Instance()->getHash(i.path().string());
+		GlobalId id = HashManager::Instance()->getHash(i.path().filename().string());
 		textures[id] = t;
 		LogManager::Instance()->logInfo("Loaded texture '" + i.path().string() + "'.");
 	}
@@ -68,7 +68,7 @@ void AssetsManager::parseAssets()
 	{
 		sf::SoundBuffer s;
 		s.loadFromFile(i.path().string());
-		GlobalId id = HashManager::Instance()->getHash(i.path().string());
+		GlobalId id = HashManager::Instance()->getHash(i.path().filename().string());
 		audio[id] = s;
 		LogManager::Instance()->logInfo("Loaded audio '" + i.path().string() + "'.");
 	}
