@@ -5,6 +5,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+
 #include <boost/filesystem.hpp>
 
 #include "../objects/GlobalId.h"
@@ -14,8 +15,10 @@
 class AssetsManager: public Singleton<AssetsManager>
 {
 	public:
-		const sf::Texture& getTexture(GlobalId id);
-		const sf::SoundBuffer& getAudio(GlobalId id);
+		const sf::Texture& getTexture(GlobalId);
+		const sf::Texture& getTexture(const std::string&);
+		const sf::SoundBuffer& getAudio(GlobalId);
+		const sf::SoundBuffer& getAudio(const std::string&);
 
 		AssetsManager();	
 		~AssetsManager();
