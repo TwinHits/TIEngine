@@ -9,9 +9,14 @@ class Factory
 	public:
 		const T& create() 
 		{ 
-			T* so_ptr = new T();
-			const T& so = dynamic_cast<const T&>(SceneObjectManager::Instance()->addSceneObject(so_ptr));
-			return so;
+			T* ptr = new T();
+			const T& ref = dynamic_cast<const T&>(SceneObjectManager::Instance()->addSceneObject(ptr));
+			return ref;
+		}
+		const T& create(T* ptr)
+		{
+			const T& ref = dynamic_cast<const T&>(SceneObjectManager::Instance()->addSceneObject(ptr));
+			return ref;
 		}
 
 	protected:
