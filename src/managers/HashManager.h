@@ -1,6 +1,8 @@
 #ifndef HASHMANAGER_H
 #define HASHMANAGER_H
 
+#include <string>
+
 #include "../templates/Singleton.h"
 
 #include "../objects/GlobalId.h"
