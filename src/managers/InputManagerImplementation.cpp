@@ -75,6 +75,18 @@ void InputManager::processInput()
 						std::cout << keyBinds[event.key.code] << std::endl;
 						break;	
 				}
+			case sf::Event::MouseButtonPressed:
+				switch (event.mouseButton.button)
+				{
+					case sf::Mouse::Left:
+						std::cout << event.mouseButton.x << ", " << event.mouseButton.y << std::endl;
+						break;
+					case sf::Mouse::Right:
+						break;
+					default:
+						break;
+				}
+
 			default:
 				break;
 		}
