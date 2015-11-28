@@ -28,7 +28,7 @@ void SceneManager::render()
 
 	double frame = clock.restart().asSeconds();
 	fps = 100 / frame;
-
+	window.setTitle(std::to_string(fps));
 }
 
 int SceneManager::getFPS()
