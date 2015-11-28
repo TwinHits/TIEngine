@@ -1,0 +1,5 @@
+bin/*
+logs/*
+tiengine
+doc/todo.txt
+assets/
