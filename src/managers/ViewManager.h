@@ -14,14 +14,24 @@ namespace TIE
 	class ViewManager : public Singleton<ViewManager>
 	{
 		public:
-			const sf::View& addView();
-			const sf::View& getView(GlobalId);
+			GlobalId addView(const sf::FloatRect&);
+			GlobalId addView();
+			sf::View& getView(GlobalId);
+			sf::View& getCurrentView();
 			void rmView(GlobalId);
-	
+
+			void updateCamera();
+			void changeCurrentView(GlobalId);
+			enum Direction { TOP, RIGHT, BOTTOM, LEFT };
+
+			void scroll(int direction);
+
 			ViewManager();
 			~ViewManager();
+
 		private:
 			std::map<GlobalId, sf::View*> views;
+			GlobalId activeView;
 
 			void operator=(const ViewManager&);
 			ViewManager(const ViewManager&);

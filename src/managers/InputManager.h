@@ -17,7 +17,7 @@ namespace TIE
 			~InputManager();
 		private:
 			std::map<unsigned int, unsigned int> keyBinds;
-	
+
 			InputManager(const InputManager&);
 			void operator=(const InputManager&);
 	};

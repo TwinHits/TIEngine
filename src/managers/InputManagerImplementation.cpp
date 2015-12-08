@@ -1,8 +1,9 @@
 #include <iostream>
 
 #include "InputManager.h"
-#include "WindowManager.h"
 #include "LogManager.h"
+#include "ViewManager.h"
+#include "WindowManager.h"
 
 using namespace TIE;
 
@@ -77,6 +78,7 @@ void InputManager::processInput()
 						std::cout << keyBinds[event.key.code] << std::endl;
 						break;	
 				}
+				break;
 			case sf::Event::MouseButtonPressed:
 				switch (event.mouseButton.button)
 				{
@@ -88,9 +90,24 @@ void InputManager::processInput()
 					default:
 						break;
 				}
-
+				break;
+			case sf::Event::MouseMoved:
+				break;
 			default:
 				break;
 		}
+			
 	}
+	//Check for scrolling and hover
+	sf::Vector2i mouseposition = sf::Mouse::getPosition();	
+	short scrollZone = 5;
+
+	if (mouseposition.y <= scrollZone)
+		ViewManager::Instance()->scroll(1);
+	if (mouseposition.x >= abs(window.getSize().x)-scrollZone)
+		ViewManager::Instance()->scroll(2);
+	if (mouseposition.y >= abs(window.getSize().y)-scrollZone)
+		ViewManager::Instance()->scroll(3);
+	if (mouseposition.x <= scrollZone)
+		ViewManager::Instance()->scroll(4);
 }
