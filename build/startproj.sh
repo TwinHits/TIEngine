@@ -27,6 +27,8 @@ mkdir $targetdirectory$projectname/src
 mkdir $targetdirectory$projectname/src/objects
 #build src/factories
 mkdir $targetdirectory$projectname/src/factories
+#build src/managers
+mkdir $targetdirectory$projectname/src/managers
 #build /logs
 mkdir $targetdirectory$projectname/logs
 #build /bin
@@ -40,3 +42,5 @@ cp ../src/main.cpp $targetdirectory$projectname/src/main.cpp
 cp defaultConfig.ini $targetdirectory$projectname/config.ini
 #build makefile
 cp defaultMakeFile $targetdirectory$projectname/makefile
+#build .gitignore
+cp defaultGitIgnore $targetdirectory$projectname/.gitignore
