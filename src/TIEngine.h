@@ -23,6 +23,7 @@
 	#include "managers/SceneObjectManager.h"
 	#include "managers/StringManager.h"
 	#include "managers/TimeManager.h"
+	#include "managers/ViewManager.h"
 	#include "managers/WindowManager.h"
 
 	#include "templates/Factory.h"
