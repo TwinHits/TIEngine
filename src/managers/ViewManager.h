@@ -22,7 +22,6 @@ namespace TIE
 
 			void updateCamera();
 			void changeCurrentView(GlobalId);
-			enum Direction { TOP, RIGHT, BOTTOM, LEFT };
 
 			void scroll(int direction);
 
@@ -37,6 +36,7 @@ namespace TIE
 			ViewManager(const ViewManager&);
 	};
 
+	enum Direction { TOP, RIGHT, BOTTOM, LEFT };
 }
 
 #endif

@@ -103,11 +103,11 @@ void InputManager::processInput()
 	short scrollZone = 5;
 
 	if (mouseposition.y <= scrollZone)
-		ViewManager::Instance()->scroll(1);
+		ViewManager::Instance()->scroll(TOP);
 	if (mouseposition.x >= abs(window.getSize().x)-scrollZone)
-		ViewManager::Instance()->scroll(2);
+		ViewManager::Instance()->scroll(RIGHT);
 	if (mouseposition.y >= abs(window.getSize().y)-scrollZone)
-		ViewManager::Instance()->scroll(3);
+		ViewManager::Instance()->scroll(BOTTOM);
 	if (mouseposition.x <= scrollZone)
-		ViewManager::Instance()->scroll(4);
+		ViewManager::Instance()->scroll(LEFT);
 }
