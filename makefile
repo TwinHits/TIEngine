@@ -4,7 +4,9 @@ CC_FLAGS = -g -Wall -Werror -std=c++11
 LD_FLAGS = -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system -lboost_filesystem -lboost_system
 LIB_NAME = libTIEngine-debug.a
 
-bin/tiengine: ${OBJ_FILES} rv
+all: bin/tiengine rv
+
+bin/tiengine: ${OBJ_FILES} 
 	g++ -o $@ $^ ${LD_FLAGS}
 
 bin/objs/%.o: src/managers/%.cpp

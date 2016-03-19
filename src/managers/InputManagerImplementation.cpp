@@ -110,4 +110,5 @@ void InputManager::processInput()
 		ViewManager::Instance()->scroll(BOTTOM);
 	if (mouseposition.x <= scrollZone)
 		ViewManager::Instance()->scroll(LEFT);
+
 }
