@@ -1,4 +1,5 @@
 #include "WindowManager.h"
+#include "StringManager.h"
 #include "LogManager.h"
 
 using namespace TIE;
@@ -15,6 +16,14 @@ sf::RenderWindow& WindowManager::addWindow(sf::VideoMode mode, const std::string
 	{
 		this->window = new sf::RenderWindow(mode, title, style, settings);
 		LogManager::Instance()->logInfo("Opened window.");
+
+		//Handle localization of default window title case
+		if (title == "")
+		{
+			StringManager::Instance()->addString(title);
+			window->setTitle(StringManager::Instance()->getString(title));
+		}
+
 		return getWindow();
 	}
 	else
@@ -34,5 +43,10 @@ void WindowManager::rmWindow()
 
 sf::RenderWindow& WindowManager::getWindow()
 {
-		return *window;
+	return *window;
+}
+
+void WindowManager::showFPS(const std::string& t)
+{
+	this->getWindow().setTitle("Twin Ion Engine " + t);
 }

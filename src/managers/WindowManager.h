@@ -17,11 +17,12 @@ namespace TIE
 			sf::RenderWindow& getWindow();
 			void rmWindow();
 
+			void showFPS(const std::string&);
+
 			WindowManager();
 			~WindowManager();
 
 		private:
-		
 			sf::RenderWindow* window;
 
 			WindowManager(const WindowManager&);
