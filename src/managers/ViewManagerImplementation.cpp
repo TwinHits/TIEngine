@@ -49,8 +49,14 @@ sf::View& ViewManager::getView(GlobalId id)
 	}
 }
 
-sf::View& ViewManager::getCurrentView()
+sf::View& ViewManager::getActiveView()
 {
+	if (activeView == 0)
+	{
+		LogManager::Instance()->logWarn("No active view found, building default.");
+		setActiveView(addView());
+	}
+
 	return this->getView(this->activeView);
 }
 
@@ -66,7 +72,7 @@ void ViewManager::rmView(GlobalId id)
 	}
 }
 
-void ViewManager::changeCurrentView(GlobalId id)
+void ViewManager::setActiveView(GlobalId id)
 {
 	sf::View& view = this->getView(id);
 	WindowManager::Instance()->getWindow().setView(view);
@@ -75,18 +81,19 @@ void ViewManager::changeCurrentView(GlobalId id)
 
 void ViewManager::updateCamera()
 {
-	WindowManager::Instance()->getWindow().setView(this->getCurrentView());
+	WindowManager::Instance()->getWindow().setView(this->getActiveView());
 }	
 
-void ViewManager::scroll(int direction)
+void ViewManager::scroll(Direction direction)
 {
-	sf::View& view = this->getCurrentView();
-	if (direction == 1)
+	sf::View& view = this->getActiveView();
+
+	if (direction == TOP)
 		view.move(0,-5);
-	if (direction == 2)
+	if (direction == RIGHT)
 		view.move(5,0);
-	if (direction == 3)
+	if (direction == BOTTOM)
 		view.move(0,5);
-	if (direction == 4)
+	if (direction == LEFT)
 		view.move(-5,0);
 }

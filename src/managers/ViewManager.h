@@ -11,19 +11,21 @@
 
 namespace TIE
 {
+	enum Direction { TOP, RIGHT, BOTTOM, LEFT };
+
 	class ViewManager : public Singleton<ViewManager>
 	{
 		public:
 			GlobalId addView(const sf::FloatRect&);
 			GlobalId addView();
 			sf::View& getView(GlobalId);
-			sf::View& getCurrentView();
+			sf::View& getActiveView();
 			void rmView(GlobalId);
 
 			void updateCamera();
-			void changeCurrentView(GlobalId);
+			void setActiveView(GlobalId);
 
-			void scroll(int direction);
+			void scroll(Direction direction);
 
 			ViewManager();
 			~ViewManager();
@@ -35,8 +37,6 @@ namespace TIE
 			void operator=(const ViewManager&);
 			ViewManager(const ViewManager&);
 	};
-
-	enum Direction { TOP, RIGHT, BOTTOM, LEFT };
 }
 
 #endif
