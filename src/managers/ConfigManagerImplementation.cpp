@@ -50,7 +50,7 @@ void ConfigManager::parseConfig(std::ifstream& config)
 			if (key == "DebugLogPath") { debugLogPath = value; }
 			if (key == "AssetsPath") { assetsPath = value; }
 			if (key == "DebugLogLevel") { debugLogLevel = StringToInt(value); }
-			if (key == "defaultDisplayLanguage") { defaultDisplayLanguage = parseLanguage(value); }
+			if (key == "DefaultDisplayLanguage") { defaultDisplayLanguage = parseLanguage(value); }
 		}
 	}
 }
