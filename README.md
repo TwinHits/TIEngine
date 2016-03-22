@@ -17,3 +17,8 @@ the location you picked for the libTIEngine in LIBLOCATION.
 src/main.cpp has an include statement, rewrite it to point to TIEngine.h.
 
 See docs for documentation for avaliable classes and methods.
+
+This engine utilizes
+	SFML -
+	Boost - 
+	OTL 4.0 -
