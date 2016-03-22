@@ -18,11 +18,8 @@ sf::RenderWindow& WindowManager::addWindow(sf::VideoMode mode, const std::string
 		LogManager::Instance()->logInfo("Opened window.");
 
 		//Handle localization of default window title case
-		if (title == "")
-		{
-			StringManager::Instance()->addString(title);
-			window->setTitle(StringManager::Instance()->getString(title));
-		}
+		StringManager::Instance()->addString(title);
+		window->setTitle(StringManager::Instance()->getString(title));
 
 		return getWindow();
 	}

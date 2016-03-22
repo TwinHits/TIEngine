@@ -1,7 +1,10 @@
 #include "../../TIEngine/src/TIEngine.h"
+#include "TestData.h"
 
 int main()
 {
+	LoadTestData();
+
 	//Minimum render loop
 	sf::RenderWindow& window = TIE::WindowManager::Instance()->addWindow();
 
