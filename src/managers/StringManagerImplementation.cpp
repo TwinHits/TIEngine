@@ -56,7 +56,6 @@ const std::string& StringManager::getString(const std::string& s, Language l)
 void StringManager::addString(const std::string& defaultString)
 {
 	unsigned long hash = HashManager::Instance()->getHash(defaultString);
-	std::cout << hash << std::endl;
 	if (locals.find(hash) == locals.end())
 	{
 		locals[hash][displayLanguage] = defaultString;
