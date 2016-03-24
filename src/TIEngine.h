@@ -25,6 +25,7 @@
 	#include "managers/TimeManager.h"
 	#include "managers/ViewManager.h"
 	#include "managers/WindowManager.h"
+	#include "managers/DatabaseManager.h"
 
 	#include "templates/Factory.h"
 
