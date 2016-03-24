@@ -3,7 +3,7 @@
 
 enum Language 
 {
-	EN, ES, FR, DE, JP, RU, AR, CN
+	en_US, fe_FR, es_ES, de_DE, ja_JP
 };
 
 #endif
