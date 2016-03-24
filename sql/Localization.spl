@@ -1,0 +1,41 @@
+CREATE TABLE TIE_LanguageStrings (
+	stringId         serial     PRIMARY KEY                                NOT NULL,
+	defaultContent   text                                                  NOT  NULL);
+
+CREATE TABLE TIE_Languages (
+	languageName     char(5)    PRIMARY KEY                                NOT NULL);
+
+CREATE TABLE TIE_StringLocalizations (
+	_stringId        serial     REFERENCES TIE_LanguageStrings(stringId)   NOT NULL,
+	_languageName	 char(5)    REFERENCES TIE_Languages(languageName)     NOT NULL,
+	localizedContent text);
+
+
+INSERT INTO TIE_Languages (languageName) VALUES ('en_US');
+INSERT INTO TIE_Languages (languageName) VALUES ('fe_FR');
+INSERT INTO TIE_Languages (languageName) VALUES ('es_ES');
+INSERT INTO TIE_Languages (languageName) VALUES ('de_DE');
+INSERT INTO TIE_Languages (languageName) VALUES ('ja_JP');
+
+
+INSERT INTO TIE_LanguageStrings (stringId, defaultContent) VALUES (default, 'Twin Ion Engine');
+
+INSERT INTO TIE_StringLocalizations (_stringId, _languageName, localizedContent)
+VALUES ((SELECT stringId FROM TIE_LanguageStrings
+WHERE defaultContent='Twin Ion Engine'), 'en_US', 'Twin Ion Engine');
+
+INSERT INTO TIE_StringLocalizations (_stringId, _languageName, localizedContent)
+VALUES ((SELECT stringId FROM TIE_LanguageStrings
+WHERE defaultContent='Twin Ion Engine'), 'fe_FR', 'Lits Ion Engine');
+
+INSERT INTO TIE_StringLocalizations (_stringId, _languageName, localizedContent)
+VALUES ((SELECT stringId FROM TIE_LanguageStrings
+WHERE defaultContent='Twin Ion Engine'), 'de_DE', 'Twin Ion Motor');
+
+INSERT INTO TIE_StringLocalizations (_stringId, _languageName, localizedContent)
+VALUES ((SELECT stringId FROM TIE_LanguageStrings
+WHERE defaultContent='Twin Ion Engine'), 'es_ES', 'Doble Ion Engine');
+
+INSERT INTO TIE_StringLocalizations (_stringId, _languageName, localizedContent)
+VALUES ((SELECT stringId FROM TIE_LanguageStrings
+WHERE defaultContent='Twin Ion Engine'), 'ja_JP', 'Tsuinionenjin');
