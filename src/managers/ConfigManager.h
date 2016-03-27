@@ -31,7 +31,7 @@ namespace TIE
 			std::string debugLogPath = "";
 			std::string assetsPath = "";
 			int debugLogLevel = 3;
-			Language defaultDisplayLanguage = EN;
+			Language defaultDisplayLanguage = en_US;
 
 			ConfigManager(const ConfigManager&);
 			void operator=(const ConfigManager&);

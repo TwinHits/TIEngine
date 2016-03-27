@@ -60,18 +60,15 @@ Language ConfigManager::parseLanguage(const std::string& s)
 	//defaultDisplayLanguage is stored as a string in the config.ini, and must
 	//be converted to it's enumerated type.
 	std::map<std::string, Language> languages;
-	languages["EN"] = EN;
-	languages["ES"] = ES;
-	languages["FR"] = FR;
-	languages["DE"] = DE;
-	languages["JP"] = JP;
-	languages["RU"] = RU;
-	languages["AR"] = AR;
-	languages["CN"] = CN;
+	languages["en_US"] = en_US;
+	languages["es_ES"] = es_ES;
+	languages["fe_FR"] = fe_FR;
+	languages["de_DE"] = de_DE;
+	languages["ja_JP"] = ja_JP;
 
 	Language l = languages[s];
 	if (l == 0)
-		return EN;
+		return en_US;
 	else
 		return l;
 }
