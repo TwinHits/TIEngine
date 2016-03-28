@@ -1,9 +1,8 @@
-#include <iostream>
-
 #include "StringManager.h"
 #include "LogManager.h"
 #include "HashManager.h"
 #include "ConfigManager.h"
+#include "DatabaseManager.h"
 
 using namespace TIE;
 
@@ -11,82 +10,30 @@ StringManager::StringManager()
 {
 	this->displayLanguage = ConfigManager::Instance()->getDefaultDisplayLanguage();
 }
+
 StringManager::~StringManager() {}
 
-const std::string& StringManager::getString(const std::string& s)
+std::string StringManager::getString(const GlobalId id)
 {
-	unsigned long hash = HashManager::Instance()->getHash(s);
-	if (locals.find(hash) != locals.end())
-	{
-		if (locals[hash].find(displayLanguage) != locals[hash].end())
-			return locals[hash][displayLanguage];
-		else
-		{
-			LogManager::Instance()->logWarn("Cannot find string for language '" + std::to_string(displayLanguage) + "' for string '" + s + "'. Returning passed value.");
-			return s;
-		}
-	}
-	else 
-	{
-		LogManager::Instance()->logError("Cannot find registration for string '" + s + "'. Returning passed value.");
-		return s;
-	}
+	return getString(id, displayLanguage);
 }
 
-const std::string& StringManager::getString(const std::string& s, Language l)
+std::string StringManager::getString(const GlobalId id, const Language l)
 {
-	unsigned long hash = HashManager::Instance()->getHash(s);
-	if (locals.find(hash) != locals.end())
+	std::string query = "SELECT COALESCE((SELECT localizedContent FROM TIE_StringLocalizations WHERE _languageId=" + std::to_string(l) + "), defaultContent) FROM TIE_LanguageStrings LEFT JOIN TIE_StringLocalizations ON stringId=_stringId WHERE stringId =" + std::to_string(id) + " LIMIT 1;";
+	Result result;
+	DatabaseManager::Instance()->Select(query, result);
+	
+	std::string s;
+	for (auto i = result.begin(); i != result.end(); ++i)
 	{
-		if (locals[hash].find(l) != locals[hash].end())
-			return locals[hash][l];
-		else
+		for (auto j = i->begin(); j != i->end(); ++j)
 		{
-			LogManager::Instance()->logWarn("Cannot find string for language '" + std::to_string(l) + "' for string '" + s + "'. Returning passed value.");
-			return s;
+			s = (*j).c_str();
 		}
 	}
-	else
-	{
-		LogManager::Instance()->logError("Cannot find registration for string '" + s + "'. Returning passed value.");
-		return s;
-	}
-}
 
-void StringManager::addString(const std::string& defaultString)
-{
-	unsigned long hash = HashManager::Instance()->getHash(defaultString);
-	if (locals.find(hash) == locals.end())
-	{
-		locals[hash][displayLanguage] = defaultString;
-	}
-	else if (locals.find(hash) != locals.end())
-	{
-		LogManager::Instance()->logWarn("Overriding localization for '" + std::to_string(displayLanguage) + "' for '" + defaultString + "'.");
-		locals[hash][displayLanguage] = defaultString;
-	}
-}
-
-void StringManager::addString(const std::string& defaultString, Language l, const std::string& localizedString)
-{
-	unsigned long hash = HashManager::Instance()->getHash(defaultString);
-	if (locals.find(hash) == locals.end())
-	{
-		locals[hash][displayLanguage] = defaultString;
-		locals[hash][l] = localizedString;
-	}
-	else if (locals.find(hash) != locals.end())
-	{
-		if (locals[hash].find(l) == locals[hash].end())
-		{
-			locals[hash][l] = localizedString;
-		}
-		else 
-		{
-			LogManager::Instance()->logWarn("Overriding localization for '" + std::to_string(l) + "' for '" + defaultString + "'.");
-			locals[hash][l] = localizedString;
-		}
-	}
+	return s;
 }
 
 void StringManager::setDisplayLanguage(Language l)
