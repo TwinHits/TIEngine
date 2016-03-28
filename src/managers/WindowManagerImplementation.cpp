@@ -14,12 +14,16 @@ sf::RenderWindow& WindowManager::addWindow(sf::VideoMode mode, const std::string
 {
 	if (window == nullptr)
 	{
-		this->window = new sf::RenderWindow(mode, title, style, settings);
+		this->title = title;
+		this->window = new sf::RenderWindow(mode, this->title, style, settings);
 		LogManager::Instance()->logInfo("Opened window.");
 
 		//Handle localization of default window title case
-		StringManager::Instance()->addString(title);
-		window->setTitle(StringManager::Instance()->getString(title));
+		if (this->title == "Twin Ion Engine")
+		{
+			this->title = StringManager::Instance()->getString(1);
+			
+		}
 
 		return getWindow();
 	}
@@ -43,7 +47,7 @@ sf::RenderWindow& WindowManager::getWindow()
 	return *window;
 }
 
-void WindowManager::showFPS(const std::string& t)
+void WindowManager::showFPS(const std::string& fps)
 {
-	this->getWindow().setTitle("Twin Ion Engine " + t);
+	this->getWindow().setTitle(title + " " + fps);
 }
