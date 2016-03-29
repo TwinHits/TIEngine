@@ -26,6 +26,7 @@ namespace TIE
 			void setActiveView(GlobalId);
 
 			void scroll(Direction direction);
+			void zoom(void);
 
 			ViewManager();
 			~ViewManager();

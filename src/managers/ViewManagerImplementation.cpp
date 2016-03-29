@@ -97,3 +97,8 @@ void ViewManager::scroll(Direction direction)
 	if (direction == LEFT)
 		view.move(-5,0);
 }
+
+void ViewManager::zoom(void)
+{
+
+}
