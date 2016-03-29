@@ -1,4 +1,5 @@
 #include <iostream>
+#include <SFML/Graphics.hpp>
 
 #include "InputManager.h"
 #include "LogManager.h"
@@ -59,6 +60,7 @@ void InputManager::processInput()
 	
 	sf::Event event;
 	sf::RenderWindow& window = WindowManager::Instance()->getWindow();
+	sf::Vector2f worldPosition = window.mapPixelToCoords(sf::Mouse::getPosition(window));
 	while (window.pollEvent(event))
 	{
 		switch (event.type)
@@ -83,7 +85,7 @@ void InputManager::processInput()
 				switch (event.mouseButton.button)
 				{
 					case sf::Mouse::Left:
-						std::cout << event.mouseButton.x << ", " << event.mouseButton.y << std::endl;
+						std::cout << worldPosition.x << ", " << worldPosition.y << std::endl;
 						break;
 					case sf::Mouse::Right:
 						break;
