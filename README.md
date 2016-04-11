@@ -21,4 +21,4 @@ See docs for documentation for avaliable classes and methods.
 This engine utilizes
 	SFML -
 	Boost - 
-	OTL 4.0 -
+	pqxx++ - 
