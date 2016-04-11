@@ -14,7 +14,10 @@ InputManager::InputManager()
 	inputMap = new InputMap();	
 }
 
-InputManager::~InputManager() {}
+InputManager::~InputManager()
+{
+	delete inputMap;
+}
 
 void InputManager::processInput()
 {
