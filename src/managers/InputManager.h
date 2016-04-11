@@ -1,9 +1,11 @@
-#ifndef EVENTSMANAGER_H
-#define EVENTSMANAGER_H
+#ifndef INPUTMANAGER_H
+#define INPUTMANAGER_H
 
 #include <map>
 
 #include "../templates/Singleton.h"
+
+#include "../objects/InputMap.h"
 
 namespace TIE
 {
@@ -12,11 +14,13 @@ namespace TIE
 	{
 		public:
 			void processInput();
+			void setInputMap(InputMap* inputMap);
 
 			InputManager();
 			~InputManager();
 		private:
-			std::map<unsigned int, unsigned int> keyBinds;
+			short scrollZone = 5;
+			InputMap* inputMap;	
 
 			InputManager(const InputManager&);
 			void operator=(const InputManager&);
