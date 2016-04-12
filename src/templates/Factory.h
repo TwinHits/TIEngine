@@ -3,8 +3,6 @@
 
 #include "../managers/SceneObjectManager.h"
 
-using namespace TIE;
-
 namespace TIE
 {
 	template<typename T>
