@@ -39,7 +39,7 @@ void InputManager::processInput()
 						LogManager::Instance()->logInfo("Window closed by user.");
 						break;
 					default:
-						inputMap->process(event.key.code);
+						inputMap->process(event);
 						break;	
 				}
 				break;
@@ -47,10 +47,10 @@ void InputManager::processInput()
 				switch (event.mouseButton.button)
 				{
 					case sf::Mouse::Left:
-						inputMap->process(sf::Mouse::Left);
+						inputMap->process(event);
 						break;
 					case sf::Mouse::Right:
-						inputMap->process(sf::Mouse::Right);
+						inputMap->process(event);
 						break;
 					default:
 						break;
@@ -63,16 +63,16 @@ void InputManager::processInput()
 		}
 			
 	}
-	//Check for scrolling and hover
-	sf::Vector2i mouseposition = sf::Mouse::getPosition();	
 
-	if (mouseposition.y <= scrollZone)
+	//Check if we're scrolling the camera
+	sf::Vector2i mousePosition = sf::Mouse::getPosition();	
+	if (mousePosition.y <= scrollZone)
 		ViewManager::Instance()->scroll(TOP);
-	if (mouseposition.x >= abs(window.getSize().x)-scrollZone)
+	if (mousePosition.x >= abs(window.getSize().x)-scrollZone)
 		ViewManager::Instance()->scroll(RIGHT);
-	if (mouseposition.y >= abs(window.getSize().y)-scrollZone)
+	if (mousePosition.y >= abs(window.getSize().y)-scrollZone)
 		ViewManager::Instance()->scroll(BOTTOM);
-	if (mouseposition.x <= scrollZone)
+	if (mousePosition.x <= scrollZone)
 		ViewManager::Instance()->scroll(LEFT);
 
 }
