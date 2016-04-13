@@ -19,10 +19,10 @@ void SceneManager::render()
 	auto sceneObjects = SceneObjectManager::Instance()->getAllSceneObjects();
 
 	window.clear();
-	for (auto so = sceneObjects.begin(); so != sceneObjects.end(); ++so)
+	for (auto& so : sceneObjects)
 	{
-		if (so->second->getDraw())
-			window.draw(so->second->getSprite());
+		if (so.second->getDraw())
+			window.draw(so.second->getSprite());
 	}
 	window.display();
 

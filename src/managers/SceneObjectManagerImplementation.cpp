@@ -47,8 +47,8 @@ const std::map<GlobalId, std::shared_ptr<SceneObject> >& SceneObjectManager::get
 
 void SceneObjectManager::updateGameState()
 {
-	for (auto so = sceneObjects.begin(); so != sceneObjects.end(); ++so)
+	for (auto& so: sceneObjects)
 	{
-			so->second->update();
+			so.second->update();
 	}
 }

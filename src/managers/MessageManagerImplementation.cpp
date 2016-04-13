@@ -15,9 +15,9 @@ void MessageManager::sendMessage(Message msg)
 	else if (msg.receiverId == 0)
 	{
 		auto sobjs = SceneObjectManager::Instance()->getAllSceneObjects();
-		for (auto so = sobjs.begin(); so != sobjs.end(); ++so)
+		for (auto& so : sobjs)
 		{
-			so->second->receiveMessage(msg);
+			so.second->receiveMessage(msg);
 		}
 	}
 }
