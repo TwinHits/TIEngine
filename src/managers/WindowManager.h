@@ -2,6 +2,7 @@
 #define WINDOWMANAGER_H
 
 #include <string>
+#include <memory>
 
 #include <SFML/Graphics.hpp>
 
@@ -23,7 +24,7 @@ namespace TIE
 			~WindowManager();
 
 		private:
-			sf::RenderWindow* window;
+			std::shared_ptr<sf::RenderWindow> window;
 			std::string title;
 
 			WindowManager(const WindowManager&);

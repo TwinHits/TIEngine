@@ -2,6 +2,7 @@
 #define PLAYERMANAGER_H
 
 #include <map>
+#include <memory>
 
 #include "../templates/Singleton.h"
 
@@ -18,12 +19,12 @@ namespace TIE
 			void rmPlayer(GlobalId id);
 
 			const Player& getPlayer(GlobalId id);
-			const std::map<GlobalId, Player*>& getAllPlayers();
+			const std::map<GlobalId, std::shared_ptr<Player> >& getAllPlayers();
 
 			PlayerManager();
 			~PlayerManager();
 		private:
-			std::map<GlobalId, Player*> players;
+			std::map<GlobalId, std::shared_ptr<Player> > players;
 	
 			PlayerManager(const PlayerManager&);
 			void operator=(const PlayerManager&);

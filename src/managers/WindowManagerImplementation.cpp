@@ -14,16 +14,16 @@ sf::RenderWindow& WindowManager::addWindow(sf::VideoMode mode, const std::string
 {
 	if (window == nullptr)
 	{
-		this->title = title;
-		this->window = new sf::RenderWindow(mode, this->title, style, settings);
-		LogManager::Instance()->logInfo("Opened window.");
-
 		//Handle localization of default window title case
+		this->title = title;
 		if (this->title == "Twin Ion Engine")
 		{
 			this->title = StringManager::Instance()->getString(1);
 			
 		}
+
+		this->window = std::make_shared<sf::RenderWindow>(mode, this->title, style, settings);
+		LogManager::Instance()->logInfo("Opened window.");
 
 		return getWindow();
 	}
@@ -38,7 +38,7 @@ void WindowManager::rmWindow()
 {
 	if (this->window != nullptr)
 	{
-		delete this->window;
+		this->window.reset();
 	}
 }
 

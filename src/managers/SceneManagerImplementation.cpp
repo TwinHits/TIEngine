@@ -16,7 +16,7 @@ void SceneManager::render()
 {		
 	
 	sf::RenderWindow& window = WindowManager::Instance()->getWindow();
-	const std::map<GlobalId, SceneObject*>& sceneObjects = SceneObjectManager::Instance()->getAllSceneObjects();
+	auto sceneObjects = SceneObjectManager::Instance()->getAllSceneObjects();
 
 	window.clear();
 	for (auto so = sceneObjects.begin(); so != sceneObjects.end(); ++so)

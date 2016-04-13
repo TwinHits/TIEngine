@@ -2,6 +2,8 @@
 #define DATABASEMANAGER_H
 
 #include <pqxx/pqxx>
+
+#include <memory>
 #include <string>
 
 #include "../templates/Singleton.h"
@@ -18,7 +20,7 @@ namespace TIE
 			~DatabaseManager();
 			DatabaseManager();
 		private:
-			pqxx::connection* connection;
+			std::unique_ptr<pqxx::connection> connection;
 
 			DatabaseManager(const DatabaseManager&);
 			void operator=(const DatabaseManager&);

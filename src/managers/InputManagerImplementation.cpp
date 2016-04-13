@@ -11,13 +11,10 @@ using namespace TIE;
 
 InputManager::InputManager() 
 {
-	inputMap = new InputMap();	
+	inputMap = std::make_shared<InputMap>();	
 }
 
-InputManager::~InputManager()
-{
-	delete inputMap;
-}
+InputManager::~InputManager() {}
 
 void InputManager::processInput()
 {
@@ -77,8 +74,7 @@ void InputManager::processInput()
 
 }
 
-void InputManager::setInputMap(InputMap* inputMap)
+void InputManager::setInputMap(std::shared_ptr<InputMap> inputMap)
 {
-	delete this->inputMap;
 	this->inputMap = inputMap;
 }

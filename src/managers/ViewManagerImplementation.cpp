@@ -6,13 +6,7 @@
 using namespace TIE; 
 
 ViewManager::ViewManager() {}
-ViewManager::~ViewManager()
-{
-	for (auto i = views.begin(); i != views.end(); ++i)
-	{
-		delete i->second;
-	}
-}
+ViewManager::~ViewManager() {}
 
 GlobalId ViewManager::addView()
 {
@@ -24,7 +18,7 @@ GlobalId ViewManager::addView(const sf::FloatRect& rect)
 	GlobalId id = HashManager::Instance()->getNewGlobalId();
 	if (views.find(id) == views.end())
 	{
-		sf::View* view = new sf::View(rect);
+		std::shared_ptr<sf::View> view = std::make_shared<sf::View>(rect);
 		view->setCenter(0,0);
 		views[id] = view;
 		return id;
@@ -62,11 +56,12 @@ sf::View& ViewManager::getActiveView()
 
 void ViewManager::rmView(GlobalId id)
 {
-	if (views.find(id) != views.end())
+	auto view = views.find(id);
+	if (view != views.end())
 	{
-		delete views[id];
+		views.erase(view);
 	}
-	else if (views.find(id) == views.end())
+	else if (view == views.end())
 	{
 		LogManager::Instance()->logWarn("No view found by id '" + std::to_string(id) + "'. Doing nothing.");	
 	}

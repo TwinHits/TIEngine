@@ -2,6 +2,7 @@
 #define SCENEOBJECTMANAGER_H
 
 #include <map>
+#include <memory>
 
 #include "../templates/Singleton.h"
 
@@ -14,18 +15,18 @@ namespace TIE
 	class SceneObjectManager : public Singleton<SceneObjectManager>
 	{
 		public:
-			const SceneObject& addSceneObject(SceneObject* so);
+			const SceneObject& addSceneObject(std::shared_ptr<SceneObject> so);
 			void rmSceneObject(GlobalId id);
 		
 			const SceneObject& getSceneObject(GlobalId id);
-			const std::map<GlobalId, SceneObject*>& getAllSceneObjects();
+			const std::map<GlobalId, std::shared_ptr<SceneObject> >& getAllSceneObjects();
 
 			void updateGameState();
 		
 			SceneObjectManager();
 			~SceneObjectManager();
 		private:
-			std::map<GlobalId, SceneObject*> sceneObjects;
+			std::map<GlobalId, std::shared_ptr<SceneObject> > sceneObjects;
 		
 			SceneObjectManager(const SceneObjectManager&);
 			void operator=(const SceneObjectManager&);

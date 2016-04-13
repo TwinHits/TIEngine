@@ -1,7 +1,7 @@
 #ifndef INPUTMANAGER_H
 #define INPUTMANAGER_H
 
-#include <map>
+#include <memory>
 
 #include "../templates/Singleton.h"
 
@@ -14,13 +14,13 @@ namespace TIE
 	{
 		public:
 			void processInput();
-			void setInputMap(InputMap* inputMap);
+			void setInputMap(std::shared_ptr<InputMap> inputMap);
 
 			InputManager();
 			~InputManager();
 		private:
 			short scrollZone = 5;
-			InputMap* inputMap;	
+			std::shared_ptr<InputMap> inputMap;	
 
 			InputManager(const InputManager&);
 			void operator=(const InputManager&);

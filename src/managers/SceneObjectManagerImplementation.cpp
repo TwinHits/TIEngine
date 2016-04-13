@@ -5,15 +5,9 @@ using namespace TIE;
 
 SceneObjectManager::SceneObjectManager() {}
 
-SceneObjectManager::~SceneObjectManager() 
-{
-	for (auto so = sceneObjects.begin(); so != sceneObjects.end(); ++so)
-	{
-		rmSceneObject(so->second->getId());
-	}
-}
+SceneObjectManager::~SceneObjectManager() {}
 
-const SceneObject& SceneObjectManager::addSceneObject(SceneObject* so)
+const SceneObject& SceneObjectManager::addSceneObject(std::shared_ptr<SceneObject> so)
 {
 	sceneObjects[so->getId()] = so;
 	LogManager::Instance()->logInfo("Added SceneObject '" + std::to_string(so->getId()) + "'.");
@@ -34,9 +28,10 @@ const SceneObject& SceneObjectManager::getSceneObject(GlobalId id)
 
 void SceneObjectManager::rmSceneObject(GlobalId id)
 {
-	if (sceneObjects.find(id) != sceneObjects.end())
+	auto object = sceneObjects.find(id);
+	if (object != sceneObjects.end())
 	{
-		delete sceneObjects[id];
+		sceneObjects.erase(object);
 		LogManager::Instance()->logInfo("Deleted SceneObject'" + std::to_string(id) + "'.");
 	}	
 	else
@@ -45,7 +40,7 @@ void SceneObjectManager::rmSceneObject(GlobalId id)
 	}
 }
 
-const std::map<GlobalId, SceneObject*>& SceneObjectManager::getAllSceneObjects()
+const std::map<GlobalId, std::shared_ptr<SceneObject> >& SceneObjectManager::getAllSceneObjects()
 {
 	return sceneObjects;
 }

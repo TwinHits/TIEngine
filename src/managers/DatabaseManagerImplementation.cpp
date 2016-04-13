@@ -8,7 +8,7 @@ DatabaseManager::DatabaseManager()
 {
 	try 
 	{
-		connection = new pqxx::connection("dbname=tiengine user=tie_admin password=123456 hostaddr=127.0.0.1 port=5432");
+		connection = std::unique_ptr<pqxx::connection>(new pqxx::connection("dbname=tiengine user=tie_admin password=123456 hostaddr=127.0.0.1 port=5432"));
 		if (connection->is_open())
 		{
 			LogManager::Instance()->logInfo("Successfully opened postgres db connectionn.");
@@ -23,7 +23,6 @@ DatabaseManager::DatabaseManager()
 DatabaseManager::~DatabaseManager()
 {
 	connection->disconnect();
-	delete connection;
 }
 
 void DatabaseManager::Select(const std::string& q, Result& r)

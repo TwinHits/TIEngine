@@ -5,6 +5,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include <memory>
+
 #include "../templates/Singleton.h"
 
 #include "../objects/GlobalId.h"
@@ -32,7 +34,7 @@ namespace TIE
 			~ViewManager();
 
 		private:
-			std::map<GlobalId, sf::View*> views;
+			std::map<GlobalId, std::shared_ptr<sf::View> > views;
 			GlobalId activeView;
 
 			void operator=(const ViewManager&);
