@@ -22,7 +22,7 @@ namespace TIE
 			virtual void receiveMessage(const Message& msg) const;// = 0;
 			virtual void update();// = 0;
 
-			void setDraw(bool b);
+			void setDraw(bool b) const;
 
 			const sf::Sprite& getSprite() const;
 			GlobalId getId() const;
@@ -36,7 +36,7 @@ namespace TIE
 			sf::Sprite sprite;
 			sf::Clock clock;
 			GlobalId id;
-			bool draw = true;
+			mutable bool draw = true;
 	};
 
 }
