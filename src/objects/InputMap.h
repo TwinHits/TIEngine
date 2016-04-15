@@ -10,7 +10,8 @@ namespace TIE
 	class InputMap
 	{
 		public:
-			virtual void process(const sf::Event& Event);	
+			virtual void processEvent(const sf::Event& Event);	
+			virtual void processState();	
 
 			InputMap();
 			virtual ~InputMap();

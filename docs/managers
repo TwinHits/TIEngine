@@ -71,7 +71,9 @@ Singleton<InputManager>:
 		Calls a reference to the manager. Creates, if not yet done.
 	void processInput():
 		Polls window managed by WindowManager for events and sends appropriate
-		message. Incomplete.
+		message.
+		Calls InputMap object to process events, as well as to process the input
+		states on each frame.
 
 
 Singleton<WindowManager>:
