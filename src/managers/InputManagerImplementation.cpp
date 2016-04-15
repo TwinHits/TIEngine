@@ -19,9 +19,17 @@ InputManager::~InputManager() {}
 void InputManager::processInput()
 {
 	sf::RenderWindow& window = WindowManager::Instance()->getWindow();
+
+	//Client state processing
+	inputMap->processState();
+
 	sf::Event event;
 	while (window.pollEvent(event))
 	{
+		//Client event processing
+		inputMap->processEvent(event);
+
+		//Engine event processing
 		switch (event.type)
 		{
 			case sf::Event::Closed:
@@ -36,7 +44,6 @@ void InputManager::processInput()
 						LogManager::Instance()->logInfo("Window closed by user.");
 						break;
 					default:
-						inputMap->process(event);
 						break;	
 				}
 				break;
@@ -44,10 +51,8 @@ void InputManager::processInput()
 				switch (event.mouseButton.button)
 				{
 					case sf::Mouse::Left:
-						inputMap->process(event);
 						break;
 					case sf::Mouse::Right:
-						inputMap->process(event);
 						break;
 					default:
 						break;
@@ -58,10 +63,14 @@ void InputManager::processInput()
 			default:
 				break;
 		}
-			
 	}
 
-	//Check if we're scrolling the camera
+	this->scroll(window);
+
+}
+
+void InputManager::scroll(sf::RenderWindow& window)
+{
 	sf::Vector2i mousePosition = sf::Mouse::getPosition();	
 	if (mousePosition.y <= scrollZone)
 		ViewManager::Instance()->scroll(TOP);

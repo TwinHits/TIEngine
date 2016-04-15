@@ -22,6 +22,8 @@ namespace TIE
 			short scrollZone = 5;
 			std::shared_ptr<InputMap> inputMap;	
 
+			void scroll(sf::RenderWindow& window);
+
 			InputManager(const InputManager&);
 			void operator=(const InputManager&);
 	};
