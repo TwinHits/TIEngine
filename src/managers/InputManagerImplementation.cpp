@@ -19,15 +19,17 @@ InputManager::~InputManager() {}
 void InputManager::processInput()
 {
 	sf::RenderWindow& window = WindowManager::Instance()->getWindow();
+	sf::Vector2f position = window.mapPixelToCoords(sf::Mouse::getPosition(window)); 
 
 	//Client state processing
-	inputMap->processState();
+	inputMap->processState(position);
 
 	sf::Event event;
 	while (window.pollEvent(event))
 	{
+		position = window.mapPixelToCoords(sf::Mouse::getPosition(window)); 
 		//Client event processing
-		inputMap->processEvent(event);
+		inputMap->processEvent(event, position);
 
 		//Engine event processing
 		switch (event.type)

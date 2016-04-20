@@ -9,7 +9,7 @@
 TIE::InputMap::InputMap() {}
 TIE::InputMap::~InputMap() {}
 
-void TIE::InputMap::processEvent(const sf::Event& event)
+void TIE::InputMap::processEvent(const sf::Event& event, const sf::Vector2f& position)
 {
 //	sf::RenderWindow& window = WindowManager::Instance()->getWindow();
 //	sf::Vector2f worldPosition = window.mapPixelToCoords(sf::Mouse::getPosition(window));
@@ -45,4 +45,4 @@ void TIE::InputMap::processEvent(const sf::Event& event)
 	std::cout << keyBinds[event.key.code] << std::endl;
 }
 
-void TIE::InputMap::processState() {}
+void TIE::InputMap::processState(const sf::Vector2f& position) {}
