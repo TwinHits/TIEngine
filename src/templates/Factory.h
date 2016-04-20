@@ -9,27 +9,16 @@ namespace TIE
 	class Factory
 	{
 		public:
-			const T& create_ref() 
-			{ 
-				std::shared_ptr<T> ptr = std::make_shared<T>();
-				const T& ref = dynamic_cast<const T&>(SceneObjectManager::Instance()->addSceneObject(ptr));
-				return ref;
-			}
-			const T& create_ref(std::shared_ptr<T> ptr)
-			{
-				const T& ref = dynamic_cast<const T&>(SceneObjectManager::Instance()->addSceneObject(ptr));
-				return ref;
-			}
-			const std::shared_ptr<T> create_ptr() 
+			T* create() 
 			{ 
 				std::shared_ptr<T> ptr = std::make_shared<T>();
 				SceneObjectManager::Instance()->addSceneObject(ptr);
-				return ptr;
+				return ptr.get();
 			}
-			const std::shared_ptr<T> create_ptr(std::shared_ptr<T> ptr)
+			T* create(std::shared_ptr<T> ptr)
 			{
 				SceneObjectManager::Instance()->addSceneObject(ptr);
-				return ptr;
+				return ptr.get();
 			}
 	
 		protected:
