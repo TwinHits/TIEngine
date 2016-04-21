@@ -13,7 +13,7 @@ namespace TIE
 	class TimeManager : public Singleton<TimeManager>
 	{
 		public:
-			const sf::Clock& addClock();	
+			sf::Clock& addClock();	
 
 			TimeManager();
 			~TimeManager();

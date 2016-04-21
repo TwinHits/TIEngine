@@ -7,7 +7,7 @@ using namespace TIE;
 TimeManager::TimeManager() {}
 TimeManager::~TimeManager() {}
 
-const sf::Clock& TimeManager::addClock() 
+sf::Clock& TimeManager::addClock() 
 {
 	GlobalId id = HashManager::Instance()->getNewGlobalId();
 	if (clocks.find(id) == clocks.end())

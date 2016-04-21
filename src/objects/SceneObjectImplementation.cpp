@@ -8,10 +8,9 @@
 
 using namespace TIE;
 
-SceneObject::SceneObject()
+SceneObject::SceneObject() : clock(TimeManager::Instance()->addClock())
 {
 	this->id = HashManager::Instance()->getNewGlobalId();	
-	this->clock = TimeManager::Instance()->addClock();
 }
 
 bool SceneObject::operator==(const SceneObject& rhs) const 

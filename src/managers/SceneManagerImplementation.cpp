@@ -5,9 +5,8 @@
 
 using namespace TIE;
 
-SceneManager::SceneManager() 
+SceneManager::SceneManager() : clock(TimeManager::Instance()->addClock())
 {
-	this->clock = TimeManager::Instance()->addClock();
 }
 	
 SceneManager::~SceneManager() {}

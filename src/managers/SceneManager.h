@@ -17,7 +17,7 @@ namespace TIE
 			~SceneManager();
 			SceneManager();
 		private:
-			sf::Clock clock;
+			sf::Clock& clock;
 			int fps;
 
 			SceneManager(const SceneManager&);

@@ -34,9 +34,9 @@ namespace TIE
 		
 		protected:
 			sf::Sprite sprite;
-			sf::Clock clock;
+			sf::Clock& clock;
 			GlobalId id;
-			mutable bool draw = true;
+			bool draw = true;
 	};
 
 }
