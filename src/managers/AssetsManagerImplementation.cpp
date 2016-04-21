@@ -60,7 +60,6 @@ void AssetsManager::parseAssets()
 	{
 		sf::Texture t;
 		t.loadFromFile(i.path().string());
-		t.setSmooth(true);
 		GlobalId id = HashManager::Instance()->getHash(i.path().filename().string());
 		textures[id] = t;
 		LogManager::Instance()->logInfo("Loaded texture '" + i.path().string() + "'.");
