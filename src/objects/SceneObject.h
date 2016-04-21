@@ -22,7 +22,7 @@ namespace TIE
 			virtual void receiveMessage(const Message& msg) const;
 			virtual void update() = 0;
 
-			void setDraw(bool b) const;
+			void setDraw(bool b);
 
 			const sf::Sprite& getSprite() const;
 			GlobalId getId() const;
