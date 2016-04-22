@@ -20,7 +20,7 @@ namespace TIE
 			virtual ~SceneObject();
 	
 			virtual void receiveMessage(const Message& msg) const;
-			virtual void update() = 0;
+			virtual void update();
 
 			void setDraw(bool b);
 
