@@ -2,13 +2,10 @@
 #define STRINGTONUMBER_H
 
 #include <string>
-#include <sstream>
 
-int StringToInt(std::string& s)
+namespace TIE
 {
-	std::stringstream ss(s);
-	int num;
-	return ss >> num ? num: 0;
+	int StringToInt(std::string& s);
 }
 
 #endif

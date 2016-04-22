@@ -28,5 +28,9 @@
 	#include "managers/DatabaseManager.h"
 
 	#include "templates/Factory.h"
+	
+	#include "utilities/LocalTime.h"
+	#include "utilities/StringToInt.h"
+	#include "utilities/ToDegrees.h"
 
 #endif
