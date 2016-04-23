@@ -11,8 +11,6 @@ TIE::InputMap::~InputMap() {}
 
 void TIE::InputMap::processEvent(const sf::Event& event, const sf::Vector2f& position)
 {
-//	sf::RenderWindow& window = WindowManager::Instance()->getWindow();
-//	sf::Vector2f worldPosition = window.mapPixelToCoords(sf::Mouse::getPosition(window));
 	std::map<unsigned int, unsigned int> keyBinds;
 
 	keyBinds[sf::Keyboard::A] = 10;
@@ -41,8 +39,6 @@ void TIE::InputMap::processEvent(const sf::Event& event, const sf::Vector2f& pos
 	keyBinds[sf::Keyboard::X] = 33;
 	keyBinds[sf::Keyboard::Y] = 34;
 	keyBinds[sf::Keyboard::Z] = 35;
-
-	std::cout << keyBinds[event.key.code] << std::endl;
 }
 
 void TIE::InputMap::processState(const sf::Vector2f& position) {}

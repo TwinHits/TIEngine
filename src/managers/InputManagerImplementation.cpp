@@ -1,9 +1,12 @@
+#include <iostream>
+
 #include <SFML/Graphics.hpp>
 
 #include "InputManager.h"
 #include "LogManager.h"
 #include "ViewManager.h"
 #include "WindowManager.h"
+#include "ConsoleManager.h"
 
 #include "../objects/InputMap.h"
 
@@ -19,18 +22,11 @@ InputManager::~InputManager() {}
 void InputManager::processInput()
 {
 	sf::RenderWindow& window = WindowManager::Instance()->getWindow();
-	sf::Vector2f position = window.mapPixelToCoords(sf::Mouse::getPosition(window)); 
-
-	//Client state processing
-	inputMap->processState(position);
 
 	sf::Event event;
+	static sf::String textInput;
 	while (window.pollEvent(event))
 	{
-		position = window.mapPixelToCoords(sf::Mouse::getPosition(window)); 
-		//Client event processing
-		inputMap->processEvent(event, position);
-
 		//Engine event processing
 		switch (event.type)
 		{
@@ -38,34 +34,61 @@ void InputManager::processInput()
 				window.close();
 				LogManager::Instance()->logInfo("Window closed by user.");
 				break;
+			case sf::Event::TextEntered:
+				if (ConsoleManager::Instance()->checkConsole())
+				{
+					textInput += static_cast<char>(event.text.unicode);
+				}
+				break;
 			case sf::Event::KeyPressed:
 				switch (event.key.code)
 				{
 					case sf::Keyboard::Escape:
-						window.close();
-						LogManager::Instance()->logInfo("Window closed by user.");
+						if (!ConsoleManager::Instance()->checkConsole())
+						{
+							window.close();
+							LogManager::Instance()->logInfo("Window closed by user.");
+						}
+						else if (ConsoleManager::Instance()->checkConsole())
+						{
+							ConsoleManager::Instance()->hideConsole();
+							textInput = "";
+						}
+						break;
+					case sf::Keyboard::BackSlash:
+						if (!ConsoleManager::Instance()->checkConsole())
+						{
+							ConsoleManager::Instance()->showConsole();
+							textInput = "";
+						}
+						else if (ConsoleManager::Instance()->checkConsole())
+						{
+							ConsoleManager::Instance()->hideConsole();
+							textInput = "";
+						}
+						break;
+					case sf::Keyboard::Return:
+						if (ConsoleManager::Instance()->checkConsole())
+						{
+							ConsoleManager::Instance()->runCommand(textInput);
+							textInput = "";
+						}
 						break;
 					default:
 						break;	
 				}
 				break;
-			case sf::Event::MouseButtonPressed:
-				switch (event.mouseButton.button)
-				{
-					case sf::Mouse::Left:
-						break;
-					case sf::Mouse::Right:
-						break;
-					default:
-						break;
-				}
-				break;
-			case sf::Event::MouseMoved:
-				break;
 			default:
 				break;
 		}
 	}
+
+	sf::Vector2f position = window.mapPixelToCoords(sf::Mouse::getPosition(window)); 
+
+	//Client state processing
+	inputMap->processState(position);
+	//Client event processing
+	inputMap->processEvent(event, position);
 
 	this->scroll(window);
 
