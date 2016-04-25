@@ -1,5 +1,4 @@
-#include <iostream>
-
+#include <iostream> 
 #include <SFML/Graphics.hpp>
 
 #include "InputManager.h"
@@ -34,12 +33,6 @@ void InputManager::processInput()
 				window.close();
 				LogManager::Instance()->logInfo("Window closed by user.");
 				break;
-			case sf::Event::TextEntered:
-				if (ConsoleManager::Instance()->checkConsole())
-				{
-					textInput += static_cast<char>(event.text.unicode);
-				}
-				break;
 			case sf::Event::KeyPressed:
 				switch (event.key.code)
 				{
@@ -51,31 +44,40 @@ void InputManager::processInput()
 						}
 						else if (ConsoleManager::Instance()->checkConsole())
 						{
+							textInput.clear();
 							ConsoleManager::Instance()->hideConsole();
-							textInput = "";
-						}
+						}	
 						break;
+					//This should be Tilde, but its not detecting on my
+					//keyboard. to be fixed.
 					case sf::Keyboard::BackSlash:
+						textInput.clear();
 						if (!ConsoleManager::Instance()->checkConsole())
 						{
 							ConsoleManager::Instance()->showConsole();
-							textInput = "";
 						}
 						else if (ConsoleManager::Instance()->checkConsole())
 						{
 							ConsoleManager::Instance()->hideConsole();
-							textInput = "";
 						}
 						break;
 					case sf::Keyboard::Return:
 						if (ConsoleManager::Instance()->checkConsole())
-						{
+						{	
 							ConsoleManager::Instance()->runCommand(textInput);
-							textInput = "";
+							textInput.clear();
 						}
 						break;
 					default:
 						break;	
+				}
+				break;
+			case sf::Event::TextEntered:
+				//Explicitly not allowing backslash by ascii code because
+				//NOTHING ESE WORKED
+				if (ConsoleManager::Instance()->checkConsole() && event.text.unicode < 128 && static_cast<char>(event.text.unicode) != 92)
+				{
+					textInput += static_cast<char>(event.text.unicode);
 				}
 				break;
 			default:
@@ -91,7 +93,6 @@ void InputManager::processInput()
 	inputMap->processEvent(event, position);
 
 	this->scroll(window);
-
 }
 
 void InputManager::scroll(sf::RenderWindow& window)
