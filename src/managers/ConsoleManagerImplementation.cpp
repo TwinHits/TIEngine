@@ -19,13 +19,11 @@ ConsoleManager::~ConsoleManager()
 
 void ConsoleManager::showConsole()
 {
-	std::cout << "show" << std::endl;
 	consoleState = true;
 }
 
 void ConsoleManager::hideConsole()
 {
-	std::cout << "hide" << std::endl;
 	consoleState = false;
 }
 
@@ -34,11 +32,19 @@ bool ConsoleManager::checkConsole()
 	return consoleState;
 }
 
-void ConsoleManager::runCommand(const sf::String& input)
+void ConsoleManager::runCommand(const sf::String& command)
 {
-	std::string command = input;
-	//pass to consoleCommands
 	std::cout << command << std::endl;
+	
+	if (command == "test")
+	{
+		std::cout << "Command test successful" << std::endl;
+	}
+	//Run client commands
+	else if (this->consoleCommands->processCommand(command) == 1)
+	{
+		std::cout << "Command not found" << std::endl;
+	}
 }
 
 void ConsoleManager::setConsoleCommands(std::shared_ptr<ConsoleCommands> consoleCommands)

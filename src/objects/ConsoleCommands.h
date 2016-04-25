@@ -8,7 +8,7 @@ namespace TIE
 	class ConsoleCommands
 	{
 		public:
-			virtual void processCommand(const std::string& command);
+			virtual int processCommand(const std::string& command);
 
 			ConsoleCommands();
 			virtual ~ConsoleCommands();

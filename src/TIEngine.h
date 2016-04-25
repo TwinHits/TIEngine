@@ -14,6 +14,7 @@
 
 	#include "managers/AssetsManager.h"
 	#include "managers/ConfigManager.h"
+	#include "managers/ConsoleManager.h"
 	#include "managers/HashManager.h"
 	#include "managers/InputManager.h"
 	#include "managers/LogManager.h"
