@@ -7,7 +7,7 @@
 
 #include "../templates/Singleton.h"
 
-#include "../objects/ConsoleCommands.h"
+#include "../objects/DevConsole.h"
 
 namespace TIE
 {
@@ -20,12 +20,13 @@ namespace TIE
 
 			void runCommand(const std::string&);
 
-			void setConsoleCommands(std::shared_ptr<ConsoleCommands> consoleCommands);
+			void setDevConsole(std::shared_ptr<DevConsole> devConsole);
+			const DevConsole& getDevConsole();
 	
 			ConsoleManager();
 			~ConsoleManager();
 		private:
-			std::shared_ptr<ConsoleCommands> consoleCommands;
+			std::shared_ptr<DevConsole> devConsole;
 
 			bool consoleState = false;
 	
