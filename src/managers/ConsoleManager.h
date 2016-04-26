@@ -18,7 +18,7 @@ namespace TIE
 			void hideConsole();
 			bool checkConsole();
 
-			void runCommand(const sf::String&);
+			void runCommand(const std::string&);
 
 			void setConsoleCommands(std::shared_ptr<ConsoleCommands> consoleCommands);
 	

@@ -21,6 +21,7 @@ InputManager::~InputManager() {}
 void InputManager::processInput()
 {
 	sf::RenderWindow& window = WindowManager::Instance()->getWindow();
+	auto consoleManager = ConsoleManager::Instance();
 
 	sf::Event event;
 	static sf::String textInput;
@@ -37,34 +38,34 @@ void InputManager::processInput()
 				switch (event.key.code)
 				{
 					case sf::Keyboard::Escape:
-						if (!ConsoleManager::Instance()->checkConsole())
+						if (!consoleManager->checkConsole())
 						{
 							window.close();
 							LogManager::Instance()->logInfo("Window closed by user.");
 						}
-						else if (ConsoleManager::Instance()->checkConsole())
+						else if (consoleManager->checkConsole())
 						{
 							textInput.clear();
-							ConsoleManager::Instance()->hideConsole();
+							consoleManager->hideConsole();
 						}	
 						break;
 					//This should be Tilde, but its not detecting on my
 					//keyboard. to be fixed.
 					case sf::Keyboard::BackSlash:
 						textInput.clear();
-						if (!ConsoleManager::Instance()->checkConsole())
+						if (!consoleManager->checkConsole())
 						{
-							ConsoleManager::Instance()->showConsole();
+							consoleManager->showConsole();
 						}
-						else if (ConsoleManager::Instance()->checkConsole())
+						else if (consoleManager->checkConsole())
 						{
-							ConsoleManager::Instance()->hideConsole();
+							consoleManager->hideConsole();
 						}
 						break;
 					case sf::Keyboard::Return:
-						if (ConsoleManager::Instance()->checkConsole())
+						if (consoleManager->checkConsole())
 						{	
-							ConsoleManager::Instance()->runCommand(textInput);
+							consoleManager->runCommand(std::string(textInput));
 							textInput.clear();
 						}
 						break;
@@ -73,9 +74,11 @@ void InputManager::processInput()
 				}
 				break;
 			case sf::Event::TextEntered:
-				//Explicitly not allowing backslash by ascii code because
+				//Explicitly not allowing backslash and Return by ascii code because
 				//NOTHING ESE WORKED
-				if (ConsoleManager::Instance()->checkConsole() && event.text.unicode < 128 && static_cast<char>(event.text.unicode) != 92)
+				if (consoleManager->checkConsole() && event.text.unicode < 128 
+						&& static_cast<char>(event.text.unicode) != 92
+						&& static_cast<char>(event.text.unicode) != 13)
 				{
 					textInput += static_cast<char>(event.text.unicode);
 				}
@@ -86,13 +89,17 @@ void InputManager::processInput()
 	}
 
 	sf::Vector2f position = window.mapPixelToCoords(sf::Mouse::getPosition(window)); 
+	//If the console is not active
+	if (!consoleManager->checkConsole())
+	{
+		//Client state processing
+		inputMap->processState(position);
+		//Client event processing
+		inputMap->processEvent(event, position);
+		//Check for camera scrollin 
+		this->scroll(window);
+	}
 
-	//Client state processing
-	inputMap->processState(position);
-	//Client event processing
-	inputMap->processEvent(event, position);
-
-	this->scroll(window);
 }
 
 void InputManager::scroll(sf::RenderWindow& window)
