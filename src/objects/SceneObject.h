@@ -26,7 +26,7 @@ namespace TIE
 
 			const sf::Sprite& getSprite() const;
 			GlobalId getId() const;
-			bool getDraw();
+			bool getDraw() const;
 
 			void operator=(const SceneObject&);
 			bool operator==(const SceneObject& rhs) const;

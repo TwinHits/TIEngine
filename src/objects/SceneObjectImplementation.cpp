@@ -27,7 +27,7 @@ void SceneObject::setDraw(bool b) { draw = b; }
 
 const sf::Sprite& SceneObject::getSprite() const { return sprite; }
 GlobalId SceneObject::getId() const { return id; }
-bool SceneObject::getDraw() { return draw; }
+bool SceneObject::getDraw() const { return draw; }
 
 SceneObject::~SceneObject() {}
 

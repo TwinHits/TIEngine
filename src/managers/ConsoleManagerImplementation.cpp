@@ -17,17 +17,17 @@ ConsoleManager::~ConsoleManager()
 
 void ConsoleManager::showConsole()
 {
-	consoleState = true;
+	devConsole->setDraw(true);
 }
 
 void ConsoleManager::hideConsole()
 {
-	consoleState = false;
+	devConsole->setDraw(false);
 }
 
 bool ConsoleManager::checkConsole()
 {
-	return consoleState;
+	return devConsole->getDraw();
 }
 
 void ConsoleManager::runCommand(const std::string& command)

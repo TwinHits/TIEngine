@@ -2,6 +2,7 @@
 #define DEVCONSOLE_H
 
 #include <string>
+#include <vector>
 
 #include "SceneObject.h"
 
@@ -16,6 +17,7 @@ namespace TIE
 			DevConsole();
 			virtual ~DevConsole();
 		private:
+			std::vector<std::string> commandHistory;
 	};
 } 
 

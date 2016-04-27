@@ -2,12 +2,19 @@
 #include <string>
 
 #include "../managers/LogManager.h"
+#include "../managers/AssetsManager.h"
 
 #include "DevConsole.h"
 
 using namespace TIE;
 
-DevConsole::DevConsole() {}
+DevConsole::DevConsole() 
+{
+	this->sprite.setPosition(100,100);	
+	this->sprite.setTexture(AssetsManager::Instance()->getTexture("devconsole.png"));
+	this->setDraw(false);
+}
+
 DevConsole::~DevConsole() {}
 
 int DevConsole::runClientCommand(const std::string& command)

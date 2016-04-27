@@ -1,3 +1,4 @@
+#include "ConsoleManager.h"
 #include "SceneManager.h"
 #include "WindowManager.h"
 #include "SceneObjectManager.h"
@@ -23,6 +24,11 @@ void SceneManager::render()
 		if (so.second->getDraw())
 			window.draw(so.second->getSprite());
 	}
+
+	//Draw DevConsole last because it's always on top.
+	if (ConsoleManager::Instance()->getDevConsole().getDraw())
+		window.draw(ConsoleManager::Instance()->getDevConsole().getSprite());
+
 	window.display();
 
 	auto frame = clock.restart().asSeconds();

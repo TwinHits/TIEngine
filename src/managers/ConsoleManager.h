@@ -27,8 +27,6 @@ namespace TIE
 			~ConsoleManager();
 		private:
 			std::shared_ptr<DevConsole> devConsole;
-
-			bool consoleState = false;
 	
 			void operator=(const ConsoleManager&);
 			ConsoleManager(const ConsoleManager&);
