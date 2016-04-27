@@ -1,4 +1,3 @@
-#include <iostream>
 #include <string>
 
 #include "../managers/LogManager.h"
@@ -25,15 +24,15 @@ int DevConsole::runClientCommand(const std::string& command)
 
 void DevConsole::processCommand(const std::string& command)
 {
-	std::cout << command << std::endl;
+	commandHistory.push_back(command);
 
 	if (command == "test")
 	{
-		std::cout << "Command test successful" << std::endl;
+		commandHistory.push_back("Command test successful");
 	}
 	//Run client commands
 	else if (this->runClientCommand(command) == 1)
 	{
-		std::cout << "Command not found." << std::endl;
+		commandHistory.push_back("Command not found.");
 	}
 }	
