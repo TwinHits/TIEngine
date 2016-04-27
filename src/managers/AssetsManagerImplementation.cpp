@@ -10,6 +10,7 @@ AssetsManager::AssetsManager()
 	std::string assetsPath = ConfigManager::Instance()->getAssetsPath();
 	texturesPath = boost::filesystem::path(assetsPath + "textures");
 	audioPath = boost::filesystem::path(assetsPath + "audio");
+	fontsPath = boost::filesystem::path(assetsPath + "fonts");
 
 	this->parseAssets();
 }
@@ -72,5 +73,14 @@ void AssetsManager::parseAssets()
 		GlobalId id = HashManager::Instance()->getHash(i.path().filename().string());
 		audio[id] = s;
 		LogManager::Instance()->logInfo("Loaded audio '" + i.path().string() + "'.");
+	}
+
+	for (boost::filesystem::directory_entry& i : boost::filesystem::directory_iterator(fontsPath))
+	{
+		sf::Font f;
+		f.loadFromFile(i.path().string());
+		GlobalId id = HashManager::Instance()->getHash(i.path().filename().string());
+		fonts[id] = f;
+		LogManager::Instance()->logInfo("Loaded font '" + i.path().string() + "'.");
 	}
 }
