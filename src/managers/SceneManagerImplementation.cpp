@@ -33,8 +33,13 @@ void SceneManager::render()
 	}
 
 	//Draw DevConsole last because it's always on top.
-	if (ConsoleManager::Instance()->getDevConsole().getDraw())
-		window.draw(ConsoleManager::Instance()->getDevConsole().getSprite());
+	if (ConsoleManager::Instance()->checkConsole())
+	{
+		auto devConsole = ConsoleManager::Instance()->getDevConsole();
+		window.draw(devConsole.getSprite());
+		for (auto& st : devConsole.getCommandHistory())
+			window.draw(st.getText());
+	}
 
 	window.display();
 
