@@ -7,7 +7,7 @@
 
 using namespace TIE;
 
-DevConsole::DevConsole() 
+DevConsole::DevConsole() : font(AssetsManager::Instance()->getFont("font.tff"))
 {
 	this->sprite.setPosition(100,100);	
 	this->sprite.setTexture(AssetsManager::Instance()->getTexture("devconsole.png"));
@@ -19,20 +19,38 @@ DevConsole::~DevConsole() {}
 int DevConsole::runClientCommand(const std::string& command)
 {
 	LogManager::Instance()->logWarn("No client DevConsole defined.");
-	return 0;
+	return 1;
 }
 
 void DevConsole::processCommand(const std::string& command)
 {
-	commandHistory.push_back(command);
+	addCommandHistory(command);
 
 	if (command == "test")
 	{
-		commandHistory.push_back("Command test successful");
+		addCommandHistory("Command test successful");
 	}
 	//Run client commands
 	else if (this->runClientCommand(command) == 1)
 	{
-		commandHistory.push_back("Command not found.");
+		addCommandHistory("Command not found.");
 	}
 }	
+
+void DevConsole::addCommandHistory(const std::string& command)
+{
+	SceneText text;
+	text.getText().setString(command);
+	text.getText().setFont(font);
+	text.getText().setCharacterSize(fontSize);
+	text.getText().setPosition(0,writePosition);
+
+	writePosition += 10;
+	commandHistory.push_back(text);	
+
+}
+
+const std::vector<SceneText>& DevConsole::getCommandHistory()
+{
+	return commandHistory;
+}

@@ -4,7 +4,10 @@
 #include <string>
 #include <vector>
 
+#include <SFML/Graphics.hpp>
+
 #include "SceneObject.h"
+#include "SceneText.h"
 
 namespace TIE
 {
@@ -14,10 +17,19 @@ namespace TIE
 			void processCommand(const std::string& command);
 			virtual int runClientCommand(const std::string& command);
 
+			const std::vector<SceneText>& getCommandHistory();
+
 			DevConsole();
 			virtual ~DevConsole();
 		private:
-			std::vector<std::string> commandHistory;
+			std::vector<SceneText> commandHistory;
+			int writePosition = 0;
+			int fontSize = 10;
+			const sf::Font& font;
+
+			void addCommandHistory(const std::string& command);
+
+
 	};
 } 
 
