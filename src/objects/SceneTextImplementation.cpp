@@ -25,6 +25,7 @@ bool SceneText::operator!=(const SceneText& rhs) const
 
 void SceneText::setDraw(bool b) { draw = b; }
 
+sf::Text& SceneText::getText() { return text; }
 const sf::Text& SceneText::getText() const { return text; }
 GlobalId SceneText::getId() const { return id; }
 bool SceneText::getDraw() const { return draw; }

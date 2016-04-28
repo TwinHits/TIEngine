@@ -22,6 +22,7 @@ namespace TIE
 
 			void setDraw(bool b);
 
+			sf::Text& getText();
 			const sf::Text& getText() const;
 			GlobalId getId() const;
 			bool getDraw() const;
