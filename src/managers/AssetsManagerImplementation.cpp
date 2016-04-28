@@ -55,6 +55,25 @@ const sf::SoundBuffer& AssetsManager::getAudio(const std::string& name)
 	return getAudio(id);
 }
 
+const sf::Font& AssetsManager::getFont(GlobalId id)
+{
+	if (fonts.find(id) != fonts.end())
+	{
+		return fonts[id];
+	}
+	else
+	{
+		LogManager::Instance()->logError("Cannot open audio '" + std::to_string(id) + "'.");
+		return fonts[id];
+	}
+}
+
+const sf::Font& AssetsManager::getFont(const std::string& name)
+{
+	GlobalId id = HashManager::Instance()->getHash(name);
+	return getFont(id);
+}
+
 void AssetsManager::parseAssets()
 {
 	for (boost::filesystem::directory_entry& i : boost::filesystem::directory_iterator(texturesPath))
