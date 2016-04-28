@@ -17,12 +17,19 @@ void SceneManager::render()
 	
 	sf::RenderWindow& window = WindowManager::Instance()->getWindow();
 	auto sceneObjects = SceneObjectManager::Instance()->getAllSceneObjects();
+	auto sceneTexts = SceneObjectManager::Instance()->getAllSceneTexts();
 
 	window.clear();
 	for (auto& so : sceneObjects)
 	{
 		if (so.second->getDraw())
 			window.draw(so.second->getSprite());
+	}
+
+	for (auto& st : sceneTexts)
+	{
+		if (st.second->getDraw())
+			window.draw(st.second->getText());
 	}
 
 	//Draw DevConsole last because it's always on top.
