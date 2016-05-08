@@ -1,4 +1,5 @@
 #include <iostream> 
+
 #include <SFML/Graphics.hpp>
 
 #include "InputManager.h"
@@ -107,9 +108,9 @@ void InputManager::scroll(sf::RenderWindow& window)
 	sf::Vector2i mousePosition = sf::Mouse::getPosition();	
 	if (mousePosition.y <= scrollZone)
 		ViewManager::Instance()->scroll(TOP);
-	if (mousePosition.x >= abs(window.getSize().x)-scrollZone)
+	if (mousePosition.x >= window.getSize().x - scrollZone)
 		ViewManager::Instance()->scroll(RIGHT);
-	if (mousePosition.y >= abs(window.getSize().y)-scrollZone)
+	if (mousePosition.y >= window.getSize().y - scrollZone)
 		ViewManager::Instance()->scroll(BOTTOM);
 	if (mousePosition.x <= scrollZone)
 		ViewManager::Instance()->scroll(LEFT);

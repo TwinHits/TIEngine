@@ -4,4 +4,9 @@ tiengine
 doc/todo.txt
 assets/
 otlv4.h
+x64/
 *Test*
+ClassDiagram*
+.vs
+Debug/
+TIEngineVS*
