@@ -11,7 +11,7 @@ DatabaseManager::DatabaseManager()
 	}
 	catch (const std::exception& e)
 	{
-		LogManager::Instance()->logError("Postgres db connection: " + std::string(e.what()));
+		LogManager::Instance()->logError("Postgres db exception: " + std::string(e.what()));
 	}
 	LogManager::Instance()->logInfo("Successfully opened postgres db connection.");
 }
@@ -23,6 +23,13 @@ DatabaseManager::~DatabaseManager()
 
 void DatabaseManager::Select(const std::string& q, std::string& s)
 {
-	soci::indicator ind;
-	db << q, soci::into(s, ind);
+	try 
+	{
+		soci::indicator ind;
+		db << q, soci::into(s, ind);
+	}
+	catch (const std::exception& e)
+	{
+		LogManager::Instance()->logError("Postgres db exception: " + std::string(e.what()));
+	}
 }
