@@ -1,6 +1,5 @@
 #include "DatabaseManager.h"
 #include "LogManager.h" 
-#include "../objects/Transactor.h"
 
 using namespace TIE;
 
@@ -8,34 +7,22 @@ DatabaseManager::DatabaseManager()
 {
 	try 
 	{
-		connection = std::unique_ptr<pqxx::connection>(new pqxx::connection("dbname=tiengine user=tie_admin password=123456 hostaddr=127.0.0.1 port=5432"));
-		if (connection->is_open())
-		{
-			LogManager::Instance()->logInfo("Successfully opened postgres db connectionn.");
-		}
+		db.open(soci::postgresql, "dbname=tiengine user=tie_admin password=123456 hostaddr=127.0.0.1 port=5433");
 	}
-	catch (pqxx::pqxx_exception& e)
+	catch (const std::exception& e)
 	{
-		LogManager::Instance()->logError("Postgres db connection threw exception.");
+		LogManager::Instance()->logError("Postgres db connection: " + std::string(e.what()));
 	}
+	LogManager::Instance()->logInfo("Successfully opened postgres db connection.");
 }
 
 DatabaseManager::~DatabaseManager()
 {
-	connection->disconnect();
+	db.close();
 }
 
-void DatabaseManager::Select(const std::string& q, Result& r)
+void DatabaseManager::Select(const std::string& q, std::string& s)
 {
-	Transactor t(q, r);
-
-	try
-	{
-		connection->perform(t);
-	}
-	catch (std::exception& err)
-	{
-		std::string what = err.what();
-		LogManager::Instance()->logError("Database transaction failed: " + what);
-	}
+	soci::indicator ind;
+	db << q, soci::into(s, ind);
 }

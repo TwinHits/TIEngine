@@ -1,7 +1,8 @@
 #ifndef DATABASEMANAGER_H
 #define DATABASEMANAGER_H
 
-#include <pqxx/pqxx>
+#include <soci.h>
+#include <soci-postgresql.h>
 
 #include <memory>
 #include <string>
@@ -10,17 +11,15 @@
 
 namespace TIE
 {
-	typedef pqxx::result Result;
-
 	class DatabaseManager : public Singleton<DatabaseManager>
 	{
 		public:
-			void Select(const std::string& query, Result& result);
+			void Select(const std::string& query, std::string& s);
 
 			~DatabaseManager();
 			DatabaseManager();
 		private:
-			std::unique_ptr<pqxx::connection> connection;
+			soci::session db;
 
 			DatabaseManager(const DatabaseManager&);
 			void operator=(const DatabaseManager&);
