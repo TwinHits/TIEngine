@@ -1,7 +1,7 @@
 CPP_FILES = ${wildcard src/managers/*.cpp} ${wildcard src/objects/*.cpp} ${wildcard src/utilities/*.cpp} ${wildcard src/*.cpp}
 OBJ_FILES = ${addprefix bin/objs/,${notdir ${CPP_FILES:.cpp=.o}}}
 CC_FLAGS = -g -Wall -Werror -std=c++11
-LD_FLAGS = -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system -lboost_filesystem -lboost_system -lpqxx -lpq
+LD_FLAGS = -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system -lboost_filesystem -lboost_system -lsoci_core -lsoci_postgresql
 LIB_NAME = libTIEngine-debug.a
 
 all: bin/tiengine rv
