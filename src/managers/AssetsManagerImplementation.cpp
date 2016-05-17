@@ -76,30 +76,82 @@ const sf::Font& AssetsManager::getFont(const std::string& name)
 
 void AssetsManager::parseAssets()
 {
-	for (boost::filesystem::directory_entry& i : boost::filesystem::directory_iterator(texturesPath))
+	try
 	{
-		sf::Texture t;
-		t.loadFromFile(i.path().string());
-		GlobalId id = HashManager::Instance()->getHash(i.path().filename().string());
-		textures[id] = t;
-		LogManager::Instance()->logInfo("Loaded texture '" + i.path().string() + "'.");
+		if (boost::filesystem::exists(texturesPath))
+		{
+			if (boost::filesystem::is_directory(texturesPath))
+			{
+
+				for (boost::filesystem::directory_entry& i : boost::filesystem::directory_iterator(texturesPath))
+				{
+					sf::Texture t;
+					t.loadFromFile(i.path().string());
+					GlobalId id = HashManager::Instance()->getHash(i.path().filename().string());
+					textures[id] = t;
+					LogManager::Instance()->logInfo("Loaded texture '" + i.path().string() + "'.");
+				}
+			}
+		}
+		else
+		{
+			LogManager::Instance()->logError("Textures folder does not exist.");
+		}
+	}
+	catch (const boost::filesystem::filesystem_error& e)
+	{
+		LogManager::Instance()->logError("Textures folder error: " + std::string(e.what()));
 	}
 
-	for (boost::filesystem::directory_entry& i : boost::filesystem::directory_iterator(audioPath))
+	try
 	{
-		sf::SoundBuffer s;
-		s.loadFromFile(i.path().string());
-		GlobalId id = HashManager::Instance()->getHash(i.path().filename().string());
-		audio[id] = s;
-		LogManager::Instance()->logInfo("Loaded audio '" + i.path().string() + "'.");
+		if (boost::filesystem::exists(audioPath))
+		{
+			if (boost::filesystem::is_directory(audioPath))
+			{
+				for (boost::filesystem::directory_entry& i : boost::filesystem::directory_iterator(audioPath))
+				{
+					sf::SoundBuffer s;
+					s.loadFromFile(i.path().string());
+					GlobalId id = HashManager::Instance()->getHash(i.path().filename().string());
+					audio[id] = s;
+					LogManager::Instance()->logInfo("Loaded audio '" + i.path().string() + "'.");
+				}
+			}
+		}
+		else
+		{
+			LogManager::Instance()->logError("Audio folder does not exist.");
+		}
+	}
+	catch (const boost::filesystem::filesystem_error& e)
+	{
+		LogManager::Instance()->logError("Audio folder error: " + std::string(e.what()));
 	}
 
-	for (boost::filesystem::directory_entry& i : boost::filesystem::directory_iterator(fontsPath))
+	try
 	{
-		sf::Font f;
-		f.loadFromFile(i.path().string());
-		GlobalId id = HashManager::Instance()->getHash(i.path().filename().string());
-		fonts[id] = f;
-		LogManager::Instance()->logInfo("Loaded font '" + i.path().string() + "'.");
+		if (boost::filesystem::exists(fontsPath))
+		{
+			if (boost::filesystem::is_directory(fontsPath))
+			{
+				for (boost::filesystem::directory_entry& i : boost::filesystem::directory_iterator(fontsPath))
+				{
+					sf::Font f;
+					f.loadFromFile(i.path().string());
+					GlobalId id = HashManager::Instance()->getHash(i.path().filename().string());
+					fonts[id] = f;
+					LogManager::Instance()->logInfo("Loaded font '" + i.path().string() + "'.");
+				}
+			}
+		}
+		else
+		{
+			LogManager::Instance()->logError("Fonts folder does not exist.");
+		}
+	}
+	catch (const boost::filesystem::filesystem_error& e)
+	{
+		LogManager::Instance()->logError("Fonts folder error: " + std::string(e.what()));
 	}
 }
