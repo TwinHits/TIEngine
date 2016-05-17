@@ -7,7 +7,7 @@ DatabaseManager::DatabaseManager()
 {
 	try 
 	{
-		db.open(soci::postgresql, "dbname=tiengine user=tie_admin password=123456 hostaddr=127.0.0.1 port=5433");
+		db.open(*soci::factory_postgresql(), "dbname=tiengine user=tie_admin password=123456 hostaddr=127.0.0.1 port=5433");
 	}
 	catch (const std::exception& e)
 	{
