@@ -16,8 +16,8 @@ namespace TIE
 		public:
 			void Select(const std::string& query, std::string& s);
 
-			~DatabaseManager();
 			DatabaseManager();
+			~DatabaseManager();
 		private:
 			soci::session db;
 

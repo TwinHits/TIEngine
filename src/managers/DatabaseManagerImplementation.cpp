@@ -8,12 +8,12 @@ DatabaseManager::DatabaseManager()
 	try 
 	{
 		db.open(*soci::factory_postgresql(), "dbname=tiengine user=tie_admin password=123456 hostaddr=127.0.0.1 port=5432");
+		LogManager::Instance()->logInfo("Successfully opened postgres db connection.");
 	}
 	catch (const std::exception& e)
 	{
 		LogManager::Instance()->logError("Postgres db exception: " + std::string(e.what()));
 	}
-	LogManager::Instance()->logInfo("Successfully opened postgres db connection.");
 }
 
 DatabaseManager::~DatabaseManager()
