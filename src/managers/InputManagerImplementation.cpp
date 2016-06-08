@@ -109,11 +109,11 @@ void InputManager::scroll(sf::RenderWindow& window)
 	auto mousePosition = sf::Mouse::getPosition(window);	
 	if (mousePosition.y <= scrollZone)
 		ViewManager::Instance()->scroll(TOP);
-	if (mousePosition.y >= (window.getSize().y - scrollZone))
+	if (mousePosition.y >= std::abs(window.getSize().y - scrollZone))
 		ViewManager::Instance()->scroll(BOTTOM);
 	if (mousePosition.x <= scrollZone)
 		ViewManager::Instance()->scroll(LEFT);
-	if (mousePosition.x >= (window.getSize().x - scrollZone))
+	if (mousePosition.x >= std::abs(window.getSize().x - scrollZone))
 		ViewManager::Instance()->scroll(RIGHT);
 
 }
