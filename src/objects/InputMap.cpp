@@ -3,8 +3,9 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "InputMap.h"
-#include "../managers/WindowManager.h"
+#include "managers/WindowManager.h"
+
+#include "objects/InputMap.h"
 
 TIE::InputMap::InputMap() {}
 TIE::InputMap::~InputMap() {}

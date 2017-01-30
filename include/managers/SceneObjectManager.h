@@ -4,11 +4,11 @@
 #include <map>
 #include <memory>
 
-#include "../templates/Singleton.h"
+#include "templates/Singleton.h"
 
-#include "../objects/GlobalId.h"
-#include "../objects/SceneObject.h"
-#include "../objects/SceneText.h"
+#include "objects/GlobalId.h"
+#include "objects/SceneObject.h"
+#include "objects/SceneText.h"
 
 namespace TIE
 {

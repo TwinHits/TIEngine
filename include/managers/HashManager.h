@@ -3,9 +3,9 @@
 
 #include <string>
 
-#include "../templates/Singleton.h"
+#include "templates/Singleton.h"
 
-#include "../objects/GlobalId.h"
+#include "objects/GlobalId.h"
 
 namespace TIE
 {

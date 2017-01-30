@@ -1,7 +1,7 @@
-#include "HashManager.h"
-#include "LogManager.h"
-#include "ViewManager.h"
-#include "WindowManager.h"
+#include "managers/HashManager.h"
+#include "managers/LogManager.h"
+#include "managers/ViewManager.h"
+#include "managers/WindowManager.h"
 
 using namespace TIE; 
 

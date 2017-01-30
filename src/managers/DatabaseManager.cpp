@@ -1,5 +1,5 @@
-#include "DatabaseManager.h"
-#include "LogManager.h" 
+#include "managers/DatabaseManager.h"
+#include "managers/LogManager.h" 
 
 using namespace TIE;
 

@@ -3,10 +3,10 @@
 
 #include <boost/filesystem.hpp>
 
-#include "ConfigManager.h"
-#include "LogManager.h"
+#include "managers/ConfigManager.h"
+#include "managers/LogManager.h"
 
-#include "../utilities/StringToInt.h"
+#include "utilities/StringToInt.h"
 
 using namespace TIE;
 

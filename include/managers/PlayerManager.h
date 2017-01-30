@@ -4,10 +4,10 @@
 #include <map>
 #include <memory>
 
-#include "../templates/Singleton.h"
+#include "templates/Singleton.h"
 
-#include "../objects/Player.h"
-#include "../objects/GlobalId.h"
+#include "objects/Player.h"
+#include "objects/GlobalId.h"
 
 namespace TIE
 {

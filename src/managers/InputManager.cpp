@@ -3,13 +3,13 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "InputManager.h" 
-#include "LogManager.h"
-#include "ViewManager.h"
-#include "WindowManager.h"
-#include "ConsoleManager.h"
+#include "managers/InputManager.h" 
+#include "managers/LogManager.h"
+#include "managers/ViewManager.h"
+#include "managers/WindowManager.h"
+#include "managers/ConsoleManager.h"
 
-#include "../objects/InputMap.h"
+#include "objects/InputMap.h"
 
 using namespace TIE;
 

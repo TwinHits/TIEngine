@@ -1,7 +1,7 @@
 #ifndef FACTORY_H
 #define FACTORY_H
 
-#include "../managers/SceneObjectManager.h"
+#include "managers/SceneObjectManager.h"
 
 namespace TIE
 {

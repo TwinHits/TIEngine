@@ -1,7 +1,7 @@
-#include "AssetsManager.h"
-#include "ConfigManager.h"
-#include "LogManager.h"
-#include "HashManager.h"
+#include "managers/AssetsManager.h"
+#include "managers/ConfigManager.h"
+#include "managers/LogManager.h"
+#include "managers/HashManager.h"
 
 using namespace TIE;
 

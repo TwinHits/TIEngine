@@ -1,7 +1,7 @@
 #include <iostream>
 #include <memory>
 
-#include "ConsoleManager.h"
+#include "managers/ConsoleManager.h"
 
 using namespace TIE;
 

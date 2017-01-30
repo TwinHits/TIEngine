@@ -1,6 +1,6 @@
-#include "WindowManager.h"
-#include "StringManager.h"
-#include "LogManager.h"
+#include "managers/WindowManager.h"
+#include "managers/StringManager.h"
+#include "managers/LogManager.h"
 
 using namespace TIE;
 

@@ -3,7 +3,7 @@
 
 #include "TimeManager.h"
 
-#include "../templates/Singleton.h"
+#include "templates/Singleton.h"
 
 namespace TIE
 {

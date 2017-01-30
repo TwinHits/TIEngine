@@ -1,10 +1,10 @@
-#include "../managers/TimeManager.h"
-#include "../managers/MessageManager.h"
-#include "../managers/LogManager.h"
-#include "../managers/HashManager.h"
+#include "managers/TimeManager.h"
+#include "managers/MessageManager.h"
+#include "managers/LogManager.h"
+#include "managers/HashManager.h"
 
-#include "SceneObject.h"
-#include "Message.h"
+#include "objects/SceneObject.h"
+#include "objects/Message.h"
 
 using namespace TIE;
 

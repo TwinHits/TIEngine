@@ -4,9 +4,9 @@
 #include <fstream>
 #include <string>
 
-#include "../templates/Singleton.h"
+#include "templates/Singleton.h"
 
-#include "../objects/Language.h"
+#include "objects/Language.h"
 
 namespace TIE
 {

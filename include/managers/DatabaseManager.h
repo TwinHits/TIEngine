@@ -7,7 +7,7 @@
 #include <memory>
 #include <string>
 
-#include "../templates/Singleton.h"
+#include "templates/Singleton.h"
 
 namespace TIE
 {

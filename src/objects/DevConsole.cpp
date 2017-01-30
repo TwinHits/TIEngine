@@ -1,9 +1,9 @@
 #include <string>
 
-#include "../managers/LogManager.h"
-#include "../managers/AssetsManager.h"
+#include "managers/LogManager.h"
+#include "managers/AssetsManager.h"
 
-#include "DevConsole.h"
+#include "objects/DevConsole.h"
 
 using namespace TIE;
 

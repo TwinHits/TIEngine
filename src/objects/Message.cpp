@@ -1,6 +1,6 @@
-#include "Message.h"
-#include "SceneObject.h"
-#include "GlobalId.h"
+#include "objects/Message.h"
+#include "objects/SceneObject.h"
+#include "objects/GlobalId.h"
 
 using namespace TIE;
 

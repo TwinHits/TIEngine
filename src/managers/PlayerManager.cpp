@@ -1,6 +1,6 @@
-#include "PlayerManager.h"
-#include "HashManager.h"
-#include "LogManager.h"
+#include "managers/PlayerManager.h"
+#include "managers/HashManager.h"
+#include "managers/LogManager.h"
 
 using namespace TIE;
 

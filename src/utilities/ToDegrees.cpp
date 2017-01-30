@@ -1,7 +1,7 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 
-#include "ToDegrees.h"
+#include "utilities/ToDegrees.h"
 
 float TIE::ToDegrees(double radians)
 {

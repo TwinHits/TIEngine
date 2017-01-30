@@ -6,7 +6,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "../templates/Singleton.h"
+#include "templates/Singleton.h"
 
 namespace TIE
 {

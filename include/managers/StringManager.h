@@ -4,10 +4,10 @@
 #include <string>
 #include <map>
 
-#include "../templates/Singleton.h"
+#include "templates/Singleton.h"
 
-#include "../objects/GlobalId.h"
-#include "../objects/Language.h"
+#include "objects/GlobalId.h"
+#include "objects/Language.h"
 
 namespace TIE
 {

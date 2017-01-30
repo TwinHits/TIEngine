@@ -1,8 +1,8 @@
-#include "ConsoleManager.h"
-#include "SceneManager.h"
-#include "WindowManager.h"
-#include "SceneObjectManager.h"
-#include "TimeManager.h"
+#include "managers/ConsoleManager.h"
+#include "managers/SceneManager.h"
+#include "managers/WindowManager.h"
+#include "managers/SceneObjectManager.h"
+#include "managers/TimeManager.h"
 
 using namespace TIE;
 

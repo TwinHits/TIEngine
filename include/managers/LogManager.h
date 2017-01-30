@@ -4,7 +4,7 @@
 #include <fstream>
 #include <string>
 
-#include "../templates/Singleton.h"
+#include "templates/Singleton.h"
 
 namespace TIE
 {

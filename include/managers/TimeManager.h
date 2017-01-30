@@ -3,9 +3,9 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "../objects/GlobalId.h"
+#include "objects/GlobalId.h"
 
-#include "../templates/Singleton.h"
+#include "templates/Singleton.h"
 
 namespace TIE
 {

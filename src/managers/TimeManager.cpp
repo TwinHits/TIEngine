@@ -1,6 +1,6 @@
-#include "TimeManager.h"
-#include "HashManager.h"
-#include "LogManager.h"
+#include "managers/TimeManager.h"
+#include "managers/HashManager.h"
+#include "managers/LogManager.h"
 
 using namespace TIE;
 

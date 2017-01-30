@@ -1,5 +1,5 @@
-#include "SceneObjectManager.h"
-#include "LogManager.h"
+#include "managers/SceneObjectManager.h"
+#include "managers/LogManager.h"
 
 using namespace TIE;
 

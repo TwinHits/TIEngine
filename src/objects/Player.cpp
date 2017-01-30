@@ -1,7 +1,7 @@
-#include "../managers/WindowManager.h"
+#include "managers/WindowManager.h"
 
-#include "Player.h"
-#include "GlobalId.h"
+#include "objects/Player.h"
+#include "objects/GlobalId.h"
 
 using namespace TIE;
 

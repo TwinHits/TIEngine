@@ -1,7 +1,7 @@
-#include "LogManager.h"
-#include "ConfigManager.h"
+#include "managers/LogManager.h"
+#include "managers/ConfigManager.h"
 
-#include "../utilities/LocalTime.h"
+#include "utilities/LocalTime.h"
 
 using namespace TIE;
 

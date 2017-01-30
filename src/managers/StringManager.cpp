@@ -1,8 +1,8 @@
-#include "StringManager.h"
-#include "LogManager.h"
-#include "HashManager.h"
-#include "ConfigManager.h"
-#include "DatabaseManager.h"
+#include "managers/StringManager.h"
+#include "managers/LogManager.h"
+#include "managers/HashManager.h"
+#include "managers/ConfigManager.h"
+#include "managers/DatabaseManager.h"
 
 using namespace TIE;
 

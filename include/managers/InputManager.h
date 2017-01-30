@@ -3,9 +3,9 @@
 
 #include <memory>
 
-#include "../templates/Singleton.h"
+#include "templates/Singleton.h"
 
-#include "../objects/InputMap.h"
+#include "objects/InputMap.h"
 
 namespace TIE
 {
