@@ -18,11 +18,13 @@ namespace TIE
 		public:
 			const SceneObject& addSceneObject(std::shared_ptr<SceneObject> so);
 			void rmSceneObject(GlobalId id);
+
 			const SceneText& addSceneText(std::shared_ptr<SceneText> st);
 			void rmSceneText(GlobalId id);
 		
 			const SceneObject& getSceneObject(GlobalId id);
 			const std::map<GlobalId, std::shared_ptr<SceneObject> >& getAllSceneObjects();
+
 			const SceneText& getSceneText(GlobalId id);
 			const std::map<GlobalId, std::shared_ptr<SceneText> >& getAllSceneTexts();
 

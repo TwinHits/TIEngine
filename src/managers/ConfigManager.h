@@ -13,6 +13,8 @@ namespace TIE
 
 	class ConfigManager: public Singleton<ConfigManager>
 	{
+		//Singleton manager of engine side configurable values defined in
+		//config.ini. Stores default values in case of no file found.
 		public:
 			ConfigManager();
 			~ConfigManager();

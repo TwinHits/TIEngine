@@ -22,6 +22,7 @@ const SceneObject& SceneObjectManager::getSceneObject(GlobalId id)
 	}
 	else 
 	{
+		//implement exception
 		return *sceneObjects[id];
 	}
 }
@@ -41,6 +42,7 @@ const SceneText& SceneObjectManager::getSceneText(GlobalId id)
 	}
 	else 
 	{
+		//implement exception
 		return *sceneTexts[id];
 	}
 }

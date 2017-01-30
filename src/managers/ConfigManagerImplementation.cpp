@@ -21,7 +21,8 @@ void ConfigManager::loadConfig()
 {
 	auto configPath = boost::filesystem::path("config.ini");
 	if (exists(configPath))
-	{ std::ifstream config;
+	{ 
+		std::ifstream config;
 
 		config.open("config.ini");
 		if (!config.is_open())
