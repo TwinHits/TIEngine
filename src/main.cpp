@@ -1,4 +1,4 @@
-#include "../../TIEngine/src/TIEngine.h"
+#include "TIEngine.h"
 
 int main()
 {
