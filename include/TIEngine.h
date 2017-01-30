@@ -33,5 +33,6 @@
 	#include "utilities/LocalTime.h"
 	#include "utilities/StringToInt.h"
 	#include "utilities/ToDegrees.h"
+	#include "utilities/EuclideanVector.h"
 
 #endif

@@ -4,9 +4,17 @@ Exception Handling
 Allow for single point of adding langauge definition
 Utilize Boost parser
 
-Database Manager
 Physics library
 SoundBuffer format issues
 
 Change int to boost std portable integer header
 Change StringManager to use a special string class that returns the right localization based on the StringManagers's set localization.
+
+Write comments for everything
+
+DevConsole:
+	Show what is being typed
+	Stick to top left corner
+
+SceneObjectManager should hold objects by a Z factor that determines their
+drawing order.
