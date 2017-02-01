@@ -19,7 +19,6 @@ namespace TIE
 	
 			virtual void receiveMessage(const Message& msg) const;
 			virtual void update();
-			virtual void move();
 
 			void setDraw(bool b);
 
