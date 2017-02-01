@@ -1,5 +1,5 @@
 #include "objects/Message.h"
-#include "objects/SceneObject.h"
+#include "objects/TIEntity.h"
 #include "objects/GlobalId.h"
 
 using namespace TIE;

@@ -6,21 +6,20 @@
 #include "Message.h"
 #include "GlobalId.h"
 
-
-
 namespace TIE
 {
 
 	class Message;
 
-	class SceneObject
+	class TIEntity
 	{
 		public:
-			SceneObject();
-			virtual ~SceneObject();
+			TIEntity();
+			virtual ~TIEntity();
 	
 			virtual void receiveMessage(const Message& msg) const;
 			virtual void update();
+			virtual void move();
 
 			void setDraw(bool b);
 
@@ -28,9 +27,9 @@ namespace TIE
 			GlobalId getId() const;
 			bool getDraw() const;
 
-			void operator=(const SceneObject&);
-			bool operator==(const SceneObject& rhs) const;
-			bool operator!=(const SceneObject& rhs) const;
+			void operator=(const TIEntity&);
+			bool operator==(const TIEntity& rhs) const;
+			bool operator!=(const TIEntity& rhs) const;
 		
 		protected:
 			sf::Sprite sprite;

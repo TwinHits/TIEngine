@@ -1,7 +1,7 @@
 #ifndef FACTORY_H
 #define FACTORY_H
 
-#include "managers/SceneObjectManager.h"
+#include "managers/TIEntityManager.h"
 
 namespace TIE
 {
@@ -12,12 +12,12 @@ namespace TIE
 			T* create() 
 			{ 
 				std::shared_ptr<T> ptr = std::make_shared<T>();
-				SceneObjectManager::Instance()->addSceneObject(ptr);
+				TIEntityManager::Instance()->addTIEntity(ptr);
 				return ptr.get();
 			}
 			T* create(std::shared_ptr<T> ptr)
 			{
-				SceneObjectManager::Instance()->addSceneObject(ptr);
+				TIEntityManager::Instance()->addTIEntity(ptr);
 				return ptr.get();
 			}
 	

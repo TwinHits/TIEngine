@@ -7,37 +7,37 @@
 #include "templates/Singleton.h"
 
 #include "objects/GlobalId.h"
-#include "objects/SceneObject.h"
+#include "objects/TIEntity.h"
 #include "objects/SceneText.h"
 
 namespace TIE
 {
 
-	class SceneObjectManager : public Singleton<SceneObjectManager>
+	class TIEntityManager : public Singleton<TIEntityManager>
 	{
 		public:
-			const SceneObject& addSceneObject(std::shared_ptr<SceneObject> so);
-			void rmSceneObject(GlobalId id);
+			const TIEntity& addTIEntity(std::shared_ptr<TIEntity> so);
+			void rmTIEntity(GlobalId id);
 
 			const SceneText& addSceneText(std::shared_ptr<SceneText> st);
 			void rmSceneText(GlobalId id);
 		
-			const SceneObject& getSceneObject(GlobalId id);
-			const std::map<GlobalId, std::shared_ptr<SceneObject> >& getAllSceneObjects();
+			const TIEntity& getTIEntity(GlobalId id);
+			const std::map<GlobalId, std::shared_ptr<TIEntity> >& getAllTIEntitys();
 
 			const SceneText& getSceneText(GlobalId id);
 			const std::map<GlobalId, std::shared_ptr<SceneText> >& getAllSceneTexts();
 
 			void updateGameState();
 		
-			SceneObjectManager();
-			~SceneObjectManager();
+			TIEntityManager();
+			~TIEntityManager();
 		private:
-			std::map<GlobalId, std::shared_ptr<SceneObject> > sceneObjects;
+			std::map<GlobalId, std::shared_ptr<TIEntity> > sceneObjects;
 			std::map<GlobalId, std::shared_ptr<SceneText> > sceneTexts;
 		
-			SceneObjectManager(const SceneObjectManager&);
-			void operator=(const SceneObjectManager&);
+			TIEntityManager(const TIEntityManager&);
+			void operator=(const TIEntityManager&);
 	};
 
 }

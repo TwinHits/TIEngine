@@ -1,7 +1,7 @@
 #include "managers/ConsoleManager.h"
 #include "managers/SceneManager.h"
 #include "managers/WindowManager.h"
-#include "managers/SceneObjectManager.h"
+#include "managers/TIEntityManager.h"
 #include "managers/TimeManager.h"
 
 using namespace TIE;
@@ -16,8 +16,8 @@ void SceneManager::render()
 {		
 	
 	sf::RenderWindow& window = WindowManager::Instance()->getWindow();
-	auto sceneObjects = SceneObjectManager::Instance()->getAllSceneObjects();
-	auto sceneTexts = SceneObjectManager::Instance()->getAllSceneTexts();
+	auto sceneObjects = TIEntityManager::Instance()->getAllTIEntitys();
+	auto sceneTexts = TIEntityManager::Instance()->getAllSceneTexts();
 
 	window.clear();
 	for (auto& so : sceneObjects)

@@ -6,12 +6,12 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "SceneObject.h"
+#include "TIEntity.h"
 #include "SceneText.h"
 
 namespace TIE
 {
-	class DevConsole : public SceneObject
+	class DevConsole : public TIEntity
 	{
 		public:
 			void processCommand(const std::string& command);

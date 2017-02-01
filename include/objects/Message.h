@@ -2,13 +2,13 @@
 #define MESSAGE_H
 
 
-#include "SceneObject.h"
+#include "TIEntity.h"
 #include "GlobalId.h"
 
 namespace TIE
 {
 
-	class SceneObject;
+	class TIEntity;
 
 	class Message 
 	{
