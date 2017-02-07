@@ -3,19 +3,30 @@
 #include "managers/WindowManager.h"
 #include "managers/TIEntityManager.h"
 #include "managers/TimeManager.h"
+#include "managers/ViewManager.h"
+
 
 using namespace TIE;
 
+
 SceneManager::SceneManager() : clock(TimeManager::Instance()->addClock())
 {
+	sceneViewId = ViewManager::Instance()->addView(sf::FloatRect(0,0,800,600));
+
 }
+
 	
-SceneManager::~SceneManager() {}
+SceneManager::~SceneManager() 
+{
+
+}
+
 
 void SceneManager::render()
 {		
-	
 	sf::RenderWindow& window = WindowManager::Instance()->getWindow();
+   	ViewManager::Instance()->setActiveView(sceneViewId);
+
 	auto sceneObjects = TIEntityManager::Instance()->getAllTIEntitys();
 	auto sceneTexts = TIEntityManager::Instance()->getAllSceneTexts();
 
@@ -31,22 +42,17 @@ void SceneManager::render()
 		if (st.second->getDraw())
 			window.draw(st.second->getText());
 	}
-
-	//Draw DevConsole last because it's always on top.
+	
 	if (ConsoleManager::Instance()->checkConsole())
-	{
-		auto devConsole = ConsoleManager::Instance()->getDevConsole();
-		window.draw(devConsole.getSprite());
-		for (auto& st : devConsole.getCommandHistory())
-			window.draw(st.getText());
-	}
+		ConsoleManager::Instance()->renderDevConsole();
 
 	window.display();
 
 	auto frame = clock.restart().asSeconds();
-	fps = 100 / frame;
+	fps = 60 / frame;
 	WindowManager::Instance()->showFPS(std::to_string(fps));
 }
+
 
 int SceneManager::getFPS()
 {

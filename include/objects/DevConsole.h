@@ -14,22 +14,21 @@ namespace TIE
 	class DevConsole : public TIEntity
 	{
 		public:
-			void processCommand(const std::string& command);
-			virtual int runClientCommand(const std::string& command);
+			DevConsole();
+			virtual ~DevConsole();
 
 			const std::vector<SceneText>& getCommandHistory();
 
-			DevConsole();
-			virtual ~DevConsole();
+			virtual int runClientCommand(const std::string& command);
+			void processCommand(const std::string& command);
+
 		private:
 			std::vector<SceneText> commandHistory;
-			int writePosition = 0;
+			int writePosition = -500;
 			int fontSize = 10;
 			const sf::Font& font;
 
 			void addCommandHistory(const std::string& command);
-
-
 	};
 } 
 

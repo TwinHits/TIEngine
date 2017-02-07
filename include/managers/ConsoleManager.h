@@ -14,20 +14,20 @@ namespace TIE
 	class ConsoleManager : public Singleton<ConsoleManager>
 	{
 		public:
+			ConsoleManager();
+			~ConsoleManager();
 			void showConsole();
 			void hideConsole();
 			bool checkConsole();
-
 			void runCommand(const std::string&);
-
+			void renderDevConsole();
 			void setDevConsole(std::shared_ptr<DevConsole> devConsole);
 			const DevConsole& getDevConsole();
 	
-			ConsoleManager();
-			~ConsoleManager();
 		private:
 			std::shared_ptr<DevConsole> devConsole;
-	
+			GlobalId devConsoleViewId;
+
 			void operator=(const ConsoleManager&);
 			ConsoleManager(const ConsoleManager&);
 	};

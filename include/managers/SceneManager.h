@@ -19,6 +19,7 @@ namespace TIE
 		private:
 			sf::Clock& clock;
 			int fps;
+			GlobalId sceneViewId;
 
 			SceneManager(const SceneManager&);
 			void operator=(const SceneManager&);
