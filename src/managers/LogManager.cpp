@@ -1,9 +1,12 @@
-#include "managers/LogManager.h"
 #include "managers/ConfigManager.h"
+#include "managers/ConsoleManager.h"
+#include "managers/LogManager.h"
 
 #include "utilities/LocalTime.h"
 
+
 using namespace TIE;
+
 
 LogManager::LogManager() 
 {
@@ -13,25 +16,48 @@ LogManager::LogManager()
 		logError("Could not open '" + ConfigManager::Instance()->getDebugLogPath() + "'.");
 	}
 }
+
+
 LogManager::~LogManager()
 {
 	log.close();
 }
 
+
 void LogManager::logError(const std::string& message)
 {
 	if (ConfigManager::Instance()->getDebugLogLevel() > 0)
-		log << "[" << LocalTime() << "]" << " ERROR: " << message << std::endl;
+	{
+		std::string logString = "[" +  LocalTime() +  "]" + " ERROR: " +  message;
+		queueToDraw.push(logString);
+		log << logString << std::endl;
+	}
 }
+
 
 void LogManager::logWarn(const std::string& message)
 {
 	if (ConfigManager::Instance()->getDebugLogLevel() > 1)
-		log << "[" << LocalTime() << "]" << " WARN: " << message << std::endl;
+	{
+		std::string logString = "[" +  LocalTime() +  "]" + " WARN: " +  message;
+		queueToDraw.push(logString);
+		log << logString << std::endl;
+	}
 }
+
 
 void LogManager::logInfo(const std::string& message)
 {
 	if (ConfigManager::Instance()->getDebugLogLevel() > 2)
-		log << "[" << LocalTime() << "]" << " INFO: " << message << std::endl;
+	{
+		std::string logString = "[" +  LocalTime() +  "]" + " INFO: " +  message;
+		queueToDraw.push(logString);
+		log << logString << std::endl;
+	}
+}
+
+
+std::queue<std::string>& LogManager::getQueueToDraw()
+{
+	return queueToDraw;
 }

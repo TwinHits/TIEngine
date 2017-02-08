@@ -16,13 +16,14 @@ namespace TIE
 		public:
 			ConsoleManager();
 			~ConsoleManager();
+
 			void showConsole();
 			void hideConsole();
 			bool checkConsole();
 			void runCommand(const std::string&);
 			void renderDevConsole();
+
 			void setDevConsole(std::shared_ptr<DevConsole> devConsole);
-			const DevConsole& getDevConsole();
 	
 		private:
 			std::shared_ptr<DevConsole> devConsole;

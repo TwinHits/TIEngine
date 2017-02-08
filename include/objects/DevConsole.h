@@ -21,14 +21,14 @@ namespace TIE
 
 			virtual int runClientCommand(const std::string& command);
 			void processCommand(const std::string& command);
+			void appendToHistory(const std::string& command);
 
 		private:
 			std::vector<SceneText> commandHistory;
 			int writePosition = -500;
-			int fontSize = 10;
+			int fontSize = 14;
 			const sf::Font& font;
 
-			void addCommandHistory(const std::string& command);
 	};
 } 
 

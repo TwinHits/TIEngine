@@ -35,21 +35,21 @@ int DevConsole::runClientCommand(const std::string& command)
 
 void DevConsole::processCommand(const std::string& command)
 {
-	addCommandHistory(command);
+	appendToHistory(command);
 
 	if (command == "test")
 	{
-		addCommandHistory("Command test successful");
+		appendToHistory("Command test successful");
 	}
 	//Run client commands
 	else if (this->runClientCommand(command) == 1)
 	{
-		addCommandHistory("Command not found.");
+		appendToHistory("Command not found.");
 	}
 }	
 
 
-void DevConsole::addCommandHistory(const std::string& command)
+void DevConsole::appendToHistory(const std::string& command)
 {
 	SceneText text;
 	text.getText().setString(command);
@@ -57,7 +57,7 @@ void DevConsole::addCommandHistory(const std::string& command)
 	text.getText().setCharacterSize(fontSize);
 	text.getText().setPosition(-500,writePosition);
 
-	writePosition += 10;
+	writePosition += fontSize;
 	commandHistory.push_back(text);	
 
 }

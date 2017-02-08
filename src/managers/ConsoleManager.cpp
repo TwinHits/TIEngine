@@ -1,7 +1,9 @@
 #include <iostream>
 #include <memory>
+#include <queue>
 
 #include "managers/ConsoleManager.h"
+#include "managers/LogManager.h"
 #include "managers/WindowManager.h"
 #include "managers/ViewManager.h"
 
@@ -22,6 +24,7 @@ ConsoleManager::~ConsoleManager()
 {
 
 } 
+
 
 void ConsoleManager::showConsole()
 {
@@ -50,6 +53,16 @@ void ConsoleManager::runCommand(const std::string& command)
 
 void ConsoleManager::renderDevConsole()
 {
+	//Append any log messages to the scenetexts for drawing
+	std::queue<std::string>& queue = LogManager::Instance()->getQueueToDraw();
+	{
+		while (!queue.empty())
+		{
+			devConsole->appendToHistory(queue.front());
+			queue.pop();
+		}
+	}
+
 	//Draw DevConsole last because it's always on top.
 	sf::RenderWindow& window = WindowManager::Instance()->getWindow();
 	ViewManager::Instance()->setActiveView(devConsoleViewId);
@@ -63,10 +76,4 @@ void ConsoleManager::renderDevConsole()
 void ConsoleManager::setDevConsole(std::shared_ptr<DevConsole> devConsole)
 {
 	this->devConsole = devConsole;
-}
-
-
-const DevConsole& ConsoleManager::getDevConsole()
-{
-	return *devConsole;	
 }
