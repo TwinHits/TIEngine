@@ -9,6 +9,7 @@
 #include "TIEntity.h"
 #include "SceneText.h"
 
+
 namespace TIE
 {
 	class DevConsole : public TIEntity
@@ -26,10 +27,11 @@ namespace TIE
 		private:
 			std::vector<SceneText> commandHistory;
 			int writePosition = -500;
-			int fontSize = 14;
+			int fontSize = 16;
 			const sf::Font& font;
 
 	};
 } 
+
 
 #endif

@@ -33,7 +33,7 @@ void LogManager::logCommand(const std::string& message)
 {
 	if (ConfigManager::Instance()->getDebugLogLevel() > 0)
 	{
-		std::string logString = "[" +  LocalTime() +  "]" + "COMMAND: " +  message;
+		std::string logString = "[" +  LocalTime() +  "] " +  message;
 		queueToDraw.push(logString);
 		log << logString << std::endl;
 	}
