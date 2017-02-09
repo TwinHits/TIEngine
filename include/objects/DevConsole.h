@@ -21,7 +21,7 @@ namespace TIE
 
 			virtual int runClientCommand(const std::string& command);
 			void processCommand(const std::string& command);
-			void appendToHistory(const std::string& command);
+			void update();
 
 		private:
 			std::vector<SceneText> commandHistory;

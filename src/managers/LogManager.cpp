@@ -24,22 +24,27 @@ LogManager::~LogManager()
 }
 
 
-void LogManager::logError(const std::string& message)
+std::queue<std::string>& LogManager::getQueueToDraw()
+{
+	return queueToDraw;
+}
+
+void LogManager::logCommand(const std::string& message)
 {
 	if (ConfigManager::Instance()->getDebugLogLevel() > 0)
 	{
-		std::string logString = "[" +  LocalTime() +  "]" + " ERROR: " +  message;
+		std::string logString = "[" +  LocalTime() +  "]" + "COMMAND: " +  message;
 		queueToDraw.push(logString);
 		log << logString << std::endl;
 	}
 }
 
 
-void LogManager::logWarn(const std::string& message)
+void LogManager::logError(const std::string& message)
 {
-	if (ConfigManager::Instance()->getDebugLogLevel() > 1)
+	if (ConfigManager::Instance()->getDebugLogLevel() > 0)
 	{
-		std::string logString = "[" +  LocalTime() +  "]" + " WARN: " +  message;
+		std::string logString = "[" +  LocalTime() +  "]" + " ERROR: " +  message;
 		queueToDraw.push(logString);
 		log << logString << std::endl;
 	}
@@ -57,7 +62,12 @@ void LogManager::logInfo(const std::string& message)
 }
 
 
-std::queue<std::string>& LogManager::getQueueToDraw()
+void LogManager::logWarn(const std::string& message)
 {
-	return queueToDraw;
+	if (ConfigManager::Instance()->getDebugLogLevel() > 1)
+	{
+		std::string logString = "[" +  LocalTime() +  "]" + " WARN: " +  message;
+		queueToDraw.push(logString);
+		log << logString << std::endl;
+	}
 }
