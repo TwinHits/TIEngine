@@ -39,12 +39,12 @@ void DevConsole::processCommand(const std::string& command)
 
 	if (command == "test")
 	{
-		LogManager::Instance()->logInfo("Test Command Successful!");
+		LogManager::Instance()->logCommand("Test Command Successful!");
 	}
 	//Run client commands
 	else if (this->runClientCommand(command) == 1)
 	{
-		LogManager::Instance()->logWarn("Unknown command.");
+		LogManager::Instance()->logCommand("Unknown command.");
 	}
 }	
 
@@ -66,7 +66,7 @@ void DevConsole::update()
 			text.getText().setCharacterSize(fontSize);
 			text.getText().setPosition(-500,writePosition);
 
-			writePosition += fontSize + 1;
+			writePosition += fontSize;
 			commandHistory.push_back(text);	
 
 			queue.pop();
