@@ -54,7 +54,7 @@ void DevConsole::update()
 	/**
 	 *To get the messages to display in console, get not yet processed messages from the LogManager, turn them into scene texts, and draw them. This happens every frame.t
 	 */
-	auto queue = LogManager::Instance()->getQueueToDraw();
+	std::queue<std::string>& queue = LogManager::Instance()->getQueueToDraw();
 	{
 		while (!queue.empty())
 		{
