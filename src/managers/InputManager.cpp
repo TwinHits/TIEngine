@@ -11,14 +11,27 @@
 
 #include "objects/InputMap.h"
 
+
 using namespace TIE;
+
 
 InputManager::InputManager() 
 {
 	inputMap = std::make_shared<InputMap>();	
 }
 
-InputManager::~InputManager() {}
+
+InputManager::~InputManager()
+{
+
+}
+
+
+const std::string InputManager::getTextEntered()
+{
+	return textEntered;
+}
+
 
 void InputManager::processInput()
 {
@@ -26,7 +39,6 @@ void InputManager::processInput()
 	auto consoleManager = ConsoleManager::Instance();
 
 	sf::Event event;
-	static sf::String textInput;
 	while (window.pollEvent(event))
 	{
 		//Engine event processing
@@ -47,14 +59,14 @@ void InputManager::processInput()
 						}
 						else if (consoleManager->checkConsole())
 						{
-							textInput.clear();
+							textEntered.clear();
 							consoleManager->hideConsole();
 						}	
 						break;
 					//This should be Tilde, but its not detecting on my
 					//keyboard. to be fixed.
 					case sf::Keyboard::BackSlash:
-						textInput.clear();
+						textEntered.clear();
 						if (!consoleManager->checkConsole())
 						{
 							consoleManager->showConsole();
@@ -67,8 +79,8 @@ void InputManager::processInput()
 					case sf::Keyboard::Return:
 						if (consoleManager->checkConsole())
 						{	
-							consoleManager->runCommand(std::string(textInput));
-							textInput.clear();
+							consoleManager->runCommand(std::string(textEntered));
+							textEntered.clear();
 						}
 						break;
 					default:
@@ -82,7 +94,7 @@ void InputManager::processInput()
 						&& static_cast<char>(event.text.unicode) != 92
 						&& static_cast<char>(event.text.unicode) != 13)
 				{
-					textInput += static_cast<char>(event.text.unicode);
+					textEntered += static_cast<char>(event.text.unicode);
 				}
 				break;
 			default:
@@ -104,6 +116,7 @@ void InputManager::processInput()
 
 }
 
+
 void InputManager::scroll(sf::RenderWindow& window)
 {
 	auto mousePosition = sf::Mouse::getPosition(window);	
@@ -115,8 +128,8 @@ void InputManager::scroll(sf::RenderWindow& window)
 		ViewManager::Instance()->scroll(LEFT);
 	if (mousePosition.x >= std::abs(window.getSize().x - scrollZone))
 		ViewManager::Instance()->scroll(RIGHT);
-
 }
+
 
 void InputManager::setInputMap(std::shared_ptr<InputMap> inputMap)
 {

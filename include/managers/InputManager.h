@@ -16,9 +16,12 @@ namespace TIE
 			void processInput();
 			void setInputMap(std::shared_ptr<InputMap> inputMap);
 
+			const std::string getTextEntered();
+
 			InputManager();
 			~InputManager();
 		private:
+			sf::String textEntered;
 			int scrollZone = 5;
 			std::shared_ptr<InputMap> inputMap;	
 

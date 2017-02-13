@@ -60,6 +60,8 @@ void ConsoleManager::renderDevConsole()
 	window.draw(devConsole->getSprite());
 	for (auto& st : devConsole->getCommandHistory())
 		window.draw(st.getText());
+	
+	window.draw(devConsole->getCurrentCommand().getText());
 }
 
 

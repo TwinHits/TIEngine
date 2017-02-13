@@ -18,6 +18,7 @@ namespace TIE
 			virtual ~DevConsole();
 
 			const std::vector<SceneText>& getCommandHistory();
+			const SceneText& getCurrentCommand();
 
 			virtual int runClientCommand(const std::string& command);
 			void processCommand(const std::string& command);
@@ -25,9 +26,10 @@ namespace TIE
 
 		private:
 			std::vector<SceneText> commandHistory;
-			int writePosition = -500;
-			int fontSize = 14;
+			SceneText currentCommand;
 			const sf::Font& font;
+			int fontSize = 14;
+			int writePosition = -500;
 
 	};
 } 
