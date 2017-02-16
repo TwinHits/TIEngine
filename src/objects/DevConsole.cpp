@@ -50,11 +50,12 @@ int DevConsole::runClientCommand(const std::string& command)
 
 
 void DevConsole::processCommand(const std::string& command)
-{ LogManager::Instance()->logCommand(command);
+{
+   	LogManager::Instance()->logCommand(command);
 
 	if (command == "test")
 	{
-		LogManager::Instance()->logCommand("Test Command Successful!");
+		LogManager::Instance()->logCommand("Test Command Please Ignore.");
 	}
 	//Run client commands
 	else if (this->runClientCommand(command) == 1)
