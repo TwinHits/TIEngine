@@ -12,13 +12,13 @@ namespace TIE
 	{
 		public:
 			void render();
-			int getFPS();
+			double getFPS();
 
 			~SceneManager();
 			SceneManager();
 		private:
 			sf::Clock& clock;
-			int fps;
+			double fps;
 			GlobalId sceneViewId;
 
 			SceneManager(const SceneManager&);

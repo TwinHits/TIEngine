@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A9567AE9-6967-4C7C-B85C-21737B2A2EE5}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>E:\Applications\PostgreSQL\9.5\include;E:\Third Party Code\include;C:\Users\John Goben\Source\Repos\TIEngine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalLibraryDirectories>E:\Applications\PostgreSQL\9.5\lib;E:\Applications\PostgreSQL\9.5\bin;E:\Third Party Code\bin;E:\Third Party Code\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-window-d.lib;sfml-audio-d.lib;sfml-graphics-d.lib;sfml-system-d.lib;sfml-main-d.lib;libsoci_core_3_2.lib;libsoci_empty_3_2.lib;libsoci_postgresql_3_2.lib;libpq.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>E:\Applications\PostgreSQL\9.5\include;E:\Third Party Code\include;C:\Users\John Goben\Source\Repos\TIEngine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>E:\Applications\PostgreSQL\9.5\lib;E:\Applications\PostgreSQL\9.5\bin;E:\Third Party Code\bin;E:\Third Party Code\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>E:\Applications\PostgreSQL\9.5\include;E:\Third Party Code\include;C:\Users\John Goben\Source\Repos\TIEngine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>E:\Applications\PostgreSQL\9.5\lib;E:\Applications\PostgreSQL\9.5\bin;E:\Third Party Code\bin;E:\Third Party Code\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-window-d.lib;sfml-audio-d.lib;sfml-graphics-d.lib;sfml-system-d.lib;sfml-main-d.lib;libsoci_core_3_2.lib;libsoci_empty_3_2.lib;libsoci_postgresql_3_2.lib;libpq.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>E:\Applications\PostgreSQL\9.5\include;E:\Third Party Code\include;C:\Users\John Goben\Source\Repos\TIEngine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>E:\Applications\PostgreSQL\9.5\lib;E:\Applications\PostgreSQL\9.5\bin;E:\Third Party Code\bin;E:\Third Party Code\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\managers\AssetsManager.cpp" />
+    <ClCompile Include="src\managers\ConfigManager.cpp" />
+    <ClCompile Include="src\managers\ConsoleManager.cpp" />
+    <ClCompile Include="src\managers\DatabaseManager.cpp" />
+    <ClCompile Include="src\managers\HashManager.cpp" />
+    <ClCompile Include="src\managers\InputManager.cpp" />
+    <ClCompile Include="src\managers\LogManager.cpp" />
+    <ClCompile Include="src\managers\MessageManager.cpp" />
+    <ClCompile Include="src\managers\PlayerManager.cpp" />
+    <ClCompile Include="src\managers\SceneManager.cpp" />
+    <ClCompile Include="src\managers\StringManager.cpp" />
+    <ClCompile Include="src\managers\TIEntityManager.cpp" />
+    <ClCompile Include="src\managers\TimeManager.cpp" />
+    <ClCompile Include="src\managers\ViewManager.cpp" />
+    <ClCompile Include="src\managers\WindowManager.cpp" />
+    <ClCompile Include="src\objects\DevConsole.cpp" />
+    <ClCompile Include="src\objects\InputMap.cpp" />
+    <ClCompile Include="src\objects\Message.cpp" />
+    <ClCompile Include="src\objects\Player.cpp" />
+    <ClCompile Include="src\objects\SceneText.cpp" />
+    <ClCompile Include="src\objects\TIEntity.cpp" />
+    <ClCompile Include="src\utilities\LocalTime.cpp" />
+    <ClCompile Include="src\utilities\StringToInt.cpp" />
+    <ClCompile Include="src\utilities\ToDegrees.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\managers\AssetsManager.h" />
+    <ClInclude Include="include\managers\ConfigManager.h" />
+    <ClInclude Include="include\managers\ConsoleManager.h" />
+    <ClInclude Include="include\managers\DatabaseManager.h" />
+    <ClInclude Include="include\managers\HashManager.h" />
+    <ClInclude Include="include\managers\InputManager.h" />
+    <ClInclude Include="include\managers\LogManager.h" />
+    <ClInclude Include="include\managers\MessageManager.h" />
+    <ClInclude Include="include\managers\PlayerManager.h" />
+    <ClInclude Include="include\managers\SceneManager.h" />
+    <ClInclude Include="include\managers\StringManager.h" />
+    <ClInclude Include="include\managers\TIEntityManager.h" />
+    <ClInclude Include="include\managers\TimeManager.h" />
+    <ClInclude Include="include\managers\ViewManager.h" />
+    <ClInclude Include="include\managers\WindowManager.h" />
+    <ClInclude Include="include\objects\DevConsole.h" />
+    <ClInclude Include="include\objects\GlobalId.h" />
+    <ClInclude Include="include\objects\InputMap.h" />
+    <ClInclude Include="include\objects\Language.h" />
+    <ClInclude Include="include\objects\Message.h" />
+    <ClInclude Include="include\objects\Player.h" />
+    <ClInclude Include="include\objects\SceneText.h" />
+    <ClInclude Include="include\objects\TIEntity.h" />
+    <ClInclude Include="include\templates\Factory.h" />
+    <ClInclude Include="include\templates\Singleton.h" />
+    <ClInclude Include="include\TIEngine.h" />
+    <ClInclude Include="include\utilities\LocalTime.h" />
+    <ClInclude Include="include\utilities\StringToInt.h" />
+    <ClInclude Include="include\utilities\ToDegrees.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

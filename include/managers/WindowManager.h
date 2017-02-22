@@ -19,6 +19,7 @@ namespace TIE
 			void rmWindow();
 
 			void showFPS(const std::string& fps);
+			sf::Vector2i getWindowSize();
 
 			WindowManager();
 			~WindowManager();
@@ -26,6 +27,7 @@ namespace TIE
 		private:
 			std::shared_ptr<sf::RenderWindow> window;
 			std::string title;
+			sf::Vector2i windowSize;
 
 			WindowManager(const WindowManager&);
 			void operator=(const WindowManager&);

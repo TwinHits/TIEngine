@@ -49,12 +49,12 @@ void SceneManager::render()
 	window.display();
 
 	auto frame = clock.restart().asSeconds();
-	fps = 60 / frame;
+	this->fps = 60 / frame;
 	WindowManager::Instance()->showFPS(std::to_string(fps));
 }
 
 
-int SceneManager::getFPS()
+double SceneManager::getFPS()
 {
 	return fps;	
 }
