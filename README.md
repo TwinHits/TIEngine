@@ -1,8 +1,11 @@
-This Twin Ion Engine (TIEngine), a 2D game engine utilizing the SFML libray.
+This is Twin Ion Engine (TIEngine), a 2D game engine utilizing the SFML libray.
 
 It's objective is to do the low level work for you, so that you can focus on
 making game objects and gameplay rules, and less on worrying about object
 management, logging, window management, and game loops.
+
+This project is cross platform and has been tested on Visual Studio 14.0 and gcc
+4.8.4.
 
 To install, clone to your machine and run 'make'. This will produce a
 libTIEngine-debug in bin/. Move to lib folder of your choice.
