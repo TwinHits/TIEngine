@@ -8,30 +8,75 @@
 
 using namespace TIE;
 
-TIEntity::TIEntity() : clock(TimeManager::Instance()->addClock())
-{
+TIEntity::TIEntity() : clock(TimeManager::Instance()->addClock()) {
+
 	this->id = HashManager::Instance()->getNewGlobalId();	
 }
 
-bool TIEntity::operator==(const TIEntity& rhs) const
-{
+
+bool TIEntity::operator==(const TIEntity& rhs) const {
+
 	return this->getId() == rhs.getId();
 }
 
-bool TIEntity::operator!=(const TIEntity& rhs) const
-{
+
+bool TIEntity::operator!=(const TIEntity& rhs) const {
+
 	return this->getId() != rhs.getId();
 }
 
-void TIEntity::setDraw(bool b) { draw = b; }
 
-const sf::Sprite& TIEntity::getSprite() const { return sprite; }
-GlobalId TIEntity::getId() const { return id; }
-bool TIEntity::getDraw() const { return draw; }
+void TIEntity::setDraw(bool b) { 
 
-TIEntity::~TIEntity() {}
+	draw = b;
+}
 
-void TIEntity::operator=(const TIEntity&) {}
 
-void TIEntity::receiveMessage(const Message& msg) const {}
-void TIEntity::update() {}
+const sf::Sprite& TIEntity::getSprite() const { 
+	
+	return sprite; 
+}
+
+
+GlobalId TIEntity::getId() const { 
+	
+	return id;
+}
+
+
+bool TIEntity::getDraw() const { 
+	
+	return draw; 
+}
+
+
+void TIEntity::setDrawOrder(int i) {
+
+	drawOrder = i;
+}
+
+
+int TIEntity::getDrawOrder() {
+
+	return drawOrder;
+}
+
+
+TIEntity::~TIEntity() {
+
+}
+
+
+void TIEntity::operator=(const TIEntity&) {
+
+}
+
+
+void TIEntity::receiveMessage(const Message& msg) const {
+
+}
+
+
+void TIEntity::update() {
+
+}

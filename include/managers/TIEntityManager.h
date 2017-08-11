@@ -37,7 +37,7 @@ namespace TIE
 			std::map<GlobalId, std::shared_ptr<TIEntity> > sceneObjects;
 			std::map<GlobalId, std::shared_ptr<SceneText> > sceneTexts;
 			
-			std::priority_queue<std::shared_ptr<TIEntity> > objectsToBeDraw();
+			std::priority_queue<std::shared_ptr<TIEntity> > objectsToBeDrawn();
 		
 			TIEntityManager(const TIEntityManager&);
 			void operator=(const TIEntityManager&);

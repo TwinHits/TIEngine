@@ -21,6 +21,8 @@ namespace TIE
 			virtual void update();
 
 			void setDraw(bool b);
+			void setDrawOrder(int i);
+			int getDrawOrder();
 
 			const sf::Sprite& getSprite() const;
 			GlobalId getId() const;
@@ -35,6 +37,8 @@ namespace TIE
 			sf::Clock& clock;
 			GlobalId id;
 			bool draw = true;
+			int drawOrder = 0;
+
 	};
 
 }
