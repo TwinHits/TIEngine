@@ -86,10 +86,13 @@ void AssetsManager::parseAssets()
 				for (boost::filesystem::directory_entry& i : boost::filesystem::directory_iterator(texturesPath))
 				{
 					sf::Texture t;
-					t.loadFromFile(i.path().string());
+					bool success = t.loadFromFile(i.path().string());
 					GlobalId id = HashManager::Instance()->getHash(i.path().filename().string());
 					textures[id] = t;
-					LogManager::Instance()->logInfo("Loaded texture '" + i.path().string() + "'.");
+					if (LogManager::Instance()->isInfoEnabled()) {
+
+						LogManager::Instance()->logInfo("Loading texture '" + i.path().string() + ": " + std::to_string(success));
+					}
 				}
 			}
 		}

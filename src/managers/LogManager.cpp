@@ -29,6 +29,21 @@ std::queue<std::string>& LogManager::getQueueToDraw()
 	return queueToDraw;
 }
 
+bool LogManager::isErrorEnabled() {
+
+	return ConfigManager::Instance()->getDebugLogLevel() > 0;
+}
+
+bool LogManager::isInfoEnabled() {
+	
+	return ConfigManager::Instance()->getDebugLogLevel() > 2;
+}
+
+bool LogManager::isWarnEnabled() {
+
+	return ConfigManager::Instance()->getDebugLogLevel() > 1;
+}
+
 void LogManager::logCommand(const std::string& message)
 {
 	if (ConfigManager::Instance()->getDebugLogLevel() > 0)

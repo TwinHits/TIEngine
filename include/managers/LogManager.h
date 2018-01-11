@@ -15,6 +15,10 @@ namespace TIE
 		public:
 			std::queue<std::string>& getQueueToDraw();
 
+			bool isErrorEnabled();
+			bool isInfoEnabled();
+			bool isWarnEnabled();
+
 			void logCommand(const std::string& message);
 			void logError(const std::string& message);
 			void logInfo(const std::string& message);
