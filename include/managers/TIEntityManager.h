@@ -3,6 +3,7 @@
 
 #include <map>
 #include <memory>
+#include <queue>
 
 #include "templates/Singleton.h"
 
@@ -35,6 +36,8 @@ namespace TIE
 		private:
 			std::map<GlobalId, std::shared_ptr<TIEntity> > sceneObjects;
 			std::map<GlobalId, std::shared_ptr<SceneText> > sceneTexts;
+			
+			std::priority_queue<std::shared_ptr<TIEntity> > objectsToBeDrawn();
 		
 			TIEntityManager(const TIEntityManager&);
 			void operator=(const TIEntityManager&);

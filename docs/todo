@@ -12,9 +12,7 @@ Change StringManager to use a special string class that returns the right locali
 
 Write comments for everything
 
-DevConsole:
-	Show what is being typed
-	Stick to top left corner
-
 SceneObjectManager should hold objects by a Z factor that determines their
 drawing order.
+	OR
+Some mechanism that allows for lastlight to draw by cell.
