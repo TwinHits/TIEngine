@@ -2,15 +2,19 @@
 
 //Using the Singleton instance method should return the object
 TEST(Singleton, Instance) {
-	const TIE::ConfigManager* configManager = TIE::ConfigManager::Instance();
+	auto singleton = TIE::Singleton<int>::Instance();
 
-	ASSERT_TRUE(configManager != nullptr);
+	ASSERT_TRUE(singleton != nullptr);
 }
 
-//Calling the Singleton instance method twice should return the same object
+//Calling the Singleton instance method twice for the same type should return the same object
 TEST(Singleton, MultipleInstances) {
-	const TIE::ConfigManager* configManager1 = TIE::ConfigManager::Instance();
-	const TIE::ConfigManager* configManager2 = TIE::ConfigManager::Instance();
+	auto intSingleton1 = TIE::Singleton<int>::Instance();
+	auto intSingleton2 = TIE::Singleton<int>::Instance();
 
-	ASSERT_EQ(configManager1, configManager2);
+	auto charSingleton1 = TIE::Singleton<char>::Instance();
+	auto charSingleton2 = TIE::Singleton<char>::Instance();
+
+	ASSERT_EQ(intSingleton1, intSingleton2);
+	ASSERT_EQ(charSingleton1, charSingleton2);
 }
