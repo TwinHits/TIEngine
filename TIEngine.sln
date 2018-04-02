@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TIEngine", "TIEngine.vcxproj", "{A9567AE9-6967-4C7C-B85C-21737B2A2EE5}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tests", "tests\tests.vcxproj", "{1B095AEB-76FD-4515-8B19-02C47871ED69}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,6 +13,8 @@ Global
 		Debug|x86 = Debug|x86
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
+		Tests|x64 = Tests|x64
+		Tests|x86 = Tests|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{A9567AE9-6967-4C7C-B85C-21737B2A2EE5}.Debug|x64.ActiveCfg = Debug|x64
@@ -21,8 +25,25 @@ Global
 		{A9567AE9-6967-4C7C-B85C-21737B2A2EE5}.Release|x64.Build.0 = Release|x64
 		{A9567AE9-6967-4C7C-B85C-21737B2A2EE5}.Release|x86.ActiveCfg = Release|Win32
 		{A9567AE9-6967-4C7C-B85C-21737B2A2EE5}.Release|x86.Build.0 = Release|Win32
+		{A9567AE9-6967-4C7C-B85C-21737B2A2EE5}.Tests|x64.ActiveCfg = Debug|x64
+		{A9567AE9-6967-4C7C-B85C-21737B2A2EE5}.Tests|x64.Build.0 = Debug|x64
+		{A9567AE9-6967-4C7C-B85C-21737B2A2EE5}.Tests|x86.ActiveCfg = Release|Win32
+		{A9567AE9-6967-4C7C-B85C-21737B2A2EE5}.Tests|x86.Build.0 = Release|Win32
+		{1B095AEB-76FD-4515-8B19-02C47871ED69}.Debug|x64.ActiveCfg = Debug|x64
+		{1B095AEB-76FD-4515-8B19-02C47871ED69}.Debug|x86.ActiveCfg = Debug|Win32
+		{1B095AEB-76FD-4515-8B19-02C47871ED69}.Debug|x86.Build.0 = Debug|Win32
+		{1B095AEB-76FD-4515-8B19-02C47871ED69}.Release|x64.ActiveCfg = Release|x64
+		{1B095AEB-76FD-4515-8B19-02C47871ED69}.Release|x86.ActiveCfg = Release|Win32
+		{1B095AEB-76FD-4515-8B19-02C47871ED69}.Release|x86.Build.0 = Release|Win32
+		{1B095AEB-76FD-4515-8B19-02C47871ED69}.Tests|x64.ActiveCfg = Debug|x64
+		{1B095AEB-76FD-4515-8B19-02C47871ED69}.Tests|x64.Build.0 = Debug|x64
+		{1B095AEB-76FD-4515-8B19-02C47871ED69}.Tests|x86.ActiveCfg = Release|Win32
+		{1B095AEB-76FD-4515-8B19-02C47871ED69}.Tests|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8EA41D3E-731B-48EF-A98F-8E30FB2B5E78}
 	EndGlobalSection
 EndGlobal
