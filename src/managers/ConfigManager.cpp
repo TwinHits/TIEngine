@@ -10,43 +10,68 @@
 
 using namespace TIE;
 
-ConfigManager::ConfigManager() 
-{
-	loadConfig();
+ConfigManager::ConfigManager() {
+	loadConfig(this->defaultConfigPath);
 }
 
-ConfigManager::~ConfigManager() {}
 
-void ConfigManager::loadConfig()
-{
-	auto configPath = boost::filesystem::path("config.ini");
-	if (exists(configPath))
-	{ 
+ConfigManager::~ConfigManager() {
+}
+
+
+const std::string& ConfigManager::getDebugLogPath() {
+	return debugLogPath;
+}
+
+
+const std::string& ConfigManager::getAssetsPath() {
+	return assetsPath;
+}
+
+
+const int& ConfigManager::getDebugLogLevel() {
+	return debugLogLevel;
+}
+
+
+const Language& ConfigManager::getDefaultDisplayLanguage() {
+	return defaultDisplayLanguage;
+}
+
+
+bool TIE::ConfigManager::loadConfigFile(std::string path) {
+	return loadConfig(path);
+}
+
+
+bool ConfigManager::loadConfig(std::string path) {
+	auto configPath = boost::filesystem::path(path);
+	if (exists(configPath)) { 
 		std::ifstream config;
 
-		config.open("config.ini");
-		if (!config.is_open())
-		{
-			return;
+		config.open(configPath.string());
+		if (!config.is_open()) {
+			throw std::runtime_error("File '" + configPath.string() + "' was found, but did not open. Cannot parse configuration values so using default values.");
 		}	
 
 		parseConfig(config);
 
 		config.close();
+		return true;
+	} else {
+		return false;
 	}
 }
 
-void ConfigManager::parseConfig(std::ifstream& config)
-{
+
+void ConfigManager::parseConfig(std::ifstream& config) {
 	std::string line;
-	while (std::getline(config, line))
-	{
+	while (std::getline(config, line)) {
 		std::stringstream fileline(line);
 		std::string key;
 		std::string value;
 
-		if (std::getline(fileline, key, '='))
-		{
+		if (std::getline(fileline, key, '=')) {
 			std::getline(fileline, value);	
 
 			if (key == "DebugLogPath") { debugLogPath = value; }
@@ -57,8 +82,8 @@ void ConfigManager::parseConfig(std::ifstream& config)
 	}
 }
 
-Language ConfigManager::parseLanguage(const std::string& s)
-{
+
+Language ConfigManager::parseLanguage(const std::string& s) {
 	//defaultDisplayLanguage is stored as a string in the config.ini, and must
 	//be converted to it's enumerated type.
 	std::map<std::string, Language> languages;
@@ -69,13 +94,9 @@ Language ConfigManager::parseLanguage(const std::string& s)
 	languages["ja_JP"] = ja_JP;
 
 	Language l = languages[s];
-	if (l == 0)
+	if (l == 0) {
 		return en_US;
-	else
+	} else {
 		return l;
+	}
 }
-
-const std::string& ConfigManager::getDebugLogPath() { return debugLogPath; }
-const std::string& ConfigManager::getAssetsPath() { return assetsPath; }
-const int& ConfigManager::getDebugLogLevel() { return debugLogLevel; }
-const Language& ConfigManager::getDefaultDisplayLanguage() { return defaultDisplayLanguage; }

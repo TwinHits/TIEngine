@@ -8,36 +8,37 @@
 
 #include "objects/Language.h"
 
-namespace TIE
-{
+namespace TIE {
 
-	class ConfigManager: public Singleton<ConfigManager>
-	{
-		//Singleton manager of engine side configurable values defined in
-		//config.ini. Stores default values in case of no file found.
-		public:
-			ConfigManager();
-			~ConfigManager();
+class ConfigManager: public Singleton<ConfigManager> {
+	//Singleton manager of engine side configurable values defined in
+	//config.ini. Stores default values in case of no file found.
+	public:
+		ConfigManager();
+		~ConfigManager();
 		
-			const std::string& getDebugLogPath();
-			const std::string& getAssetsPath();
-			const int& getDebugLogLevel();
-			const Language& getDefaultDisplayLanguage();
-			
-		private:
-			void loadConfig();
-			void parseConfig(std::ifstream& config);
-			Language parseLanguage(const std::string& s);
+		const std::string& getDebugLogPath();
+		const std::string& getAssetsPath();
+		const int& getDebugLogLevel();
+		const Language& getDefaultDisplayLanguage();
+		bool loadConfigFile(std::string path);
+		
+	private:
+		bool loadConfig(std::string path);
+		void parseConfig(std::ifstream& config);
+		Language parseLanguage(const std::string& s);
 
-			//Configurable Values
-			std::string debugLogPath = "";
-			std::string assetsPath = "";
-			int debugLogLevel = 3;
-			Language defaultDisplayLanguage = en_US;
+		std::string defaultConfigPath = "config.ini";
 
-			ConfigManager(const ConfigManager&);
-			void operator=(const ConfigManager&);
-	};
+		//Possible values and their defaults
+		std::string debugLogPath = "logs/";
+		std::string assetsPath = "assets/";
+		int debugLogLevel = 3;
+		Language defaultDisplayLanguage = en_US;
+
+		ConfigManager(const ConfigManager&);
+		void operator=(const ConfigManager&);
+};
 
 }
 #endif

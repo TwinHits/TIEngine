@@ -2,6 +2,7 @@
 #define SINGLETON_H
 
 namespace TIE {
+
 template <typename T>
 class Singleton {
 	public:
@@ -16,6 +17,6 @@ class Singleton {
 		void operator=(const Singleton& S) {}
 		~Singleton() {}
 };
-}
 
+}
 #endif
