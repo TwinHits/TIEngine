@@ -41,11 +41,11 @@ TEST(ConfigManager, ParseConfigFile) {
 	std::string testConfigurationFile = "../../tests/testconfig.ini";
 	bool success = TIE::ConfigManager::Instance()->loadConfigFile(testConfigurationFile);
 
-	std::string expectedAssets = "tests/assets/";
+	std::string expectedAssets = "../../tests/assets/";
 	std::string actualAssets = TIE::ConfigManager::Instance()->getAssetsPath();
 	ASSERT_EQ(expectedAssets, actualAssets);
 
-	std::string expectedLogs = "tests/logs/";
+	std::string expectedLogs = "../../tests/logs/";
 	std::string actualLogs = TIE::ConfigManager::Instance()->getDebugLogPath();
 	ASSERT_EQ(expectedLogs, actualLogs);
 

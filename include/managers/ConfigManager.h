@@ -21,10 +21,10 @@ class ConfigManager: public Singleton<ConfigManager> {
 		const std::string& getAssetsPath();
 		const int& getDebugLogLevel();
 		const Language& getDefaultDisplayLanguage();
-		bool loadConfigFile(std::string path);
+		bool loadConfigFile(const std::string& path);
 		
 	private:
-		bool loadConfig(std::string path);
+		bool loadConfig(const std::string& path);
 		void parseConfig(std::ifstream& config);
 		Language parseLanguage(const std::string& s);
 

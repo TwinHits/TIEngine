@@ -39,12 +39,12 @@ const Language& ConfigManager::getDefaultDisplayLanguage() {
 }
 
 
-bool TIE::ConfigManager::loadConfigFile(std::string path) {
+bool TIE::ConfigManager::loadConfigFile(const std::string& path) {
 	return loadConfig(path);
 }
 
 
-bool ConfigManager::loadConfig(std::string path) {
+bool ConfigManager::loadConfig(const std::string& path) {
 	auto configPath = boost::filesystem::path(path);
 	if (exists(configPath)) { 
 		std::ifstream config;
