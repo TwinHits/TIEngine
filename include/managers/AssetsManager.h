@@ -12,39 +12,38 @@
 
 #include "templates/Singleton.h"
 
-namespace TIE
-{
+namespace TIE {
 
-	class AssetsManager: public Singleton<AssetsManager>
-	{
-		//Singleton manager for game assets. Parses every file found in the
-		//config file defined assets folders.
-		public:
-			const sf::Texture& getTexture(GlobalId);
-			const sf::Texture& getTexture(const std::string&);
-			const sf::SoundBuffer& getAudio(GlobalId);
-			const sf::SoundBuffer& getAudio(const std::string&);
-			const sf::Font& getFont(GlobalId);
-			const sf::Font& getFont(const std::string&);
-	
-			AssetsManager();	
-			~AssetsManager();
+class AssetsManager: public Singleton<AssetsManager> {
+	//Singleton manager for game assets. Parses every file found in the
+	//config file defined assets folders.
+	public:
+		const sf::Texture& getTexture(GlobalId);
+		const sf::Texture& getTexture(const std::string&);
+		const sf::SoundBuffer& getAudio(GlobalId);
+		const sf::SoundBuffer& getAudio(const std::string&);
+		const sf::Font& getFont(GlobalId);
+		const sf::Font& getFont(const std::string&);
 
-		private:
-			boost::filesystem::path texturesPath;
-			boost::filesystem::path audioPath;
-			boost::filesystem::path fontsPath;
+		//void setTexturesPath(const std::string&);
 
-			void parseAssets();
+		AssetsManager();	
+		~AssetsManager();
 
-			std::map<GlobalId, sf::Texture> textures;
-			std::map<GlobalId, sf::SoundBuffer> audio; 
-			std::map<GlobalId, sf::Font> fonts;
+	private:
+		boost::filesystem::path texturesPath;
+		boost::filesystem::path audioPath;
+		boost::filesystem::path fontsPath;
 
-			AssetsManager(const AssetsManager&);
-			void operator=(const AssetsManager&);
-	};
+		void parseAssets();
+
+		std::map<GlobalId, sf::Texture> textures;
+		std::map<GlobalId, sf::SoundBuffer> audio; 
+		std::map<GlobalId, sf::Font> fonts;
+
+		AssetsManager(const AssetsManager&);
+		void operator=(const AssetsManager&);
+};
 
 }
-
 #endif
