@@ -7,26 +7,24 @@
 
 #include "objects/GlobalId.h"
 
-namespace TIE
-{
+namespace TIE {
 
-	class HashManager : public Singleton<HashManager>
-	{
-		public:
-			GlobalId getNewGlobalId();
-			GlobalId getHash(const std::string& s);
-	
-			void setSeed(unsigned long seed);
+class HashManager : public Singleton<HashManager> {
+	public:
+		GlobalId getNewGlobalId();
+		GlobalId getHash(const std::string& s);
 
-			HashManager();
-			~HashManager();
+		void setSeed(unsigned long seed);
 
-		private:
-			GlobalId seed = 0;
+		HashManager();
+		~HashManager();
 
-			HashManager(const HashManager&);
-			void operator=(const HashManager&);
-	};
+	private:
+		GlobalId seed = 0;
+
+		HashManager(const HashManager&);
+		void operator=(const HashManager&);
+};
 
 }
 #endif
