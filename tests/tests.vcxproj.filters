@@ -11,9 +11,19 @@
     <ClCompile Include="Singleton.cpp">
       <Filter>templates</Filter>
     </ClCompile>
+    <ClCompile Include="HashManager.cpp">
+      <Filter>managers</Filter>
+    </ClCompile>
+    <ClCompile Include="LogManager.cpp">
+      <Filter>managers</Filter>
+    </ClCompile>
+    <ClCompile Include="LogLevel.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Constants.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -24,6 +34,9 @@
     </Filter>
     <Filter Include="templates">
       <UniqueIdentifier>{cb26dafd-7ef2-40ba-a925-3a22b905f6df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objects">
+      <UniqueIdentifier>{fcf5dda1-173c-4972-9c86-f3cb19743bac}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

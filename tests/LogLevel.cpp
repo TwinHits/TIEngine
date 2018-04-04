@@ -1,0 +1,41 @@
+#include "pch.h"
+
+int COMMAND_INT_VALUE = 0;
+int ERROR_INT_VALUE = 1;
+int WARN_INT_VALUE = 2;
+int INFO_INT_VALUE = 3;
+
+std::string COMMAND_STRING_VALUE_LC = "command";
+std::string ERROR_STRING_VALUE_LC = "error";
+std::string WARN_STRING_VALUE_LC = "warn";
+std::string INFO_STRING_VALUE_LC = "info";
+
+std::string COMMAND_STRING_VALUE_UC = "COMMAND";
+std::string ERROR_STRING_VALUE_UC = "ERROR";
+std::string WARN_STRING_VALUE_UC = "WARN";
+std::string INFO_STRING_VALUE_UC = "INFO";
+
+TEST(LogLevel, LogLevelToInt) {
+	ASSERT_EQ(TIE::LogLevel::COMMAND, COMMAND_INT_VALUE);
+	ASSERT_EQ(TIE::LogLevel::ERROR, ERROR_INT_VALUE);
+	ASSERT_EQ(TIE::LogLevel::WARN, WARN_INT_VALUE);
+	ASSERT_EQ(TIE::LogLevel::INFO, INFO_INT_VALUE);
+}
+
+TEST(LogLevel, StringToLogLevel) {
+	ASSERT_EQ(TIE::LogLevel::COMMAND, TIE::strToLogLevel(COMMAND_STRING_VALUE_UC));
+	ASSERT_EQ(TIE::LogLevel::ERROR, TIE::strToLogLevel(ERROR_STRING_VALUE_UC));
+	ASSERT_EQ(TIE::LogLevel::WARN, TIE::strToLogLevel(WARN_STRING_VALUE_UC));
+	ASSERT_EQ(TIE::LogLevel::INFO, TIE::strToLogLevel(INFO_STRING_VALUE_UC));
+
+	ASSERT_EQ(TIE::LogLevel::COMMAND, TIE::strToLogLevel(COMMAND_STRING_VALUE_LC));
+	ASSERT_EQ(TIE::LogLevel::ERROR, TIE::strToLogLevel(ERROR_STRING_VALUE_LC));
+	ASSERT_EQ(TIE::LogLevel::WARN, TIE::strToLogLevel(WARN_STRING_VALUE_LC));
+	ASSERT_EQ(TIE::LogLevel::INFO, TIE::strToLogLevel(INFO_STRING_VALUE_LC));
+}
+
+TEST(LogLevel, LogLevelHeirarchy) {
+	ASSERT_GE(TIE::LogLevel::INFO, TIE::LogLevel::WARN);
+	ASSERT_GE(TIE::LogLevel::WARN, TIE::LogLevel::ERROR);
+	ASSERT_GE(TIE::LogLevel::ERROR, TIE::LogLevel::COMMAND);
+}

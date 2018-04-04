@@ -18,8 +18,8 @@ TEST(ConfigManager, GetAssetsPathDefault) {
 }
 
 TEST(ConfigManager, GetDebugLogLevelDefault) {
-	int expected = 3;
-	int actual = TIE::ConfigManager::Instance()->getDebugLogLevel();
+	TIE::LogLevel expected = TIE::LogLevel::INFO;
+	TIE::LogLevel actual = TIE::ConfigManager::Instance()->getDebugLogLevel();
 
 	ASSERT_EQ(expected, actual);
 }
@@ -49,8 +49,8 @@ TEST(ConfigManager, ParseConfigFile) {
 	std::string actualLogs = TIE::ConfigManager::Instance()->getDebugLogPath();
 	ASSERT_EQ(expectedLogs, actualLogs);
 
-	int expectedDebugLogLevel = 1;
-	int actualDebugLogLevel = TIE::ConfigManager::Instance()->getDebugLogLevel();
+	TIE::LogLevel expectedDebugLogLevel = TIE::LogLevel::ERROR;
+	TIE::LogLevel actualDebugLogLevel = TIE::ConfigManager::Instance()->getDebugLogLevel();
 	ASSERT_EQ(expectedDebugLogLevel, actualDebugLogLevel);
 
 	Language expectedDefaultDisplayLanguage = ja_JP;
@@ -69,10 +69,10 @@ TEST(ConfigManager, SetDefaultDisplayLanguage) {
 }
 
 TEST(ConfigManager, SetDebugLogLevel) {
-	TIE::ConfigManager::Instance()->setDebugLogLevel(2);
+	TIE::ConfigManager::Instance()->setDebugLogLevel(TIE::LogLevel::WARN);
 
-	int expected = 2;
-	int actual = TIE::ConfigManager::Instance()->getDebugLogLevel();
+	TIE::LogLevel expected = TIE::LogLevel::WARN;
+	TIE::LogLevel actual = TIE::ConfigManager::Instance()->getDebugLogLevel();
 
 	ASSERT_EQ(expected, actual);
 

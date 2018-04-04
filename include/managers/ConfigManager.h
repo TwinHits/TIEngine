@@ -6,6 +6,7 @@
 
 #include "templates/Singleton.h"
 
+#include "objects/LogLevel.h"	
 #include "objects/Language.h"
 
 namespace TIE {
@@ -21,11 +22,11 @@ class ConfigManager: public Singleton<ConfigManager> {
 
 		const std::string& getDebugLogPath();
 		const std::string& getAssetsPath();
-		const int& getDebugLogLevel();
+		LogLevel getDebugLogLevel();
 		const Language& getDefaultDisplayLanguage();
 
 		void setDefaultDisplayLanguage(const Language& defaultDisplayLanguage);
-		void setDebugLogLevel(const int& debugLogLevel);
+		void setDebugLogLevel(LogLevel debugLogLevel);
 		
 	private:
 		bool loadConfig(const std::string& path);
@@ -37,8 +38,8 @@ class ConfigManager: public Singleton<ConfigManager> {
 		//Possible values and their defaults
 		std::string debugLogPath = "logs/";
 		std::string assetsPath = "assets/";
-		int debugLogLevel = 3;
-		Language defaultDisplayLanguage = en_US;
+		LogLevel debugLogLevel = LogLevel::INFO;
+		Language defaultDisplayLanguage = Language::en_US;
 
 		ConfigManager(const ConfigManager&);
 		void operator=(const ConfigManager&);

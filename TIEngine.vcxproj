@@ -169,6 +169,7 @@
     <ClInclude Include="include\objects\GlobalId.h" />
     <ClInclude Include="include\objects\InputMap.h" />
     <ClInclude Include="include\objects\Language.h" />
+    <ClInclude Include="include\objects\LogLevel.h" />
     <ClInclude Include="include\objects\Message.h" />
     <ClInclude Include="include\objects\Player.h" />
     <ClInclude Include="include\objects\SceneText.h" />
@@ -179,6 +180,9 @@
     <ClInclude Include="include\utilities\LocalTime.h" />
     <ClInclude Include="include\utilities\StringToInt.h" />
     <ClInclude Include="include\utilities\ToDegrees.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\objects\LogLevel.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

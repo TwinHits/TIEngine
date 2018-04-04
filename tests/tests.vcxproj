@@ -33,6 +33,7 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
+    <ClInclude Include="Constants.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
@@ -45,6 +46,9 @@
     </ClCompile>
     <ClCompile Include="AssetsManager.cpp" />
     <ClCompile Include="Singleton.cpp" />
+    <ClCompile Include="HashManager.cpp" />
+    <ClCompile Include="LogManager.cpp" />
+    <ClCompile Include="LogLevel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

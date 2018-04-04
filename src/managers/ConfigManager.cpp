@@ -6,7 +6,7 @@
 #include "managers/ConfigManager.h"
 #include "managers/LogManager.h"
 
-#include "utilities/StringToInt.h"
+#include "objects/LogLevel.h"
 
 using namespace TIE;
 
@@ -29,12 +29,12 @@ const std::string& ConfigManager::getAssetsPath() {
 }
 
 
-const int& ConfigManager::getDebugLogLevel() {
+LogLevel ConfigManager::getDebugLogLevel() {
 	return debugLogLevel;
 }
 
 
-void ConfigManager::setDebugLogLevel(const int& debugLogLevel) {
+void ConfigManager::setDebugLogLevel(LogLevel debugLogLevel) {
 	this->debugLogLevel = debugLogLevel;
 }
 
@@ -87,7 +87,7 @@ void ConfigManager::parseConfig(std::ifstream& config) {
 
 			if (key == "DebugLogPath") { debugLogPath = value; }
 			if (key == "AssetsPath") { assetsPath = value; }
-			if (key == "DebugLogLevel") { debugLogLevel = StringToInt(value); }
+			if (key == "DebugLogLevel") { debugLogLevel = strToLogLevel(value); }
 			if (key == "DefaultDisplayLanguage") { defaultDisplayLanguage = parseLanguage(value); }
 		}
 	}
