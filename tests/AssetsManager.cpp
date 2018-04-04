@@ -1,14 +1,6 @@
 #include "pch.h"
 
-std::string TEST_CONFIG_FILE = "../../tests/testconfig.ini";
-std::string TEST_TEXTURE = "test_texture.png";
-int TEST_TEXTURE_SIZE_X = 256;
-int DEFAULT_TEXTURE_SIZE_X = 512;
-std::string TEST_FONT = "test_font.ttf";
-std::string TEST_FONT_FAMILY = "Oswald Regular";
-std::string DEFAULT_FONT_FAMILY = "";
-std::string TEST_AUDIO = "test_audio";
-std::string TEST_NONSENSE = "memes";
+#include "Constants.h"
 
 //Test that private method ParseAssets successfully parses all assets. This will runtime_exception if it fails.
 TEST(AssetsManager, ParseAssets) {
@@ -36,7 +28,7 @@ TEST(AssetsManager, GetTextureById) {
 //When given an invalid texture id, the missing_texture should be returned
 TEST(AssetsManager, GetDefaultTexture) {
 	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
-	const sf::Texture& texture = TIE::AssetsManager::Instance()->getTexture(TEST_NONSENSE);
+	const sf::Texture& texture = TIE::AssetsManager::Instance()->getTexture(TEST_NONSENSE_1);
 	//sf::Texture has no comparison operator, but missing_texture's x is 512.
 	ASSERT_EQ(texture.getSize().x, DEFAULT_TEXTURE_SIZE_X);
 }
@@ -45,7 +37,7 @@ TEST(AssetsManager, GetDefaultTexture) {
 TEST(AssetsManager, GetFontByName) {
 	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
 	const sf::Font& success = TIE::AssetsManager::Instance()->getFont(TEST_FONT);
-	const sf::Font& failure = TIE::AssetsManager::Instance()->getFont(TEST_NONSENSE);
+	const sf::Font& failure = TIE::AssetsManager::Instance()->getFont(TEST_NONSENSE_1);
 
 	//sf::Font have no comparison operators, but the font has a distinctive font family
 	ASSERT_EQ(success.getInfo().family, TEST_FONT_FAMILY);
@@ -57,7 +49,7 @@ TEST(AssetsManager, GetFontById) {
 	GlobalId hashedfont = TIE::HashManager::Instance()->getHash(TEST_FONT);
 	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
 	const sf::Font& success = TIE::AssetsManager::Instance()->getFont(hashedfont);
-	const sf::Font& failure = TIE::AssetsManager::Instance()->getFont(TEST_NONSENSE);
+	const sf::Font& failure = TIE::AssetsManager::Instance()->getFont(TEST_NONSENSE_1);
 
 	//sf::Font have no comparison operators, but the text texture has a distinctive font family
 	ASSERT_EQ(success.getInfo().family, TEST_FONT_FAMILY);
@@ -67,7 +59,7 @@ TEST(AssetsManager, GetFontById) {
 //When given an invalid font id, the default font should be returned
 TEST(AssetsManager, GetDefaultFont) {
 	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
-	const sf::Font& font = TIE::AssetsManager::Instance()->getFont(TEST_NONSENSE);
+	const sf::Font& font = TIE::AssetsManager::Instance()->getFont(TEST_NONSENSE_1);
 	//sf::Font has no comparison operator, but missing_font's family 
 	ASSERT_EQ(font.getInfo().family, DEFAULT_FONT_FAMILY);
 }
