@@ -34,9 +34,20 @@ const int& ConfigManager::getDebugLogLevel() {
 }
 
 
+void ConfigManager::setDebugLogLevel(const int& debugLogLevel) {
+	this->debugLogLevel = debugLogLevel;
+}
+
+
 const Language& ConfigManager::getDefaultDisplayLanguage() {
 	return defaultDisplayLanguage;
 }
+
+
+void ConfigManager::setDefaultDisplayLanguage(const Language& defaultDisplayLanguage) {
+	this->defaultDisplayLanguage = defaultDisplayLanguage;
+}
+
 
 
 bool TIE::ConfigManager::loadConfigFile(const std::string& path) {

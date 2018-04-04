@@ -17,11 +17,15 @@ class ConfigManager: public Singleton<ConfigManager> {
 		ConfigManager();
 		~ConfigManager();
 		
+		bool loadConfigFile(const std::string& path);
+
 		const std::string& getDebugLogPath();
 		const std::string& getAssetsPath();
 		const int& getDebugLogLevel();
 		const Language& getDefaultDisplayLanguage();
-		bool loadConfigFile(const std::string& path);
+
+		void setDefaultDisplayLanguage(const Language& defaultDisplayLanguage);
+		void setDebugLogLevel(const int& debugLogLevel);
 		
 	private:
 		bool loadConfig(const std::string& path);
