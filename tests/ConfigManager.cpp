@@ -31,6 +31,13 @@ TEST(ConfigManager, GetDefaultDisplayLanguageDefault) {
 	ASSERT_EQ(expected, actual);
 }
 
+TEST(ConfigManager, GetDatabaseConnectionStringDefault) {
+	const std::string expected = "dbname=tiengine user=tie_admin password=123456 hostaddr=127.0.0.1 port=5432";
+	const std::string actual = TIE::ConfigManager::Instance()->getDatabaseConnectionString();
+
+	ASSERT_EQ(expected, actual);
+}
+
 //Test when given a specific configuration file, the file is loaded correctly.
 TEST(ConfigManager, LoadCustomConfigFile) {
 	bool success = TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
@@ -56,6 +63,11 @@ TEST(ConfigManager, ParseConfigFile) {
 	Language expectedDefaultDisplayLanguage = ja_JP;
 	Language actualDefaultDisplayLanguage = TIE::ConfigManager::Instance()->getDefaultDisplayLanguage();
 	ASSERT_EQ(expectedDefaultDisplayLanguage, actualDefaultDisplayLanguage);
+
+	std::string expectedDBString = "dbname=testtiedb user=root password=654321 hostaddr=localhost port=2345";
+	std::string actualDBString = TIE::ConfigManager::Instance()->getDatabaseConnectionString();
+	ASSERT_EQ(expectedDBString, actualDBString);
+
 }
 
 

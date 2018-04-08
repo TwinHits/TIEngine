@@ -20,6 +20,9 @@
     <ClCompile Include="LogLevel.cpp">
       <Filter>objects</Filter>
     </ClCompile>
+    <ClCompile Include="DatabaseManager.cpp">
+      <Filter>managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

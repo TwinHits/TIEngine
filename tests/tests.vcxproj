@@ -49,6 +49,7 @@
     <ClCompile Include="HashManager.cpp" />
     <ClCompile Include="LogManager.cpp" />
     <ClCompile Include="LogLevel.cpp" />
+    <ClCompile Include="DatabaseManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

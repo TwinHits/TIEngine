@@ -2,6 +2,7 @@
 #define CONFIGMANAGER_H 
 
 #include <fstream>
+#include <map>
 #include <string>
 
 #include "templates/Singleton.h"
@@ -24,6 +25,7 @@ class ConfigManager: public Singleton<ConfigManager> {
 		const std::string& getAssetsPath();
 		LogLevel getDebugLogLevel();
 		const Language& getDefaultDisplayLanguage();
+		const std::string& getDatabaseConnectionString();
 
 		void setDefaultDisplayLanguage(const Language& defaultDisplayLanguage);
 		void setDebugLogLevel(LogLevel debugLogLevel);
@@ -32,6 +34,7 @@ class ConfigManager: public Singleton<ConfigManager> {
 		bool loadConfig(const std::string& path);
 		void parseConfig(std::ifstream& config);
 		Language parseLanguage(const std::string& s);
+		const std::string assembleDatabaseConnectionString(std::map<std::string, std::string>);
 
 		std::string defaultConfigPath = "config.ini";
 
@@ -40,6 +43,7 @@ class ConfigManager: public Singleton<ConfigManager> {
 		std::string assetsPath = "assets/";
 		LogLevel debugLogLevel = LogLevel::INFO;
 		Language defaultDisplayLanguage = Language::en_US;
+		std::string databaseConnectionString = "dbname=tiengine user=tie_admin password=123456 hostaddr=127.0.0.1 port=5432";
 
 		ConfigManager(const ConfigManager&);
 		void operator=(const ConfigManager&);

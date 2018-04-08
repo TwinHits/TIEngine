@@ -20,17 +20,17 @@ ConfigManager::~ConfigManager() {
 
 
 const std::string& ConfigManager::getDebugLogPath() {
-	return debugLogPath;
+	return this->debugLogPath;
 }
 
 
 const std::string& ConfigManager::getAssetsPath() {
-	return assetsPath;
+	return this->assetsPath;
 }
 
 
 LogLevel ConfigManager::getDebugLogLevel() {
-	return debugLogLevel;
+	return this->debugLogLevel;
 }
 
 
@@ -40,9 +40,13 @@ void ConfigManager::setDebugLogLevel(LogLevel debugLogLevel) {
 
 
 const Language& ConfigManager::getDefaultDisplayLanguage() {
-	return defaultDisplayLanguage;
+	return this->defaultDisplayLanguage;
 }
 
+
+const std::string& ConfigManager::getDatabaseConnectionString() {
+	return this->databaseConnectionString;
+}
 
 void ConfigManager::setDefaultDisplayLanguage(const Language& defaultDisplayLanguage) {
 	this->defaultDisplayLanguage = defaultDisplayLanguage;
@@ -77,6 +81,7 @@ bool ConfigManager::loadConfig(const std::string& path) {
 
 void ConfigManager::parseConfig(std::ifstream& config) {
 	std::string line;
+	std::map<std::string, std::string> databaseConfig;
 	while (std::getline(config, line)) {
 		std::stringstream fileline(line);
 		std::string key;
@@ -86,11 +91,25 @@ void ConfigManager::parseConfig(std::ifstream& config) {
 			std::getline(fileline, value);	
 
 			if (key == "DebugLogPath") { debugLogPath = value; }
-			if (key == "AssetsPath") { assetsPath = value; }
-			if (key == "DebugLogLevel") { debugLogLevel = strToLogLevel(value); }
-			if (key == "DefaultDisplayLanguage") { defaultDisplayLanguage = parseLanguage(value); }
-		}
+			else if (key == "AssetsPath") { assetsPath = value; }
+			else if (key == "DebugLogLevel") { debugLogLevel = strToLogLevel(value); }
+			else if (key == "DefaultDisplayLanguage") { defaultDisplayLanguage = parseLanguage(value); }
+			else if (key == "DatabaseDBName" || key == "DatabaseUser" || key == "DatabasePassword" || key == "DatabaseHostAddr" || key == "DatabasePort") {
+				databaseConfig.insert(std::pair<std::string, std::string>(key, value));
+			}
+		} 
 	}
+	this->databaseConnectionString = assembleDatabaseConnectionString(databaseConfig);
+}
+
+const std::string ConfigManager::assembleDatabaseConnectionString(const std::map<std::string, std::string> databaseConfig) {
+	std::stringstream databaseConnectionString;
+	databaseConnectionString << "dbname=" << databaseConfig.at("DatabaseDBName") << " ";
+	databaseConnectionString << "user=" << databaseConfig.at("DatabaseUser") << " ";
+	databaseConnectionString << "password=" << databaseConfig.at("DatabasePassword") << " ";
+	databaseConnectionString << "hostaddr=" << databaseConfig.at("DatabaseHostAddr") << " ";
+	databaseConnectionString << "port=" << databaseConfig.at("DatabasePort");
+	return databaseConnectionString.str();
 }
 
 
