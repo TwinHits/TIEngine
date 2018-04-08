@@ -38,6 +38,7 @@ TEST(LogManager, LogLevelError) {
 }
 
 
+//Check if text logged is correctly written to a file
 TEST(LogManager, LogInfoToFile) {
 	TIE::LogManager::Instance()->setDebugLogLevel(TIE::LogLevel::INFO);
 	TIE::LogManager::Instance()->logInfo(TEST_NONSENSE_2);
@@ -70,6 +71,7 @@ TEST(LogManager, LogCommandToFile) {
 }
 
 
+//Get all text logged this session and make sure it has everything.
 TEST(LogManager, GetQueueToDraw) {
 	TIE::LogManager::Instance()->setDebugLogLevel(TIE::LogLevel::INFO);
 	TIE::LogManager::Instance()->logInfo(TEST_NONSENSE_1);
@@ -79,7 +81,7 @@ TEST(LogManager, GetQueueToDraw) {
 	ASSERT_TRUE(queueToDraw.back().find(INFO_LEVEL_PREFIX + TEST_NONSENSE_1, 0));
 }
 
-
+//Helper method for making sure that the last line of the debuglog contains the provided text
 bool CheckDebugLogForText(const std::string& text) {
 	std::ifstream log;
 	log.open(TIE::ConfigManager::Instance()->getDebugLogPath() + "debug.log", std::ios_base::app);
