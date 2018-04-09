@@ -23,6 +23,9 @@
     <ClCompile Include="DatabaseManager.cpp">
       <Filter>managers</Filter>
     </ClCompile>
+    <ClCompile Include="StringManager.cpp">
+      <Filter>managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

@@ -9,18 +9,19 @@
 #include "templates/Singleton.h"
 
 namespace TIE {
-	class DatabaseManager : public Singleton<DatabaseManager> {
-		public:
-			void Select(const std::string& query, std::string& s);
 
-			DatabaseManager();
-			~DatabaseManager();
-		private:
-			soci::session db;
+class DatabaseManager : public Singleton<DatabaseManager> {
+	public:
+		void Select(const std::string& query, std::string& s);
 
-			DatabaseManager(const DatabaseManager&);
-			void operator=(const DatabaseManager&);
-	};
+		DatabaseManager();
+		~DatabaseManager();
+	private:
+		soci::session db;
+
+		DatabaseManager(const DatabaseManager&);
+		void operator=(const DatabaseManager&);
+};
+
 }
-
 #endif

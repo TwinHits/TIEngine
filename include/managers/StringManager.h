@@ -9,25 +9,22 @@
 #include "objects/GlobalId.h"
 #include "objects/Language.h"
 
-namespace TIE
-{
+namespace TIE {
 
-	class StringManager : public Singleton<StringManager>
-	{
-		public:
-			std::string getString(const GlobalId id);
-			std::string getString(const GlobalId id, const Language l);
-			void setDisplayLanguage(Language l);
-			
-			StringManager();
-			~StringManager();
-		private:
-			Language displayLanguage;
+class StringManager : public Singleton<StringManager> {
+	public:
+		std::string getString(const GlobalId id);
+		std::string getString(const GlobalId id, const Language l);
+		void setDisplayLanguage(Language l);
+		
+		StringManager();
+		~StringManager();
+	private:
+		Language displayLanguage;
 
-			StringManager(const StringManager&);
-			void operator=(const StringManager&);
+		StringManager(const StringManager&);
+		void operator=(const StringManager&);
 	};
 
 }
-
 #endif
