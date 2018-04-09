@@ -4,15 +4,12 @@
 #include <soci.h>
 #include <soci-postgresql.h>
 
-#include <memory>
 #include <string>
 
 #include "templates/Singleton.h"
 
-namespace TIE
-{
-	class DatabaseManager : public Singleton<DatabaseManager>
-	{
+namespace TIE {
+	class DatabaseManager : public Singleton<DatabaseManager> {
 		public:
 			void Select(const std::string& query, std::string& s);
 
