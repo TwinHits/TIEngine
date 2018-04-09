@@ -1,7 +1,8 @@
-CPP_FILES = ${wildcard src/managers/*.cpp} ${wildcard src/objects/*.cpp} ${wildcard src/utilities/*.cpp} ${wildcard src/*.cpp}
-OBJ_FILES = ${addprefix bin/objs/,${notdir ${CPP_FILES:.cpp=.o}}}
-CC_FLAGS = -g -Wall -Werror -std=c++11
-LD_FLAGS = -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system -lboost_filesystem -lboost_system -lsoci_core -lsoci_postgresql
+CPP_FILES = ${wildcard src/managers/*.cpp} ${wildcard src/objects/*.cpp} ${wildcard src/utilities/*.cpp} #${wildcard src/*.cpp}
+TEST_CPP_FILES = ${wildcard tests/*.cpp}
+OBJ_FILES = ${addprefix bin/objs/,${notdir ${CPP_FILES:.cpp=.o}}} ${addprefix bin/tests/,${notdir ${TEST_CPP_FILES:.cpp=.o}}}
+CC_FLAGS = -g -Wall -Wno-unused-variable -Werror -std=c++11
+LD_FLAGS = -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system -lboost_filesystem -lboost_system -lsoci_core -lsoci_postgresql -lgtest -lgtest_main -lpthread -lgmock -lgmock_main
 IN_FLAGS = -Iinclude
 LIB_NAME = libTIEngine-debug.a
 
@@ -19,7 +20,10 @@ bin/objs/%.o: src/objects/%.cpp
 bin/objs/%.o: src/utilities/%.cpp
 	g++ ${CC_FLAGS} ${IN_FLAGS} -c -o $@ $<
 
-bin/objs/%.o: src/%.cpp
+#bin/objs/%.o: src/%.cpp
+#	g++ ${CC_FLAGS} ${IN_FLAGS} -c -o $@ $<
+
+bin/tests/%.o: tests/%.cpp
 	g++ ${CC_FLAGS} ${IN_FLAGS} -c -o $@ $<
 
 rv:
@@ -27,5 +31,6 @@ rv:
 
 clean:
 	rm bin/objs/*.o
+	tm bin/tests/*.o
 	rm bin/tiengine
 	rm bin/libTIEngine-debug.a

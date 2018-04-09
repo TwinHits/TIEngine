@@ -13,7 +13,7 @@ TEST(AssetsManager, GetTextureByName) {
 	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
 	const sf::Texture& texture = TIE::AssetsManager::Instance()->getTexture(TEST_TEXTURE);
 	//sf::Texture has no comparison operator, but we're looking for a 256 sized texture and the missing_texture is 512.
-	ASSERT_EQ(texture.getSize().x, 256);
+	ASSERT_EQ(texture.getSize().x, TEST_TEXTURE_SIZE_X);
 }
 
 //Using a known texture name, make a hash and get the sf::texture by hashed id
@@ -22,7 +22,7 @@ TEST(AssetsManager, GetTextureById) {
 	GlobalId hashedTextureId = TIE::HashManager::Instance()->getHash(TEST_TEXTURE);
 	const sf::Texture& texture = TIE::AssetsManager::Instance()->getTexture(hashedTextureId);
 	//sf::Texture has no comparison operator, but we're looking for a 256 sized texture and the missing_texture is 512.
-	ASSERT_EQ(texture.getSize().x, 256);
+	ASSERT_EQ(texture.getSize().x, TEST_TEXTURE_SIZE_X);
 }
 
 //When given an invalid texture id, the missing_texture should be returned
