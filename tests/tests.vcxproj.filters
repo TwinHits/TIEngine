@@ -29,6 +29,9 @@
     <ClCompile Include="Language.cpp">
       <Filter>objects</Filter>
     </ClCompile>
+    <ClCompile Include="Test.cpp">
+      <Filter>utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -46,6 +49,9 @@
     </Filter>
     <Filter Include="objects">
       <UniqueIdentifier>{fcf5dda1-173c-4972-9c86-f3cb19743bac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utilities">
+      <UniqueIdentifier>{9c4d5fe4-419b-47db-bf30-70f185976208}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
