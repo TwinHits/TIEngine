@@ -21,6 +21,22 @@ static std::string TEST_FONT_FAMILY = "Oswald Regular";
 static std::string DEFAULT_FONT_FAMILY = "";
 static std::string TEST_AUDIO = "test_audio";
 
+//LogLevels
+int COMMAND_INT_VALUE = 0;
+int ERROR_INT_VALUE = 1;
+int WARN_INT_VALUE = 2;
+int INFO_INT_VALUE = 3;
+
+std::string COMMAND_STRING_VALUE_LC = "command";
+std::string ERROR_STRING_VALUE_LC = "error";
+std::string WARN_STRING_VALUE_LC = "warn";
+std::string INFO_STRING_VALUE_LC = "info";
+
+std::string COMMAND_STRING_VALUE_UC = "COMMAND";
+std::string ERROR_STRING_VALUE_UC = "ERROR";
+std::string WARN_STRING_VALUE_UC = "WARN";
+std::string INFO_STRING_VALUE_UC = "INFO";
+
 //LogManager
 static std::string INFO_LEVEL_PREFIX = "INFO: ";
 static std::string WARN_LEVEL_PREFIX = "WARN: ";
