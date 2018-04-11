@@ -6,30 +6,32 @@
 
 using namespace TIE;
 
-StringManager::StringManager()
-{
+StringManager::StringManager() {
 	this->displayLanguage = ConfigManager::Instance()->getDefaultDisplayLanguage();
 }
 
-StringManager::~StringManager() {}
 
-std::string StringManager::getString(const GlobalId id)
-{
+StringManager::~StringManager() {
+}
+
+
+std::string StringManager::getString(const GlobalId id) {
 	return getString(id, displayLanguage);
 }
 
-std::string StringManager::getString(const GlobalId id, const Language l)
-{
 
-	std::string query = "SELECT COALESCE((SELECT localizedContent FROM TIE_StringLocalizations WHERE _languageId=" + std::to_string(l) + "), defaultContent) FROM TIE_LanguageStrings LEFT JOIN TIE_StringLocalizations ON stringId=_stringId WHERE stringId =" + std::to_string(id) + " LIMIT 1;";
-
-	std::string s;
-	DatabaseManager::Instance()->Select(query, s);
-
-	return s;
+std::string StringManager::getString(const GlobalId id, const Language language) {
+	std::string result = "";
+	std::string query = "SELECT COALESCE((SELECT localizedContent FROM TIE_StringLocalizations WHERE _languageId=" + std::to_string(language) + "), defaultContent) FROM TIE_LanguageStrings LEFT JOIN TIE_StringLocalizations ON stringId=_stringId WHERE stringId =" + std::to_string(id) + " LIMIT 2;";
+	DatabaseManager::Instance()->Select(query, result);
+	return result;
 }
 
-void StringManager::setDisplayLanguage(Language l)
-{
-	this->displayLanguage = l;
+
+Language StringManager::getDisplayLanguage() {
+	return this->displayLanguage;
+}
+
+void StringManager::setDisplayLanguage(Language language) {
+	this->displayLanguage = language;
 }

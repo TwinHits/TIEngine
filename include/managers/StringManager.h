@@ -14,8 +14,10 @@ namespace TIE {
 class StringManager : public Singleton<StringManager> {
 	public:
 		std::string getString(const GlobalId id);
-		std::string getString(const GlobalId id, const Language l);
-		void setDisplayLanguage(Language l);
+		std::string getString(const GlobalId id, const Language language);
+
+		Language getDisplayLanguage();
+		void setDisplayLanguage(Language language);
 		
 		StringManager();
 		~StringManager();

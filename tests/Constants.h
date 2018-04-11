@@ -4,7 +4,6 @@
 #include "pch.h"
 
 //General
-static std::string TWIN_ION_ENGINE = "Twin Ion Engine";
 static std::string TEST_NONSENSE_1 = "memes";
 static std::string TEST_NONSENSE_2 = "My fair lady reinforces gender sterotypes";
 static std::string TEST_NONSENSE_3 = "memes are the DNA of the soul";
@@ -27,5 +26,10 @@ static std::string INFO_LEVEL_PREFIX = "INFO: ";
 static std::string WARN_LEVEL_PREFIX = "WARN: ";
 static std::string ERROR_LEVEL_PREFIX = "ERROR: ";
 static std::string COMMAND_LEVEL_PREFIX = "COMMAND: ";
+
+//StringManager
+static std::string TWIN_ION_ENGINE_EN = "Twin Ion Engine";
+static std::string TWIN_ION_ENGINE_JP = "Tsuinionenjin";
+static TIE::GlobalId TWIN_ION_ENGINE_ID = 1;
 
 #endif
