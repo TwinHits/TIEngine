@@ -25,8 +25,8 @@ TEST(ConfigManager, GetDebugLogLevelDefault) {
 }
 
 TEST(ConfigManager, GetDefaultDisplayLanguageDefault) {
-	Language expected = en_US;
-	Language actual = TIE::ConfigManager::Instance()->getDefaultDisplayLanguage();
+	TIE::Language expected = TIE::en_US;
+	TIE::Language actual = TIE::ConfigManager::Instance()->getDefaultDisplayLanguage();
 
 	ASSERT_EQ(expected, actual);
 }
@@ -59,8 +59,8 @@ TEST(ConfigManager, ParseConfigFile) {
 	TIE::LogLevel actualDebugLogLevel = TIE::ConfigManager::Instance()->getDebugLogLevel();
 	ASSERT_EQ(expectedDebugLogLevel, actualDebugLogLevel);
 
-	Language expectedDefaultDisplayLanguage = ja_JP;
-	Language actualDefaultDisplayLanguage = TIE::ConfigManager::Instance()->getDefaultDisplayLanguage();
+	TIE::Language expectedDefaultDisplayLanguage = TIE::ja_JP;
+	TIE::Language actualDefaultDisplayLanguage = TIE::ConfigManager::Instance()->getDefaultDisplayLanguage();
 	ASSERT_EQ(expectedDefaultDisplayLanguage, actualDefaultDisplayLanguage);
 
 	std::string expectedDBString = "dbname=testtiedb user=root password=654321 hostaddr=localhost port=2345";
@@ -71,10 +71,10 @@ TEST(ConfigManager, ParseConfigFile) {
 
 
 TEST(ConfigManager, SetDefaultDisplayLanguage) {
-	TIE::ConfigManager::Instance()->setDefaultDisplayLanguage(es_ES);
+	TIE::ConfigManager::Instance()->setDefaultDisplayLanguage(TIE::es_ES);
 
-	Language expected = es_ES;
-	Language actual = TIE::ConfigManager::Instance()->getDefaultDisplayLanguage();
+	TIE::Language expected = TIE::es_ES;
+	TIE::Language actual = TIE::ConfigManager::Instance()->getDefaultDisplayLanguage();
 
 	ASSERT_EQ(expected, actual);
 }
@@ -86,5 +86,4 @@ TEST(ConfigManager, SetDebugLogLevel) {
 	TIE::LogLevel actual = TIE::ConfigManager::Instance()->getDebugLogLevel();
 
 	ASSERT_EQ(expected, actual);
-
 }
