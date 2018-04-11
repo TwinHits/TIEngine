@@ -51,6 +51,7 @@
     <ClCompile Include="LogLevel.cpp" />
     <ClCompile Include="DatabaseManager.cpp" />
     <ClCompile Include="StringManager.cpp" />
+    <ClCompile Include="Language.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

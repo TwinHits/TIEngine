@@ -26,6 +26,9 @@
     <ClCompile Include="StringManager.cpp">
       <Filter>managers</Filter>
     </ClCompile>
+    <ClCompile Include="Language.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
