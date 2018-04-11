@@ -19,7 +19,7 @@ TEST(AssetsManager, GetTextureByName) {
 //Using a known texture name, make a hash and get the sf::texture by hashed id
 TEST(AssetsManager, GetTextureById) {
 	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
-	GlobalId hashedTextureId = TIE::HashManager::Instance()->getHash(TEST_TEXTURE);
+	TIE::GlobalId hashedTextureId = TIE::HashManager::Instance()->getHash(TEST_TEXTURE);
 	const sf::Texture& texture = TIE::AssetsManager::Instance()->getTexture(hashedTextureId);
 	//sf::Texture has no comparison operator, but we're looking for a 256 sized texture and the missing_texture is 512.
 	ASSERT_EQ(texture.getSize().x, TEST_TEXTURE_SIZE_X);
@@ -46,7 +46,7 @@ TEST(AssetsManager, GetFontByName) {
 
 //Using a known font name, make a hash and get the sf::font by hashed id
 TEST(AssetsManager, GetFontById) {
-	GlobalId hashedfont = TIE::HashManager::Instance()->getHash(TEST_FONT);
+	TIE::GlobalId hashedfont = TIE::HashManager::Instance()->getHash(TEST_FONT);
 	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
 	const sf::Font& success = TIE::AssetsManager::Instance()->getFont(hashedfont);
 	const sf::Font& failure = TIE::AssetsManager::Instance()->getFont(TEST_NONSENSE_1);
