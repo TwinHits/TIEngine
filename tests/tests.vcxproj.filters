@@ -32,8 +32,11 @@
     <ClCompile Include="LocalTime.cpp">
       <Filter>utilities</Filter>
     </ClCompile>
-    <ClCompile Include="Test.cpp">
+    <ClCompile Include="ToDegrees.cpp">
       <Filter>utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeManager.cpp">
+      <Filter>managers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

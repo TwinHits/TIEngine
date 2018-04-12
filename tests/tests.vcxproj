@@ -53,7 +53,8 @@
     <ClCompile Include="StringManager.cpp" />
     <ClCompile Include="Language.cpp" />
     <ClCompile Include="LocalTime.cpp" />
-    <ClCompile Include="Test.cpp" />
+    <ClCompile Include="TimeManager.cpp" />
+    <ClCompile Include="ToDegrees.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
