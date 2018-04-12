@@ -38,7 +38,7 @@
     <ClCompile Include="TimeManager.cpp">
       <Filter>managers</Filter>
     </ClCompile>
-    <ClCompile Include="Test.cpp">
+    <ClCompile Include="GlobalId.cpp">
       <Filter>objects</Filter>
     </ClCompile>
   </ItemGroup>
