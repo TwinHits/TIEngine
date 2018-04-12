@@ -38,6 +38,9 @@
     <ClCompile Include="TimeManager.cpp">
       <Filter>managers</Filter>
     </ClCompile>
+    <ClCompile Include="Test.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
