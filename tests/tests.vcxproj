@@ -52,6 +52,7 @@
     <ClCompile Include="DatabaseManager.cpp" />
     <ClCompile Include="StringManager.cpp" />
     <ClCompile Include="Language.cpp" />
+    <ClCompile Include="LocalTime.cpp" />
     <ClCompile Include="Test.cpp" />
   </ItemGroup>
   <ItemGroup>

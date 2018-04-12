@@ -29,6 +29,9 @@
     <ClCompile Include="Language.cpp">
       <Filter>objects</Filter>
     </ClCompile>
+    <ClCompile Include="LocalTime.cpp">
+      <Filter>utilities</Filter>
+    </ClCompile>
     <ClCompile Include="Test.cpp">
       <Filter>utilities</Filter>
     </ClCompile>
