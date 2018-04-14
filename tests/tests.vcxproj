@@ -54,6 +54,9 @@
     <ClCompile Include="Language.cpp" />
     <ClCompile Include="LocalTime.cpp" />
     <ClCompile Include="GlobalId.cpp" />
+    <ClCompile Include="PlayerManager.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="StringToInt.cpp" />
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="ToDegrees.cpp" />
   </ItemGroup>

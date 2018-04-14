@@ -48,4 +48,9 @@ static std::string TWIN_ION_ENGINE_EN = "Twin Ion Engine";
 static std::string TWIN_ION_ENGINE_JP = "Tsuinionenjin";
 static TIE::GlobalId TWIN_ION_ENGINE_ID = 1;
 
+//StringToInt 
+static std::string ONE = "1";
+static std::string TWO = "2";
+static std::string THREE = "3";
+
 #endif

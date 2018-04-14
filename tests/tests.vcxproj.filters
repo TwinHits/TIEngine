@@ -41,6 +41,15 @@
     <ClCompile Include="GlobalId.cpp">
       <Filter>objects</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerManager.cpp">
+      <Filter>managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
+    <ClCompile Include="StringToInt.cpp">
+      <Filter>utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
