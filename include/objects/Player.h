@@ -3,22 +3,20 @@
 
 #include "GlobalId.h"
 
-namespace TIE
-{
+namespace TIE {
 
-	class Player
-	{
-		public:
-			Player(GlobalId id);
-			~Player();
+class Player {
+	public:
+		Player(GlobalId id);
+		~Player();
 
-			GlobalId getId() const;
-		private:	
-			GlobalId id;
+		GlobalId getId() const;
+	private:	
+		GlobalId id;
 
-			Player(const Player&);
-			void operator=(const Player&);
-	};
+		Player(const Player&);
+		void operator=(const Player&);
+};
 
 }
 #endif

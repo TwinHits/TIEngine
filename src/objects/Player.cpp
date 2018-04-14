@@ -5,13 +5,26 @@
 
 using namespace TIE;
 
-Player::Player(GlobalId id) 
-{
+Player::Player(GlobalId id)  {
 	this->id = id;
 }
-Player::~Player() {}
 
-GlobalId Player::getId() const { return id; }
 
-Player::Player(const Player&) {}
-void Player::operator=(const Player&) {}
+Player::~Player() {
+
+}
+
+
+GlobalId Player::getId() const {
+	return id; 
+}
+
+
+Player::Player(const Player&) {
+
+}
+
+
+void Player::operator=(const Player&) {
+
+}
