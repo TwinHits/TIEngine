@@ -2,71 +2,67 @@
 #include "managers/StringManager.h"
 #include "managers/LogManager.h"
 
-
 using namespace TIE;
 
-
-WindowManager::WindowManager() 
-{
+WindowManager::WindowManager() {
 
 }
 
 
-WindowManager::~WindowManager() 
-{
-	rmWindow();
+WindowManager::~WindowManager() {
+	this->removeWindow();
 }
 
 
-sf::RenderWindow& WindowManager::addWindow(sf::VideoMode mode, const std::string& title, int style, const sf::ContextSettings& settings)
-{
-	if (window == nullptr)
-	{
+sf::RenderWindow& WindowManager::addWindow(sf::VideoMode mode, const std::string& title, int style, const sf::ContextSettings& settings) {
+	if (!this->window) {
 		//Handle localization of default window title case
 		this->title = title;
-		if (this->title == "Twin Ion Engine")
-		{
+		if (this->title == "Twin Ion Engine") {
 			this->title = StringManager::Instance()->getString(1);
-			
 		}
 
-		this->window = std::make_shared<sf::RenderWindow>(mode, this->title, style, settings);
+		this->window = std::make_unique<sf::RenderWindow>(mode, this->title, style, settings);
 		LogManager::Instance()->logInfo("Opened window.");
 
 		this->windowSize.y = mode.height;
 		this->windowSize.x = mode.width;
 
-		return getWindow();
-	}
-	else
-	{
+		return this->getWindow();
+	} else {
 		LogManager::Instance()->logWarn("Client attempted to open a second window. Returning existing.");
-		return getWindow();
+		return this->getWindow();
 	}
 }
 
 
-void WindowManager::rmWindow()
-{
-	if (this->window != nullptr)
-	{
+void WindowManager::removeWindow() {
+	if (this->window) {
 		this->window.reset();
 	}
 }
 
 
-sf::RenderWindow& WindowManager::getWindow()
-{
-	return *window;
+sf::RenderWindow& WindowManager::getWindow() {
+	if (this->window) {
+		return *this->window;
+	} else {
+		LogManager::Instance()->logWarn("Client attempted to get a window that does not exist. Returning default new window.");
+		return this->addWindow();
+	}
 }
 
 
-void WindowManager::showFPS(const std::string& fps)
-{
+void WindowManager::showFPS(const std::string& fps) {
 	this->getWindow().setTitle(title + " " + fps);
 }
 
-sf::Vector2i WindowManager::getWindowSize()
-{
-	return windowSize;
+
+sf::Vector2i WindowManager::getWindowSize() {
+	return this->windowSize;
+}
+
+
+const std::string& WindowManager::getTitle() {
+	return this->title;
 }

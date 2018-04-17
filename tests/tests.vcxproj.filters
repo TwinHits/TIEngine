@@ -50,10 +50,14 @@
     <ClCompile Include="StringToInt.cpp">
       <Filter>utilities</Filter>
     </ClCompile>
+    <ClCompile Include="WindowManager.cpp">
+      <Filter>managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="Constants.h" />
+    <ClInclude Include="Helpers.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

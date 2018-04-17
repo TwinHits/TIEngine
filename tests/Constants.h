@@ -53,4 +53,8 @@ static std::string ONE = "1";
 static std::string TWO = "2";
 static std::string THREE = "3";
 
+//WindowManager
+static std::string SECOND_WINDOW_WARNING = "Client attempted to open a second window. Returning existing.";
+static std::string NO_WINDOW_WARNING = "Client attempted to get a window that does not exist. Returning default new window.";
+
 #endif
