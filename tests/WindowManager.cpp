@@ -42,9 +42,21 @@ TEST(WindowManager, RemoveWindow) {
 TEST(WindowManager, GetWindowNoWindow) {
 	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
 
-	TIE::LogManager::Instance()->logWarn(TEST_NONSENSE_3);
 	const sf::RenderWindow& window = TIE::WindowManager::Instance()->getWindow();
-	ASSERT_TRUE(CheckDebugLogForText(WARN_LEVEL_PREFIX + NO_WINDOW_WARNING));
+
+	sf::Vector2u actualSize = window.getSize();
+	sf::Vector2u expectedSize(800, 600);
+	ASSERT_EQ(expectedSize.x, actualSize.x);
+	ASSERT_EQ(expectedSize.y, actualSize.y);
+
+	const sf::ContextSettings& actualSettings = window.getSettings();
+	const sf::ContextSettings expectedSettings = sf::ContextSettings();
+	ASSERT_EQ(expectedSettings.antialiasingLevel, actualSettings.antialiasingLevel);
+	ASSERT_EQ(expectedSettings.attributeFlags, actualSettings.attributeFlags);
+	ASSERT_EQ(expectedSettings.Core, actualSettings.Core);
+	ASSERT_EQ(expectedSettings.Debug, actualSettings.Debug);
+	ASSERT_EQ(expectedSettings.depthBits, actualSettings.depthBits);
+	ASSERT_EQ(expectedSettings.stencilBits, actualSettings.stencilBits);
 
 	TIE::WindowManager::Instance()->removeWindow();
 }
@@ -56,7 +68,7 @@ TEST(WindowManager, GetWindowAlreadyExists) {
 	TIE::WindowManager::Instance()->addWindow();
 	TIE::LogManager::Instance()->logWarn(TEST_NONSENSE_3);
 	const sf::RenderWindow& window = TIE::WindowManager::Instance()->getWindow();
-	ASSERT_FALSE(CheckDebugLogForText(WARN_LEVEL_PREFIX + NO_WINDOW_WARNING));
+	ASSERT_FALSE(CheckDebugLogForText(WARN_LEVEL_PREFIX + NO_WINDOW_TO_GET_WARNING));
 
 	TIE::WindowManager::Instance()->removeWindow();
 }
