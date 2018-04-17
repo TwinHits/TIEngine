@@ -43,7 +43,7 @@ class ConfigManager: public Singleton<ConfigManager> {
 		std::string assetsPath = "assets/";
 		LogLevel debugLogLevel = LogLevel::INFO;
 		Language defaultDisplayLanguage = Language::en_US;
-		std::string databaseConnectionString = "dbname=tiengine user=tie_admin password=123456 hostaddr=127.0.0.1 port=5432";
+		std::string databaseConnectionString = "noconnectionstring";
 
 		ConfigManager(const ConfigManager&);
 		void operator=(const ConfigManager&);
