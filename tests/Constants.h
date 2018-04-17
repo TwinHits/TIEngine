@@ -26,22 +26,26 @@ static int COMMAND_INT_VALUE = 0;
 static int ERROR_INT_VALUE = 1;
 static int WARN_INT_VALUE = 2;
 static int INFO_INT_VALUE = 3;
+static int DEBUG_INT_VALUE = 4;
 
 static std::string COMMAND_STRING_VALUE_LC = "command";
 static std::string ERROR_STRING_VALUE_LC = "error";
 static std::string WARN_STRING_VALUE_LC = "warn";
 static std::string INFO_STRING_VALUE_LC = "info";
+static std::string DEBUG_STRING_VALUE_LC = "debug";
 
 static std::string COMMAND_STRING_VALUE_UC = "COMMAND";
 static std::string ERROR_STRING_VALUE_UC = "ERROR";
 static std::string WARN_STRING_VALUE_UC = "WARN";
 static std::string INFO_STRING_VALUE_UC = "INFO";
+static std::string DEBUG_STRING_VALUE_UC = "DEBUG";
 
 //LogManager
-static std::string INFO_LEVEL_PREFIX = "INFO: ";
-static std::string WARN_LEVEL_PREFIX = "WARN: ";
-static std::string ERROR_LEVEL_PREFIX = "ERROR: ";
-static std::string COMMAND_LEVEL_PREFIX = "COMMAND: ";
+static std::string INFO_LEVEL_PREFIX = " INFO: ";
+static std::string WARN_LEVEL_PREFIX = " WARN: ";
+static std::string ERROR_LEVEL_PREFIX = " ERROR: ";
+static std::string COMMAND_LEVEL_PREFIX = " COMMAND: ";
+static std::string DEBUG_LEVEL_PREFIX = " DEBUG: ";
 
 //StringManager
 static std::string TWIN_ION_ENGINE_EN = "Twin Ion Engine";
@@ -55,6 +59,18 @@ static std::string THREE = "3";
 
 //WindowManager
 static std::string SECOND_WINDOW_WARNING = "Client attempted to open a second window. Returning existing.";
-static std::string NO_WINDOW_WARNING = "Client attempted to get a window that does not exist. Returning default new window.";
+static std::string NO_WINDOW_TO_GET_WARNING = "Client attempted to get a window that does not exist. Returning default new window.";
+
+
+//ViewManager
+static sf::Vector2f DEFAULT_VIEW_CENTER = sf::Vector2f(0, 0);
+static sf::Vector2f DEFAULT_VIEW_SIZE = sf::Vector2f(1000, 1000);
+static std::string NO_VIEW_TO_REMOVE_WARNING = "No view found by id ";
+static std::string NO_VIEW_TO_GET_ERROR = "No view found by id '";
+static sf::FloatRect CUSTOM_VIEW_RECT = sf::FloatRect(0, 0, 1000, 1000);
+static sf::Vector2f CUSTOM_VIEW_CENTER = sf::Vector2f(0, 0);
+static sf::Vector2f CUSTOM_VIEW_SIZE = sf::Vector2f(1000, 1000);
+static TIE::GlobalId TEST_UNUSED_ID = 123151342;
+static int SCROLL_SPEED = 5;
 
 #endif

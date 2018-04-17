@@ -5,82 +5,80 @@
 
 using namespace TIE; 
 
-ViewManager::ViewManager() {}
-ViewManager::~ViewManager() {}
+ViewManager::ViewManager() {
 
-GlobalId ViewManager::addView()
-{
+}
+
+
+ViewManager::~ViewManager() {
+
+}
+
+
+GlobalId ViewManager::addView() {
 	return this->addView(sf::FloatRect(0,0,1000,1000));
 }
 
-GlobalId ViewManager::addView(const sf::FloatRect& rect)
-{
+
+GlobalId ViewManager::addView(const sf::FloatRect& rect) {
 	GlobalId id = HashManager::Instance()->getNewGlobalId();
-	if (views.find(id) == views.end())
-	{
-		std::shared_ptr<sf::View> view = std::make_shared<sf::View>(rect);
+	if (this->views.find(id) == this->views.end()) {
+		std::unique_ptr<sf::View> view = std::make_unique<sf::View>(rect);
 		view->setCenter(0,0);
-		views[id] = view;
+		this->views[id] = std::move(view);
 		return id;
-	}
-	else
-	{
+	} else {
 		LogManager::Instance()->logWarn("Hash Collision, recursively rehashing.");		
 		return this->addView();
 	}
 }
 
-sf::View& ViewManager::getView(GlobalId id)
-{
-	if (views.find(id) != views.end())
-	{
-		return *views[id];
+
+sf::View& ViewManager::getView(GlobalId id) {
+	if (this->views.find(id) != this->views.end()) {
+		return *this->views[id];
 	}
-	else
-	{
+	else {
 		LogManager::Instance()->logError("No view found by id '" + std::to_string(id) + "'. Returning nullptr.");	
-		return *views[id];
+		return *this->views[id];
 	}
 }
 
-sf::View& ViewManager::getActiveView()
-{
-	if (activeView == 0)
-	{
+
+sf::View& ViewManager::getActiveView() {
+	if (this->activeView == 0) {
 		LogManager::Instance()->logWarn("No active view found, building default.");
-		setActiveView(addView());
+		this->setActiveView(this->addView());
 	}
 
 	return this->getView(this->activeView);
 }
 
-void ViewManager::rmView(GlobalId id)
-{
-	auto view = views.find(id);
-	if (view != views.end())
-	{
-		views.erase(view);
+
+void ViewManager::removeView(GlobalId id) {
+	auto view = this->views.find(id);
+	if (view != this->views.end()) {
+		this->views.erase(view);
 	}
-	else if (view == views.end())
-	{
+	else if (view == this->views.end()) {
 		LogManager::Instance()->logWarn("No view found by id '" + std::to_string(id) + "'. Doing nothing.");	
 	}
 }
 
-void ViewManager::setActiveView(GlobalId id)
-{
+
+void ViewManager::setActiveView(GlobalId id) {
 	sf::View& view = this->getView(id);
 	WindowManager::Instance()->getWindow().setView(view);
 	this->activeView = id;
 }
 
-void ViewManager::updateCamera()
-{
+
+void ViewManager::updateCamera() {
 	WindowManager::Instance()->getWindow().setView(this->getActiveView());
 }	
 
-void ViewManager::scroll(Direction direction)
-{
+
+void ViewManager::scroll(Direction direction) {
 	sf::View& view = this->getActiveView();
 
 	if (direction == TOP)
@@ -93,7 +91,7 @@ void ViewManager::scroll(Direction direction)
 		view.move(-5,0);
 }
 
-void ViewManager::zoom(void)
-{
+
+void ViewManager::zoom(void) {
 
 }

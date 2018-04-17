@@ -11,35 +11,34 @@
 
 #include "objects/GlobalId.h"
 
-namespace TIE
-{
-	enum Direction { TOP, RIGHT, BOTTOM, LEFT };
+namespace TIE {
+	
+enum Direction { TOP, RIGHT, BOTTOM, LEFT };
 
-	class ViewManager : public Singleton<ViewManager>
-	{
-		public:
-			GlobalId addView(const sf::FloatRect&);
-			GlobalId addView();
-			sf::View& getView(GlobalId);
-			sf::View& getActiveView();
-			void rmView(GlobalId);
+class ViewManager : public Singleton<ViewManager> {
+	public:
+		GlobalId addView(const sf::FloatRect&);
+		GlobalId addView();
+		sf::View& getView(GlobalId);
+		sf::View& getActiveView();
+		void removeView(GlobalId);
 
-			void updateCamera();
-			void setActiveView(GlobalId);
+		void updateCamera();
+		void setActiveView(GlobalId);
 
-			void scroll(Direction direction);
-			void zoom(void);
+		void scroll(Direction direction);
+		void zoom(void);
 
-			ViewManager();
-			~ViewManager();
+		ViewManager();
+		~ViewManager();
 
-		private:
-			std::map<GlobalId, std::shared_ptr<sf::View> > views;
-			GlobalId activeView;
+	private:
+		std::map<GlobalId, std::unique_ptr<sf::View> > views;
+		GlobalId activeView;
 
-			void operator=(const ViewManager&);
-			ViewManager(const ViewManager&);
-	};
+		void operator=(const ViewManager&);
+		ViewManager(const ViewManager&);
+};
+
 }
-
 #endif

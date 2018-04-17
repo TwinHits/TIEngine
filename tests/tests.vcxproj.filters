@@ -53,6 +53,9 @@
     <ClCompile Include="WindowManager.cpp">
       <Filter>managers</Filter>
     </ClCompile>
+    <ClCompile Include="ViewManager.cpp">
+      <Filter>managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
