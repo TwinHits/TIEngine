@@ -1,8 +1,7 @@
 #include "pch.h"
 
 #include "Constants.h"
-
-bool CheckDebugLogForText(const std::string& text);
+#include "Helpers.h"
 
 //Test that LogManager correctly communicates changes to the ConfigManager
 TEST(LogManager, SetDebugLogLevel) {
@@ -79,29 +78,4 @@ TEST(LogManager, GetQueueToDraw) {
 	std::queue<std::string> queueToDraw = TIE::LogManager::Instance()->getQueueToDraw();
 	ASSERT_TRUE(!queueToDraw.empty());
 	ASSERT_TRUE(queueToDraw.back().find(INFO_LEVEL_PREFIX + TEST_NONSENSE_1, 0));
-}
-
-//Helper method for making sure that the last line of the debuglog contains the provided text
-bool CheckDebugLogForText(const std::string& text) {
-	std::ifstream log;
-	log.open(TIE::ConfigManager::Instance()->getDebugLogPath() + "debug.log", std::ios_base::app);
-	if (!log.is_open()) {
-		throw std::runtime_error("Failed to open debug log file: " + TIE::ConfigManager::Instance()->getDebugLogPath() + "debug.log");
-	} else {
-		std::string line = "";
-		std::vector<std::string> lines;
-		while (std::getline(log, line)) {
-			lines.push_back(line);
-		}
-
-		const std::string& lastLine = lines.back();
-		if (lastLine.find(text, 0) != std::string::npos) {
-			log.close();
-			return true;
-		} else {
-			log.close();
-			return false;
-		}
-	}
-	return false;
 }
