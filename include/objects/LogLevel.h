@@ -7,7 +7,7 @@
 namespace TIE {
 
 enum LogLevel {
-	COMMAND, ERROR, WARN, INFO
+	COMMAND, ERROR, WARN, INFO, DEBUG
 };
 
 LogLevel strToLogLevel(std::string loglevel);

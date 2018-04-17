@@ -13,6 +13,8 @@ TIE::LogLevel TIE::strToLogLevel(std::string loglevel) {
 		return TIE::LogLevel::WARN;
 	else if (loglevel == "INFO")
 		return TIE::LogLevel::INFO;
+	else if (loglevel == "DEBUG")
+		return TIE::LogLevel::DEBUG;
 	else
 		throw std::runtime_error("This is not a known loglevel: " + loglevel);
 }

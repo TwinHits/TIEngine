@@ -55,7 +55,7 @@ TEST(ConfigManager, ParseConfigFile) {
 	std::string actualLogs = TIE::ConfigManager::Instance()->getDebugLogPath();
 	ASSERT_EQ(expectedLogs, actualLogs);
 
-	TIE::LogLevel expectedDebugLogLevel = TIE::LogLevel::ERROR;
+	TIE::LogLevel expectedDebugLogLevel = TIE::LogLevel::DEBUG;
 	TIE::LogLevel actualDebugLogLevel = TIE::ConfigManager::Instance()->getDebugLogLevel();
 	ASSERT_EQ(expectedDebugLogLevel, actualDebugLogLevel);
 

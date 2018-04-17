@@ -12,9 +12,20 @@ TEST(LogManager, SetDebugLogLevel) {
 	ASSERT_EQ(expected, actual);
 }
 
+
 //Test that each log level value evaluates to the correct log level implementation
+TEST(LogManager, LogLevelDebug) {
+	TIE::LogManager::Instance()->setDebugLogLevel(TIE::LogLevel::DEBUG);
+	ASSERT_TRUE(TIE::LogManager::Instance()->isDebugEnabled());
+	ASSERT_TRUE(TIE::LogManager::Instance()->isInfoEnabled());
+	ASSERT_TRUE(TIE::LogManager::Instance()->isWarnEnabled());
+	ASSERT_TRUE(TIE::LogManager::Instance()->isErrorEnabled());
+}
+
+
 TEST(LogManager, LogLevelInfo) {
 	TIE::LogManager::Instance()->setDebugLogLevel(TIE::LogLevel::INFO);
+	ASSERT_FALSE(TIE::LogManager::Instance()->isDebugEnabled());
 	ASSERT_TRUE(TIE::LogManager::Instance()->isInfoEnabled());
 	ASSERT_TRUE(TIE::LogManager::Instance()->isWarnEnabled());
 	ASSERT_TRUE(TIE::LogManager::Instance()->isErrorEnabled());
@@ -23,6 +34,7 @@ TEST(LogManager, LogLevelInfo) {
 
 TEST(LogManager, LogLevelWarn) {
 	TIE::LogManager::Instance()->setDebugLogLevel(TIE::LogLevel::WARN);
+	ASSERT_FALSE(TIE::LogManager::Instance()->isDebugEnabled());
 	ASSERT_FALSE(TIE::LogManager::Instance()->isInfoEnabled());
 	ASSERT_TRUE(TIE::LogManager::Instance()->isWarnEnabled());
 	ASSERT_TRUE(TIE::LogManager::Instance()->isErrorEnabled());
@@ -31,6 +43,7 @@ TEST(LogManager, LogLevelWarn) {
 
 TEST(LogManager, LogLevelError) {
 	TIE::LogManager::Instance()->setDebugLogLevel(TIE::LogLevel::ERROR);
+	ASSERT_FALSE(TIE::LogManager::Instance()->isDebugEnabled());
 	ASSERT_FALSE(TIE::LogManager::Instance()->isInfoEnabled());
 	ASSERT_FALSE(TIE::LogManager::Instance()->isWarnEnabled());
 	ASSERT_TRUE(TIE::LogManager::Instance()->isErrorEnabled());
@@ -38,6 +51,14 @@ TEST(LogManager, LogLevelError) {
 
 
 //Check if text logged is correctly written to a file
+TEST(LogManager, LogDebugToFile) {
+	TIE::LogManager::Instance()->setDebugLogLevel(TIE::LogLevel::DEBUG);
+	TIE::LogManager::Instance()->logDebug(TEST_NONSENSE_1);
+	bool checkSuccess = CheckDebugLogForText(DEBUG_LEVEL_PREFIX + TEST_NONSENSE_1);
+	ASSERT_TRUE(checkSuccess);
+}
+
+
 TEST(LogManager, LogInfoToFile) {
 	TIE::LogManager::Instance()->setDebugLogLevel(TIE::LogLevel::INFO);
 	TIE::LogManager::Instance()->logInfo(TEST_NONSENSE_2);

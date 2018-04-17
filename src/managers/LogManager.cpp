@@ -32,8 +32,8 @@ std::queue<std::string>& LogManager::getQueueToDraw() {
 }
 
 
-bool LogManager::isErrorEnabled() {
-	return ConfigManager::Instance()->getDebugLogLevel() >= TIE::LogLevel::ERROR;
+bool LogManager::isDebugEnabled() {
+	return ConfigManager::Instance()->getDebugLogLevel() >= TIE::LogLevel::DEBUG;
 }
 
 
@@ -47,18 +47,14 @@ bool LogManager::isWarnEnabled() {
 }
 
 
-void LogManager::logCommand(const std::string& message) {
-	if (ConfigManager::Instance()->getDebugLogLevel() > 0) {
-		std::string logString = "[" +  LocalTime() +  "]" + "COMMAND: " +  message;
-		queueToDraw.push(logString);
-		log << logString << std::endl;
-	}
+bool LogManager::isErrorEnabled() {
+	return ConfigManager::Instance()->getDebugLogLevel() >= TIE::LogLevel::ERROR;
 }
 
 
-void LogManager::logError(const std::string& message) {
-	if (this->isErrorEnabled()) {
-		std::string logString = "[" +  LocalTime() +  "]" + " ERROR: " +  message;
+void LogManager::logDebug(const std::string& message) {
+	if (this->isDebugEnabled()) {
+		std::string logString = "[" +  LocalTime() +  "]" + " DEBUG: " +  message;
 		queueToDraw.push(logString);
 		log << logString << std::endl;
 	}
@@ -77,6 +73,24 @@ void LogManager::logInfo(const std::string& message) {
 void LogManager::logWarn(const std::string& message) {
 	if (this->isErrorEnabled()) {
 		std::string logString = "[" +  LocalTime() +  "]" + " WARN: " +  message;
+		queueToDraw.push(logString);
+		log << logString << std::endl;
+	}
+}
+
+
+void LogManager::logError(const std::string& message) {
+	if (this->isErrorEnabled()) {
+		std::string logString = "[" +  LocalTime() +  "]" + " ERROR: " +  message;
+		queueToDraw.push(logString);
+		log << logString << std::endl;
+	}
+}
+
+
+void LogManager::logCommand(const std::string& message) {
+	if (ConfigManager::Instance()->getDebugLogLevel() > 0) {
+		std::string logString = "[" +  LocalTime() +  "]" + "COMMAND: " +  message;
 		queueToDraw.push(logString);
 		log << logString << std::endl;
 	}
