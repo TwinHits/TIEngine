@@ -31,6 +31,7 @@
 	#include "templates/Factory.h"
 	
 	#include "utilities/LocalTime.h"
+	#include "utilities/MissingSprite.h"
 	#include "utilities/StringToInt.h"
 	#include "utilities/ToDegrees.h"
 

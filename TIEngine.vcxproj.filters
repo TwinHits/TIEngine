@@ -90,6 +90,9 @@
     <ClCompile Include="src\objects\LogLevel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\utilities\MissingSprite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\TIEngine.h">
@@ -180,6 +183,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\objects\LogLevel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\utilities\MissingSprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

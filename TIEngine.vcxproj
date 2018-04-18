@@ -146,6 +146,7 @@
     <ClCompile Include="src\objects\SceneText.cpp" />
     <ClCompile Include="src\objects\TIEntity.cpp" />
     <ClCompile Include="src\utilities\LocalTime.cpp" />
+    <ClCompile Include="src\utilities\MissingSprite.cpp" />
     <ClCompile Include="src\utilities\StringToInt.cpp" />
     <ClCompile Include="src\utilities\ToDegrees.cpp" />
   </ItemGroup>
@@ -178,6 +179,7 @@
     <ClInclude Include="include\templates\Singleton.h" />
     <ClInclude Include="include\TIEngine.h" />
     <ClInclude Include="include\utilities\LocalTime.h" />
+    <ClInclude Include="include\utilities\MissingSprite.h" />
     <ClInclude Include="include\utilities\StringToInt.h" />
     <ClInclude Include="include\utilities\ToDegrees.h" />
   </ItemGroup>
