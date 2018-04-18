@@ -88,7 +88,7 @@ TEST(ViewManager, GetViewDefault) {
 	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
 	TIE::LogManager::Instance()->logDebug(TEST_NONSENSE_1);
 
-	const sf::View& view = TIE::ViewManager::Instance()->getView(TEST_UNUSED_ID);
+	const sf::View& view = TIE::ViewManager::Instance()->getView(VIEW_UNUSED_ID);
 	ASSERT_TRUE(CheckDebugLogForText(ERROR_LEVEL_PREFIX + NO_VIEW_TO_GET_ERROR));
 }
 

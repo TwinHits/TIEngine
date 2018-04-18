@@ -56,6 +56,12 @@
     <ClCompile Include="ViewManager.cpp">
       <Filter>managers</Filter>
     </ClCompile>
+    <ClCompile Include="MessageManager.cpp">
+      <Filter>managers</Filter>
+    </ClCompile>
+    <ClCompile Include="TIEntity.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

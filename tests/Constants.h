@@ -61,7 +61,6 @@ static std::string THREE = "3";
 static std::string SECOND_WINDOW_WARNING = "Client attempted to open a second window. Returning existing.";
 static std::string NO_WINDOW_TO_GET_WARNING = "Client attempted to get a window that does not exist. Returning default new window.";
 
-
 //ViewManager
 static sf::Vector2f DEFAULT_VIEW_CENTER = sf::Vector2f(0, 0);
 static sf::Vector2f DEFAULT_VIEW_SIZE = sf::Vector2f(1000, 1000);
@@ -70,7 +69,14 @@ static std::string NO_VIEW_TO_GET_ERROR = "No view found by id '";
 static sf::FloatRect CUSTOM_VIEW_RECT = sf::FloatRect(0, 0, 1000, 1000);
 static sf::Vector2f CUSTOM_VIEW_CENTER = sf::Vector2f(0, 0);
 static sf::Vector2f CUSTOM_VIEW_SIZE = sf::Vector2f(1000, 1000);
-static TIE::GlobalId TEST_UNUSED_ID = 123151342;
-static int SCROLL_SPEED = 5;
+static TIE::GlobalId VIEW_UNUSED_ID = 123151342;
+static float SCROLL_SPEED = 5;
+
+//TIEntity
+static bool DEFAULT_DRAW_BOOL = true;
+static bool CUSTOM_DRAW_BOOL = false;
+static int DEFAULT_DRAW_ORDER_INT = 0;
+static int CUSTOM_DRAW_ORDER_INT = 12312;
+static TIE::GlobalId ENTITY_UNUSED_ID = 99868;
 
 #endif

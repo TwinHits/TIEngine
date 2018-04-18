@@ -58,6 +58,8 @@
     <ClCompile Include="PlayerManager.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="StringToInt.cpp" />
+    <ClCompile Include="MessageManager.cpp" />
+    <ClCompile Include="TIEntity.cpp" />
     <ClCompile Include="ViewManager.cpp" />
     <ClCompile Include="WindowManager.cpp" />
     <ClCompile Include="TimeManager.cpp" />
