@@ -2,23 +2,21 @@
 #define MESSAGEMANAGER_H
 
 #include "templates/Singleton.h"
+
 #include "objects/Message.h"
 
-namespace TIE
-{
+namespace TIE {
 
-	class MessageManager : public Singleton<MessageManager>
-	{
-		public:
-			void sendMessage(Message msg);
+class MessageManager : public Singleton<MessageManager>	{
+	public:
+		void sendMessage(Message msg);
 
-			MessageManager();
-			~MessageManager();
-		private:
-			MessageManager(const MessageManager&);
-			void operator=(const MessageManager&);
-	};
+		MessageManager();
+		~MessageManager();
+	private:
+		MessageManager(const MessageManager&);
+		void operator=(const MessageManager&);
+};
 
 }
-
 #endif
