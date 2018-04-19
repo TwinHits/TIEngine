@@ -182,9 +182,13 @@
     <ClInclude Include="include\utilities\MissingSprite.h" />
     <ClInclude Include="include\utilities\StringToInt.h" />
     <ClInclude Include="include\utilities\ToDegrees.h" />
+    <ClCompile Include="src\utilities\MissingText.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\objects\LogLevel.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\utilities\MissingText.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

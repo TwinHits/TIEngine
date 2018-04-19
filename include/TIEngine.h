@@ -32,6 +32,7 @@
 	
 	#include "utilities/LocalTime.h"
 	#include "utilities/MissingSprite.h"
+	#include "utilities/MissingText.h"
 	#include "utilities/StringToInt.h"
 	#include "utilities/ToDegrees.h"
 
