@@ -2,6 +2,17 @@
 
 #include "Constants.h"
 
+TEST(TIEntity, GetId) {
+	TIE::HashManager::Instance()->setSeed(ENTITY_UNUSED_ID);
+	//plus 2 for the clock initialized inside the constructor	
+	TIE::GlobalId expected = ENTITY_UNUSED_ID+2;
+	TIE::TIEntity entity = TIE::TIEntity();
+	TIE::GlobalId actual = entity.getId();
+
+	ASSERT_EQ(expected, actual);
+}
+
+
 TEST(TIEntity, GetDraw) {
 	TIE::TIEntity entity = TIE::TIEntity();
 	bool expected = DEFAULT_DRAW_BOOL;
@@ -39,17 +50,6 @@ TEST(TIEntity, SetDrawOrder) {
 
 	entity.setDrawOrder(CUSTOM_DRAW_ORDER_INT);
 	int actual = entity.getDrawOrder();
-
-	ASSERT_EQ(expected, actual);
-}
-
-
-TEST(TIEntity, GetId) {
-	TIE::HashManager::Instance()->setSeed(ENTITY_UNUSED_ID);
-	//plus 2 for the clock initialized inside the constructor	
-	TIE::GlobalId expected = ENTITY_UNUSED_ID+2;
-	TIE::TIEntity entity = TIE::TIEntity();
-	TIE::GlobalId actual = entity.getId();
 
 	ASSERT_EQ(expected, actual);
 }
