@@ -62,6 +62,9 @@
     <ClCompile Include="TIEntity.cpp">
       <Filter>objects</Filter>
     </ClCompile>
+    <ClCompile Include="SceneText.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

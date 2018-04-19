@@ -75,8 +75,13 @@ static float SCROLL_SPEED = 5;
 //TIEntity
 static bool DEFAULT_DRAW_BOOL = true;
 static bool CUSTOM_DRAW_BOOL = false;
+
 static int DEFAULT_DRAW_ORDER_INT = 0;
 static int CUSTOM_DRAW_ORDER_INT = 12312;
 static TIE::GlobalId ENTITY_UNUSED_ID = 99868;
+
+
+//SceneText
+static TIE::GlobalId SCENETEXT_UNUSED_ID = 40003;
 
 #endif

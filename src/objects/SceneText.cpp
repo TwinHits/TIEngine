@@ -6,33 +6,74 @@
 #include "objects/SceneText.h"
 #include "objects/Message.h"
 
+#include "utilities/MissingText.h"
+
 using namespace TIE;
 
-SceneText::SceneText() : clock(TimeManager::Instance()->addClock())
-{
+SceneText::SceneText() : clock(TimeManager::Instance()->addClock()) {
 	this->id = HashManager::Instance()->getNewGlobalId();	
+	this->text = TIE::getMissingText();
 }
 
-bool SceneText::operator==(const SceneText& rhs) const
-{
+
+SceneText::~SceneText() {
+	
+}
+
+
+GlobalId SceneText::getId() const { 
+	return id;
+}
+
+
+void SceneText::setText(const sf::Text& text) {
+	this->text.setString(text.getString());
+	this->text.setFont(*text.getFont());
+	this->text.setCharacterSize(text.getCharacterSize());
+	this->text.setPosition(text.getPosition());
+}
+
+
+sf::Text& SceneText::getText() {
+	return text; 
+}
+
+
+const sf::Text& SceneText::getText() const { 
+	return text; 
+}
+
+
+void SceneText::setDraw(bool b) { 
+	draw = b; 
+}
+
+
+bool SceneText::getDraw() const { 
+	return draw; 
+}
+
+
+void SceneText::update() {
+
+}
+
+
+void SceneText::receiveMessage(const Message& msg) const {
+
+}
+
+
+bool SceneText::operator==(const SceneText& rhs) const {
 	return this->getId() == rhs.getId();
 }
 
-bool SceneText::operator!=(const SceneText& rhs) const
-{
+
+bool SceneText::operator!=(const SceneText& rhs) const {
 	return this->getId() != rhs.getId();
 }
 
-void SceneText::setDraw(bool b) { draw = b; }
 
-sf::Text& SceneText::getText() { return text; }
-const sf::Text& SceneText::getText() const { return text; }
-GlobalId SceneText::getId() const { return id; }
-bool SceneText::getDraw() const { return draw; }
+void SceneText::operator=(const SceneText&) {
 
-SceneText::~SceneText() {}
-
-void SceneText::operator=(const SceneText&) {}
-
-void SceneText::receiveMessage(const Message& msg) const {}
-void SceneText::update() {}
+}
