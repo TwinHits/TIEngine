@@ -9,14 +9,15 @@ TIEntityManager::TIEntityManager() {
 
 
 TIEntityManager::~TIEntityManager() {
-
+	
 }
 
 
 const TIEntity& TIEntityManager::addTIEntity(std::unique_ptr<TIEntity> e) {
-	sceneObjects[e->getId()] = std::move(e);
-	LogManager::Instance()->logInfo("Added TIEntity '" + std::to_string(e->getId()) + "'.");
-	return getTIEntity(e->getId());
+	GlobalId id = e->getId();
+	sceneObjects[id] = std::move(e);
+	LogManager::Instance()->logInfo("Added TIEntity '" + std::to_string(id) + "'.");
+	return getTIEntity(id);
 }
 
 
@@ -31,9 +32,10 @@ const TIEntity& TIEntityManager::getTIEntity(GlobalId id) {
 
 
 const SceneText& TIEntityManager::addSceneText(std::unique_ptr<SceneText> st) {
-	sceneTexts[st->getId()] = std::move(st);
-	LogManager::Instance()->logInfo("Added SceneText '" + std::to_string(st->getId()) + "'.");
-	return getSceneText(st->getId());
+	GlobalId id = st->getId();
+	sceneTexts[id] = std::move(st);
+	LogManager::Instance()->logInfo("Added SceneText '" + std::to_string(id) + "'.");
+	return getSceneText(id);
 }
 
 
@@ -47,7 +49,7 @@ const SceneText& TIEntityManager::getSceneText(GlobalId id) {
 }
 
 
-void TIEntityManager::rmTIEntity(GlobalId id) {
+void TIEntityManager::removeTIEntity(GlobalId id) {
 	auto object = sceneObjects.find(id);
 	if (object != sceneObjects.end()) {
 		sceneObjects.erase(object);
@@ -70,7 +72,7 @@ void TIEntityManager::updateGameState() {
 }
 
 
-void TIEntityManager::rmSceneText(GlobalId id) {
+void TIEntityManager::removeSceneText(GlobalId id) {
 	auto text = sceneTexts.find(id);
 	if (text != sceneTexts.end()) {
 		sceneTexts.erase(text);
