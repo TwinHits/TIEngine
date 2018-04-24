@@ -27,8 +27,8 @@ void SceneManager::render()
 	sf::RenderWindow& window = WindowManager::Instance()->getWindow();
    	ViewManager::Instance()->setActiveView(sceneViewId);
 
-	auto sceneObjects = TIEntityManager::Instance()->getAllTIEntitys();
-	auto sceneTexts = TIEntityManager::Instance()->getAllSceneTexts();
+	auto& sceneObjects = TIEntityManager::Instance()->getAllTIEntitys();
+	auto& sceneTexts = TIEntityManager::Instance()->getAllSceneTexts();
 
 	window.clear();
 	for (auto& so : sceneObjects)

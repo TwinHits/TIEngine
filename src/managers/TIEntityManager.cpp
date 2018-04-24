@@ -1,112 +1,86 @@
-#include "managers/TIEntityManager.h"
 #include "managers/LogManager.h"
-
+#include "managers/TIEntityManager.h"
 
 using namespace TIE;
 
-
-TIEntityManager::TIEntityManager() 
-{
+TIEntityManager::TIEntityManager() {
 
 }
 
 
-TIEntityManager::~TIEntityManager()
-{
+TIEntityManager::~TIEntityManager() {
 
 }
 
 
-const TIEntity& TIEntityManager::addTIEntity(std::shared_ptr<TIEntity> so)
-{
-	sceneObjects[so->getId()] = so;
-	LogManager::Instance()->logInfo("Added TIEntity '" + std::to_string(so->getId()) + "'.");
-	return getTIEntity(so->getId());
+const TIEntity& TIEntityManager::addTIEntity(std::unique_ptr<TIEntity> e) {
+	sceneObjects[e->getId()] = std::move(e);
+	LogManager::Instance()->logInfo("Added TIEntity '" + std::to_string(e->getId()) + "'.");
+	return getTIEntity(e->getId());
 }
 
 
-const TIEntity& TIEntityManager::getTIEntity(GlobalId id)
-{
-	if (sceneObjects.find(id) != sceneObjects.end())
-	{
+const TIEntity& TIEntityManager::getTIEntity(GlobalId id) {
+	if (sceneObjects.find(id) != sceneObjects.end()) {
 		return *sceneObjects[id];
-	}
-	else 
-	{
+	} else {
 		//implement exception
 		return *sceneObjects[id];
 	}
 }
 
 
-const SceneText& TIEntityManager::addSceneText(std::shared_ptr<SceneText> st)
-{
-	sceneTexts[st->getId()] = st;
+const SceneText& TIEntityManager::addSceneText(std::unique_ptr<SceneText> st) {
+	sceneTexts[st->getId()] = std::move(st);
 	LogManager::Instance()->logInfo("Added SceneText '" + std::to_string(st->getId()) + "'.");
 	return getSceneText(st->getId());
 }
 
 
-const SceneText& TIEntityManager::getSceneText(GlobalId id)
-{
-	if (sceneTexts.find(id) != sceneTexts.end())
-	{
+const SceneText& TIEntityManager::getSceneText(GlobalId id) {
+	if (sceneTexts.find(id) != sceneTexts.end()) {
 		return *sceneTexts[id];
-	}
-	else 
-	{
+	} else {
 		//implement exception
 		return *sceneTexts[id];
 	}
 }
 
 
-void TIEntityManager::rmTIEntity(GlobalId id)
-{
+void TIEntityManager::rmTIEntity(GlobalId id) {
 	auto object = sceneObjects.find(id);
-	if (object != sceneObjects.end())
-	{
+	if (object != sceneObjects.end()) {
 		sceneObjects.erase(object);
 		LogManager::Instance()->logInfo("Deleted TIEntity'" + std::to_string(id) + "'.");
-	}	
-	else
-	{
+	} else {
 		LogManager::Instance()->logError("TIEntity '" + std::to_string(id) + "' does not exist, doing nothing.");	
 	}
 }
 
 
-const std::map<GlobalId, std::shared_ptr<TIEntity> >& TIEntityManager::getAllTIEntitys()
-{
+const std::map<GlobalId, std::unique_ptr<TIEntity> >& TIEntityManager::getAllTIEntitys() {
 	return sceneObjects;
 }
 
 
-void TIEntityManager::updateGameState()
-{
-	for (auto& so: sceneObjects)
-	{
-			so.second->update();
+void TIEntityManager::updateGameState() {
+	for (auto& e: sceneObjects) {
+			e.second->update();
 	}
 }
 
 
-void TIEntityManager::rmSceneText(GlobalId id)
-{
+void TIEntityManager::rmSceneText(GlobalId id) {
 	auto text = sceneTexts.find(id);
-	if (text != sceneTexts.end())
-	{
+	if (text != sceneTexts.end()) {
 		sceneTexts.erase(text);
 		LogManager::Instance()->logInfo("Deleted SceneText " + std::to_string(id) + "'.");
-	}	
-	else
-	{
+	} else {
 		LogManager::Instance()->logError("SceneText '" + std::to_string(id) + "' does not exist, doing nothing.");	
 	}
 }
 
 
-const std::map<GlobalId, std::shared_ptr<SceneText> >& TIEntityManager::getAllSceneTexts()
-{
+const std::map<GlobalId, std::unique_ptr<SceneText> >& TIEntityManager::getAllSceneTexts() {
 	return sceneTexts;
 }
