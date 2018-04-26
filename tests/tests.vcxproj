@@ -61,6 +61,7 @@
     <ClCompile Include="MessageManager.cpp" />
     <ClCompile Include="SceneText.cpp" />
     <ClCompile Include="TIEntity.cpp" />
+    <ClCompile Include="TIEntityManager.cpp" />
     <ClCompile Include="ViewManager.cpp" />
     <ClCompile Include="WindowManager.cpp" />
     <ClCompile Include="TimeManager.cpp" />

@@ -53,7 +53,7 @@ void TIEntityManager::removeTIEntity(GlobalId id) {
 	auto object = sceneObjects.find(id);
 	if (object != sceneObjects.end()) {
 		sceneObjects.erase(object);
-		LogManager::Instance()->logInfo("Deleted TIEntity'" + std::to_string(id) + "'.");
+		LogManager::Instance()->logInfo("Deleted TIEntity '" + std::to_string(id) + "'.");
 	} else {
 		LogManager::Instance()->logError("TIEntity '" + std::to_string(id) + "' does not exist, doing nothing.");	
 	}
@@ -76,7 +76,7 @@ void TIEntityManager::removeSceneText(GlobalId id) {
 	auto text = sceneTexts.find(id);
 	if (text != sceneTexts.end()) {
 		sceneTexts.erase(text);
-		LogManager::Instance()->logInfo("Deleted SceneText " + std::to_string(id) + "'.");
+		LogManager::Instance()->logInfo("Deleted SceneText '" + std::to_string(id) + "'.");
 	} else {
 		LogManager::Instance()->logError("SceneText '" + std::to_string(id) + "' does not exist, doing nothing.");	
 	}

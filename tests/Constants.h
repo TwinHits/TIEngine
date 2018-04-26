@@ -80,8 +80,11 @@ static int DEFAULT_DRAW_ORDER_INT = 0;
 static int CUSTOM_DRAW_ORDER_INT = 12312;
 static TIE::GlobalId ENTITY_UNUSED_ID = 99868;
 
-
 //SceneText
 static TIE::GlobalId SCENETEXT_UNUSED_ID = 40003;
+
+//TIEntityManager
+static std::string DELETED_TIENTITY_INFO = "Deleted TIEntity '";
+static std::string DELETED_SCENETEXT_INFO = "Deleted SceneText '";
 
 #endif
