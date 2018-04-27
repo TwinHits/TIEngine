@@ -60,6 +60,8 @@
     <ClCompile Include="StringToInt.cpp" />
     <ClCompile Include="MessageManager.cpp" />
     <ClCompile Include="SceneText.cpp" />
+    <ClCompile Include="MissingSprite.cpp" />
+    <ClCompile Include="MissingText.cpp" />
     <ClCompile Include="TIEntity.cpp" />
     <ClCompile Include="TIEntityManager.cpp" />
     <ClCompile Include="ViewManager.cpp" />

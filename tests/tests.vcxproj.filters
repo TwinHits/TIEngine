@@ -68,6 +68,12 @@
     <ClCompile Include="TIEntityManager.cpp">
       <Filter>managers</Filter>
     </ClCompile>
+    <ClCompile Include="MissingSprite.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
+    <ClCompile Include="MissingText.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

@@ -87,4 +87,17 @@ static TIE::GlobalId SCENETEXT_UNUSED_ID = 40003;
 static std::string DELETED_TIENTITY_INFO = "Deleted TIEntity '";
 static std::string DELETED_SCENETEXT_INFO = "Deleted SceneText '";
 
+//MissingSprite
+static std::string MISSING_SPRITE_TEXTURE = "missing_texture.png";
+static sf::IntRect MISSING_SPRITE_SIZE = sf::IntRect(0, 0, 32, 48);
+static sf::Vector2f MISSING_SPRITE_SCALE = sf::Vector2f(2, 2);
+static sf::Vector2f MISSING_SPRITE_ORIGIN = sf::Vector2f(16, 48);
+static sf::Vector2f MISSING_SPRITE_POSITION = sf::Vector2f(0, 0);
+
+//MissingText
+static std::string MISSING_TEXT_FONT = "font.tff";
+static std::string MISSING_TEXT_STRING = "NO_TEXT";
+static sf::Vector2f MISSING_TEXT_POSITION = sf::Vector2f(0, 0);
+static int MISSING_TEXT_CHARACTER_SIZE = 14;
+
 #endif
