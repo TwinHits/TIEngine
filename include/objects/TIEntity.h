@@ -26,8 +26,13 @@ class TIEntity {
 		void setSprite(const sf::Sprite& sprite);
 		const sf::Sprite& getSprite() const;
 
+		void setSpeed(double speed);
+		double getSpeed() const;
+
 		virtual void update();
 		virtual void receiveMessage(const Message& msg) const;
+
+		virtual void move(const sf::Vector2f destination, const float delta);
 
 		void operator=(const TIEntity&);
 		bool operator==(const TIEntity& rhs) const;
@@ -39,6 +44,8 @@ class TIEntity {
 		GlobalId id;
 		bool draw = true;
 		int drawOrder = 0;
+
+		double speed = 1;
 };
 
 }

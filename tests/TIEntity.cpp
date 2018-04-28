@@ -55,6 +55,26 @@ TEST(TIEntity, SetDrawOrder) {
 }
 
 
+TEST(TIEntity, GetSpeed) {
+	TIE::TIEntity entity = TIE::TIEntity();
+	double expected = DEFAULT_SPEED_DOUBLE;
+
+	double actual = entity.getSpeed();
+
+	ASSERT_EQ(expected, actual);
+}
+
+TEST(TIEntity, SetSpeed) {
+	TIE::TIEntity entity = TIE::TIEntity();
+	double expected = CUSTOM_SPEED_DOUBLE;
+
+	entity.setSpeed(CUSTOM_SPEED_DOUBLE);
+	double actual = entity.getSpeed();
+
+	ASSERT_EQ(expected, actual);
+}
+
+
 TEST(TIEntity, GetSprite) {
 	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
 
