@@ -81,7 +81,6 @@ static TIE::GlobalId ENTITY_UNUSED_ID = 99868;
 static double DEFAULT_SPEED_DOUBLE = 1;
 static double CUSTOM_SPEED_DOUBLE = 0.5;
 
-
 //SceneText
 static TIE::GlobalId SCENETEXT_UNUSED_ID = 40003;
 
@@ -101,5 +100,11 @@ static std::string MISSING_TEXT_FONT = "font.tff";
 static std::string MISSING_TEXT_STRING = "NO_TEXT";
 static sf::Vector2f MISSING_TEXT_POSITION = sf::Vector2f(0, 0);
 static int MISSING_TEXT_CHARACTER_SIZE = 14;
+
+//DevConsole
+static std::string TEST_COMMAND = "test";
+static std::string TEST_COMMAND_RUN_COMMAND = "Test Command Please Ignore.";
+static std::string UNKNOWN_COMMAND_RUN_COMMAND = "Unknown command.";
+
 
 #endif

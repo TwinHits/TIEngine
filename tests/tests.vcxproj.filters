@@ -74,6 +74,12 @@
     <ClCompile Include="MissingText.cpp">
       <Filter>objects</Filter>
     </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>managers</Filter>
+    </ClCompile>
+    <ClCompile Include="DevConsole.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

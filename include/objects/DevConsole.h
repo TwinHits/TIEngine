@@ -9,29 +9,28 @@
 #include "TIEntity.h"
 #include "SceneText.h"
 
-namespace TIE
-{
-	class DevConsole : public TIEntity
-	{
-		public:
-			DevConsole();
-			virtual ~DevConsole();
+namespace TIE {
 
-			const std::vector<SceneText>& getCommandHistory();
-			const SceneText& getCurrentCommand();
+class DevConsole : public TIEntity {
+	public:
+		DevConsole();
+		virtual ~DevConsole();
 
-			virtual int runClientCommand(const std::string& command);
-			void processCommand(const std::string& command);
-			void update();
+		const std::vector<SceneText>& getCommandHistory();
+		const SceneText& getCurrentCommand();
 
-		private:
-			std::vector<SceneText> commandHistory;
-			SceneText currentCommand;
-			const sf::Font& font;
-			int fontSize = 14;
-			int writePosition = -500;
+		virtual int runClientCommand(const std::string& command);
+		void processCommand(const std::string& command);
+		void update();
 
-	};
+	private:
+		std::vector<SceneText> commandHistory;
+		SceneText currentCommand;
+		const sf::Font& font;
+		int fontSize = 14;
+		int writePosition = -500;
+
+};
+
 } 
-
 #endif
