@@ -8,22 +8,18 @@
 
 using namespace TIE;
 
-
-SceneManager::SceneManager() : clock(TimeManager::Instance()->addClock())
-{
+SceneManager::SceneManager() : clock(TimeManager::Instance()->addClock()) {
 	sceneViewId = ViewManager::Instance()->addView(sf::FloatRect(0,0,800,600));
 
 }
 
 	
-SceneManager::~SceneManager() 
-{
+SceneManager::~SceneManager() {
 
 }
 
 
-void SceneManager::render()
-{		
+void SceneManager::render() {		
 	sf::RenderWindow& window = WindowManager::Instance()->getWindow();
    	ViewManager::Instance()->setActiveView(sceneViewId);
 
@@ -31,20 +27,19 @@ void SceneManager::render()
 	auto& sceneTexts = TIEntityManager::Instance()->getAllSceneTexts();
 
 	window.clear();
-	for (auto& so : sceneObjects)
-	{
+	for (auto& so : sceneObjects) {
 		if (so.second->getDraw())
 			window.draw(so.second->getSprite());
 	}
 
-	for (auto& st : sceneTexts)
-	{
+	for (auto& st : sceneTexts) {
 		if (st.second->getDraw())
 			window.draw(st.second->getText());
 	}
 	
-	if (ConsoleManager::Instance()->checkConsole())
+	if (ConsoleManager::Instance()->checkConsole()) {
 		ConsoleManager::Instance()->renderDevConsole();
+	}
 
 	window.display();
 
@@ -54,7 +49,6 @@ void SceneManager::render()
 }
 
 
-double SceneManager::getFPS()
-{
+double SceneManager::getFPS() {
 	return fps;	
 }

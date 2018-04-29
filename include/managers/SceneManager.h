@@ -5,25 +5,23 @@
 
 #include "templates/Singleton.h"
 
-namespace TIE
-{
+namespace TIE {
 
-	class SceneManager : public Singleton<SceneManager>
-	{
-		public:
-			void render();
-			double getFPS();
+class SceneManager : public Singleton<SceneManager> {
+	public:
+		void render();
+		double getFPS();
 
-			~SceneManager();
-			SceneManager();
-		private:
-			sf::Clock& clock;
-			double fps;
-			GlobalId sceneViewId;
+		~SceneManager();
+		SceneManager();
+	private:
+		sf::Clock& clock;
+		double fps = 0;
+		GlobalId sceneViewId;
 
-			SceneManager(const SceneManager&);
-			void operator=(const SceneManager&);
-	};
+		SceneManager(const SceneManager&);
+		void operator=(const SceneManager&);
+};
 
 }
 #endif
