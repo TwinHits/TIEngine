@@ -106,5 +106,4 @@ static std::string TEST_COMMAND = "test";
 static std::string TEST_COMMAND_RUN_COMMAND = "Test Command Please Ignore.";
 static std::string UNKNOWN_COMMAND_RUN_COMMAND = "Unknown command.";
 
-
 #endif

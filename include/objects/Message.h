@@ -11,8 +11,6 @@ class TIEntity;
 
 class Message {
 	public:
-		Message(GlobalId s, GlobalId r);
-		Message(GlobalId s);
 
 		struct MoveMsg {
 			//msg.move.dest
@@ -24,15 +22,28 @@ class Message {
 			//Possible messages to send;
 			Move
 		};
-			
-		MessageType type;
-		GlobalId senderId;
-		GlobalId receiverId;	
 	
+		Message(GlobalId s, GlobalId r);
+		Message(GlobalId s);
+
+		void setMessageType(MessageType type);
+		MessageType getMessageType();
+
+		void setSenderId(GlobalId id);
+		GlobalId getSenderId();
+
+		void setReceiverId(GlobalId id);
+		GlobalId getReceiverId();
+
 		union {
 			//Registry of the possible messages?
 			MoveMsg move;
 		};
+
+	private:
+		MessageType type;
+		GlobalId senderId;
+		GlobalId receiverId;	
 
 };
 
