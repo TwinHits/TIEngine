@@ -8,49 +8,39 @@
 
 using namespace TIE;
 
-
-ConsoleManager::ConsoleManager()
-{
-	//make a view that happens to be the same size as the windows the client
-	//created. This should not be a magic number.
+ConsoleManager::ConsoleManager() {
+	//make a view that happens to be the same size as the windows the client created. This should not be a magic number.
 	devConsoleViewId = ViewManager::Instance()->addView(sf::FloatRect(0,0,1000,1000));
-	devConsole = std::make_shared<DevConsole>();
+	devConsole = std::make_unique<DevConsole>();
 }
 
 
-ConsoleManager::~ConsoleManager()
-{
+ConsoleManager::~ConsoleManager() {
 
 } 
 
 
-void ConsoleManager::showConsole()
-{
+void ConsoleManager::showConsole() {
 	devConsole->setDraw(true);
 }
 
 
-void ConsoleManager::hideConsole()
-{
-
+void ConsoleManager::hideConsole() {
 	devConsole->setDraw(false);
 }
 
 
-bool ConsoleManager::checkConsole()
-{
+bool ConsoleManager::checkConsole() {
 	return devConsole->getDraw();
 }
 
 
-void ConsoleManager::runCommand(const std::string& command)
-{
+void ConsoleManager::runCommand(const std::string& command) {
 	this->devConsole->processCommand(command);
 }
 
 
-void ConsoleManager::renderDevConsole()
-{
+void ConsoleManager::renderDevConsole() {
 	//Draw DevConsole last because it's always on top.
 	sf::RenderWindow& window = WindowManager::Instance()->getWindow();
 	ViewManager::Instance()->setActiveView(devConsoleViewId);
@@ -65,7 +55,6 @@ void ConsoleManager::renderDevConsole()
 }
 
 
-void ConsoleManager::setDevConsole(std::shared_ptr<DevConsole> devConsole)
-{
-	this->devConsole = devConsole;
+void ConsoleManager::setDevConsole(std::unique_ptr<DevConsole> devConsole) {
+	this->devConsole = std::move(devConsole);
 }

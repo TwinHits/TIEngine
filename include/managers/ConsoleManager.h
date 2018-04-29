@@ -9,29 +9,28 @@
 
 #include "objects/DevConsole.h"
 
-namespace TIE
-{
-	class ConsoleManager : public Singleton<ConsoleManager>
-	{
-		public:
-			ConsoleManager();
-			~ConsoleManager();
+namespace TIE {
 
-			void showConsole();
-			void hideConsole();
-			bool checkConsole();
-			void runCommand(const std::string&);
-			void renderDevConsole();
+class ConsoleManager : public Singleton<ConsoleManager> {
+	public:
+		ConsoleManager();
+		~ConsoleManager();
 
-			void setDevConsole(std::shared_ptr<DevConsole> devConsole);
-	
-		private:
-			std::shared_ptr<DevConsole> devConsole;
-			GlobalId devConsoleViewId;
+		void showConsole();
+		void hideConsole();
+		bool checkConsole();
+		void runCommand(const std::string&);
+		void renderDevConsole();
 
-			void operator=(const ConsoleManager&);
-			ConsoleManager(const ConsoleManager&);
-	};
+		void setDevConsole(std::unique_ptr<DevConsole> devConsole);
+
+	private:
+		std::unique_ptr<DevConsole> devConsole;
+		GlobalId devConsoleViewId;
+
+		void operator=(const ConsoleManager&);
+		ConsoleManager(const ConsoleManager&);
+};
+
 }
-
 #endif

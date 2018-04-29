@@ -80,6 +80,9 @@
     <ClCompile Include="DevConsole.cpp">
       <Filter>objects</Filter>
     </ClCompile>
+    <ClCompile Include="ConsoleManager.cpp">
+      <Filter>managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
