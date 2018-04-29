@@ -3,15 +3,19 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "managers/WindowManager.h"
-
 #include "objects/InputMap.h"
 
-TIE::InputMap::InputMap() {}
-TIE::InputMap::~InputMap() {}
+TIE::InputMap::InputMap() {
 
-void TIE::InputMap::processEvent(const sf::Event& event, const sf::Vector2f& position)
-{
+}
+
+
+TIE::InputMap::~InputMap() {
+
+}
+
+
+void TIE::InputMap::processEvent(const sf::Event& event, const sf::Vector2f& position) {
 	std::map<unsigned int, unsigned int> keyBinds;
 
 	keyBinds[sf::Keyboard::A] = 10;
@@ -42,4 +46,6 @@ void TIE::InputMap::processEvent(const sf::Event& event, const sf::Vector2f& pos
 	keyBinds[sf::Keyboard::Z] = 35;
 }
 
-void TIE::InputMap::processState(const sf::Vector2f& position) {}
+void TIE::InputMap::processState(const sf::Vector2f& position) {
+
+}

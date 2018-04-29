@@ -3,12 +3,9 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "templates/Singleton.h"
+namespace TIE {
 
-namespace TIE
-{
-	class InputMap
-	{
+	class InputMap {
 		public:
 			virtual void processEvent(const sf::Event& Event, const sf::Vector2f& position);
 			virtual void processState(const sf::Vector2f& position);
@@ -17,6 +14,6 @@ namespace TIE
 			virtual ~InputMap();
 		private:
 	};
-} 
 
+} 
 #endif
