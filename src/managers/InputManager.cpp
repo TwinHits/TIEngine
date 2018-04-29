@@ -14,71 +14,56 @@
 
 using namespace TIE;
 
-
-InputManager::InputManager() 
-{
-	inputMap = std::make_shared<InputMap>();	
+InputManager::InputManager() {
+	inputMap = std::make_unique<InputMap>();	
 }
 
 
-InputManager::~InputManager()
-{
+InputManager::~InputManager() {
 
 }
 
 
-const std::string InputManager::getTextEntered()
-{
+const std::string InputManager::getTextEntered() {
 	return textEntered;
 }
 
 
-void InputManager::processInput()
-{
+void InputManager::processInput() {
 	sf::RenderWindow& window = WindowManager::Instance()->getWindow();
 	auto consoleManager = ConsoleManager::Instance();
 
 	sf::Event event;
-	while (window.pollEvent(event))
-	{
+	while (window.pollEvent(event)) {
 		//Engine event processing
-		switch (event.type)
-		{
+		switch (event.type) {
 			case sf::Event::Closed:
 				window.close();
 				LogManager::Instance()->logInfo("Window closed by user.");
 				break;
 			case sf::Event::KeyPressed:
-				switch (event.key.code)
-				{
+				switch (event.key.code) {
 					case sf::Keyboard::Escape:
-						if (!consoleManager->checkConsole())
-						{
+						if (!consoleManager->checkConsole()) {
 							window.close();
 							LogManager::Instance()->logInfo("Window closed by user.");
-						}
-						else if (consoleManager->checkConsole())
-						{
+						} else if (consoleManager->checkConsole()) {
 							textEntered.clear();
 							consoleManager->hideConsole();
 						}	
 						break;
-					//This should be Tilde, but its not detecting on my
-					//keyboard. to be fixed.
+					//This should be Tilde, but its not detecting on my keyboard. to be fixed.
 					case sf::Keyboard::BackSlash:
 						textEntered.clear();
-						if (!consoleManager->checkConsole())
-						{
+						if (!consoleManager->checkConsole()) {
 							consoleManager->showConsole();
 						}
-						else if (consoleManager->checkConsole())
-						{
+						else if (consoleManager->checkConsole()) {
 							consoleManager->hideConsole();
 						}
 						break;
 					case sf::Keyboard::Return:
-						if (consoleManager->checkConsole())
-						{	
+						if (consoleManager->checkConsole()) {	
 							consoleManager->runCommand(std::string(textEntered));
 							textEntered.clear();
 						}
@@ -88,12 +73,10 @@ void InputManager::processInput()
 				}
 				break;
 			case sf::Event::TextEntered:
-				//Explicitly not allowing backslash and Return by ascii code because
-				//NOTHING ESE WORKED
+				//Explicitly not allowing backslash and Return by ascii code because NOTHING ESE WORKED
 				if (consoleManager->checkConsole() && event.text.unicode < 128 
 						&& static_cast<char>(event.text.unicode) != 92
-						&& static_cast<char>(event.text.unicode) != 13)
-				{
+						&& static_cast<char>(event.text.unicode) != 13) {
 					textEntered += static_cast<char>(event.text.unicode);
 				}
 				break;
@@ -104,8 +87,7 @@ void InputManager::processInput()
 
 	sf::Vector2f position = window.mapPixelToCoords(sf::Mouse::getPosition(window)); 
 	//If the console is not active
-	if (!consoleManager->checkConsole())
-	{
+	if (!consoleManager->checkConsole()) {
 		//Client state processing
 		inputMap->processState(position);
 		//Client event processing
@@ -117,8 +99,7 @@ void InputManager::processInput()
 }
 
 
-void InputManager::scroll(sf::RenderWindow& window)
-{
+void InputManager::scroll(sf::RenderWindow& window) {
 	auto mousePosition = sf::Mouse::getPosition(window);	
 	if (mousePosition.y <= scrollZone)
 		ViewManager::Instance()->scroll(TOP);
@@ -131,7 +112,6 @@ void InputManager::scroll(sf::RenderWindow& window)
 }
 
 
-void InputManager::setInputMap(std::shared_ptr<InputMap> inputMap)
-{
-	this->inputMap = inputMap;
+void InputManager::setInputMap(std::unique_ptr<InputMap> inputMap) {
+	this->inputMap = std::move(inputMap);
 }

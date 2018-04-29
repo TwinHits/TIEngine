@@ -65,6 +65,7 @@
     <ClCompile Include="MissingText.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="DevConsole.cpp" />
+    <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="TIEntity.cpp" />
     <ClCompile Include="TIEntityManager.cpp" />
     <ClCompile Include="ViewManager.cpp" />

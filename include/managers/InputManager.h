@@ -7,29 +7,28 @@
 
 #include "objects/InputMap.h"
 
-namespace TIE
-{
+namespace TIE {
 
-	class InputManager : public Singleton<InputManager>
-	{
-		public:
-			void processInput();
-			void setInputMap(std::shared_ptr<InputMap> inputMap);
+class InputManager : public Singleton<InputManager> {
+	public:
+		void processInput();
+		void setInputMap(std::unique_ptr<InputMap> inputMap);
 
-			const std::string getTextEntered();
+		const std::string getTextEntered();
 
-			InputManager();
-			~InputManager();
-		private:
-			sf::String textEntered;
-			int scrollZone = 5;
-			std::shared_ptr<InputMap> inputMap;	
+		InputManager();
+		~InputManager();
 
-			void scroll(sf::RenderWindow& window);
+	private:
+		sf::String textEntered;
+		int scrollZone = 5;
+		std::unique_ptr<InputMap> inputMap;	
 
-			InputManager(const InputManager&);
-			void operator=(const InputManager&);
-	};
+		void scroll(sf::RenderWindow& window);
+
+		InputManager(const InputManager&);
+		void operator=(const InputManager&);
+};
 
 }
 #endif
