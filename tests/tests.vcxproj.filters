@@ -92,6 +92,9 @@
     <ClCompile Include="Message.cpp">
       <Filter>objects</Filter>
     </ClCompile>
+    <ClCompile Include="Factory.cpp">
+      <Filter>templates</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
