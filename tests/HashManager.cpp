@@ -4,6 +4,8 @@
 
 //Get a new unique global id
 TEST(HashManager, GetNewGlobalId) {
+	TIE::HashManager::Instance()->setSeed(0);
+
 	TIE::GlobalId id1 = TIE::HashManager::Instance()->getNewGlobalId();
 	TIE::GlobalId id2 = TIE::HashManager::Instance()->getNewGlobalId();
 	TIE::GlobalId id3 = TIE::HashManager::Instance()->getNewGlobalId();
