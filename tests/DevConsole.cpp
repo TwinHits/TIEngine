@@ -33,6 +33,7 @@ TEST(DevConsole, Update) {
 
 	TIE::DevConsole devConsole = TIE::DevConsole();
 
+	auto queueCopy = TIE::LogManager::Instance()->getQueueToDraw();
 	auto& queue = TIE::LogManager::Instance()->getQueueToDraw();
 	auto expected = queue.size();
 
@@ -44,4 +45,12 @@ TEST(DevConsole, Update) {
 	auto actual = commandHistory.size();
 
 	ASSERT_EQ(expected, actual);
+
+	for (auto& c : commandHistory) {
+		std::string expected = queueCopy.front();
+		std::string actual = c.getText().getString();
+		ASSERT_EQ(expected,actual);
+		queueCopy.pop();
+	}
+
 }
