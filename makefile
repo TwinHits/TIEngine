@@ -7,8 +7,8 @@ CPP_FILES = ${wildcard src/managers/*.cpp} ${wildcard src/objects/*.cpp} ${wildc
 TEST_CPP_FILES = ${wildcard tests/*.cpp}
 OBJ_FILES = ${addprefix bin/objs/,${notdir ${CPP_FILES:.cpp=.o}}} ${addprefix bin/tests/,${notdir ${TEST_CPP_FILES:.cpp=.o}}}
 CC_FLAGS = -g -Wall -Wno-unused-variable -Werror -std=c++11
-LD_FLAGS = -L/usr/lib/x86_64-linux-gnu -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system -lboost_filesystem -lboost_system -lsoci_core -lsoci_postgresql -lgtest -lgtest_main -lpthread -lgmock -lgmock_main
-IN_FLAGS = -Iinclude
+LD_FLAGS = -L/usr/local/lib -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system -lboost_filesystem -lboost_system -lsoci_core -lsoci_postgresql -lgtest -lgtest_main -lpthread -lgmock -lgmock_main
+IN_FLAGS = -Iinclude -I/usr/local/include/soci -I/usr/local/include/soci/postgresql -I/usr/include/postgresql
 LIB_NAME = libTIEngine-debug.a
 
 all: bin/tiengine rv
