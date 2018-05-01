@@ -3,6 +3,8 @@
 #include "managers/ViewManager.h"
 #include "managers/WindowManager.h"
 
+#include "templates/MakeUnique.h"
+
 using namespace TIE; 
 
 ViewManager::ViewManager() {
@@ -23,7 +25,7 @@ GlobalId ViewManager::addView() {
 GlobalId ViewManager::addView(const sf::FloatRect& rect) {
 	GlobalId id = HashManager::Instance()->getNewGlobalId();
 	if (this->views.find(id) == this->views.end()) {
-		std::unique_ptr<sf::View> view = std::make_unique<sf::View>(rect);
+		std::unique_ptr<sf::View> view = TIE::make_unique<sf::View>(rect);
 		view->setCenter(0,0);
 		this->views[id] = std::move(view);
 		return id;

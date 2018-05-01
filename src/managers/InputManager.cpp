@@ -11,11 +11,13 @@
 
 #include "objects/InputMap.h"
 
+#include "templates/MakeUnique.h"
+
 
 using namespace TIE;
 
 InputManager::InputManager() {
-	inputMap = std::make_unique<InputMap>();	
+	inputMap = TIE::make_unique<InputMap>();	
 }
 
 

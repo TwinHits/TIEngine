@@ -3,13 +3,15 @@
 
 #include "managers/TIEntityManager.h"
 
+#include "templates/MakeUnique.h"
+
 namespace TIE {
 
 template<typename T>
 class Factory {
 	public:
 		GlobalId create() { 
-			std::unique_ptr<T> ptr = std::make_unique<T>();
+			std::unique_ptr<T> ptr = TIE::make_unique<T>();
 			GlobalId id = ptr->getId();
 			TIEntityManager::Instance()->addTIEntity(std::move(ptr));
 			return id;

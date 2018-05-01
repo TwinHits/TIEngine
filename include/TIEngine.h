@@ -29,6 +29,7 @@
 	#include "managers/DatabaseManager.h"
 
 	#include "templates/Factory.h"
+	#include "templates/MakeUnique.h"
 	
 	#include "utilities/LocalTime.h"
 	#include "utilities/MissingSprite.h"

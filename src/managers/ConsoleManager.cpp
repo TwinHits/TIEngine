@@ -5,13 +5,14 @@
 #include "managers/WindowManager.h"
 #include "managers/ViewManager.h"
 
+#include "templates/MakeUnique.h"
 
 using namespace TIE;
 
 ConsoleManager::ConsoleManager() {
 	//make a view that happens to be the same size as the windows the client created. This should not be a magic number.
 	devConsoleViewId = ViewManager::Instance()->addView(sf::FloatRect(0,0,1000,1000));
-	devConsole = std::make_unique<DevConsole>();
+	devConsole = TIE::make_unique<DevConsole>();
 }
 
 

@@ -5,11 +5,11 @@
 TEST(MessageManager, SendMessage) {
 	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
 
-	std::unique_ptr<TIE::TIEntity> entity1 = std::make_unique<TIE::TIEntity>();
+	std::unique_ptr<TIE::TIEntity> entity1 = TIE::make_unique<TIE::TIEntity>();
 	TIE::GlobalId id1 = entity1->getId();
 	TIE::TIEntityManager::Instance()->addTIEntity(std::move(entity1));
 
-	std::unique_ptr<TIE::TIEntity> entity2 = std::make_unique<TIE::TIEntity>();
+	std::unique_ptr<TIE::TIEntity> entity2 = TIE::make_unique<TIE::TIEntity>();
 	TIE::GlobalId id2 = entity2->getId();
 	TIE::TIEntityManager::Instance()->addTIEntity(std::move(entity2));
 

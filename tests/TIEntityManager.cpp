@@ -6,7 +6,7 @@
 TEST(TIEntityManager, AddTIEntity) {
 	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
 
-	std::unique_ptr<TIE::TIEntity> entity = std::make_unique<TIE::TIEntity>();
+	std::unique_ptr<TIE::TIEntity> entity = TIE::make_unique<TIE::TIEntity>();
 	TIE::GlobalId expected = entity->getId();
 	TIE::TIEntityManager::Instance()->addTIEntity(std::move(entity));
 
@@ -20,7 +20,7 @@ TEST(TIEntityManager, AddTIEntity) {
 TEST(TIEntityManager, RemoveTIEntity) {
 	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
 
-	std::unique_ptr<TIE::TIEntity> entity = std::make_unique<TIE::TIEntity>();
+	std::unique_ptr<TIE::TIEntity> entity = TIE::make_unique<TIE::TIEntity>();
 	TIE::GlobalId id = entity->getId();
 	TIE::TIEntityManager::Instance()->addTIEntity(std::move(entity));
 
@@ -34,7 +34,7 @@ TEST(TIEntityManager, RemoveTIEntity) {
 TEST(TIEntityManager, AddSceneText) {
 	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
 
-	std::unique_ptr<TIE::SceneText> text = std::make_unique<TIE::SceneText>();
+	std::unique_ptr<TIE::SceneText> text = TIE::make_unique<TIE::SceneText>();
 	TIE::GlobalId expected = text->getId();
 	TIE::TIEntityManager::Instance()->addSceneText(std::move(text));
 
@@ -48,7 +48,7 @@ TEST(TIEntityManager, AddSceneText) {
 TEST(TIEntityManager, RemoveSceneText) {
 	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
 
-	std::unique_ptr<TIE::SceneText> text = std::make_unique<TIE::SceneText>();
+	std::unique_ptr<TIE::SceneText> text = TIE::make_unique<TIE::SceneText>();
 	TIE::GlobalId id = text->getId();
 	TIE::TIEntityManager::Instance()->addSceneText(std::move(text));
 
@@ -62,11 +62,11 @@ TEST(TIEntityManager, RemoveSceneText) {
 TEST(TIEntityManager, GetTIEntity) {
 	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
 
-	std::unique_ptr<TIE::TIEntity> entity1 = std::make_unique<TIE::TIEntity>();
+	std::unique_ptr<TIE::TIEntity> entity1 = TIE::make_unique<TIE::TIEntity>();
 	TIE::GlobalId id1 = entity1->getId();
 	TIE::TIEntityManager::Instance()->addTIEntity(std::move(entity1));
 
-	std::unique_ptr<TIE::TIEntity> entity2 = std::make_unique<TIE::TIEntity>();
+	std::unique_ptr<TIE::TIEntity> entity2 = TIE::make_unique<TIE::TIEntity>();
 	TIE::GlobalId id2 = entity2->getId();
 	TIE::TIEntityManager::Instance()->addTIEntity(std::move(entity2));
 
@@ -81,15 +81,15 @@ TEST(TIEntityManager, GetTIEntity) {
 TEST(TIEntityManager, GetAllTIEntities) {
 	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
 	
-	std::unique_ptr<TIE::TIEntity> entity1 = std::make_unique<TIE::TIEntity>();
+	std::unique_ptr<TIE::TIEntity> entity1 = TIE::make_unique<TIE::TIEntity>();
 	TIE::GlobalId id1 = entity1->getId();
 	TIE::TIEntityManager::Instance()->addTIEntity(std::move(entity1));
 
-	std::unique_ptr<TIE::TIEntity> entity2 = std::make_unique<TIE::TIEntity>();
+	std::unique_ptr<TIE::TIEntity> entity2 = TIE::make_unique<TIE::TIEntity>();
 	TIE::GlobalId id2 = entity2->getId();
 	TIE::TIEntityManager::Instance()->addTIEntity(std::move(entity2));
 
-	std::unique_ptr<TIE::TIEntity> entity3 = std::make_unique<TIE::TIEntity>();
+	std::unique_ptr<TIE::TIEntity> entity3 = TIE::make_unique<TIE::TIEntity>();
 	TIE::GlobalId id3 = entity3->getId();
 	TIE::TIEntityManager::Instance()->addTIEntity(std::move(entity3));
 
@@ -104,11 +104,11 @@ TEST(TIEntityManager, GetAllTIEntities) {
 TEST(TIEntityManager, GetSceneText) {
 	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
 
-	std::unique_ptr<TIE::SceneText> text1 = std::make_unique<TIE::SceneText>();
+	std::unique_ptr<TIE::SceneText> text1 = TIE::make_unique<TIE::SceneText>();
 	TIE::GlobalId id1 = text1->getId();
 	TIE::TIEntityManager::Instance()->addSceneText(std::move(text1));
 	
-	std::unique_ptr<TIE::SceneText> text2 = std::make_unique<TIE::SceneText>();
+	std::unique_ptr<TIE::SceneText> text2 = TIE::make_unique<TIE::SceneText>();
 	TIE::GlobalId id2 = text2->getId();
 	TIE::TIEntityManager::Instance()->addSceneText(std::move(text2));
 
@@ -123,15 +123,15 @@ TEST(TIEntityManager, GetSceneText) {
 TEST(TIEntityManager, GetAllSceneTexts) {
 	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
 
-	std::unique_ptr<TIE::SceneText> text1 = std::make_unique<TIE::SceneText>();
+	std::unique_ptr<TIE::SceneText> text1 = TIE::make_unique<TIE::SceneText>();
 	TIE::GlobalId id1 = text1->getId();
 	TIE::TIEntityManager::Instance()->addSceneText(std::move(text1));
 
-	std::unique_ptr<TIE::SceneText> text2 = std::make_unique<TIE::SceneText>();
+	std::unique_ptr<TIE::SceneText> text2 = TIE::make_unique<TIE::SceneText>();
 	TIE::GlobalId id2 = text2->getId();
 	TIE::TIEntityManager::Instance()->addSceneText(std::move(text2));
 
-	std::unique_ptr<TIE::SceneText> text3 = std::make_unique<TIE::SceneText>();
+	std::unique_ptr<TIE::SceneText> text3 = TIE::make_unique<TIE::SceneText>();
 	TIE::GlobalId id3 = text3->getId();
 	TIE::TIEntityManager::Instance()->addSceneText(std::move(text3));
 

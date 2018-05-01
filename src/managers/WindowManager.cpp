@@ -2,6 +2,8 @@
 #include "managers/StringManager.h"
 #include "managers/LogManager.h"
 
+#include "templates/MakeUnique.h"
+
 using namespace TIE;
 
 WindowManager::WindowManager() {
@@ -22,7 +24,7 @@ sf::RenderWindow& WindowManager::addWindow(sf::VideoMode mode, const std::string
 			this->title = StringManager::Instance()->getString(1);
 		}
 
-		this->window = std::make_unique<sf::RenderWindow>(mode, this->title, style, settings);
+		this->window = TIE::make_unique<sf::RenderWindow>(mode, this->title, style, settings);
 		LogManager::Instance()->logInfo("Opened window.");
 
 		this->windowSize.y = mode.height;

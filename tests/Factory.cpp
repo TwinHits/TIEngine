@@ -11,7 +11,7 @@ TEST(Factory, Create) {
 
 
 TEST(Factory, CreateFromPointer) {
-	std::unique_ptr<TIE::TIEntity> ptr = std::make_unique<TIE::TIEntity>();
+	std::unique_ptr<TIE::TIEntity> ptr = TIE::make_unique<TIE::TIEntity>();
 
 	TIE::Factory<TIE::TIEntity> factory = TIE::Factory<TIE::TIEntity>();
 	TIE::GlobalId id = factory.create(std::move(ptr));
