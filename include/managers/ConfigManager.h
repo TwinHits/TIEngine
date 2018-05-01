@@ -29,6 +29,8 @@ class ConfigManager: public Singleton<ConfigManager> {
 
 		void setDefaultDisplayLanguage(const Language& defaultDisplayLanguage);
 		void setDebugLogLevel(LogLevel debugLogLevel);
+
+		void restoreDefaultConfiguration();
 		
 	private:
 		bool loadConfig(const std::string& path);

@@ -4,6 +4,8 @@
 
 //Test that when using a config file we cannot find that the default values are returned correctly.
 TEST(ConfigManager, GetDebugLogPathDefault) {
+	TIE::ConfigManager::Instance()->restoreDefaultConfiguration();
+
 	std::string expected = "logs/";
 	std::string actual = TIE::ConfigManager::Instance()->getDebugLogPath();
 	
@@ -11,6 +13,8 @@ TEST(ConfigManager, GetDebugLogPathDefault) {
 }
 
 TEST(ConfigManager, GetAssetsPathDefault) {
+	TIE::ConfigManager::Instance()->restoreDefaultConfiguration();
+
 	std::string expected = "assets/";
 	std::string actual = TIE::ConfigManager::Instance()->getAssetsPath();
 
@@ -18,6 +22,8 @@ TEST(ConfigManager, GetAssetsPathDefault) {
 }
 
 TEST(ConfigManager, GetDebugLogLevelDefault) {
+	TIE::ConfigManager::Instance()->restoreDefaultConfiguration();
+	
 	TIE::LogLevel expected = TIE::LogLevel::INFO;
 	TIE::LogLevel actual = TIE::ConfigManager::Instance()->getDebugLogLevel();
 
@@ -25,6 +31,8 @@ TEST(ConfigManager, GetDebugLogLevelDefault) {
 }
 
 TEST(ConfigManager, GetDefaultDisplayLanguageDefault) {
+	TIE::ConfigManager::Instance()->restoreDefaultConfiguration();
+
 	TIE::Language expected = TIE::en_US;
 	TIE::Language actual = TIE::ConfigManager::Instance()->getDefaultDisplayLanguage();
 
@@ -32,6 +40,8 @@ TEST(ConfigManager, GetDefaultDisplayLanguageDefault) {
 }
 
 TEST(ConfigManager, GetDatabaseConnectionStringDefault) {
+	TIE::ConfigManager::Instance()->restoreDefaultConfiguration();
+
 	const std::string expected = "noconnectionstring";
 	const std::string actual = TIE::ConfigManager::Instance()->getDatabaseConnectionString();
 
@@ -45,6 +55,7 @@ TEST(ConfigManager, LoadCustomConfigFile) {
 
 //Test parsing the configuration values from a config file
 TEST(ConfigManager, ParseConfigFile) {
+	TIE::ConfigManager::Instance()->restoreDefaultConfiguration();
 	ASSERT_TRUE(TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE));
 
 	std::string expectedAssets = "../../tests/assets/";
@@ -79,11 +90,28 @@ TEST(ConfigManager, SetDefaultDisplayLanguage) {
 	ASSERT_EQ(expected, actual);
 }
 
+
 TEST(ConfigManager, SetDebugLogLevel) {
 	TIE::ConfigManager::Instance()->setDebugLogLevel(TIE::LogLevel::WARN);
 
 	TIE::LogLevel expected = TIE::LogLevel::WARN;
 	TIE::LogLevel actual = TIE::ConfigManager::Instance()->getDebugLogLevel();
+
+	ASSERT_EQ(expected, actual);
+}
+
+
+TEST(ConfigManager, RestoreDefaultConfiguration) {
+	ASSERT_TRUE(TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE));
+
+	std::string expectedAssets = "../../tests/assets/";
+	std::string actualAssets = TIE::ConfigManager::Instance()->getAssetsPath();
+	ASSERT_EQ(expectedAssets, actualAssets);
+
+	TIE::ConfigManager::Instance()->restoreDefaultConfiguration();
+
+	std::string expected = "assets/";
+	std::string actual = TIE::ConfigManager::Instance()->getAssetsPath();
 
 	ASSERT_EQ(expected, actual);
 }

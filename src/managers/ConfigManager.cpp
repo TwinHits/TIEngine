@@ -130,3 +130,12 @@ Language ConfigManager::parseLanguage(const std::string& s) {
 		return l;
 	}
 }
+
+
+void ConfigManager::restoreDefaultConfiguration() {
+		this->debugLogPath = "logs/";
+		this->assetsPath = "assets/";
+		this->debugLogLevel = LogLevel::INFO;
+		this->defaultDisplayLanguage = Language::en_US;
+		this->databaseConnectionString = "noconnectionstring";
+}
