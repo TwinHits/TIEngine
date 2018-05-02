@@ -19,6 +19,10 @@ static bool CheckDebugLogForText(const std::string& text) {
 			lines.push_back(line);
 		}
 
+		if (lines.empty()) {
+			return false;
+		}
+
 		const std::string& lastLine = lines.back();
 		if (lastLine.find(text, 0) != std::string::npos) {
 			log.close();

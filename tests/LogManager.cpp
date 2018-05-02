@@ -5,6 +5,7 @@
 
 //Test that LogManager correctly communicates changes to the ConfigManager
 TEST(LogManager, SetDebugLogLevel) {
+
 	TIE::LogManager::Instance()->setDebugLogLevel(TIE::LogLevel::INFO);
 
 	TIE::LogLevel expected = TIE::LogLevel::INFO;
@@ -52,6 +53,8 @@ TEST(LogManager, LogLevelError) {
 
 //Check if text logged is correctly written to a file
 TEST(LogManager, LogDebugToFile) {
+	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
+
 	TIE::LogManager::Instance()->setDebugLogLevel(TIE::LogLevel::DEBUG);
 	TIE::LogManager::Instance()->logDebug(TEST_NONSENSE_1);
 	bool checkSuccess = CheckDebugLogForText(DEBUG_LEVEL_PREFIX + TEST_NONSENSE_1);
@@ -60,6 +63,8 @@ TEST(LogManager, LogDebugToFile) {
 
 
 TEST(LogManager, LogInfoToFile) {
+	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
+
 	TIE::LogManager::Instance()->setDebugLogLevel(TIE::LogLevel::INFO);
 	TIE::LogManager::Instance()->logInfo(TEST_NONSENSE_2);
 	bool checkSuccess = CheckDebugLogForText(INFO_LEVEL_PREFIX + TEST_NONSENSE_2);
@@ -68,6 +73,8 @@ TEST(LogManager, LogInfoToFile) {
 
 
 TEST(LogManager, LogWarnToFile) {
+	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
+
 	TIE::LogManager::Instance()->setDebugLogLevel(TIE::LogLevel::INFO);
 	TIE::LogManager::Instance()->logWarn(TEST_NONSENSE_3);
 	bool checkSuccess = CheckDebugLogForText(WARN_LEVEL_PREFIX + TEST_NONSENSE_3);
@@ -76,6 +83,8 @@ TEST(LogManager, LogWarnToFile) {
 
 
 TEST(LogManager, LogErrorToFile) {
+	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
+
 	TIE::LogManager::Instance()->setDebugLogLevel(TIE::LogLevel::INFO);
 	TIE::LogManager::Instance()->logError(TEST_NONSENSE_4);
 	bool checkSuccess = CheckDebugLogForText(ERROR_LEVEL_PREFIX + TEST_NONSENSE_4);
@@ -84,6 +93,8 @@ TEST(LogManager, LogErrorToFile) {
 
 
 TEST(LogManager, LogCommandToFile) {
+	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
+
 	TIE::LogManager::Instance()->setDebugLogLevel(TIE::LogLevel::INFO);
 	TIE::LogManager::Instance()->logCommand(TEST_NONSENSE_1);
 	bool checkSuccess = CheckDebugLogForText(COMMAND_LEVEL_PREFIX + TEST_NONSENSE_1);
@@ -93,6 +104,8 @@ TEST(LogManager, LogCommandToFile) {
 
 //Get all text logged this session and make sure it has everything.
 TEST(LogManager, GetQueueToDraw) {
+	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
+
 	TIE::LogManager::Instance()->setDebugLogLevel(TIE::LogLevel::INFO);
 	TIE::LogManager::Instance()->logInfo(TEST_NONSENSE_1);
 

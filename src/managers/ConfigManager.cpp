@@ -4,7 +4,6 @@
 #include <boost/filesystem.hpp>
 
 #include "managers/ConfigManager.h"
-#include "managers/LogManager.h"
 
 #include "objects/LogLevel.h"
 

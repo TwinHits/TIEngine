@@ -62,7 +62,7 @@ TEST(ConfigManager, ParseConfigFile) {
 	std::string actualAssets = TIE::ConfigManager::Instance()->getAssetsPath();
 	ASSERT_EQ(expectedAssets, actualAssets);
 
-	std::string expectedLogs = "../../tests/logs/";
+	std::string expectedLogs = "logs/";
 	std::string actualLogs = TIE::ConfigManager::Instance()->getDebugLogPath();
 	ASSERT_EQ(expectedLogs, actualLogs);
 
