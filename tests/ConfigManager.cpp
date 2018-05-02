@@ -58,7 +58,7 @@ TEST(ConfigManager, ParseConfigFile) {
 	TIE::ConfigManager::Instance()->restoreDefaultConfiguration();
 	ASSERT_TRUE(TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE));
 
-	std::string expectedAssets = "../../tests/assets/";
+	std::string expectedAssets = "assets/";
 	std::string actualAssets = TIE::ConfigManager::Instance()->getAssetsPath();
 	ASSERT_EQ(expectedAssets, actualAssets);
 
@@ -104,7 +104,7 @@ TEST(ConfigManager, SetDebugLogLevel) {
 TEST(ConfigManager, RestoreDefaultConfiguration) {
 	ASSERT_TRUE(TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE));
 
-	std::string expectedAssets = "../../tests/assets/";
+	std::string expectedAssets = "assets/";
 	std::string actualAssets = TIE::ConfigManager::Instance()->getAssetsPath();
 	ASSERT_EQ(expectedAssets, actualAssets);
 
