@@ -106,4 +106,11 @@ static std::string TEST_COMMAND = "test";
 static std::string TEST_COMMAND_RUN_COMMAND = "Test Command Please Ignore.";
 static std::string UNKNOWN_COMMAND_RUN_COMMAND = "Unknown command.";
 
+//ParseLanguageString
+static std::string EN_STRING = "en_US";
+static std::string ES_STRING = "es_ES";
+static std::string FR_STRING = "fe_FR";
+static std::string DE_STRING = "de_DE";
+static std::string JA_STRING = "ja_JP";
+
 #endif
