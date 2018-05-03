@@ -7,6 +7,8 @@
 
 #include "objects/LogLevel.h"
 
+#include "utilities/ParseLanguageString.h"
+
 using namespace TIE;
 
 ConfigManager::ConfigManager() {
@@ -68,7 +70,7 @@ bool ConfigManager::loadConfig(const std::string& path) {
 			throw std::runtime_error("File '" + configPath.string() + "' was found, but did not open. Cannot parse configuration values so using default values.");
 		}	
 
-		parseConfig(config);
+		this->parseConfig(config);
 
 		config.close();
 		return true;
@@ -92,7 +94,7 @@ void ConfigManager::parseConfig(std::ifstream& config) {
 			if (key == "DebugLogPath") { debugLogPath = value; }
 			else if (key == "AssetsPath") { assetsPath = value; }
 			else if (key == "DebugLogLevel") { debugLogLevel = strToLogLevel(value); }
-			else if (key == "DefaultDisplayLanguage") { defaultDisplayLanguage = parseLanguage(value); }
+			else if (key == "DefaultDisplayLanguage") { defaultDisplayLanguage = parseLanguageString(value); }
 			else if (key == "DatabaseDBName" || key == "DatabaseUser" || key == "DatabasePassword" || key == "DatabaseHostAddr" || key == "DatabasePort") {
 				databaseConfig.insert(std::pair<std::string, std::string>(key, value));
 			}
@@ -109,25 +111,6 @@ const std::string ConfigManager::assembleDatabaseConnectionString(const std::map
 	databaseConnectionString << "hostaddr=" << databaseConfig.at("DatabaseHostAddr") << " ";
 	databaseConnectionString << "port=" << databaseConfig.at("DatabasePort");
 	return databaseConnectionString.str();
-}
-
-
-Language ConfigManager::parseLanguage(const std::string& s) {
-	//defaultDisplayLanguage is stored as a string in the config.ini, and must
-	//be converted to it's enumerated type.
-	std::map<std::string, Language> languages;
-	languages["en_US"] = en_US;
-	languages["es_ES"] = es_ES;
-	languages["fe_FR"] = fe_FR;
-	languages["de_DE"] = de_DE;
-	languages["ja_JP"] = ja_JP;
-
-	Language l = languages[s];
-	if (l == 0) {
-		return en_US;
-	} else {
-		return l;
-	}
 }
 
 

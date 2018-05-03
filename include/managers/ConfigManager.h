@@ -35,7 +35,6 @@ class ConfigManager: public Singleton<ConfigManager> {
 	private:
 		bool loadConfig(const std::string& path);
 		void parseConfig(std::ifstream& config);
-		Language parseLanguage(const std::string& s);
 		const std::string assembleDatabaseConnectionString(std::map<std::string, std::string>);
 
 		std::string defaultConfigPath = "config.ini";

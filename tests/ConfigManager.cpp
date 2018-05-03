@@ -77,7 +77,6 @@ TEST(ConfigManager, ParseConfigFile) {
 	std::string expectedDBString = "dbname=tiengine user=tie_admin password=123456 hostaddr=127.0.0.1 port=5432";
 	std::string actualDBString = TIE::ConfigManager::Instance()->getDatabaseConnectionString();
 	ASSERT_EQ(expectedDBString, actualDBString);
-
 }
 
 
