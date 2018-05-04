@@ -2,8 +2,7 @@
 
 #include "utilities/LocalTime.h"
 
-std::string TIE::LocalTime()
-{
+std::string TIE::LocalTime() {
 	auto t = std::time(nullptr);
 	auto local = std::localtime(&t);
 
