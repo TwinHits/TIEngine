@@ -54,7 +54,6 @@ void ConfigManager::setDefaultDisplayLanguage(const Language& defaultDisplayLang
 }
 
 
-
 bool TIE::ConfigManager::loadConfigFile(const std::string& path) {
 	return loadConfig(path);
 }
@@ -102,6 +101,7 @@ void ConfigManager::parseConfig(std::ifstream& config) {
 	}
 	this->databaseConnectionString = assembleDatabaseConnectionString(databaseConfig);
 }
+
 
 const std::string ConfigManager::assembleDatabaseConnectionString(const std::map<std::string, std::string> databaseConfig) {
 	std::stringstream databaseConnectionString;
