@@ -82,17 +82,27 @@ void ViewManager::updateCamera() {
 }	
 
 
+void ViewManager::setScrollSpeed(float scrollSpeed) {
+	this->scrollSpeed = scrollSpeed;
+}
+
+
+float ViewManager::getScrollSpeed() {
+	return this->scrollSpeed;
+}
+
+
 void ViewManager::scroll(Direction direction) {
 	sf::View& view = this->getActiveView();
 
 	if (direction == TOP)
-		view.move(0,-5);
+		view.move(0, -scrollSpeed);
 	if (direction == RIGHT)
-		view.move(5,0);
+		view.move(scrollSpeed, 0);
 	if (direction == BOTTOM)
-		view.move(0,5);
+		view.move(0, scrollSpeed);
 	if (direction == LEFT)
-		view.move(-5,0);
+		view.move(-scrollSpeed, 0);
 }
 
 

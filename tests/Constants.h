@@ -71,6 +71,7 @@ static sf::Vector2f CUSTOM_VIEW_CENTER = sf::Vector2f(0, 0);
 static sf::Vector2f CUSTOM_VIEW_SIZE = sf::Vector2f(1000, 1000);
 static TIE::GlobalId VIEW_UNUSED_ID = 123151342;
 static float SCROLL_SPEED = 5;
+static float TEST_SCROLL_SPEED = 50;
 
 //TIEntity
 static bool DEFAULT_DRAW_BOOL = true;

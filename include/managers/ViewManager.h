@@ -23,8 +23,12 @@ class ViewManager : public Singleton<ViewManager> {
 		sf::View& getActiveView();
 		void removeView(GlobalId);
 
-		void updateCamera();
+
 		void setActiveView(GlobalId);
+		void updateCamera();
+
+		void setScrollSpeed(float scrollSpeed);
+		float getScrollSpeed();
 
 		void scroll(Direction direction);
 		void zoom(void);
@@ -36,6 +40,8 @@ class ViewManager : public Singleton<ViewManager> {
 		std::map<GlobalId, std::unique_ptr<sf::View> > views;
 		GlobalId activeView;
 
+		float scrollSpeed = 5.0;
+		
 		void operator=(const ViewManager&);
 		ViewManager(const ViewManager&);
 };

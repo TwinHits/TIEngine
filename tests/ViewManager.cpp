@@ -84,12 +84,22 @@ TEST(ViewManager, GetView) {
 
 
 TEST(ViewManager, GetViewDefault) {
-
 	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
 	TIE::LogManager::Instance()->logDebug(TEST_NONSENSE_1);
 
 	const sf::View& view = TIE::ViewManager::Instance()->getView(VIEW_UNUSED_ID);
 	ASSERT_TRUE(CheckDebugLogForText(ERROR_LEVEL_PREFIX + NO_VIEW_TO_GET_ERROR));
+}
+
+
+TEST(ViewManager, GetScrollSpeed) {
+	ASSERT_FLOAT_EQ(SCROLL_SPEED, TIE::ViewManager::Instance()->getScrollSpeed());
+}
+
+
+TEST(ViewManager, SetScrollSpeed) {
+	TIE::ViewManager::Instance()->setScrollSpeed(TEST_SCROLL_SPEED);
+	ASSERT_FLOAT_EQ(TEST_SCROLL_SPEED, TIE::ViewManager::Instance()->getScrollSpeed());
 }
 
 
@@ -140,8 +150,8 @@ TEST(ViewManager, UpdateCamera) {
 
 
 TEST(ViewManager, Scroll) {
-
 	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
+	TIE::ViewManager::Instance()->setScrollSpeed(SCROLL_SPEED);
 
 	const sf::RenderWindow& window = TIE::WindowManager::Instance()->addWindow();
 	TIE::GlobalId viewId = TIE::ViewManager::Instance()->addView();
