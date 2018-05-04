@@ -9,11 +9,11 @@
 
 #include "templates/Singleton.h"
 
+#include "objects/Direction.h"
 #include "objects/GlobalId.h"
 
 namespace TIE {
 	
-enum Direction { TOP, RIGHT, BOTTOM, LEFT };
 
 class ViewManager : public Singleton<ViewManager> {
 	public:

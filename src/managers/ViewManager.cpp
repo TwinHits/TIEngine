@@ -3,6 +3,8 @@
 #include "managers/ViewManager.h"
 #include "managers/WindowManager.h"
 
+#include "objects/Direction.h"
+
 #include "templates/MakeUnique.h"
 
 using namespace TIE; 
