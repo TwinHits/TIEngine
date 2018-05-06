@@ -95,6 +95,9 @@
     <ClCompile Include="Factory.cpp">
       <Filter>templates</Filter>
     </ClCompile>
+    <ClCompile Include="ParseLanguageString.cpp">
+      <Filter>utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

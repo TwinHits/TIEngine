@@ -191,8 +191,8 @@
     <ClInclude Include="include\utilities\MissingText.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="include\utilities\ParseLanguageString.h" />
-    <Text Include="src\utilities\ParseLanguageString.cpp" />
+    <ClInclude Include="include\utilities\ParseLanguageString.h" />
+    <ClCompile Include="src\utilities\ParseLanguageString.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

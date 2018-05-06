@@ -96,6 +96,9 @@
     <ClCompile Include="src\utilities\MissingText.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\utilities\ParseLanguageString.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\TIEngine.h">
@@ -194,13 +197,8 @@
     <ClInclude Include="include\utilities\MissingText.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="src\utilities\ParseLanguageString.cpp">
-      <Filter>Source Files</Filter>
-    </Text>
-    <Text Include="include\utilities\ParseLanguageString.h">
+    <ClInclude Include="include\utilities\ParseLanguageString.h">
       <Filter>Header Files</Filter>
-    </Text>
+    </ClInclude>
   </ItemGroup>
 </Project>

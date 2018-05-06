@@ -1,10 +1,11 @@
 #include <map>
+#include <string>
+
+#include "objects/Language.h"
 
 #include "utilities/ParseLanguageString.h"
 
-using namespace TIE;
-
-Language TIE::parseLanguageString(const std::string& s) {
+TIE::Language TIE::parseLanguageString(const std::string& string) {
 	//Take a string and figure out with language it's referring to.
 
 	std::map<std::string, Language> languages;
@@ -14,7 +15,7 @@ Language TIE::parseLanguageString(const std::string& s) {
 	languages["de_DE"] = de_DE;
 	languages["ja_JP"] = ja_JP;
 
-	Language l = languages[s];
+	TIE::Language l = languages[string];
 	if (l == 0) {
 		return en_US;
 	} else {

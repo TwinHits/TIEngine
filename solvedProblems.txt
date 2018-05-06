@@ -6,3 +6,9 @@ Recompiled gtest on 4.8. Had to delete the existing ones in my lib in order for 
 5/2/2018 I moved my libs to /usr/local/lib and lib64, I had to add those paths
 to /etc/ld.so.conf because I was getting a 'cannot open shared object libraries'
 error when running tiengine. 
+
+5/6/2018 For #7 I moved ParseLanguageConfig to its own utility class. That
+caused an unresolved external error. This happened because I added the files
+as existing items in order to maintain their folder position and get aronud
+VS's filter system, but I forgot to change their properties from text to .h
+and .cpp.

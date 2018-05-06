@@ -7,7 +7,7 @@
 
 namespace TIE { 
 
-TIE::Language parseLanguageString(const std::string& string);
+Language parseLanguageString(const std::string& string);
 
 }
 #endif 
