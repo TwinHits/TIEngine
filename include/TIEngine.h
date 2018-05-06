@@ -3,8 +3,7 @@
  * This is Twin Ion Engine, a game engine for the SFML graphics library.
  * Include this file, in order to access all the neccessary classes to utilize
  * this libray.
- *
- * See src/main.cpp for an example of the basic render loop.
+ * * See src/main.cpp for an example of the basic render loop.
  *
  * Glory and gore go hand in hand.
 */
@@ -31,9 +30,9 @@
 	#include "templates/Factory.h"
 	#include "templates/MakeUnique.h"
 	
+	#include "utilities/GetMissingSprite.h"
+	#include "utilities/GetMissingText.h"
 	#include "utilities/LocalTime.h"
-	#include "utilities/MissingSprite.h"
-	#include "utilities/MissingText.h"
 	#include "utilities/ParseLanguageString.h"
 	#include "utilities/StringToInt.h"
 	#include "utilities/ToDegrees.h"

@@ -4,9 +4,10 @@
 #include "managers/TimeManager.h"
 
 #include "objects/Message.h"
-#include "objects/TIEntity.h"
 
-#include "utilities/MissingSprite.h"
+#include "objects/drawables/MissingSprite.h"
+#include "objects/drawables/TIEntity.h"
+
 #include "utilities/ToDegrees.h"
 
 using namespace TIE;

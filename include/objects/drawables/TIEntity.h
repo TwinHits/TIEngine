@@ -3,8 +3,8 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "Message.h"
-#include "GlobalId.h"
+#include "../Message.h"
+#include "../GlobalId.h"
 
 namespace TIE {
 

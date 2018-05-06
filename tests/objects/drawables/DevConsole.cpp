@@ -1,7 +1,7 @@
-#include "../pch.h"
+#include "../../pch.h"
 
-#include "../Constants.h"
-#include "../Helpers.h"
+#include "../../Constants.h"
+#include "../../Helpers.h"
 
 TEST(DevConsole, RunKnownCommand) {
 	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);

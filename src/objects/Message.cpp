@@ -1,6 +1,7 @@
 #include "objects/GlobalId.h"
 #include "objects/Message.h"
-#include "objects/TIEntity.h"
+
+#include "objects/drawables/TIEntity.h"
 
 using namespace TIE;
 

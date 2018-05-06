@@ -7,8 +7,8 @@
 #include "templates/Singleton.h"
 
 #include "objects/GlobalId.h"
-#include "objects/SceneText.h"
-#include "objects/TIEntity.h"
+#include "objects/drawables/SceneText.h"
+#include "objects/drawables/TIEntity.h"
 
 namespace TIE {
 

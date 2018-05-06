@@ -4,7 +4,7 @@
 #include "managers/AssetsManager.h"
 #include "managers/InputManager.h"
 
-#include "objects/DevConsole.h"
+#include "objects/drawables/DevConsole.h"
 
 
 using namespace TIE;

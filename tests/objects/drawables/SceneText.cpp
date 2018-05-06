@@ -1,6 +1,6 @@
-#include "../pch.h"
+#include "../../pch.h"
 
-#include "../Constants.h"
+#include "../../Constants.h"
 
 TEST(SceneText, GetId) {
 	TIE::HashManager::Instance()->setSeed(SCENETEXT_UNUSED_ID);

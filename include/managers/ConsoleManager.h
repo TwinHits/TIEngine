@@ -7,7 +7,7 @@
 
 #include "templates/Singleton.h"
 
-#include "objects/DevConsole.h"
+#include "objects/drawables/DevConsole.h"
 
 namespace TIE {
 

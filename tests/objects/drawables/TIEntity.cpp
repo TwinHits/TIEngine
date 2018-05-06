@@ -1,6 +1,6 @@
-#include "../pch.h"
+#include "../../pch.h"
 
-#include "../Constants.h"
+#include "../../Constants.h"
 
 TEST(TIEntity, GetId) {
 	TIE::HashManager::Instance()->setSeed(ENTITY_UNUSED_ID);

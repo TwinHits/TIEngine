@@ -3,10 +3,11 @@
 #include "managers/LogManager.h"
 #include "managers/HashManager.h"
 
-#include "objects/SceneText.h"
 #include "objects/Message.h"
 
-#include "utilities/MissingText.h"
+#include "objects/drawables/MissingText.h"
+#include "objects/drawables/SceneText.h"
+
 
 using namespace TIE;
 

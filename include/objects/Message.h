@@ -1,9 +1,9 @@
 #ifndef MESSAGE_H
 #define MESSAGE_H
 
-
-#include "TIEntity.h"
 #include "GlobalId.h"
+
+#include "drawables/TIEntity.h"
 
 namespace TIE {
 
