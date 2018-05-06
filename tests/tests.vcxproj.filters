@@ -2,101 +2,104 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="ConfigManager.cpp">
+    <ClCompile Include="managers/AssetsManager.cpp">
       <Filter>managers</Filter>
     </ClCompile>
-    <ClCompile Include="AssetsManager.cpp">
+    <ClCompile Include="managers/ConfigManager.cpp">
       <Filter>managers</Filter>
     </ClCompile>
-    <ClCompile Include="Singleton.cpp">
+    <ClCompile Include="managers/ConsoleManager.cpp">
+      <Filter>managers</Filter>
+    </ClCompile>
+    <ClCompile Include="managers/DatabaseManager.cpp">
+      <Filter>managers</Filter>
+    </ClCompile>
+    <ClCompile Include="managers/HashManager.cpp">
+      <Filter>managers</Filter>
+    </ClCompile>
+    <ClCompile Include="managers/InputManager.cpp">
+      <Filter>managers</Filter>
+    </ClCompile>
+    <ClCompile Include="managers/LogManager.cpp">
+      <Filter>managers</Filter>
+    </ClCompile>
+    <ClCompile Include="managers/MessageManager.cpp">
+      <Filter>managers</Filter>
+    </ClCompile>
+    <ClCompile Include="managers/PlayerManager.cpp">
+      <Filter>managers</Filter>
+    </ClCompile>
+    <ClCompile Include="managers/SceneManager.cpp">
+      <Filter>managers</Filter>
+    </ClCompile>
+    <ClCompile Include="managers/StringManager.cpp">
+      <Filter>managers</Filter>
+    </ClCompile>
+    <ClCompile Include="managers/TIEntityManager.cpp">
+      <Filter>managers</Filter>
+    </ClCompile>
+    <ClCompile Include="managers/TimeManager.cpp">
+      <Filter>managers</Filter>
+    </ClCompile>
+    <ClCompile Include="managers/WindowManager.cpp">
+      <Filter>managers</Filter>
+    </ClCompile>
+    <ClCompile Include="managers/ViewManager.cpp">
+      <Filter>managers</Filter>
+    </ClCompile>
+    <ClCompile Include="templates/Factory.cpp">
       <Filter>templates</Filter>
     </ClCompile>
-    <ClCompile Include="HashManager.cpp">
-      <Filter>managers</Filter>
-    </ClCompile>
-    <ClCompile Include="LogManager.cpp">
-      <Filter>managers</Filter>
-    </ClCompile>
-    <ClCompile Include="LogLevel.cpp">
-      <Filter>objects</Filter>
-    </ClCompile>
-    <ClCompile Include="DatabaseManager.cpp">
-      <Filter>managers</Filter>
-    </ClCompile>
-    <ClCompile Include="StringManager.cpp">
-      <Filter>managers</Filter>
-    </ClCompile>
-    <ClCompile Include="Language.cpp">
-      <Filter>objects</Filter>
-    </ClCompile>
-    <ClCompile Include="LocalTime.cpp">
-      <Filter>utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="ToDegrees.cpp">
-      <Filter>utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="TimeManager.cpp">
-      <Filter>managers</Filter>
-    </ClCompile>
-    <ClCompile Include="GlobalId.cpp">
-      <Filter>objects</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerManager.cpp">
-      <Filter>managers</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>objects</Filter>
-    </ClCompile>
-    <ClCompile Include="StringToInt.cpp">
-      <Filter>utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="WindowManager.cpp">
-      <Filter>managers</Filter>
-    </ClCompile>
-    <ClCompile Include="ViewManager.cpp">
-      <Filter>managers</Filter>
-    </ClCompile>
-    <ClCompile Include="MessageManager.cpp">
-      <Filter>managers</Filter>
-    </ClCompile>
-    <ClCompile Include="TIEntity.cpp">
-      <Filter>objects</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneText.cpp">
-      <Filter>objects</Filter>
-    </ClCompile>
-    <ClCompile Include="TIEntityManager.cpp">
-      <Filter>managers</Filter>
-    </ClCompile>
-    <ClCompile Include="MissingSprite.cpp">
-      <Filter>objects</Filter>
-    </ClCompile>
-    <ClCompile Include="MissingText.cpp">
-      <Filter>objects</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>managers</Filter>
-    </ClCompile>
-    <ClCompile Include="DevConsole.cpp">
-      <Filter>objects</Filter>
-    </ClCompile>
-    <ClCompile Include="ConsoleManager.cpp">
-      <Filter>managers</Filter>
-    </ClCompile>
-    <ClCompile Include="InputManager.cpp">
-      <Filter>managers</Filter>
-    </ClCompile>
-    <ClCompile Include="InputMap.cpp">
-      <Filter>objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Message.cpp">
-      <Filter>objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Factory.cpp">
+    <ClCompile Include="templates/Singleton.cpp">
       <Filter>templates</Filter>
     </ClCompile>
-    <ClCompile Include="ParseLanguageString.cpp">
+    <ClCompile Include="objects/GlobalId.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects/DevConsole.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects/InputMap.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects/Message.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects/MissingSprite.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects/MissingText.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects/Player.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects/SceneText.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects/TIEntity.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
+    <ClCompile Include="utilities/ToDegrees.cpp">
       <Filter>utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="utilities/StringToInt.cpp">
+      <Filter>utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="utilities/ParseLanguageString.cpp">
+      <Filter>utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="utilities/LocalTime.cpp">
+      <Filter>utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="objects/enumeration/Direction.cpp">
+      <Filter>objects\enumeration</Filter>
+    </ClCompile>
+    <ClCompile Include="objects/enumeration/Language.cpp">
+      <Filter>objects\enumeration</Filter>
+    </ClCompile>
+    <ClCompile Include="objects/enumeration/LogLevel.cpp">
+      <Filter>objects\enumeration</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -119,6 +122,9 @@
     </Filter>
     <Filter Include="utilities">
       <UniqueIdentifier>{9c4d5fe4-419b-47db-bf30-70f185976208}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objects\enumeration">
+      <UniqueIdentifier>{841215c5-9339-4e50-a423-f11ff4344ac2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

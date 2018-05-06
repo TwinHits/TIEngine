@@ -38,44 +38,45 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ConfigManager.cpp" />
-    <ClCompile Include="ConsoleManager.cpp" />
-    <ClCompile Include="Factory.cpp" />
-    <ClCompile Include="Message.cpp" />
-    <ClCompile Include="ParseLanguageString.cpp" />
+    <ClCompile Include="managers/ConfigManager.cpp" />
+    <ClCompile Include="managers/ConsoleManager.cpp" />
+    <ClCompile Include="objects/enumeration/Direction.cpp" />
+    <ClCompile Include="templates/Factory.cpp" />
+    <ClCompile Include="objects/Message.cpp" />
+    <ClCompile Include="utilities/ParseLanguageString.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="AssetsManager.cpp" />
-    <ClCompile Include="Singleton.cpp" />
-    <ClCompile Include="HashManager.cpp" />
-    <ClCompile Include="LogManager.cpp" />
-    <ClCompile Include="LogLevel.cpp" />
-    <ClCompile Include="DatabaseManager.cpp" />
-    <ClCompile Include="StringManager.cpp" />
-    <ClCompile Include="Language.cpp" />
-    <ClCompile Include="LocalTime.cpp" />
-    <ClCompile Include="GlobalId.cpp" />
-    <ClCompile Include="PlayerManager.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="StringToInt.cpp" />
-    <ClCompile Include="MessageManager.cpp" />
-    <ClCompile Include="SceneText.cpp" />
-    <ClCompile Include="MissingSprite.cpp" />
-    <ClCompile Include="MissingText.cpp" />
-    <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="DevConsole.cpp" />
-    <ClCompile Include="InputManager.cpp" />
-    <ClCompile Include="InputMap.cpp" />
-    <ClCompile Include="TIEntity.cpp" />
-    <ClCompile Include="TIEntityManager.cpp" />
-    <ClCompile Include="ViewManager.cpp" />
-    <ClCompile Include="WindowManager.cpp" />
-    <ClCompile Include="TimeManager.cpp" />
-    <ClCompile Include="ToDegrees.cpp" />
+    <ClCompile Include="managers/AssetsManager.cpp" />
+    <ClCompile Include="templates/Singleton.cpp" />
+    <ClCompile Include="managers/HashManager.cpp" />
+    <ClCompile Include="managers/LogManager.cpp" />
+    <ClCompile Include="objects/enumeration/LogLevel.cpp" />
+    <ClCompile Include="managers/DatabaseManager.cpp" />
+    <ClCompile Include="managers/StringManager.cpp" />
+    <ClCompile Include="objects/enumeration/Language.cpp" />
+    <ClCompile Include="utilities/LocalTime.cpp" />
+    <ClCompile Include="objects/GlobalId.cpp" />
+    <ClCompile Include="managers/PlayerManager.cpp" />
+    <ClCompile Include="objects/Player.cpp" />
+    <ClCompile Include="utilities/StringToInt.cpp" />
+    <ClCompile Include="managers/MessageManager.cpp" />
+    <ClCompile Include="objects/SceneText.cpp" />
+    <ClCompile Include="objects/MissingSprite.cpp" />
+    <ClCompile Include="objects/MissingText.cpp" />
+    <ClCompile Include="managers/SceneManager.cpp" />
+    <ClCompile Include="objects/DevConsole.cpp" />
+    <ClCompile Include="managers/InputManager.cpp" />
+    <ClCompile Include="objects/InputMap.cpp" />
+    <ClCompile Include="objects/TIEntity.cpp" />
+    <ClCompile Include="managers/TIEntityManager.cpp" />
+    <ClCompile Include="managers/ViewManager.cpp" />
+    <ClCompile Include="managers/WindowManager.cpp" />
+    <ClCompile Include="managers/TimeManager.cpp" />
+    <ClCompile Include="utilities/ToDegrees.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -108,7 +109,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>X64;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
