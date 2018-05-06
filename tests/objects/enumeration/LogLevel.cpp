@@ -1,0 +1,32 @@
+#include "../../pch.h"
+
+#include "../../Constants.h"
+
+TEST(LogLevel, LogLevelToInt) {
+	ASSERT_EQ(TIE::LogLevel::COMMAND, COMMAND_INT_VALUE);
+	ASSERT_EQ(TIE::LogLevel::ERROR, ERROR_INT_VALUE);
+	ASSERT_EQ(TIE::LogLevel::WARN, WARN_INT_VALUE);
+	ASSERT_EQ(TIE::LogLevel::INFO, INFO_INT_VALUE);
+	ASSERT_EQ(TIE::LogLevel::DEBUG, DEBUG_INT_VALUE);
+}
+
+TEST(LogLevel, StringToLogLevel) {
+	ASSERT_EQ(TIE::LogLevel::COMMAND, TIE::strToLogLevel(COMMAND_STRING_VALUE_UC));
+	ASSERT_EQ(TIE::LogLevel::ERROR, TIE::strToLogLevel(ERROR_STRING_VALUE_UC));
+	ASSERT_EQ(TIE::LogLevel::WARN, TIE::strToLogLevel(WARN_STRING_VALUE_UC));
+	ASSERT_EQ(TIE::LogLevel::INFO, TIE::strToLogLevel(INFO_STRING_VALUE_UC));
+	ASSERT_EQ(TIE::LogLevel::DEBUG, TIE::strToLogLevel(DEBUG_STRING_VALUE_UC));
+
+	ASSERT_EQ(TIE::LogLevel::COMMAND, TIE::strToLogLevel(COMMAND_STRING_VALUE_LC));
+	ASSERT_EQ(TIE::LogLevel::ERROR, TIE::strToLogLevel(ERROR_STRING_VALUE_LC));
+	ASSERT_EQ(TIE::LogLevel::WARN, TIE::strToLogLevel(WARN_STRING_VALUE_LC));
+	ASSERT_EQ(TIE::LogLevel::INFO, TIE::strToLogLevel(INFO_STRING_VALUE_LC));
+	ASSERT_EQ(TIE::LogLevel::DEBUG, TIE::strToLogLevel(DEBUG_STRING_VALUE_LC));
+}
+
+TEST(LogLevel, LogLevelHeirarchy) {
+	ASSERT_GE(TIE::LogLevel::DEBUG, TIE::LogLevel::INFO);
+	ASSERT_GE(TIE::LogLevel::INFO, TIE::LogLevel::WARN);
+	ASSERT_GE(TIE::LogLevel::WARN, TIE::LogLevel::ERROR);
+	ASSERT_GE(TIE::LogLevel::ERROR, TIE::LogLevel::COMMAND);
+}
