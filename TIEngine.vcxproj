@@ -139,14 +139,15 @@
     <ClCompile Include="src\managers\TimeManager.cpp" />
     <ClCompile Include="src\managers\ViewManager.cpp" />
     <ClCompile Include="src\managers\WindowManager.cpp" />
-    <ClCompile Include="src\objects\DevConsole.cpp" />
+    <ClCompile Include="src\objects\drawables\DevConsole.cpp" />
+    <ClCompile Include="src\objects\drawables\SceneText.cpp" />
+    <ClCompile Include="src\objects\drawables\TIEntity.cpp" />
     <ClCompile Include="src\objects\InputMap.cpp" />
     <ClCompile Include="src\objects\Message.cpp" />
     <ClCompile Include="src\objects\Player.cpp" />
-    <ClCompile Include="src\objects\SceneText.cpp" />
-    <ClCompile Include="src\objects\TIEntity.cpp" />
+    <ClCompile Include="src\utilities\GetMissingSprite.cpp" />
+    <ClCompile Include="src\utilities\GetMissingText.cpp" />
     <ClCompile Include="src\utilities\LocalTime.cpp" />
-    <ClCompile Include="src\utilities\MissingSprite.cpp" />
     <ClCompile Include="src\utilities\StringToInt.cpp" />
     <ClCompile Include="src\utilities\ToDegrees.cpp" />
   </ItemGroup>
@@ -166,29 +167,26 @@
     <ClInclude Include="include\managers\TimeManager.h" />
     <ClInclude Include="include\managers\ViewManager.h" />
     <ClInclude Include="include\managers\WindowManager.h" />
-    <ClInclude Include="include\objects\DevConsole.h" />
+    <ClInclude Include="include\objects\drawables\DevConsole.h" />
+    <ClInclude Include="include\objects\drawables\SceneText.h" />
+    <ClInclude Include="include\objects\drawables\TIEntity.h" />
     <ClInclude Include="include\objects\GlobalId.h" />
     <ClInclude Include="include\objects\InputMap.h" />
     <ClInclude Include="include\objects\Language.h" />
     <ClInclude Include="include\objects\LogLevel.h" />
     <ClInclude Include="include\objects\Message.h" />
     <ClInclude Include="include\objects\Player.h" />
-    <ClInclude Include="include\objects\SceneText.h" />
-    <ClInclude Include="include\objects\TIEntity.h" />
     <ClInclude Include="include\templates\Factory.h" />
     <ClInclude Include="include\templates\Singleton.h" />
     <ClInclude Include="include\TIEngine.h" />
+    <ClInclude Include="include\utilities\GetMissingSprite.h" />
+    <ClInclude Include="include\utilities\GetMissingText.h" />
     <ClInclude Include="include\utilities\LocalTime.h" />
-    <ClInclude Include="include\utilities\MissingSprite.h" />
     <ClInclude Include="include\utilities\StringToInt.h" />
     <ClInclude Include="include\utilities\ToDegrees.h" />
-    <ClCompile Include="src\utilities\MissingText.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\objects\LogLevel.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="include\utilities\MissingText.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\utilities\ParseLanguageString.h" />

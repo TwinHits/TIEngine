@@ -56,28 +56,13 @@
     <ClCompile Include="objects/GlobalId.cpp">
       <Filter>objects</Filter>
     </ClCompile>
-    <ClCompile Include="objects/DevConsole.cpp">
-      <Filter>objects</Filter>
-    </ClCompile>
     <ClCompile Include="objects/InputMap.cpp">
       <Filter>objects</Filter>
     </ClCompile>
     <ClCompile Include="objects/Message.cpp">
       <Filter>objects</Filter>
     </ClCompile>
-    <ClCompile Include="objects/MissingSprite.cpp">
-      <Filter>objects</Filter>
-    </ClCompile>
-    <ClCompile Include="objects/MissingText.cpp">
-      <Filter>objects</Filter>
-    </ClCompile>
     <ClCompile Include="objects/Player.cpp">
-      <Filter>objects</Filter>
-    </ClCompile>
-    <ClCompile Include="objects/SceneText.cpp">
-      <Filter>objects</Filter>
-    </ClCompile>
-    <ClCompile Include="objects/TIEntity.cpp">
       <Filter>objects</Filter>
     </ClCompile>
     <ClCompile Include="utilities/ToDegrees.cpp">
@@ -100,6 +85,21 @@
     </ClCompile>
     <ClCompile Include="objects/enumeration/LogLevel.cpp">
       <Filter>objects\enumeration</Filter>
+    </ClCompile>
+    <ClCompile Include="utilities\GetMissingSprite.cpp">
+      <Filter>utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="utilities\GetMissingText.cpp">
+      <Filter>utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\drawables\DevConsole.cpp">
+      <Filter>objects\drawables</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\drawables\SceneText.cpp">
+      <Filter>objects\drawables</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\drawables\TIEntity.cpp">
+      <Filter>objects\drawables</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -125,6 +125,9 @@
     </Filter>
     <Filter Include="objects\enumeration">
       <UniqueIdentifier>{841215c5-9339-4e50-a423-f11ff4344ac2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objects\drawables">
+      <UniqueIdentifier>{de53c464-e3aa-4fd8-9446-9e5bdf69a0d4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -41,6 +41,9 @@
     <ClCompile Include="managers/ConfigManager.cpp" />
     <ClCompile Include="managers/ConsoleManager.cpp" />
     <ClCompile Include="objects/enumeration/Direction.cpp" />
+    <ClCompile Include="objects\drawables\DevConsole.cpp" />
+    <ClCompile Include="objects\drawables\SceneText.cpp" />
+    <ClCompile Include="objects\drawables\TIEntity.cpp" />
     <ClCompile Include="templates/Factory.cpp" />
     <ClCompile Include="objects/Message.cpp" />
     <ClCompile Include="utilities/ParseLanguageString.cpp" />
@@ -64,19 +67,16 @@
     <ClCompile Include="objects/Player.cpp" />
     <ClCompile Include="utilities/StringToInt.cpp" />
     <ClCompile Include="managers/MessageManager.cpp" />
-    <ClCompile Include="objects/SceneText.cpp" />
-    <ClCompile Include="objects/MissingSprite.cpp" />
-    <ClCompile Include="objects/MissingText.cpp" />
     <ClCompile Include="managers/SceneManager.cpp" />
-    <ClCompile Include="objects/DevConsole.cpp" />
     <ClCompile Include="managers/InputManager.cpp" />
     <ClCompile Include="objects/InputMap.cpp" />
-    <ClCompile Include="objects/TIEntity.cpp" />
     <ClCompile Include="managers/TIEntityManager.cpp" />
     <ClCompile Include="managers/ViewManager.cpp" />
     <ClCompile Include="managers/WindowManager.cpp" />
     <ClCompile Include="managers/TimeManager.cpp" />
     <ClCompile Include="utilities/ToDegrees.cpp" />
+    <ClCompile Include="utilities\GetMissingSprite.cpp" />
+    <ClCompile Include="utilities\GetMissingText.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
