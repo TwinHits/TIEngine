@@ -5,8 +5,9 @@
 
 #include "objects/Message.h"
 
-#include "objects/drawables/MissingText.h"
 #include "objects/drawables/SceneText.h"
+
+#include "utilities/GetMissingText.h"
 
 
 using namespace TIE;

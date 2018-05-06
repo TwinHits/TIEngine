@@ -5,9 +5,7 @@
 
 #include "objects/Message.h"
 
-#include "objects/drawables/MissingSprite.h"
-#include "objects/drawables/TIEntity.h"
-
+#include "utilities/GetMissingSprite.h"
 #include "utilities/ToDegrees.h"
 
 using namespace TIE;
