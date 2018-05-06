@@ -9,7 +9,7 @@
 
 #include "templates/Singleton.h"
 
-#include "objects/Direction.h"
+#include "objects/enumeration/Direction.h"
 #include "objects/GlobalId.h"
 
 namespace TIE {

@@ -3,7 +3,7 @@
 #include "managers/ViewManager.h"
 #include "managers/WindowManager.h"
 
-#include "objects/Direction.h"
+#include "objects/enumeration/Direction.h"
 
 #include "templates/MakeUnique.h"
 

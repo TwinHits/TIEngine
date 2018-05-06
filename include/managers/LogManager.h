@@ -5,7 +5,7 @@
 #include <string>
 #include <queue>
 
-#include "objects/LogLevel.h"
+#include "objects/enumeration/LogLevel.h"
 
 #include "templates/Singleton.h"
 

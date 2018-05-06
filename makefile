@@ -1,4 +1,4 @@
-CPP_FILES = ${wildcard src/managers/*.cpp} ${wildcard src/objects/*.cpp} ${wildcard src/utilities/*.cpp} #${wildcard src/*.cpp}
+CPP_FILES = ${wildcard src/managers/*.cpp} ${wildcard src/objects/*.cpp} ${wildcard src/utilities/*.cpp} #${wildcard src/*.cpp} 
 TEST_CPP_FILES = ${wildcard tests/*/*.cpp}
 OBJ_FILES = ${addprefix bin/objs/,${notdir ${CPP_FILES:.cpp=.o}}} ${addprefix bin/tests/,${notdir ${TEST_CPP_FILES:.cpp=.o}}}
 CC_FLAGS = -g -Wall -Wno-unused-variable -Werror -std=c++11

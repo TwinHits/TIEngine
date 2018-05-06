@@ -7,7 +7,7 @@
 #include "templates/Singleton.h"
 
 #include "objects/GlobalId.h"
-#include "objects/Language.h"
+#include "objects/enumeration/Language.h"
 
 namespace TIE {
 

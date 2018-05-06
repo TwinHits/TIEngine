@@ -5,7 +5,7 @@
 
 #include "managers/ConfigManager.h"
 
-#include "objects/LogLevel.h"
+#include "objects/enumeration/LogLevel.h"
 
 #include "utilities/ParseLanguageString.h"
 

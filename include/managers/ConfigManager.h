@@ -7,8 +7,8 @@
 
 #include "templates/Singleton.h"
 
-#include "objects/LogLevel.h"	
-#include "objects/Language.h"
+#include "objects/enumeration/LogLevel.h"	
+#include "objects/enumeration/Language.h"
 
 namespace TIE {
 

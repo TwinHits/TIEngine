@@ -2,7 +2,7 @@
 #include <string>
 #include <stdexcept>
 
-#include "objects/LogLevel.h"
+#include "objects/enumeration/LogLevel.h"
 
 TIE::LogLevel TIE::strToLogLevel(std::string loglevel) {
 	std::transform(loglevel.begin(), loglevel.end(), loglevel.begin(), ::toupper);

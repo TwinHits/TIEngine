@@ -2,7 +2,7 @@
 #include "managers/ConsoleManager.h"
 #include "managers/LogManager.h"
 
-#include "objects/LogLevel.h"
+#include "objects/enumeration/LogLevel.h"
 
 #include "utilities/LocalTime.h"
 
