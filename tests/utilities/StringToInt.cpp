@@ -3,9 +3,9 @@
 #include "../Constants.h"
 
 TEST(StringToInt, StringToInt) {
-	int one = TIE::StringToInt(ONE);
-	int two = TIE::StringToInt(TWO);
-	int three = TIE::StringToInt(THREE);
+	int one = TIE::StringToInt(TIE::ONE);
+	int two = TIE::StringToInt(TIE::TWO);
+	int three = TIE::StringToInt(TIE::THREE);
 
 	ASSERT_EQ(one, 1);
 	ASSERT_EQ(two, 2);

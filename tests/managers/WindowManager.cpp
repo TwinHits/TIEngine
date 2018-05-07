@@ -4,7 +4,7 @@
 #include "../Helpers.h"
 
 TEST(WindowManager, AddWindowDefaultSettings) {
-	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
 
 	const sf::RenderWindow& window = TIE::WindowManager::Instance()->addWindow();
 
@@ -27,20 +27,20 @@ TEST(WindowManager, AddWindowDefaultSettings) {
 
 
 TEST(WindowManager, RemoveWindow) {
-	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
 
 	const sf::RenderWindow& window = TIE::WindowManager::Instance()->addWindow();
 	TIE::WindowManager::Instance()->removeWindow();
-	TIE::LogManager::Instance()->logWarn(TEST_NONSENSE_4);
+	TIE::LogManager::Instance()->logWarn(TIE::TEST_NONSENSE_4);
 	const sf::RenderWindow& window2 = TIE::WindowManager::Instance()->addWindow();
-	ASSERT_FALSE(CheckDebugLogForText(WARN_LEVEL_PREFIX + SECOND_WINDOW_WARNING));
+	ASSERT_FALSE(TIE::CheckDebugLogForText(TIE::WARN_LEVEL_PREFIX + TIE::SECOND_WINDOW_WARNING));
 
 	TIE::WindowManager::Instance()->removeWindow();
 }
 
 
 TEST(WindowManager, GetWindowNoWindow) {
-	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
 
 	const sf::RenderWindow& window = TIE::WindowManager::Instance()->getWindow();
 
@@ -63,24 +63,24 @@ TEST(WindowManager, GetWindowNoWindow) {
 
 
 TEST(WindowManager, GetWindowAlreadyExists) {
-	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
 
 	TIE::WindowManager::Instance()->addWindow();
-	TIE::LogManager::Instance()->logWarn(TEST_NONSENSE_3);
+	TIE::LogManager::Instance()->logWarn(TIE::TEST_NONSENSE_3);
 	const sf::RenderWindow& window = TIE::WindowManager::Instance()->getWindow();
-	ASSERT_FALSE(CheckDebugLogForText(WARN_LEVEL_PREFIX + NO_WINDOW_TO_GET_WARNING));
+	ASSERT_FALSE(TIE::CheckDebugLogForText(TIE::WARN_LEVEL_PREFIX + TIE::NO_WINDOW_TO_GET_WARNING));
 
 	TIE::WindowManager::Instance()->removeWindow();
 }
 
 
 TEST(WindowManager, AddSecondWindow) {
-	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
 
 	const sf::RenderWindow& window1 = TIE::WindowManager::Instance()->addWindow();
 	const sf::RenderWindow& window2 = TIE::WindowManager::Instance()->addWindow();
 
-	ASSERT_TRUE(CheckDebugLogForText(WARN_LEVEL_PREFIX + SECOND_WINDOW_WARNING));
+	ASSERT_TRUE(TIE::CheckDebugLogForText(TIE::WARN_LEVEL_PREFIX + TIE::SECOND_WINDOW_WARNING));
 
 	sf::Vector2u window1Size = window1.getSize();
 	sf::Vector2u window2Size(800, 600);
@@ -112,7 +112,7 @@ TEST(WindowManager, GetWindowSize) {
 
 
 TEST(WindowManager, GetTitle) {
-	std::string expected = TEST_NONSENSE_1;
+	std::string expected = TIE::TEST_NONSENSE_1;
 	TIE::WindowManager::Instance()->addWindow(sf::VideoMode(800, 600), expected);
 	const std::string& actual = TIE::WindowManager::Instance()->getTitle();
 	ASSERT_EQ(expected, actual);

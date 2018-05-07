@@ -30,13 +30,13 @@ TEST(ConsoleManager, HideConsole) {
 }
 
 TEST(ConsoleManager, RunCommand) {
-	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
 	TIE::ConsoleManager::Instance()->checkConsole();
-	TIE::LogManager::Instance()->logDebug(TEST_NONSENSE_1);
+	TIE::LogManager::Instance()->logDebug(TIE::TEST_NONSENSE_1);
 
-	TIE::ConsoleManager::Instance()->runCommand(TEST_COMMAND);
+	TIE::ConsoleManager::Instance()->runCommand(TIE::TEST_COMMAND);
 
-	ASSERT_TRUE(CheckDebugLogForText(TEST_COMMAND_RUN_COMMAND));
+	ASSERT_TRUE(TIE::CheckDebugLogForText(TIE::TEST_COMMAND_RUN_COMMAND));
 }
 
 

@@ -3,9 +3,9 @@
 #include "../../Constants.h"
 
 TEST(SceneText, GetId) {
-	TIE::HashManager::Instance()->setSeed(SCENETEXT_UNUSED_ID);
+	TIE::HashManager::Instance()->setSeed(TIE::SCENETEXT_UNUSED_ID);
 	//plus 2 for the clock initialized inside the constructor	
-	TIE::GlobalId expected = SCENETEXT_UNUSED_ID + 2;
+	TIE::GlobalId expected = TIE::SCENETEXT_UNUSED_ID + 2;
 	TIE::SceneText sceneText = TIE::SceneText();
 	TIE::GlobalId actual = sceneText.getId();
 
@@ -14,7 +14,7 @@ TEST(SceneText, GetId) {
 
 
 TEST(SceneText, GetText) {
-	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
 	TIE::SceneText text = TIE::SceneText();
 
 	sf::Text expected = TIE::getMissingText();
@@ -31,8 +31,8 @@ TEST(SceneText, SetText) {
 	TIE::SceneText text = TIE::SceneText();
 
 	sf::Text expected = sf::Text();
-	expected.setString(TEST_NONSENSE_1);
-	expected.setFont(TIE::AssetsManager::Instance()->getFont(TEST_FONT));
+	expected.setString(TIE::TEST_NONSENSE_1);
+	expected.setFont(TIE::AssetsManager::Instance()->getFont(TIE::TEST_FONT));
 	expected.setCharacterSize(20);
 	expected.setPosition(100, 100);
 
@@ -48,7 +48,7 @@ TEST(SceneText, SetText) {
 
 TEST(SceneText, GetDraw) {
 	TIE::SceneText sceneText = TIE::SceneText();
-	bool expected = DEFAULT_DRAW_BOOL;
+	bool expected = TIE::DEFAULT_DRAW_BOOL;
 
 	bool actual = sceneText.getDraw();
 
@@ -58,9 +58,9 @@ TEST(SceneText, GetDraw) {
 
 TEST(SceneText, SetDraw) {
 	TIE::SceneText sceneText = TIE::SceneText();
-	bool expected = CUSTOM_DRAW_BOOL;
+	bool expected = TIE::CUSTOM_DRAW_BOOL;
 
-	sceneText.setDraw(CUSTOM_DRAW_BOOL);
+	sceneText.setDraw(TIE::CUSTOM_DRAW_BOOL);
 	bool actual = sceneText.getDraw();
 
 	ASSERT_EQ(expected, actual);

@@ -50,13 +50,13 @@ TEST(ConfigManager, GetDatabaseConnectionStringDefault) {
 
 //Test when given a specific configuration file, the file is loaded correctly.
 TEST(ConfigManager, LoadCustomConfigFile) {
-	ASSERT_TRUE(TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE));
+	ASSERT_TRUE(TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE));
 }
 
 //Test parsing the configuration values from a config file
 TEST(ConfigManager, ParseConfigFile) {
 	TIE::ConfigManager::Instance()->restoreDefaultConfiguration();
-	ASSERT_TRUE(TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE));
+	ASSERT_TRUE(TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE));
 
 	std::string expectedAssets = "assets/";
 	std::string actualAssets = TIE::ConfigManager::Instance()->getAssetsPath();
@@ -101,7 +101,7 @@ TEST(ConfigManager, SetDebugLogLevel) {
 
 
 TEST(ConfigManager, RestoreDefaultConfiguration) {
-	ASSERT_TRUE(TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE));
+	ASSERT_TRUE(TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE));
 
 	std::string expectedAssets = "assets/";
 	std::string actualAssets = TIE::ConfigManager::Instance()->getAssetsPath();

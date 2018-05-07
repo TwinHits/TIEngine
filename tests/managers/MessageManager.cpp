@@ -3,7 +3,7 @@
 #include "../Constants.h"
 
 TEST(MessageManager, SendMessage) {
-	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
 
 	std::unique_ptr<TIE::TIEntity> entity1 = TIE::make_unique<TIE::TIEntity>();
 	TIE::GlobalId id1 = entity1->getId();

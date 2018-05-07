@@ -3,6 +3,8 @@
 
 #include "pch.h"
 
+namespace TIE {
+
 //General
 static std::string TEST_NONSENSE_1 = "memes";
 static std::string TEST_NONSENSE_2 = "My fair lady reinforces gender sterotypes";
@@ -114,4 +116,5 @@ static std::string FR_STRING = "fe_FR";
 static std::string DE_STRING = "de_DE";
 static std::string JA_STRING = "ja_JP";
 
+} 
 #endif

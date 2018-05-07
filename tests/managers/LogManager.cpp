@@ -53,63 +53,63 @@ TEST(LogManager, LogLevelError) {
 
 //Check if text logged is correctly written to a file
 TEST(LogManager, LogDebugToFile) {
-	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
 
 	TIE::LogManager::Instance()->setDebugLogLevel(TIE::LogLevel::DEBUG);
-	TIE::LogManager::Instance()->logDebug(TEST_NONSENSE_1);
-	bool checkSuccess = CheckDebugLogForText(DEBUG_LEVEL_PREFIX + TEST_NONSENSE_1);
+	TIE::LogManager::Instance()->logDebug(TIE::TEST_NONSENSE_1);
+	bool checkSuccess = TIE::CheckDebugLogForText(TIE::DEBUG_LEVEL_PREFIX + TIE::TEST_NONSENSE_1);
 	ASSERT_TRUE(checkSuccess);
 }
 
 
 TEST(LogManager, LogInfoToFile) {
-	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
 
 	TIE::LogManager::Instance()->setDebugLogLevel(TIE::LogLevel::INFO);
-	TIE::LogManager::Instance()->logInfo(TEST_NONSENSE_2);
-	bool checkSuccess = CheckDebugLogForText(INFO_LEVEL_PREFIX + TEST_NONSENSE_2);
+	TIE::LogManager::Instance()->logInfo(TIE::TEST_NONSENSE_2);
+	bool checkSuccess = TIE::CheckDebugLogForText(TIE::INFO_LEVEL_PREFIX + TIE::TEST_NONSENSE_2);
 	ASSERT_TRUE(checkSuccess);
 }
 
 
 TEST(LogManager, LogWarnToFile) {
-	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
 
 	TIE::LogManager::Instance()->setDebugLogLevel(TIE::LogLevel::INFO);
-	TIE::LogManager::Instance()->logWarn(TEST_NONSENSE_3);
-	bool checkSuccess = CheckDebugLogForText(WARN_LEVEL_PREFIX + TEST_NONSENSE_3);
+	TIE::LogManager::Instance()->logWarn(TIE::TEST_NONSENSE_3);
+	bool checkSuccess = TIE::CheckDebugLogForText(TIE::WARN_LEVEL_PREFIX + TIE::TEST_NONSENSE_3);
 	ASSERT_TRUE(checkSuccess);
 }
 
 
 TEST(LogManager, LogErrorToFile) {
-	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
 
 	TIE::LogManager::Instance()->setDebugLogLevel(TIE::LogLevel::INFO);
-	TIE::LogManager::Instance()->logError(TEST_NONSENSE_4);
-	bool checkSuccess = CheckDebugLogForText(ERROR_LEVEL_PREFIX + TEST_NONSENSE_4);
+	TIE::LogManager::Instance()->logError(TIE::TEST_NONSENSE_4);
+	bool checkSuccess = TIE::CheckDebugLogForText(TIE::ERROR_LEVEL_PREFIX + TIE::TEST_NONSENSE_4);
 	ASSERT_TRUE(checkSuccess);
 }
 
 
 TEST(LogManager, LogCommandToFile) {
-	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
 
 	TIE::LogManager::Instance()->setDebugLogLevel(TIE::LogLevel::INFO);
-	TIE::LogManager::Instance()->logCommand(TEST_NONSENSE_1);
-	bool checkSuccess = CheckDebugLogForText(COMMAND_LEVEL_PREFIX + TEST_NONSENSE_1);
+	TIE::LogManager::Instance()->logCommand(TIE::TEST_NONSENSE_1);
+	bool checkSuccess = TIE::CheckDebugLogForText(TIE::COMMAND_LEVEL_PREFIX + TIE::TEST_NONSENSE_1);
 	ASSERT_TRUE(checkSuccess);
 }
 
 
 //Get all text logged this session and make sure it has everything.
 TEST(LogManager, GetQueueToDraw) {
-	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
 
 	TIE::LogManager::Instance()->setDebugLogLevel(TIE::LogLevel::INFO);
-	TIE::LogManager::Instance()->logInfo(TEST_NONSENSE_1);
+	TIE::LogManager::Instance()->logInfo(TIE::TEST_NONSENSE_1);
 
 	std::queue<std::string> queueToDraw = TIE::LogManager::Instance()->getQueueToDraw();
 	ASSERT_TRUE(!queueToDraw.empty());
-	ASSERT_TRUE(queueToDraw.back().find(INFO_LEVEL_PREFIX + TEST_NONSENSE_1, 0));
+	ASSERT_TRUE(queueToDraw.back().find(TIE::INFO_LEVEL_PREFIX + TIE::TEST_NONSENSE_1, 0));
 }

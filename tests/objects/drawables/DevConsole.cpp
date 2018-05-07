@@ -4,32 +4,32 @@
 #include "../../Helpers.h"
 
 TEST(DevConsole, RunKnownCommand) {
-	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
-	TIE::LogManager::Instance()->logCommand(TEST_NONSENSE_1);
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
+	TIE::LogManager::Instance()->logCommand(TIE::TEST_NONSENSE_1);
 
 	TIE::DevConsole devConsole = TIE::DevConsole();
 
-	devConsole.processCommand(TEST_COMMAND);
-	ASSERT_TRUE(CheckDebugLogForText(TEST_COMMAND_RUN_COMMAND));
+	devConsole.processCommand(TIE::TEST_COMMAND);
+	ASSERT_TRUE(TIE::CheckDebugLogForText(TIE::TEST_COMMAND_RUN_COMMAND));
 }
 
 
 TEST(DevConsole, RunUnknownCommand) {
-	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
-	TIE::LogManager::Instance()->logCommand(TEST_NONSENSE_2);
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
+	TIE::LogManager::Instance()->logCommand(TIE::TEST_NONSENSE_2);
 
 	TIE::DevConsole devConsole = TIE::DevConsole();
 
-	devConsole.processCommand(TEST_NONSENSE_3);
-	ASSERT_TRUE(CheckDebugLogForText(UNKNOWN_COMMAND_RUN_COMMAND));
+	devConsole.processCommand(TIE::TEST_NONSENSE_3);
+	ASSERT_TRUE(TIE::CheckDebugLogForText(TIE::UNKNOWN_COMMAND_RUN_COMMAND));
 }
 
 
 TEST(DevConsole, Update) {
-	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
-	TIE::LogManager::Instance()->logInfo(TEST_NONSENSE_1);
-	TIE::LogManager::Instance()->logWarn(TEST_NONSENSE_2);
-	TIE::LogManager::Instance()->logError(TEST_NONSENSE_3);
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
+	TIE::LogManager::Instance()->logInfo(TIE::TEST_NONSENSE_1);
+	TIE::LogManager::Instance()->logWarn(TIE::TEST_NONSENSE_2);
+	TIE::LogManager::Instance()->logError(TIE::TEST_NONSENSE_3);
 
 	TIE::DevConsole devConsole = TIE::DevConsole();
 

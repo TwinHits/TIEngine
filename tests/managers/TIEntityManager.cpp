@@ -4,7 +4,7 @@
 #include "../Helpers.h"
 
 TEST(TIEntityManager, AddTIEntity) {
-	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
 
 	std::unique_ptr<TIE::TIEntity> entity = TIE::make_unique<TIE::TIEntity>();
 	TIE::GlobalId expected = entity->getId();
@@ -18,21 +18,21 @@ TEST(TIEntityManager, AddTIEntity) {
 
 
 TEST(TIEntityManager, RemoveTIEntity) {
-	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
 
 	std::unique_ptr<TIE::TIEntity> entity = TIE::make_unique<TIE::TIEntity>();
 	TIE::GlobalId id = entity->getId();
 	TIE::TIEntityManager::Instance()->addTIEntity(std::move(entity));
 
-	TIE::LogManager::Instance()->logDebug(TEST_NONSENSE_1);
+	TIE::LogManager::Instance()->logDebug(TIE::TEST_NONSENSE_1);
 	TIE::TIEntityManager::Instance()->removeTIEntity(id);
 
-	ASSERT_TRUE(CheckDebugLogForText(DELETED_TIENTITY_INFO + std::to_string(id)));
+	ASSERT_TRUE(TIE::CheckDebugLogForText(TIE::DELETED_TIENTITY_INFO + std::to_string(id)));
 }
 
 
 TEST(TIEntityManager, AddSceneText) {
-	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
 
 	std::unique_ptr<TIE::SceneText> text = TIE::make_unique<TIE::SceneText>();
 	TIE::GlobalId expected = text->getId();
@@ -46,21 +46,21 @@ TEST(TIEntityManager, AddSceneText) {
 
 
 TEST(TIEntityManager, RemoveSceneText) {
-	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
 
 	std::unique_ptr<TIE::SceneText> text = TIE::make_unique<TIE::SceneText>();
 	TIE::GlobalId id = text->getId();
 	TIE::TIEntityManager::Instance()->addSceneText(std::move(text));
 
-	TIE::LogManager::Instance()->logDebug(TEST_NONSENSE_1);
+	TIE::LogManager::Instance()->logDebug(TIE::TEST_NONSENSE_1);
 	TIE::TIEntityManager::Instance()->removeSceneText(id);
 
-	ASSERT_TRUE(CheckDebugLogForText(DELETED_SCENETEXT_INFO + std::to_string(id)));
+	ASSERT_TRUE(TIE::CheckDebugLogForText(TIE::DELETED_SCENETEXT_INFO + std::to_string(id)));
 }
 
 
 TEST(TIEntityManager, GetTIEntity) {
-	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
 
 	std::unique_ptr<TIE::TIEntity> entity1 = TIE::make_unique<TIE::TIEntity>();
 	TIE::GlobalId id1 = entity1->getId();
@@ -79,7 +79,7 @@ TEST(TIEntityManager, GetTIEntity) {
 
 
 TEST(TIEntityManager, GetAllTIEntities) {
-	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
 	
 	std::unique_ptr<TIE::TIEntity> entity1 = TIE::make_unique<TIE::TIEntity>();
 	TIE::GlobalId id1 = entity1->getId();
@@ -102,7 +102,7 @@ TEST(TIEntityManager, GetAllTIEntities) {
 
 
 TEST(TIEntityManager, GetSceneText) {
-	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
 
 	std::unique_ptr<TIE::SceneText> text1 = TIE::make_unique<TIE::SceneText>();
 	TIE::GlobalId id1 = text1->getId();
@@ -121,7 +121,7 @@ TEST(TIEntityManager, GetSceneText) {
 
 
 TEST(TIEntityManager, GetAllSceneTexts) {
-	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
 
 	std::unique_ptr<TIE::SceneText> text1 = TIE::make_unique<TIE::SceneText>();
 	TIE::GlobalId id1 = text1->getId();

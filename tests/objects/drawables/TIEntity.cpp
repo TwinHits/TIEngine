@@ -3,9 +3,9 @@
 #include "../../Constants.h"
 
 TEST(TIEntity, GetId) {
-	TIE::HashManager::Instance()->setSeed(ENTITY_UNUSED_ID);
+	TIE::HashManager::Instance()->setSeed(TIE::ENTITY_UNUSED_ID);
 	//plus 2 for the clock initialized inside the constructor	
-	TIE::GlobalId expected = ENTITY_UNUSED_ID+2;
+	TIE::GlobalId expected = TIE::ENTITY_UNUSED_ID+2;
 	TIE::TIEntity entity = TIE::TIEntity();
 	TIE::GlobalId actual = entity.getId();
 
@@ -15,7 +15,7 @@ TEST(TIEntity, GetId) {
 
 TEST(TIEntity, GetDraw) {
 	TIE::TIEntity entity = TIE::TIEntity();
-	bool expected = DEFAULT_DRAW_BOOL;
+	bool expected = TIE::DEFAULT_DRAW_BOOL;
 
 	bool actual = entity.getDraw();
 
@@ -25,9 +25,9 @@ TEST(TIEntity, GetDraw) {
 
 TEST(TIEntity, SetDraw) {
 	TIE::TIEntity entity = TIE::TIEntity();
-	bool expected = CUSTOM_DRAW_BOOL;
+	bool expected = TIE::CUSTOM_DRAW_BOOL;
 
-	entity.setDraw(CUSTOM_DRAW_BOOL);
+	entity.setDraw(TIE::CUSTOM_DRAW_BOOL);
 	bool actual = entity.getDraw();
 
 	ASSERT_EQ(expected, actual);
@@ -36,7 +36,7 @@ TEST(TIEntity, SetDraw) {
 
 TEST(TIEntity, GetDrawOrder) {
 	TIE::TIEntity entity = TIE::TIEntity();
-	int expected = DEFAULT_DRAW_ORDER_INT;
+	int expected = TIE::DEFAULT_DRAW_ORDER_INT;
 
 	int actual = entity.getDrawOrder();
 
@@ -46,9 +46,9 @@ TEST(TIEntity, GetDrawOrder) {
 
 TEST(TIEntity, SetDrawOrder) {
 	TIE::TIEntity entity = TIE::TIEntity();
-	int expected = CUSTOM_DRAW_ORDER_INT;
+	int expected = TIE::CUSTOM_DRAW_ORDER_INT;
 
-	entity.setDrawOrder(CUSTOM_DRAW_ORDER_INT);
+	entity.setDrawOrder(TIE::CUSTOM_DRAW_ORDER_INT);
 	int actual = entity.getDrawOrder();
 
 	ASSERT_EQ(expected, actual);
@@ -57,7 +57,7 @@ TEST(TIEntity, SetDrawOrder) {
 
 TEST(TIEntity, GetSpeed) {
 	TIE::TIEntity entity = TIE::TIEntity();
-	double expected = DEFAULT_SPEED_DOUBLE;
+	double expected = TIE::DEFAULT_SPEED_DOUBLE;
 
 	double actual = entity.getSpeed();
 
@@ -66,9 +66,9 @@ TEST(TIEntity, GetSpeed) {
 
 TEST(TIEntity, SetSpeed) {
 	TIE::TIEntity entity = TIE::TIEntity();
-	double expected = CUSTOM_SPEED_DOUBLE;
+	double expected = TIE::CUSTOM_SPEED_DOUBLE;
 
-	entity.setSpeed(CUSTOM_SPEED_DOUBLE);
+	entity.setSpeed(TIE::CUSTOM_SPEED_DOUBLE);
 	double actual = entity.getSpeed();
 
 	ASSERT_EQ(expected, actual);
@@ -76,7 +76,7 @@ TEST(TIEntity, SetSpeed) {
 
 
 TEST(TIEntity, GetSprite) {
-	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
 
 	TIE::TIEntity entity = TIE::TIEntity();
 	sf::Sprite expected = TIE::getMissingSprite();
@@ -98,7 +98,7 @@ TEST(TIEntity, GetSprite) {
 
 TEST(TIEntity, SetSprite) {
 	//confirm that setting a new sprite updates the sprite returned by getSprite
-	sf::Sprite expected = sf::Sprite(TIE::AssetsManager::Instance()->getTexture(TEST_TEXTURE));
+	sf::Sprite expected = sf::Sprite(TIE::AssetsManager::Instance()->getTexture(TIE::TEST_TEXTURE));
 	expected.setPosition(sf::Vector2f(132, 256));
 	expected.setOrigin(sf::Vector2f(10, 10));
 	expected.setScale(sf::Vector2f(3, 3));

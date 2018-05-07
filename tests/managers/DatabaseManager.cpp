@@ -12,7 +12,7 @@ TEST(DatabaseManager, ConnectToDatabase) {
 
 //Test that a select statement runs correctly
 TEST(DatabaseManager, RunSelect) {
-	std::string expected = TWIN_ION_ENGINE_EN;
+	std::string expected = TIE::TWIN_ION_ENGINE_EN;
 	std::string query = "SELECT defaultcontent FROM tie_languagestrings WHERE stringid = 1";
 	std::string actual;
 	TIE::DatabaseManager::Instance()->Select(query, actual);

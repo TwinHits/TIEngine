@@ -5,6 +5,8 @@
 
 #include "../include/TIEngine.h"
 
+namespace TIE {
+
 //Helper method for making sure that the last line of the debuglog contains the provided text
 static bool CheckDebugLogForText(const std::string& text) {
 	std::ifstream log;
@@ -36,4 +38,5 @@ static bool CheckDebugLogForText(const std::string& text) {
 	return false;
 }
 
+}
 #endif

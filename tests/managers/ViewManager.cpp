@@ -4,19 +4,19 @@
 #include "../Helpers.h"
 
 TEST(ViewManager, AddViewDefault) {
-	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
 
 	TIE::GlobalId viewId = TIE::ViewManager::Instance()->addView();
-	TIE::LogManager::Instance()->logDebug(TEST_NONSENSE_2);
+	TIE::LogManager::Instance()->logDebug(TIE::TEST_NONSENSE_2);
 	const sf::View& view = TIE::ViewManager::Instance()->getView(viewId);
-	ASSERT_FALSE(CheckDebugLogForText(ERROR_LEVEL_PREFIX + NO_VIEW_TO_GET_ERROR));
+	ASSERT_FALSE(TIE::CheckDebugLogForText(TIE::ERROR_LEVEL_PREFIX + TIE::NO_VIEW_TO_GET_ERROR));
 
-	sf::Vector2f expectedCenter = DEFAULT_VIEW_CENTER;
+	sf::Vector2f expectedCenter = TIE::DEFAULT_VIEW_CENTER;
 	const sf::Vector2f& actualCenter = view.getCenter();
 	ASSERT_EQ(expectedCenter.x, actualCenter.x);
 	ASSERT_EQ(expectedCenter.y, actualCenter.y);
 
-	sf::Vector2f expectedSize = DEFAULT_VIEW_SIZE;
+	sf::Vector2f expectedSize = TIE::DEFAULT_VIEW_SIZE;
 	const sf::Vector2f& actualSize = view.getSize();
 	ASSERT_EQ(expectedSize.x, actualSize.x);
 	ASSERT_EQ(expectedSize.y, actualSize.y);
@@ -26,33 +26,33 @@ TEST(ViewManager, AddViewDefault) {
 
 
 TEST(ViewManager, RemoveView) {
-	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
 
 	TIE::GlobalId viewId = TIE::ViewManager::Instance()->addView();
-	TIE::LogManager::Instance()->logDebug(TEST_NONSENSE_1);
+	TIE::LogManager::Instance()->logDebug(TIE::TEST_NONSENSE_1);
 
 	TIE::ViewManager::Instance()->removeView(viewId);
-	ASSERT_FALSE(CheckDebugLogForText(WARN_LEVEL_PREFIX + NO_VIEW_TO_REMOVE_WARNING));
+	ASSERT_FALSE(TIE::CheckDebugLogForText(TIE::WARN_LEVEL_PREFIX + TIE::NO_VIEW_TO_REMOVE_WARNING));
 
 	TIE::ViewManager::Instance()->getView(viewId);
-	ASSERT_TRUE(CheckDebugLogForText(ERROR_LEVEL_PREFIX + NO_VIEW_TO_GET_ERROR));
+	ASSERT_TRUE(TIE::CheckDebugLogForText(TIE::ERROR_LEVEL_PREFIX + TIE::NO_VIEW_TO_GET_ERROR));
 }
 
 
 TEST(ViewManager, AddViewCustom) {
-	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
 
-	TIE::GlobalId viewId = TIE::ViewManager::Instance()->addView(CUSTOM_VIEW_RECT);
-	TIE::LogManager::Instance()->logDebug(TEST_NONSENSE_3);
+	TIE::GlobalId viewId = TIE::ViewManager::Instance()->addView(TIE::CUSTOM_VIEW_RECT);
+	TIE::LogManager::Instance()->logDebug(TIE::TEST_NONSENSE_3);
 	const sf::View& view = TIE::ViewManager::Instance()->getView(viewId);
-	ASSERT_FALSE(CheckDebugLogForText(ERROR_LEVEL_PREFIX + NO_VIEW_TO_GET_ERROR));
+	ASSERT_FALSE(TIE::CheckDebugLogForText(TIE::ERROR_LEVEL_PREFIX + TIE::NO_VIEW_TO_GET_ERROR));
 
-	sf::Vector2f expectedCenter = CUSTOM_VIEW_CENTER;
+	sf::Vector2f expectedCenter = TIE::CUSTOM_VIEW_CENTER;
 	const sf::Vector2f& actualCenter = view.getCenter();
 	ASSERT_EQ(expectedCenter.x, actualCenter.x);
 	ASSERT_EQ(expectedCenter.y, actualCenter.y);
 
-	sf::Vector2f expectedSize = CUSTOM_VIEW_SIZE;
+	sf::Vector2f expectedSize = TIE::CUSTOM_VIEW_SIZE;
 	const sf::Vector2f& actualSize = view.getSize();
 	ASSERT_EQ(expectedSize.x, actualSize.x);
 	ASSERT_EQ(expectedSize.y, actualSize.y);
@@ -62,19 +62,19 @@ TEST(ViewManager, AddViewCustom) {
 
 
 TEST(ViewManager, GetView) {
-	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
 
-	TIE::GlobalId viewId = TIE::ViewManager::Instance()->addView(CUSTOM_VIEW_RECT);
-	TIE::LogManager::Instance()->logDebug(TEST_NONSENSE_1);
+	TIE::GlobalId viewId = TIE::ViewManager::Instance()->addView(TIE::CUSTOM_VIEW_RECT);
+	TIE::LogManager::Instance()->logDebug(TIE::TEST_NONSENSE_1);
 	const sf::View& view = TIE::ViewManager::Instance()->getView(viewId);
-	ASSERT_FALSE(CheckDebugLogForText(ERROR_LEVEL_PREFIX + NO_VIEW_TO_GET_ERROR));
+	ASSERT_FALSE(TIE::CheckDebugLogForText(TIE::ERROR_LEVEL_PREFIX + TIE::NO_VIEW_TO_GET_ERROR));
 
-	sf::Vector2f expectedCenter = CUSTOM_VIEW_CENTER;
+	sf::Vector2f expectedCenter = TIE::CUSTOM_VIEW_CENTER;
 	const sf::Vector2f& actualCenter = view.getCenter();
 	ASSERT_EQ(expectedCenter.x, actualCenter.x);
 	ASSERT_EQ(expectedCenter.y, actualCenter.y);
 
-	sf::Vector2f expectedSize = CUSTOM_VIEW_SIZE;
+	sf::Vector2f expectedSize = TIE::CUSTOM_VIEW_SIZE;
 	const sf::Vector2f& actualSize = view.getSize();
 	ASSERT_EQ(expectedSize.x, actualSize.x);
 	ASSERT_EQ(expectedSize.y, actualSize.y);
@@ -84,39 +84,39 @@ TEST(ViewManager, GetView) {
 
 
 TEST(ViewManager, GetViewDefault) {
-	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
-	TIE::LogManager::Instance()->logDebug(TEST_NONSENSE_1);
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
+	TIE::LogManager::Instance()->logDebug(TIE::TEST_NONSENSE_1);
 
-	const sf::View& view = TIE::ViewManager::Instance()->getView(VIEW_UNUSED_ID);
-	ASSERT_TRUE(CheckDebugLogForText(ERROR_LEVEL_PREFIX + NO_VIEW_TO_GET_ERROR));
+	const sf::View& view = TIE::ViewManager::Instance()->getView(TIE::VIEW_UNUSED_ID);
+	ASSERT_TRUE(TIE::CheckDebugLogForText(TIE::ERROR_LEVEL_PREFIX + TIE::NO_VIEW_TO_GET_ERROR));
 }
 
 
 TEST(ViewManager, GetScrollSpeed) {
-	ASSERT_FLOAT_EQ(SCROLL_SPEED, TIE::ViewManager::Instance()->getScrollSpeed());
+	ASSERT_FLOAT_EQ(TIE::SCROLL_SPEED, TIE::ViewManager::Instance()->getScrollSpeed());
 }
 
 
 TEST(ViewManager, SetScrollSpeed) {
-	TIE::ViewManager::Instance()->setScrollSpeed(TEST_SCROLL_SPEED);
-	ASSERT_FLOAT_EQ(TEST_SCROLL_SPEED, TIE::ViewManager::Instance()->getScrollSpeed());
+	TIE::ViewManager::Instance()->setScrollSpeed(TIE::TEST_SCROLL_SPEED);
+	ASSERT_FLOAT_EQ(TIE::TEST_SCROLL_SPEED, TIE::ViewManager::Instance()->getScrollSpeed());
 }
 
 
 TEST(ViewManager, SetActiveView) {
-	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
 
-	TIE::GlobalId viewId = TIE::ViewManager::Instance()->addView(CUSTOM_VIEW_RECT);
+	TIE::GlobalId viewId = TIE::ViewManager::Instance()->addView(TIE::CUSTOM_VIEW_RECT);
 	const sf::View& expected = TIE::ViewManager::Instance()->getView(viewId);
 	TIE::ViewManager::Instance()->setActiveView(viewId);
 	const sf::View& actual = TIE::ViewManager::Instance()->getActiveView();
 
-	sf::Vector2f expectedCenter = CUSTOM_VIEW_CENTER;
+	sf::Vector2f expectedCenter = TIE::CUSTOM_VIEW_CENTER;
 	const sf::Vector2f& actualCenter =actual.getCenter();
 	ASSERT_EQ(expectedCenter.x, actualCenter.x);
 	ASSERT_EQ(expectedCenter.y, actualCenter.y);
 
-	sf::Vector2f expectedSize = CUSTOM_VIEW_SIZE;
+	sf::Vector2f expectedSize = TIE::CUSTOM_VIEW_SIZE;
 	const sf::Vector2f& actualSize = actual.getSize();
 	ASSERT_EQ(expectedSize.x, actualSize.x);
 	ASSERT_EQ(expectedSize.y, actualSize.y);
@@ -124,7 +124,7 @@ TEST(ViewManager, SetActiveView) {
 
 
 TEST(ViewManager, UpdateCamera) {
-	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
 
 	const sf::RenderWindow& window = TIE::WindowManager::Instance()->addWindow();
 	TIE::GlobalId viewId = TIE::ViewManager::Instance()->addView();
@@ -150,8 +150,8 @@ TEST(ViewManager, UpdateCamera) {
 
 
 TEST(ViewManager, Scroll) {
-	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
-	TIE::ViewManager::Instance()->setScrollSpeed(SCROLL_SPEED);
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
+	TIE::ViewManager::Instance()->setScrollSpeed(TIE::SCROLL_SPEED);
 
 	const sf::RenderWindow& window = TIE::WindowManager::Instance()->addWindow();
 	TIE::GlobalId viewId = TIE::ViewManager::Instance()->addView();
@@ -164,19 +164,19 @@ TEST(ViewManager, Scroll) {
 	ASSERT_EQ(expectedNeutralScroll.y, actualNeutralScroll.y);
 
 	TIE::ViewManager::Instance()->scroll(TIE::Direction::TOP);
-	const sf::Vector2f expectedTopScroll = sf::Vector2f(0, -SCROLL_SPEED);
+	const sf::Vector2f expectedTopScroll = sf::Vector2f(0, -TIE::SCROLL_SPEED);
 	const sf::Vector2f actualTopScroll = view.getCenter();
 	ASSERT_EQ(expectedTopScroll.x, actualTopScroll.x);
 	ASSERT_EQ(expectedTopScroll.y, actualTopScroll.y);
 
 	TIE::ViewManager::Instance()->scroll(TIE::Direction::RIGHT);
-	const sf::Vector2f expectedRightScroll = sf::Vector2f(SCROLL_SPEED, -SCROLL_SPEED);
+	const sf::Vector2f expectedRightScroll = sf::Vector2f(TIE::SCROLL_SPEED, -TIE::SCROLL_SPEED);
 	const sf::Vector2f actualRightScroll = view.getCenter();
 	ASSERT_EQ(expectedRightScroll.x, actualRightScroll.x);
 	ASSERT_EQ(expectedRightScroll.y, actualRightScroll.y);
 
 	TIE::ViewManager::Instance()->scroll(TIE::Direction::BOTTOM);
-	const sf::Vector2f expectedBottomScroll = sf::Vector2f(SCROLL_SPEED, 0);
+	const sf::Vector2f expectedBottomScroll = sf::Vector2f(TIE::SCROLL_SPEED, 0);
 	const sf::Vector2f actualBottomScroll = view.getCenter();
 	ASSERT_EQ(expectedBottomScroll.x, actualBottomScroll.x);
 	ASSERT_EQ(expectedBottomScroll.y, actualBottomScroll.y);

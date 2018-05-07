@@ -3,7 +3,7 @@
 #include "../Constants.h"
 
 TEST(StringManager, GetDisplayLanguage) {
-	TIE::ConfigManager::Instance()->loadConfigFile(TEST_CONFIG_FILE);
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
 	TIE::Language expected = TIE::ConfigManager::Instance()->getDefaultDisplayLanguage();
 	TIE::Language actual = TIE::StringManager::Instance()->getDisplayLanguage();
 
@@ -24,14 +24,14 @@ TEST(StringManager, SetDisplayLanguage) {
 
 TEST(StringManager, GetStringForDisplayLanguage) {
 	TIE::StringManager::Instance()->setDisplayLanguage(TIE::en_US);
-	std::string expected = TWIN_ION_ENGINE_EN;
-	std::string actual = TIE::StringManager::Instance()->getString(TWIN_ION_ENGINE_ID);
+	std::string expected = TIE::TWIN_ION_ENGINE_EN;
+	std::string actual = TIE::StringManager::Instance()->getString(TIE::TWIN_ION_ENGINE_ID);
 	ASSERT_EQ(expected, actual);
 }
 
 
 TEST(StringManager, GetStringForLangauge) {
-	std::string expected = TWIN_ION_ENGINE_JP;
-	std::string actual = TIE::StringManager::Instance()->getString(TWIN_ION_ENGINE_ID, TIE::ja_JP);
+	std::string expected = TIE::TWIN_ION_ENGINE_JP;
+	std::string actual = TIE::StringManager::Instance()->getString(TIE::TWIN_ION_ENGINE_ID, TIE::ja_JP);
 	ASSERT_EQ(expected, actual);
 }

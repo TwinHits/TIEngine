@@ -30,17 +30,17 @@ TEST(HashManager, SetGlobalIdSeed) {
 //Get the hashed values for three TEST_NONSENSE_ objects and make sure they aren't the same or are
 TEST(HashManager, GetHashForObject) {
 
-	TIE::GlobalId id1 = TIE::HashManager::Instance()->getHash(TEST_NONSENSE_1);
-	TIE::GlobalId id2 = TIE::HashManager::Instance()->getHash(TEST_NONSENSE_2);
-	TIE::GlobalId id3 = TIE::HashManager::Instance()->getHash(TEST_NONSENSE_3);
+	TIE::GlobalId id1 = TIE::HashManager::Instance()->getHash(TIE::TEST_NONSENSE_1);
+	TIE::GlobalId id2 = TIE::HashManager::Instance()->getHash(TIE::TEST_NONSENSE_2);
+	TIE::GlobalId id3 = TIE::HashManager::Instance()->getHash(TIE::TEST_NONSENSE_3);
 
 	ASSERT_NE(id1, id2);
 	ASSERT_NE(id2, id3);
 	ASSERT_NE(id3, id1); 
 
-	TIE::GlobalId id4 = TIE::HashManager::Instance()->getHash(TEST_NONSENSE_1);
-	TIE::GlobalId id5 = TIE::HashManager::Instance()->getHash(TEST_NONSENSE_2);
-	TIE::GlobalId id6 = TIE::HashManager::Instance()->getHash(TEST_NONSENSE_3);
+	TIE::GlobalId id4 = TIE::HashManager::Instance()->getHash(TIE::TEST_NONSENSE_1);
+	TIE::GlobalId id5 = TIE::HashManager::Instance()->getHash(TIE::TEST_NONSENSE_2);
+	TIE::GlobalId id6 = TIE::HashManager::Instance()->getHash(TIE::TEST_NONSENSE_3);
 
 	ASSERT_EQ(id1, id4);
 	ASSERT_EQ(id2, id5);
