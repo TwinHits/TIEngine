@@ -10,8 +10,8 @@
 using namespace TIE;
 
 ConsoleManager::ConsoleManager() {
-	//make a view that happens to be the same size as the windows the client created. This should not be a magic number.
-	devConsoleViewId = ViewManager::Instance()->addView(sf::FloatRect(0,0,1000,1000));
+	sf::Vector2i size = WindowManager::Instance()->getWindowSize();
+	devConsoleViewId = ViewManager::Instance()->addView(sf::FloatRect(0,0,size.x,size.y));
 	devConsole = TIE::make_unique<DevConsole>();
 }
 
