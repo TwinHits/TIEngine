@@ -18,8 +18,8 @@ class AssetsManager: public Singleton<AssetsManager> {
 	//Singleton manager for game assets. Parses every file found in the
 	//config file defined assets folders.
 	public:
-		const sf::Texture& getTexture(GlobalId);
-		const sf::Texture& getTexture(const std::string&);
+		sf::Texture& getTexture(GlobalId);
+		sf::Texture& getTexture(const std::string&);
 		const sf::SoundBuffer& getAudio(GlobalId);
 		const sf::SoundBuffer& getAudio(const std::string&);
 		const sf::Font& getFont(GlobalId);

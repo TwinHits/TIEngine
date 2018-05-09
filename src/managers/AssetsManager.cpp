@@ -19,7 +19,7 @@ AssetsManager::~AssetsManager() {
 }
 
 
-const sf::Texture& AssetsManager::getTexture(GlobalId id) {
+sf::Texture& AssetsManager::getTexture(GlobalId id) {
 	if (textures.find(id) != textures.end()) {
 		return textures[id];
 	} else {
@@ -29,7 +29,7 @@ const sf::Texture& AssetsManager::getTexture(GlobalId id) {
 }
 
 
-const sf::Texture& AssetsManager::getTexture(const std::string& name) {
+sf::Texture& AssetsManager::getTexture(const std::string& name) {
 	GlobalId id = HashManager::Instance()->getHash(name);
 	return getTexture(id);
 }
