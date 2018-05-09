@@ -29,8 +29,8 @@ class TIEntity {
 		void setAngle(float angle);
 		float getAngle();
 
-		void setSpeed(double speed);
-		double getSpeed() const;
+		void setSpeed(float speed);
+		float getSpeed() const;
 
 		virtual void update();
 		virtual void receiveMessage(const Message& msg) const;
@@ -48,7 +48,7 @@ class TIEntity {
 		bool draw = true;
 		int drawOrder = 0;
 
-		double speed = 1;
+		float speed = 1;
 };
 
 }

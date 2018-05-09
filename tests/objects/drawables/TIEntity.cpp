@@ -57,21 +57,21 @@ TEST(TIEntity, SetDrawOrder) {
 
 TEST(TIEntity, GetSpeed) {
 	TIE::TIEntity entity = TIE::TIEntity();
-	double expected = TIE::DEFAULT_SPEED_DOUBLE;
+	float expected = TIE::DEFAULT_SPEED_FLOAT;
 
-	double actual = entity.getSpeed();
+	float actual = entity.getSpeed();
 
-	ASSERT_EQ(expected, actual);
+	ASSERT_FLOAT_EQ(expected, actual);
 }
 
 TEST(TIEntity, SetSpeed) {
 	TIE::TIEntity entity = TIE::TIEntity();
-	double expected = TIE::CUSTOM_SPEED_DOUBLE;
+	float expected = TIE::CUSTOM_SPEED_FLOAT;
 
-	entity.setSpeed(TIE::CUSTOM_SPEED_DOUBLE);
-	double actual = entity.getSpeed();
+	entity.setSpeed(TIE::CUSTOM_SPEED_FLOAT);
+	float actual = entity.getSpeed();
 
-	ASSERT_EQ(expected, actual);
+	ASSERT_FLOAT_EQ(expected, actual);
 }
 
 
@@ -179,19 +179,21 @@ TEST(TIEntity, AssignmentOperator) {
 	ASSERT_NE(entity1, entity2);
 }
 
-TEST(TIEntity, MoveUp) {
+
+TEST(TIEntity, MoveRight) {
 	TIE::TIEntity entity = TIE::TIEntity();
 	sf::Vector2f startPosition = entity.getSprite().getPosition();
-	sf::Vector2f preconditionPosition = sf::Vector2f(0,0);
+	sf::Vector2f preconditionPosition = sf::Vector2f(0.0, 0.0);
 
 	ASSERT_FLOAT_EQ(startPosition.x, preconditionPosition.x);
 	ASSERT_FLOAT_EQ(startPosition.y, preconditionPosition.y);
 
 	float delta = 1.0;
 
+	entity.setAngle(0.0);
 	entity.move(delta);
 
-	sf::Vector2f expected = sf::Vector2f(0,-1);
+	sf::Vector2f expected = sf::Vector2f(1.0, 0.0);
  	sf::Vector2f actual = entity.getSprite().getPosition();
 
 	ASSERT_FLOAT_EQ(expected.x, actual.x);
@@ -199,21 +201,21 @@ TEST(TIEntity, MoveUp) {
 }
 
 
-TEST(TIEntity, MoveRight) {
+TEST(TIEntity, MoveDownRight) {
 	TIE::TIEntity entity = TIE::TIEntity();
 	sf::Vector2f startPosition = entity.getSprite().getPosition();
-	sf::Vector2f preconditionPosition = sf::Vector2f(0,0);
+	sf::Vector2f preconditionPosition = sf::Vector2f(0.0, 0.0);
 
 	ASSERT_FLOAT_EQ(startPosition.x, preconditionPosition.x);
 	ASSERT_FLOAT_EQ(startPosition.y, preconditionPosition.y);
 
 	float delta = 1.0;
 
-	entity.setAngle(90.0);
+	entity.setAngle(45.0);
 	entity.move(delta);
 
-	sf::Vector2f expected = sf::Vector2f(1,0);
- 	sf::Vector2f actual = entity.getSprite().getPosition();
+	sf::Vector2f expected = sf::Vector2f(0.7071067, 0.7071067);
+	sf::Vector2f actual = entity.getSprite().getPosition();
 
 	ASSERT_FLOAT_EQ(expected.x, actual.x);
 	ASSERT_FLOAT_EQ(expected.y, actual.y);
@@ -223,17 +225,38 @@ TEST(TIEntity, MoveRight) {
 TEST(TIEntity, MoveDown) {
 	TIE::TIEntity entity = TIE::TIEntity();
 	sf::Vector2f startPosition = entity.getSprite().getPosition();
-	sf::Vector2f preconditionPosition = sf::Vector2f(0,1);
+	sf::Vector2f preconditionPosition = sf::Vector2f(0.0, 0.0);
 
 	ASSERT_FLOAT_EQ(startPosition.x, preconditionPosition.x);
 	ASSERT_FLOAT_EQ(startPosition.y, preconditionPosition.y);
 
 	float delta = 1.0;
 
-	entity.setAngle(180.0);
+	entity.setAngle(90.0);
 	entity.move(delta);
 
-	sf::Vector2f expected = sf::Vector2f(0,0);
+	sf::Vector2f expected = sf::Vector2f(0.0, 1.0);
+ 	sf::Vector2f actual = entity.getSprite().getPosition();
+
+	ASSERT_FLOAT_EQ(expected.x, actual.x);
+	ASSERT_FLOAT_EQ(expected.y, actual.y);
+}
+
+
+TEST(TIEntity, MoveDownLeft) {
+	TIE::TIEntity entity = TIE::TIEntity();
+	sf::Vector2f startPosition = entity.getSprite().getPosition();
+	sf::Vector2f preconditionPosition = sf::Vector2f(0.0, 0.0);
+
+	ASSERT_FLOAT_EQ(startPosition.x, preconditionPosition.x);
+	ASSERT_FLOAT_EQ(startPosition.y, preconditionPosition.y);
+
+	float delta = 1.0;
+
+	entity.setAngle(135.0);
+	entity.move(delta);
+
+	sf::Vector2f expected = sf::Vector2f(-0.7071067, 0.7071067);
  	sf::Vector2f actual = entity.getSprite().getPosition();
 
 	ASSERT_FLOAT_EQ(expected.x, actual.x);
@@ -244,22 +267,84 @@ TEST(TIEntity, MoveDown) {
 TEST(TIEntity, MoveLeft) {
 	TIE::TIEntity entity = TIE::TIEntity();
 	sf::Vector2f startPosition = entity.getSprite().getPosition();
-	sf::Vector2f preconditionPosition = sf::Vector2f(-1,0);
+	sf::Vector2f preconditionPosition = sf::Vector2f(0.0, 0.0);
 
 	ASSERT_FLOAT_EQ(startPosition.x, preconditionPosition.x);
 	ASSERT_FLOAT_EQ(startPosition.y, preconditionPosition.y);
 
 	float delta = 1.0;
 
-	entity.setAngle(270.0);
+	entity.setAngle(180.0);
 	entity.move(delta);
 
-	sf::Vector2f expected = sf::Vector2f(0,0);
+	sf::Vector2f expected = sf::Vector2f(-1.0, 0.0);
  	sf::Vector2f actual = entity.getSprite().getPosition();
 
 	ASSERT_FLOAT_EQ(expected.x, actual.x);
 	ASSERT_FLOAT_EQ(expected.y, actual.y);
 }
+
+TEST(TIEntity, MoveUpLeft) {
+	TIE::TIEntity entity = TIE::TIEntity();
+	sf::Vector2f startPosition = entity.getSprite().getPosition();
+	sf::Vector2f preconditionPosition = sf::Vector2f(0.0, 0.0);
+
+	ASSERT_FLOAT_EQ(startPosition.x, preconditionPosition.x);
+	ASSERT_FLOAT_EQ(startPosition.y, preconditionPosition.y);
+
+	float delta = 1.0;
+
+	entity.setAngle(225.0);
+	entity.move(delta);
+
+	sf::Vector2f expected = sf::Vector2f(-0.7071067, -0.7071067);
+ 	sf::Vector2f actual = entity.getSprite().getPosition();
+
+	ASSERT_FLOAT_EQ(expected.x, actual.x);
+	ASSERT_FLOAT_EQ(expected.y, actual.y);
+}
+
+
+TEST(TIEntity, MoveUp) {
+	TIE::TIEntity entity = TIE::TIEntity();
+	sf::Vector2f startPosition = entity.getSprite().getPosition();
+	sf::Vector2f preconditionPosition = sf::Vector2f(0.0, 0.0);
+
+	ASSERT_FLOAT_EQ(startPosition.x, preconditionPosition.x);
+	ASSERT_FLOAT_EQ(startPosition.y, preconditionPosition.y);
+
+	float delta = 1.0;
+	entity.setAngle(270.0);
+	entity.move(delta);
+
+	sf::Vector2f expected = sf::Vector2f(0.0, -1.0);
+	sf::Vector2f actual = entity.getSprite().getPosition();
+
+	ASSERT_FLOAT_EQ(expected.x, actual.x);
+	ASSERT_FLOAT_EQ(expected.y, actual.y);
+}
+
+
+TEST(TIEntity, MoveUpRight) {
+	TIE::TIEntity entity = TIE::TIEntity();
+	sf::Vector2f startPosition = entity.getSprite().getPosition();
+	sf::Vector2f preconditionPosition = sf::Vector2f(0.0, 0.0);
+
+	ASSERT_FLOAT_EQ(startPosition.x, preconditionPosition.x);
+	ASSERT_FLOAT_EQ(startPosition.y, preconditionPosition.y);
+
+	float delta = 1.0;
+	entity.setAngle(315.0);
+	entity.move(delta);
+
+	sf::Vector2f expected = sf::Vector2f(0.7071067, -0.7071067);
+	sf::Vector2f actual = entity.getSprite().getPosition();
+
+	ASSERT_FLOAT_EQ(expected.x, actual.x);
+	ASSERT_FLOAT_EQ(expected.y, actual.y);
+}
+
+
 //TEST(TIEntity, RecieveMessage) {}
 
 

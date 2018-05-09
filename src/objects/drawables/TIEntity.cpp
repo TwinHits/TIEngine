@@ -6,7 +6,7 @@
 #include "objects/Message.h"
 
 #include "utilities/GetMissingSprite.h"
-#include "utilities/ToDegrees.h"
+#include "utilities/ToRadians.h"
 
 using namespace TIE;
 
@@ -70,12 +70,12 @@ int TIEntity::getDrawOrder() const {
 }
 
 
-void TIEntity::setSpeed(double speed) {
+void TIEntity::setSpeed(float speed) {
 	this->speed = speed;
 }
 
 
-double TIEntity::getSpeed() const {
+float TIEntity::getSpeed() const {
 	return this->speed;
 }
 
@@ -91,10 +91,25 @@ void TIEntity::receiveMessage(const Message& msg) const {
 
 
 void TIEntity::move(const float delta) {
+	float degrees = sprite.getRotation();
+	float x = 0;
+	float y = 0;
 
-    double x = std::sin(ToDegrees(sprite.getRotation())) * speed * delta;
-	double y = std::cos(ToDegrees(sprite.getRotation())) * speed * delta;
-    sprite.move(sf::Vector2f(x, -y));
+	//Handle special values because of sin/cos handling the seminal values
+	if (degrees == 0.0) {
+		x = std::cos(ToRadians(degrees)) * speed * delta;
+	} else if (degrees == 90.0) {
+		y = std::sin(ToRadians(degrees)) * speed * delta;
+	} else if (degrees == 180.0) {
+		x = std::cos(ToRadians(degrees)) * speed * delta;
+	} else if (degrees == 270.0) {
+		y = std::sin(ToRadians(degrees)) * speed * delta;
+	} else {
+		x = std::cos(ToRadians(degrees)) * speed * delta;
+		y = std::sin(ToRadians(degrees)) * speed * delta;
+	}
+
+    sprite.move(sf::Vector2f(x, y));
 }
 
 
