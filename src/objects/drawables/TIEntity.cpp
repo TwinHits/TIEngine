@@ -50,6 +50,16 @@ const sf::Sprite& TIEntity::getSprite() const {
 }
 
 
+void TIEntity::setAngle(float angle) {
+	this->sprite.setRotation(angle);
+}
+
+
+float TIEntity::getAngle() {
+	return this->sprite.getRotation();
+}
+
+
 void TIEntity::setDrawOrder(int i) {
 	this->drawOrder = i;
 }
@@ -79,41 +89,12 @@ void TIEntity::receiveMessage(const Message& msg) const {
 
 }
 
-void TIEntity::move(const sf::Vector2f destination, const float delta) {
-	/**
-	Get the cartesian coordinates. Make Y positions negative because screen
-	coordainates are as if they are in quadrant 4.
-	**/
-	auto position = sprite.getPosition();
-	double x = destination.x - position.x;
-	double y = destination.y - position.y;
 
-	//Convert to polar vector.
-	double magnitude = std::hypot(x, y);
-	double direction = std::atan(y / x);
+void TIEntity::move(const float delta) {
 
-	//C++'s inverse tangent function returns radians, convert to degrees
-	direction = ToDegrees(direction);
-
-	//Add or subtrack according to quadrant
-	if (y >= 0 && x >= 0)
-		direction = direction;
-	else if (x < 0 && y < 0)
-		direction = direction + 360;
-	else
-		direction = direction + 180;
-
-	//Normalize distances. Not sure why.
-	double normalX = x / magnitude;
-	double normalY = y / magnitude;
-
-	//Move along this direction per speed of this object for the time since last calcuation
-	auto yMove = normalY * this->speed * delta;
-	auto xMove = normalX * this->speed * delta;
-
-	//Actually move the sprite
-	sprite.move(sf::Vector2f(xMove, yMove));
-
+    double x = std::sin(ToDegrees(sprite.getRotation())) * speed * delta;
+	double y = std::cos(ToDegrees(sprite.getRotation())) * speed * delta;
+    sprite.move(sf::Vector2f(x, -y));
 }
 
 

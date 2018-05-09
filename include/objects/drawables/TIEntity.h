@@ -26,13 +26,16 @@ class TIEntity {
 		void setSprite(const sf::Sprite& sprite);
 		const sf::Sprite& getSprite() const;
 
+		void setAngle(float angle);
+		float getAngle();
+
 		void setSpeed(double speed);
 		double getSpeed() const;
 
 		virtual void update();
 		virtual void receiveMessage(const Message& msg) const;
 
-		virtual void move(const sf::Vector2f destination, const float delta);
+		virtual void move(const float delta);
 
 		void operator=(const TIEntity&);
 		bool operator==(const TIEntity& rhs) const;
