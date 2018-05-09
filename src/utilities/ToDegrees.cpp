@@ -3,7 +3,6 @@
 
 #include "utilities/ToDegrees.h"
 
-float TIE::ToDegrees(double radians)
-{
+float TIE::ToDegrees(double radians) {
 	return (radians *180)/M_PI;
 }
