@@ -82,8 +82,8 @@ static bool CUSTOM_DRAW_BOOL = false;
 static int DEFAULT_DRAW_ORDER_INT = 0;
 static int CUSTOM_DRAW_ORDER_INT = 12312;
 static TIE::GlobalId ENTITY_UNUSED_ID = 99868;
-static double DEFAULT_SPEED_DOUBLE = 1;
-static double CUSTOM_SPEED_DOUBLE = 0.5;
+static float DEFAULT_SPEED_FLOAT = 1;
+static float CUSTOM_SPEED_FLOAT = 0.5;
 
 //SceneText
 static TIE::GlobalId SCENETEXT_UNUSED_ID = 40003;
