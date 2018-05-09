@@ -104,13 +104,17 @@ void ConfigManager::parseConfig(std::ifstream& config) {
 
 
 const std::string ConfigManager::assembleDatabaseConnectionString(const std::map<std::string, std::string> databaseConfig) {
-	std::stringstream databaseConnectionString;
-	databaseConnectionString << "dbname=" << databaseConfig.at("DatabaseDBName") << " ";
-	databaseConnectionString << "user=" << databaseConfig.at("DatabaseUser") << " ";
-	databaseConnectionString << "password=" << databaseConfig.at("DatabasePassword") << " ";
-	databaseConnectionString << "hostaddr=" << databaseConfig.at("DatabaseHostAddr") << " ";
-	databaseConnectionString << "port=" << databaseConfig.at("DatabasePort");
-	return databaseConnectionString.str();
+	try {
+		std::stringstream databaseConnectionString;
+		databaseConnectionString << "dbname=" << databaseConfig.at("DatabaseDBName") << " ";
+		databaseConnectionString << "user=" << databaseConfig.at("DatabaseUser") << " ";
+		databaseConnectionString << "password=" << databaseConfig.at("DatabasePassword") << " ";
+		databaseConnectionString << "hostaddr=" << databaseConfig.at("DatabaseHostAddr") << " ";
+		databaseConnectionString << "port=" << databaseConfig.at("DatabasePort");
+		return databaseConnectionString.str();
+	} catch (std::out_of_range e) {
+		return this->databaseConnectionString;
+	}
 }
 
 

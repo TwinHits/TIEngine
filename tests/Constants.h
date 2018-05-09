@@ -13,6 +13,7 @@ static std::string TEST_NONSENSE_4 = "the non gender specific pronoun's revenge"
 
 //ConfigManager
 static std::string TEST_CONFIG_FILE = "../../tests/testconfig.ini";
+static std::string JUNK_CONFIG_FILE = "../../tests/junkconfig.ini";
 
 //AssetsManager
 static std::string TEST_TEXTURE = "test_texture.png";

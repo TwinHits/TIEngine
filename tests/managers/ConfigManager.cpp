@@ -80,6 +80,16 @@ TEST(ConfigManager, ParseConfigFile) {
 }
 
 
+TEST(COnfigManager, MissingDatabaseString) {
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::JUNK_CONFIG_FILE);
+
+	std::string expected = "noConnectionString";
+	std::string actual = TIE::ConfigManager::Instance()->getDatabaseConnectionString();
+	  
+	ASSERT_EQ(expected, actual);
+}
+
+
 TEST(ConfigManager, SetDefaultDisplayLanguage) {
 	TIE::ConfigManager::Instance()->setDefaultDisplayLanguage(TIE::es_ES);
 
