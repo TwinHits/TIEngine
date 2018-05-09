@@ -99,6 +99,9 @@
     <ClCompile Include="src\objects\drawables\TIEntity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\utilities\ToRadians.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\TIEngine.h">
@@ -198,6 +201,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\utilities\GetMissingText.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\utilities\ToRadians.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

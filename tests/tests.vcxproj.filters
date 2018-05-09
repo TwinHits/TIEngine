@@ -101,6 +101,9 @@
     <ClCompile Include="objects\drawables\TIEntity.cpp">
       <Filter>objects\drawables</Filter>
     </ClCompile>
+    <ClCompile Include="utilities\ToRadians.cpp">
+      <Filter>utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
