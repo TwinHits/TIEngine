@@ -28,7 +28,7 @@ class DevConsole : public TIEntity {
 		SceneText currentCommand;
 		const sf::Font& font;
 		int fontSize = 14;
-		int writePosition = -500;
+		sf::Vector2i textWritePosition;
 
 };
 

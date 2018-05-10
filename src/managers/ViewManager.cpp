@@ -20,7 +20,8 @@ ViewManager::~ViewManager() {
 
 
 GlobalId ViewManager::addView() {
-	return this->addView(sf::FloatRect(0,0,1000,1000));
+	sf::Vector2i windowSize = WindowManager::Instance()->getWindowSize();
+	return this->addView(sf::FloatRect(0, 0, windowSize.x, windowSize.y));
 }
 
 

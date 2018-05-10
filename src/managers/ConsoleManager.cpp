@@ -11,7 +11,7 @@ using namespace TIE;
 
 ConsoleManager::ConsoleManager() {
 	sf::Vector2i size = WindowManager::Instance()->getWindowSize();
-	devConsoleViewId = ViewManager::Instance()->addView(sf::FloatRect(0,0,size.x,size.y));
+	devConsoleViewId = ViewManager::Instance()->addView(sf::FloatRect(0, 0, size.x, size.y));
 	devConsole = TIE::make_unique<DevConsole>();
 }
 
@@ -24,7 +24,6 @@ ConsoleManager::~ConsoleManager() {
 void ConsoleManager::showConsole() {
 	devConsole->setDraw(true);
 }
-
 
 void ConsoleManager::hideConsole() {
 	devConsole->setDraw(false);
@@ -57,5 +56,6 @@ void ConsoleManager::renderDevConsole() {
 
 
 void ConsoleManager::setDevConsole(std::unique_ptr<DevConsole> devConsole) {
+	//devConsole.reset();
 	this->devConsole = std::move(devConsole);
 }

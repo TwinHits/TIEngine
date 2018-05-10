@@ -3,6 +3,7 @@
 #include "managers/LogManager.h"
 #include "managers/AssetsManager.h"
 #include "managers/InputManager.h"
+#include "managers/WindowManager.h"
 
 #include "objects/drawables/DevConsole.h"
 
@@ -10,14 +11,19 @@
 using namespace TIE;
 
 DevConsole::DevConsole() : font(AssetsManager::Instance()->getFont("font.tff")) {
-	this->sprite.setPosition(sf::Vector2f(-500,-500));
-	//this->sprite.setTexture(AssetsManager::Instance()->getTexture("devconsole.png"));
+	sf::Vector2i windowSize = TIE::WindowManager::Instance()->getWindowSize();
+
+	textWritePosition.x = windowSize.x/2;	
+	textWritePosition.y = -windowSize.y/2;
+
+	this->sprite.setPosition(sf::Vector2f(-(windowSize.x/2),-(windowSize.y/2)));
+	this->sprite.setTexture(AssetsManager::Instance()->getTexture("devconsole.png"));
 	this->setDraw(false);
 	
 	//Set the currentCommand for drawing only. Maybe later combine with processing?
 	this->currentCommand.getText().setFont(font);
 	this->currentCommand.getText().setCharacterSize(fontSize);
-	this->currentCommand.getText().setPosition(-500,100);
+	this->currentCommand.getText().setPosition(-(windowSize.x/2),-(windowSize.y/4));
 }
 
 
@@ -60,20 +66,21 @@ void DevConsole::update() {
 	auto textEntered = InputManager::Instance()->getTextEntered();
 	currentCommand.getText().setString(textEntered);
 
-	std::queue<std::string>& queue = LogManager::Instance()->getQueueToDraw(); {
-		while (!queue.empty()) {
-			auto s = queue.front();
+	std::queue<std::string>& queue = LogManager::Instance()->getQueueToDraw();
 
-			SceneText text;
-			text.getText().setString(s);
-			text.getText().setFont(font);
-			text.getText().setCharacterSize(fontSize);
-			text.getText().setPosition(-500,writePosition);
+	while (!queue.empty()) {
+		auto s = queue.front();
 
-			writePosition += fontSize;
-			commandHistory.push_back(text);	
+		SceneText text;
+		text.getText().setString(s);
+		text.getText().setFont(font);
+		text.getText().setCharacterSize(fontSize);
+		text.getText().setPosition(textWritePosition.x, textWritePosition.y);
 
-			queue.pop();
-		}
+		textWritePosition.x += fontSize;
+		commandHistory.push_back(text);	
+
+		queue.pop();
 	}
 }
+
