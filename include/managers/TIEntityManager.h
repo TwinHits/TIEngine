@@ -20,10 +20,10 @@ class TIEntityManager : public Singleton<TIEntityManager> {
 		const SceneText& addSceneText(std::unique_ptr<SceneText> st);
 		void removeSceneText(GlobalId id);
 	
-		const TIEntity& getTIEntity(GlobalId id);
+		TIEntity& getTIEntity(GlobalId id);
 		const std::map<GlobalId, std::unique_ptr<TIEntity> >& getAllTIEntitys();
 
-		const SceneText& getSceneText(GlobalId id);
+		SceneText& getSceneText(GlobalId id);
 		const std::map<GlobalId, std::unique_ptr<SceneText> >& getAllSceneTexts();
 
 		void updateGameState();

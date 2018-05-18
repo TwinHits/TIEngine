@@ -21,7 +21,7 @@ const TIEntity& TIEntityManager::addTIEntity(std::unique_ptr<TIEntity> e) {
 }
 
 
-const TIEntity& TIEntityManager::getTIEntity(GlobalId id) {
+TIEntity& TIEntityManager::getTIEntity(GlobalId id) {
 	if (sceneObjects.find(id) != sceneObjects.end()) {
 		return *sceneObjects[id];
 	} else {
@@ -39,7 +39,7 @@ const SceneText& TIEntityManager::addSceneText(std::unique_ptr<SceneText> st) {
 }
 
 
-const SceneText& TIEntityManager::getSceneText(GlobalId id) {
+SceneText& TIEntityManager::getSceneText(GlobalId id) {
 	if (sceneTexts.find(id) != sceneTexts.end()) {
 		return *sceneTexts[id];
 	} else {

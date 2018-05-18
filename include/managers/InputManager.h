@@ -12,7 +12,9 @@ namespace TIE {
 class InputManager : public Singleton<InputManager> {
 	public:
 		void processInput();
+		
 		void setInputMap(std::unique_ptr<InputMap> inputMap);
+		const InputMap& getInputMap();
 
 		const std::string getTextEntered();
 

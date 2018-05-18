@@ -117,3 +117,7 @@ void InputManager::scroll(sf::RenderWindow& window) {
 void InputManager::setInputMap(std::unique_ptr<InputMap> inputMap) {
 	this->inputMap = std::move(inputMap);
 }
+
+const InputMap& InputManager::getInputMap() {
+	return *inputMap;
+}
