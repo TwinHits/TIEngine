@@ -64,6 +64,12 @@ TEST(AssetsManager, GetDefaultFont) {
 	ASSERT_EQ(font.getInfo().family, TIE::DEFAULT_FONT_FAMILY);
 }
 
+TEST(AssetsManager, GetDevConsoleFont) {
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
+	const sf::Font& font = TIE::AssetsManager::Instance()->getFont("DevConsole.ttf");
+	ASSERT_NE(font.getInfo().family, TIE::DEFAULT_FONT_FAMILY);
+}
+
 TEST(AssetsManager, GetAudioByName) {
 	
 }

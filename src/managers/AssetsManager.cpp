@@ -16,6 +16,7 @@ AssetsManager::AssetsManager() {
 
 
 AssetsManager::~AssetsManager() {
+
 }
 
 
@@ -62,7 +63,7 @@ const sf::Font& AssetsManager::getFont(GlobalId id) {
 }
 
 
-const sf::Font& AssetsManager::getFont(const std::string& name) {
+const sf::Font& AssetsManager::getFont(const std::string& name) { 
 	GlobalId id = HashManager::Instance()->getHash(name);
 	return getFont(id);
 }
@@ -78,10 +79,7 @@ void AssetsManager::parseAssets() {
 					bool success = t.loadFromFile(i.path().string());
 					GlobalId id = HashManager::Instance()->getHash(i.path().filename().string());
 					textures[id] = t;
-					if (LogManager::Instance()->isInfoEnabled()) {
-
-						LogManager::Instance()->logInfo("Loading texture '" + i.path().string() + ": " + std::to_string(success));
-					}
+					LogManager::Instance()->logInfo("Loading texture '" + i.path().string() + ". Id: " + std::to_string(id));
 				}
 			}
 		} else {
@@ -100,7 +98,7 @@ void AssetsManager::parseAssets() {
 					s.loadFromFile(i.path().string());
 					GlobalId id = HashManager::Instance()->getHash(i.path().filename().string());
 					audio[id] = s;
-					LogManager::Instance()->logInfo("Loaded audio '" + i.path().string() + "'.");
+					LogManager::Instance()->logInfo("Loaded audio '" + i.path().string() + "'. Id: " + std::to_string(id));
 				}
 			}
 		} else {
@@ -119,7 +117,7 @@ void AssetsManager::parseAssets() {
 					f.loadFromFile(i.path().string());
 					GlobalId id = HashManager::Instance()->getHash(i.path().filename().string());
 					fonts[id] = f;
-					LogManager::Instance()->logInfo("Loaded font '" + i.path().string() + "'.");
+					LogManager::Instance()->logInfo("Loaded font '" + i.path().string() + "'. Id: " + std::to_string(id));
 				}
 			}
 		} else {

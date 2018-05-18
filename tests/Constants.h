@@ -24,6 +24,9 @@ static std::string TEST_FONT_FAMILY = "Oswald Regular";
 static std::string DEFAULT_FONT_FAMILY = "";
 static std::string TEST_AUDIO = "test_audio";
 
+//HashManager
+static std::string SAME_CONTENT_DIFFERENT_ADDRESS_1 = "memes";
+
 //LogLevels
 static int COMMAND_INT_VALUE = 0;
 static int ERROR_INT_VALUE = 1;

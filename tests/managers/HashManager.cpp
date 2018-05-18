@@ -46,3 +46,9 @@ TEST(HashManager, GetHashForObject) {
 	ASSERT_EQ(id2, id5);
 	ASSERT_EQ(id3, id6); 
 }
+
+TEST(HashManager, HashForDifferentMemoryAddressesSameValue){
+	
+	TIE::GlobalId id1 = TIE::HashManager::Instance()->getHash(TIE::TEST_NONSENSE_1);
+	TIE::GlobalId id2 = TIE::HashManager::Instance()->getHash(TIE::SAME_CONTENT_DIFFERENT_ADDRESS_1);
+}

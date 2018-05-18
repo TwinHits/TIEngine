@@ -3,27 +3,26 @@
 #include "managers/LogManager.h"
 #include "managers/AssetsManager.h"
 #include "managers/InputManager.h"
+#include "managers/HashManager.h"
 #include "managers/WindowManager.h"
 
-#include "objects/drawables/DevConsole.h"
-
-
+#include "objects/drawables/DevConsole.h" 
 using namespace TIE;
 
-DevConsole::DevConsole() : font(AssetsManager::Instance()->getFont("font.tff")) {
+DevConsole::DevConsole() : font(AssetsManager::Instance()->getFont("DevConsole.ttf")) {
 	sf::Vector2i windowSize = TIE::WindowManager::Instance()->getWindowSize();
 
-	textWritePosition.x = windowSize.x/2;	
+	textWritePosition.x = -windowSize.x/2;	
 	textWritePosition.y = -windowSize.y/2;
 
-	this->sprite.setPosition(sf::Vector2f(-(windowSize.x/2),-(windowSize.y/2)));
+	this->sprite.setPosition(sf::Vector2f(-(windowSize.x/2), -(windowSize.y/2)));
 	this->sprite.setTexture(AssetsManager::Instance()->getTexture("devconsole.png"));
 	this->setDraw(false);
 	
 	//Set the currentCommand for drawing only. Maybe later combine with processing?
 	this->currentCommand.getText().setFont(font);
 	this->currentCommand.getText().setCharacterSize(fontSize);
-	this->currentCommand.getText().setPosition(-(windowSize.x/2),-(windowSize.y/4));
+	this->currentCommand.getText().setPosition(-(windowSize.x/2), -(fontSize * 10));
 }
 
 
@@ -68,16 +67,16 @@ void DevConsole::update() {
 
 	std::queue<std::string>& queue = LogManager::Instance()->getQueueToDraw();
 
+	SceneText text;
 	while (!queue.empty()) {
 		auto s = queue.front();
 
-		SceneText text;
 		text.getText().setString(s);
 		text.getText().setFont(font);
 		text.getText().setCharacterSize(fontSize);
 		text.getText().setPosition(textWritePosition.x, textWritePosition.y);
 
-		textWritePosition.x += fontSize;
+		textWritePosition.y += fontSize;
 		commandHistory.push_back(text);	
 
 		queue.pop();
