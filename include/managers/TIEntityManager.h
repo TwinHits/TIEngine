@@ -14,10 +14,10 @@ namespace TIE {
 
 class TIEntityManager : public Singleton<TIEntityManager> {
 	public:
-		const TIEntity& addTIEntity(std::unique_ptr<TIEntity> so);
+		TIEntity& addTIEntity(std::unique_ptr<TIEntity> so);
 		void removeTIEntity(GlobalId id);
 
-		const SceneText& addSceneText(std::unique_ptr<SceneText> st);
+		SceneText& addSceneText(std::unique_ptr<SceneText> st);
 		void removeSceneText(GlobalId id);
 	
 		TIEntity& getTIEntity(GlobalId id);

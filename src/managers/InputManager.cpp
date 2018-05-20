@@ -85,18 +85,20 @@ void InputManager::processInput() {
 			default:
 				break;
 		}
+
+		//Do client side event processing if the console is not showing
+		if (!consoleManager->checkConsole()) {
+			sf::Vector2f position = window.mapPixelToCoords(sf::Mouse::getPosition(window)); 
+			//Client state processing
+			inputMap->processState(position);
+			//Client event processing
+			inputMap->processEvent(event, position);
+		}
+
 	}
 
-	sf::Vector2f position = window.mapPixelToCoords(sf::Mouse::getPosition(window)); 
-	//If the console is not active
-	if (!consoleManager->checkConsole()) {
-		//Client state processing
-		inputMap->processState(position);
-		//Client event processing
-		inputMap->processEvent(event, position);
-		//Check for camera scrollin 
-		this->scroll(window);
-	}
+	//Check for camera scrollin 
+	this->scroll(window);
 
 }
 

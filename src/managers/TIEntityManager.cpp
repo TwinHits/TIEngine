@@ -13,7 +13,7 @@ TIEntityManager::~TIEntityManager() {
 }
 
 
-const TIEntity& TIEntityManager::addTIEntity(std::unique_ptr<TIEntity> e) {
+TIEntity& TIEntityManager::addTIEntity(std::unique_ptr<TIEntity> e) {
 	GlobalId id = e->getId();
 	sceneObjects[id] = std::move(e);
 	LogManager::Instance()->logInfo("Added TIEntity '" + std::to_string(id) + "'.");
@@ -31,7 +31,7 @@ TIEntity& TIEntityManager::getTIEntity(GlobalId id) {
 }
 
 
-const SceneText& TIEntityManager::addSceneText(std::unique_ptr<SceneText> st) {
+SceneText& TIEntityManager::addSceneText(std::unique_ptr<SceneText> st) {
 	GlobalId id = st->getId();
 	sceneTexts[id] = std::move(st);
 	LogManager::Instance()->logInfo("Added SceneText '" + std::to_string(id) + "'.");
