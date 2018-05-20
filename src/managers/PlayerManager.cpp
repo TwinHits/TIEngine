@@ -16,7 +16,7 @@ PlayerManager::~PlayerManager() {
 }
 
 
-const Player& PlayerManager::addPlayer() {
+Player& PlayerManager::addPlayer() {
 	GlobalId id = HashManager::Instance()->getNewGlobalId();
 	if (players.find(id) == players.end()) {
 		players[id] = make_unique<Player>(id);
@@ -29,7 +29,7 @@ const Player& PlayerManager::addPlayer() {
 	}	
 }
 
-const Player& PlayerManager::addPlayer(std::unique_ptr<Player> player) {
+ Player& PlayerManager::addPlayer(std::unique_ptr<Player> player) {
 	GlobalId id = player->getId();
 	if (players.find(id) == players.end()) {
 		players[id] = std::move(player);
@@ -55,7 +55,7 @@ void PlayerManager::rmPlayer(GlobalId id) {
 }
 
 
-const Player& PlayerManager::getPlayer(GlobalId id) {
+ Player& PlayerManager::getPlayer(GlobalId id) {
 	if (players.find(id) != players.end()) {
 		return *players[id];
 	}
@@ -68,4 +68,15 @@ const Player& PlayerManager::getPlayer(GlobalId id) {
 
 const std::map<GlobalId, std::unique_ptr<Player> >& PlayerManager::getAllPlayers() {
 	return players;
+}
+
+
+void PlayerManager::registerId(std::string key, GlobalId id) {
+	this->registeredIds[key] = id;
+}
+
+
+GlobalId PlayerManager::getRegisteredId(std::string key) {
+	return this->registeredIds[key];
+
 }
