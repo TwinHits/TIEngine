@@ -1,4 +1,4 @@
-#include "managers/WindowManager.h"
+#include "managers/HashManager.h"
 
 #include "objects/Player.h"
 #include "objects/GlobalId.h"
@@ -9,6 +9,10 @@ Player::Player(GlobalId id)  {
 	this->id = id;
 }
 
+Player::Player()  {
+	this->id = HashManager::Instance()->getNewGlobalId();
+}
+
 
 Player::~Player() {
 
@@ -17,14 +21,4 @@ Player::~Player() {
 
 GlobalId Player::getId() const {
 	return id; 
-}
-
-
-Player::Player(const Player&) {
-
-}
-
-
-void Player::operator=(const Player&) {
-
 }

@@ -20,7 +20,7 @@ TEST(PlayerManager, GetPlayer) {
 
 TEST(PlayerManager, GetAllPlayers) {
 	const TIE::Player& player3 = TIE::PlayerManager::Instance()->addPlayer();
-	const std::map<TIE::GlobalId, std::shared_ptr<TIE::Player> >& players = TIE::PlayerManager::Instance()->getAllPlayers();
+	const std::map<TIE::GlobalId, std::unique_ptr<TIE::Player> >& players = TIE::PlayerManager::Instance()->getAllPlayers();
 	ASSERT_EQ(players.size(), 4);
 	for (auto& p : players) {
 		ASSERT_TRUE(p.second != nullptr);

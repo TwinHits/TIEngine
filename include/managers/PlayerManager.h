@@ -14,15 +14,16 @@ namespace TIE {
 class PlayerManager : public Singleton<PlayerManager> {
 	public:
 		const Player& addPlayer();
+		const Player& addPlayer(std::unique_ptr<Player> player);
 		void rmPlayer(GlobalId id);
 
 		const Player& getPlayer(GlobalId id);
-		const std::map<GlobalId, std::shared_ptr<Player> >& getAllPlayers();
+		const std::map<GlobalId, std::unique_ptr<Player> >& getAllPlayers();
 
 		PlayerManager();
 		~PlayerManager();
 	private:
-		std::map<GlobalId, std::shared_ptr<Player> > players;
+		std::map<GlobalId, std::unique_ptr<Player> > players;
 
 		PlayerManager(const PlayerManager&);
 		void operator=(const PlayerManager&);

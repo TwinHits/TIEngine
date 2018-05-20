@@ -7,15 +7,13 @@ namespace TIE {
 
 class Player {
 	public:
+		Player();
 		Player(GlobalId id);
 		~Player();
 
 		GlobalId getId() const;
 	private:	
 		GlobalId id;
-
-		Player(const Player&);
-		void operator=(const Player&);
 };
 
 }

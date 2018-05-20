@@ -2,6 +2,8 @@
 #include "managers/HashManager.h"
 #include "managers/LogManager.h"
 
+#include "templates/MakeUnique.h"
+
 using namespace TIE;
 
 PlayerManager::PlayerManager() {
@@ -17,13 +19,26 @@ PlayerManager::~PlayerManager() {
 const Player& PlayerManager::addPlayer() {
 	GlobalId id = HashManager::Instance()->getNewGlobalId();
 	if (players.find(id) == players.end()) {
-		players[id] = std::make_shared<Player>(id);
+		players[id] = make_unique<Player>(id);
 		LogManager::Instance()->logInfo("Added player '" + std::to_string(id) + "'.");
 		return *players[id];
 	}
 	else {
 		LogManager::Instance()->logWarn("Hash collison! Player '" + std::to_string(id) + "' already exists, recursively rehashing.");
 		return addPlayer();
+	}	
+}
+
+const Player& PlayerManager::addPlayer(std::unique_ptr<Player> player) {
+	GlobalId id = player->getId();
+	if (players.find(id) == players.end()) {
+		players[id] = std::move(player);
+		LogManager::Instance()->logInfo("Added player '" + std::to_string(id) + "'.");
+		return *players[id];
+	}
+	else {
+		LogManager::Instance()->logWarn("Player '" + std::to_string(id) + "' already exists, returning that player.");
+		return *players[id];
 	}	
 }
 
@@ -51,6 +66,6 @@ const Player& PlayerManager::getPlayer(GlobalId id) {
 }
 
 
-const std::map<GlobalId, std::shared_ptr<Player> >& PlayerManager::getAllPlayers() {
+const std::map<GlobalId, std::unique_ptr<Player> >& PlayerManager::getAllPlayers() {
 	return players;
 }
