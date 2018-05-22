@@ -26,11 +26,11 @@ class TIEntity {
 		void setSprite(const sf::Sprite& sprite);
 		const sf::Sprite& getSprite() const;
 
-		void setAngle(float angle);
-		float getAngle();
+		virtual void setAngle(float angle);
+		virtual float getAngle();
 
-		void setSpeed(float speed);
-		float getSpeed() const;
+		virtual void setSpeed(float speed);
+		virtual float getSpeed();
 
 		virtual void update();
 		virtual void receiveMessage(const Message& msg) const;

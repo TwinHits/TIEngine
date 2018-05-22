@@ -75,7 +75,7 @@ void TIEntity::setSpeed(float speed) {
 }
 
 
-float TIEntity::getSpeed() const {
+float TIEntity::getSpeed() {
 	return this->speed;
 }
 
