@@ -1,6 +1,7 @@
 #include "managers/PlayerManager.h"
 #include "managers/HashManager.h"
 #include "managers/LogManager.h"
+#include "managers/ViewManager.h"
 
 #include "templates/MakeUnique.h"
 
@@ -18,8 +19,9 @@ PlayerManager::~PlayerManager() {
 
 Player& PlayerManager::addPlayer() {
 	GlobalId id = HashManager::Instance()->getNewGlobalId();
+	sf::View& view = TIE::ViewManager::Instance()->getActiveView();
 	if (players.find(id) == players.end()) {
-		players[id] = make_unique<Player>(id);
+		players[id] = make_unique<Player>(id, view);
 		LogManager::Instance()->logInfo("Added player '" + std::to_string(id) + "'.");
 		return *players[id];
 	}
