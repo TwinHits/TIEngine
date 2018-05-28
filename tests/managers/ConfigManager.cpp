@@ -80,10 +80,10 @@ TEST(ConfigManager, ParseConfigFile) {
 }
 
 
-TEST(COnfigManager, MissingDatabaseString) {
+TEST(ConfigManager, MissingDatabaseString) {
 	TIE::ConfigManager::Instance()->loadConfigFile(TIE::JUNK_CONFIG_FILE);
 
-	std::string expected = "noConnectionString";
+	std::string expected = "noconnectionstring";
 	std::string actual = TIE::ConfigManager::Instance()->getDatabaseConnectionString();
 	  
 	ASSERT_EQ(expected, actual);

@@ -39,7 +39,7 @@ class TIEntityManager : public Singleton<TIEntityManager> {
 		std::map<GlobalId, std::unique_ptr<SceneText> > sceneTexts;
 
 		//Strategy Pattern
-		void simple(std::vector<GlobalId>, TIEntity& entity);
+		void simple(std::vector<GlobalId>&, TIEntity& entity);
 		
 		TIEntityManager(const TIEntityManager&);
 		void operator=(const TIEntityManager&);

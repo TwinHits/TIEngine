@@ -98,7 +98,7 @@ std::vector<GlobalId> TIEntityManager::getCollidingTIEntities(DetectionStrategy 
 }
 
 
-void TIEntityManager::simple(std::vector<GlobalId> ids, TIEntity& entity) {
+void TIEntityManager::simple(std::vector<GlobalId>& ids, TIEntity& entity) {
 	//Gets all the tientities and checks their texture rectangles for collisions
 	//if they are drawn
 	const std::map<GlobalId, std::unique_ptr<TIEntity> >&  entities = this->getAllTIEntitys();
