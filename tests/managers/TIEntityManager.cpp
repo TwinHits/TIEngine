@@ -142,5 +142,31 @@ TEST(TIEntityManager, GetAllSceneTexts) {
 	ASSERT_EQ(texts.at(id3)->getId(), id3);
 }
 
+TEST(TIEntityManager, CollisonDetectionSimpleStrategy) {
+	std::unique_ptr<TIE::TIEntity> entity1_ptr = TIE::make_unique<TIE::TIEntity>();
+	TIE::GlobalId id1 = entity1_ptr->getId();
+	TIE::TIEntity entity1 = TIE::TIEntityManager::Instance()->addTIEntity(std::move(entity1_ptr));
 
-//TEST(TIEntityManager, UpdateGameState) {}
+	std::unique_ptr<TIE::TIEntity> entity2_ptr = TIE::make_unique<TIE::TIEntity>();
+	TIE::GlobalId id2 = entity2_ptr->getId();
+	TIE::TIEntity entity2 = TIE::TIEntityManager::Instance()->addTIEntity(std::move(entity2_ptr));
+
+	std::unique_ptr<TIE::TIEntity> entity3_ptr = TIE::make_unique<TIE::TIEntity>();
+	TIE::GlobalId id3 = entity3_ptr->getId();
+	TIE::TIEntity entity3 = TIE::TIEntityManager::Instance()->addTIEntity(std::move(entity3_ptr));
+
+	float delta = 50.0;
+	entity1.setAngle(0.0);
+	entity1.move(delta);
+
+	entity2.setAngle(180.0);
+	entity2.move(delta);
+
+	delta = 40.0;
+	entity3.setAngle(0.0);
+	entity3.move(delta);
+
+	std::vector<TIE::GlobalId> ids = TIE::TIEntityManager::Instance()->getCollidingTIEntities(TIE::DetectionStrategy::SIMPLE, entity1);
+
+	ASSERT_EQ(ids.size(), 1);
+}

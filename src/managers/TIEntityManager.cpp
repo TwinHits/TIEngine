@@ -86,3 +86,30 @@ void TIEntityManager::removeSceneText(GlobalId id) {
 const std::map<GlobalId, std::unique_ptr<SceneText> >& TIEntityManager::getAllSceneTexts() {
 	return sceneTexts;
 }
+
+std::vector<GlobalId> TIEntityManager::getCollidingTIEntities(DetectionStrategy strategy, TIEntity& entity) {
+	std::vector<GlobalId> ids;
+
+	if (strategy == DetectionStrategy::SIMPLE) {
+		simple(ids, entity);
+	}
+
+	return ids;
+}
+
+
+void TIEntityManager::simple(std::vector<GlobalId> ids, TIEntity& entity) {
+	//Gets all the tientities and checks their texture rectangles for collisions
+	//if they are drawn
+	const std::map<GlobalId, std::unique_ptr<TIEntity> >&  entities = this->getAllTIEntitys();
+	sf::FloatRect hitbox = entity.getSprite().getGlobalBounds();
+	for (auto& e : entities) {
+		if (e.second->getDraw()) {
+			sf::FloatRect rect = e.second->getSprite().getGlobalBounds();
+			if (hitbox.intersects(rect)) {
+				ids.push_back(e.second->getId());	
+			}
+		}
+	}
+	return;	
+}

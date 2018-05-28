@@ -12,6 +12,8 @@
 
 namespace TIE {
 
+enum DetectionStrategy { SIMPLE };
+
 class TIEntityManager : public Singleton<TIEntityManager> {
 	public:
 		TIEntity& addTIEntity(std::unique_ptr<TIEntity> so);
@@ -26,6 +28,8 @@ class TIEntityManager : public Singleton<TIEntityManager> {
 		SceneText& getSceneText(GlobalId id);
 		const std::map<GlobalId, std::unique_ptr<SceneText> >& getAllSceneTexts();
 
+		std::vector<GlobalId> getCollidingTIEntities(DetectionStrategy strategy, TIEntity& entity);
+
 		void updateGameState();
 	
 		TIEntityManager();
@@ -33,6 +37,9 @@ class TIEntityManager : public Singleton<TIEntityManager> {
 	private:
 		std::map<GlobalId, std::unique_ptr<TIEntity> > sceneObjects;
 		std::map<GlobalId, std::unique_ptr<SceneText> > sceneTexts;
+
+		//Strategy Pattern
+		void simple(std::vector<GlobalId>, TIEntity& entity);
 		
 		TIEntityManager(const TIEntityManager&);
 		void operator=(const TIEntityManager&);
