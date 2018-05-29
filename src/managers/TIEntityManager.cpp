@@ -104,7 +104,7 @@ void TIEntityManager::simple(std::vector<GlobalId>& ids, TIEntity& entity) {
 	const std::map<GlobalId, std::unique_ptr<TIEntity> >&  entities = this->getAllTIEntitys();
 	sf::FloatRect hitbox = entity.getSprite().getGlobalBounds();
 	for (auto& e : entities) {
-		if (e.second->getDraw()) {
+		if (e.second->getDraw() && entity.getId() != e.second->getId()) {
 			sf::FloatRect rect = e.second->getSprite().getGlobalBounds();
 			if (hitbox.intersects(rect)) {
 				ids.push_back(e.second->getId());	

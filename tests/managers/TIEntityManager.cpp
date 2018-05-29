@@ -159,6 +159,7 @@ TEST(TIEntityManager, CollisonDetectionSimpleStrategy) {
 	entity1.setAngle(0.0);
 	entity1.move(delta);
 
+	delta = 1000.0;
 	entity2.setAngle(180.0);
 	entity2.move(delta);
 

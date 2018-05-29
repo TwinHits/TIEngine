@@ -20,6 +20,9 @@ class TIEntity {
 		void setDraw(bool b);
 		bool getDraw() const;
 
+		void setCollidable(bool b);
+		bool getCollidable();
+
 		void setDrawOrder(int i);
 		int getDrawOrder() const;
 
@@ -46,6 +49,7 @@ class TIEntity {
 		sf::Clock& clock;
 		GlobalId id;
 		bool draw = true;
+		bool collidable = true;
 		int drawOrder = 0;
 
 		float speed = 1;

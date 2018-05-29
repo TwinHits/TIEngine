@@ -34,6 +34,27 @@ TEST(TIEntity, SetDraw) {
 }
 
 
+TEST(TIEntity, GetCollidable) {
+	TIE::TIEntity entity = TIE::TIEntity();
+	bool expected = TIE::DEFAULT_DRAW_BOOL;
+
+	bool actual = entity.getCollidable();
+
+	ASSERT_EQ(expected, actual);
+}
+
+
+TEST(TIEntity, SetCollidable) {
+	TIE::TIEntity entity = TIE::TIEntity();
+	bool expected = TIE::CUSTOM_DRAW_BOOL;
+
+	entity.setCollidable(TIE::CUSTOM_DRAW_BOOL);
+	bool actual = entity.getCollidable();
+
+	ASSERT_EQ(expected, actual);
+}
+
+
 TEST(TIEntity, GetDrawOrder) {
 	TIE::TIEntity entity = TIE::TIEntity();
 	int expected = TIE::DEFAULT_DRAW_ORDER_INT;
