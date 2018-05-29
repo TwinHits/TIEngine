@@ -98,7 +98,9 @@ void InputManager::processInput() {
 	}
 
 	//Check for camera scrollin 
-	this->scroll(window);
+	if (!consoleManager->checkConsole()) {
+		this->scroll(window);
+	}
 
 }
 
