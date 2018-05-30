@@ -87,8 +87,13 @@ const std::map<GlobalId, std::unique_ptr<SceneText> >& TIEntityManager::getAllSc
 	return sceneTexts;
 }
 
+
 std::vector<GlobalId> TIEntityManager::getCollidingTIEntities(DetectionStrategy strategy, TIEntity& entity) {
 	std::vector<GlobalId> ids;
+
+	if (!entity.getCollidable()) {
+		return ids;
+	}
 
 	if (strategy == DetectionStrategy::SIMPLE) {
 		simple(ids, entity);
