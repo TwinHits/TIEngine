@@ -98,23 +98,32 @@ void InputManager::processInput() {
 	}
 
 	//Check for camera scrollin 
-	if (!consoleManager->checkConsole()) {
-		this->scroll(window);
-	}
+	this->scroll(window);
 
 }
 
 
 void InputManager::scroll(sf::RenderWindow& window) {
+
+	auto consoleManager = ConsoleManager::Instance();
 	auto mousePosition = sf::Mouse::getPosition(window);	
-	if (mousePosition.y <= scrollZone)
-		ViewManager::Instance()->scroll(TOP);
-	if (mousePosition.y >= WindowManager::Instance()->getWindowSize().y - scrollZone)
-		ViewManager::Instance()->scroll(BOTTOM);
-	if (mousePosition.x <= scrollZone)
-		ViewManager::Instance()->scroll(LEFT);
-	if (mousePosition.x >= WindowManager::Instance()->getWindowSize().x - scrollZone)
-		ViewManager::Instance()->scroll(RIGHT);
+	Direction direction;
+	
+	if (!consoleManager->checkConsole()) {
+		if (mousePosition.y <= scrollZone)
+			ViewManager::Instance()->scroll(TOP);
+		if (mousePosition.y >= WindowManager::Instance()->getWindowSize().y - scrollZone)
+			ViewManager::Instance()->scroll(BOTTOM);
+		if (mousePosition.x <= scrollZone)
+			ViewManager::Instance()->scroll(LEFT);
+		if (mousePosition.x >= WindowManager::Instance()->getWindowSize().x - scrollZone)
+			ViewManager::Instance()->scroll(RIGHT);
+	} else if (consoleManager->checkConsole()) {
+		if (mousePosition.y <= scrollZone)
+			consoleManager->scroll(TOP);
+		if (mousePosition.y >= WindowManager::Instance()->getWindowSize().y - scrollZone)
+			consoleManager->scroll(BOTTOM);
+	}
 }
 
 

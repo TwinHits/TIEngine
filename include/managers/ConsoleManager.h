@@ -9,6 +9,8 @@
 
 #include "objects/drawables/DevConsole.h"
 
+#include "objects/enumeration/Direction.h"
+
 namespace TIE {
 
 class ConsoleManager : public Singleton<ConsoleManager> {
@@ -21,6 +23,7 @@ class ConsoleManager : public Singleton<ConsoleManager> {
 		bool checkConsole();
 		void runCommand(const std::string&);
 		void renderDevConsole();
+		void scroll(Direction direction);
 
 		void setDevConsole(std::unique_ptr<DevConsole> devConsole);
 
