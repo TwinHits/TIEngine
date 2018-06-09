@@ -62,6 +62,21 @@ void ConsoleManager::setDevConsole(std::unique_ptr<DevConsole> devConsole) {
 
 
 void ConsoleManager::scroll(Direction direction) {
-	//sf::View view = ViewManager::Instance()->getView(this->devConsoleViewId);		
-	ViewManager::Instance()->scroll(direction);
+	sf::View view = ViewManager::Instance()->getView(this->devConsoleViewId);		
+	if (direction == Direction::TOP) {
+		sf::Vector2f center = view.getCenter();
+		if (center.y == 0) {
+			return;		
+		}
+		ViewManager::Instance()->scroll(direction);
+	} else if (direction == Direction::BOTTOM) {
+		sf::Vector2f size = view.getSize();
+		sf::Vector2f center = view.getCenter();
+		const sf::Vector2i writePosition = this->devConsole->getWritePosition();
+		float bottomOfView = center.y + size.y /2;
+		if (writePosition.y < bottomOfView) {
+			return;
+		}
+		ViewManager::Instance()->scroll(direction);
+	}
 }

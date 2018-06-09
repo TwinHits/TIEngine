@@ -21,6 +21,9 @@ class DevConsole : public TIEntity {
 
 		virtual int runClientCommand(const std::string& command);
 		void processCommand(const std::string& command);
+
+		const sf::Vector2i& getWritePosition();
+
 		void update();
 
 	private:

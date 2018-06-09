@@ -7,6 +7,7 @@
 #include "managers/WindowManager.h"
 
 #include "objects/drawables/DevConsole.h" 
+
 using namespace TIE;
 
 DevConsole::DevConsole() : font(AssetsManager::Instance()->getFont("DevConsole.ttf")) {
@@ -23,7 +24,8 @@ DevConsole::DevConsole() : font(AssetsManager::Instance()->getFont("DevConsole.t
 	//Set the currentCommand for drawing only. Maybe later combine with processing?
 	this->currentCommand.getText().setFont(font);
 	this->currentCommand.getText().setCharacterSize(fontSize);
-	this->currentCommand.getText().setPosition(-(windowSize.x/2), -(fontSize * 10));
+
+	this->currentCommand.getText().setPosition(-(windowSize.x/2), windowSize.y/2 - fontSize);
 }
 
 
@@ -63,6 +65,7 @@ void DevConsole::processCommand(const std::string& command) {
 
 void DevConsole::update() {
 	//To get the messages to display in console, get not yet processed messages from the LogManager, turn them into scene texts, and draw them. This happens every frame.
+
 	auto textEntered = InputManager::Instance()->getTextEntered();
 	currentCommand.getText().setString(textEntered);
 
@@ -82,5 +85,10 @@ void DevConsole::update() {
 
 		queue.pop();
 	}
+
 }
 
+
+const sf::Vector2i& DevConsole::getWritePosition() {
+	return this->textWritePosition;
+}
