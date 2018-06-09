@@ -1,9 +1,11 @@
-#include "managers/LogManager.h"
+#include "managers/TimeManager.h"
+#include "managers/LogManager.h" 
 #include "managers/TIEntityManager.h"
+#include "managers/WindowManager.h"
 
 using namespace TIE;
 
-TIEntityManager::TIEntityManager() {
+TIEntityManager::TIEntityManager() : clock(TimeManager::Instance()->addClock()) {
 
 }
 
@@ -66,9 +68,14 @@ const std::map<GlobalId, std::unique_ptr<TIEntity> >& TIEntityManager::getAllTIE
 
 
 void TIEntityManager::updateGameState() {
+	float delta = clock.restart().asSeconds();
+
 	for (auto& e: sceneObjects) {
-			e.second->update();
+			e.second->update(delta);
 	}
+
+	float fps = 60 / delta;
+	WindowManager::Instance()->showFPS(std::to_string(fps));
 }
 
 

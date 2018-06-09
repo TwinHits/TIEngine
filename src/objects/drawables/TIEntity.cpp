@@ -10,7 +10,7 @@
 
 using namespace TIE;
 
-TIEntity::TIEntity() : clock(TimeManager::Instance()->addClock()) {
+TIEntity::TIEntity() {
 	this->id = HashManager::Instance()->getNewGlobalId();	
 	this->sprite = TIE::getMissingSprite();
 }
@@ -89,7 +89,7 @@ float TIEntity::getSpeed() {
 }
 
 
-void TIEntity::update() {
+void TIEntity::update(const float delta) {
 
 }
 

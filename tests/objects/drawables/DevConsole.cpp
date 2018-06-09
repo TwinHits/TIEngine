@@ -37,7 +37,7 @@ TEST(DevConsole, Update) {
 	auto& queue = TIE::LogManager::Instance()->getQueueToDraw();
 	auto expected = queue.size();
 
-	devConsole.update();
+	devConsole.update(1);
 
 	ASSERT_TRUE(queue.empty());
 

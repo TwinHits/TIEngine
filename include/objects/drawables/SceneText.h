@@ -22,7 +22,7 @@ class SceneText {
 		void setDraw(bool b);
 		bool getDraw() const;
 
-		virtual void update();
+		virtual void update(const float delta);
 		virtual void receiveMessage(const Message& msg) const;
 
 		bool operator==(const SceneText& rhs) const;
@@ -31,7 +31,6 @@ class SceneText {
 	
 	protected:
 		sf::Text text;
-		sf::Clock& clock;
 		GlobalId id;
 		bool draw = true;
 };

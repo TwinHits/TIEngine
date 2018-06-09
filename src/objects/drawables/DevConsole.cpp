@@ -63,7 +63,7 @@ void DevConsole::processCommand(const std::string& command) {
 }	
 
 
-void DevConsole::update() {
+void DevConsole::update(const float delta) {
 	//To get the messages to display in console, get not yet processed messages from the LogManager, turn them into scene texts, and draw them. This happens every frame.
 
 	auto textEntered = InputManager::Instance()->getTextEntered();

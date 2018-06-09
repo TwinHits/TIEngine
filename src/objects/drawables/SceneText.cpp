@@ -12,7 +12,7 @@
 
 using namespace TIE;
 
-SceneText::SceneText() : clock(TimeManager::Instance()->addClock()) {
+SceneText::SceneText() {
 	this->id = HashManager::Instance()->getNewGlobalId();	
 	this->text = TIE::getMissingText();
 }
@@ -56,7 +56,7 @@ bool SceneText::getDraw() const {
 }
 
 
-void SceneText::update() {
+void SceneText::update(const float delta) {
 
 }
 

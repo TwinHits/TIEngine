@@ -24,7 +24,7 @@ class DevConsole : public TIEntity {
 
 		const sf::Vector2i& getWritePosition();
 
-		void update();
+		void update(const float delta);
 
 	private:
 		std::vector<SceneText> commandHistory;

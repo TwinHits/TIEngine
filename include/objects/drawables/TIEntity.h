@@ -35,7 +35,7 @@ class TIEntity {
 		virtual void setSpeed(float speed);
 		virtual float getSpeed();
 
-		virtual void update();
+		virtual void update(const float delta);
 		virtual void receiveMessage(const Message& msg) const;
 
 		virtual void move(const float delta);
@@ -46,7 +46,6 @@ class TIEntity {
 	
 	protected:
 		sf::Sprite sprite;
-		sf::Clock& clock;
 		GlobalId id;
 		bool draw = true;
 		bool collidable = true;

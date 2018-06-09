@@ -8,7 +8,7 @@
 
 using namespace TIE;
 
-SceneManager::SceneManager() : clock(TimeManager::Instance()->addClock()) {
+SceneManager::SceneManager() {
 	sceneViewId = ViewManager::Instance()->addView(sf::FloatRect(0,0,800,600));
 
 }
@@ -38,17 +38,9 @@ void SceneManager::render() {
 	}
 	
 	if (ConsoleManager::Instance()->checkConsole()) {
-		ConsoleManager::Instance()->renderDevConsole();
+		ConsoleManager::Instance()->renderDevConsole(1);
 	}
 
 	window.display();
 
-	auto frame = clock.restart().asSeconds();
-	this->fps = 60 / frame;
-	WindowManager::Instance()->showFPS(std::to_string(fps));
-}
-
-
-double SceneManager::getFPS() {
-	return fps;	
 }

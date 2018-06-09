@@ -35,6 +35,8 @@ class TIEntityManager : public Singleton<TIEntityManager> {
 		TIEntityManager();
 		~TIEntityManager();
 	private:
+		sf::Clock& clock;
+
 		std::map<GlobalId, std::unique_ptr<TIEntity> > sceneObjects;
 		std::map<GlobalId, std::unique_ptr<SceneText> > sceneTexts;
 
