@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "managers/TimeManager.h"
 #include "managers/LogManager.h" 
 #include "managers/TIEntityManager.h"
@@ -68,14 +70,25 @@ const std::map<GlobalId, std::unique_ptr<TIEntity> >& TIEntityManager::getAllTIE
 
 
 void TIEntityManager::updateGameState() {
-	float delta = clock.restart().asSeconds();
 
-	for (auto& e: sceneObjects) {
-			e.second->update(delta);
+	this->delta += this->clock.restart().asSeconds();
+
+	std::cout << "checking " << std::to_string(delta) << " < " << TimePerFrame << std::endl;
+	while (this->delta > this->TimePerFrame) {
+
+		std::cout << "passed " << std::to_string(delta) << std::endl;
+		std::cout << "delta " << std::to_string(delta) << std::endl;
+
+		for (auto& e: sceneObjects) {
+				e.second->update(delta);
+		}
+
+
+		float fps = 60 / delta;
+		WindowManager::Instance()->showFPS(std::to_string(fps));
+		this->delta = 0;
 	}
 
-	float fps = 60 / delta;
-	WindowManager::Instance()->showFPS(std::to_string(fps));
 }
 
 

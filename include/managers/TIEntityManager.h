@@ -36,6 +36,8 @@ class TIEntityManager : public Singleton<TIEntityManager> {
 		~TIEntityManager();
 	private:
 		sf::Clock& clock;
+		float delta = 0;
+		float TimePerFrame = 1.f/60.f; //Lock at 60 fps
 
 		std::map<GlobalId, std::unique_ptr<TIEntity> > sceneObjects;
 		std::map<GlobalId, std::unique_ptr<SceneText> > sceneTexts;
