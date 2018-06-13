@@ -18,7 +18,7 @@ DevConsole::DevConsole() : font(AssetsManager::Instance()->getFont("DevConsole.t
 
 	this->sprite.setPosition(sf::Vector2f(-(windowSize.x/2), -(windowSize.y/2)));
 	this->sprite.setTexture(AssetsManager::Instance()->getTexture("missing_texture.png"));
-	this->setDraw(false);
+	this->setDrawn(false);
 	this->setCollidable(false);
 	
 	//Set the currentCommand for drawing only. Maybe later combine with processing?
@@ -91,4 +91,9 @@ void DevConsole::update(const float delta) {
 
 const sf::Vector2i& DevConsole::getWritePosition() {
 	return this->textWritePosition;
+}
+
+
+void DevConsole::drawSelf(sf::RenderWindow& window, sf::RenderStates states) const {
+	
 }

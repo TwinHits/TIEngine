@@ -8,10 +8,11 @@
 
 namespace TIE {
 
-class SceneNode : public sf::Drawable, sf::Transformable, private sf::NonCopyable {
+class SceneNode {
 	public:
 		SceneNode();
-		~SceneNode();
+		SceneNode(const SceneNode&);
+		virtual ~SceneNode();
 
 		void setDrawn(bool);
 		bool getDrawn();
@@ -19,7 +20,7 @@ class SceneNode : public sf::Drawable, sf::Transformable, private sf::NonCopyabl
 		void setParent(SceneNode*);
 		SceneNode& getParent();
 
-		void draw(sf::RenderWindow&, sf::RenderStates&) const;
+		void draw(sf::RenderWindow&, sf::RenderStates) const;
 
 		void attachChild(std::unique_ptr<SceneNode>);
 		std::unique_ptr<SceneNode> detachChild(const SceneNode&);
@@ -28,7 +29,7 @@ class SceneNode : public sf::Drawable, sf::Transformable, private sf::NonCopyabl
 		bool operator!=(const SceneNode&) const;
 
 	private:
-		virtual void drawSelf(sf::RenderWindow&, sf::RenderStates&) const = 0;
+		virtual void drawSelf(sf::RenderWindow&, sf::RenderStates) const = 0;
 
 		bool drawn = false;
 		SceneNode* parent = nullptr;

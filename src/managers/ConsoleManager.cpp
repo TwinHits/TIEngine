@@ -22,16 +22,16 @@ ConsoleManager::~ConsoleManager() {
 
 
 void ConsoleManager::showConsole() {
-	devConsole->setDraw(true);
+	devConsole->setDrawn(true);
 }
 
 void ConsoleManager::hideConsole() {
-	devConsole->setDraw(false);
+	devConsole->setDrawn(false);
 }
 
 
 bool ConsoleManager::checkConsole() {
-	return devConsole->getDraw();
+	return devConsole->getDrawn();
 }
 
 

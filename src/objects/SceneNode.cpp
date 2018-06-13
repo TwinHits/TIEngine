@@ -6,7 +6,14 @@ SceneNode::SceneNode() {
 
 }
 
+
 SceneNode::~SceneNode() {
+
+}
+
+
+SceneNode::SceneNode(const SceneNode&) {
+
 
 }
 
@@ -31,7 +38,7 @@ SceneNode& SceneNode::getParent() {
 }
 
 
-void SceneNode::draw(sf::RenderWindow& window, sf::RenderStates& states) const {
+void SceneNode::draw(sf::RenderWindow& window, sf::RenderStates states) const {
 
 	//Combine transforms
 

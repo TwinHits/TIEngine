@@ -8,7 +8,6 @@
 
 #include "TIEntity.h"
 #include "SceneText.h"
-
 namespace TIE {
 
 class DevConsole : public TIEntity {
@@ -27,6 +26,8 @@ class DevConsole : public TIEntity {
 		void update(const float delta);
 
 	private:
+		virtual void drawSelf(sf::RenderWindow&, sf::RenderStates) const;
+	
 		std::vector<SceneText> commandHistory;
 		SceneText currentCommand;
 		const sf::Font& font;

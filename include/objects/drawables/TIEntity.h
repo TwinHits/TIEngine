@@ -1,30 +1,23 @@
 #ifndef SCENEOBJECT_H
 #define SCENEOBJECT_H
 
-#include <SFML/Graphics.hpp>
-
-#include "../Message.h"
 #include "../GlobalId.h"
+#include "../Message.h"
+#include "../SceneNode.h"
 
 namespace TIE {
 
 class Message;
 
-class TIEntity {
+class TIEntity : public SceneNode {
 	public:
 		TIEntity();
 		virtual ~TIEntity();
 
 		GlobalId getId() const;
 
-		void setDraw(bool b);
-		bool getDraw() const;
-
 		void setCollidable(bool b);
 		bool getCollidable();
-
-		void setDrawOrder(int i);
-		int getDrawOrder() const;
 
 		void setSprite(const sf::Sprite& sprite);
 		const sf::Sprite& getSprite() const;
@@ -40,6 +33,7 @@ class TIEntity {
 
 		virtual void move(const float delta);
 
+
 		void operator=(const TIEntity&);
 		bool operator==(const TIEntity& rhs) const;
 		bool operator!=(const TIEntity& rhs) const;
@@ -47,11 +41,12 @@ class TIEntity {
 	protected:
 		sf::Sprite sprite;
 		GlobalId id;
-		bool draw = true;
 		bool collidable = true;
-		int drawOrder = 0;
 
 		float speed = 1;
+
+	private:
+		virtual void drawSelf(sf::RenderWindow&, sf::RenderStates) const;
 };
 
 }

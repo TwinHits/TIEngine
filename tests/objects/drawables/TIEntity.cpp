@@ -13,22 +13,22 @@ TEST(TIEntity, GetId) {
 }
 
 
-TEST(TIEntity, GetDraw) {
+TEST(TIEntity, GetDrawn) {
 	TIE::TIEntity entity = TIE::TIEntity();
 	bool expected = TIE::DEFAULT_DRAW_BOOL;
 
-	bool actual = entity.getDraw();
+	bool actual = entity.getDrawn();
 
 	ASSERT_EQ(expected, actual);
 }
 
 
-TEST(TIEntity, SetDraw) {
+TEST(TIEntity, SetDrawn) {
 	TIE::TIEntity entity = TIE::TIEntity();
 	bool expected = TIE::CUSTOM_DRAW_BOOL;
 
-	entity.setDraw(TIE::CUSTOM_DRAW_BOOL);
-	bool actual = entity.getDraw();
+	entity.setDrawn(TIE::CUSTOM_DRAW_BOOL);
+	bool actual = entity.getDrawn();
 
 	ASSERT_EQ(expected, actual);
 }
@@ -50,27 +50,6 @@ TEST(TIEntity, SetCollidable) {
 
 	entity.setCollidable(TIE::CUSTOM_DRAW_BOOL);
 	bool actual = entity.getCollidable();
-
-	ASSERT_EQ(expected, actual);
-}
-
-
-TEST(TIEntity, GetDrawOrder) {
-	TIE::TIEntity entity = TIE::TIEntity();
-	int expected = TIE::DEFAULT_DRAW_ORDER_INT;
-
-	int actual = entity.getDrawOrder();
-
-	ASSERT_EQ(expected, actual);
-}
-
-
-TEST(TIEntity, SetDrawOrder) {
-	TIE::TIEntity entity = TIE::TIEntity();
-	int expected = TIE::CUSTOM_DRAW_ORDER_INT;
-
-	entity.setDrawOrder(TIE::CUSTOM_DRAW_ORDER_INT);
-	int actual = entity.getDrawOrder();
 
 	ASSERT_EQ(expected, actual);
 }

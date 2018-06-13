@@ -26,16 +26,6 @@ GlobalId TIEntity::getId() const {
 }
 
 
-void TIEntity::setDraw(bool b) { 
-	this->draw = b;
-}
-
-
-bool TIEntity::getDraw() const { 
-	return this->draw; 
-}
-
-
 void TIEntity::setCollidable(bool b) { 
 	this->collidable = b;
 }
@@ -66,16 +56,6 @@ void TIEntity::setAngle(float angle) {
 
 float TIEntity::getAngle() {
 	return this->sprite.getRotation();
-}
-
-
-void TIEntity::setDrawOrder(int i) {
-	this->drawOrder = i;
-}
-
-
-int TIEntity::getDrawOrder() const {
-	return this->drawOrder;
 }
 
 
@@ -119,6 +99,11 @@ void TIEntity::move(const float delta) {
 	}
 
     sprite.move(sf::Vector2f(x, y));
+}
+
+
+void TIEntity::drawSelf(sf::RenderWindow& window, sf::RenderStates states) const {
+	window.draw(sprite, states);
 }
 
 

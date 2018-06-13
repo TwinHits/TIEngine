@@ -42,7 +42,7 @@ TEST(ConsoleManager, RunCommand) {
 
 TEST(ConsoleManager, SetDevConsole) {
 	std::unique_ptr<TIE::DevConsole> devConsole = TIE::make_unique<TIE::DevConsole>();
-	devConsole->setDraw(true);
+	devConsole->setDrawn(true);
 	TIE::ConsoleManager::Instance()->hideConsole();
 	
 	TIE::ConsoleManager::Instance()->setDevConsole(std::move(devConsole));
