@@ -2,12 +2,9 @@
 #define SCENEOBJECT_H
 
 #include "../GlobalId.h"
-#include "../Message.h"
 #include "../SceneNode.h"
 
 namespace TIE {
-
-class Message;
 
 class TIEntity : public SceneNode {
 	public:
@@ -18,8 +15,7 @@ class TIEntity : public SceneNode {
 
 		void setCollidable(bool b);
 		bool getCollidable();
-
-		void setSprite(const sf::Sprite& sprite);
+void setSprite(const sf::Sprite& sprite);
 		const sf::Sprite& getSprite() const;
 
 		virtual void setAngle(float angle);
@@ -28,11 +24,7 @@ class TIEntity : public SceneNode {
 		virtual void setSpeed(float speed);
 		virtual float getSpeed();
 
-		virtual void update(const float delta);
-		virtual void receiveMessage(const Message& msg) const;
-
 		virtual void move(const float delta);
-
 
 		void operator=(const TIEntity&);
 		bool operator==(const TIEntity& rhs) const;
@@ -47,6 +39,7 @@ class TIEntity : public SceneNode {
 
 	private:
 		virtual void drawSelf(sf::RenderWindow&, sf::RenderStates) const;
+		virtual void updateSelf(const float);
 };
 
 }

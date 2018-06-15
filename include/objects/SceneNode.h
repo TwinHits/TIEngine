@@ -15,12 +15,14 @@ class SceneNode {
 		virtual ~SceneNode();
 
 		void setDrawn(bool);
-		bool getDrawn();
+		bool getDrawn() const;
 
 		void setParent(SceneNode*);
 		SceneNode& getParent();
 
 		void draw(sf::RenderWindow&, sf::RenderStates) const;
+
+		void update(const float);
 
 		void attachChild(std::unique_ptr<SceneNode>);
 		std::unique_ptr<SceneNode> detachChild(const SceneNode&);
@@ -30,6 +32,7 @@ class SceneNode {
 
 	private:
 		virtual void drawSelf(sf::RenderWindow&, sf::RenderStates) const = 0;
+		virtual void updateSelf(const float) = 0;
 
 		bool drawn = false;
 		SceneNode* parent = nullptr;

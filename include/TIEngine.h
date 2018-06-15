@@ -17,7 +17,6 @@
 	#include "managers/HashManager.h"
 	#include "managers/InputManager.h"
 	#include "managers/LogManager.h"
-	#include "managers/MessageManager.h"
 	#include "managers/PlayerManager.h"
 	#include "managers/SceneManager.h"
 	#include "managers/TIEntityManager.h"

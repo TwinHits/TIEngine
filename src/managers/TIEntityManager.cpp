@@ -29,24 +29,6 @@ SceneNode& TIEntityManager::attachToSceneGraphRoot(std::unique_ptr<SceneNode> no
 }
 
 
-TIEntity& TIEntityManager::addTIEntity(std::unique_ptr<TIEntity> e) {
-	GlobalId id = e->getId();
-	sceneObjects[id] = std::move(e);
-	LogManager::Instance()->logInfo("Added TIEntity '" + std::to_string(id) + "'.");
-	return getTIEntity(id);
-}
-
-
-TIEntity& TIEntityManager::getTIEntity(GlobalId id) {
-	if (sceneObjects.find(id) != sceneObjects.end()) {
-		return *sceneObjects[id];
-	} else {
-		//implement exception
-		return *sceneObjects[id];
-	}
-}
-
-
 SceneText& TIEntityManager::addSceneText(std::unique_ptr<SceneText> st) {
 	GlobalId id = st->getId();
 	sceneTexts[id] = std::move(st);
@@ -65,32 +47,13 @@ SceneText& TIEntityManager::getSceneText(GlobalId id) {
 }
 
 
-void TIEntityManager::removeTIEntity(GlobalId id) {
-	auto object = sceneObjects.find(id);
-	if (object != sceneObjects.end()) {
-		sceneObjects.erase(object);
-		LogManager::Instance()->logInfo("Deleted TIEntity '" + std::to_string(id) + "'.");
-	} else {
-		LogManager::Instance()->logError("TIEntity '" + std::to_string(id) + "' does not exist, doing nothing.");	
-	}
-}
-
-
-const std::map<GlobalId, std::unique_ptr<TIEntity> >& TIEntityManager::getAllTIEntitys() {
-	return sceneObjects;
-}
-
-
 void TIEntityManager::updateGameState() {
 
 	this->delta += this->clock.restart().asSeconds();
 
 	while (this->delta > this->TimePerFrame) {
 
-		for (auto& e: sceneObjects) {
-				//e.second->update(delta);
-		}
-
+		sceneGraphRoot->update(delta);
 
 		float fps = 60 / delta;
 		WindowManager::Instance()->showFPS(std::to_string(fps));
@@ -132,8 +95,8 @@ std::vector<GlobalId> TIEntityManager::getCollidingTIEntities(DetectionStrategy 
 
 
 void TIEntityManager::simple(std::vector<GlobalId>& ids, TIEntity& entity) {
-	//Gets all the tientities and checks their texture rectangles for collisions
-	//if they are drawn
+	//Requires a significant refactoring to go before this can be reimplemented.
+	/**
 	const std::map<GlobalId, std::unique_ptr<TIEntity> >&  entities = this->getAllTIEntitys();
 	sf::FloatRect hitbox = entity.getSprite().getGlobalBounds();
 	for (auto& e : entities) {
@@ -144,5 +107,6 @@ void TIEntityManager::simple(std::vector<GlobalId>& ids, TIEntity& entity) {
 			}
 		}
 	}
+	**/
 	return;	
 }

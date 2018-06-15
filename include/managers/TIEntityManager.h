@@ -20,15 +20,9 @@ class TIEntityManager : public Singleton<TIEntityManager> {
 
 		SceneNode& attachToSceneGraphRoot(std::unique_ptr<SceneNode>);
 
-		TIEntity& addTIEntity(std::unique_ptr<TIEntity> so);
-		void removeTIEntity(GlobalId id);
-
 		SceneText& addSceneText(std::unique_ptr<SceneText> st);
 		void removeSceneText(GlobalId id);
 	
-		TIEntity& getTIEntity(GlobalId id);
-		const std::map<GlobalId, std::unique_ptr<TIEntity> >& getAllTIEntitys();
-
 		SceneText& getSceneText(GlobalId id);
 		const std::map<GlobalId, std::unique_ptr<SceneText> >& getAllSceneTexts();
 
@@ -44,7 +38,6 @@ class TIEntityManager : public Singleton<TIEntityManager> {
 		float TimePerFrame = 1.f/60.f; //Lock at 60 fps
 
 		std::unique_ptr<SceneNode> sceneGraphRoot;
-		std::map<GlobalId, std::unique_ptr<TIEntity> > sceneObjects;
 		std::map<GlobalId, std::unique_ptr<SceneText> > sceneTexts;
 
 		//Strategy Pattern

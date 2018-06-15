@@ -3,8 +3,8 @@
 #include "managers/LogManager.h"
 #include "managers/AssetsManager.h"
 #include "managers/InputManager.h"
-#include "managers/HashManager.h"
 #include "managers/WindowManager.h"
+#include "managers/ViewManager.h"
 
 #include "objects/drawables/DevConsole.h" 
 
@@ -34,12 +34,12 @@ DevConsole::~DevConsole() {
 }	
 
 
-const std::vector<SceneText>& DevConsole::getCommandHistory() {
+const std::vector<SceneText>& DevConsole::getCommandHistory() const {
 	return commandHistory;
 }
 
 
-const SceneText& DevConsole::getCurrentCommand() {
+const SceneText& DevConsole::getCurrentCommand() const {
 	return currentCommand;
 }
 
@@ -63,7 +63,7 @@ void DevConsole::processCommand(const std::string& command) {
 }	
 
 
-void DevConsole::update(const float delta) {
+void DevConsole::updateSelf(const float delta) {
 	//To get the messages to display in console, get not yet processed messages from the LogManager, turn them into scene texts, and draw them. This happens every frame.
 
 	auto textEntered = InputManager::Instance()->getTextEntered();
@@ -95,5 +95,12 @@ const sf::Vector2i& DevConsole::getWritePosition() {
 
 
 void DevConsole::drawSelf(sf::RenderWindow& window, sf::RenderStates states) const {
+
+	//ViewManager::Instance()->setActiveView(devConsoleViewId);
 	
+	window.draw(this->getSprite());
+	for (auto& st : this->getCommandHistory())
+		window.draw(st.getText());
+	
+	window.draw(this->getCurrentCommand().getText());
 }

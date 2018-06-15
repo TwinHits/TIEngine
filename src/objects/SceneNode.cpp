@@ -23,7 +23,7 @@ void SceneNode::setDrawn(bool drawn) {
 }
 
 
-bool SceneNode::getDrawn() {
+bool SceneNode::getDrawn() const {
 	return this->drawn;
 }
 
@@ -42,10 +42,20 @@ void SceneNode::draw(sf::RenderWindow& window, sf::RenderStates states) const {
 
 	//Combine transforms
 
-	this->drawSelf(window, states);
+	if (this->getDrawn()) {
+		this->drawSelf(window, states);
+
+		for (auto& child : children) {
+			child->draw(window, states);	
+		}
+	}
+}
+
+void SceneNode::update(const float delta) {
+	this->updateSelf(delta);
 
 	for (auto& child : children) {
-		child->draw(window, states);	
+		child->update(delta);
 	}
 }
 
@@ -71,12 +81,12 @@ std::unique_ptr<SceneNode> SceneNode::detachChild(const SceneNode& child){
 
 
 bool SceneNode::operator==(const SceneNode& rhs) const {
-		const SceneNode* ptr = &rhs;
-		return this == ptr;
+	const SceneNode* ptr = &rhs;
+	return this == ptr;
 }
 
 
 bool SceneNode::operator!=(const SceneNode& rhs) const {
-		const SceneNode* ptr = &rhs;
-		return this != ptr;
+	const SceneNode* ptr = &rhs;
+	return this != ptr;
 }

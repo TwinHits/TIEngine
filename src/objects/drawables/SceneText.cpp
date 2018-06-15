@@ -1,9 +1,6 @@
 #include "managers/TimeManager.h"
-#include "managers/MessageManager.h"
 #include "managers/LogManager.h"
 #include "managers/HashManager.h"
-
-#include "objects/Message.h"
 
 #include "objects/drawables/SceneText.h"
 
@@ -57,11 +54,6 @@ bool SceneText::getDraw() const {
 
 
 void SceneText::update(const float delta) {
-
-}
-
-
-void SceneText::receiveMessage(const Message& msg) const {
 
 }
 

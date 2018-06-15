@@ -15,18 +15,18 @@ class DevConsole : public TIEntity {
 		DevConsole();
 		virtual ~DevConsole();
 
-		const std::vector<SceneText>& getCommandHistory();
-		const SceneText& getCurrentCommand();
+		const std::vector<SceneText>& getCommandHistory() const;
+		const SceneText& getCurrentCommand() const;
 
 		virtual int runClientCommand(const std::string& command);
 		void processCommand(const std::string& command);
 
 		const sf::Vector2i& getWritePosition();
 
-		void update(const float delta);
 
 	private:
 		virtual void drawSelf(sf::RenderWindow&, sf::RenderStates) const;
+		void updateSelf(const float delta);
 	
 		std::vector<SceneText> commandHistory;
 		SceneText currentCommand;

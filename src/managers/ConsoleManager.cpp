@@ -44,17 +44,6 @@ void ConsoleManager::runCommand(const std::string& command) {
 
 
 void ConsoleManager::renderDevConsole(const float delta) {
-	//Draw DevConsole last because it's always on top.
-	sf::RenderWindow& window = WindowManager::Instance()->getWindow();
-	ViewManager::Instance()->setActiveView(devConsoleViewId);
-	
-	this->devConsole->update(delta);
-
-	window.draw(this->devConsole->getSprite());
-	for (auto& st : this->devConsole->getCommandHistory())
-		window.draw(st.getText());
-	
-	window.draw(this->devConsole->getCurrentCommand().getText());
 }
 
 

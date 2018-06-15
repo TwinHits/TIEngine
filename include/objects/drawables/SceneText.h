@@ -3,7 +3,6 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "../Message.h"
 #include "../GlobalId.h"
 
 namespace TIE {
@@ -23,7 +22,6 @@ class SceneText {
 		bool getDraw() const;
 
 		virtual void update(const float delta);
-		virtual void receiveMessage(const Message& msg) const;
 
 		bool operator==(const SceneText& rhs) const;
 		bool operator!=(const SceneText& rhs) const;

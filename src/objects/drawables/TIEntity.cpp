@@ -1,9 +1,8 @@
 #include "managers/HashManager.h"
 #include "managers/LogManager.h"
-#include "managers/MessageManager.h"
 #include "managers/TimeManager.h"
 
-#include "objects/Message.h"
+#include "objects/drawables/TIEntity.h"
 
 #include "utilities/GetMissingSprite.h"
 #include "utilities/ToRadians.h"
@@ -69,12 +68,7 @@ float TIEntity::getSpeed() {
 }
 
 
-void TIEntity::update(const float delta) {
-
-}
-
-
-void TIEntity::receiveMessage(const Message& msg) const {
+void TIEntity::updateSelf(const float delta) {
 
 }
 

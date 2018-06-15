@@ -22,6 +22,7 @@ SceneManager::~SceneManager() {
 void SceneManager::render() {		
 	sf::RenderWindow& window = WindowManager::Instance()->getWindow();
    	ViewManager::Instance()->setActiveView(sceneViewId);
+
 	SceneNode& sceneGraph = TIEntityManager::Instance()->getSceneGraphRoot();
 	sf::RenderStates states;
 
@@ -29,10 +30,6 @@ void SceneManager::render() {
 
 	sceneGraph.draw(window, states);
 	
-	if (ConsoleManager::Instance()->checkConsole()) {
-		ConsoleManager::Instance()->renderDevConsole(1);
-	}
-
 	window.display();
 
 }
