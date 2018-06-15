@@ -16,6 +16,10 @@ enum DetectionStrategy { SIMPLE };
 
 class TIEntityManager : public Singleton<TIEntityManager> {
 	public:
+		SceneNode& getSceneGraphRoot();
+
+		SceneNode& attachToSceneGraphRoot(std::unique_ptr<SceneNode>);
+
 		TIEntity& addTIEntity(std::unique_ptr<TIEntity> so);
 		void removeTIEntity(GlobalId id);
 
@@ -39,6 +43,7 @@ class TIEntityManager : public Singleton<TIEntityManager> {
 		float delta = 0;
 		float TimePerFrame = 1.f/60.f; //Lock at 60 fps
 
+		std::unique_ptr<SceneNode> sceneGraphRoot;
 		std::map<GlobalId, std::unique_ptr<TIEntity> > sceneObjects;
 		std::map<GlobalId, std::unique_ptr<SceneText> > sceneTexts;
 

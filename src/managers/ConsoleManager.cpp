@@ -2,6 +2,7 @@
 #include <queue>
 
 #include "managers/ConsoleManager.h"
+#include "managers/TIEntityManager.h"
 #include "managers/WindowManager.h"
 #include "managers/ViewManager.h"
 
@@ -12,7 +13,9 @@ using namespace TIE;
 ConsoleManager::ConsoleManager() {
 	sf::Vector2i size = WindowManager::Instance()->getWindowSize();
 	this->devConsoleViewId = ViewManager::Instance()->addView(sf::FloatRect(0, 0, size.x, size.y));
-	this->devConsole = TIE::make_unique<DevConsole>();
+	std::unique_ptr<DevConsole> defaultDevConsole = make_unique<DevConsole>();
+	this->devConsole = &*defaultDevConsole;
+	TIEntityManager::Instance()->attachToSceneGraphRoot(make_unique<DevConsole>());
 }
 
 
@@ -22,16 +25,16 @@ ConsoleManager::~ConsoleManager() {
 
 
 void ConsoleManager::showConsole() {
-	devConsole->setDrawn(true);
+	this->devConsole->setDrawn(true);
 }
 
 void ConsoleManager::hideConsole() {
-	devConsole->setDrawn(false);
+	this->devConsole->setDrawn(false);
 }
 
 
 bool ConsoleManager::checkConsole() {
-	return devConsole->getDrawn();
+	return this->devConsole->getDrawn();
 }
 
 
@@ -45,19 +48,21 @@ void ConsoleManager::renderDevConsole(const float delta) {
 	sf::RenderWindow& window = WindowManager::Instance()->getWindow();
 	ViewManager::Instance()->setActiveView(devConsoleViewId);
 	
-	devConsole->update(delta);
+	this->devConsole->update(delta);
 
-	window.draw(devConsole->getSprite());
-	for (auto& st : devConsole->getCommandHistory())
+	window.draw(this->devConsole->getSprite());
+	for (auto& st : this->devConsole->getCommandHistory())
 		window.draw(st.getText());
 	
-	window.draw(devConsole->getCurrentCommand().getText());
+	window.draw(this->devConsole->getCurrentCommand().getText());
 }
 
 
 void ConsoleManager::setDevConsole(std::unique_ptr<DevConsole> devConsole) {
-	//devConsole.reset();
-	this->devConsole = std::move(devConsole);
+	SceneNode& root = TIEntityManager::Instance()->getSceneGraphRoot();
+	this->devConsole = &*devConsole;
+	root.detachChild(*this->devConsole);
+	root.attachChild(std::move(devConsole));
 }
 
 

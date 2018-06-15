@@ -28,7 +28,7 @@ class ConsoleManager : public Singleton<ConsoleManager> {
 		void setDevConsole(std::unique_ptr<DevConsole> devConsole);
 
 	private:
-		std::unique_ptr<DevConsole> devConsole;
+		DevConsole* devConsole;
 		GlobalId devConsoleViewId;
 
 		void operator=(const ConsoleManager&);

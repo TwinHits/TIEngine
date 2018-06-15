@@ -3,15 +3,29 @@
 #include "managers/TIEntityManager.h"
 #include "managers/WindowManager.h"
 
+#include "templates/MakeUnique.h"
+
 using namespace TIE;
 
 TIEntityManager::TIEntityManager() : clock(TimeManager::Instance()->addClock()) {
-
+	sceneGraphRoot = make_unique<TIEntity>();
 }
 
 
 TIEntityManager::~TIEntityManager() {
 	
+}
+
+
+SceneNode& TIEntityManager::getSceneGraphRoot() {
+	return *this->sceneGraphRoot;
+}
+
+
+SceneNode& TIEntityManager::attachToSceneGraphRoot(std::unique_ptr<SceneNode> node) {
+	SceneNode& reference = *node;
+	sceneGraphRoot->attachChild(std::move(node));
+	return reference;
 }
 
 
@@ -74,7 +88,7 @@ void TIEntityManager::updateGameState() {
 	while (this->delta > this->TimePerFrame) {
 
 		for (auto& e: sceneObjects) {
-				e.second->update(delta);
+				//e.second->update(delta);
 		}
 
 

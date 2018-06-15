@@ -22,20 +22,12 @@ SceneManager::~SceneManager() {
 void SceneManager::render() {		
 	sf::RenderWindow& window = WindowManager::Instance()->getWindow();
    	ViewManager::Instance()->setActiveView(sceneViewId);
-
-	auto& sceneObjects = TIEntityManager::Instance()->getAllTIEntitys();
-	auto& sceneTexts = TIEntityManager::Instance()->getAllSceneTexts();
+	SceneNode& sceneGraph = TIEntityManager::Instance()->getSceneGraphRoot();
+	sf::RenderStates states;
 
 	window.clear();
-	for (auto& so : sceneObjects) {
-		if (so.second->getDrawn())
-			window.draw(so.second->getSprite());
-	}
 
-	for (auto& st : sceneTexts) {
-		if (st.second->getDraw())
-			window.draw(st.second->getText());
-	}
+	sceneGraph.draw(window, states);
 	
 	if (ConsoleManager::Instance()->checkConsole()) {
 		ConsoleManager::Instance()->renderDevConsole(1);
