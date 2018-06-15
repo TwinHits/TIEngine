@@ -13,13 +13,13 @@ TIEntityManager::TIEntityManager() : clock(TimeManager::Instance()->addClock()) 
 	this->sceneGraphRoot = make_unique<SceneLayer>();
 	this->sceneGraphRoot->setLayer(SceneLayer::Layer::ROOT);
 
-	std::unique_ptr<SceneLayer> engineLayer = make_unique<SceneLayer>();
-	engineLayer->setLayer(SceneLayer::Layer::ENGINE);
-	this->sceneGraphRoot->attachChild(std::move(engineLayer));
-
 	std::unique_ptr<SceneLayer> clientLayer = make_unique<SceneLayer>();
 	clientLayer->setLayer(SceneLayer::Layer::CLIENT);
-	this->sceneGraphRoot->attachChild(std::move(clientLayer));
+	this->clientLayer = &dynamic_cast<SceneLayer&>(this->sceneGraphRoot->attachChild(std::move(clientLayer)));
+
+	std::unique_ptr<SceneLayer> engineLayer = make_unique<SceneLayer>();
+	engineLayer->setLayer(SceneLayer::Layer::ENGINE);
+	this->engineLayer = &dynamic_cast<SceneLayer&>(this->sceneGraphRoot->attachChild(std::move(engineLayer)));
 }
 
 
@@ -33,12 +33,14 @@ SceneLayer& TIEntityManager::getSceneGraphRoot() {
 }
 
 
-SceneNode& TIEntityManager::attachToSceneGraphRoot(std::unique_ptr<SceneNode> node) {
-	SceneNode& reference = *node;
-	sceneGraphRoot->attachChild(std::move(node));
-	return reference;
+SceneLayer& TIEntityManager::getEngineLayer() {
+	return *this->engineLayer;
 }
 
+
+SceneLayer& TIEntityManager::getClientLayer() {
+	return *this->clientLayer;
+}
 
 SceneText& TIEntityManager::addSceneText(std::unique_ptr<SceneText> st) {
 	GlobalId id = st->getId();

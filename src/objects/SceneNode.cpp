@@ -60,9 +60,10 @@ void SceneNode::update(const float delta) {
 }
 
 
-void SceneNode::attachChild(std::unique_ptr<SceneNode> child){
+SceneNode& SceneNode::attachChild(std::unique_ptr<SceneNode> child){
 	child->setParent(this);
 	children.push_back(std::move(child));
+	return *children.back();
 }
 
 

@@ -15,7 +15,7 @@ ConsoleManager::ConsoleManager() {
 	this->devConsoleViewId = ViewManager::Instance()->addView(sf::FloatRect(0, 0, size.x, size.y));
 	std::unique_ptr<DevConsole> defaultDevConsole = make_unique<DevConsole>();
 	this->devConsole = &*defaultDevConsole;
-	TIEntityManager::Instance()->attachToSceneGraphRoot(make_unique<DevConsole>());
+	TIEntityManager::Instance()->getEngineLayer().attachChild(make_unique<DevConsole>());
 }
 
 

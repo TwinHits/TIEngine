@@ -24,7 +24,7 @@ class SceneNode {
 
 		void update(const float);
 
-		void attachChild(std::unique_ptr<SceneNode>);
+		SceneNode& attachChild(std::unique_ptr<SceneNode>);
 		std::unique_ptr<SceneNode> detachChild(const SceneNode&);
 
 		bool operator==(const SceneNode&) const;
