@@ -3,12 +3,23 @@
 #include "managers/TIEntityManager.h"
 #include "managers/WindowManager.h"
 
+#include "objects/SceneLayer.h"
+
 #include "templates/MakeUnique.h"
 
 using namespace TIE;
 
 TIEntityManager::TIEntityManager() : clock(TimeManager::Instance()->addClock()) {
-	sceneGraphRoot = make_unique<TIEntity>();
+	this->sceneGraphRoot = make_unique<SceneLayer>();
+	this->sceneGraphRoot->setLayer(SceneLayer::Layer::ROOT);
+
+	std::unique_ptr<SceneLayer> engineLayer = make_unique<SceneLayer>();
+	engineLayer->setLayer(SceneLayer::Layer::ENGINE);
+	this->sceneGraphRoot->attachChild(std::move(engineLayer));
+
+	std::unique_ptr<SceneLayer> clientLayer = make_unique<SceneLayer>();
+	clientLayer->setLayer(SceneLayer::Layer::CLIENT);
+	this->sceneGraphRoot->attachChild(std::move(clientLayer));
 }
 
 
@@ -17,7 +28,7 @@ TIEntityManager::~TIEntityManager() {
 }
 
 
-SceneNode& TIEntityManager::getSceneGraphRoot() {
+SceneLayer& TIEntityManager::getSceneGraphRoot() {
 	return *this->sceneGraphRoot;
 }
 

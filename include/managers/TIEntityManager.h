@@ -7,8 +7,9 @@
 #include "templates/Singleton.h"
 
 #include "objects/GlobalId.h"
-#include "objects/drawables/SceneText.h"
+#include "objects/SceneLayer.h"
 #include "objects/drawables/TIEntity.h"
+#include "objects/drawables/SceneText.h"
 
 namespace TIE {
 
@@ -16,7 +17,7 @@ enum DetectionStrategy { SIMPLE };
 
 class TIEntityManager : public Singleton<TIEntityManager> {
 	public:
-		SceneNode& getSceneGraphRoot();
+		SceneLayer& getSceneGraphRoot();
 
 		SceneNode& attachToSceneGraphRoot(std::unique_ptr<SceneNode>);
 
@@ -37,7 +38,7 @@ class TIEntityManager : public Singleton<TIEntityManager> {
 		float delta = 0;
 		float TimePerFrame = 1.f/60.f; //Lock at 60 fps
 
-		std::unique_ptr<SceneNode> sceneGraphRoot;
+		std::unique_ptr<SceneLayer> sceneGraphRoot;
 		std::map<GlobalId, std::unique_ptr<SceneText> > sceneTexts;
 
 		//Strategy Pattern

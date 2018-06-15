@@ -23,28 +23,28 @@ bin/objs/%.o: src/objects/drawables/%.cpp
 bin/objs/%.o: src/utilities/%.cpp
 	g++-4.8 ${CC_FLAGS} ${IN_FLAGS} -c -o $@ $<
 
-#bin/objs/%.o: src/%.cpp
-#	g++-4.8 ${CC_FLAGS} ${IN_FLAGS} -c -o $@ $<
-
-#bin/tests/%.o: tests/managers/%.cpp
-#	g++-4.8 ${CC_FLAGS} ${IN_FLAGS} -c -o $@ $<
-
-#bin/tests/%.o: tests/objects/%.cpp
+bin/objs/%.o: src/%.cpp
 	g++-4.8 ${CC_FLAGS} ${IN_FLAGS} -c -o $@ $<
 
-#bin/tests/%.o: tests/objects/drawables/%.cpp
+bin/tests/%.o: tests/managers/%.cpp
 	g++-4.8 ${CC_FLAGS} ${IN_FLAGS} -c -o $@ $<
 
-#bin/tests/%.o: tests/objects/enumeration/%.cpp
+bin/tests/%.o: tests/objects/%.cpp
 	g++-4.8 ${CC_FLAGS} ${IN_FLAGS} -c -o $@ $<
 
-#bin/tests/%.o: tests/utilities/%.cpp
+bin/tests/%.o: tests/objects/drawables/%.cpp
 	g++-4.8 ${CC_FLAGS} ${IN_FLAGS} -c -o $@ $<
 
-#bin/tests/%.o: tests/templates/%.cpp
+bin/tests/%.o: tests/objects/enumeration/%.cpp
 	g++-4.8 ${CC_FLAGS} ${IN_FLAGS} -c -o $@ $<
 
-#bin/tests/%.o: tests/%.cpp
+bin/tests/%.o: tests/utilities/%.cpp
+	g++-4.8 ${CC_FLAGS} ${IN_FLAGS} -c -o $@ $<
+
+bin/tests/%.o: tests/templates/%.cpp
+	g++-4.8 ${CC_FLAGS} ${IN_FLAGS} -c -o $@ $<
+
+bin/tests/%.o: tests/%.cpp
 	g++-4.8 ${CC_FLAGS} ${IN_FLAGS} -c -o $@ $<
 
 
