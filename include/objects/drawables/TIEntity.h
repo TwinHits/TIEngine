@@ -11,17 +11,11 @@ class TIEntity : public SceneNode {
 		TIEntity();
 		virtual ~TIEntity();
 
-		void setCollidable(bool b);
-		bool getCollidable();
-
 		void setSprite(const sf::Sprite& sprite);
 		const sf::Sprite& getSprite() const;
 
-		virtual void setAngle(float angle);
-		virtual float getAngle();
-
-		virtual void setSpeed(float speed);
-		virtual float getSpeed();
+		void setVelocity(sf::Vector2f); //x = speed, y = direction
+		const sf::Vector2f getVelocity();
 
 		virtual void move(const float delta);
 
@@ -34,9 +28,7 @@ class TIEntity : public SceneNode {
 	
 	protected:
 		sf::Sprite sprite;
-		bool collidable = true;
-
-		float speed = 1;
+		sf::Vector2f velocity = sf::Vector2f(0,0);
 
 	private:
 };

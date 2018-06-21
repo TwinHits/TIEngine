@@ -19,14 +19,17 @@ class SceneNode {
 
 		GlobalId getId() const;
 
-		std::string getName() const;
 		void setName(const std::string&);
+		std::string getName() const;
 
 		void setDrawn(bool);
 		bool getDrawn() const;
 
 		void setParent(SceneNode*);
 		SceneNode& getParent();
+
+		void setCollidable(bool);
+		bool getCollidable() const;
 
 		void draw(sf::RenderWindow&, sf::RenderStates) const;
 
@@ -46,6 +49,7 @@ class SceneNode {
 		std::string name = "undefined";
 		bool drawn = false;
 		SceneNode* parent = nullptr;
+		bool collidable = false;
 		std::vector<std::unique_ptr<SceneNode> > children;
 };
 

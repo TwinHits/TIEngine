@@ -25,14 +25,15 @@ GlobalId SceneNode::getId() const {
 }
 
 
+void SceneNode::setName(const std::string& name) {
+	this->name = name;
+}
+
+
 std::string SceneNode::getName() const {
 	return this->name;
 }
 
-
-void SceneNode::setName(const std::string& name) {
-	this->name = name;
-}
 
 
 void SceneNode::setDrawn(bool drawn) {
@@ -42,6 +43,16 @@ void SceneNode::setDrawn(bool drawn) {
 
 bool SceneNode::getDrawn() const {
 	return this->drawn;
+}
+
+
+void SceneNode::setCollidable(bool collidable) { 
+	this->collidable = collidable;
+}
+
+
+bool SceneNode::getCollidable() const { 
+	return this->collidable; 
 }
 
 

@@ -55,26 +55,6 @@ TEST(TIEntity, SetCollidable) {
 }
 
 
-TEST(TIEntity, GetSpeed) {
-	TIE::TIEntity entity = TIE::TIEntity();
-	float expected = TIE::DEFAULT_SPEED_FLOAT;
-
-	float actual = entity.getSpeed();
-
-	ASSERT_FLOAT_EQ(expected, actual);
-}
-
-TEST(TIEntity, SetSpeed) {
-	TIE::TIEntity entity = TIE::TIEntity();
-	float expected = TIE::CUSTOM_SPEED_FLOAT;
-
-	entity.setSpeed(TIE::CUSTOM_SPEED_FLOAT);
-	float actual = entity.getSpeed();
-
-	ASSERT_FLOAT_EQ(expected, actual);
-}
-
-
 TEST(TIEntity, GetSprite) {
 	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
 
@@ -121,7 +101,7 @@ TEST(TIEntity, SetSprite) {
 }
 
 
-TEST(TIEntity, GetAngle) {
+TEST(TIEntity, GetVelocity) {
 	sf::Sprite sprite = sf::Sprite(TIE::AssetsManager::Instance()->getTexture(TIE::TEST_TEXTURE));
 	sprite.setPosition(sf::Vector2f(132, 256));
 	sprite.setOrigin(sf::Vector2f(10, 10));
@@ -130,14 +110,16 @@ TEST(TIEntity, GetAngle) {
 	TIE::TIEntity entity = TIE::TIEntity();
 	entity.setSprite(sprite);
 
-	float expected = 0.0;
-	float actual = entity.getAngle();
+	float expectedSpeed = 0.0;
+	float expectedDirection = 0.0;
+	sf::Vector2f actual = entity.getVelocity();
 
-	ASSERT_FLOAT_EQ(expected, actual);
+	ASSERT_FLOAT_EQ(expectedSpeed, actual.x);
+	ASSERT_FLOAT_EQ(expectedDirection, actual.y);
 }
 
 
-TEST(TIEntity, SetAngle) {
+TEST(TIEntity, SetVelocity) {
 	sf::Sprite sprite = sf::Sprite(TIE::AssetsManager::Instance()->getTexture(TIE::TEST_TEXTURE));
 	sprite.setPosition(sf::Vector2f(132, 256));
 	sprite.setOrigin(sf::Vector2f(10, 10));
@@ -146,11 +128,14 @@ TEST(TIEntity, SetAngle) {
 	TIE::TIEntity entity = TIE::TIEntity();
 	entity.setSprite(sprite);
 
-	float expected = 90.0;
-	entity.setAngle(expected);
-	float actual = entity.getAngle();
+	float expectedSpeed = 40.0;
+	float expectedDirection = 90.0;
+	sf::Vector2f expected = sf::Vector2f(expectedSpeed, expectedDirection);
+	entity.setVelocity(expected);
+	sf::Vector2f actual = entity.getVelocity();
 
-	ASSERT_FLOAT_EQ(expected, actual);
+	ASSERT_FLOAT_EQ(expectedSpeed, actual.x);
+	ASSERT_FLOAT_EQ(expectedDirection, actual.y);
 }
 
 
@@ -189,8 +174,9 @@ TEST(TIEntity, MoveRight) {
 	ASSERT_FLOAT_EQ(startPosition.y, preconditionPosition.y);
 
 	float delta = 1.0;
+	sf::Vector2f velocity = sf::Vector2f(1, 0);
+	entity.setVelocity(velocity);
 
-	entity.setAngle(0.0);
 	entity.move(delta);
 
 	sf::Vector2f expected = sf::Vector2f(1.0, 0.0);
@@ -210,8 +196,9 @@ TEST(TIEntity, MoveDownRight) {
 	ASSERT_FLOAT_EQ(startPosition.y, preconditionPosition.y);
 
 	float delta = 1.0;
-
-	entity.setAngle(45.0);
+	sf::Vector2f velocity = sf::Vector2f(1.0, 45.0);
+	entity.setVelocity(velocity);
+	
 	entity.move(delta);
 
 	sf::Vector2f expected = sf::Vector2f(0.7071067, 0.7071067);
@@ -231,8 +218,9 @@ TEST(TIEntity, MoveDown) {
 	ASSERT_FLOAT_EQ(startPosition.y, preconditionPosition.y);
 
 	float delta = 1.0;
+	sf::Vector2f velocity = sf::Vector2f(1.0, 90.0);
+	entity.setVelocity(velocity);
 
-	entity.setAngle(90.0);
 	entity.move(delta);
 
 	sf::Vector2f expected = sf::Vector2f(0.0, 1.0);
@@ -252,8 +240,9 @@ TEST(TIEntity, MoveDownLeft) {
 	ASSERT_FLOAT_EQ(startPosition.y, preconditionPosition.y);
 
 	float delta = 1.0;
+	sf::Vector2f velocity = sf::Vector2f(1.0, 135.0);
+	entity.setVelocity(velocity);
 
-	entity.setAngle(135.0);
 	entity.move(delta);
 
 	sf::Vector2f expected = sf::Vector2f(-0.7071067, 0.7071067);
@@ -273,8 +262,9 @@ TEST(TIEntity, MoveLeft) {
 	ASSERT_FLOAT_EQ(startPosition.y, preconditionPosition.y);
 
 	float delta = 1.0;
+	sf::Vector2f velocity = sf::Vector2f(1.0, 180.0);
+	entity.setVelocity(velocity);
 
-	entity.setAngle(180.0);
 	entity.move(delta);
 
 	sf::Vector2f expected = sf::Vector2f(-1.0, 0.0);
@@ -293,8 +283,9 @@ TEST(TIEntity, MoveUpLeft) {
 	ASSERT_FLOAT_EQ(startPosition.y, preconditionPosition.y);
 
 	float delta = 1.0;
+	sf::Vector2f velocity = sf::Vector2f(1.0, 225.0);
+	entity.setVelocity(velocity);
 
-	entity.setAngle(225.0);
 	entity.move(delta);
 
 	sf::Vector2f expected = sf::Vector2f(-0.7071067, -0.7071067);
@@ -314,7 +305,9 @@ TEST(TIEntity, MoveUp) {
 	ASSERT_FLOAT_EQ(startPosition.y, preconditionPosition.y);
 
 	float delta = 1.0;
-	entity.setAngle(270.0);
+	sf::Vector2f velocity = sf::Vector2f(1.0, 270.0);
+	entity.setVelocity(velocity);
+
 	entity.move(delta);
 
 	sf::Vector2f expected = sf::Vector2f(0.0, -1.0);
@@ -334,7 +327,9 @@ TEST(TIEntity, MoveUpRight) {
 	ASSERT_FLOAT_EQ(startPosition.y, preconditionPosition.y);
 
 	float delta = 1.0;
-	entity.setAngle(315.0);
+	sf::Vector2f velocity = sf::Vector2f(1.0, 315.0);
+	entity.setVelocity(velocity);
+
 	entity.move(delta);
 
 	sf::Vector2f expected = sf::Vector2f(0.7071067, -0.7071067);
@@ -343,9 +338,5 @@ TEST(TIEntity, MoveUpRight) {
 	ASSERT_FLOAT_EQ(expected.x, actual.x);
 	ASSERT_FLOAT_EQ(expected.y, actual.y);
 }
-
-
-//TEST(TIEntity, RecieveMessage) {}
-
 
 //TEST(TIEntity, UpdateState) {}

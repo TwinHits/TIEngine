@@ -19,14 +19,6 @@ TIEntity::~TIEntity() {
 }
 
 
-void TIEntity::setCollidable(bool b) { 
-	this->collidable = b;
-}
-
-
-bool TIEntity::getCollidable() { 
-	return this->collidable; 
-}
 
 
 void TIEntity::setSprite(const sf::Sprite& sprite) {
@@ -43,25 +35,14 @@ const sf::Sprite& TIEntity::getSprite() const {
 }
 
 
-void TIEntity::setAngle(float angle) {
-	this->sprite.setRotation(angle);
+void TIEntity::setVelocity(sf::Vector2f velocity) {
+	this->velocity = velocity;
 }
 
 
-float TIEntity::getAngle() {
-	return this->sprite.getRotation();
+const sf::Vector2f TIEntity::getVelocity() {
+	return this->velocity;
 }
-
-
-void TIEntity::setSpeed(float speed) {
-	this->speed = speed;
-}
-
-
-float TIEntity::getSpeed() {
-	return this->speed;
-}
-
 
 void TIEntity::move(const float delta) {
 	float degrees = sprite.getRotation();
@@ -70,16 +51,16 @@ void TIEntity::move(const float delta) {
 
 	//Handle special values because of sin/cos handling the seminal values
 	if (degrees == 0.0) {
-		x = std::cos(ToRadians(degrees)) * speed * delta;
+		x = std::cos(ToRadians(degrees)) * this->velocity.x * delta;
 	} else if (degrees == 90.0) {
-		y = std::sin(ToRadians(degrees)) * speed * delta;
+		y = std::sin(ToRadians(degrees)) * this->velocity.x * delta;
 	} else if (degrees == 180.0) {
-		x = std::cos(ToRadians(degrees)) * speed * delta;
+		x = std::cos(ToRadians(degrees)) * this->velocity.x * delta;
 	} else if (degrees == 270.0) {
-		y = std::sin(ToRadians(degrees)) * speed * delta;
+		y = std::sin(ToRadians(degrees)) * this->velocity.x * delta;
 	} else {
-		x = std::cos(ToRadians(degrees)) * speed * delta;
-		y = std::sin(ToRadians(degrees)) * speed * delta;
+		x = std::cos(ToRadians(degrees)) * this->velocity.x * delta;
+		y = std::sin(ToRadians(degrees)) * this->velocity.x * delta;
 	}
 
     sprite.move(sf::Vector2f(x, y));
