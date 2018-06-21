@@ -12,14 +12,17 @@ using namespace TIE;
 TIEntityManager::TIEntityManager() : clock(TimeManager::Instance()->addClock()) {
 	this->sceneGraphRoot = make_unique<SceneLayer>();
 	this->sceneGraphRoot->setLayer(SceneLayer::Layer::ROOT);
+	this->sceneGraphRoot->setName("ROOT");
 
-	std::unique_ptr<SceneLayer> clientLayer = make_unique<SceneLayer>();
-	clientLayer->setLayer(SceneLayer::Layer::CLIENT);
-	this->clientLayer = &dynamic_cast<SceneLayer&>(this->sceneGraphRoot->attachChild(std::move(clientLayer)));
+	std::unique_ptr<SceneLayer> clientLayerPtr = make_unique<SceneLayer>();
+	clientLayerPtr->setLayer(SceneLayer::Layer::CLIENT);
+	clientLayerPtr->setName("client layer");
+	this->clientLayer = &dynamic_cast<SceneLayer&>(this->sceneGraphRoot->attachChild(std::move(clientLayerPtr)));
 
-	std::unique_ptr<SceneLayer> engineLayer = make_unique<SceneLayer>();
-	engineLayer->setLayer(SceneLayer::Layer::ENGINE);
-	this->engineLayer = &dynamic_cast<SceneLayer&>(this->sceneGraphRoot->attachChild(std::move(engineLayer)));
+	std::unique_ptr<SceneLayer> engineLayerPtr = make_unique<SceneLayer>();
+	engineLayerPtr->setLayer(SceneLayer::Layer::ENGINE);
+	engineLayerPtr->setName("engine layer");
+	this->engineLayer = &dynamic_cast<SceneLayer&>(this->sceneGraphRoot->attachChild(std::move(engineLayerPtr)));
 }
 
 
@@ -61,7 +64,6 @@ SceneText& TIEntityManager::getSceneText(GlobalId id) {
 
 
 void TIEntityManager::updateGameState() {
-
 	this->delta += this->clock.restart().asSeconds();
 
 	while (this->delta > this->TimePerFrame) {
@@ -72,7 +74,6 @@ void TIEntityManager::updateGameState() {
 		WindowManager::Instance()->showFPS(std::to_string(fps));
 		this->delta = 0;
 	}
-
 }
 
 

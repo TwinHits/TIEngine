@@ -5,7 +5,6 @@
 #include "managers/TIEntityManager.h"
 #include "managers/WindowManager.h"
 #include "managers/ViewManager.h"
-
 #include "templates/MakeUnique.h"
 
 using namespace TIE;
@@ -14,8 +13,8 @@ ConsoleManager::ConsoleManager() {
 	sf::Vector2i size = WindowManager::Instance()->getWindowSize();
 	this->devConsoleViewId = ViewManager::Instance()->addView(sf::FloatRect(0, 0, size.x, size.y));
 	std::unique_ptr<DevConsole> defaultDevConsole = make_unique<DevConsole>();
-	this->devConsole = &*defaultDevConsole;
-	TIEntityManager::Instance()->getEngineLayer().attachChild(make_unique<DevConsole>());
+	defaultDevConsole->setName("default dev console.");
+	this->devConsole = &dynamic_cast<DevConsole&>(TIEntityManager::Instance()->getEngineLayer().attachChild(std::move(defaultDevConsole)));
 }
 
 
@@ -43,15 +42,11 @@ void ConsoleManager::runCommand(const std::string& command) {
 }
 
 
-void ConsoleManager::renderDevConsole(const float delta) {
-}
-
-
 void ConsoleManager::setDevConsole(std::unique_ptr<DevConsole> devConsole) {
-	SceneNode& root = TIEntityManager::Instance()->getSceneGraphRoot();
-	this->devConsole = &*devConsole;
-	root.detachChild(*this->devConsole);
-	root.attachChild(std::move(devConsole));
+	SceneLayer& engineLayer = TIEntityManager::Instance()->getEngineLayer();
+	engineLayer.detachChild(*this->devConsole);
+	devConsole->setName("client defined dev console.");
+	this->devConsole = &dynamic_cast<DevConsole&>(engineLayer.attachChild(std::move(devConsole)));
 }
 
 

@@ -1,20 +1,37 @@
+#include "managers/HashManager.h"
+#include "managers/LogManager.h"
 #include "objects/SceneNode.h"
 
 using namespace TIE;
 
 SceneNode::SceneNode() {
-
+	this->id = HashManager::Instance()->getNewGlobalId();
 }
 
 
 SceneNode::~SceneNode() {
 
-}
+} 
 
 
 SceneNode::SceneNode(const SceneNode&) {
 
 
+}
+
+
+GlobalId SceneNode::getId() const {
+	return this->id;
+}
+
+
+std::string SceneNode::getName() const {
+	return this->name;
+}
+
+
+void SceneNode::setName(const std::string& name) {
+	this->name = name;
 }
 
 
@@ -54,14 +71,17 @@ void SceneNode::draw(sf::RenderWindow& window, sf::RenderStates states) const {
 void SceneNode::update(const float delta) {
 	this->updateSelf(delta);
 
-	for (auto& child : children) {
-		child->update(delta);
+	for (auto& child : this->children) {
+		if (child != nullptr) {
+			child->update(delta);
+		}
 	}
 }
 
 
 SceneNode& SceneNode::attachChild(std::unique_ptr<SceneNode> child){
 	child->setParent(this);
+	LogManager::Instance()->logInfo("Attaching node with name " + child->getName() +  ".");
 	children.push_back(std::move(child));
 	return *children.back();
 }

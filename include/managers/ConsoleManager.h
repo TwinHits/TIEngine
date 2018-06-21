@@ -22,7 +22,6 @@ class ConsoleManager : public Singleton<ConsoleManager> {
 		void hideConsole();
 		bool checkConsole();
 		void runCommand(const std::string&);
-		void renderDevConsole(const float delta);
 		void scroll(Direction direction);
 
 		void setDevConsole(std::unique_ptr<DevConsole> devConsole);

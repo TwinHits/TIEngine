@@ -10,18 +10,12 @@
 using namespace TIE;
 
 TIEntity::TIEntity() {
-	this->id = HashManager::Instance()->getNewGlobalId();	
 	this->sprite = TIE::getMissingSprite();
 }
 
 
 TIEntity::~TIEntity() {
 
-}
-
-
-GlobalId TIEntity::getId() const { 
-	return this->id;
 }
 
 
@@ -33,6 +27,7 @@ void TIEntity::setCollidable(bool b) {
 bool TIEntity::getCollidable() { 
 	return this->collidable; 
 }
+
 
 void TIEntity::setSprite(const sf::Sprite& sprite) {
 	this->sprite.setTexture(*sprite.getTexture());
@@ -68,11 +63,6 @@ float TIEntity::getSpeed() {
 }
 
 
-void TIEntity::updateSelf(const float delta) {
-
-}
-
-
 void TIEntity::move(const float delta) {
 	float degrees = sprite.getRotation();
 	float x = 0;
@@ -97,7 +87,12 @@ void TIEntity::move(const float delta) {
 
 
 void TIEntity::drawSelf(sf::RenderWindow& window, sf::RenderStates states) const {
-	window.draw(sprite, states);
+	
+}
+
+
+void TIEntity::updateSelf(const float delta) {
+	
 }
 
 
