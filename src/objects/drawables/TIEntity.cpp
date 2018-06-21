@@ -68,7 +68,7 @@ void TIEntity::move(const float delta) {
 
 
 void TIEntity::drawSelf(sf::RenderWindow& window, sf::RenderStates states) const {
-	
+	window.draw(sprite, states);	
 }
 
 
