@@ -11,7 +11,7 @@
 
 namespace TIE {
 
-class SceneNode {
+class SceneNode : public sf::Transformable, sf::Drawable {
 	public:
 		SceneNode();
 		SceneNode(const SceneNode&);
@@ -31,7 +31,7 @@ class SceneNode {
 		void setCollidable(bool);
 		bool getCollidable() const;
 
-		void draw(sf::RenderWindow&, sf::RenderStates) const;
+		void draw(sf::RenderTarget&, sf::RenderStates) const;
 
 		void update(const float);
 
@@ -42,7 +42,7 @@ class SceneNode {
 		bool operator!=(const SceneNode&) const;
 
 	private:
-		virtual void drawSelf(sf::RenderWindow&, sf::RenderStates) const = 0;
+		virtual void drawSelf(sf::RenderTarget&, sf::RenderStates) const = 0;
 		virtual void updateSelf(const float) = 0;
 
 		GlobalId id;
@@ -51,6 +51,7 @@ class SceneNode {
 		SceneNode* parent = nullptr;
 		bool collidable = false;
 		std::vector<std::unique_ptr<SceneNode> > children;
+
 };
 
 }

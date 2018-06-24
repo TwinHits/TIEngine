@@ -25,7 +25,7 @@ class DevConsole : public TIEntity {
 
 
 	private:
-		virtual void drawSelf(sf::RenderWindow&, sf::RenderStates) const;
+		virtual void drawSelf(sf::RenderTarget&, sf::RenderStates) const;
 		void updateSelf(const float delta);
 	
 		std::vector<SceneText> commandHistory;

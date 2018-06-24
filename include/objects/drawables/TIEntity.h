@@ -19,7 +19,7 @@ class TIEntity : public SceneNode {
 
 		virtual void move(const float delta);
 
-		virtual void drawSelf(sf::RenderWindow&, sf::RenderStates) const;
+		virtual void drawSelf(sf::RenderTarget&, sf::RenderStates) const;
 		virtual void updateSelf(const float);
 
 		void operator=(const TIEntity&);

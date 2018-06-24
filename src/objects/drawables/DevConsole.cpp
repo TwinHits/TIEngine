@@ -94,7 +94,7 @@ const sf::Vector2i& DevConsole::getWritePosition() {
 }
 
 
-void DevConsole::drawSelf(sf::RenderWindow& window, sf::RenderStates states) const {
+void DevConsole::drawSelf(sf::RenderTarget& window, sf::RenderStates states) const {
 
 	//ViewManager::Instance()->setActiveView(devConsoleViewId);
 	

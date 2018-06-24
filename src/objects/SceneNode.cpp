@@ -66,9 +66,9 @@ SceneNode& SceneNode::getParent() {
 }
 
 
-void SceneNode::draw(sf::RenderWindow& window, sf::RenderStates states) const {
+void SceneNode::draw(sf::RenderTarget& window, sf::RenderStates states) const {
 
-	//Combine transforms
+	states.transform *= this->getTransform();
 
 	if (this->getDrawn()) {
 		this->drawSelf(window, states);

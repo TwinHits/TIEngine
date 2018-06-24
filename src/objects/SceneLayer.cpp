@@ -22,7 +22,7 @@ void SceneLayer::setLayer(Layer layer) {
 }
 
 
-void SceneLayer::drawSelf(sf::RenderWindow&, sf::RenderStates) const {
+void SceneLayer::drawSelf(sf::RenderTarget&, sf::RenderStates) const {
 
 }
 

@@ -13,6 +13,7 @@ TIEntityManager::TIEntityManager() : clock(TimeManager::Instance()->addClock()) 
 	this->sceneGraphRoot = make_unique<SceneLayer>();
 	this->sceneGraphRoot->setLayer(SceneLayer::Layer::ROOT);
 	this->sceneGraphRoot->setName("ROOT");
+	this->sceneGraphRoot->setPosition(0,0);
 
 	std::unique_ptr<SceneLayer> clientLayerPtr = make_unique<SceneLayer>();
 	clientLayerPtr->setLayer(SceneLayer::Layer::CLIENT);

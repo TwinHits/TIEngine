@@ -20,7 +20,7 @@ class SceneLayer : public SceneNode {
 		void setLayer(Layer);
 		
 	private:
-		void drawSelf(sf::RenderWindow&, sf::RenderStates) const;
+		void drawSelf(sf::RenderTarget&, sf::RenderStates) const;
 		void updateSelf(const float);
 
 		Layer layer;
