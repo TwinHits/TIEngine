@@ -62,7 +62,7 @@ void SceneNode::setParent(SceneNode* parent) {
 
 
 SceneNode& SceneNode::getParent() {
-	return *this->parent;
+	return *parent;
 }
 
 
@@ -80,6 +80,7 @@ void SceneNode::draw(sf::RenderTarget& window, sf::RenderStates states) const {
 }
 
 void SceneNode::update(const float delta) {
+
 	this->updateSelf(delta);
 
 	for (auto& child : this->children) {
@@ -91,8 +92,8 @@ void SceneNode::update(const float delta) {
 
 
 SceneNode& SceneNode::attachChild(std::unique_ptr<SceneNode> child){
-	child->setParent(this);
 	LogManager::Instance()->logInfo("Attaching node with name " + child->getName() +  ".");
+	child->setParent(this);
 	children.push_back(std::move(child));
 	return *children.back();
 }

@@ -45,7 +45,7 @@ const sf::Vector2f TIEntity::getVelocity() {
 }
 
 void TIEntity::move(const float delta) {
-	float degrees = sprite.getRotation();
+	float degrees = this->getRotation();
 	float x = 0;
 	float y = 0;
 
@@ -63,7 +63,7 @@ void TIEntity::move(const float delta) {
 		y = std::sin(ToRadians(degrees)) * this->velocity.x * delta;
 	}
 
-    sprite.move(sf::Vector2f(x, y));
+    this->sf::Transformable::move(sf::Vector2f(x, y));
 }
 
 
