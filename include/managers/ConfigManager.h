@@ -26,6 +26,7 @@ class ConfigManager: public Singleton<ConfigManager> {
 		LogLevel getDebugLogLevel();
 		const Language& getDefaultDisplayLanguage();
 		const std::string& getDatabaseConnectionString();
+		const bool getShowMousePtrCoords();
 
 		void setDefaultDisplayLanguage(const Language& defaultDisplayLanguage);
 		void setDebugLogLevel(LogLevel debugLogLevel);
@@ -45,6 +46,7 @@ class ConfigManager: public Singleton<ConfigManager> {
 		LogLevel debugLogLevel = LogLevel::INFO;
 		Language defaultDisplayLanguage = Language::en_US;
 		std::string databaseConnectionString = "noconnectionstring";
+		bool showMousePtrCoords = false;
 
 		ConfigManager(const ConfigManager&);
 		void operator=(const ConfigManager&);

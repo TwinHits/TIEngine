@@ -49,6 +49,12 @@ const std::string& ConfigManager::getDatabaseConnectionString() {
 	return this->databaseConnectionString;
 }
 
+
+const bool ConfigManager::getShowMousePtrCoords() {
+	return this->showMousePtrCoords;
+}
+
+
 void ConfigManager::setDefaultDisplayLanguage(const Language& defaultDisplayLanguage) {
 	this->defaultDisplayLanguage = defaultDisplayLanguage;
 }
@@ -96,6 +102,11 @@ void ConfigManager::parseConfig(std::ifstream& config) {
 			else if (key == "DefaultDisplayLanguage") { defaultDisplayLanguage = parseLanguageString(value); }
 			else if (key == "DatabaseDBName" || key == "DatabaseUser" || key == "DatabasePassword" || key == "DatabaseHostAddr" || key == "DatabasePort") {
 				databaseConfig.insert(std::pair<std::string, std::string>(key, value));
+			}
+			else if (key == "ShowMousePtrCoords") { 
+				if (value == "true") {
+					this->showMousePtrCoords = true; 
+				}
 			}
 		} 
 	}

@@ -7,6 +7,7 @@
 #include "managers/LogManager.h"
 #include "managers/ViewManager.h"
 #include "managers/WindowManager.h"
+#include "managers/ConfigManager.h"
 #include "managers/ConsoleManager.h"
 
 #include "objects/InputMap.h"
@@ -86,9 +87,14 @@ void InputManager::processInput() {
 				break;
 		}
 
+		sf::Vector2f position = window.mapPixelToCoords(sf::Mouse::getPosition(window)); 
+
+		if (ConfigManager::Instance()->getShowMousePtrCoords()) {
+						
+		}
+
 		//Do client side event processing if the console is not showing
 		if (!consoleManager->checkConsole()) {
-			sf::Vector2f position = window.mapPixelToCoords(sf::Mouse::getPosition(window)); 
 			//Client state processing
 			inputMap->processState(position);
 			//Client event processing
@@ -97,9 +103,8 @@ void InputManager::processInput() {
 
 	}
 
-	//Check for camera scrollin 
+	//Check for camera scrolling
 	this->scroll(window);
-
 }
 
 
@@ -130,6 +135,7 @@ void InputManager::scroll(sf::RenderWindow& window) {
 void InputManager::setInputMap(std::unique_ptr<InputMap> inputMap) {
 	this->inputMap = std::move(inputMap);
 }
+
 
 const InputMap& InputManager::getInputMap() {
 	return *inputMap;
