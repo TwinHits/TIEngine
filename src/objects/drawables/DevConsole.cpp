@@ -34,12 +34,12 @@ DevConsole::~DevConsole() {
 }	
 
 
-const std::vector<SceneText>& DevConsole::getCommandHistory() const {
+const std::vector<TIExt>& DevConsole::getCommandHistory() const {
 	return commandHistory;
 }
 
 
-const SceneText& DevConsole::getCurrentCommand() const {
+const TIExt& DevConsole::getCurrentCommand() const {
 	return currentCommand;
 }
 
@@ -71,7 +71,7 @@ void DevConsole::updateSelf(const float delta) {
 
 	std::queue<std::string>& queue = LogManager::Instance()->getQueueToDraw();
 
-	SceneText text;
+	TIExt text;
 	while (!queue.empty()) {
 		auto s = queue.front();
 
@@ -81,6 +81,8 @@ void DevConsole::updateSelf(const float delta) {
 		text.getText().setPosition(textWritePosition.x, textWritePosition.y);
 
 		textWritePosition.y += fontSize;
+
+		//These should be children
 		commandHistory.push_back(text);	
 
 		queue.pop();

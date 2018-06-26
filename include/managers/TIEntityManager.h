@@ -9,7 +9,6 @@
 #include "objects/GlobalId.h"
 #include "objects/SceneLayer.h"
 #include "objects/drawables/TIEntity.h"
-#include "objects/drawables/SceneText.h"
 
 namespace TIE {
 
@@ -20,12 +19,6 @@ class TIEntityManager : public Singleton<TIEntityManager> {
 		SceneLayer& getSceneGraphRoot();
 		SceneLayer& getEngineLayer();
 		SceneLayer& getClientLayer();
-
-		SceneText& addSceneText(std::unique_ptr<SceneText> st);
-		void removeSceneText(GlobalId id);
-	
-		SceneText& getSceneText(GlobalId id);
-		const std::map<GlobalId, std::unique_ptr<SceneText> >& getAllSceneTexts();
 
 		std::vector<GlobalId> getCollidingTIEntities(DetectionStrategy strategy, TIEntity& entity);
 
@@ -41,7 +34,6 @@ class TIEntityManager : public Singleton<TIEntityManager> {
 		std::unique_ptr<SceneLayer> sceneGraphRoot;
 		SceneLayer* engineLayer;
 		SceneLayer* clientLayer;
-		std::map<GlobalId, std::unique_ptr<SceneText> > sceneTexts;
 
 		//Strategy Pattern
 		void simple(std::vector<GlobalId>&, TIEntity& entity);

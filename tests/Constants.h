@@ -88,12 +88,12 @@ static TIE::GlobalId ENTITY_UNUSED_ID = 99868;
 static float DEFAULT_SPEED_FLOAT = 1;
 static float CUSTOM_SPEED_FLOAT = 0.5;
 
-//SceneText
-static TIE::GlobalId SCENETEXT_UNUSED_ID = 40003;
+//TIExt
+static TIE::GlobalId TIEXT_UNUSED_ID = 40003;
 
 //TIEntityManager
 static std::string DELETED_TIENTITY_INFO = "Deleted TIEntity '";
-static std::string DELETED_SCENETEXT_INFO = "Deleted SceneText '";
+static std::string DELETED_TIEXT_INFO = "Deleted TIExt '";
 
 //MissingSprite
 static std::string MISSING_SPRITE_TEXTURE = "missing_texture.png";

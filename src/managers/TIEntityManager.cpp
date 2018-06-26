@@ -46,23 +46,6 @@ SceneLayer& TIEntityManager::getClientLayer() {
 	return *this->clientLayer;
 }
 
-SceneText& TIEntityManager::addSceneText(std::unique_ptr<SceneText> st) {
-	GlobalId id = st->getId();
-	sceneTexts[id] = std::move(st);
-	LogManager::Instance()->logInfo("Added SceneText '" + std::to_string(id) + "'.");
-	return getSceneText(id);
-}
-
-
-SceneText& TIEntityManager::getSceneText(GlobalId id) {
-	if (sceneTexts.find(id) != sceneTexts.end()) {
-		return *sceneTexts[id];
-	} else {
-		//implement exception
-		return *sceneTexts[id];
-	}
-}
-
 
 void TIEntityManager::updateGameState() {
 	this->delta += this->clock.restart().asSeconds();
@@ -75,22 +58,6 @@ void TIEntityManager::updateGameState() {
 		WindowManager::Instance()->showFPS(std::to_string(fps));
 		this->delta = 0;
 	}
-}
-
-
-void TIEntityManager::removeSceneText(GlobalId id) {
-	auto text = sceneTexts.find(id);
-	if (text != sceneTexts.end()) {
-		sceneTexts.erase(text);
-		LogManager::Instance()->logInfo("Deleted SceneText '" + std::to_string(id) + "'.");
-	} else {
-		LogManager::Instance()->logError("SceneText '" + std::to_string(id) + "' does not exist, doing nothing.");	
-	}
-}
-
-
-const std::map<GlobalId, std::unique_ptr<SceneText> >& TIEntityManager::getAllSceneTexts() {
-	return sceneTexts;
 }
 
 

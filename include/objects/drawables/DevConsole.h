@@ -7,7 +7,8 @@
 #include <SFML/Graphics.hpp>
 
 #include "TIEntity.h"
-#include "SceneText.h"
+#include "TIExt.h"
+
 namespace TIE {
 
 class DevConsole : public TIEntity {
@@ -15,8 +16,8 @@ class DevConsole : public TIEntity {
 		DevConsole();
 		virtual ~DevConsole();
 
-		const std::vector<SceneText>& getCommandHistory() const;
-		const SceneText& getCurrentCommand() const;
+		const std::vector<TIExt>& getCommandHistory() const;
+		const TIExt& getCurrentCommand() const;
 
 		virtual int runClientCommand(const std::string& command);
 		void processCommand(const std::string& command);
@@ -28,8 +29,8 @@ class DevConsole : public TIEntity {
 		virtual void drawSelf(sf::RenderTarget&, sf::RenderStates) const;
 		void updateSelf(const float delta);
 	
-		std::vector<SceneText> commandHistory;
-		SceneText currentCommand;
+		std::vector<TIExt> commandHistory;
+		TIExt currentCommand;
 		const sf::Font& font;
 		int fontSize = 14;
 		sf::Vector2i textWritePosition;
