@@ -66,6 +66,22 @@ SceneNode& SceneNode::getParent() {
 }
 
 
+sf::Vector2f SceneNode::getWorldPosition() const {
+	return this->getWorldTransform() * sf::Vector2f();
+}
+
+
+float SceneNode::getWorldRotation() const {
+	float rotation = 0;
+
+	for (SceneNode* n = parent; n != nullptr; n = n->parent) {
+		rotation+=n->getRotation();
+	}
+
+	return rotation;
+}
+
+
 void SceneNode::draw(sf::RenderTarget& window, sf::RenderStates states) const {
 
 	states.transform *= this->getTransform();
@@ -110,6 +126,17 @@ std::unique_ptr<SceneNode> SceneNode::detachChild(const SceneNode& child){
 	}
 
 	return nullptr;
+}
+
+
+sf::Transform SceneNode::getWorldTransform() const {
+	sf::Transform transform = sf::Transform::Identity;
+
+	for (SceneNode* n = parent; n != nullptr; n = n->parent) {
+		transform = n->getTransform() * transform;
+	}
+
+	return transform;
 }
 
 

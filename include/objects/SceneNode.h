@@ -31,6 +31,9 @@ class SceneNode : public sf::Transformable, sf::Drawable {
 		void setCollidable(bool);
 		bool getCollidable() const;
 
+		sf::Vector2f getWorldPosition() const;
+		float getWorldRotation() const;
+
 		void draw(sf::RenderTarget&, sf::RenderStates) const;
 
 		void update(const float);
@@ -44,6 +47,7 @@ class SceneNode : public sf::Transformable, sf::Drawable {
 	private:
 		virtual void drawSelf(sf::RenderTarget&, sf::RenderStates) const = 0;
 		virtual void updateSelf(const float) = 0;
+		sf::Transform getWorldTransform() const;
 
 		GlobalId id;
 		std::string name = "undefined";
