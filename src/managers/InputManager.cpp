@@ -90,7 +90,7 @@ void InputManager::processInput() {
 		sf::Vector2f position = window.mapPixelToCoords(sf::Mouse::getPosition(window)); 
 
 		if (ConfigManager::Instance()->getShowMousePtrCoords()) {
-						
+									
 		}
 
 		//Do client side event processing if the console is not showing

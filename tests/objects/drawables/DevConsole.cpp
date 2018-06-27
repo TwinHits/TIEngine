@@ -40,17 +40,4 @@ TEST(DevConsole, Update) {
 	devConsole.update(1);
 
 	ASSERT_TRUE(queue.empty());
-
-	auto& commandHistory = devConsole.getCommandHistory();
-	auto actual = commandHistory.size();
-
-	ASSERT_EQ(expected, actual);
-
-	for (auto& c : commandHistory) {
-		std::string expected = queueCopy.front();
-		std::string actual = c.getText().getString();
-		ASSERT_EQ(expected,actual);
-		queueCopy.pop();
-	}
-
 }

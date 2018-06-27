@@ -1,5 +1,6 @@
 #include "managers/HashManager.h"
 #include "managers/LogManager.h"
+#include "managers/TIEntityManager.h"
 #include "managers/ViewManager.h"
 #include "managers/WindowManager.h"
 
@@ -94,7 +95,7 @@ float ViewManager::getScrollSpeed() {
 
 
 void ViewManager::scroll(Direction direction) {
-	sf::View& view = this->getActiveView();
+	sf::View& view = this->getView(TIEntityManager::Instance()->getClientLayer().getViewId());
 
 	if (direction == TOP)
 		view.move(0, -scrollSpeed);

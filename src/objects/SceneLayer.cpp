@@ -1,3 +1,5 @@
+#include "managers/ViewManager.h"
+
 #include "objects/SceneLayer.h"
 
 using namespace TIE;
@@ -22,8 +24,18 @@ void SceneLayer::setLayer(Layer layer) {
 }
 
 
-void SceneLayer::drawSelf(sf::RenderTarget&, sf::RenderStates) const {
+void SceneLayer::setViewId(GlobalId id) {
+	this->viewId = id;
+}
 
+
+GlobalId SceneLayer::getViewId() {
+	return this->viewId;
+}
+
+
+void SceneLayer::drawSelf(sf::RenderTarget&, sf::RenderStates) const {
+	ViewManager::Instance()->setActiveView(viewId);
 }
 
 

@@ -18,12 +18,16 @@ class SceneLayer : public SceneNode {
 
 		Layer getLayer();
 		void setLayer(Layer);
+
+		void setViewId(GlobalId);
+		GlobalId getViewId();
 		
 	private:
 		void drawSelf(sf::RenderTarget&, sf::RenderStates) const;
 		void updateSelf(const float);
 
 		Layer layer;
+		GlobalId viewId;
 };
 
 }

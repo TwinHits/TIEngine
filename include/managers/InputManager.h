@@ -17,6 +17,7 @@ class InputManager : public Singleton<InputManager> {
 		const InputMap& getInputMap();
 
 		const std::string getTextEntered();
+		const sf::Vector2f getMouseWorldPosition();
 
 		InputManager();
 		~InputManager();

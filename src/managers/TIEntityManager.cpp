@@ -1,6 +1,7 @@
 #include "managers/TimeManager.h"
 #include "managers/LogManager.h" 
 #include "managers/TIEntityManager.h"
+#include "managers/ViewManager.h"
 #include "managers/WindowManager.h"
 
 #include "objects/SceneLayer.h"
@@ -10,19 +11,25 @@
 using namespace TIE;
 
 TIEntityManager::TIEntityManager() : clock(TimeManager::Instance()->addClock()) {
+	GlobalId engineViewId = ViewManager::Instance()->addView();
+	GlobalId clientViewId = ViewManager::Instance()->addView();
+
 	this->sceneGraphRoot = make_unique<SceneLayer>();
 	this->sceneGraphRoot->setLayer(SceneLayer::Layer::ROOT);
 	this->sceneGraphRoot->setName("ROOT");
 	this->sceneGraphRoot->setPosition(0,0);
+	this->sceneGraphRoot->setViewId(engineViewId);
 
 	std::unique_ptr<SceneLayer> clientLayerPtr = make_unique<SceneLayer>();
 	clientLayerPtr->setLayer(SceneLayer::Layer::CLIENT);
 	clientLayerPtr->setName("client layer");
+	clientLayerPtr->setViewId(clientViewId);
 	this->clientLayer = &dynamic_cast<SceneLayer&>(this->sceneGraphRoot->attachChild(std::move(clientLayerPtr)));
 
 	std::unique_ptr<SceneLayer> engineLayerPtr = make_unique<SceneLayer>();
 	engineLayerPtr->setLayer(SceneLayer::Layer::ENGINE);
 	engineLayerPtr->setName("engine layer");
+	engineLayerPtr->setViewId(engineViewId);
 	this->engineLayer = &dynamic_cast<SceneLayer&>(this->sceneGraphRoot->attachChild(std::move(engineLayerPtr)));
 }
 

@@ -14,8 +14,6 @@ class SceneManager : public Singleton<SceneManager> {
 		~SceneManager();
 		SceneManager();
 	private:
-		GlobalId sceneViewId;
-
 		SceneManager(const SceneManager&);
 		void operator=(const SceneManager&);
 };

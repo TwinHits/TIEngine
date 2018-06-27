@@ -28,7 +28,6 @@ class ConsoleManager : public Singleton<ConsoleManager> {
 
 	private:
 		DevConsole* devConsole;
-		GlobalId devConsoleViewId;
 
 		void operator=(const ConsoleManager&);
 		ConsoleManager(const ConsoleManager&);

@@ -1,5 +1,4 @@
 #include "managers/HashManager.h"
-#include "managers/LogManager.h"
 #include "objects/SceneNode.h"
 
 using namespace TIE;
@@ -108,7 +107,6 @@ void SceneNode::update(const float delta) {
 
 
 SceneNode& SceneNode::attachChild(std::unique_ptr<SceneNode> child){
-	LogManager::Instance()->logInfo("Attaching node with name " + child->getName() +  ".");
 	child->setParent(this);
 	children.push_back(std::move(child));
 	return *children.back();

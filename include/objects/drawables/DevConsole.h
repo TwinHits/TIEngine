@@ -29,9 +29,8 @@ class DevConsole : public TIEntity {
 		virtual void drawSelf(sf::RenderTarget&, sf::RenderStates) const;
 		void updateSelf(const float delta);
 	
-		std::vector<TIExt> commandHistory;
-		TIExt currentCommand;
 		const sf::Font& font;
+		TIExt& currentCommand;
 		int fontSize = 14;
 		sf::Vector2i textWritePosition;
 

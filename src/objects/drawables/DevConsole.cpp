@@ -8,16 +8,27 @@
 
 #include "objects/drawables/DevConsole.h" 
 
+#include "templates/MakeUnique.h"
+
 using namespace TIE;
 
-DevConsole::DevConsole() : font(AssetsManager::Instance()->getFont("DevConsole.ttf")) {
+DevConsole::DevConsole() : font(AssetsManager::Instance()->getFont("DevConsole.ttf")),
+	currentCommand(dynamic_cast<TIExt&>(this->attachChild(make_unique<TIExt>()))) {
 	sf::Vector2i windowSize = TIE::WindowManager::Instance()->getWindowSize();
 
 	textWritePosition.x = -windowSize.x/2;	
 	textWritePosition.y = -windowSize.y/2;
+	
+	sf::Texture& texture = AssetsManager::Instance()->getTexture("dev_console.png");
+	sf::Vector2u size = texture.getSize();
 
-	this->sprite.setPosition(sf::Vector2f(-(windowSize.x/2), -(windowSize.y/2)));
-	this->sprite.setTexture(AssetsManager::Instance()->getTexture("missing_texture.png"));
+	this->sprite.setTexture(texture);
+	this->sprite.setTextureRect(sf::Rect<int>(0, 0, size.x, size.y));
+	this->sprite.setOrigin(size.x/2, size.y/2);
+
+	this->setPosition(sf::Vector2f(0,0));
+	this->setRotation(0);
+	this->setScale(1,1);
 	this->setDrawn(false);
 	this->setCollidable(false);
 	
@@ -25,18 +36,14 @@ DevConsole::DevConsole() : font(AssetsManager::Instance()->getFont("DevConsole.t
 	this->currentCommand.getText().setFont(font);
 	this->currentCommand.getText().setCharacterSize(fontSize);
 
-	this->currentCommand.getText().setPosition(-(windowSize.x/2), windowSize.y/2 - fontSize);
+	//this->currentCommand.getText().setPosition(-(windowSize.x/2), windowSize.y/2 - fontSize);
+	this->currentCommand.getText().setPosition(0,0);
 }
 
 
 DevConsole::~DevConsole() {
 
 }	
-
-
-const std::vector<TIExt>& DevConsole::getCommandHistory() const {
-	return commandHistory;
-}
 
 
 const TIExt& DevConsole::getCurrentCommand() const {
@@ -71,19 +78,19 @@ void DevConsole::updateSelf(const float delta) {
 
 	std::queue<std::string>& queue = LogManager::Instance()->getQueueToDraw();
 
-	TIExt text;
 	while (!queue.empty()) {
 		auto s = queue.front();
 
-		text.getText().setString(s);
-		text.getText().setFont(font);
-		text.getText().setCharacterSize(fontSize);
-		text.getText().setPosition(textWritePosition.x, textWritePosition.y);
+		std::unique_ptr<TIExt> tiext = make_unique<TIExt>();
+		tiext->getText().setString(s);
+		tiext->getText().setFont(font);
+		tiext->getText().setCharacterSize(fontSize);
+		tiext->getText().setPosition(textWritePosition.x, textWritePosition.y);
+		tiext->setDrawn(true);
 
 		textWritePosition.y += fontSize;
 
-		//These should be children
-		commandHistory.push_back(text);	
+		this->attachChild(std::move(tiext));
 
 		queue.pop();
 	}
@@ -97,12 +104,5 @@ const sf::Vector2i& DevConsole::getWritePosition() {
 
 
 void DevConsole::drawSelf(sf::RenderTarget& window, sf::RenderStates states) const {
-
-	//ViewManager::Instance()->setActiveView(devConsoleViewId);
-	
-	window.draw(this->getSprite());
-	for (auto& st : this->getCommandHistory())
-		window.draw(st.getText());
-	
-	window.draw(this->getCurrentCommand().getText());
+	window.draw(this->getSprite(), states);
 }

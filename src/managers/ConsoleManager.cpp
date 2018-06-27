@@ -10,8 +10,6 @@
 using namespace TIE;
 
 ConsoleManager::ConsoleManager() {
-	sf::Vector2i size = WindowManager::Instance()->getWindowSize();
-	this->devConsoleViewId = ViewManager::Instance()->addView(sf::FloatRect(0, 0, size.x, size.y));
 	std::unique_ptr<DevConsole> defaultDevConsole = make_unique<DevConsole>();
 	defaultDevConsole->setName("default dev console.");
 	this->devConsole = &dynamic_cast<DevConsole&>(TIEntityManager::Instance()->getEngineLayer().attachChild(std::move(defaultDevConsole)));
@@ -51,7 +49,7 @@ void ConsoleManager::setDevConsole(std::unique_ptr<DevConsole> devConsole) {
 
 
 void ConsoleManager::scroll(Direction direction) {
-	sf::View view = ViewManager::Instance()->getView(this->devConsoleViewId);		
+	sf::View view = ViewManager::Instance()->getView(TIEntityManager::Instance()->getEngineLayer().getViewId());
 	if (direction == Direction::TOP) {
 		sf::Vector2f center = view.getCenter();
 		if (center.y == 0) {
