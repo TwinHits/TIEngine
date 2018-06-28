@@ -17,6 +17,7 @@ class InputManager : public Singleton<InputManager> {
 		const InputMap& getInputMap();
 
 		const std::string getTextEntered();
+		const sf::Vector2f getMouseWindowPosition();
 		const sf::Vector2f getMouseWorldPosition();
 
 		InputManager();
@@ -24,10 +25,12 @@ class InputManager : public Singleton<InputManager> {
 
 	private:
 		sf::String textEntered;
+		sf::Vector2f mouseWindowPosition;
+		sf::Vector2f mouseWorldPosition;
 		int scrollZone = 5;
 		std::unique_ptr<InputMap> inputMap;	
 
-		void scroll(sf::RenderWindow& window);
+		void scroll(sf::RenderWindow&);
 
 		InputManager(const InputManager&);
 		void operator=(const InputManager&);

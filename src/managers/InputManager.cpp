@@ -3,17 +3,17 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "managers/InputManager.h" 
-#include "managers/LogManager.h"
-#include "managers/ViewManager.h"
-#include "managers/WindowManager.h"
 #include "managers/ConfigManager.h"
 #include "managers/ConsoleManager.h"
+#include "managers/InputManager.h" 
+#include "managers/LogManager.h"
+#include "managers/TIEntityManager.h"
+#include "managers/ViewManager.h"
+#include "managers/WindowManager.h"
 
 #include "objects/InputMap.h"
 
 #include "templates/MakeUnique.h"
-
 
 using namespace TIE;
 
@@ -28,7 +28,17 @@ InputManager::~InputManager() {
 
 
 const std::string InputManager::getTextEntered() {
-	return textEntered;
+	return this->textEntered;
+}
+
+
+const sf::Vector2f InputManager::getMouseWindowPosition() {
+	return this->mouseWindowPosition;
+}
+
+
+const sf::Vector2f InputManager::getMouseWorldPosition() {
+	return this->mouseWorldPosition;
 }
 
 
@@ -87,18 +97,17 @@ void InputManager::processInput() {
 				break;
 		}
 
-		sf::Vector2f position = window.mapPixelToCoords(sf::Mouse::getPosition(window)); 
-
-		if (ConfigManager::Instance()->getShowMousePtrCoords()) {
-									
-		}
+		sf::View& view = ViewManager::Instance()->getView(TIEntityManager::Instance()->getClientLayer().getViewId());
+		sf::Vector2i position = sf::Mouse::getPosition(window);
+		this->mouseWindowPosition = window.mapPixelToCoords(position);
+		this->mouseWorldPosition = window.mapPixelToCoords(position, view); 
 
 		//Do client side event processing if the console is not showing
 		if (!consoleManager->checkConsole()) {
 			//Client state processing
-			inputMap->processState(position);
+			inputMap->processState(mouseWorldPosition);
 			//Client event processing
-			inputMap->processEvent(event, position);
+			inputMap->processEvent(event, mouseWorldPosition);
 		}
 
 	}
@@ -111,7 +120,7 @@ void InputManager::processInput() {
 void InputManager::scroll(sf::RenderWindow& window) {
 
 	auto consoleManager = ConsoleManager::Instance();
-	auto mousePosition = sf::Mouse::getPosition(window);	
+	auto mousePosition = sf::Mouse::getPosition(window);
 	Direction direction;
 	
 	if (!consoleManager->checkConsole()) {

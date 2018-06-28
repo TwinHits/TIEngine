@@ -5,6 +5,7 @@
 #include "managers/WindowManager.h"
 
 #include "objects/SceneLayer.h"
+#include "objects/drawables/MousePtrCoords.h"
 
 #include "templates/MakeUnique.h"
 
@@ -31,6 +32,10 @@ TIEntityManager::TIEntityManager() : clock(TimeManager::Instance()->addClock()) 
 	engineLayerPtr->setName("engine layer");
 	engineLayerPtr->setViewId(engineViewId);
 	this->engineLayer = &dynamic_cast<SceneLayer&>(this->sceneGraphRoot->attachChild(std::move(engineLayerPtr)));
+
+	std::unique_ptr<MousePtrCoords> mousePtrCoords = make_unique<MousePtrCoords>();
+	mousePtrCoords->setName("mouse coords ptr");
+	this->engineLayer->attachChild(std::move(mousePtrCoords));
 }
 
 
