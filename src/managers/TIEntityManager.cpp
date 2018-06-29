@@ -19,24 +19,23 @@ TIEntityManager::TIEntityManager() : clock(TimeManager::Instance()->addClock()) 
 
 	this->sceneGraphRoot = make_unique<SceneLayer>();
 	this->sceneGraphRoot->setLayer(SceneLayer::Layer::ROOT);
-	this->sceneGraphRoot->setName("ROOT");
+	this->sceneGraphRoot->setType("ROOT");
 	this->sceneGraphRoot->setPosition(0,0);
 	this->sceneGraphRoot->setViewId(engineViewId);
 
 	std::unique_ptr<SceneLayer> clientLayerPtr = make_unique<SceneLayer>();
 	clientLayerPtr->setLayer(SceneLayer::Layer::CLIENT);
-	clientLayerPtr->setName("client layer");
+	clientLayerPtr->setType("Client Layer");
 	clientLayerPtr->setViewId(clientViewId);
 	this->clientLayer = &dynamic_cast<SceneLayer&>(this->sceneGraphRoot->attachChild(std::move(clientLayerPtr)));
 
 	std::unique_ptr<SceneLayer> engineLayerPtr = make_unique<SceneLayer>();
 	engineLayerPtr->setLayer(SceneLayer::Layer::ENGINE);
-	engineLayerPtr->setName("engine layer");
+	engineLayerPtr->setType("Engine Layer");
 	engineLayerPtr->setViewId(engineViewId);
 	this->engineLayer = &dynamic_cast<SceneLayer&>(this->sceneGraphRoot->attachChild(std::move(engineLayerPtr)));
 
 	std::unique_ptr<MousePtrCoords> mousePtrCoords = make_unique<MousePtrCoords>();
-	mousePtrCoords->setName("mouse coords ptr");
 	this->engineLayer->attachChild(std::move(mousePtrCoords));
 }
 
@@ -75,7 +74,7 @@ void TIEntityManager::updateGameState() {
 	this->checkForCollisions();
 
 	for (auto& pair : collisions) {
-		std::cout << pair.first->getName() << " " << pair.second->getName() << std::endl;
+		std::cout << collisions.size() << " " << pair.first->getType() << " " << pair.second->getType() << std::endl;
 	}
 
 	while (this->delta > this->TimePerFrame) {

@@ -11,7 +11,6 @@ using namespace TIE;
 
 ConsoleManager::ConsoleManager() {
 	std::unique_ptr<DevConsole> defaultDevConsole = make_unique<DevConsole>();
-	defaultDevConsole->setName("default dev console.");
 	this->devConsole = &dynamic_cast<DevConsole&>(TIEntityManager::Instance()->getEngineLayer().attachChild(std::move(defaultDevConsole)));
 }
 
@@ -43,7 +42,7 @@ void ConsoleManager::runCommand(const std::string& command) {
 void ConsoleManager::setDevConsole(std::unique_ptr<DevConsole> devConsole) {
 	SceneLayer& engineLayer = TIEntityManager::Instance()->getEngineLayer();
 	engineLayer.detachChild(*this->devConsole);
-	devConsole->setName("client defined dev console.");
+	devConsole->setType("Client Defined Dev Console.");
 	this->devConsole = &dynamic_cast<DevConsole&>(engineLayer.attachChild(std::move(devConsole)));
 }
 

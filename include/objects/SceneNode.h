@@ -20,8 +20,8 @@ class SceneNode : public sf::Transformable, sf::Drawable {
 
 		GlobalId getId() const;
 
-		void setName(const std::string&);
-		std::string getName() const;
+		void setType(const std::string&);
+		std::string getType() const;
 
 		void setDrawn(bool);
 		bool getDrawn() const;
@@ -32,7 +32,7 @@ class SceneNode : public sf::Transformable, sf::Drawable {
 		void setCollidable(bool);
 		bool getCollidable() const;
 
-		virtual sf::FloatRect getBoundingRect() const;
+		virtual sf::FloatRect getHitBox() const;
 
 		sf::Transform getWorldTransform() const;
 		sf::Vector2f getWorldPosition() const;
@@ -57,7 +57,7 @@ class SceneNode : public sf::Transformable, sf::Drawable {
 		virtual void drawSelf(sf::RenderTarget&, sf::RenderStates) const = 0;
 
 		GlobalId id;
-		std::string name = "undefined";
+		std::string type = "Undefined";
 		bool drawn = false;
 		SceneNode* parent = nullptr;
 		bool collidable = false;

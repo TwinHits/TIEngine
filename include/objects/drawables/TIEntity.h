@@ -17,7 +17,7 @@ class TIEntity : public SceneNode {
 		void setVelocity(sf::Vector2f); //x = speed, y = direction
 		const sf::Vector2f getVelocity();
 
-		virtual sf::FloatRect getBoundingRect() const;
+		virtual sf::FloatRect getHitBox() const;
 
 		virtual void move(const float delta);
 

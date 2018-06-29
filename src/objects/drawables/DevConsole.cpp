@@ -38,6 +38,8 @@ DevConsole::DevConsole() : font(AssetsManager::Instance()->getFont("DevConsole.t
 
 	//this->currentCommand.getText().setPosition(-(windowSize.x/2), windowSize.y/2 - fontSize);
 	this->currentCommand.getText().setPosition(0,0);
+
+	this->setType("Default Dev Console.");
 }
 
 

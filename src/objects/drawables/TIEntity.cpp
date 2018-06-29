@@ -11,6 +11,7 @@ using namespace TIE;
 
 TIEntity::TIEntity() {
 	this->sprite = TIE::getMissingSprite();
+	this->setType("TIEntity.");
 }
 
 
@@ -45,7 +46,7 @@ const sf::Vector2f TIEntity::getVelocity() {
 }
 
 
-sf::FloatRect TIEntity::getBoundingRect() const {
+sf::FloatRect TIEntity::getHitBox() const {
 	return this->getWorldTransform().transformRect(this->sprite.getGlobalBounds());
 }
 

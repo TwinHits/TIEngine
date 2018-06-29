@@ -15,6 +15,7 @@ MousePtrCoords::MousePtrCoords() :
 
 	this->setPosition(0,0);
 	this->setDrawn(ConfigManager::Instance()->getShowMousePtrCoords());
+	this->setType("Mouse Coords");
 }
 
 

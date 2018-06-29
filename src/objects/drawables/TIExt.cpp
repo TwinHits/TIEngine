@@ -11,6 +11,7 @@ using namespace TIE;
 
 TIExt::TIExt() {
 	this->text = getMissingText();
+	this->setType("TIExt");
 }
 
 

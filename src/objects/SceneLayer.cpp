@@ -6,6 +6,7 @@ using namespace TIE;
 
 SceneLayer::SceneLayer() {
 	this->setDrawn(true);
+	this->setType("Layer");
 }
 
 

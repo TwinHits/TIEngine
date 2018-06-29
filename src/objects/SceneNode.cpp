@@ -21,13 +21,13 @@ GlobalId SceneNode::getId() const {
 }
 
 
-void SceneNode::setName(const std::string& name) {
-	this->name = name;
+void SceneNode::setType(const std::string& type) {
+	this->type = type;
 }
 
 
-std::string SceneNode::getName() const {
-	return this->name;
+std::string SceneNode::getType() const {
+	return this->type;
 }
 
 
@@ -157,12 +157,12 @@ bool SceneNode::collision(SceneNode& lhs, SceneNode& rhs) const {
 	if (!lhs.getCollidable() || !rhs.getCollidable()) {
 		return false;
 	}
-	return lhs.getBoundingRect().intersects(rhs.getBoundingRect());
+	return lhs.getHitBox().intersects(rhs.getHitBox());
 }
 
 
-sf::FloatRect SceneNode::getBoundingRect() const {
-	return sf::FloatRect(0, 0, 0, 0);
+sf::FloatRect SceneNode::getHitBox() const {
+	return sf::FloatRect(0, 0, 0, 0); //Test this
 }
 
 
