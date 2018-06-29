@@ -1,15 +1,12 @@
 #include "managers/HashManager.h"
-#include "objects/SceneNode.h"
-
+#include "objects/SceneNode.h" 
 using namespace TIE;
 
 SceneNode::SceneNode() {
 	this->id = HashManager::Instance()->getNewGlobalId();
 }
 
-
-SceneNode::~SceneNode() {
-
+SceneNode::~SceneNode() { 
 } 
 
 
@@ -32,7 +29,6 @@ void SceneNode::setName(const std::string& name) {
 std::string SceneNode::getName() const {
 	return this->name;
 }
-
 
 
 void SceneNode::setDrawn(bool drawn) {
@@ -81,6 +77,36 @@ float SceneNode::getWorldRotation() const {
 }
 
 
+void SceneNode::checkSceneCollisions(SceneNode& sceneGraphRoot, std::set<std::pair<SceneNode*, SceneNode*> >& collisions) {
+	this->checkNodeCollisions(sceneGraphRoot, collisions);
+	for (auto& child : sceneGraphRoot.children) {
+		this->checkSceneCollisions(*child, collisions);
+	}	
+}
+
+
+void SceneNode::checkNodeCollisions(SceneNode& sceneNode, std::set<std::pair<SceneNode*, SceneNode*> >& collisions) {
+	if (*this != sceneNode && collision(*this, sceneNode)) {
+		collisions.insert(std::minmax(this, &sceneNode));
+	}
+	for (auto& child : this->children) {
+		child->checkNodeCollisions(sceneNode, collisions);
+	}	
+}
+
+
+void SceneNode::update(const float delta) {
+
+	this->updateSelf(delta);
+
+	for (auto& child : this->children) {
+		if (child != nullptr) {
+			child->update(delta);
+		}
+	}
+}
+
+
 void SceneNode::draw(sf::RenderTarget& window, sf::RenderStates states) const {
 
 	states.transform *= this->getTransform();
@@ -90,17 +116,6 @@ void SceneNode::draw(sf::RenderTarget& window, sf::RenderStates states) const {
 
 		for (auto& child : children) {
 			child->draw(window, states);	
-		}
-	}
-}
-
-void SceneNode::update(const float delta) {
-
-	this->updateSelf(delta);
-
-	for (auto& child : this->children) {
-		if (child != nullptr) {
-			child->update(delta);
 		}
 	}
 }
@@ -138,13 +153,30 @@ sf::Transform SceneNode::getWorldTransform() const {
 }
 
 
+bool SceneNode::collision(SceneNode& lhs, SceneNode& rhs) const {
+	if (!lhs.getCollidable() || !rhs.getCollidable()) {
+		return false;
+	}
+	return lhs.getBoundingRect().intersects(rhs.getBoundingRect());
+}
+
+
+sf::FloatRect SceneNode::getBoundingRect() const {
+	return sf::FloatRect(0, 0, 0, 0);
+}
+
+
 bool SceneNode::operator==(const SceneNode& rhs) const {
-	const SceneNode* ptr = &rhs;
-	return this == ptr;
+	if (this->getId() == rhs.getId()) {
+		return true;
+	}
+	return false;
 }
 
 
 bool SceneNode::operator!=(const SceneNode& rhs) const {
-	const SceneNode* ptr = &rhs;
-	return this != ptr;
+	if (*this == rhs) {
+		return false;
+	}
+	return true;
 }

@@ -2,6 +2,7 @@
 #define SCENENODE_H
 
 #include <memory>
+#include <set>
 #include <string>
 #include <vector>
 
@@ -31,23 +32,29 @@ class SceneNode : public sf::Transformable, sf::Drawable {
 		void setCollidable(bool);
 		bool getCollidable() const;
 
+		virtual sf::FloatRect getBoundingRect() const;
+
+		sf::Transform getWorldTransform() const;
 		sf::Vector2f getWorldPosition() const;
 		float getWorldRotation() const;
-
-		void draw(sf::RenderTarget&, sf::RenderStates) const;
+		
+		void checkSceneCollisions(SceneNode&, std::set<std::pair<SceneNode*, SceneNode*> >&);
+		void checkNodeCollisions(SceneNode&, std::set<std::pair<SceneNode*, SceneNode*> >&);
 
 		void update(const float);
+		void draw(sf::RenderTarget&, sf::RenderStates) const;
 
 		SceneNode& attachChild(std::unique_ptr<SceneNode>);
 		std::unique_ptr<SceneNode> detachChild(const SceneNode&);
+
+		bool collision(SceneNode&, SceneNode&) const;
 
 		bool operator==(const SceneNode&) const;
 		bool operator!=(const SceneNode&) const;
 
 	private:
-		virtual void drawSelf(sf::RenderTarget&, sf::RenderStates) const = 0;
 		virtual void updateSelf(const float) = 0;
-		sf::Transform getWorldTransform() const;
+		virtual void drawSelf(sf::RenderTarget&, sf::RenderStates) const = 0;
 
 		GlobalId id;
 		std::string name = "undefined";
@@ -55,7 +62,6 @@ class SceneNode : public sf::Transformable, sf::Drawable {
 		SceneNode* parent = nullptr;
 		bool collidable = false;
 		std::vector<std::unique_ptr<SceneNode> > children;
-
 };
 
 }

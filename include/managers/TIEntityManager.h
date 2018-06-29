@@ -1,8 +1,8 @@
 #ifndef SCENEOBJECTMANAGER_H 
 #define SCENEOBJECTMANAGER_H
 
-#include <map>
 #include <memory>
+#include <set>
 
 #include "templates/Singleton.h"
 
@@ -12,16 +12,13 @@
 
 namespace TIE {
 
-enum DetectionStrategy { SIMPLE };
-
 class TIEntityManager : public Singleton<TIEntityManager> {
 	public:
 		SceneLayer& getSceneGraphRoot();
 		SceneLayer& getEngineLayer();
 		SceneLayer& getClientLayer();
 
-		std::vector<GlobalId> getCollidingTIEntities(DetectionStrategy strategy, TIEntity& entity);
-
+		void checkForCollisions();
 		void updateGameState();
 	
 		TIEntityManager();
@@ -35,9 +32,8 @@ class TIEntityManager : public Singleton<TIEntityManager> {
 		SceneLayer* engineLayer;
 		SceneLayer* clientLayer;
 
-		//Strategy Pattern
-		void simple(std::vector<GlobalId>&, TIEntity& entity);
-		
+		std::set<std::pair<SceneNode*, SceneNode*> > collisions;
+
 		TIEntityManager(const TIEntityManager&);
 		void operator=(const TIEntityManager&);
 };

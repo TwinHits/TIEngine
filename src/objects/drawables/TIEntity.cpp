@@ -44,6 +44,12 @@ const sf::Vector2f TIEntity::getVelocity() {
 	return this->velocity;
 }
 
+
+sf::FloatRect TIEntity::getBoundingRect() const {
+	return this->getWorldTransform().transformRect(this->sprite.getGlobalBounds());
+}
+
+
 void TIEntity::move(const float delta) {
 	float degrees = this->getRotation();
 	float x = 0;
@@ -65,6 +71,7 @@ void TIEntity::move(const float delta) {
 
     this->sf::Transformable::move(sf::Vector2f(x, y));
 }
+
 
 
 void TIEntity::drawSelf(sf::RenderTarget& window, sf::RenderStates states) const {

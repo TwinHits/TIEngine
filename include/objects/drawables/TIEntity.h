@@ -17,6 +17,8 @@ class TIEntity : public SceneNode {
 		void setVelocity(sf::Vector2f); //x = speed, y = direction
 		const sf::Vector2f getVelocity();
 
+		virtual sf::FloatRect getBoundingRect() const;
+
 		virtual void move(const float delta);
 
 		virtual void drawSelf(sf::RenderTarget&, sf::RenderStates) const;
@@ -29,8 +31,6 @@ class TIEntity : public SceneNode {
 	protected:
 		sf::Sprite sprite;
 		sf::Vector2f velocity = sf::Vector2f(0,0);
-
-	private:
 };
 
 }

@@ -9,6 +9,8 @@
 
 #include "templates/MakeUnique.h"
 
+#include <iostream>
+
 using namespace TIE;
 
 TIEntityManager::TIEntityManager() : clock(TimeManager::Instance()->addClock()) {
@@ -59,10 +61,26 @@ SceneLayer& TIEntityManager::getClientLayer() {
 }
 
 
+void TIEntityManager::checkForCollisions() {
+	this->collisions.clear();
+	
+	SceneLayer& sceneGraphRoot = this->getSceneGraphRoot();
+	sceneGraphRoot.checkSceneCollisions(sceneGraphRoot, this->collisions);
+}
+
+
 void TIEntityManager::updateGameState() {
 	this->delta += this->clock.restart().asSeconds();
 
+	this->checkForCollisions();
+
+	for (auto& pair : collisions) {
+		std::cout << pair.first->getName() << " " << pair.second->getName() << std::endl;
+	}
+
 	while (this->delta > this->TimePerFrame) {
+
+		this->checkForCollisions();
 
 		sceneGraphRoot->update(delta);
 
@@ -70,37 +88,4 @@ void TIEntityManager::updateGameState() {
 		WindowManager::Instance()->showFPS(std::to_string(fps));
 		this->delta = 0;
 	}
-}
-
-
-std::vector<GlobalId> TIEntityManager::getCollidingTIEntities(DetectionStrategy strategy, TIEntity& entity) {
-	std::vector<GlobalId> ids;
-
-	if (!entity.getCollidable()) {
-		return ids;
-	}
-
-	if (strategy == DetectionStrategy::SIMPLE) {
-		simple(ids, entity);
-	}
-
-	return ids;
-}
-
-
-void TIEntityManager::simple(std::vector<GlobalId>& ids, TIEntity& entity) {
-	//Requires a significant refactoring to go before this can be reimplemented.
-	/**
-	const std::map<GlobalId, std::unique_ptr<TIEntity> >&  entities = this->getAllTIEntitys();
-	sf::FloatRect hitbox = entity.getSprite().getGlobalBounds();
-	for (auto& e : entities) {
-		if (e.second->getCollidable() && entity.getId() != e.second->getId()) {
-			sf::FloatRect rect = e.second->getSprite().getGlobalBounds();
-			if (hitbox.intersects(rect)) {
-				ids.push_back(e.second->getId());	
-			}
-		}
-	}
-	**/
-	return;	
 }
