@@ -9,8 +9,6 @@
 
 #include "templates/MakeUnique.h"
 
-#include <iostream>
-
 using namespace TIE;
 
 TIEntityManager::TIEntityManager() : clock(TimeManager::Instance()->addClock()) {
@@ -72,10 +70,6 @@ void TIEntityManager::updateGameState() {
 	this->delta += this->clock.restart().asSeconds();
 
 	this->checkForCollisions();
-
-	for (auto& pair : collisions) {
-		std::cout << collisions.size() << " " << pair.first->getType() << " " << pair.second->getType() << std::endl;
-	}
 
 	while (this->delta > this->TimePerFrame) {
 

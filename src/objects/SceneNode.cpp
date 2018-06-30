@@ -145,7 +145,7 @@ std::unique_ptr<SceneNode> SceneNode::detachChild(const SceneNode& child){
 sf::Transform SceneNode::getWorldTransform() const {
 	sf::Transform transform = sf::Transform::Identity;
 
-	for (SceneNode* n = parent; n != nullptr; n = n->parent) {
+	for (const SceneNode* n = this; n != nullptr; n = n->parent) {
 		transform = n->getTransform() * transform;
 	}
 

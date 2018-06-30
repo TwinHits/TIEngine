@@ -20,8 +20,6 @@ TIEntity::~TIEntity() {
 }
 
 
-
-
 void TIEntity::setSprite(const sf::Sprite& sprite) {
 	this->sprite.setTexture(*sprite.getTexture());
 	this->sprite.setTextureRect(sprite.getTextureRect());
