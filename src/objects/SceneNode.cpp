@@ -1,10 +1,12 @@
 #include "managers/HashManager.h"
 #include "objects/SceneNode.h" 
+
 using namespace TIE;
 
 SceneNode::SceneNode() {
 	this->id = HashManager::Instance()->getNewGlobalId();
 }
+
 
 SceneNode::~SceneNode() { 
 } 
@@ -163,6 +165,11 @@ bool SceneNode::collision(SceneNode& lhs, SceneNode& rhs) const {
 
 sf::FloatRect SceneNode::getHitBox() const {
 	return sf::FloatRect(0, 0, 0, 0); //Test this
+}
+
+
+void SceneNode::collide(SceneNode*) {
+
 }
 
 

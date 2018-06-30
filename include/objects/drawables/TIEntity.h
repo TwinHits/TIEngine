@@ -19,6 +19,7 @@ class TIEntity : public SceneNode {
 
 		virtual sf::FloatRect getHitBox() const;
 
+
 		virtual void move(const float delta);
 
 		virtual void drawSelf(sf::RenderTarget&, sf::RenderStates) const;

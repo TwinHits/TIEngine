@@ -72,7 +72,6 @@ void TIEntity::move(const float delta) {
 }
 
 
-
 void TIEntity::drawSelf(sf::RenderTarget& window, sf::RenderStates states) const {
 	window.draw(sprite, states);	
 }

@@ -34,6 +34,8 @@ class SceneNode : public sf::Transformable, sf::Drawable {
 
 		virtual sf::FloatRect getHitBox() const;
 
+		virtual void collide(SceneNode*);
+
 		sf::Transform getWorldTransform() const;
 		sf::Vector2f getWorldPosition() const;
 		float getWorldRotation() const;

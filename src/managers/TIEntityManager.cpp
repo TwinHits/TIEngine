@@ -63,13 +63,18 @@ void TIEntityManager::checkForCollisions() {
 	
 	SceneLayer& sceneGraphRoot = this->getSceneGraphRoot();
 	sceneGraphRoot.checkSceneCollisions(sceneGraphRoot, this->collisions);
+
+	if (!collisions.empty()) {
+		for (auto& pair : collisions) {
+			pair.first->collide(pair.second);
+			pair.second->collide(pair.first);
+		}
+	}
 }
 
 
 void TIEntityManager::updateGameState() {
 	this->delta += this->clock.restart().asSeconds();
-
-	this->checkForCollisions();
 
 	while (this->delta > this->TimePerFrame) {
 
