@@ -91,7 +91,7 @@ static float CUSTOM_SPEED_FLOAT = 0.5;
 //TIExt
 static TIE::GlobalId TIEXT_UNUSED_ID = 40003;
 
-//TIEntityManager
+//SceneManager
 static std::string DELETED_TIENTITY_INFO = "Deleted TIEntity '";
 static std::string DELETED_TIEXT_INFO = "Deleted TIExt '";
 

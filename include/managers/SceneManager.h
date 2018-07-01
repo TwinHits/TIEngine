@@ -1,19 +1,39 @@
 #ifndef SCENEMANAGER_H
-#define SCENEMANGER_H
+#define SCENEMANAGER_H
 
-#include "TimeManager.h"
+#include <memory>
+#include <set>
 
 #include "templates/Singleton.h"
+
+#include "objects/SceneLayer.h"
 
 namespace TIE {
 
 class SceneManager : public Singleton<SceneManager> {
 	public:
-		void render();
+		SceneLayer& getSceneGraphRoot();
+		SceneLayer& getEngineLayer();
+		SceneLayer& getClientLayer();
 
-		~SceneManager();
+		void removeNodes();
+		void checkForCollisions();
+		void updateGameState();
+		void render();
+	
 		SceneManager();
+		~SceneManager();
 	private:
+		sf::Clock& clock;
+		float delta = 0;
+		float TimePerFrame = 1.f/60.f; //Lock at 60 fps
+
+		std::unique_ptr<SceneLayer> sceneGraphRoot;
+		SceneLayer* engineLayer;
+		SceneLayer* clientLayer;
+
+		std::set<std::pair<SceneNode*, SceneNode*> > collisions;
+
 		SceneManager(const SceneManager&);
 		void operator=(const SceneManager&);
 };

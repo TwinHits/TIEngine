@@ -7,7 +7,7 @@
 #include "managers/ConsoleManager.h"
 #include "managers/InputManager.h" 
 #include "managers/LogManager.h"
-#include "managers/TIEntityManager.h"
+#include "managers/SceneManager.h"
 #include "managers/ViewManager.h"
 #include "managers/WindowManager.h"
 
@@ -97,7 +97,7 @@ void InputManager::processInput() {
 				break;
 		}
 
-		sf::View& view = ViewManager::Instance()->getView(TIEntityManager::Instance()->getClientLayer().getViewId());
+		sf::View& view = ViewManager::Instance()->getView(SceneManager::Instance()->getClientLayer().getViewId());
 		sf::Vector2i position = sf::Mouse::getPosition(window);
 		this->mouseWindowPosition = window.mapPixelToCoords(position);
 		this->mouseWorldPosition = window.mapPixelToCoords(position, view); 

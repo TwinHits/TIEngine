@@ -7,7 +7,7 @@ int main()
 
 	while (window.isOpen()) {
 		TIE::InputManager::Instance()->processInput();
-		TIE::TIEntityManager::Instance()->updateGameState();
+		TIE::SceneManager::Instance()->updateGameState();
 		TIE::SceneManager::Instance()->render();		
 	}
 }

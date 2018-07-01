@@ -19,7 +19,6 @@
 	#include "managers/LogManager.h"
 	#include "managers/PlayerManager.h"
 	#include "managers/SceneManager.h"
-	#include "managers/TIEntityManager.h"
 	#include "managers/StringManager.h"
 	#include "managers/TimeManager.h"
 	#include "managers/ViewManager.h"

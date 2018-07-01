@@ -2,7 +2,7 @@
 #include <queue>
 
 #include "managers/ConsoleManager.h"
-#include "managers/TIEntityManager.h"
+#include "managers/SceneManager.h"
 #include "managers/WindowManager.h"
 #include "managers/ViewManager.h"
 #include "templates/MakeUnique.h"
@@ -11,7 +11,7 @@ using namespace TIE;
 
 ConsoleManager::ConsoleManager() {
 	std::unique_ptr<DevConsole> defaultDevConsole = make_unique<DevConsole>();
-	this->devConsole = &dynamic_cast<DevConsole&>(TIEntityManager::Instance()->getEngineLayer().attachChild(std::move(defaultDevConsole)));
+	this->devConsole = &dynamic_cast<DevConsole&>(SceneManager::Instance()->getEngineLayer().attachChild(std::move(defaultDevConsole)));
 }
 
 
@@ -41,14 +41,14 @@ void ConsoleManager::runCommand(const std::string& command) {
 
 void ConsoleManager::setDevConsole(std::unique_ptr<DevConsole> devConsole) {
 	this->devConsole->setRemove(true);
-	SceneLayer& engineLayer = TIEntityManager::Instance()->getEngineLayer();
+	SceneLayer& engineLayer = SceneManager::Instance()->getEngineLayer();
 	devConsole->setType("Client Defined Dev Console.");
 	this->devConsole = &dynamic_cast<DevConsole&>(engineLayer.attachChild(std::move(devConsole)));
 }
 
 
 void ConsoleManager::scroll(Direction direction) {
-	sf::View view = ViewManager::Instance()->getView(TIEntityManager::Instance()->getEngineLayer().getViewId());
+	sf::View view = ViewManager::Instance()->getView(SceneManager::Instance()->getEngineLayer().getViewId());
 	if (direction == Direction::TOP) {
 		sf::Vector2f center = view.getCenter();
 		if (center.y == 0) {
