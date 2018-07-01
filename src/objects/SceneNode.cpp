@@ -33,6 +33,16 @@ std::string SceneNode::getType() const {
 }
 
 
+void SceneNode::setParent(SceneNode* parent) {
+	this->parent = parent;
+}
+
+
+SceneNode& SceneNode::getParent() {
+	return *parent;
+}
+
+
 void SceneNode::setDrawn(bool drawn) {
 	this->drawn = drawn;
 }
@@ -53,13 +63,13 @@ bool SceneNode::getCollidable() const {
 }
 
 
-void SceneNode::setParent(SceneNode* parent) {
-	this->parent = parent;
+void SceneNode::setRemove(bool remove) { 
+	this->remove = remove;
 }
 
 
-SceneNode& SceneNode::getParent() {
-	return *parent;
+bool SceneNode::getRemove() const { 
+	return this->remove; 
 }
 
 
@@ -120,6 +130,13 @@ void SceneNode::draw(sf::RenderTarget& window, sf::RenderStates states) const {
 			child->draw(window, states);	
 		}
 	}
+}
+
+
+void SceneNode::removeNodes() {
+	auto removesBegin = std::remove_if(this->children.begin(), this->children.end(), std::mem_fn(&SceneNode::getRemove));
+	this->children.erase(removesBegin, this->children.end());
+	std::for_each(this->children.begin(), this->children.end(), std::mem_fn(&SceneNode::removeNodes));
 }
 
 

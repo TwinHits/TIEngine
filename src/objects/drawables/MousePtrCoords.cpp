@@ -13,7 +13,8 @@ MousePtrCoords::MousePtrCoords() :
 	text.setFont(font);
 	text.setCharacterSize(14);
 
-	this->setPosition(0,0);
+	sf::Vector2f mouseWindowPosition = inputManager->getMouseWindowPosition();
+	this->setPosition(mouseWindowPosition.x + 20, mouseWindowPosition.y);
 	this->setDrawn(ConfigManager::Instance()->getShowMousePtrCoords());
 	this->setType("Mouse Coords");
 }

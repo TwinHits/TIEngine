@@ -40,8 +40,8 @@ void ConsoleManager::runCommand(const std::string& command) {
 
 
 void ConsoleManager::setDevConsole(std::unique_ptr<DevConsole> devConsole) {
+	this->devConsole->setRemove(true);
 	SceneLayer& engineLayer = TIEntityManager::Instance()->getEngineLayer();
-	engineLayer.detachChild(*this->devConsole);
 	devConsole->setType("Client Defined Dev Console.");
 	this->devConsole = &dynamic_cast<DevConsole&>(engineLayer.attachChild(std::move(devConsole)));
 }

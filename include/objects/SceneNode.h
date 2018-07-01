@@ -23,14 +23,17 @@ class SceneNode : public sf::Transformable, sf::Drawable {
 		void setType(const std::string&);
 		std::string getType() const;
 
-		void setDrawn(bool);
-		bool getDrawn() const;
-
 		void setParent(SceneNode*);
 		SceneNode& getParent();
 
+		void setDrawn(bool);
+		bool getDrawn() const;
+
 		void setCollidable(bool);
 		bool getCollidable() const;
+
+		void setRemove(bool);
+		bool getRemove() const;
 
 		virtual sf::FloatRect getHitBox() const;
 
@@ -42,12 +45,12 @@ class SceneNode : public sf::Transformable, sf::Drawable {
 		
 		void checkSceneCollisions(SceneNode&, std::set<std::pair<SceneNode*, SceneNode*> >&);
 		void checkNodeCollisions(SceneNode&, std::set<std::pair<SceneNode*, SceneNode*> >&);
+		void removeNodes();
 
 		void update(const float);
 		void draw(sf::RenderTarget&, sf::RenderStates) const;
 
 		SceneNode& attachChild(std::unique_ptr<SceneNode>);
-		std::unique_ptr<SceneNode> detachChild(const SceneNode&);
 
 		bool collision(SceneNode&, SceneNode&) const;
 
@@ -58,11 +61,15 @@ class SceneNode : public sf::Transformable, sf::Drawable {
 		virtual void updateSelf(const float) = 0;
 		virtual void drawSelf(sf::RenderTarget&, sf::RenderStates) const = 0;
 
+		std::unique_ptr<SceneNode> detachChild(const SceneNode&);
+
 		GlobalId id;
 		std::string type = "Undefined";
-		bool drawn = false;
 		SceneNode* parent = nullptr;
+		bool drawn = false;
 		bool collidable = false;
+		bool remove = false;
+
 		std::vector<std::unique_ptr<SceneNode> > children;
 };
 

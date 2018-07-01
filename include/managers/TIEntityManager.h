@@ -20,6 +20,7 @@ class TIEntityManager : public Singleton<TIEntityManager> {
 
 		void checkForCollisions();
 		void updateGameState();
+		void removeNodes();
 	
 		TIEntityManager();
 		~TIEntityManager();

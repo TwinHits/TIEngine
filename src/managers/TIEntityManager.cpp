@@ -74,16 +74,21 @@ void TIEntityManager::checkForCollisions() {
 
 
 void TIEntityManager::updateGameState() {
-	this->delta += this->clock.restart().asSeconds();
 
+	this->delta += this->clock.restart().asSeconds();
 	while (this->delta > this->TimePerFrame) {
 
+		this->removeNodes();
 		this->checkForCollisions();
-
 		sceneGraphRoot->update(delta);
 
 		float fps = 60 / delta;
 		WindowManager::Instance()->showFPS(std::to_string(fps));
 		this->delta = 0;
 	}
+}
+
+
+void TIEntityManager::removeNodes() {
+	this->sceneGraphRoot->removeNodes();
 }
