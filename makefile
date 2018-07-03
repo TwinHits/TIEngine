@@ -20,6 +20,9 @@ bin/objs/%.o: src/objects/%.cpp
 bin/objs/%.o: src/objects/drawables/%.cpp
 	g++-4.8 ${CC_FLAGS} ${IN_FLAGS} -c -o $@ $<
 
+bin/objs/%.o: src/objects/enumeration/%.cpp
+	g++-4.8 ${CC_FLAGS} ${IN_FLAGS} -c -o $@ $<
+
 bin/objs/%.o: src/utilities/%.cpp
 	g++-4.8 ${CC_FLAGS} ${IN_FLAGS} -c -o $@ $<
 
