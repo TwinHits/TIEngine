@@ -35,6 +35,16 @@ GlobalId SceneLayer::getViewId() {
 }
 
 
+void SceneLayer::draw(sf::RenderTarget& window, sf::RenderStates states) const {
+	if (this->getDrawn()) {
+		this->drawSelf(window, states);
+		for (auto& child : this->getChildren()) {
+			child->draw(window, states);	
+		}
+	}
+}
+
+
 void SceneLayer::drawSelf(sf::RenderTarget&, sf::RenderStates) const {
 	ViewManager::Instance()->setActiveView(viewId);
 }

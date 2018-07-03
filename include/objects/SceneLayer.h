@@ -21,6 +21,8 @@ class SceneLayer : public SceneNode {
 
 		void setViewId(GlobalId);
 		GlobalId getViewId();
+
+		virtual void draw(sf::RenderTarget&, sf::RenderStates) const;
 		
 	private:
 		void drawSelf(sf::RenderTarget&, sf::RenderStates) const;

@@ -42,6 +42,10 @@ SceneNode& SceneNode::getParent() {
 	return *parent;
 }
 
+const std::vector<std::unique_ptr<SceneNode> >& SceneNode::getChildren() const {
+	return this->children;
+}
+
 
 void SceneNode::setDrawn(bool drawn) {
 	this->drawn = drawn;

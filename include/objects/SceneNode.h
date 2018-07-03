@@ -11,8 +11,7 @@
 #include "objects/GlobalId.h"
 
 namespace TIE {
-
-class SceneNode : public sf::Transformable, sf::Drawable {
+class SceneNode : public sf::Transformable, sf::Drawable { 
 	public:
 		SceneNode();
 		SceneNode(const SceneNode&);
@@ -25,6 +24,8 @@ class SceneNode : public sf::Transformable, sf::Drawable {
 
 		void setParent(SceneNode*);
 		SceneNode& getParent();
+
+		const std::vector<std::unique_ptr<SceneNode> >& getChildren() const;
 
 		void setDrawn(bool);
 		bool getDrawn() const;
@@ -48,7 +49,7 @@ class SceneNode : public sf::Transformable, sf::Drawable {
 		void removeNodes();
 
 		void update(const float);
-		void draw(sf::RenderTarget&, sf::RenderStates) const;
+		virtual void draw(sf::RenderTarget&, sf::RenderStates) const;
 
 		SceneNode& attachChild(std::unique_ptr<SceneNode>);
 
@@ -63,9 +64,10 @@ class SceneNode : public sf::Transformable, sf::Drawable {
 
 		std::unique_ptr<SceneNode> detachChild(const SceneNode&);
 
+		SceneNode* parent = nullptr;
+
 		GlobalId id;
 		std::string type = "Undefined";
-		SceneNode* parent = nullptr;
 		bool drawn = false;
 		bool collidable = false;
 		bool remove = false;
