@@ -89,6 +89,8 @@ float SceneNode::getWorldRotation() const {
 		rotation+=n->getRotation();
 	}
 
+	rotation += this->getRotation();
+
 	return rotation;
 }
 
