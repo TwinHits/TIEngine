@@ -48,13 +48,14 @@ void ConsoleManager::setDevConsole(std::unique_ptr<DevConsole> devConsole) {
 
 
 void ConsoleManager::scroll(Direction direction) {
-	sf::View view = ViewManager::Instance()->getView(SceneManager::Instance()->getEngineLayer().getViewId());
+	GlobalId viewId = SceneManager::Instance()->getEngineLayer().getViewId();
+	sf::View view = ViewManager::Instance()->getView(viewId);
 	if (direction == Direction::TOP) {
 		sf::Vector2f center = view.getCenter();
 		if (center.y == 0) {
 			return;		
 		}
-		ViewManager::Instance()->scroll(direction);
+		ViewManager::Instance()->scroll(viewId, direction);
 	} else if (direction == Direction::BOTTOM) {
 		sf::Vector2f size = view.getSize();
 		sf::Vector2f center = view.getCenter();
@@ -63,6 +64,6 @@ void ConsoleManager::scroll(Direction direction) {
 		if (writePosition.y < bottomOfView) {
 			return;
 		}
-		ViewManager::Instance()->scroll(direction);
+		ViewManager::Instance()->scroll(viewId, direction);
 	}
 }

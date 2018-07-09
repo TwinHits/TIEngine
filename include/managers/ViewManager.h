@@ -30,6 +30,7 @@ class ViewManager : public Singleton<ViewManager> {
 		void setScrollSpeed(float scrollSpeed);
 		float getScrollSpeed();
 
+		void scroll(GlobalId viewId, Direction direction);
 		void scroll(Direction direction);
 		void zoom(void);
 

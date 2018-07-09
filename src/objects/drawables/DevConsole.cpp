@@ -3,6 +3,7 @@
 #include "managers/LogManager.h"
 #include "managers/AssetsManager.h"
 #include "managers/InputManager.h"
+#include "managers/SceneManager.h"
 #include "managers/WindowManager.h"
 #include "managers/ViewManager.h"
 
@@ -35,9 +36,9 @@ DevConsole::DevConsole() : font(AssetsManager::Instance()->getFont("DevConsole.t
 	//Set the currentCommand for drawing only. Maybe later combine with processing?
 	this->currentCommand.getText().setFont(font);
 	this->currentCommand.getText().setCharacterSize(fontSize);
+	this->currentCommand.setDrawn(true);
 
-	//this->currentCommand.getText().setPosition(-(windowSize.x/2), windowSize.y/2 - fontSize);
-	this->currentCommand.getText().setPosition(0,0);
+	this->currentCommand.getText().setPosition(-(windowSize.x/2), windowSize.y/2 - fontSize);
 
 	this->setType("Default Dev Console.");
 }

@@ -94,17 +94,21 @@ float ViewManager::getScrollSpeed() {
 }
 
 
-void ViewManager::scroll(Direction direction) {
-	sf::View& view = this->getView(SceneManager::Instance()->getClientLayer().getViewId());
+void ViewManager::scroll(GlobalId viewId, Direction direction) {
+	this->setActiveView(viewId);
+	this->scroll(direction);
+}
 
+
+void ViewManager::scroll(Direction direction) {
 	if (direction == TOP)
-		view.move(0, -scrollSpeed);
+		this->getActiveView().move(0, -scrollSpeed);
 	if (direction == RIGHT)
-		view.move(scrollSpeed, 0);
+		this->getActiveView().move(scrollSpeed, 0);
 	if (direction == BOTTOM)
-		view.move(0, scrollSpeed);
+		this->getActiveView().move(0, scrollSpeed);
 	if (direction == LEFT)
-		view.move(-scrollSpeed, 0);
+		this->getActiveView().move(-scrollSpeed, 0);
 }
 
 

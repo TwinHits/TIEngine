@@ -121,17 +121,18 @@ void InputManager::scroll(sf::RenderWindow& window) {
 
 	auto consoleManager = ConsoleManager::Instance();
 	auto mousePosition = sf::Mouse::getPosition(window);
+	GlobalId viewId = SceneManager::Instance()->getClientLayer().getViewId();
 	Direction direction;
 	
 	if (!consoleManager->checkConsole()) {
 		if (mousePosition.y <= scrollZone)
-			ViewManager::Instance()->scroll(TOP);
+			ViewManager::Instance()->scroll(viewId, TOP);
 		if (mousePosition.y >= WindowManager::Instance()->getWindowSize().y - scrollZone)
-			ViewManager::Instance()->scroll(BOTTOM);
+			ViewManager::Instance()->scroll(viewId, BOTTOM);
 		if (mousePosition.x <= scrollZone)
-			ViewManager::Instance()->scroll(LEFT);
+			ViewManager::Instance()->scroll(viewId, LEFT);
 		if (mousePosition.x >= WindowManager::Instance()->getWindowSize().x - scrollZone)
-			ViewManager::Instance()->scroll(RIGHT);
+			ViewManager::Instance()->scroll(viewId, RIGHT);
 	} else if (consoleManager->checkConsole()) {
 		if (mousePosition.y <= scrollZone)
 			consoleManager->scroll(TOP);
