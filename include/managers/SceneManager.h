@@ -16,6 +16,8 @@ class SceneManager : public Singleton<SceneManager> {
 		SceneLayer& getEngineLayer();
 		SceneLayer& getClientLayer();
 
+		SceneNode* findSceneNode(sf::Vector2f);
+
 		void removeNodes();
 		void checkForCollisions();
 		void updateGameState();

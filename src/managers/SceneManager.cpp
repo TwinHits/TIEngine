@@ -58,6 +58,11 @@ SceneLayer& SceneManager::getClientLayer() {
 }
 
 
+SceneNode* SceneManager::findSceneNode(sf::Vector2f point) {
+	return this->getClientLayer().findNode(point);	
+}
+
+
 void SceneManager::removeNodes() {
 	this->sceneGraphRoot->removeNodes();
 }
@@ -92,6 +97,7 @@ void SceneManager::updateGameState() {
 		this->delta = 0;
 	}
 }
+
 
 void SceneManager::render() {		
 	sf::RenderWindow& window = WindowManager::Instance()->getWindow();

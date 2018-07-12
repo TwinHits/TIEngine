@@ -38,22 +38,23 @@ class SceneNode : public sf::Transformable, sf::Drawable {
 
 		virtual sf::FloatRect getHitBox() const;
 
-		virtual void collide(SceneNode*);
-
 		sf::Transform getWorldTransform() const;
 		sf::Vector2f getWorldPosition() const;
 		float getWorldRotation() const;
 		
+		SceneNode& attachChild(std::unique_ptr<SceneNode>);
+
 		void checkSceneCollisions(SceneNode&, std::set<std::pair<SceneNode*, SceneNode*> >&);
 		void checkNodeCollisions(SceneNode&, std::set<std::pair<SceneNode*, SceneNode*> >&);
+		virtual void collide(SceneNode*);
+		bool collision(SceneNode&, SceneNode&) const;
+
 		void removeNodes();
 
 		void update(const float);
 		virtual void draw(sf::RenderTarget&, sf::RenderStates) const;
 
-		SceneNode& attachChild(std::unique_ptr<SceneNode>);
-
-		bool collision(SceneNode&, SceneNode&) const;
+		SceneNode* findNode(sf::Vector2f);
 
 		bool operator==(const SceneNode&) const;
 		bool operator!=(const SceneNode&) const;

@@ -17,7 +17,7 @@
 
 using namespace TIE;
 
-InputManager::InputManager() {
+InputManager::InputManager() { 
 	inputMap = TIE::make_unique<InputMap>();	
 }
 

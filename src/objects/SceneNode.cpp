@@ -196,6 +196,21 @@ void SceneNode::collide(SceneNode*) {
 }
 
 
+SceneNode* SceneNode::findNode(sf::Vector2f point) {
+	if (this->getHitBox().contains(point)) {
+		return this;
+	} else {
+		for (auto& child : children) {
+			SceneNode* ptr = child->findNode(point);
+			if (ptr != nullptr) {
+				return ptr;
+			}
+		}
+		return nullptr;
+	}
+}
+
+
 bool SceneNode::operator==(const SceneNode& rhs) const {
 	if (this->getId() == rhs.getId()) {
 		return true;
