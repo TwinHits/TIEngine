@@ -9,15 +9,13 @@ template<typename T>
 class Factory {
 	public:
 
-		GlobalId create() { 
+		SceneNode& create() { 
 			std::unique_ptr<T> ptr = TIE::make_unique<T>();
-			GlobalId id = ptr->getId();
-			return id;
+			return *ptr;
 		}
 
-		GlobalId create(std::unique_ptr<T> ptr) {
-			GlobalId id = ptr->getId();
-			return id;
+		SceneNode& create(std::unique_ptr<T> ptr) {
+			return *ptr;
 		}
 };
 
