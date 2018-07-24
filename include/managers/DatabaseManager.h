@@ -12,12 +12,17 @@ namespace TIE {
 
 class DatabaseManager : public Singleton<DatabaseManager> {
 	public:
-		void Select(const std::string& query, std::string& s);
-
 		DatabaseManager();
 		~DatabaseManager();
+
+		soci::session& getConnection();
+
+		void Select(const std::string& query, std::string& s);
+
 	private:
-		soci::session db;
+		std::string connectionString;
+		const std::size_t CONNECTION_POOL_SIZE = 10;
+		soci::connection_pool connectionPool = soci::connection_pool(CONNECTION_POOL_SIZE);
 
 		DatabaseManager(const DatabaseManager&);
 		void operator=(const DatabaseManager&);
