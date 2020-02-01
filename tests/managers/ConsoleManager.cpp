@@ -50,5 +50,3 @@ TEST(ConsoleManager, SetDevConsole) {
 	ASSERT_TRUE(TIE::ConsoleManager::Instance()->checkConsole());
 }
 
-
-//TEST(ConsoleManager, RenderDevConsole) {}

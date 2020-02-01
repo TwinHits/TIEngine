@@ -36,9 +36,6 @@
     <ClCompile Include="src\managers\LogManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\managers\MessageManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\managers\PlayerManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -46,9 +43,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\managers\StringManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\managers\TIEntityManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\managers\TimeManager.cpp">
@@ -63,9 +57,6 @@
     <ClCompile Include="src\objects\InputMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\Message.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\objects\Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -76,9 +67,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\utilities\ToDegrees.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\objects\LogLevel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\utilities\ParseLanguageString.cpp">
@@ -93,13 +81,25 @@
     <ClCompile Include="src\objects\drawables\DevConsole.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\drawables\SceneText.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\objects\drawables\TIEntity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\utilities\ToRadians.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objects\SceneLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objects\SceneNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objects\enumeration\LogLevel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objects\drawables\MousePtrCoords.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objects\drawables\TIExt.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -140,9 +140,6 @@
     <ClInclude Include="include\managers\StringManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\managers\TIEntityManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\managers\TimeManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -159,9 +156,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\objects\Language.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\objects\Message.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\objects\Player.h">
@@ -182,16 +176,10 @@
     <ClInclude Include="include\utilities\ToDegrees.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\objects\LogLevel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\utilities\ParseLanguageString.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\objects\drawables\DevConsole.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\objects\drawables\SceneText.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\objects\drawables\TIEntity.h">

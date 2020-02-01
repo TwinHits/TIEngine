@@ -80,8 +80,8 @@ static float SCROLL_SPEED = 5;
 static float TEST_SCROLL_SPEED = 50;
 
 //TIEntity
-static bool DEFAULT_DRAW_BOOL = true;
-static bool CUSTOM_DRAW_BOOL = false;
+static bool DEFAULT_DRAW_BOOL = false;
+static bool CUSTOM_DRAW_BOOL = true;
 static int DEFAULT_DRAW_ORDER_INT = 0;
 static int CUSTOM_DRAW_ORDER_INT = 12312;
 static TIE::GlobalId ENTITY_UNUSED_ID = 99868;

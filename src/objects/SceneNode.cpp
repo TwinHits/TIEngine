@@ -1,3 +1,5 @@
+#include <functional>
+
 #include "managers/HashManager.h"
 #include "objects/SceneNode.h" 
 

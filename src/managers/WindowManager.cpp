@@ -7,7 +7,8 @@
 using namespace TIE;
 
 WindowManager::WindowManager() {
-
+	//Creating default window that can be replaced by client defined window
+	this->addWindow();
 }
 
 
@@ -17,41 +18,29 @@ WindowManager::~WindowManager() {
 
 
 sf::RenderWindow& WindowManager::addWindow(sf::VideoMode mode, const std::string& title, int style, const sf::ContextSettings& settings) {
-	if (!this->window) {
-		//Handle localization of default window title case
-		this->title = title;
-		if (this->title == "Twin Ion Engine") {
-			this->title = StringManager::Instance()->getString(1);
-		}
-
-		this->window = TIE::make_unique<sf::RenderWindow>(mode, this->title, style, settings);
-		LogManager::Instance()->logInfo("Opened window.");
-
-		this->windowSize.y = mode.height;
-		this->windowSize.x = mode.width;
-
-		return this->getWindow();
-	} else {
-		LogManager::Instance()->logWarn("Client attempted to open a second window. Returning existing.");
-		return this->getWindow();
+	//Handle localization of default window title case
+	this->title = title;
+	if (this->title == "Twin Ion Engine") {
+		this->title = StringManager::Instance()->getString(1);
 	}
+
+	this->window = TIE::make_unique<sf::RenderWindow>(mode, this->title, style, settings);
+	LogManager::Instance()->logInfo("Opened window.");
+
+	this->windowSize.y = mode.height;
+	this->windowSize.x = mode.width;
+
+	return this->getWindow();
 }
 
 
 void WindowManager::removeWindow() {
-	if (this->window) {
-		this->window.reset();
-	}
+	this->window.reset();
 }
 
 
 sf::RenderWindow& WindowManager::getWindow() {
-	if (this->window) {
-		return *this->window;
-	} else {
-		LogManager::Instance()->logWarn("Client attempted to get a window that does not exist. Returning default new window.");
-		return this->addWindow();
-	}
+	return *this->window;
 }
 
 

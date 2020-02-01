@@ -131,20 +131,21 @@
     <ClCompile Include="src\managers\HashManager.cpp" />
     <ClCompile Include="src\managers\InputManager.cpp" />
     <ClCompile Include="src\managers\LogManager.cpp" />
-    <ClCompile Include="src\managers\MessageManager.cpp" />
     <ClCompile Include="src\managers\PlayerManager.cpp" />
     <ClCompile Include="src\managers\SceneManager.cpp" />
     <ClCompile Include="src\managers\StringManager.cpp" />
-    <ClCompile Include="src\managers\TIEntityManager.cpp" />
     <ClCompile Include="src\managers\TimeManager.cpp" />
     <ClCompile Include="src\managers\ViewManager.cpp" />
     <ClCompile Include="src\managers\WindowManager.cpp" />
     <ClCompile Include="src\objects\drawables\DevConsole.cpp" />
-    <ClCompile Include="src\objects\drawables\SceneText.cpp" />
+    <ClCompile Include="src\objects\drawables\MousePtrCoords.cpp" />
     <ClCompile Include="src\objects\drawables\TIEntity.cpp" />
+    <ClCompile Include="src\objects\drawables\TIExt.cpp" />
+    <ClCompile Include="src\objects\enumeration\LogLevel.cpp" />
     <ClCompile Include="src\objects\InputMap.cpp" />
-    <ClCompile Include="src\objects\Message.cpp" />
     <ClCompile Include="src\objects\Player.cpp" />
+    <ClCompile Include="src\objects\SceneLayer.cpp" />
+    <ClCompile Include="src\objects\SceneNode.cpp" />
     <ClCompile Include="src\utilities\GetMissingSprite.cpp" />
     <ClCompile Include="src\utilities\GetMissingText.cpp" />
     <ClCompile Include="src\utilities\LocalTime.cpp" />
@@ -164,18 +165,14 @@
     <ClInclude Include="include\managers\PlayerManager.h" />
     <ClInclude Include="include\managers\SceneManager.h" />
     <ClInclude Include="include\managers\StringManager.h" />
-    <ClInclude Include="include\managers\TIEntityManager.h" />
     <ClInclude Include="include\managers\TimeManager.h" />
     <ClInclude Include="include\managers\ViewManager.h" />
     <ClInclude Include="include\managers\WindowManager.h" />
     <ClInclude Include="include\objects\drawables\DevConsole.h" />
-    <ClInclude Include="include\objects\drawables\SceneText.h" />
     <ClInclude Include="include\objects\drawables\TIEntity.h" />
     <ClInclude Include="include\objects\GlobalId.h" />
     <ClInclude Include="include\objects\InputMap.h" />
     <ClInclude Include="include\objects\Language.h" />
-    <ClInclude Include="include\objects\LogLevel.h" />
-    <ClInclude Include="include\objects\Message.h" />
     <ClInclude Include="include\objects\Player.h" />
     <ClInclude Include="include\templates\Factory.h" />
     <ClInclude Include="include\templates\Singleton.h" />
@@ -186,9 +183,6 @@
     <ClInclude Include="include\utilities\StringToInt.h" />
     <ClInclude Include="include\utilities\ToDegrees.h" />
     <ClInclude Include="include\utilities\ToRadians.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\objects\LogLevel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\utilities\ParseLanguageString.h" />

@@ -4,8 +4,7 @@
 
 TEST(TIEntity, GetId) {
 	TIE::HashManager::Instance()->setSeed(TIE::ENTITY_UNUSED_ID);
-	//plus 2 for the clock initialized inside the constructor	
-	TIE::GlobalId expected = TIE::ENTITY_UNUSED_ID+2;
+	TIE::GlobalId expected = TIE::ENTITY_UNUSED_ID+1;
 	TIE::TIEntity entity = TIE::TIEntity();
 	TIE::GlobalId actual = entity.getId();
 

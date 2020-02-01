@@ -42,10 +42,8 @@
     <ClCompile Include="managers/ConsoleManager.cpp" />
     <ClCompile Include="objects/enumeration/Direction.cpp" />
     <ClCompile Include="objects\drawables\DevConsole.cpp" />
-    <ClCompile Include="objects\drawables\SceneText.cpp" />
     <ClCompile Include="objects\drawables\TIEntity.cpp" />
-    <ClCompile Include="templates/Factory.cpp" />
-    <ClCompile Include="objects/Message.cpp" />
+    <ClCompile Include="objects\drawables\TIExt.cpp" />
     <ClCompile Include="utilities/ParseLanguageString.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -66,11 +64,8 @@
     <ClCompile Include="managers/PlayerManager.cpp" />
     <ClCompile Include="objects/Player.cpp" />
     <ClCompile Include="utilities/StringToInt.cpp" />
-    <ClCompile Include="managers/MessageManager.cpp" />
-    <ClCompile Include="managers/SceneManager.cpp" />
     <ClCompile Include="managers/InputManager.cpp" />
     <ClCompile Include="objects/InputMap.cpp" />
-    <ClCompile Include="managers/TIEntityManager.cpp" />
     <ClCompile Include="managers/ViewManager.cpp" />
     <ClCompile Include="managers/WindowManager.cpp" />
     <ClCompile Include="managers/TimeManager.cpp" />
