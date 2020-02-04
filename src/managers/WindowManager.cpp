@@ -18,11 +18,7 @@ WindowManager::~WindowManager() {
 
 
 sf::RenderWindow& WindowManager::addWindow(sf::VideoMode mode, const std::string& title, int style, const sf::ContextSettings& settings) {
-	//Handle localization of default window title case
 	this->title = title;
-	if (this->title == "Twin Ion Engine") {
-		this->title = StringManager::Instance()->getString(1);
-	}
 
 	this->window = TIE::make_unique<sf::RenderWindow>(mode, this->title, style, settings);
 	LogManager::Instance()->logInfo("Opened window.");

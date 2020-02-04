@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include "managers/HashManager.h"
 #include "managers/LogManager.h"
 #include "managers/TimeManager.h"

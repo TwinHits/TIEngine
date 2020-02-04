@@ -2,6 +2,7 @@
 #define INPUTMANAGER_H
 
 #include <memory>
+#include <string>
 
 #include "templates/Singleton.h"
 
@@ -24,7 +25,7 @@ class InputManager : public Singleton<InputManager> {
 		~InputManager();
 
 	private:
-		sf::String textEntered;
+		std::string textEntered;
 		sf::Vector2f mouseWindowPosition;
 		sf::Vector2f mouseWorldPosition;
 		int scrollZone = 5;
