@@ -1,0 +1,7 @@
+Put the SFML libraries downloaded from the website in the build folder
+Set the CMAKE variable to the correct folder.
+	set(SFML_DIR "./SFML-2.5.1/lib/cmake/SFML")
+
+Need Xming running on windows or there will be an X error.
+
+For I think the third time, I forgot about that you're supposed to do ./boostrap and then ./b2 to build boost once you've downloaded it. It could not find filesystem until I did.

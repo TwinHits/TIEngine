@@ -1,0 +1,14 @@
+5/1/2018 I think that SFML 2.4.2 is compiled with g++-4.8, so I had to explicitly use g++ because the default is now 5. I think since I compiled gtest and gmock with 4.8, it also needs 4.8.
+But I need at least 4.8 because I need make_unique. I made my own.
+Now, Gtest isn't working again probably because my default is 5.0.
+Recompiled gtest on 4.8. Had to delete the existing ones in my lib in order for the changes to take effect.
+
+5/2/2018 I moved my libs to /usr/local/lib and lib64, I had to add those paths
+to /etc/ld.so.conf because I was getting a 'cannot open shared object libraries'
+error when running tiengine. 
+
+5/6/2018 For #7 I moved ParseLanguageConfig to its own utility class. That
+caused an unresolved external error. This happened because I added the files
+as existing items in order to maintain their folder position and get aronud
+VS's filter system, but I forgot to change their properties from text to .h
+and .cpp.
