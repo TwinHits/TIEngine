@@ -39,9 +39,10 @@ TEST(WindowManager, RemoveWindow) {
 }
 
 
-TEST(WindowManager, GetWindowNoWindow) {
+TEST(WindowManager, GetWindowNoInitializedWindow) {
 	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
 
+	TIE::WindowManager::Instance()->removeWindow();
 	const sf::RenderWindow& window = TIE::WindowManager::Instance()->getWindow();
 
 	sf::Vector2u actualSize = window.getSize();
@@ -80,22 +81,6 @@ TEST(WindowManager, AddSecondWindow) {
 	const sf::RenderWindow& window1 = TIE::WindowManager::Instance()->addWindow();
 	const sf::RenderWindow& window2 = TIE::WindowManager::Instance()->addWindow();
 
-	ASSERT_TRUE(TIE::CheckDebugLogForText(TIE::WARN_LEVEL_PREFIX + TIE::SECOND_WINDOW_WARNING));
-
-	sf::Vector2u window1Size = window1.getSize();
-	sf::Vector2u window2Size(800, 600);
-	ASSERT_EQ(window1Size.x, window2Size.x);
-	ASSERT_EQ(window1Size.y, window2Size.y);
-
-	const sf::ContextSettings& window1Settings = window1.getSettings();
-	const sf::ContextSettings& window2Settings = window2.getSettings();
-	ASSERT_EQ(window1Settings.antialiasingLevel, window2Settings.antialiasingLevel);
-	ASSERT_EQ(window1Settings.attributeFlags, window2Settings.attributeFlags);
-	ASSERT_EQ(window1Settings.Core, window2Settings.Core);
-	ASSERT_EQ(window1Settings.Debug, window2Settings.Debug);
-	ASSERT_EQ(window1Settings.depthBits, window2Settings.depthBits);
-	ASSERT_EQ(window1Settings.stencilBits, window2Settings.stencilBits);
-
 	TIE::WindowManager::Instance()->removeWindow();
 }
 
@@ -119,5 +104,3 @@ TEST(WindowManager, GetTitle) {
 
 	TIE::WindowManager::Instance()->removeWindow();
 }
-
-//TEST(WindowManager, ShowFPSInTitle) {}

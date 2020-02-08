@@ -55,10 +55,9 @@ TEST(ConfigManager, LoadCustomConfigFile) {
 
 //Test parsing the configuration values from a config file
 TEST(ConfigManager, ParseConfigFile) {
-	TIE::ConfigManager::Instance()->restoreDefaultConfiguration();
 	ASSERT_TRUE(TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE));
 
-	std::string expectedAssets = "assets/";
+	std::string expectedAssets = "../assets/";
 	std::string actualAssets = TIE::ConfigManager::Instance()->getAssetsPath();
 	ASSERT_EQ(expectedAssets, actualAssets);
 
@@ -73,21 +72,6 @@ TEST(ConfigManager, ParseConfigFile) {
 	TIE::Language expectedDefaultDisplayLanguage = TIE::ja_JP;
 	TIE::Language actualDefaultDisplayLanguage = TIE::ConfigManager::Instance()->getDefaultDisplayLanguage();
 	ASSERT_EQ(expectedDefaultDisplayLanguage, actualDefaultDisplayLanguage);
-
-	std::string expectedDBString = "dbname=tiengine user=tie_admin password=123456 hostaddr=127.0.0.1 port=5432";
-	std::string actualDBString = TIE::ConfigManager::Instance()->getDatabaseConnectionString();
-	ASSERT_EQ(expectedDBString, actualDBString);
-}
-
-
-TEST(ConfigManager, MissingDatabaseString) {
-	TIE::ConfigManager::Instance()->restoreDefaultConfiguration();
-	TIE::ConfigManager::Instance()->loadConfigFile(TIE::JUNK_CONFIG_FILE);
-
-	std::string expected = "noconnectionstring";
-	std::string actual = TIE::ConfigManager::Instance()->getDatabaseConnectionString();
-	  
-	ASSERT_EQ(expected, actual);
 }
 
 
@@ -114,7 +98,7 @@ TEST(ConfigManager, SetDebugLogLevel) {
 TEST(ConfigManager, RestoreDefaultConfiguration) {
 	ASSERT_TRUE(TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE));
 
-	std::string expectedAssets = "assets/";
+	std::string expectedAssets = "../assets/";
 	std::string actualAssets = TIE::ConfigManager::Instance()->getAssetsPath();
 	ASSERT_EQ(expectedAssets, actualAssets);
 

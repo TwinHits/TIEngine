@@ -12,8 +12,8 @@
 using namespace TIE;
 
 TIEntity::TIEntity() {
-	this->sprite = TIE::getMissingSprite();
-	this->setType("TIEntity.");
+	this->setSprite(TIE::getMissingSprite());
+	this->setType("TIEntity");
 }
 
 
@@ -52,7 +52,8 @@ sf::FloatRect TIEntity::getHitBox() const {
 
 
 void TIEntity::move(const float delta) {
-	float degrees = this->getRotation();
+	//float degrees = this->getRotation(); //Move according to current rotation
+	float degrees = this->velocity.y; //Move according to velocity's rotation
 	float x = 0;
 	float y = 0;
 
