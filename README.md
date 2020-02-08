@@ -7,21 +7,18 @@ management, logging, window management, and game loops.
 This project is cross platform and has been tested on Visual Studio 14.0 and gcc
 4.8.4.
 
-To install, clone to your machine and run 'make'. This will produce a
-libTIEngine-debug in bin/. Move to lib folder of your choice.
+Install the dependencies in the lib folder.
+This engine utilizes
+	SFML - 2.5
+	Boost - 1.72.0
+
+To install, clone to your machine and run 'cmake .'. This will create a TIEngine library and unit tests.
 
 In build/ run startproj.sh with the name of your project and the location for
 project directory. This will build folder heriarchy, make the default
 config.ini, and a starter makefile.
 
-Edit your project's makefile with the name of your executable in place of PROJECTNAME and
-the location you picked for the libTIEngine in LIBLOCATION.
-
 src/main.cpp has an include statement, rewrite it to point to TIEngine.h.
 
 See docs for documentation for avaliable classes and methods.
 
-This engine utilizes
-	SFML -
-	Boost - 
-	SOCI -
