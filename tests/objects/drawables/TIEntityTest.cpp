@@ -165,21 +165,23 @@ TEST(TIEntity, AssignmentOperator) {
 
 
 TEST(TIEntity, MoveRight) {
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
+
 	TIE::TIEntity entity = TIE::TIEntity();
-	sf::Vector2f startPosition = entity.getSprite().getPosition();
+	sf::Vector2f startPosition = entity.getWorldPosition();
 	sf::Vector2f preconditionPosition = sf::Vector2f(0.0, 0.0);
 
 	ASSERT_FLOAT_EQ(startPosition.x, preconditionPosition.x);
 	ASSERT_FLOAT_EQ(startPosition.y, preconditionPosition.y);
 
 	float delta = 1.0;
-	sf::Vector2f velocity = sf::Vector2f(1, 0);
+	sf::Vector2f velocity = sf::Vector2f(1.0, 0.0);
 	entity.setVelocity(velocity);
 
 	entity.move(delta);
 
 	sf::Vector2f expected = sf::Vector2f(1.0, 0.0);
- 	sf::Vector2f actual = entity.getSprite().getPosition();
+ 	sf::Vector2f actual = entity.getWorldPosition();
 
 	ASSERT_FLOAT_EQ(expected.x, actual.x);
 	ASSERT_FLOAT_EQ(expected.y, actual.y);
@@ -187,8 +189,10 @@ TEST(TIEntity, MoveRight) {
 
 
 TEST(TIEntity, MoveDownRight) {
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
+	
 	TIE::TIEntity entity = TIE::TIEntity();
-	sf::Vector2f startPosition = entity.getSprite().getPosition();
+	sf::Vector2f startPosition = entity.getWorldPosition();
 	sf::Vector2f preconditionPosition = sf::Vector2f(0.0, 0.0);
 
 	ASSERT_FLOAT_EQ(startPosition.x, preconditionPosition.x);
@@ -201,7 +205,7 @@ TEST(TIEntity, MoveDownRight) {
 	entity.move(delta);
 
 	sf::Vector2f expected = sf::Vector2f(0.7071067, 0.7071067);
-	sf::Vector2f actual = entity.getSprite().getPosition();
+	sf::Vector2f actual = entity.getWorldPosition();
 
 	ASSERT_FLOAT_EQ(expected.x, actual.x);
 	ASSERT_FLOAT_EQ(expected.y, actual.y);
@@ -209,8 +213,10 @@ TEST(TIEntity, MoveDownRight) {
 
 
 TEST(TIEntity, MoveDown) {
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
+
 	TIE::TIEntity entity = TIE::TIEntity();
-	sf::Vector2f startPosition = entity.getSprite().getPosition();
+	sf::Vector2f startPosition = entity.getWorldPosition();
 	sf::Vector2f preconditionPosition = sf::Vector2f(0.0, 0.0);
 
 	ASSERT_FLOAT_EQ(startPosition.x, preconditionPosition.x);
@@ -223,7 +229,7 @@ TEST(TIEntity, MoveDown) {
 	entity.move(delta);
 
 	sf::Vector2f expected = sf::Vector2f(0.0, 1.0);
- 	sf::Vector2f actual = entity.getSprite().getPosition();
+ 	sf::Vector2f actual = entity.getWorldPosition();
 
 	ASSERT_FLOAT_EQ(expected.x, actual.x);
 	ASSERT_FLOAT_EQ(expected.y, actual.y);
@@ -231,8 +237,10 @@ TEST(TIEntity, MoveDown) {
 
 
 TEST(TIEntity, MoveDownLeft) {
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
+
 	TIE::TIEntity entity = TIE::TIEntity();
-	sf::Vector2f startPosition = entity.getSprite().getPosition();
+	sf::Vector2f startPosition = entity.getWorldPosition();
 	sf::Vector2f preconditionPosition = sf::Vector2f(0.0, 0.0);
 
 	ASSERT_FLOAT_EQ(startPosition.x, preconditionPosition.x);
@@ -245,7 +253,7 @@ TEST(TIEntity, MoveDownLeft) {
 	entity.move(delta);
 
 	sf::Vector2f expected = sf::Vector2f(-0.7071067, 0.7071067);
- 	sf::Vector2f actual = entity.getSprite().getPosition();
+ 	sf::Vector2f actual = entity.getWorldPosition();
 
 	ASSERT_FLOAT_EQ(expected.x, actual.x);
 	ASSERT_FLOAT_EQ(expected.y, actual.y);
@@ -253,8 +261,10 @@ TEST(TIEntity, MoveDownLeft) {
 
 
 TEST(TIEntity, MoveLeft) {
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
+
 	TIE::TIEntity entity = TIE::TIEntity();
-	sf::Vector2f startPosition = entity.getSprite().getPosition();
+	sf::Vector2f startPosition = entity.getWorldPosition();
 	sf::Vector2f preconditionPosition = sf::Vector2f(0.0, 0.0);
 
 	ASSERT_FLOAT_EQ(startPosition.x, preconditionPosition.x);
@@ -267,15 +277,17 @@ TEST(TIEntity, MoveLeft) {
 	entity.move(delta);
 
 	sf::Vector2f expected = sf::Vector2f(-1.0, 0.0);
- 	sf::Vector2f actual = entity.getSprite().getPosition();
+ 	sf::Vector2f actual = entity.getWorldPosition();
 
 	ASSERT_FLOAT_EQ(expected.x, actual.x);
 	ASSERT_FLOAT_EQ(expected.y, actual.y);
 }
 
 TEST(TIEntity, MoveUpLeft) {
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
+
 	TIE::TIEntity entity = TIE::TIEntity();
-	sf::Vector2f startPosition = entity.getSprite().getPosition();
+	sf::Vector2f startPosition = entity.getWorldPosition();
 	sf::Vector2f preconditionPosition = sf::Vector2f(0.0, 0.0);
 
 	ASSERT_FLOAT_EQ(startPosition.x, preconditionPosition.x);
@@ -288,7 +300,7 @@ TEST(TIEntity, MoveUpLeft) {
 	entity.move(delta);
 
 	sf::Vector2f expected = sf::Vector2f(-0.7071067, -0.7071067);
- 	sf::Vector2f actual = entity.getSprite().getPosition();
+ 	sf::Vector2f actual = entity.getWorldPosition();
 
 	ASSERT_FLOAT_EQ(expected.x, actual.x);
 	ASSERT_FLOAT_EQ(expected.y, actual.y);
@@ -296,8 +308,10 @@ TEST(TIEntity, MoveUpLeft) {
 
 
 TEST(TIEntity, MoveUp) {
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
+
 	TIE::TIEntity entity = TIE::TIEntity();
-	sf::Vector2f startPosition = entity.getSprite().getPosition();
+	sf::Vector2f startPosition = entity.getWorldPosition();
 	sf::Vector2f preconditionPosition = sf::Vector2f(0.0, 0.0);
 
 	ASSERT_FLOAT_EQ(startPosition.x, preconditionPosition.x);
@@ -310,7 +324,7 @@ TEST(TIEntity, MoveUp) {
 	entity.move(delta);
 
 	sf::Vector2f expected = sf::Vector2f(0.0, -1.0);
-	sf::Vector2f actual = entity.getSprite().getPosition();
+	sf::Vector2f actual = entity.getWorldPosition();
 
 	ASSERT_FLOAT_EQ(expected.x, actual.x);
 	ASSERT_FLOAT_EQ(expected.y, actual.y);
@@ -318,8 +332,10 @@ TEST(TIEntity, MoveUp) {
 
 
 TEST(TIEntity, MoveUpRight) {
+	TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE);
+
 	TIE::TIEntity entity = TIE::TIEntity();
-	sf::Vector2f startPosition = entity.getSprite().getPosition();
+	sf::Vector2f startPosition = entity.getWorldPosition();
 	sf::Vector2f preconditionPosition = sf::Vector2f(0.0, 0.0);
 
 	ASSERT_FLOAT_EQ(startPosition.x, preconditionPosition.x);
@@ -332,10 +348,8 @@ TEST(TIEntity, MoveUpRight) {
 	entity.move(delta);
 
 	sf::Vector2f expected = sf::Vector2f(0.7071067, -0.7071067);
-	sf::Vector2f actual = entity.getSprite().getPosition();
+	sf::Vector2f actual = entity.getWorldPosition();
 
 	ASSERT_FLOAT_EQ(expected.x, actual.x);
 	ASSERT_FLOAT_EQ(expected.y, actual.y);
 }
-
-//TEST(TIEntity, UpdateState) {}

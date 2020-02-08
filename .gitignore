@@ -1,6 +1,7 @@
 ##Project specific Ignores
 bin/*
 logs/*
+tests/logs/*
 doc/todo.txt
 otlv4.h
 x64/
