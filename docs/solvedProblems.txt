@@ -1,4 +1,4 @@
-5/1/2018 I think that SFML 2.4.2 is compiled with g++-4.8, so I had to explicitly use g++ because the default is now 5. I think since I compiled gtest and gmock with 4.8, it also needs 4.8.
+udo apt-get install libvorbisfile3/1/2018 I think that SFML 2.4.2 is compiled with g++-4.8, so I had to explicitly use g++ because the default is now 5. I think since I compiled gtest and gmock with 4.8, it also needs 4.8.
 But I need at least 4.8 because I need make_unique. I made my own.
 Now, Gtest isn't working again probably because my default is 5.0.
 Recompiled gtest on 4.8. Had to delete the existing ones in my lib in order for the changes to take effect.
@@ -12,3 +12,17 @@ caused an unresolved external error. This happened because I added the files
 as existing items in order to maintain their folder position and get aronud
 VS's filter system, but I forgot to change their properties from text to .h
 and .cpp.
+
+2/5/2020 After doing a sudo apt autoremove (I think) a bunch of stuff got removed. The errors looked like:
+/usr/bin/ld: warning: libvorbisfile.so.3, needed by ../lib/SFML-2.5.1/lib/libsfml-audio.so.2.5.1, not found (try using
+-rpath or -rpath-link)
+../lib/SFML-2.5.1/lib/libsfml-audio.so.2.5.1: undefined reference to `ov_read'
+../lib/SFML-2.5.1/lib/libsfml-audio.so.2.5.1: undefined reference to `ov_open_callbacks'
+../lib/SFML-2.5.1/lib/libsfml-audio.so.2.5.1: undefined reference to `ov_test_callbacks'
+../lib/SFML-2.5.1/lib/libsfml-audio.so.2.5.1: undefined reference to `ov_info'
+../lib/SFML-2.5.1/lib/libsfml-audio.so.2.5.1: undefined reference to `ov_pcm_seek'
+../lib/SFML-2.5.1/lib/libsfml-audio.so.2.5.1: undefined reference to `ov_clear'
+../lib/SFML-2.5.1/lib/libsfml-audio.so.2.5.1: undefined reference to `ov_pcm_total'o
+I fixed by googling the names of those so. I followed this post but without the i386
+https://askubuntu.com/questions/608418/error-while-loading-shared-libraries-libopenal-so-1-game-pacapong-in-ubuntu
+ https://ubuntu.pkgs.org/16.04/ubuntu-main-i386/libvorbisfile3_1.3.5-3_i386.deb.html
