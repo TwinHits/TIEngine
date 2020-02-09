@@ -3,7 +3,8 @@
 file(GLOB_RECURSE SOURCES LIST_DIRECTORIES true *.cpp)
 
 #Compile and Link library
-add_library(${CMAKE_PROJECT_NAME} SHARED ${SOURCES})
+#add_library(${CMAKE_PROJECT_NAME} SHARED ${SOURCES})
+add_library(${CMAKE_PROJECT_NAME} STATIC ${SOURCES})
 target_link_libraries(${CMAKE_PROJECT_NAME} sfml-graphics sfml-audio )
 target_link_libraries(${CMAKE_PROJECT_NAME} ${Boost_LIBRARIES} )
 
