@@ -9,6 +9,7 @@ target_link_libraries(${CMAKE_PROJECT_NAME} sfml-graphics sfml-audio )
 target_link_libraries(${CMAKE_PROJECT_NAME} ${Boost_LIBRARIES} )
 
 #Compile Sanity Check
-#add_executable(${CMAKE_PROJECT_NAME}_run ${SOURCES})
-#target_link_libraries(${CMAKE_PROJECT_NAME}_run sfml-graphics sfml-audio )
-#target_link_libraries(${CMAKE_PROJECT_NAME}_run ${Boost_LIBRARIES} )
+add_executable(${CMAKE_PROJECT_NAME}_run ${SOURCES})
+target_link_libraries(${CMAKE_PROJECT_NAME}_run sfml-graphics-d sfml-system-d sfml-window-d sfml-audio-d )
+#target_link_libraries(${CMAKE_PROJECT_NAME}_run ${SFML_LIBRARIES} )
+target_link_libraries(${CMAKE_PROJECT_NAME}_run ${Boost_LIBRARIES} )

@@ -34,3 +34,6 @@ src/TIEngine.dir/*
 tests/Debug/*
 tests/TIEngine_tests.dir/*
 x64/*
+Debug/*
+src/TIEngine_run.dir
+
