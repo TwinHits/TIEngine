@@ -83,8 +83,8 @@ void AssetsManager::parseAssets() {
 				}
 			}
 		} else {
-			LogManager::Instance()->logError("Textures folder does not exist.");
-			throw std::runtime_error("Textures folder '" + texturesPath.string() + "' does not exist. Aborting.");
+			LogManager::Instance()->logWarn("Textures folder does not exist yet. Creating.");
+			boost::filesystem::create_directory(texturesPath);
 		}
 	} catch (const boost::filesystem::filesystem_error& e) {
 		LogManager::Instance()->logError("Textures folder error: " + std::string(e.what()));
@@ -102,8 +102,8 @@ void AssetsManager::parseAssets() {
 				}
 			}
 		} else {
-			LogManager::Instance()->logError("Audio folder does not exist.");
-			throw std::runtime_error("Audio folder '" + audioPath.string() + "' does not exist. Aborting.");
+			LogManager::Instance()->logWarn("Audio folder does not exist yet. Creating.");
+			boost::filesystem::create_directory(audioPath);
 		}
 	} catch (const boost::filesystem::filesystem_error& e) {
 		LogManager::Instance()->logError("Audio folder error: " + std::string(e.what()));
@@ -121,8 +121,8 @@ void AssetsManager::parseAssets() {
 				}
 			}
 		} else {
-			LogManager::Instance()->logError("Fonts folder does not exist.");
-			throw std::runtime_error("Fonts folder '" + fontsPath.string() + "' does not exist. Aborting.");
+			LogManager::Instance()->logWarn("Fonts folder does not exist yet. Creating.");
+			boost::filesystem::create_directory(fontsPath);
 		}
 	} catch (const boost::filesystem::filesystem_error& e) {
 		LogManager::Instance()->logError("Fonts folder error: " + std::string(e.what()));
