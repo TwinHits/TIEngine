@@ -132,9 +132,9 @@ const std::string ConfigManager::assembleDatabaseConnectionString(const std::map
 
 
 void ConfigManager::restoreDefaultConfiguration() {
-		this->debugLogPath = "logs/";
-		this->assetsPath = "assets/";
-		this->debugLogLevel = LogLevel::INFO;
-		this->defaultDisplayLanguage = Language::en_US;
-		this->databaseConnectionString = "noconnectionstring";
+	this->debugLogPath = this->defaultDebugLogPath;
+	this->assetsPath = this->defaultAssetsPath;
+	this->debugLogLevel = this->defaultDebugLogLevel;
+	this->defaultDisplayLanguage = this->defaultDefaultDisplayLanguage;
+	this->databaseConnectionString = this->defaultDatabaseConnectionString;
 }

@@ -41,12 +41,20 @@ class ConfigManager: public Singleton<ConfigManager> {
 		std::string defaultConfigPath = "config.ini";
 
 		//Possible values and their defaults
-		std::string debugLogPath = "logs/";
-		std::string assetsPath = "assets/";
-		LogLevel debugLogLevel = LogLevel::INFO;
-		Language defaultDisplayLanguage = Language::en_US;
-		std::string databaseConnectionString = "noconnectionstring";
-		bool showMousePtrCoords = false;
+		std::string defaultDebugLogPath = "../logs/";
+		std::string defaultAssetsPath = "../assets/";
+		LogLevel defaultDebugLogLevel = LogLevel::INFO;
+		Language defaultDefaultDisplayLanguage = Language::en_US;
+		std::string defaultDatabaseConnectionString = "noconnectionstring";
+		bool defaultShowMousePtrCoords = false;
+
+		std::string debugLogPath = defaultDebugLogPath;
+		std::string assetsPath = defaultAssetsPath;
+		LogLevel debugLogLevel = defaultDebugLogLevel;
+		Language defaultDisplayLanguage = defaultDefaultDisplayLanguage;
+		std::string databaseConnectionString = defaultDatabaseConnectionString;
+		bool showMousePtrCoords = defaultShowMousePtrCoords;
+
 
 		ConfigManager(const ConfigManager&);
 		void operator=(const ConfigManager&);
