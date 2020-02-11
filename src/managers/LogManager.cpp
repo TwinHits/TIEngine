@@ -1,3 +1,7 @@
+#include <boost/filesystem.hpp>
+
+#include <iostream>
+
 #include "managers/ConfigManager.h"
 #include "managers/ConsoleManager.h"
 #include "managers/LogManager.h"
@@ -10,9 +14,15 @@
 using namespace TIE;
 
 LogManager::LogManager()  {
-	log.open(ConfigManager::Instance()->getDebugLogPath() + "debug.log", std::ios_base::app);
+	std::string debugLogPathConfig = ConfigManager::Instance()->getDebugLogPath();
+	boost::filesystem::path debugLogPath = boost::filesystem::path(debugLogPathConfig);
+	if (!boost::filesystem::exists(debugLogPath) || !boost::filesystem::is_directory(debugLogPath)) {
+		boost::filesystem::create_directory(debugLogPath);
+	}
+
+	log.open(debugLogPathConfig + "debug.log", std::ios_base::app);
 	if (!log.is_open()) {
-		logError("Could not open '" + ConfigManager::Instance()->getDebugLogPath() + "'.");
+		std::cout << "Could not open '" + ConfigManager::Instance()->getDebugLogPath() + "'." << std::endl;
 	}
 }
 
