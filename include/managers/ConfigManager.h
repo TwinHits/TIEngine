@@ -25,7 +25,6 @@ class ConfigManager: public Singleton<ConfigManager> {
 		const std::string& getAssetsPath();
 		LogLevel getDebugLogLevel();
 		const Language& getDefaultDisplayLanguage();
-		const std::string& getDatabaseConnectionString();
 		const bool getShowMousePtrCoords();
 
 		void setDefaultDisplayLanguage(const Language& defaultDisplayLanguage);
@@ -36,7 +35,6 @@ class ConfigManager: public Singleton<ConfigManager> {
 	private:
 		bool loadConfig(const std::string& path);
 		void parseConfig(std::ifstream& config);
-		const std::string assembleDatabaseConnectionString(std::map<std::string, std::string>);
 
 		std::string defaultConfigPath = "config.ini";
 
@@ -45,14 +43,12 @@ class ConfigManager: public Singleton<ConfigManager> {
 		std::string defaultAssetsPath = "../assets/";
 		LogLevel defaultDebugLogLevel = LogLevel::INFO;
 		Language defaultDefaultDisplayLanguage = Language::en_US;
-		std::string defaultDatabaseConnectionString = "noconnectionstring";
 		bool defaultShowMousePtrCoords = false;
 
 		std::string debugLogPath = defaultDebugLogPath;
 		std::string assetsPath = defaultAssetsPath;
 		LogLevel debugLogLevel = defaultDebugLogLevel;
 		Language defaultDisplayLanguage = defaultDefaultDisplayLanguage;
-		std::string databaseConnectionString = defaultDatabaseConnectionString;
 		bool showMousePtrCoords = defaultShowMousePtrCoords;
 
 

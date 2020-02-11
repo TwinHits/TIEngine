@@ -39,15 +39,6 @@ TEST(ConfigManager, GetDefaultDisplayLanguageDefault) {
 	ASSERT_EQ(expected, actual);
 }
 
-TEST(ConfigManager, GetDatabaseConnectionStringDefault) {
-	TIE::ConfigManager::Instance()->restoreDefaultConfiguration();
-
-	const std::string expected = "noconnectionstring";
-	const std::string actual = TIE::ConfigManager::Instance()->getDatabaseConnectionString();
-
-	ASSERT_EQ(expected, actual);
-}
-
 //Test when given a specific configuration file, the file is loaded correctly.
 TEST(ConfigManager, LoadCustomConfigFile) {
 	ASSERT_TRUE(TIE::ConfigManager::Instance()->loadConfigFile(TIE::TEST_CONFIG_FILE));

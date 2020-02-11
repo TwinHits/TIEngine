@@ -45,11 +45,6 @@ const Language& ConfigManager::getDefaultDisplayLanguage() {
 }
 
 
-const std::string& ConfigManager::getDatabaseConnectionString() {
-	return this->databaseConnectionString;
-}
-
-
 const bool ConfigManager::getShowMousePtrCoords() {
 	return this->showMousePtrCoords;
 }
@@ -89,7 +84,6 @@ bool ConfigManager::loadConfig(const std::string& path) {
 
 void ConfigManager::parseConfig(std::ifstream& config) {
 	std::string line;
-	std::map<std::string, std::string> databaseConfig;
 	while (std::getline(config, line)) {
 		std::stringstream fileline(line);
 		std::string key;
@@ -102,31 +96,12 @@ void ConfigManager::parseConfig(std::ifstream& config) {
 			else if (key == "AssetsPath") { assetsPath = value; }
 			else if (key == "DebugLogLevel") { debugLogLevel = strToLogLevel(value); }
 			else if (key == "DefaultDisplayLanguage") { defaultDisplayLanguage = parseLanguageString(value); }
-			else if (key == "DatabaseDBName" || key == "DatabaseUser" || key == "DatabasePassword" || key == "DatabaseHostAddr" || key == "DatabasePort") {
-				databaseConfig.insert(std::pair<std::string, std::string>(key, value));
-			}
 			else if (key == "ShowMousePtrCoords") { 
 				if (value == "true") {
 					this->showMousePtrCoords = true; 
 				}
 			}
 		} 
-	}
-	this->databaseConnectionString = assembleDatabaseConnectionString(databaseConfig);
-}
-
-
-const std::string ConfigManager::assembleDatabaseConnectionString(const std::map<std::string, std::string> databaseConfig) {
-	try {
-		std::stringstream databaseConnectionString;
-		databaseConnectionString << "dbname=" << databaseConfig.at("DatabaseDBName") << " ";
-		databaseConnectionString << "user=" << databaseConfig.at("DatabaseUser") << " ";
-		databaseConnectionString << "password=" << databaseConfig.at("DatabasePassword") << " ";
-		databaseConnectionString << "hostaddr=" << databaseConfig.at("DatabaseHostAddr") << " ";
-		databaseConnectionString << "port=" << databaseConfig.at("DatabasePort");
-		return databaseConnectionString.str();
-	} catch (std::out_of_range e) {
-		return this->databaseConnectionString;
 	}
 }
 
@@ -136,5 +111,4 @@ void ConfigManager::restoreDefaultConfiguration() {
 	this->assetsPath = this->defaultAssetsPath;
 	this->debugLogLevel = this->defaultDebugLogLevel;
 	this->defaultDisplayLanguage = this->defaultDefaultDisplayLanguage;
-	this->databaseConnectionString = this->defaultDatabaseConnectionString;
 }
