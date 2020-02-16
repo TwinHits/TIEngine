@@ -27,7 +27,16 @@ find_package(Boost COMPONENTS filesystem REQUIRED)
 include_directories( ${Boost_INCLUDE_DIR} )
 link_directories("lib/boost_1_72_0-msvc-14.2-64/lib64-msvc-14.2")
 
-#Include
+#Lua
+include_directories("lib/LuaBridge/Source/LuaBridge")
+include_directories("lib/LuaBridge/Source")
+if(${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU")
+	include_directories("lib/lua-5.3.5_Linux319_64_lib/include")
+	link_directories("lib/lua-5.3.5_Linux319_64_lib")
+elseif(${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC)
+endif()
+
+#Include TIEngine directories
 include_directories(include)
 
 #TIEngine Library location

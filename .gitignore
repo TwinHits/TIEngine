@@ -1,9 +1,11 @@
 ##Project specific Ignores
 bin/*
 logs/*
+scripts/
 tests/logs/*
 docs/todo.txt
 TIEngineVS*
+src/logs/*
 
 #Build Artifacts
 *TIEngine
@@ -21,6 +23,7 @@ CMakeCache.txt
 cmake_install.cmake
 makefile
 CTestTestfile.cmake
+CMakeSettings.json
 
 #MSVC
 *sln

@@ -10,6 +10,8 @@ This project is cross platform and has been tested on Visual Studio 17.0 and g++
 This engine utilizes
 	SFML - 2.5
 	Boost - 1.72.0
+	LuaBridge - 2.4
+		https://github.com/vinniefalco/LuaBridge
 
 Windows set up:
 1. Clone this repo.

@@ -23,6 +23,7 @@ class ConfigManager: public Singleton<ConfigManager> {
 
 		const std::string& getDebugLogPath();
 		const std::string& getAssetsPath();
+		const std::string& getScriptsPath();
 		LogLevel getDebugLogLevel();
 		const Language& getDefaultDisplayLanguage();
 		const bool getShowMousePtrCoords();
@@ -41,12 +42,14 @@ class ConfigManager: public Singleton<ConfigManager> {
 		//Possible values and their defaults
 		std::string defaultDebugLogPath = "../logs/";
 		std::string defaultAssetsPath = "../assets/";
+		std::string defaultScriptsPath = "../scripts/";
 		LogLevel defaultDebugLogLevel = LogLevel::INFO;
 		Language defaultDefaultDisplayLanguage = Language::en_US;
 		bool defaultShowMousePtrCoords = false;
 
 		std::string debugLogPath = defaultDebugLogPath;
 		std::string assetsPath = defaultAssetsPath;
+		std::string scriptsPath = defaultScriptsPath;
 		LogLevel debugLogLevel = defaultDebugLogLevel;
 		Language defaultDisplayLanguage = defaultDefaultDisplayLanguage;
 		bool showMousePtrCoords = defaultShowMousePtrCoords;

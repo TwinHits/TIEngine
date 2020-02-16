@@ -30,6 +30,11 @@ const std::string& ConfigManager::getAssetsPath() {
 }
 
 
+const std::string& ConfigManager::getScriptsPath() {
+	return this->scriptsPath;
+}
+
+
 LogLevel ConfigManager::getDebugLogLevel() {
 	return this->debugLogLevel;
 }
@@ -75,8 +80,6 @@ bool ConfigManager::loadConfig(const std::string& path) {
 		config.close();
 		return true;
 	} else {
-		//Create a default config file for future loads. 
-		//Consider also using a verson system where the file has a version and is replaced if the version number in the header is greater than the one in the file.
 		return false;
 	}
 }
