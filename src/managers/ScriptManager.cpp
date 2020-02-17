@@ -1,13 +1,5 @@
 #include <iostream>
 #include <string>
-  
-//Lua headers must be included before LuaBridge
-extern "C" {
-	#include <lua.h>
-	#include <lauxlib.h>
-	#include <lualib.h>
-}
-#include <LuaBridge.h>
 
 #include "managers/ConfigManager.h"
 #include "managers/LogManager.h"
@@ -17,7 +9,7 @@ using namespace luabridge;
 using namespace TIE;
 
 ScriptManager::ScriptManager() {
-	
+    this->luaState = luaL_newstate();
 }
 
 
@@ -25,18 +17,14 @@ ScriptManager::~ScriptManager() {
 
 }
 
-void ScriptManager::loadScript() {
+void ScriptManager::loadScript(const std::string& scriptName) {
 
-	auto scriptsPath = ConfigManager::Instance()->getScriptsPath();
-	std::string script = scriptsPath + "script.lua";
+    const std::string& scriptsPath = ConfigManager::Instance()->getScriptsPath();
+    std::string scriptFile = scriptsPath + scriptName;
 
-    lua_State* L = luaL_newstate();
-    luaL_dofile(L, script.c_str());
-    luaL_openlibs(L);
-    lua_pcall(L, 0, 0, 0);
-    LuaRef s = getGlobal(L, "testString");
-    LuaRef n = getGlobal(L, "number");
-    std::string luaString = s.cast<std::string>();
-    int answer = n.cast<int>();
-    LogManager::Instance()->logInfo(luaString);
+    luaL_dofile(this->luaState, scriptFile.c_str());
+    luaL_openlibs(this->luaState);
+    lua_pcall(this->luaState, 0, 0, 0);
+
+    LuaRef t = getGlobal(this->luaState, "window");
 }
