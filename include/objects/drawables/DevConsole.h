@@ -23,7 +23,7 @@ class DevConsole : public TIEntity {
 		void processCommand(const std::string& command);
 
 		const sf::Vector2i& getWritePosition();
-
+		std::vector<std::string>& splitString(const std::string& string, char delimiter, std::vector<std::string>& out);
 
 	private:
 		virtual void drawSelf(sf::RenderTarget&, sf::RenderStates) const;
@@ -33,7 +33,6 @@ class DevConsole : public TIEntity {
 		TIExt& currentCommand;
 		int fontSize = 14;
 		sf::Vector2i textWritePosition;
-
 };
 
 } 

@@ -3,7 +3,7 @@
 int main()
 {
 	//Minimum render loop for sample
-	sf::RenderWindow& window = TIE::WindowManager::Instance()->addWindow();
+	sf::RenderWindow& window = TIE::WindowManager::Instance()->getWindow();
 
 	while (window.isOpen()) {
 		TIE::InputManager::Instance()->processInput();

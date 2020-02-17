@@ -1,9 +1,11 @@
 #include <string>
+#include <sstream>
 
 #include "managers/LogManager.h"
 #include "managers/AssetsManager.h"
 #include "managers/InputManager.h"
 #include "managers/SceneManager.h"
+#include "managers/ScriptManager.h"
 #include "managers/WindowManager.h"
 #include "managers/ViewManager.h"
 
@@ -60,14 +62,23 @@ int DevConsole::runClientCommand(const std::string& command) {
 }
 
 
-void DevConsole::processCommand(const std::string& command) {
-   	LogManager::Instance()->logCommand(command);
+void DevConsole::processCommand(const std::string& c) {
+   	LogManager::Instance()->logCommand(c);
+
+
+	std::vector<std::string> commandArgs;
+	this->splitString(c, ' ', commandArgs);
+	const std::string& command = commandArgs.front();
 
 	if (command == "test") {
 		LogManager::Instance()->logCommand("Test Command Please Ignore.");
 	}
+	else if (command == "script") {
+		const std::string& scriptName = commandArgs.at(1);
+		ScriptManager::Instance()->loadScript(scriptName);
+	}
 	//Run client commands
-	else if (this->runClientCommand(command) == 1) {
+	else if (this->runClientCommand(c) == 1) {
 		LogManager::Instance()->logCommand("Unknown command.");
 	}
 }	
@@ -108,4 +119,13 @@ const sf::Vector2i& DevConsole::getWritePosition() {
 
 void DevConsole::drawSelf(sf::RenderTarget& window, sf::RenderStates states) const {
 	window.draw(this->getSprite(), states);
+}
+
+std::vector<std::string>& DevConsole::splitString(const std::string& string, char delimiter, std::vector<std::string>& out) {
+		std::istringstream iss(string);
+		std::string item;
+		while (std::getline(iss, item, delimiter)) {
+			out.push_back(item);
+		}
+		return out;
 }
