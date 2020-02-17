@@ -65,8 +65,7 @@ void InputManager::processInput() {
 							consoleManager->hideConsole();
 						}	
 						break;
-					//This should be Tilde, but its not detecting on my keyboard. to be fixed.
-					case sf::Keyboard::BackSlash:
+					case sf::Keyboard::Tilde:
 						textEntered.clear();
 						if (!consoleManager->checkConsole()) {
 							consoleManager->showConsole();
