@@ -10,6 +10,7 @@ extern "C" {
 #include <LuaBridge.h>
 
 #include "managers/ConfigManager.h"
+#include "managers/LogManager.h"
 #include "managers/ScriptManager.h"
 
 using namespace luabridge;
@@ -29,7 +30,6 @@ void ScriptManager::loadScript() {
 	auto scriptsPath = ConfigManager::Instance()->getScriptsPath();
 	std::string script = scriptsPath + "script.lua";
 
-	
     lua_State* L = luaL_newstate();
     luaL_dofile(L, script.c_str());
     luaL_openlibs(L);
@@ -38,6 +38,5 @@ void ScriptManager::loadScript() {
     LuaRef n = getGlobal(L, "number");
     std::string luaString = s.cast<std::string>();
     int answer = n.cast<int>();
-    std::cout << luaString << std::endl;
-    std::cout << "And here's our number:" << answer << std::endl;	
+    LogManager::Instance()->logInfo(luaString);
 }

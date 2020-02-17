@@ -12,6 +12,6 @@ file(GLOB_RECURSE SOURCES LIST_DIRECTORIES true *.cpp)
 #target_link_libraries(${CMAKE_PROJECT_NAME} ${Boost_LIBRARIES} )
 
 #Compile Sanity Check exe
-add_executable(${CMAKE_PROJECT_NAME}_run ${SOURCES})
-target_link_libraries(${CMAKE_PROJECT_NAME}_run sfml-graphics sfml-audio lua53)
-target_link_libraries(${CMAKE_PROJECT_NAME}_run ${Boost_LIBRARIES} )
+add_executable(${CMAKE_PROJECT_NAME} ${SOURCES})
+target_link_libraries(${CMAKE_PROJECT_NAME} sfml-graphics sfml-audio lua53)
+target_link_libraries(${CMAKE_PROJECT_NAME} ${Boost_LIBRARIES} )
