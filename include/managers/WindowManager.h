@@ -17,7 +17,9 @@ class WindowManager : public Singleton<WindowManager> {
 									int style=sf::Style::Default,
 									const sf::ContextSettings& settings=sf::ContextSettings());
 		sf::RenderWindow& getWindow();
+		sf::RenderWindow& updateWindowSize(int, int);
 		void removeWindow();
+
 
 		void showFPS(const std::string& fps);
 		sf::Vector2i getWindowSize();

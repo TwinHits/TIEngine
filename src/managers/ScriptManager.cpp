@@ -36,7 +36,5 @@ void ScriptManager::loadScript(const std::string& scriptName) {
     int width = w.cast<int>();
     int height = h.cast<int>();
 
-    WindowManager::Instance()->addWindow(sf::VideoMode(width, height), titleString);
-    TIE::GlobalId viewId = ViewManager::Instance()->addView();
-    ViewManager::Instance()->setActiveView(viewId);
+    WindowManager::Instance()->updateWindowSize(width, height);
 }

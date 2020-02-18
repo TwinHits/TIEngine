@@ -1,6 +1,7 @@
 #include "managers/WindowManager.h"
 #include "managers/StringManager.h"
 #include "managers/LogManager.h"
+#include "managers/ViewManager.h"
 
 #include "templates/MakeUnique.h"
 
@@ -46,6 +47,13 @@ sf::RenderWindow& WindowManager::getWindow() {
 		this->addWindow();
 	}
 	return *this->window;
+}
+
+sf::RenderWindow& TIE::WindowManager::updateWindowSize(int width, int height) {
+	sf::RenderWindow& window = this->getWindow();
+	window.setSize(sf::Vector2u(width, height));
+
+	return window;
 }
 
 
