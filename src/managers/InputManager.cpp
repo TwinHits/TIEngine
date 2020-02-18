@@ -7,7 +7,6 @@
 #include "managers/ConsoleManager.h"
 #include "managers/InputManager.h" 
 #include "managers/LogManager.h"
-#include "managers/SceneManager.h"
 #include "managers/ViewManager.h"
 #include "managers/WindowManager.h"
 
@@ -96,10 +95,10 @@ void InputManager::processInput() {
 				break;
 		}
 
-		sf::View& view = ViewManager::Instance()->getView(SceneManager::Instance()->getClientLayer().getViewId());
+		sf::View& clientView = ViewManager::Instance()->getClientView();
 		sf::Vector2i position = sf::Mouse::getPosition(window);
 		this->mouseWindowPosition = window.mapPixelToCoords(position);
-		this->mouseWorldPosition = window.mapPixelToCoords(position, view); 
+		this->mouseWorldPosition = window.mapPixelToCoords(position, clientView); 
 
 		//Do client side event processing if the console is not showing
 		if (!consoleManager->checkConsole()) {
@@ -120,18 +119,18 @@ void InputManager::scroll(sf::RenderWindow& window) {
 
 	auto consoleManager = ConsoleManager::Instance();
 	auto mousePosition = sf::Mouse::getPosition(window);
-	GlobalId viewId = SceneManager::Instance()->getClientLayer().getViewId();
+	GlobalId clientViewId = ViewManager::Instance()->getClientViewId();
 	Direction direction;
 	
 	if (!consoleManager->checkConsole()) {
 		if (mousePosition.y <= scrollZone)
-			ViewManager::Instance()->scroll(viewId, TOP);
+			ViewManager::Instance()->scroll(clientViewId, TOP);
 		if (mousePosition.y >= WindowManager::Instance()->getWindowSize().y - scrollZone)
-			ViewManager::Instance()->scroll(viewId, BOTTOM);
+			ViewManager::Instance()->scroll(clientViewId, BOTTOM);
 		if (mousePosition.x <= scrollZone)
-			ViewManager::Instance()->scroll(viewId, LEFT);
+			ViewManager::Instance()->scroll(clientViewId, LEFT);
 		if (mousePosition.x >= WindowManager::Instance()->getWindowSize().x - scrollZone)
-			ViewManager::Instance()->scroll(viewId, RIGHT);
+			ViewManager::Instance()->scroll(clientViewId, RIGHT);
 	} else if (consoleManager->checkConsole()) {
 		if (mousePosition.y <= scrollZone)
 			consoleManager->scroll(TOP);

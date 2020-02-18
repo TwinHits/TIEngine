@@ -12,25 +12,22 @@
 using namespace TIE;
 
 SceneManager::SceneManager() : clock(TimeManager::Instance()->addClock()) {
-	GlobalId engineViewId = ViewManager::Instance()->addView();
-	GlobalId clientViewId = ViewManager::Instance()->addView();
-
 	this->sceneGraphRoot = make_unique<SceneLayer>();
 	this->sceneGraphRoot->setLayer(SceneLayer::Layer::ROOT);
 	this->sceneGraphRoot->setType("ROOT");
 	this->sceneGraphRoot->setPosition(0, 0);
-	this->sceneGraphRoot->setViewId(engineViewId);
+	this->sceneGraphRoot->setViewId(ViewManager::Instance()->getEngineViewId());
 
 	std::unique_ptr<SceneLayer> clientLayerPtr = make_unique<SceneLayer>();
 	clientLayerPtr->setLayer(SceneLayer::Layer::CLIENT);
 	clientLayerPtr->setType("Client Layer");
-	clientLayerPtr->setViewId(clientViewId);
+	clientLayerPtr->setViewId(ViewManager::Instance()->getClientViewId());
 	this->clientLayer = &dynamic_cast<SceneLayer&>(this->sceneGraphRoot->attachChild(std::move(clientLayerPtr)));
 
 	std::unique_ptr<SceneLayer> engineLayerPtr = make_unique<SceneLayer>();
 	engineLayerPtr->setLayer(SceneLayer::Layer::ENGINE);
 	engineLayerPtr->setType("Engine Layer");
-	engineLayerPtr->setViewId(engineViewId);
+	engineLayerPtr->setViewId(ViewManager::Instance()->getEngineViewId());
 	this->engineLayer = &dynamic_cast<SceneLayer&>(this->sceneGraphRoot->attachChild(std::move(engineLayerPtr)));
 
 	std::unique_ptr<MousePtrCoords> mousePtrCoords = make_unique<MousePtrCoords>();

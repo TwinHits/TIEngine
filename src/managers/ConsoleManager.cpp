@@ -48,22 +48,22 @@ void ConsoleManager::setDevConsole(std::unique_ptr<DevConsole> devConsole) {
 
 
 void ConsoleManager::scroll(Direction direction) {
-	GlobalId viewId = SceneManager::Instance()->getEngineLayer().getViewId();
-	sf::View view = ViewManager::Instance()->getView(viewId);
+	GlobalId engineViewId = ViewManager::Instance()->getEngineViewId();
+	sf::View& engineView = ViewManager::Instance()->getEngineView();
 	if (direction == Direction::TOP) {
-		sf::Vector2f center = view.getCenter();
+		sf::Vector2f center = engineView.getCenter();
 		if (center.y == 0) {
 			return;		
 		}
-		ViewManager::Instance()->scroll(viewId, direction);
+		ViewManager::Instance()->scroll(engineViewId, direction);
 	} else if (direction == Direction::BOTTOM) {
-		sf::Vector2f size = view.getSize();
-		sf::Vector2f center = view.getCenter();
+		sf::Vector2f size = engineView.getSize();
+		sf::Vector2f center = engineView.getCenter();
 		const sf::Vector2i writePosition = this->devConsole->getWritePosition();
 		float bottomOfView = center.y + size.y /2;
 		if (writePosition.y < bottomOfView) {
 			return;
 		}
-		ViewManager::Instance()->scroll(viewId, direction);
+		ViewManager::Instance()->scroll(engineViewId, direction);
 	}
 }

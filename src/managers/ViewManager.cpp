@@ -1,6 +1,5 @@
 #include "managers/HashManager.h"
 #include "managers/LogManager.h"
-#include "managers/SceneManager.h"
 #include "managers/ViewManager.h"
 #include "managers/WindowManager.h"
 
@@ -11,7 +10,9 @@
 using namespace TIE; 
 
 ViewManager::ViewManager() {
-
+	sf::Vector2i windowSize = WindowManager::Instance()->getWindowSize();
+	this->engineViewId = this->addView(sf::FloatRect(0, 0, windowSize.x, windowSize.y));
+	this->clientViewId = this->addView(sf::FloatRect(0, 0, windowSize.x, windowSize.y));
 }
 
 
@@ -50,14 +51,25 @@ sf::View& ViewManager::getView(GlobalId id) {
 	}
 }
 
+sf::View& ViewManager::updateView(GlobalId id, const sf::FloatRect& size) {
+	sf::View& view = this->getView(id);
+	return this->updateView(view, size);
+}
+
+sf::View& ViewManager::updateView(sf::View& view, const sf::FloatRect& size) {
+	view.setCenter(sf::Vector2f(size.left, size.top));
+	view.setSize(sf::Vector2f(size.width, size.height));
+	return view;
+}
+
 
 sf::View& ViewManager::getActiveView() {
-	if (this->activeView == 0) {
+	if (this->activeViewId == 0) {
 		LogManager::Instance()->logWarn("No active view found, building default.");
 		this->setActiveView(this->addView());
 	}
 
-	return this->getView(this->activeView);
+	return this->getView(this->activeViewId);
 }
 
 
@@ -75,7 +87,7 @@ void ViewManager::removeView(GlobalId id) {
 void ViewManager::setActiveView(GlobalId id) {
 	sf::View& view = this->getView(id);
 	WindowManager::Instance()->getWindow().setView(view);
-	this->activeView = id;
+	this->activeViewId = id;
 }
 
 
@@ -114,4 +126,24 @@ void ViewManager::scroll(Direction direction) {
 
 void ViewManager::zoom(void) {
 
+}
+
+
+GlobalId ViewManager::getClientViewId() {
+	return this->clientViewId;
+}
+
+
+GlobalId ViewManager::getEngineViewId() {
+	return this->engineViewId;
+}
+
+
+sf::View& ViewManager::getClientView() {
+	return this->getView(this->clientViewId);
+}
+
+
+sf::View& ViewManager::getEngineView() {
+	return this->getView(this->engineViewId);
 }

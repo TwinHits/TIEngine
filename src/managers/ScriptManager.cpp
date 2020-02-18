@@ -4,6 +4,8 @@
 #include "managers/ConfigManager.h"
 #include "managers/LogManager.h"
 #include "managers/ScriptManager.h"
+#include "managers/WindowManager.h"
+#include "managers/ViewManager.h"
 
 using namespace luabridge;
 using namespace TIE;
@@ -27,4 +29,14 @@ void ScriptManager::loadScript(const std::string& scriptName) {
     lua_pcall(this->luaState, 0, 0, 0);
 
     LuaRef t = getGlobal(this->luaState, "window");
+    LuaRef title = t["title"];
+    LuaRef w = t["width"];
+    LuaRef h = t["height"];
+    std::string titleString = title.cast<std::string>();
+    int width = w.cast<int>();
+    int height = h.cast<int>();
+
+    WindowManager::Instance()->addWindow(sf::VideoMode(width, height), titleString);
+    TIE::GlobalId viewId = ViewManager::Instance()->addView();
+    ViewManager::Instance()->setActiveView(viewId);
 }

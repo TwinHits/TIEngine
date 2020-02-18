@@ -17,29 +17,39 @@ namespace TIE {
 
 class ViewManager : public Singleton<ViewManager> {
 	public:
-		GlobalId addView(const sf::FloatRect&);
 		GlobalId addView();
+		GlobalId addView(const sf::FloatRect&);
 		sf::View& getView(GlobalId);
-		sf::View& getActiveView();
+		sf::View& updateView(GlobalId, const sf::FloatRect&);
+		sf::View& updateView(sf::View&, const sf::FloatRect&);
 		void removeView(GlobalId);
 
+		void updateCamera();
+		void scroll(GlobalId viewId, Direction direction);
+		void scroll(Direction direction);
+		void zoom(void);
 
 		void setActiveView(GlobalId);
-		void updateCamera();
+		sf::View& getActiveView();
 
 		void setScrollSpeed(float scrollSpeed);
 		float getScrollSpeed();
 
-		void scroll(GlobalId viewId, Direction direction);
-		void scroll(Direction direction);
-		void zoom(void);
+		GlobalId getEngineViewId();
+		GlobalId getClientViewId();
+
+		sf::View& getEngineView();
+		sf::View& getClientView();
 
 		ViewManager();
 		~ViewManager();
 
 	private:
 		std::map<GlobalId, std::unique_ptr<sf::View> > views;
-		GlobalId activeView;
+
+		GlobalId activeViewId;
+		GlobalId clientViewId;
+		GlobalId engineViewId;
 
 		float scrollSpeed = 5.0;
 		
