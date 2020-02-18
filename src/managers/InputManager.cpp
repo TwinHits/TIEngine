@@ -84,11 +84,14 @@ void InputManager::processInput() {
 				}
 				break;
 			case sf::Event::TextEntered:
-				//Explicitly not allowing backslash and Return by ascii code because NOTHING ESE WORKED
-				if (consoleManager->checkConsole() && event.text.unicode < 128 
-						&& static_cast<char>(event.text.unicode) != 96
-						&& static_cast<char>(event.text.unicode) != 13) {
+				if (consoleManager->checkConsole() 
+					&& event.text.unicode < 128  //if it's a character
+					&& static_cast<int>(event.text.unicode) != 96 //tilde
+					&& static_cast<int>(event.text.unicode) != 13 //return
+					&& static_cast<int>(event.text.unicode) != 8) { // backspace
 					textEntered += static_cast<char>(event.text.unicode);
+				} else if (static_cast<int>(event.text.unicode) == 8) { //backspace
+					textEntered = textEntered.substr(0, textEntered.length() - 1);
 				}
 				break;
 			default:
