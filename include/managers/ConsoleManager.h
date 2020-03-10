@@ -21,13 +21,20 @@ class ConsoleManager : public Singleton<ConsoleManager> {
 		void showConsole();
 		void hideConsole();
 		bool checkConsole();
-		void runCommand(const std::string&);
+		void runCommand();
 		void scroll(Direction direction);
+		void traverseHistory(sf::Event event);
+		void addToCommand(unsigned int unicodeCharacter);
+		const std::string& getCommand();
 
 		void setDevConsole(std::unique_ptr<DevConsole> devConsole);
 
 	private:
+		std::vector<std::string>& splitString(const std::string& string, char delimiter, std::vector<std::string>& out);
+
 		DevConsole* devConsole;
+		std::string command;
+		std::vector<std::string> commandHistory;
 
 		void operator=(const ConsoleManager&);
 		ConsoleManager(const ConsoleManager&);

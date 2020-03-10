@@ -28,6 +28,11 @@ void TIExt::setText(const sf::Text& text) {
 }
 
 
+void TIExt::setTextString(const std::string& string) {
+	this->text.setString(string);
+}
+
+
 sf::Text& TIExt::getText() {
 	return this->text; 
 }

@@ -16,14 +16,8 @@ class DevConsole : public TIEntity {
 		DevConsole();
 		virtual ~DevConsole();
 
-		const std::vector<TIExt>& getCommandHistory() const;
-		const TIExt& getCurrentCommand() const;
-
-		virtual int runClientCommand(const std::string& command);
-		void processCommand(const std::string& command);
-
+		TIExt& getCommandTIExt();
 		const sf::Vector2i& getWritePosition();
-		std::vector<std::string>& splitString(const std::string& string, char delimiter, std::vector<std::string>& out);
 
 	private:
 		virtual void drawSelf(sf::RenderTarget&, sf::RenderStates) const;

@@ -34,7 +34,7 @@ class LogManager: public Singleton<LogManager> {
 		~LogManager();
 	private:
 		std::ofstream log;
-		std::queue<std::string> queueToDraw;
+		std::queue<std::string> logHistory;
 
 		LogManager(const LogManager&);
 		void operator=(const LogManager&);

@@ -15,6 +15,7 @@ class TIExt : public SceneNode {
 		void setText(const sf::Text&);
 		sf::Text& getText();
 		const sf::Text& getText() const;
+		void setTextString(const std::string&);
 
 		bool operator==(const TIExt&) const;
 		bool operator!=(const TIExt&) const;

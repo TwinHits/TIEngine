@@ -1,13 +1,8 @@
 #include <string>
-#include <sstream>
 
 #include "managers/LogManager.h"
 #include "managers/AssetsManager.h"
-#include "managers/InputManager.h"
-#include "managers/SceneManager.h"
-#include "managers/ScriptManager.h"
 #include "managers/WindowManager.h"
-#include "managers/ViewManager.h"
 
 #include "objects/drawables/DevConsole.h" 
 
@@ -35,11 +30,9 @@ DevConsole::DevConsole() : font(AssetsManager::Instance()->getFont("DevConsole.t
 	this->setDrawn(false);
 	this->setCollidable(false);
 	
-	//Set the currentCommand for drawing only. Maybe later combine with processing?
 	this->currentCommand.getText().setFont(font);
 	this->currentCommand.getText().setCharacterSize(fontSize);
 	this->currentCommand.setDrawn(true);
-
 	this->currentCommand.getText().setPosition(-(windowSize.x/2), windowSize.y/2 - fontSize);
 
 	this->setType("Default Dev Console.");
@@ -51,44 +44,8 @@ DevConsole::~DevConsole() {
 }	
 
 
-const TIExt& DevConsole::getCurrentCommand() const {
-	return currentCommand;
-}
-
-
-int DevConsole::runClientCommand(const std::string& command) {
-	LogManager::Instance()->logWarn("No client DevConsole defined.");
-	return 1;
-}
-
-
-void DevConsole::processCommand(const std::string& c) {
-   	LogManager::Instance()->logCommand(c);
-
-
-	std::vector<std::string> commandArgs;
-	this->splitString(c, ' ', commandArgs);
-	const std::string& command = commandArgs.front();
-
-	if (command == "test") {
-		LogManager::Instance()->logCommand("Test Command Please Ignore.");
-	}
-	else if (command == "script") {
-		const std::string& scriptName = commandArgs.at(1);
-		ScriptManager::Instance()->loadScript(scriptName);
-	}
-	//Run client commands
-	else if (this->runClientCommand(c) == 1) {
-		LogManager::Instance()->logCommand("Unknown command.");
-	}
-}	
-
-
 void DevConsole::updateSelf(const float delta) {
 	//To get the messages to display in console, get not yet processed messages from the LogManager, turn them into scene texts, and draw them. This happens every frame.
-
-	auto textEntered = InputManager::Instance()->getTextEntered();
-	currentCommand.getText().setString(textEntered);
 
 	std::queue<std::string>& queue = LogManager::Instance()->getQueueToDraw();
 
@@ -108,7 +65,6 @@ void DevConsole::updateSelf(const float delta) {
 
 		queue.pop();
 	}
-
 }
 
 
@@ -117,15 +73,11 @@ const sf::Vector2i& DevConsole::getWritePosition() {
 }
 
 
-void DevConsole::drawSelf(sf::RenderTarget& window, sf::RenderStates states) const {
-	window.draw(this->getSprite(), states);
+TIExt& DevConsole::getCommandTIExt() {
+	return this->currentCommand;
 }
 
-std::vector<std::string>& DevConsole::splitString(const std::string& string, char delimiter, std::vector<std::string>& out) {
-		std::istringstream iss(string);
-		std::string item;
-		while (std::getline(iss, item, delimiter)) {
-			out.push_back(item);
-		}
-		return out;
+
+void DevConsole::drawSelf(sf::RenderTarget& window, sf::RenderStates states) const {
+	window.draw(this->getSprite(), states);
 }

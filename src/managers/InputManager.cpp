@@ -1,9 +1,7 @@
-#include <iostream> 
 #include <cstdio>
 
 #include <SFML/Graphics.hpp>
 
-#include "managers/ConfigManager.h"
 #include "managers/ConsoleManager.h"
 #include "managers/InputManager.h" 
 #include "managers/LogManager.h"
@@ -25,10 +23,6 @@ InputManager::~InputManager() {
 
 }
 
-
-const std::string InputManager::getTextEntered() {
-	return this->textEntered;
-}
 
 
 const sf::Vector2f InputManager::getMouseWindowPosition() {
@@ -60,12 +54,10 @@ void InputManager::processInput() {
 							window.close();
 							LogManager::Instance()->logInfo("Window closed by user.");
 						} else if (consoleManager->checkConsole()) {
-							textEntered.clear();
 							consoleManager->hideConsole();
 						}	
 						break;
 					case sf::Keyboard::Tilde:
-						textEntered.clear();
 						if (!consoleManager->checkConsole()) {
 							consoleManager->showConsole();
 						}
@@ -75,8 +67,13 @@ void InputManager::processInput() {
 						break;
 					case sf::Keyboard::Return:
 						if (consoleManager->checkConsole()) {	
-							consoleManager->runCommand(std::string(textEntered));
-							textEntered.clear();
+							consoleManager->runCommand();
+						}
+						break;
+					case sf::Keyboard::Up:
+					case sf::Keyboard::Down:
+						if (consoleManager->checkConsole()) {	
+							consoleManager->traverseHistory(event);
 						}
 						break;
 					default:
@@ -84,14 +81,8 @@ void InputManager::processInput() {
 				}
 				break;
 			case sf::Event::TextEntered:
-				if (consoleManager->checkConsole() 
-					&& event.text.unicode < 128  //if it's a character
-					&& static_cast<int>(event.text.unicode) != 96 //tilde
-					&& static_cast<int>(event.text.unicode) != 13 //return
-					&& static_cast<int>(event.text.unicode) != 8) { // backspace
-					textEntered += static_cast<char>(event.text.unicode);
-				} else if (static_cast<int>(event.text.unicode) == 8) { //backspace
-					textEntered = textEntered.substr(0, textEntered.length() - 1);
+				if (consoleManager->checkConsole()) {
+					consoleManager->addToCommand(event.text.unicode);
 				}
 				break;
 			default:
