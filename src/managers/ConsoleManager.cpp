@@ -40,7 +40,6 @@ bool ConsoleManager::checkConsole() {
 
 void ConsoleManager::runCommand() {
    	LogManager::Instance()->logCommand(this->command);
-	this->commandHistory.push_back(this->command);
 
 	std::vector<std::string> commandArgs;
 	this->splitString(this->command, ' ', commandArgs);
@@ -54,6 +53,10 @@ void ConsoleManager::runCommand() {
 	} else {
 		LogManager::Instance()->logCommand("Unknown command.");
 	}
+
+	this->commandHistory.push_back(this->command);
+	this->command = "";
+	this->historyIndex = commandHistory.end();
 }
 
 
@@ -93,12 +96,20 @@ void ConsoleManager::scroll(Direction direction) {
 
 
 void ConsoleManager::traverseDownHistory() {
-
+	if (this->historyIndex + 1 != this->commandHistory.end()) {
+		this->historyIndex++;
+		this->command = *(this->historyIndex);
+		this->devConsole->getCommandTIExt().setTextString(this->command);
+	}
 }
 
 
 void ConsoleManager::traverseUpHistory() {
-
+	if (this->historyIndex != this->commandHistory.begin()) {
+		this->historyIndex--;
+		this->command = *(this->historyIndex);
+		this->devConsole->getCommandTIExt().setTextString(this->command);
+	}
 }
 
 

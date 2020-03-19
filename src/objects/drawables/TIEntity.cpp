@@ -6,7 +6,7 @@
 
 #include "objects/drawables/TIEntity.h"
 
-#include "utilities/GetMissingSprite.h"
+#include "utilities/MissingSprite.h"
 #include "utilities/ToRadians.h"
 
 using namespace TIE;
