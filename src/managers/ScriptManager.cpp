@@ -28,13 +28,25 @@ void ScriptManager::loadScript(const std::string& scriptName) {
     luaL_openlibs(this->luaState);
     lua_pcall(this->luaState, 0, 0, 0);
 
-    LuaRef t = getGlobal(this->luaState, "window");
-    LuaRef title = t["title"];
-    LuaRef w = t["width"];
-    LuaRef h = t["height"];
-    std::string titleString = title.cast<std::string>();
-    int width = w.cast<int>();
-    int height = h.cast<int>();
+    LuaRef windowProperties = getGlobal(this->luaState, "window");
+    this->loadWindowProperties(windowProperties);
 
+    LuaRef tientityDefinitions = getGlobal(this->luaState, "tientities");
+    this->loadTIEntityDefinitions(tientityDefinitions);
+}
+
+void ScriptManager::loadWindowProperties(LuaRef windowProperties) {
+    LuaRef titleProp = windowProperties["title"];
+    LuaRef widthProp = windowProperties["width"];
+    LuaRef heightProp = windowProperties["height"];
+
+    std::string title = titleProp.cast<std::string>();
+    int width = widthProp.cast<int>();
+    int height = heightProp.cast<int>();
     WindowManager::Instance()->updateWindowSize(width, height);
+    WindowManager::Instance()->setTitle(title);
+}
+
+void ScriptManager::loadTIEntityDefinitions(LuaRef tientityDefinitions) {
+    
 }

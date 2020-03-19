@@ -25,6 +25,7 @@ class WindowManager : public Singleton<WindowManager> {
 		sf::Vector2i getWindowSize();
 
 		const std::string& getTitle();
+		void setTitle(const std::string&);
 
 		WindowManager();
 		~WindowManager();

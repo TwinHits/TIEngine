@@ -25,6 +25,9 @@ class ScriptManager : public Singleton<ScriptManager> {
 
 		lua_State* luaState;
 
+		void loadWindowProperties(luabridge::LuaRef);
+		void loadTIEntityDefinitions(luabridge::LuaRef);
+
 		ScriptManager(const ScriptManager&);
 		void operator=(const ScriptManager&);
 };

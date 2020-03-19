@@ -70,3 +70,8 @@ sf::Vector2i WindowManager::getWindowSize() {
 const std::string& WindowManager::getTitle() {
 	return this->title;
 }
+
+void WindowManager::setTitle(const std::string& title) {
+	this->title = title;
+	this->getWindow().setTitle(this->title);
+}
