@@ -15,8 +15,6 @@ SceneNode::~SceneNode() {
 
 
 SceneNode::SceneNode(const SceneNode&) {
-
-
 }
 
 

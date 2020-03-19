@@ -15,8 +15,6 @@
 namespace TIE {
 
 class AssetsManager: public Singleton<AssetsManager> {
-	//Singleton manager for game assets. Parses every file found in the
-	//config file defined assets folders.
 	public:
 		sf::Texture& getTexture(GlobalId);
 		sf::Texture& getTexture(const std::string&);

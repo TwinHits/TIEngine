@@ -92,7 +92,12 @@ void ConsoleManager::scroll(Direction direction) {
 }
 
 
-void ConsoleManager::traverseHistory(sf::Event event) {
+void ConsoleManager::traverseDownHistory() {
+
+}
+
+
+void ConsoleManager::traverseUpHistory() {
 
 }
 

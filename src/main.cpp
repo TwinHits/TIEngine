@@ -1,8 +1,6 @@
 #include <TIEngine.h>
 
-int main()
-{
-	//Minimum render loop for sample
+int main() {
 	sf::RenderWindow& window = TIE::WindowManager::Instance()->getWindow();
 
 	while (window.isOpen()) {

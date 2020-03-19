@@ -23,7 +23,8 @@ class ConsoleManager : public Singleton<ConsoleManager> {
 		bool checkConsole();
 		void runCommand();
 		void scroll(Direction direction);
-		void traverseHistory(sf::Event event);
+		void traverseDownHistory();
+		void traverseUpHistory();
 		void addToCommand(unsigned int unicodeCharacter);
 		const std::string& getCommand();
 

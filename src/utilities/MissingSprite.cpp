@@ -2,7 +2,7 @@
 
 #include "managers/AssetsManager.h"
 
-#include "utilities/GetMissingSprite.h"
+#include "utilities/MissingSprite.h"
 
 sf::Sprite TIE::getMissingSprite() {
 	sf::Sprite sprite;

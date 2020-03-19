@@ -71,9 +71,13 @@ void InputManager::processInput() {
 						}
 						break;
 					case sf::Keyboard::Up:
+						if (consoleManager->checkConsole()) {	
+							consoleManager->traverseUpHistory();
+						}
+						break;
 					case sf::Keyboard::Down:
 						if (consoleManager->checkConsole()) {	
-							consoleManager->traverseHistory(event);
+							consoleManager->traverseDownHistory();
 						}
 						break;
 					default:
