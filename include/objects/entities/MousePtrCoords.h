@@ -3,17 +3,19 @@
 
 #include "managers/InputManager.h"
 
-#include "objects/drawables/TIExt.h"
+#include "objects/entities/TIEntity.h"
 
 namespace TIE {
 
-class MousePtrCoords : public TIExt {
+class MousePtrCoords : public TIEntity {
 	public:
 		MousePtrCoords();
-		~MousePtrCoords();
+		~MousePtrCoords() {};
+
+		void initialize();
+		void update(const float);
 
 	private:
-		void updateSelf(const float);
 
 		const sf::Font& font;
 		InputManager* inputManager = InputManager::Instance();

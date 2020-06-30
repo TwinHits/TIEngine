@@ -9,12 +9,12 @@ template<typename T>
 class Factory {
 	public:
 
-		SceneNode& create() { 
+		TIEntity& create() { 
 			std::unique_ptr<T> ptr = TIE::make_unique<T>();
 			return *ptr;
 		}
 
-		SceneNode& create(std::unique_ptr<T> ptr) {
+		TIEntity& create(std::unique_ptr<T> ptr) {
 			return *ptr;
 		}
 };

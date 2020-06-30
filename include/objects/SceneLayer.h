@@ -1,11 +1,11 @@
 #ifndef SCENELAYER_H
 #define SCENELAYER_H
 
-#include "objects/SceneNode.h"
+#include "objects/entities/TIEntity.h"
 
 namespace TIE {
 
-class SceneLayer : public SceneNode {
+class SceneLayer : public TIEntity {
 	public:
 		enum Layer {
 			ROOT,
@@ -13,23 +13,18 @@ class SceneLayer : public SceneNode {
 			CLIENT
 		};
 
-		SceneLayer();
-		virtual ~SceneLayer();
+		SceneLayer() {};
+		virtual ~SceneLayer() {};
 
 		Layer getLayer();
 		void setLayer(Layer);
 
 		void setViewId(GlobalId);
 		GlobalId getViewId();
-
-		virtual void draw(sf::RenderTarget&, sf::RenderStates) const;
 		
 	private:
-		void drawSelf(sf::RenderTarget&, sf::RenderStates) const;
-		void updateSelf(const float);
-
-		Layer layer;
-		GlobalId viewId;
+		Layer layer = Layer::ROOT;
+		GlobalId viewId = 0;
 };
 
 }

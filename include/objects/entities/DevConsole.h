@@ -7,24 +7,23 @@
 #include <SFML/Graphics.hpp>
 
 #include "TIEntity.h"
-#include "TIExt.h"
 
 namespace TIE {
 
 class DevConsole : public TIEntity {
 	public:
 		DevConsole();
-		virtual ~DevConsole();
+		virtual ~DevConsole() {};
 
-		TIExt& getCommandTIExt();
+		void initialize();
+
+		TIEntity& getCommandText();
 		const sf::Vector2i& getWritePosition();
+		void update(const float delta);
 
 	private:
-		virtual void drawSelf(sf::RenderTarget&, sf::RenderStates) const;
-		void updateSelf(const float delta);
-	
 		const sf::Font& font;
-		TIExt& currentCommand;
+		TIEntity& currentCommand;
 		int fontSize = 14;
 		sf::Vector2i textWritePosition;
 };

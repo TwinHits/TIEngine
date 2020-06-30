@@ -12,11 +12,7 @@
 using namespace TIE;
 
 ConfigManager::ConfigManager() {
-	loadConfig(this->defaultConfigPath);
-}
-
-
-ConfigManager::~ConfigManager() {
+	this->loadConfig(this->defaultConfigPath);
 }
 
 

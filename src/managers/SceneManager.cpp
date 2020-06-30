@@ -4,8 +4,12 @@
 #include "managers/ViewManager.h"
 #include "managers/WindowManager.h"
 
+#include "managers/componentsystems/CollidesComponentSystem.h"
+#include "managers/componentsystems/GraphicsComponentSystem.h"
+#include "managers/componentsystems/MovesComponentSystem.h"
+
 #include "objects/SceneLayer.h"
-#include "objects/drawables/MousePtrCoords.h"
+#include "objects/entities/MousePtrCoords.h"
 
 #include "templates/MakeUnique.h"
 
@@ -14,23 +18,20 @@ using namespace TIE;
 SceneManager::SceneManager() : clock(TimeManager::Instance()->addClock()) {
 	this->sceneGraphRoot = make_unique<SceneLayer>();
 	this->sceneGraphRoot->setLayer(SceneLayer::Layer::ROOT);
-	this->sceneGraphRoot->setType("ROOT");
-	this->sceneGraphRoot->setPosition(0, 0);
 	this->sceneGraphRoot->setViewId(ViewManager::Instance()->getEngineViewId());
 
 	std::unique_ptr<SceneLayer> clientLayerPtr = make_unique<SceneLayer>();
 	clientLayerPtr->setLayer(SceneLayer::Layer::CLIENT);
-	clientLayerPtr->setType("Client Layer");
 	clientLayerPtr->setViewId(ViewManager::Instance()->getClientViewId());
 	this->clientLayer = &dynamic_cast<SceneLayer&>(this->sceneGraphRoot->attachChild(std::move(clientLayerPtr)));
 
 	std::unique_ptr<SceneLayer> engineLayerPtr = make_unique<SceneLayer>();
 	engineLayerPtr->setLayer(SceneLayer::Layer::ENGINE);
-	engineLayerPtr->setType("Engine Layer");
 	engineLayerPtr->setViewId(ViewManager::Instance()->getEngineViewId());
 	this->engineLayer = &dynamic_cast<SceneLayer&>(this->sceneGraphRoot->attachChild(std::move(engineLayerPtr)));
 
 	std::unique_ptr<MousePtrCoords> mousePtrCoords = make_unique<MousePtrCoords>();
+	mousePtrCoords->initialize();
 	this->engineLayer->attachChild(std::move(mousePtrCoords));
 }
 
@@ -55,39 +56,22 @@ SceneLayer& SceneManager::getClientLayer() {
 }
 
 
-SceneNode* SceneManager::findSceneNode(sf::Vector2f point) {
+/* //Investigate with collides component
+TIEntity* SceneManager::findTIEntity(sf::Vector2f point) {
 	return this->getClientLayer().findNode(point);	
 }
-
-
-void SceneManager::removeNodes() {
-	this->sceneGraphRoot->removeNodes();
-}
-
-
-void SceneManager::checkForCollisions() {
-	this->collisions.clear();
-	
-	SceneLayer& sceneGraphRoot = this->getSceneGraphRoot();
-	sceneGraphRoot.checkSceneCollisions(sceneGraphRoot, this->collisions);
-
-	if (!collisions.empty()) {
-		for (auto& pair : collisions) {
-			pair.first->collide(pair.second);
-			pair.second->collide(pair.first);
-		}
-	}
-}
+*/
 
 
 void SceneManager::updateGameState() {
 
 	this->delta += this->clock.restart().asSeconds();
+	TIEntity& sceneGraph = this->getSceneGraphRoot();
+
 	while (this->delta > this->TimePerFrame) {
 
 		this->removeNodes();
-		this->checkForCollisions();
-		sceneGraphRoot->update(delta);
+		this->executeComponentSystems(sceneGraphRoot->getChildren());
 
 		float fps = 60 / delta;
 		WindowManager::Instance()->showFPS(std::to_string(fps));
@@ -96,13 +80,37 @@ void SceneManager::updateGameState() {
 }
 
 
-void SceneManager::render() {		
-	sf::RenderWindow& window = WindowManager::Instance()->getWindow();
+void SceneManager::removeNodes() {
+	this->sceneGraphRoot->removeNodes();
+}
 
-	SceneNode& sceneGraph = SceneManager::Instance()->getSceneGraphRoot();
+void SceneManager::executeComponentSystems(const std::vector<std::unique_ptr<TIEntity> >& entities) {
+	for (auto& entity : entities) {
+		MovesComponentSystem().execute(*entity);
+		CollidesComponentSystem().execute(*entity);
+		entity->update(this->delta);
+
+		for (auto& child : entity->getChildren()) {
+			this->executeComponentSystems(entity->getChildren());
+		}
+	}
+}
+
+
+void SceneManager::render() {		
+
+	sf::RenderWindow& window = WindowManager::Instance()->getWindow();
 	sf::RenderStates states;
+	SceneLayer& clientLayer = this->getClientLayer();
+	SceneLayer& engineLayer = this->getEngineLayer();
 
 	window.clear();
-	sceneGraph.draw(window, states);
+
+	ViewManager::Instance()->setActiveView(clientLayer.getViewId());
+	GraphicsComponentSystem::draw(clientLayer.getChildren(), window, states);
+
+	ViewManager::Instance()->setActiveView(engineLayer.getViewId());
+	GraphicsComponentSystem::draw(engineLayer.getChildren(), window, states);
+
 	window.display();
 }

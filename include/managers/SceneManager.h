@@ -6,7 +6,10 @@
 
 #include "templates/Singleton.h"
 
+#include "managers/componentsystems/ComponentSystem.h" 
+
 #include "objects/SceneLayer.h"
+
 
 namespace TIE {
 
@@ -16,10 +19,10 @@ class SceneManager : public Singleton<SceneManager> {
 		SceneLayer& getEngineLayer();
 		SceneLayer& getClientLayer();
 
-		SceneNode* findSceneNode(sf::Vector2f);
+		//Investigate with collides component
+		//TIEntity* findTIEntity(sf::Vector2f);
 
 		void removeNodes();
-		void checkForCollisions();
 		void updateGameState();
 		void render();
 	
@@ -34,7 +37,7 @@ class SceneManager : public Singleton<SceneManager> {
 		SceneLayer* engineLayer;
 		SceneLayer* clientLayer;
 
-		std::set<std::pair<SceneNode*, SceneNode*> > collisions;
+		void executeComponentSystems(const std::vector<std::unique_ptr<TIEntity> >&);
 
 		SceneManager(const SceneManager&);
 		void operator=(const SceneManager&);

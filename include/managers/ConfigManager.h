@@ -17,7 +17,7 @@ class ConfigManager: public Singleton<ConfigManager> {
 	//config.ini. Stores default values in case of no file found.
 	public:
 		ConfigManager();
-		~ConfigManager();
+		~ConfigManager() {};
 		
 		bool loadConfigFile(const std::string& path);
 

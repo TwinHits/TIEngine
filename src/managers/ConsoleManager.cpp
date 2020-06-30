@@ -8,6 +8,9 @@
 #include "managers/ScriptManager.h"
 #include "managers/WindowManager.h"
 #include "managers/ViewManager.h"
+
+#include "managers/componentsystems/GraphicsComponentSystem.h"
+
 #include "templates/MakeUnique.h"
 
 using namespace TIE;
@@ -15,26 +18,22 @@ using namespace TIE;
 ConsoleManager::ConsoleManager() {
 	std::unique_ptr<DevConsole> defaultDevConsole = make_unique<DevConsole>();
 	this->devConsole = &dynamic_cast<DevConsole&>(SceneManager::Instance()->getEngineLayer().attachChild(std::move(defaultDevConsole)));
+	this->devConsole->initialize();
 }
 
 
-ConsoleManager::~ConsoleManager() {
-
-} 
-
-
 void ConsoleManager::showConsole() {
-	this->devConsole->setDrawn(true);
+	GraphicsComponentSystem::setDrawn(*this->devConsole, true);
 }
 
 
 void ConsoleManager::hideConsole() {
-	this->devConsole->setDrawn(false);
+	GraphicsComponentSystem::setDrawn(*this->devConsole, false);
 }
 
 
 bool ConsoleManager::checkConsole() {
-	return this->devConsole->getDrawn();
+	return GraphicsComponentSystem::isDrawn(*this->devConsole);
 }
 
 
@@ -68,7 +67,6 @@ const std::string& ConsoleManager::getCommand() {
 void ConsoleManager::setDevConsole(std::unique_ptr<DevConsole> devConsole) {
 	this->devConsole->setRemove(true);
 	SceneLayer& engineLayer = SceneManager::Instance()->getEngineLayer();
-	devConsole->setType("Client Defined Dev Console.");
 	this->devConsole = &dynamic_cast<DevConsole&>(engineLayer.attachChild(std::move(devConsole)));
 }
 
@@ -99,7 +97,7 @@ void ConsoleManager::traverseDownHistory() {
 	if (this->historyIndex + 1 != this->commandHistory.end()) {
 		this->historyIndex++;
 		this->command = *(this->historyIndex);
-		this->devConsole->getCommandTIExt().setTextString(this->command);
+		this->devConsole->getComponent<TextComponent>()->setString(this->command);
 	}
 }
 
@@ -108,7 +106,7 @@ void ConsoleManager::traverseUpHistory() {
 	if (this->historyIndex != this->commandHistory.begin()) {
 		this->historyIndex--;
 		this->command = *(this->historyIndex);
-		this->devConsole->getCommandTIExt().setTextString(this->command);
+		this->devConsole->getComponent<TextComponent>()->setString(this->command);
 	}
 }
 
@@ -122,7 +120,7 @@ void ConsoleManager::addToCommand(unsigned int unicodeCharacter) {
 	} else if (unicodeCharacter == 8) { //backspace
 		this->command = this->command.substr(0, this->command.length() - 1);
 	}
-	this->devConsole->getCommandTIExt().setTextString(this->command);
+	this->devConsole->getComponent<TextComponent>()->setString(this->command);
 }
 
 

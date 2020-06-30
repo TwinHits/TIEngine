@@ -7,7 +7,7 @@
 
 #include "templates/Singleton.h"
 
-#include "objects/drawables/DevConsole.h"
+#include "objects/entities/DevConsole.h"
 
 #include "objects/enumeration/Direction.h"
 
@@ -16,7 +16,7 @@ namespace TIE {
 class ConsoleManager : public Singleton<ConsoleManager> {
 	public:
 		ConsoleManager();
-		~ConsoleManager();
+		~ConsoleManager() {};
 
 		void showConsole();
 		void hideConsole();
