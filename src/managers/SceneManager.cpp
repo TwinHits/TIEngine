@@ -86,8 +86,8 @@ void SceneManager::removeNodes() {
 
 void SceneManager::executeComponentSystems(const std::vector<std::unique_ptr<TIEntity> >& entities) {
 	for (auto& entity : entities) {
-		MovesComponentSystem().execute(*entity);
-		CollidesComponentSystem().execute(*entity);
+		MovesComponentSystem().execute(*entity, this->delta);
+		CollidesComponentSystem().execute(*entity, this->delta);
 		entity->update(this->delta);
 
 		for (auto& child : entity->getChildren()) {

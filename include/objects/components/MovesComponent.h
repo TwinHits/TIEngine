@@ -15,6 +15,8 @@ class MovesComponent : public Component {
 		void setVelocity(sf::Vector2f); //x = speed, y = direction
 		const sf::Vector2f getVelocity();
 
+		void move(const float);
+
 	private: 
 		sf::Vector2f velocity;
 };

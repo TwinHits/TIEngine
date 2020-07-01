@@ -12,7 +12,7 @@ namespace TIE {
 class CollidesComponentSystem : public ComponentSystem {
 	public:
 		CollidesComponentSystem() {};
-		void execute(TIEntity&);
+		void execute(TIEntity&, const float);
 
 	//	virtual sf::FloatRect getHitBox() const;
 		void checkForCollisions();

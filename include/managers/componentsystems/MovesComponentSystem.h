@@ -5,16 +5,19 @@
 
 #include "ComponentSystem.h"
 
+#include "objects/components/MovesComponent.h"
+#include "objects/components/SpriteComponent.h"
+
 namespace TIE {
 
 class MovesComponentSystem : public ComponentSystem {
 	public:
 		MovesComponentSystem() {};
 		
-		void execute(TIEntity&);
+		void execute(TIEntity&, const float);
 
 	private:
-		//virtual void move(const float delta);
+		virtual void move(MovesComponent*, SpriteComponent*, const float);
 
 };
 

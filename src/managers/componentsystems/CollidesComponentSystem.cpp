@@ -7,15 +7,15 @@
 
 using namespace TIE;
 
-void CollidesComponentSystem::execute(TIEntity& entity) {
+void CollidesComponentSystem::execute(TIEntity& entity, const float delta) {
 	CollidesComponent* collidesComponent = entity.getComponent<CollidesComponent>();
 	if (collidesComponent != nullptr && collidesComponent->isCollidable()) {
 
 	}
 }
 
-void CollidesComponentSystem::checkForCollisions() {
 	/*
+void CollidesComponentSystem::checkForCollisions() {
 	this->collisions.clear();
 
 	SceneLayer& sceneGraphRoot = this->getSceneGraphRoot();
@@ -27,28 +27,28 @@ void CollidesComponentSystem::checkForCollisions() {
 			pair.second->collide(pair.first);
 		}
 	}
-	*/
 }
 
+	*/
 
 
-sf::FloatRect CollidesComponentSystem::getHitBox() const {
 	/*
+sf::FloatRect CollidesComponentSystem::getHitBox() const {
 	GraphicsComponent& sprite = this->getComponent<SpriteComponent>();
 	return this->getWorldTransform().transformRect(this->sprite.getGlobalBounds());
-	*/
 }
 
+	*/
 
-bool CollidesComponentSystem::collision(TIEntity& lhs, TIEntity& rhs) const {
 	/*
+bool CollidesComponentSystem::collision(TIEntity& lhs, TIEntity& rhs) const {
 	if (!lhs.getCollidable() || !rhs.getCollidable()) {
 		return false;
 	}
 	return lhs.getHitBox().intersects(rhs.getHitBox());
-	*/
 }
 
+	*/
 /*
 void CollidesComponentSystem::checkForCollisions() {
 	this->collisions.clear();

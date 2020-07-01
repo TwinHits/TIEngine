@@ -8,7 +8,7 @@ namespace TIE {
 class ComponentSystem {
 	public:
 		virtual ~ComponentSystem() {};
-		virtual void execute(TIEntity&) {};
+		virtual void execute(TIEntity&, const float) = 0;
 };
 
 }
