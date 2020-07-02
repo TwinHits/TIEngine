@@ -1,7 +1,5 @@
 #include <SFML/Graphics.hpp>
 
-#include <iostream>
-
 #include "managers/componentsystems/GraphicsComponentSystem.h" 
 
 using namespace TIE;
@@ -11,7 +9,8 @@ void GraphicsComponentSystem::draw(const std::vector<std::unique_ptr<TIEntity> >
 		SpriteComponent* spriteComponent = entity->getComponent<SpriteComponent>();
 		TextComponent* textComponent = entity->getComponent<TextComponent>();
 		
-		bool continueTraversal = false;
+		//Continue traversal if there's no graphics components, or if either component is drawn
+		bool continueTraversal = textComponent == nullptr && spriteComponent == nullptr;
 		if (spriteComponent != nullptr && spriteComponent->isDrawn()) {
 			window.draw(*dynamic_cast<sf::Sprite*>(spriteComponent), states);
 			states.transform *= spriteComponent->getTransform();

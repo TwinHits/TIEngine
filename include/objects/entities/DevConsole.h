@@ -24,7 +24,7 @@ class DevConsole : public TIEntity {
 	private:
 		const sf::Font& font;
 		TIEntity& currentCommand;
-		int fontSize = 14;
+		int fontSize = 16;
 		sf::Vector2i textWritePosition;
 };
 

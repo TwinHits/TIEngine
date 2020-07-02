@@ -1,3 +1,4 @@
+#include <cmath>
 #include <SFML/Graphics.hpp>
 
 #include "managers/componentsystems/MovesComponentSystem.h" 
