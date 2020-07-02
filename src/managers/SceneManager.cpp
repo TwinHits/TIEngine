@@ -9,6 +9,7 @@
 #include "managers/componentsystems/MovesComponentSystem.h"
 
 #include "objects/SceneLayer.h"
+#include "objects/entities/DegreeGuide.h"
 #include "objects/entities/MousePtrCoords.h"
 
 #include "templates/MakeUnique.h"
@@ -19,20 +20,28 @@ SceneManager::SceneManager() : clock(TimeManager::Instance()->addClock()) {
 	this->sceneGraphRoot = make_unique<SceneLayer>();
 	this->sceneGraphRoot->setLayer(SceneLayer::Layer::ROOT);
 	this->sceneGraphRoot->setViewId(ViewManager::Instance()->getEngineViewId());
+	this->sceneGraphRoot->setName("SceneGraphRoot");
 
 	std::unique_ptr<SceneLayer> clientLayerPtr = make_unique<SceneLayer>();
 	clientLayerPtr->setLayer(SceneLayer::Layer::CLIENT);
 	clientLayerPtr->setViewId(ViewManager::Instance()->getClientViewId());
 	this->clientLayer = &dynamic_cast<SceneLayer&>(this->sceneGraphRoot->attachChild(std::move(clientLayerPtr)));
+	this->clientLayer->setName("ClientLayer");
 
 	std::unique_ptr<SceneLayer> engineLayerPtr = make_unique<SceneLayer>();
 	engineLayerPtr->setLayer(SceneLayer::Layer::ENGINE);
 	engineLayerPtr->setViewId(ViewManager::Instance()->getEngineViewId());
 	this->engineLayer = &dynamic_cast<SceneLayer&>(this->sceneGraphRoot->attachChild(std::move(engineLayerPtr)));
+	this->clientLayer->setName("EngineLayer");
+
+	std::unique_ptr<DegreeGuide> degreeGuide = make_unique<DegreeGuide>();
+	degreeGuide->initialize();
+	this->engineLayer->attachChild(std::move(degreeGuide));
 
 	std::unique_ptr<MousePtrCoords> mousePtrCoords = make_unique<MousePtrCoords>();
 	mousePtrCoords->initialize();
 	this->engineLayer->attachChild(std::move(mousePtrCoords));
+
 }
 
 

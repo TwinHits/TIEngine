@@ -45,6 +45,9 @@ class TIEntity {
 		void setRemove(bool);
 		bool getRemove() const;
 
+		void setName(std::string);
+		const std::string getName() const;
+
 		const std::vector<std::unique_ptr<TIEntity> >& getChildren() const;
 		TIEntity& attachChild(std::unique_ptr<TIEntity>);
 		void removeNodes();
@@ -57,6 +60,7 @@ class TIEntity {
 		std::map<std::type_index, std::unique_ptr<Component> > components;
 		GlobalId id = -1;
 		bool remove = false;
+		std::string name = "entity";
 		TIEntity* parent = nullptr;
 		std::vector<std::unique_ptr<TIEntity> > children;
 

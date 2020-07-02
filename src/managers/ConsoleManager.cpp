@@ -2,6 +2,7 @@
 #include <queue>
 #include <sstream>
 
+#include "managers/ConfigManager.h"
 #include "managers/ConsoleManager.h"
 #include "managers/LogManager.h"
 #include "managers/SceneManager.h"
@@ -49,6 +50,8 @@ void ConsoleManager::runCommand() {
 	} else if (command == "script") {
 		const std::string& scriptName = commandArgs.at(1);
 		ScriptManager::Instance()->loadScript(scriptName);
+	} else if (command == "print") {
+		LogManager::Instance()->logCommand(std::to_string(ConfigManager::Instance()->getShowDegreeGuide()));
 	} else {
 		LogManager::Instance()->logCommand("Unknown command.");
 	}

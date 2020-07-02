@@ -40,6 +40,14 @@ bool TIEntity::getRemove() const {
 	return this->remove;
 }
 
+void TIE::TIEntity::setName(std::string name) {
+	this->name = name;
+}
+
+const std::string TIE::TIEntity::getName() const {
+	return this->name;
+}
+
 
 void TIEntity::removeNodes() {
 	//This probably can cut out if removal is successful

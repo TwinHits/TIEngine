@@ -11,6 +11,8 @@ MousePtrCoords::MousePtrCoords() :
 }
 
 void MousePtrCoords::initialize() {
+	this->setName("MousePtrCoords");
+
 	sf::Vector2f mouseWindowPosition = this->inputManager->getMouseWindowPosition();
 
 	TextComponent* textComponent = GraphicsComponentSystem::addTextComponent(*this);

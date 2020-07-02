@@ -27,6 +27,7 @@ class ConfigManager: public Singleton<ConfigManager> {
 		LogLevel getDebugLogLevel();
 		const Language& getDefaultDisplayLanguage();
 		const bool getShowMousePtrCoords();
+		const bool getShowDegreeGuide();
 
 		void setDefaultDisplayLanguage(const Language& defaultDisplayLanguage);
 		void setDebugLogLevel(LogLevel debugLogLevel);
@@ -46,6 +47,7 @@ class ConfigManager: public Singleton<ConfigManager> {
 		LogLevel defaultDebugLogLevel = LogLevel::INFO;
 		Language defaultDefaultDisplayLanguage = Language::en_US;
 		bool defaultShowMousePtrCoords = false;
+		bool defaultShowDegreeGuide = false;
 
 		std::string debugLogPath = defaultDebugLogPath;
 		std::string assetsPath = defaultAssetsPath;
@@ -53,7 +55,7 @@ class ConfigManager: public Singleton<ConfigManager> {
 		LogLevel debugLogLevel = defaultDebugLogLevel;
 		Language defaultDisplayLanguage = defaultDefaultDisplayLanguage;
 		bool showMousePtrCoords = defaultShowMousePtrCoords;
-
+		bool showDegreeGuide = defaultShowDegreeGuide;
 
 		ConfigManager(const ConfigManager&);
 		void operator=(const ConfigManager&);

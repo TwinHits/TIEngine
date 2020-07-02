@@ -50,6 +50,10 @@ const bool ConfigManager::getShowMousePtrCoords() {
 	return this->showMousePtrCoords;
 }
 
+const bool ConfigManager::getShowDegreeGuide() {
+	return this->showDegreeGuide;
+}
+
 
 void ConfigManager::setDefaultDisplayLanguage(const Language& defaultDisplayLanguage) {
 	this->defaultDisplayLanguage = defaultDisplayLanguage;
@@ -95,9 +99,13 @@ void ConfigManager::parseConfig(std::ifstream& config) {
 			else if (key == "AssetsPath") { assetsPath = value; }
 			else if (key == "DebugLogLevel") { debugLogLevel = strToLogLevel(value); }
 			else if (key == "DefaultDisplayLanguage") { defaultDisplayLanguage = parseLanguageString(value); }
-			else if (key == "ShowMousePtrCoords") { 
+			else if (key == "ShowMousePtrCoords") {
 				if (value == "true") {
-					this->showMousePtrCoords = true; 
+					this->showMousePtrCoords = true;
+				}
+			} else if (key == "ShowDegreeGuide") {
+				if (value == "true") {
+					this->showDegreeGuide = true; 
 				}
 			}
 		} 

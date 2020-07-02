@@ -21,6 +21,7 @@ DevConsole::DevConsole() :
 }
 
 void DevConsole::initialize() {
+	this->setName("DevConsole");
 	sf::Vector2i windowSize = TIE::WindowManager::Instance()->getWindowSize();
 	textWritePosition.x = -windowSize.x/2;	
 	textWritePosition.y = -windowSize.y/2;
@@ -52,6 +53,7 @@ void DevConsole::update(const float delta) {
 		auto s = queue.front();
 
 		std::unique_ptr<TIEntity> entity = make_unique<TIEntity>();
+		entity->setName("DevConsoleHistoryItem");
 		TextComponent* textComponent = GraphicsComponentSystem::addTextComponent(*entity);
 		textComponent->setString(s);
 		textComponent->setFont(font);
