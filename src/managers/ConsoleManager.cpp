@@ -17,8 +17,7 @@
 using namespace TIE;
 
 ConsoleManager::ConsoleManager() {
-	std::unique_ptr<DevConsole> defaultDevConsole = make_unique<DevConsole>();
-	this->devConsole = &dynamic_cast<DevConsole&>(SceneManager::Instance()->getEngineLayer().attachChild(std::move(defaultDevConsole)));
+	this->devConsole = &dynamic_cast<DevConsole&>(SceneManager::Instance()->getEngineLayer().attachChild(make_unique<DevConsole>()));
 	this->devConsole->initialize();
 }
 
@@ -50,8 +49,8 @@ void ConsoleManager::runCommand() {
 	} else if (command == "script") {
 		const std::string& scriptName = commandArgs.at(1);
 		ScriptManager::Instance()->loadScript(scriptName);
-	} else if (command == "print") {
-		LogManager::Instance()->logCommand(std::to_string(ConfigManager::Instance()->getShowDegreeGuide()));
+	} else if (command == "scenegraph") {
+		this->printSceneGraph(SceneManager::Instance()->getSceneGraphRoot());
 	} else {
 		LogManager::Instance()->logCommand("Unknown command.");
 	}
@@ -128,13 +127,21 @@ void ConsoleManager::addToCommand(unsigned int unicodeCharacter) {
 
 
 std::vector<std::string>& ConsoleManager::splitString(const std::string& string, char delimiter, std::vector<std::string>& out) {
-		std::istringstream iss(string);
-		std::string item;
-		while (std::getline(iss, item, delimiter)) {
-			out.push_back(item);
-		}
-		if (out.empty()) {
-			out.push_back(string); //If there is no delmiter, include the whole string
-		}
-		return out;
+	std::istringstream iss(string);
+	std::string item;
+	while (std::getline(iss, item, delimiter)) {
+		out.push_back(item);
+	}
+	if (out.empty()) {
+		out.push_back(string); //If there is no delmiter, include the whole string
+	}
+	return out;
+}
+
+
+void ConsoleManager::printSceneGraph(TIEntity& tientity) {
+	LogManager::Instance()->logCommand(tientity.getName());
+	for (auto& child : tientity.getChildren()) {
+		this->printSceneGraph(*child);
+	}
 }
