@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <memory>
 #include <queue>
 #include <sstream>
@@ -11,6 +12,8 @@
 #include "managers/ViewManager.h"
 
 #include "managers/componentsystems/GraphicsComponentSystem.h"
+
+#include "objects/constants/ConsoleCommands.h"
 
 #include "templates/MakeUnique.h"
 
@@ -38,23 +41,22 @@ bool ConsoleManager::checkConsole() {
 
 
 void ConsoleManager::runCommand() {
-
 	std::vector<std::string> commandArgs;
 	this->splitString(this->command, ' ', commandArgs);
 	const std::string& command = commandArgs.front();
 	
 	bool logCommand = true;
-	if (command == "test") {
+	if (command == ConsoleCommands::TEST) {
 		LogManager::Instance()->logCommand("Test Command Please Ignore.");
-	} else if (command == "script" || command == "load") {
+	} else if (command == ConsoleCommands::SCRIPT || command == ConsoleCommands::LOAD) {
 		const std::string& scriptName = commandArgs.at(1);
 		ScriptManager::Instance()->loadScript(scriptName);
-	} else if (command == "print") {
+	} else if (command == ConsoleCommands::PRINT) {
 		const std::string& printCommand = commandArgs.at(1);
-		if (printCommand == "scenegraph") {
+		if (printCommand == ConsoleCommands::SCENEGRAPH) {
 			this->printSceneGraph(SceneManager::Instance()->getSceneGraphRoot());
 		}
-	} else if (command == "clear") {
+	} else if (command == ConsoleCommands::CLEAR) {
 		this->clearConsoleHistory();
 		this->devConsole->resetWritePosition();
 		logCommand = false;

@@ -5,11 +5,10 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "templates/Singleton.h"
-
 #include "objects/entities/DevConsole.h"
-
 #include "objects/enumeration/Direction.h"
+
+#include "templates/Singleton.h"
 
 namespace TIE {
 
@@ -41,7 +40,7 @@ class ConsoleManager : public Singleton<ConsoleManager> {
 		std::vector<std::string> commandHistory;
 		std::vector<std::string>::iterator historyIndex;
 
-		void operator=(const ConsoleManager&);
+		void operator=(const ConsoleManager&) {};
 		ConsoleManager(const ConsoleManager&);
 };
 
