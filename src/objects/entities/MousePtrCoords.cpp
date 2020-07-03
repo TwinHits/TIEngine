@@ -10,6 +10,7 @@ MousePtrCoords::MousePtrCoords() :
 	font(AssetsManager::Instance()->getFont("DevConsole.ttf")) {
 }
 
+
 void MousePtrCoords::initialize() {
 	this->setName("MousePtrCoords");
 
@@ -30,6 +31,7 @@ void MousePtrCoords::update(const float delta) {
 		sf::Vector2f mouseWorldPosition = this->inputManager->getMouseWorldPosition();
 		sf::Vector2f mouseWindowPosition = this->inputManager->getMouseWindowPosition();
 		textComponent->setString(std::to_string(int(mouseWorldPosition.x)) + ", " + std::to_string(int(mouseWorldPosition.y)));
+		textComponent->setString(textComponent->getString() + "\n" + (std::to_string(int(mouseWindowPosition.x)) + ", " + std::to_string(int(mouseWindowPosition.y))));
 		textComponent->setPosition(mouseWindowPosition.x + 20, mouseWindowPosition.y);
 	}
 }
