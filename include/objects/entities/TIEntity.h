@@ -21,7 +21,7 @@ class TIEntity {
 
 		template<typename T>
 		T* addComponent() {
-			components[std::type_index(typeid(T))] = std::move(make_unique<T>());
+			components[std::type_index(typeid(T))] = make_unique<T>();
 			return this->getComponent<T>();
 		}
 		

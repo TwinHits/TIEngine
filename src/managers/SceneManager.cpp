@@ -22,17 +22,15 @@ SceneManager::SceneManager() : clock(TimeManager::Instance()->addClock()) {
 	this->sceneGraphRoot->setViewId(ViewManager::Instance()->getEngineViewId());
 	this->sceneGraphRoot->setName("SceneGraphRoot");
 
-	std::unique_ptr<SceneLayer> clientLayerPtr = make_unique<SceneLayer>();
-	clientLayerPtr->setLayer(SceneLayer::Layer::CLIENT);
-	clientLayerPtr->setViewId(ViewManager::Instance()->getClientViewId());
-	this->clientLayer = &dynamic_cast<SceneLayer&>(this->sceneGraphRoot->attachChild(std::move(clientLayerPtr)));
+	this->clientLayer = &dynamic_cast<SceneLayer&>(this->sceneGraphRoot->attachChild(make_unique<SceneLayer>()));
+	this->clientLayer->setLayer(SceneLayer::Layer::CLIENT);
+	this->clientLayer->setViewId(ViewManager::Instance()->getClientViewId());
 	this->clientLayer->setName("ClientLayer");
 
-	std::unique_ptr<SceneLayer> engineLayerPtr = make_unique<SceneLayer>();
-	engineLayerPtr->setLayer(SceneLayer::Layer::ENGINE);
-	engineLayerPtr->setViewId(ViewManager::Instance()->getEngineViewId());
-	this->engineLayer = &dynamic_cast<SceneLayer&>(this->sceneGraphRoot->attachChild(std::move(engineLayerPtr)));
-	this->clientLayer->setName("EngineLayer");
+	this->engineLayer = &dynamic_cast<SceneLayer&>(this->sceneGraphRoot->attachChild(make_unique<SceneLayer>()));
+	this->engineLayer->setLayer(SceneLayer::Layer::ENGINE);
+	this->engineLayer->setViewId(ViewManager::Instance()->getEngineViewId());
+	this->engineLayer->setName("EngineLayer");
 
 	std::unique_ptr<DegreeGuide> degreeGuide = make_unique<DegreeGuide>();
 	degreeGuide->initialize();

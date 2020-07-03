@@ -17,21 +17,20 @@ using namespace TIE;
 DevConsole::DevConsole() :
 	font(AssetsManager::Instance()->getFont("DevConsole.ttf")),
 	currentCommand(dynamic_cast<TIEntity&>(this->attachChild(make_unique<TIEntity>()))) {
-
 }
+
 
 void DevConsole::initialize() {
 	this->setName("DevConsole");
 	sf::Vector2i windowSize = TIE::WindowManager::Instance()->getWindowSize();
 	textWritePosition.x = -windowSize.x/2;	
 	textWritePosition.y = -windowSize.y/2;
-	
-	sf::Texture& texture = AssetsManager::Instance()->getTexture("dev_console.png");
-	sf::Vector2u size = texture.getSize();
 
 	SpriteComponent* spriteComponent = GraphicsComponentSystem::addSpriteComponent(*this);
+	sf::Texture& texture = AssetsManager::Instance()->getTexture("dev_console.png");
+	sf::Vector2u size = texture.getSize();
 	spriteComponent->setTexture(texture);
-	spriteComponent->setTextureRect(sf::Rect<int>(0, 0, size.x, size.y));
+	spriteComponent->setTextureRect(sf::Rect<int>(0, 0, windowSize.x * 2, windowSize.y));
 	spriteComponent->setOrigin(size.x/2, size.y/2);
 	spriteComponent->setPosition(sf::Vector2f(0,0));
 	spriteComponent->setRotation(0);
@@ -40,7 +39,7 @@ void DevConsole::initialize() {
 	TextComponent* textComponent = GraphicsComponentSystem::addTextComponent(*this);
 	textComponent->setFont(font);
 	textComponent->setCharacterSize(fontSize);
-	textComponent->setPosition(-(windowSize.x/2), windowSize.y/2 - fontSize);
+	textComponent->setPosition(-(windowSize.x / 2) + 3, -fontSize - 5);
 }
 
 
@@ -52,18 +51,16 @@ void DevConsole::update(const float delta) {
 	while (!queue.empty()) {
 		auto s = queue.front();
 
-		std::unique_ptr<TIEntity> entity = make_unique<TIEntity>();
-		entity->setName("DevConsoleHistoryItem");
-		TextComponent* textComponent = GraphicsComponentSystem::addTextComponent(*entity);
+		TIEntity& entity = this->attachChild(make_unique<TIEntity>());
+		entity.setName("DevConsoleHistoryItem");
+		TextComponent* textComponent = GraphicsComponentSystem::addTextComponent(entity);
 		textComponent->setString(s);
 		textComponent->setFont(font);
 		textComponent->setCharacterSize(fontSize);
 		textComponent->setPosition(textWritePosition.x, textWritePosition.y);
+		this->textWritePosition.y += fontSize;
 		textComponent->setDrawn(true);
 
-		this->textWritePosition.y += fontSize;
-
-		this->attachChild(std::move(entity));
 		queue.pop();
 	}
 }
