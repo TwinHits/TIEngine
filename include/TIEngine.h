@@ -27,7 +27,6 @@
 	#include "templates/Factory.h"
 	#include "templates/MakeUnique.h"
 	
-	#include "utilities/MissingSprite.h"
 	#include "utilities/GetMissingText.h"
 	#include "utilities/LocalTime.h"
 	#include "utilities/ParseLanguageString.h"
