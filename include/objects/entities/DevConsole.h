@@ -16,10 +16,12 @@ class DevConsole : public TIEntity {
 		virtual ~DevConsole() {};
 
 		void initialize();
+		void update(const float delta);
 
 		TIEntity& getCommandText();
 		const sf::Vector2i& getWritePosition();
-		void update(const float delta);
+		void setWritePosition(const sf::Vector2i&);
+		void resetWritePosition();
 
 	private:
 		const sf::Font& font;

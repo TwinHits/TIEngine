@@ -32,7 +32,9 @@ class ConsoleManager : public Singleton<ConsoleManager> {
 
 	private:
 		std::vector<std::string>& splitString(const std::string& string, char delimiter, std::vector<std::string>& out);
+
 		void printSceneGraph(TIEntity&);
+		void clearConsoleHistory();
 
 		DevConsole* devConsole;
 		std::string command;

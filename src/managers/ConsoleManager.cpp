@@ -38,23 +38,33 @@ bool ConsoleManager::checkConsole() {
 
 
 void ConsoleManager::runCommand() {
-   	LogManager::Instance()->logCommand(this->command);
 
 	std::vector<std::string> commandArgs;
 	this->splitString(this->command, ' ', commandArgs);
 	const std::string& command = commandArgs.front();
-
+	
+	bool logCommand = true;
 	if (command == "test") {
 		LogManager::Instance()->logCommand("Test Command Please Ignore.");
-	} else if (command == "script") {
+	} else if (command == "script" || command == "load") {
 		const std::string& scriptName = commandArgs.at(1);
 		ScriptManager::Instance()->loadScript(scriptName);
-	} else if (command == "scenegraph") {
-		this->printSceneGraph(SceneManager::Instance()->getSceneGraphRoot());
+	} else if (command == "print") {
+		const std::string& printCommand = commandArgs.at(1);
+		if (printCommand == "scenegraph") {
+			this->printSceneGraph(SceneManager::Instance()->getSceneGraphRoot());
+		}
+	} else if (command == "clear") {
+		this->clearConsoleHistory();
+		this->devConsole->resetWritePosition();
+		logCommand = false;
 	} else {
 		LogManager::Instance()->logCommand("Unknown command.");
 	}
 
+	if (logCommand) {
+   		LogManager::Instance()->logCommand(this->command);
+	}
 	this->commandHistory.push_back(this->command);
 	this->command = "";
 	this->historyIndex = commandHistory.end();
@@ -143,5 +153,11 @@ void ConsoleManager::printSceneGraph(TIEntity& tientity) {
 	LogManager::Instance()->logCommand(tientity.getName());
 	for (auto& child : tientity.getChildren()) {
 		this->printSceneGraph(*child);
+	}
+}
+
+void TIE::ConsoleManager::clearConsoleHistory() {
+	for (auto& child : this->devConsole->getChildren()) {
+		child->setRemove(true);
 	}
 }

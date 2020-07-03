@@ -70,6 +70,16 @@ const sf::Vector2i& DevConsole::getWritePosition() {
 	return this->textWritePosition;
 }
 
+void DevConsole::setWritePosition(const sf::Vector2i& position) {
+	this->textWritePosition = position;
+}
+
+void DevConsole::resetWritePosition() {
+	sf::Vector2i windowSize = TIE::WindowManager::Instance()->getWindowSize();
+	this->textWritePosition.x = -windowSize.x/2;	
+	this->textWritePosition.y = -windowSize.y/2;
+}
+
 
 TIEntity& DevConsole::getCommandText() {
 	return this->currentCommand;
