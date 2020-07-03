@@ -1,3 +1,5 @@
+#include <functional>
+
 #include "managers/TimeManager.h"
 #include "managers/LogManager.h" 
 #include "managers/SceneManager.h"
@@ -77,7 +79,7 @@ void SceneManager::updateGameState() {
 
 	while (this->delta > this->TimePerFrame) {
 
-		this->removeNodes();
+		this->removeTIEntities(sceneGraphRoot->getChildren());
 		this->executeComponentSystems(sceneGraphRoot->getChildren());
 
 		float fps = 60 / delta;
@@ -87,8 +89,12 @@ void SceneManager::updateGameState() {
 }
 
 
-void SceneManager::removeNodes() {
-	this->sceneGraphRoot->removeNodes();
+void SceneManager::removeTIEntities(std::vector<std::unique_ptr<TIEntity> >& entities) {
+	auto removesBegin = std::remove_if(entities.begin(), entities.end(), std::mem_fn(&TIEntity::getRemove));
+	entities.erase(removesBegin, entities.end());
+	for (auto& entity : entities) {
+		this->removeTIEntities(entity->getChildren());
+	}
 }
 
 void SceneManager::executeComponentSystems(const std::vector<std::unique_ptr<TIEntity> >& entities) {

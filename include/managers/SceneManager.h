@@ -22,7 +22,6 @@ class SceneManager : public Singleton<SceneManager> {
 		//Investigate with collides component
 		//TIEntity* findTIEntity(sf::Vector2f);
 
-		void removeNodes();
 		void updateGameState();
 		void render();
 	
@@ -38,6 +37,7 @@ class SceneManager : public Singleton<SceneManager> {
 		SceneLayer* clientLayer;
 
 		void executeComponentSystems(const std::vector<std::unique_ptr<TIEntity> >&);
+		void removeTIEntities(std::vector<std::unique_ptr<TIEntity> >&);
 
 		SceneManager(const SceneManager&);
 		void operator=(const SceneManager&);

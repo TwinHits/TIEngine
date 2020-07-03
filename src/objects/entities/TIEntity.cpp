@@ -2,7 +2,6 @@
 
 #include "objects/entities/TIEntity.h"
 #include "managers/HashManager.h"
-#include <functional>
 
 using namespace TIE;
 
@@ -26,7 +25,7 @@ TIEntity& TIEntity::getParent() {
 }
 
 
-const std::vector<std::unique_ptr<TIEntity> >& TIEntity::getChildren() const {
+std::vector<std::unique_ptr<TIEntity> >& TIEntity::getChildren() {
 	return this->children;
 }
 
@@ -46,14 +45,6 @@ void TIE::TIEntity::setName(std::string name) {
 
 const std::string TIE::TIEntity::getName() const {
 	return this->name;
-}
-
-
-void TIEntity::removeNodes() {
-	//This probably can cut out if removal is successful
-	auto removesBegin = std::remove_if(this->children.begin(), this->children.end(), std::mem_fn(&TIEntity::getRemove));
-	this->children.erase(removesBegin, this->children.end());
-	std::for_each(this->children.begin(), this->children.end(), std::mem_fn(&TIEntity::removeNodes));
 }
 
 

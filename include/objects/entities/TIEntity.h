@@ -48,9 +48,8 @@ class TIEntity {
 		void setName(std::string);
 		const std::string getName() const;
 
-		const std::vector<std::unique_ptr<TIEntity> >& getChildren() const;
+		std::vector<std::unique_ptr<TIEntity> >& getChildren();
 		TIEntity& attachChild(std::unique_ptr<TIEntity>);
-		void removeNodes();
 
 		//TIEntity* findNode(sf::Vector0f);
 
