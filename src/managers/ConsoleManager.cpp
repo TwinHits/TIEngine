@@ -108,10 +108,15 @@ void ConsoleManager::scroll(Direction direction) {
 
 
 void ConsoleManager::traverseDownHistory() {
-	if (this->historyIndex + 1 != this->commandHistory.end()) {
+	if (this->historyIndex != this->commandHistory.end()) {
 		this->historyIndex++;
-		this->command = *(this->historyIndex);
-		this->devConsole->getComponent<TextComponent>()->setString(this->command);
+		if (this->historyIndex != this->commandHistory.end()) {
+			this->command = *(this->historyIndex);
+			this->devConsole->getComponent<TextComponent>()->setString(this->command);
+		} else {
+			this->command = "";
+			this->devConsole->getComponent<TextComponent>()->setString(this->command);
+		}
 	}
 }
 
