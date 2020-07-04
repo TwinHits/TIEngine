@@ -16,7 +16,7 @@ using namespace TIE;
 
 DevConsole::DevConsole() :
 	font(AssetsManager::Instance()->getFont("DevConsole.ttf")),
-	currentCommand(dynamic_cast<TIEntity&>(this->attachChild(make_unique<TIEntity>()))) {
+	currentCommand(this->attachChild(make_unique<TIEntity>())) {
 }
 
 
