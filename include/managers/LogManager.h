@@ -14,6 +14,7 @@ namespace TIE {
 class LogManager: public Singleton<LogManager> {
 	public:
 		std::queue<std::string>& getQueueToDraw();
+		void clearQueueToDraw();
 
 		void setDebugLogLevel(LogLevel debugLogLevel);
 

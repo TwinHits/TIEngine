@@ -40,16 +40,19 @@ std::queue<std::string>& LogManager::getQueueToDraw() {
 	return logHistory;
 }
 
+void LogManager::clearQueueToDraw() {
+	// Efficently clear queue
+	std::queue<std::string> swap;
+	this->logHistory.swap(swap);
+}
+
 void LogManager::clearLog() {
 	this->log.close();
 	this->log.open(this->debugLogPath, std::ofstream::trunc);
 	if (!this->log.is_open()) {
 		std::cout << "Could not open '" + this->debugLogPath + "' after clearing." << std::endl;
 	}
-
-	// Efficently clear queue
-	std::queue<std::string> swap;
-	this->logHistory.swap(swap);
+	this->clearQueueToDraw();
 }
 
 

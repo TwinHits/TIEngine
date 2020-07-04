@@ -43,35 +43,31 @@ void ConsoleManager::runCommand() {
 	this->splitString(this->command, ' ', commandArgs);
 	const std::string& command = commandArgs.front();
 	
-	bool logCommand = true;
-	if (command == ConsoleCommands::TEST) {
+   	LogManager::Instance()->command(this->command);
+	this->commandHistory.push_back(this->command);
+	this->historyIndex = commandHistory.end();
+
+	if (this->command == ConsoleCommands::TEST) {
 		LogManager::Instance()->command("Test Command Please Ignore.");
-	} else if (command == ConsoleCommands::SCRIPT || command == ConsoleCommands::LOAD) {
+	} else if (this->command == ConsoleCommands::SCRIPT || this->command == ConsoleCommands::LOAD) {
 		const std::string& scriptName = commandArgs.at(1);
 		ScriptManager::Instance()->loadScript(scriptName);
-	} else if (command == ConsoleCommands::PRINT) {
+	} else if (this->command == ConsoleCommands::PRINT) {
 		if (!commandArgs.empty()) {
 			const std::string& printCommand = commandArgs.at(1);
 			if (printCommand == ConsoleCommands::SCENEGRAPH) {
 				this->printSceneGraph(SceneManager::Instance()->getSceneGraphRoot());
 			}
 		}
-	} else if (command == ConsoleCommands::CLEAR) {
+	} else if (this->command == ConsoleCommands::CLEAR) {
 		this->clearConsoleHistory();
-		logCommand = false;
-	} else if (command == ConsoleCommands::CLEARLOG) {
+	} else if (this->command == ConsoleCommands::CLEARLOG) {
 		this->clearDebugLog();
-		logCommand = false;
 	} else {
 		LogManager::Instance()->command("Unknown command.");
 	}
 
-	if (logCommand) {
-   		LogManager::Instance()->command(this->command);
-	}
-	this->commandHistory.push_back(this->command);
 	this->command = "";
-	this->historyIndex = commandHistory.end();
 }
 
 
@@ -169,7 +165,8 @@ void TIE::ConsoleManager::clearConsoleHistory() {
 	for (auto& child : this->devConsole->getChildren()) {
 		child->setRemove(true);
 	}
-		this->devConsole->resetWritePosition();
+	this->devConsole->resetWritePosition();
+	LogManager::Instance()->clearQueueToDraw();
 }
 
 void TIE::ConsoleManager::clearDebugLog() {
