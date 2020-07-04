@@ -43,11 +43,6 @@ SceneManager::SceneManager() : clock(TimeManager::Instance()->addClock()) {
 }
 
 
-SceneManager::~SceneManager() {
-	
-}
-
-
 SceneLayer& SceneManager::getSceneGraphRoot() {
 	return *this->sceneGraphRoot;
 }

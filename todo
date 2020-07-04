@@ -1,4 +1,3 @@
-Remove empty constructors and destructors
 move component systems out of managers
 Convert log statements to streams?
 Convert devConsole history items into one text component

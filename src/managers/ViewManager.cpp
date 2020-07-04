@@ -15,11 +15,6 @@ ViewManager::ViewManager() {
 }
 
 
-ViewManager::~ViewManager() {
-
-}
-
-
 GlobalId ViewManager::addView() {
 	sf::Vector2i windowSize = WindowManager::Instance()->getWindowSize();
 	return this->addView(sf::FloatRect(0, 0, windowSize.x, windowSize.y));

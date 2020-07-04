@@ -16,11 +16,6 @@ AssetsManager::AssetsManager() {
 }
 
 
-AssetsManager::~AssetsManager() {
-
-}
-
-
 sf::Texture& AssetsManager::getTexture(GlobalId id) {
 	if (textures.find(id) != textures.end()) {
 		return textures[id];

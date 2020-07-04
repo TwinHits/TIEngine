@@ -14,8 +14,8 @@ class TimeManager : public Singleton<TimeManager> {
 		sf::Clock& addClock();	
 		sf::Clock& getClock(GlobalId id);
 
-		TimeManager();
-		~TimeManager();
+		TimeManager() {};
+		~TimeManager() {};
 
 	private:
 		std::map<GlobalId, sf::Clock> clocks;

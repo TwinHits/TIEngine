@@ -16,11 +16,6 @@ Player::Player(sf::View& view) :
 }
 
 
-Player::~Player() {
-
-}
-
-
 GlobalId Player::getId() const {
 	return id; 
 }

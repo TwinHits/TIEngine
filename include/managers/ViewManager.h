@@ -40,7 +40,7 @@ class ViewManager : public Singleton<ViewManager> {
 		sf::View& getClientView();
 
 		ViewManager();
-		~ViewManager();
+		~ViewManager() {};
 
 	private:
 		std::map<GlobalId, std::unique_ptr<sf::View> > views;

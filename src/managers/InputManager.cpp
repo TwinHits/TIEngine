@@ -18,12 +18,6 @@ InputManager::InputManager() {
 }
 
 
-InputManager::~InputManager() {
-
-}
-
-
-
 const sf::Vector2f InputManager::getMouseWindowPosition() {
 	return this->mouseWindowPosition;
 }

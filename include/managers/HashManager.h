@@ -9,15 +9,15 @@
 
 namespace TIE {
 
-class HashManager : public Singleton<HashManager> {
+	class HashManager : public Singleton<HashManager> {
 	public:
 		GlobalId getNewGlobalId();
 		GlobalId getHash(const std::string& s);
 
 		void setSeed(unsigned long seed);
 
-		HashManager();
-		~HashManager();
+		HashManager() {};
+		~HashManager() {};
 
 	private:
 		GlobalId seed = 0;

@@ -24,7 +24,7 @@ namespace TIE {
 		void render();
 
 		SceneManager();
-		~SceneManager();
+		~SceneManager() {};
 	private:
 		sf::Clock& clock;
 		float delta = 0;

@@ -21,7 +21,7 @@ class InputManager : public Singleton<InputManager> {
 		const sf::Vector2f getMouseWorldPosition();
 
 		InputManager();
-		~InputManager();
+		~InputManager() {};
 
 	private:
 		sf::Vector2f mouseWindowPosition;

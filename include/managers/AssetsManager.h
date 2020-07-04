@@ -23,7 +23,7 @@ class AssetsManager: public Singleton<AssetsManager> {
 		const sf::Font& getFont(const std::string&);
 
 		AssetsManager();	
-		~AssetsManager();
+		~AssetsManager() {};
 
 	private:
 		boost::filesystem::path texturesPath;

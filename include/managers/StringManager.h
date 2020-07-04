@@ -20,7 +20,7 @@ class StringManager : public Singleton<StringManager> {
 		void setDisplayLanguage(Language language);
 		
 		StringManager();
-		~StringManager();
+		~StringManager() {};
 	private:
 		Language displayLanguage;
 

@@ -11,7 +11,7 @@ class Player {
 	public:
 		Player(GlobalId id, sf::View& view);
 		Player(sf::View& view);
-		~Player();
+		~Player() {};
 
 		GlobalId getId() const;
 

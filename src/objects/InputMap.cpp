@@ -5,16 +5,6 @@
 
 #include <SFML/Graphics.hpp>
 
-TIE::InputMap::InputMap() {
-
-}
-
-
-TIE::InputMap::~InputMap() {
-
-}
-
-
 void TIE::InputMap::processEvent(const sf::Event& event, const sf::Vector2f& position) {
 	std::map<unsigned int, unsigned int> keyBinds;
 

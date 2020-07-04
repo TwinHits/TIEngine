@@ -11,10 +11,6 @@ StringManager::StringManager() {
 }
 
 
-StringManager::~StringManager() {
-}
-
-
 std::string StringManager::getString(const GlobalId id) {
 	return getString(id, displayLanguage);
 }

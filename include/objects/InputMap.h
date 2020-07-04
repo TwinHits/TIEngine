@@ -10,8 +10,8 @@ class InputMap {
 		virtual void processEvent(const sf::Event& Event, const sf::Vector2f& position);
 		virtual void processState(const sf::Vector2f& position);
 
-		InputMap();
-		virtual ~InputMap();
+		InputMap() {};
+		virtual ~InputMap() {};
 	private:
 };
 
