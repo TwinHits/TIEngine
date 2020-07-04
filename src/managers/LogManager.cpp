@@ -20,15 +20,16 @@ LogManager::LogManager()  {
 		boost::filesystem::create_directory(debugLogPath);
 	}
 
-	log.open(debugLogPathConfig + "debug.log", std::ios_base::app);
-	if (!log.is_open()) {
-		std::cout << "Could not open '" + ConfigManager::Instance()->getDebugLogPath() + "'." << std::endl;
+	this->debugLogPath = debugLogPathConfig + "debug.log";
+	this->log.open(this->debugLogPath, std::ios_base::app);
+	if (!this->log.is_open()) {
+		std::cout << "Could not open '" + this->debugLogPath + "'." << std::endl;
 	}
 }
 
 
 LogManager::~LogManager() {
-	log.close();
+	this->log.close();
 }
 
 
@@ -39,6 +40,15 @@ void LogManager::setDebugLogLevel(LogLevel debugLogLevel) {
 
 std::queue<std::string>& LogManager::getQueueToDraw() {
 	return logHistory;
+}
+
+void LogManager::clearLog() {
+	this->log.close();
+	this->log.open(this->debugLogPath, std::ofstream::trunc);
+	if (!this->log.is_open()) {
+		std::cout << "Could not open '" + this->debugLogPath + "' after clearing." << std::endl;
+	}
+	this->logHistory.swap(std::queue<std::string>()); // Efficently clear queue
 }
 
 

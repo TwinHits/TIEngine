@@ -6,5 +6,4 @@ Remove unneccesary includes
 move component systems out of managers
 Convert log statements to streams?
 Convert devConsole history items into one text component
-traversing history with no history causes error
 Find a way to have commands be first in log history

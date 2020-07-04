@@ -52,13 +52,17 @@ void ConsoleManager::runCommand() {
 		const std::string& scriptName = commandArgs.at(1);
 		ScriptManager::Instance()->loadScript(scriptName);
 	} else if (command == ConsoleCommands::PRINT) {
-		const std::string& printCommand = commandArgs.at(1);
-		if (printCommand == ConsoleCommands::SCENEGRAPH) {
-			this->printSceneGraph(SceneManager::Instance()->getSceneGraphRoot());
+		if (!commandArgs.empty()) {
+			const std::string& printCommand = commandArgs.at(1);
+			if (printCommand == ConsoleCommands::SCENEGRAPH) {
+				this->printSceneGraph(SceneManager::Instance()->getSceneGraphRoot());
+			}
 		}
 	} else if (command == ConsoleCommands::CLEAR) {
 		this->clearConsoleHistory();
-		this->devConsole->resetWritePosition();
+		logCommand = false;
+	} else if (command == ConsoleCommands::CLEARLOG) {
+		this->clearDebugLog();
 		logCommand = false;
 	} else {
 		LogManager::Instance()->logCommand("Unknown command.");
@@ -167,4 +171,10 @@ void TIE::ConsoleManager::clearConsoleHistory() {
 	for (auto& child : this->devConsole->getChildren()) {
 		child->setRemove(true);
 	}
+		this->devConsole->resetWritePosition();
+}
+
+void TIE::ConsoleManager::clearDebugLog() {
+	this->clearConsoleHistory();
+	LogManager::Instance()->clearLog();
 }

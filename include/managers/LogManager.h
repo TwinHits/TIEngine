@@ -18,6 +18,8 @@ class LogManager: public Singleton<LogManager> {
 
 		void setDebugLogLevel(LogLevel debugLogLevel);
 
+		void clearLog();
+
 		bool isDebugEnabled();
 		bool isInfoEnabled();
 		bool isWarnEnabled();
@@ -29,10 +31,10 @@ class LogManager: public Singleton<LogManager> {
 		void logError(const std::string& message);
 		void logCommand(const std::string& message);
 
-
 		LogManager();
 		~LogManager();
 	private:
+		std::string debugLogPath;
 		std::ofstream log;
 		std::queue<std::string> logHistory;
 
