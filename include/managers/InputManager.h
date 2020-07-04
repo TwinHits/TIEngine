@@ -1,10 +1,10 @@
 #ifndef INPUTMANAGER_H
 #define INPUTMANAGER_H
 
+#include "templates/Singleton.h"
+
 #include <memory>
 #include <string>
-
-#include "templates/Singleton.h"
 
 #include "objects/InputMap.h"
 
@@ -32,7 +32,7 @@ class InputManager : public Singleton<InputManager> {
 		void scroll(sf::RenderWindow&);
 
 		InputManager(const InputManager&);
-		void operator=(const InputManager&);
+		void operator=(const InputManager&) {};
 };
 
 }

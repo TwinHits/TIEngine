@@ -1,14 +1,13 @@
 #ifndef LOGMANAGER_H
 #define LOGMANAGER_H
 
+#include "templates/Singleton.h"
+
 #include <fstream>
 #include <string>
 #include <queue>
 
 #include "objects/enumeration/LogLevel.h"
-
-#include "templates/Singleton.h"
-
 
 namespace TIE {
 
@@ -39,7 +38,7 @@ class LogManager: public Singleton<LogManager> {
 		std::queue<std::string> logHistory;
 
 		LogManager(const LogManager&);
-		void operator=(const LogManager&);
+		void operator=(const LogManager&) {};
 };
 
 }

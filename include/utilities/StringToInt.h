@@ -3,9 +3,10 @@
 
 #include <string>
 
-namespace TIE
-{
-	int StringToInt(std::string& s);
+namespace TIE {
+
+int StringToInt(std::string& s);
+
 }
 
 #endif

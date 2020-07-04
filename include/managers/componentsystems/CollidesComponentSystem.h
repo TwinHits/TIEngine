@@ -1,9 +1,9 @@
 #ifndef COLLIDESCOMPONENTSYSTEM_H
 #define COLLIDESCOMPONENTSYSTEM_H
 
-#include <set>
-
 #include "ComponentSystem.h"
+
+#include <set>
 
 #include "objects/entities/TIEntity.h"
 

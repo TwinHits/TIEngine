@@ -1,6 +1,6 @@
-#include <ctime>
-
 #include "utilities/LocalTime.h"
+
+#include <ctime>
 
 std::string TIE::LocalTime() {
 	auto t = std::time(nullptr);

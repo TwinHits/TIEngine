@@ -1,6 +1,6 @@
-#include <SFML/Graphics.hpp>
-
 #include "managers/componentsystems/GraphicsComponentSystem.h" 
+
+#include <SFML/Graphics.hpp>
 
 using namespace TIE;
 

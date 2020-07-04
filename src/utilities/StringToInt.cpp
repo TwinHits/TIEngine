@@ -1,7 +1,7 @@
+#include "utilities/StringToInt.h"
+
 #include <string>
 #include <sstream>
-
-#include "utilities/StringToInt.h"
 
 int TIE::StringToInt(std::string& s)
 {

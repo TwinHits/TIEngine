@@ -1,9 +1,9 @@
 #ifndef DEGREEGUIDE_H
 #define DEGREEGUIDE_H
 
-#include <array>
-
 #include "objects/entities/TIEntity.h"
+
+#include <array>
 
 namespace TIE {
 	class DegreeGuide : public TIEntity {
@@ -18,5 +18,4 @@ namespace TIE {
 			float PADDING = 0.95;
 	};
 }
-
 #endif

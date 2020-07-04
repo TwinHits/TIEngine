@@ -1,7 +1,8 @@
 #include "managers/StringManager.h"
+
+#include "managers/ConfigManager.h"
 #include "managers/LogManager.h"
 #include "managers/HashManager.h"
-#include "managers/ConfigManager.h"
 
 using namespace TIE;
 

@@ -1,6 +1,6 @@
-#include "managers/AssetsManager.h"
-
 #include "objects/components/SpriteComponent.h"
+
+#include "managers/AssetsManager.h"
 
 using namespace TIE;
 

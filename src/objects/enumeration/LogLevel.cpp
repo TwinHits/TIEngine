@@ -1,8 +1,8 @@
-#include <algorithm>
-#include <string>
-#include <stdexcept>
-
 #include "objects/enumeration/LogLevel.h"
+
+#include <algorithm>
+#include <stdexcept>
+#include <string>
 
 TIE::LogLevel TIE::strToLogLevel(std::string loglevel) {
 	std::transform(loglevel.begin(), loglevel.end(), loglevel.begin(), ::toupper);

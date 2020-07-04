@@ -1,6 +1,7 @@
+#include "objects/entities/TIEntity.h"
+
 #include <memory>
 
-#include "objects/entities/TIEntity.h"
 #include "managers/HashManager.h"
 
 using namespace TIE;

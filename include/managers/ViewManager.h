@@ -1,19 +1,17 @@
 #ifndef VIEWMANAGER_H
 #define VIEWMANAGER_H
 
+#include "templates/Singleton.h"
+
 #include <map>
+#include <memory>
 
 #include <SFML/Graphics.hpp>
 
-#include <memory>
-
-#include "templates/Singleton.h"
-
-#include "objects/enumeration/Direction.h"
 #include "objects/GlobalId.h"
+#include "objects/enumeration/Direction.h"
 
 namespace TIE {
-	
 
 class ViewManager : public Singleton<ViewManager> {
 	public:
@@ -53,7 +51,7 @@ class ViewManager : public Singleton<ViewManager> {
 
 		float scrollSpeed = 5.0;
 		
-		void operator=(const ViewManager&);
+		void operator=(const ViewManager&) {};
 		ViewManager(const ViewManager&);
 };
 

@@ -1,15 +1,14 @@
+#include "objects/entities/DevConsole.h" 
+
 #include <memory>
 #include <string>
 
-#include "managers/componentsystems/GraphicsComponentSystem.h"
 #include "managers/LogManager.h"
 #include "managers/AssetsManager.h"
 #include "managers/WindowManager.h"
-
+#include "managers/componentsystems/GraphicsComponentSystem.h"
 #include "objects/components/SpriteComponent.h" 
 #include "objects/components/TextComponent.h" 
-#include "objects/entities/DevConsole.h" 
-
 #include "templates/MakeUnique.h"
 
 using namespace TIE;

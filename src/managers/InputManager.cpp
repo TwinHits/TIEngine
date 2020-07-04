@@ -1,15 +1,14 @@
+#include "managers/InputManager.h" 
+
 #include <cstdio>
 
 #include <SFML/Graphics.hpp>
 
 #include "managers/ConsoleManager.h"
-#include "managers/InputManager.h" 
 #include "managers/LogManager.h"
 #include "managers/ViewManager.h"
 #include "managers/WindowManager.h"
-
 #include "objects/InputMap.h"
-
 #include "templates/MakeUnique.h"
 
 using namespace TIE;

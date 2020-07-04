@@ -1,11 +1,11 @@
 #ifndef CONFIGMANAGER_H
 #define CONFIGMANAGER_H 
 
+#include "templates/Singleton.h"
+
 #include <fstream>
 #include <map>
 #include <string>
-
-#include "templates/Singleton.h"
 
 #include "objects/enumeration/LogLevel.h"	
 #include "objects/enumeration/Language.h"
@@ -58,7 +58,7 @@ class ConfigManager: public Singleton<ConfigManager> {
 		bool showDegreeGuide = defaultShowDegreeGuide;
 
 		ConfigManager(const ConfigManager&);
-		void operator=(const ConfigManager&);
+		void operator=(const ConfigManager&) {};
 };
 
 }

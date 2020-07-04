@@ -1,16 +1,15 @@
 #ifndef ASSETSMANAGER_H
 #define ASSETSMANAGER_H
 
+#include "templates/Singleton.h"
+
 #include <map>
 
+#include <boost/filesystem.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 
-#include <boost/filesystem.hpp>
-
 #include "objects/GlobalId.h"
-
-#include "templates/Singleton.h"
 
 namespace TIE {
 
@@ -38,7 +37,7 @@ class AssetsManager: public Singleton<AssetsManager> {
 		std::map<GlobalId, sf::Font> fonts;
 
 		AssetsManager(const AssetsManager&);
-		void operator=(const AssetsManager&);
+		void operator=(const AssetsManager&) {};
 };
 
 }

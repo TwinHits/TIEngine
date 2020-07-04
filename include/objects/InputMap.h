@@ -5,15 +5,15 @@
 
 namespace TIE {
 
-	class InputMap {
-		public:
-			virtual void processEvent(const sf::Event& Event, const sf::Vector2f& position);
-			virtual void processState(const sf::Vector2f& position);
+class InputMap {
+	public:
+		virtual void processEvent(const sf::Event& Event, const sf::Vector2f& position);
+		virtual void processState(const sf::Vector2f& position);
 
-			InputMap();
-			virtual ~InputMap();
-		private:
-	};
+		InputMap();
+		virtual ~InputMap();
+	private:
+};
 
 } 
 #endif

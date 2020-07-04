@@ -1,6 +1,6 @@
-#include "managers/LogManager.h"
-
 #include "utilities/LuaHelpers.h"
+
+#include "managers/LogManager.h"
 
 // https://eliasdaler.wordpress.com/2015/09/08/using-lua-with-cpp-in-practice-part-2/
 

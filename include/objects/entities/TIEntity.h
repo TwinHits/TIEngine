@@ -5,11 +5,11 @@
 #include <string>
 #include <typeindex>
 #include <vector>
+
 #include <SFML/Graphics.hpp>
 
-#include "objects/components/Component.h"
 #include "objects/GlobalId.h"
-
+#include "objects/components/Component.h"
 #include "templates/MakeUnique.h"
 
 namespace TIE {

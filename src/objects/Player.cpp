@@ -1,6 +1,6 @@
-#include "managers/HashManager.h"
-
 #include "objects/Player.h"
+
+#include "managers/HashManager.h"
 #include "objects/GlobalId.h"
 
 using namespace TIE;

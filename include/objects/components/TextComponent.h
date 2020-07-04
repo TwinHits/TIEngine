@@ -6,15 +6,17 @@
 #include "objects/components/Component.h"
 
 namespace TIE {
-	class TextComponent : public Component, public sf::Text {
-		public:
-			TextComponent();
-			virtual ~TextComponent() {};
 
-			void setDrawn(bool drawn);
-			bool isDrawn() const;
-		private:
-			bool drawn = false;
-	};
+class TextComponent : public Component, public sf::Text {
+	public:
+		TextComponent();
+		virtual ~TextComponent() {};
+
+		void setDrawn(bool drawn);
+		bool isDrawn() const;
+	private:
+		bool drawn = false;
+};
+
 }
 #endif

@@ -1,7 +1,6 @@
-#include "managers/AssetsManager.h"
-
 #include "utilities/GetMissingText.h"
 
+#include "managers/AssetsManager.h"
 
 sf::Text TIE::getMissingText() {
 	sf::Text text;

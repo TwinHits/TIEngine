@@ -1,14 +1,14 @@
 #ifndef CONSOLEMANAGER_H
 #define CONSOLEMANAGER_H
 
+#include "templates/Singleton.h"
+
 #include <memory>
 
 #include <SFML/Graphics.hpp>
 
 #include "objects/entities/DevConsole.h"
 #include "objects/enumeration/Direction.h"
-
-#include "templates/Singleton.h"
 
 namespace TIE {
 

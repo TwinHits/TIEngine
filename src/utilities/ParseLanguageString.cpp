@@ -1,9 +1,9 @@
+#include "utilities/ParseLanguageString.h"
+
 #include <map>
 #include <string>
 
 #include "objects/enumeration/Language.h"
-
-#include "utilities/ParseLanguageString.h"
 
 TIE::Language TIE::parseLanguageString(const std::string& string) {
 	//Take a string and figure out with language it's referring to.

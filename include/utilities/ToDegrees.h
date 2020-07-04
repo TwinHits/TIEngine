@@ -6,4 +6,5 @@ namespace TIE {
 float ToDegrees(double radians);
 
 }
+
 #endif

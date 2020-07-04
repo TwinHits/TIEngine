@@ -6,4 +6,5 @@ namespace TIE {
 float ToRadians(float degrees);
 
 }
+
 #endif

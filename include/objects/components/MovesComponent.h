@@ -1,9 +1,9 @@
 #ifndef MOVESCOMPONENT_H
 #define MOVESCOMPONENT_H
 
-#include <SFML/Graphics.hpp>
-
 #include "objects/components/Component.h"
+
+#include <SFML/Graphics.hpp>
 
 namespace TIE {
 
@@ -18,7 +18,6 @@ class MovesComponent : public Component {
 	private: 
 		sf::Vector2f velocity;
 };
-
 
 }
 #endif

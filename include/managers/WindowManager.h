@@ -1,12 +1,12 @@
 #ifndef WINDOWMANAGER_H
 #define WINDOWMANAGER_H
 
+#include "templates/Singleton.h"
+
 #include <string>
 #include <memory>
 
 #include <SFML/Graphics.hpp>
-
-#include "templates/Singleton.h"
 
 namespace TIE {
 
@@ -36,7 +36,7 @@ class WindowManager : public Singleton<WindowManager> {
 		sf::Vector2i windowSize;
 
 		WindowManager(const WindowManager&);
-		void operator=(const WindowManager&);
+		void operator=(const WindowManager&) {};
 };
 
 }

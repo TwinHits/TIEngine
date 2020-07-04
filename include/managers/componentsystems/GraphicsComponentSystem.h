@@ -1,9 +1,9 @@
 #ifndef GRAPHICSCOMPONENTSYSTEM_H
 #define GRAPHICSCOMPONENTSYSTEM_H
 
-#include <SFML/Graphics.hpp>
-
 #include "ComponentSystem.h"
+
+#include <SFML/Graphics.hpp>
 
 #include "objects/components/SpriteComponent.h"
 #include "objects/components/TextComponent.h"

@@ -1,9 +1,9 @@
 #ifndef MOVESCOMPONENTSYSTEM_H
 #define MOVESCOMPONENTSYSTEM_H
 
-#include <SFML/Graphics.hpp>
-
 #include "ComponentSystem.h"
+
+#include <SFML/Graphics.hpp>
 
 #include "objects/components/MovesComponent.h"
 #include "objects/components/SpriteComponent.h"

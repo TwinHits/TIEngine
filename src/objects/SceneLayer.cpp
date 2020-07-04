@@ -1,6 +1,6 @@
-#include "managers/ViewManager.h"
-
 #include "objects/SceneLayer.h"
+
+#include "managers/ViewManager.h"
 
 using namespace TIE;
 

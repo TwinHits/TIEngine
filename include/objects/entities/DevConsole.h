@@ -1,12 +1,12 @@
 #ifndef DEVCONSOLE_H
 #define DEVCONSOLE_H
 
+#include "TIEntity.h"
+
 #include <string>
 #include <vector>
 
 #include <SFML/Graphics.hpp>
-
-#include "TIEntity.h"
 
 namespace TIE {
 

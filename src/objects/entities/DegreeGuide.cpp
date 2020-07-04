@@ -1,14 +1,12 @@
+#include "objects/entities/DegreeGuide.h"
+
 #include <cmath>
 
 #include "managers/AssetsManager.h"
 #include "managers/ConfigManager.h"
 #include "managers/WindowManager.h"
-
-#include "objects/entities/DegreeGuide.h"
 #include "objects/components/TextComponent.h"
-
 #include "templates/MakeUnique.h"
-
 #include "utilities/ToRadians.h"
 
 using namespace TIE;

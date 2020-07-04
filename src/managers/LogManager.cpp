@@ -1,15 +1,13 @@
-#include <boost/filesystem.hpp>
+#include "managers/LogManager.h"
 
 #include <iostream>
 
+#include <boost/filesystem.hpp>
+
 #include "managers/ConfigManager.h"
 #include "managers/ConsoleManager.h"
-#include "managers/LogManager.h"
-
 #include "objects/enumeration/LogLevel.h"
-
 #include "utilities/LocalTime.h"
-
 
 using namespace TIE;
 

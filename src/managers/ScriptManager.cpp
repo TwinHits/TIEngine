@@ -1,14 +1,14 @@
+#include "managers/ScriptManager.h"
+
 #include <string>
 #include <vector>
 
 #include "managers/ConfigManager.h"
 #include "managers/LogManager.h"
 #include "managers/SceneManager.h"
-#include "managers/ScriptManager.h"
 #include "managers/WindowManager.h"
-
-#include "objects/components/SpriteComponent.h"
 #include "objects/components/MovesComponent.h"
+#include "objects/components/SpriteComponent.h"
 
 using namespace luabridge;
 using namespace TIE;

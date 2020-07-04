@@ -1,7 +1,4 @@
-Clean header namespace spacing
 Remove empty constructors and destructors
-Resort all includes
-Remove unneccesary includes
 move component systems out of managers
 Convert log statements to streams?
 Convert devConsole history items into one text component

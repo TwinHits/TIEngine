@@ -1,6 +1,6 @@
-#include <SFML/Graphics.hpp>
-
 #include "managers/componentsystems/CollidesComponentSystem.h" 
+
+#include <SFML/Graphics.hpp>
 
 #include "objects/components/CollidesComponent.h"
 #include "objects/entities/TIEntity.h"

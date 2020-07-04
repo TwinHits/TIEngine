@@ -2,7 +2,6 @@
 #define MOUSEPTRCOORDS_H
 
 #include "managers/InputManager.h"
-
 #include "objects/entities/TIEntity.h"
 
 namespace TIE {

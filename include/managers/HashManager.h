@@ -1,9 +1,9 @@
 #ifndef HASHMANAGER_H
 #define HASHMANAGER_H
 
-#include <string>
-
 #include "templates/Singleton.h"
+
+#include <string>
 
 #include "objects/GlobalId.h"
 
@@ -23,7 +23,7 @@ class HashManager : public Singleton<HashManager> {
 		GlobalId seed = 0;
 
 		HashManager(const HashManager&);
-		void operator=(const HashManager&);
+		void operator=(const HashManager&) {};
 };
 
 }

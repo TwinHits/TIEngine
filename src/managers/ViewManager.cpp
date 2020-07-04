@@ -1,10 +1,9 @@
+#include "managers/ViewManager.h"
+
 #include "managers/HashManager.h"
 #include "managers/LogManager.h"
-#include "managers/ViewManager.h"
 #include "managers/WindowManager.h"
-
 #include "objects/enumeration/Direction.h"
-
 #include "templates/MakeUnique.h"
 
 using namespace TIE; 

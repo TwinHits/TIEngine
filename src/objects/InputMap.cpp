@@ -1,9 +1,9 @@
-#include <map>
+#include "objects/InputMap.h"
+
 #include <iostream>
+#include <map>
 
 #include <SFML/Graphics.hpp>
-
-#include "objects/InputMap.h"
 
 TIE::InputMap::InputMap() {
 

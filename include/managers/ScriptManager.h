@@ -1,10 +1,10 @@
 #ifndef SCRIPTMANAGER_H
 #define SCRIPTMANAGER_H
 
+#include "templates/Singleton.h"
+
 #include <string>
 #include <vector>
-
-#include "templates/Singleton.h"
 
 #include "utilities/LuaHelpers.h"
 

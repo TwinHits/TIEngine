@@ -1,8 +1,8 @@
 #include "managers/WindowManager.h"
-#include "managers/StringManager.h"
-#include "managers/LogManager.h"
-#include "managers/ViewManager.h"
 
+#include "managers/LogManager.h"
+#include "managers/StringManager.h"
+#include "managers/ViewManager.h"
 #include "templates/MakeUnique.h"
 
 using namespace TIE;

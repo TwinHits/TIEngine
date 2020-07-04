@@ -1,13 +1,13 @@
+#include "managers/componentsystems/MovesComponentSystem.h" 
+
 #include <cmath>
+
 #include <SFML/Graphics.hpp>
 
-#include "managers/componentsystems/MovesComponentSystem.h" 
 #include "managers/LogManager.h" 
-
 #include "objects/components/MovesComponent.h"
 #include "objects/components/SpriteComponent.h"
 #include "objects/entities/TIEntity.h"
-
 #include "utilities/ToRadians.h"
 
 using namespace TIE;

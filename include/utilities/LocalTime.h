@@ -3,9 +3,10 @@
 
 #include <string>
 
-namespace TIE
-{
-	std::string LocalTime();
+namespace TIE {
+
+std::string LocalTime();
+
 }
 
 #endif

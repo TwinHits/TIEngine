@@ -1,10 +1,10 @@
 #ifndef STRINGMANAGER_H
 #define STRINGMANAGER_H
 
+#include "templates/Singleton.h"
+
 #include <string>
 #include <map>
-
-#include "templates/Singleton.h"
 
 #include "objects/GlobalId.h"
 #include "objects/enumeration/Language.h"
@@ -25,7 +25,7 @@ class StringManager : public Singleton<StringManager> {
 		Language displayLanguage;
 
 		StringManager(const StringManager&);
-		void operator=(const StringManager&);
+		void operator=(const StringManager&) {};
 	};
 
 }
