@@ -25,11 +25,11 @@ class LogManager: public Singleton<LogManager> {
 		bool isWarnEnabled();
 		bool isErrorEnabled();
 
-		void logDebug(const std::string& message);
-		void logInfo(const std::string& message);
-		void logWarn(const std::string& message);
-		void logError(const std::string& message);
-		void logCommand(const std::string& message);
+		void debug(const std::string& message);
+		void info(const std::string& message);
+		void warn(const std::string& message);
+		void error(const std::string& message);
+		void command(const std::string& message);
 
 		LogManager();
 		~LogManager();

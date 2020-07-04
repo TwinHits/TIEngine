@@ -47,7 +47,7 @@ void ConsoleManager::runCommand() {
 	
 	bool logCommand = true;
 	if (command == ConsoleCommands::TEST) {
-		LogManager::Instance()->logCommand("Test Command Please Ignore.");
+		LogManager::Instance()->command("Test Command Please Ignore.");
 	} else if (command == ConsoleCommands::SCRIPT || command == ConsoleCommands::LOAD) {
 		const std::string& scriptName = commandArgs.at(1);
 		ScriptManager::Instance()->loadScript(scriptName);
@@ -65,11 +65,11 @@ void ConsoleManager::runCommand() {
 		this->clearDebugLog();
 		logCommand = false;
 	} else {
-		LogManager::Instance()->logCommand("Unknown command.");
+		LogManager::Instance()->command("Unknown command.");
 	}
 
 	if (logCommand) {
-   		LogManager::Instance()->logCommand(this->command);
+   		LogManager::Instance()->command(this->command);
 	}
 	this->commandHistory.push_back(this->command);
 	this->command = "";
@@ -161,7 +161,7 @@ std::vector<std::string>& ConsoleManager::splitString(const std::string& string,
 
 
 void ConsoleManager::printSceneGraph(TIEntity& tientity) {
-	LogManager::Instance()->logCommand(tientity.getName());
+	LogManager::Instance()->command(tientity.getName());
 	for (auto& child : tientity.getChildren()) {
 		this->printSceneGraph(*child);
 	}

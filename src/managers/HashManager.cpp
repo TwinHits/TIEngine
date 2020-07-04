@@ -21,7 +21,7 @@ GlobalId HashManager::getNewGlobalId() {
 
 void HashManager::setSeed(unsigned long seed) {
 	this->seed = seed;
-	LogManager::Instance()->logInfo("Hash Seed set to '" + std::to_string(seed) + "'.");
+	LogManager::Instance()->info("Hash Seed set to '" + std::to_string(seed) + "'.");
 }
 
 

@@ -22,12 +22,12 @@ sf::RenderWindow& WindowManager::addWindow(sf::VideoMode mode, const std::string
 	this->title = title;
 
 	if (this->window != nullptr) {
-		LogManager::Instance()->logWarn("A window has already been created, resetting and creating a new window.");
+		LogManager::Instance()->warn("A window has already been created, resetting and creating a new window.");
 		this->removeWindow();
 	}
 
 	this->window = TIE::make_unique<sf::RenderWindow>(mode, this->title, style, settings);
-	LogManager::Instance()->logDebug("Created window.");
+	LogManager::Instance()->debug("Created window.");
 
 	this->windowSize.x = this->window->getSize().x;
 	this->windowSize.y = this->window->getSize().y;
@@ -43,7 +43,7 @@ void WindowManager::removeWindow() {
 
 sf::RenderWindow& WindowManager::getWindow() {
 	if (this->window == nullptr) {
-		LogManager::Instance()->logWarn("Window does not yet exist, creating default window");
+		LogManager::Instance()->warn("Window does not yet exist, creating default window");
 		this->addWindow();
 	}
 	return *this->window;

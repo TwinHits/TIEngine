@@ -17,7 +17,7 @@ void MovesComponentSystem::execute(TIEntity& entity, const float delta) {
 	if (movesComponent != nullptr) {
 		SpriteComponent* spriteComponent = entity.getComponent<SpriteComponent>();
 		if (spriteComponent == nullptr) {
-			LogManager::Instance()->logError("Entity " + std::to_string(entity.getId()) + " has a move component but no sprite component.");
+			LogManager::Instance()->error("Entity " + std::to_string(entity.getId()) + " has a move component but no sprite component.");
 		}
 		this->move(movesComponent, spriteComponent, delta);
 	}

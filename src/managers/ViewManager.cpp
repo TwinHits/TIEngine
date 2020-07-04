@@ -35,7 +35,7 @@ GlobalId ViewManager::addView(const sf::FloatRect& rect) {
 		this->views[id] = std::move(view);
 		return id;
 	} else {
-		LogManager::Instance()->logWarn("Hash Collision, recursively rehashing.");		
+		LogManager::Instance()->warn("Hash Collision, recursively rehashing.");		
 		return this->addView();
 	}
 }
@@ -46,7 +46,7 @@ sf::View& ViewManager::getView(GlobalId id) {
 		return *this->views[id];
 	}
 	else {
-		LogManager::Instance()->logError("No view found by id '" + std::to_string(id) + "'. Returning nullptr.");	
+		LogManager::Instance()->error("No view found by id '" + std::to_string(id) + "'. Returning nullptr.");	
 		return *this->views[id];
 	}
 }
@@ -65,7 +65,7 @@ sf::View& ViewManager::updateView(sf::View& view, const sf::FloatRect& size) {
 
 sf::View& ViewManager::getActiveView() {
 	if (this->activeViewId == 0) {
-		LogManager::Instance()->logWarn("No active view found, building default.");
+		LogManager::Instance()->warn("No active view found, building default.");
 		this->setActiveView(this->addView());
 	}
 
@@ -79,7 +79,7 @@ void ViewManager::removeView(GlobalId id) {
 		this->views.erase(view);
 	}
 	else if (view == this->views.end()) {
-		LogManager::Instance()->logWarn("No view found by id '" + std::to_string(id) + "'. Doing nothing.");	
+		LogManager::Instance()->warn("No view found by id '" + std::to_string(id) + "'. Doing nothing.");	
 	}
 }
 

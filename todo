@@ -1,4 +1,3 @@
-logDebug -> debug
 Clean header namespace spacing
 Remove empty constructors and destructors
 Resort all includes

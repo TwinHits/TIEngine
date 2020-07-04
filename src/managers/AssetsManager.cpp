@@ -24,7 +24,7 @@ sf::Texture& AssetsManager::getTexture(GlobalId id) {
 	if (textures.find(id) != textures.end()) {
 		return textures[id];
 	} else {
-		LogManager::Instance()->logError("Cannot open texture "  + std::to_string(id) + "'.");
+		LogManager::Instance()->error("Cannot open texture "  + std::to_string(id) + "'.");
 		return textures[HashManager::Instance()->getHash("missing_texture.png")];
 	}
 }
@@ -40,7 +40,7 @@ const sf::SoundBuffer& AssetsManager::getAudio(GlobalId id) {
 	if (audio.find(id) != audio.end()) {
 		return audio[id];
 	} else {
-		LogManager::Instance()->logError("Cannot open audio '" + std::to_string(id) + "'.");
+		LogManager::Instance()->error("Cannot open audio '" + std::to_string(id) + "'.");
 		return audio[id];
 	}
 }
@@ -57,7 +57,7 @@ const sf::Font& AssetsManager::getFont(GlobalId id) {
 		return fonts[id];
 	}
 	else {
-		LogManager::Instance()->logError("Cannot open font '" + std::to_string(id) + "'.");
+		LogManager::Instance()->error("Cannot open font '" + std::to_string(id) + "'.");
 		return fonts[id];
 	}
 }
@@ -79,15 +79,15 @@ void AssetsManager::parseAssets() {
 					bool success = t.loadFromFile(i.path().string());
 					GlobalId id = HashManager::Instance()->getHash(i.path().filename().string());
 					textures[id] = t;
-					LogManager::Instance()->logInfo("Loading texture '" + i.path().string() + ". Id: " + std::to_string(id));
+					LogManager::Instance()->info("Loading texture '" + i.path().string() + ". Id: " + std::to_string(id));
 				}
 			}
 		} else {
-			LogManager::Instance()->logWarn("Textures folder does not exist yet. Creating.");
+			LogManager::Instance()->warn("Textures folder does not exist yet. Creating.");
 			boost::filesystem::create_directory(texturesPath);
 		}
 	} catch (const boost::filesystem::filesystem_error& e) {
-		LogManager::Instance()->logError("Textures folder error: " + std::string(e.what()));
+		LogManager::Instance()->error("Textures folder error: " + std::string(e.what()));
 	}
 
 	try {
@@ -98,15 +98,15 @@ void AssetsManager::parseAssets() {
 					s.loadFromFile(i.path().string());
 					GlobalId id = HashManager::Instance()->getHash(i.path().filename().string());
 					audio[id] = s;
-					LogManager::Instance()->logInfo("Loaded audio '" + i.path().string() + "'. Id: " + std::to_string(id));
+					LogManager::Instance()->info("Loaded audio '" + i.path().string() + "'. Id: " + std::to_string(id));
 				}
 			}
 		} else {
-			LogManager::Instance()->logWarn("Audio folder does not exist yet. Creating.");
+			LogManager::Instance()->warn("Audio folder does not exist yet. Creating.");
 			boost::filesystem::create_directory(audioPath);
 		}
 	} catch (const boost::filesystem::filesystem_error& e) {
-		LogManager::Instance()->logError("Audio folder error: " + std::string(e.what()));
+		LogManager::Instance()->error("Audio folder error: " + std::string(e.what()));
 	}
 
 	try {
@@ -117,14 +117,14 @@ void AssetsManager::parseAssets() {
 					f.loadFromFile(i.path().string());
 					GlobalId id = HashManager::Instance()->getHash(i.path().filename().string());
 					fonts[id] = f;
-					LogManager::Instance()->logInfo("Loaded font '" + i.path().string() + "'. Id: " + std::to_string(id));
+					LogManager::Instance()->info("Loaded font '" + i.path().string() + "'. Id: " + std::to_string(id));
 				}
 			}
 		} else {
-			LogManager::Instance()->logWarn("Fonts folder does not exist yet. Creating.");
+			LogManager::Instance()->warn("Fonts folder does not exist yet. Creating.");
 			boost::filesystem::create_directory(fontsPath);
 		}
 	} catch (const boost::filesystem::filesystem_error& e) {
-		LogManager::Instance()->logError("Fonts folder error: " + std::string(e.what()));
+		LogManager::Instance()->error("Fonts folder error: " + std::string(e.what()));
 	}
 }

@@ -72,7 +72,7 @@ bool LogManager::isErrorEnabled() {
 }
 
 
-void LogManager::logDebug(const std::string& message) {
+void LogManager::debug(const std::string& message) {
 	if (this->isDebugEnabled()) {
 		std::string logString = "[" +  LocalTime() +  "]" + " DEBUG: " +  message;
 		logHistory.push(logString);
@@ -81,7 +81,7 @@ void LogManager::logDebug(const std::string& message) {
 }
 
 
-void LogManager::logInfo(const std::string& message) {
+void LogManager::info(const std::string& message) {
 	if (this->isInfoEnabled()) {
 		std::string logString = "[" +  LocalTime() +  "]" + " INFO: " +  message;
 		logHistory.push(logString);
@@ -90,7 +90,7 @@ void LogManager::logInfo(const std::string& message) {
 }
 
 
-void LogManager::logWarn(const std::string& message) {
+void LogManager::warn(const std::string& message) {
 	if (this->isErrorEnabled()) {
 		std::string logString = "[" +  LocalTime() +  "]" + " WARN: " +  message;
 		logHistory.push(logString);
@@ -99,7 +99,7 @@ void LogManager::logWarn(const std::string& message) {
 }
 
 
-void LogManager::logError(const std::string& message) {
+void LogManager::error(const std::string& message) {
 	if (this->isErrorEnabled()) {
 		std::string logString = "[" +  LocalTime() +  "]" + " ERROR: " +  message;
 		logHistory.push(logString);
@@ -108,7 +108,7 @@ void LogManager::logError(const std::string& message) {
 }
 
 
-void LogManager::logCommand(const std::string& message) {
+void LogManager::command(const std::string& message) {
 	if (ConfigManager::Instance()->getDebugLogLevel() > 0) {
 		std::string logString = "[" +  LocalTime() +  "]" + " COMMAND: " +  message;
 		logHistory.push(logString);

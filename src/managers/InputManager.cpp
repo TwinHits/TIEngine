@@ -45,14 +45,14 @@ void InputManager::processInput() {
 		switch (event.type) {
 			case sf::Event::Closed:
 				window.close();
-				LogManager::Instance()->logInfo("Window closed by user.");
+				LogManager::Instance()->info("Window closed by user.");
 				break;
 			case sf::Event::KeyPressed:
 				switch (event.key.code) {
 					case sf::Keyboard::Escape:
 						if (!consoleManager->checkConsole()) {
 							window.close();
-							LogManager::Instance()->logInfo("Window closed by user.");
+							LogManager::Instance()->info("Window closed by user.");
 						} else if (consoleManager->checkConsole()) {
 							consoleManager->hideConsole();
 						}	

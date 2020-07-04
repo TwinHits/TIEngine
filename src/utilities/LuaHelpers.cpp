@@ -8,22 +8,22 @@ bool TIE::Lua::loadScript(lua_State* L, const std::string& script) {
 
     int errorCode = luaL_loadfile(L, script.c_str()); //success == false
     if (errorCode == 0) {
-        LogManager::Instance()->logInfo("Loaded script " + script);
+        LogManager::Instance()->info("Loaded script " + script);
         errorCode = lua_pcall(L, 0, 0, 0);  //success == false
         if (errorCode == 0) {
-            LogManager::Instance()->logDebug("Called global lua function for " + script);
+            LogManager::Instance()->debug("Called global lua function for " + script);
         } else {
-            LogManager::Instance()->logError("Could not call global lua function " + script + ": " + std::to_string(errorCode));
+            LogManager::Instance()->error("Could not call global lua function " + script + ": " + std::to_string(errorCode));
             return false;
         }
 	} else if (errorCode == 7) {
-        LogManager::Instance()->logError("Could not load lua script " + script + ": Could not find file.");
+        LogManager::Instance()->error("Could not load lua script " + script + ": Could not find file.");
         return false;
     } else if (errorCode == 3) {
-        LogManager::Instance()->logError("Could not load lua script " + script + ": Syntax error.");
+        LogManager::Instance()->error("Could not load lua script " + script + ": Syntax error.");
         return false;
     } else {
-        LogManager::Instance()->logError("Could not load lua script " + script + ": " + std::to_string(errorCode));
+        LogManager::Instance()->error("Could not load lua script " + script + ": " + std::to_string(errorCode));
         return false;
     }
     return true;
@@ -44,7 +44,7 @@ void TIE::Lua::lua_gettostack(lua_State* L, const std::string& variableName) {
             }
  
             if (lua_isnil(L, -1)) {
-                LogManager::Instance()->logError("Can't get " + variableName + " from Lua script");
+                LogManager::Instance()->error("Can't get " + variableName + " from Lua script");
                 return;
             } else {
                 var = "";
@@ -84,11 +84,11 @@ void TIE::Lua::loadGetKeysFunction(lua_State* L) {
 std::vector<std::string> TIE::Lua::getTableKeys(lua_State* L, const std::string& name) {
     lua_getglobal(L, "getKeys"); // get function
     if (lua_isnil(L, -1)) {
-        LogManager::Instance()->logDebug("Lua getKeys function is not loaded yet. Loading...");
+        LogManager::Instance()->debug("Lua getKeys function is not loaded yet. Loading...");
         loadGetKeysFunction(L);
         lua_getglobal(L, "getKeys");
         if (lua_isnil(L, -1)) {
-            LogManager::Instance()->logError("Failed to load Lua getKeys function.");
+            LogManager::Instance()->error("Failed to load Lua getKeys function.");
         }
     }
 
@@ -96,13 +96,13 @@ std::vector<std::string> TIE::Lua::getTableKeys(lua_State* L, const std::string&
     std::vector<std::string> keys;
     int errorCode = lua_pcall(L, 1, 1, 0); //success == false
     if (errorCode == 2) {
-        LogManager::Instance()->logError("Could not find lua table key: " + name);
+        LogManager::Instance()->error("Could not find lua table key: " + name);
         return keys;
     } else if (errorCode != 0) {
-        LogManager::Instance()->logError("Failed to call lua getKeys function: " + std::to_string(errorCode));
+        LogManager::Instance()->error("Failed to call lua getKeys function: " + std::to_string(errorCode));
         return keys;
     }
-    LogManager::Instance()->logDebug("Called getKeys lua function.");
+    LogManager::Instance()->debug("Called getKeys lua function.");
 
     lua_pushnil(L); //Magic sauce for some reason
     while (lua_next(L, -2)) { // get values one by one
