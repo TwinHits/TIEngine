@@ -175,4 +175,5 @@ void TIE::ConsoleManager::clearConsoleHistory() {
 void TIE::ConsoleManager::clearDebugLog() {
 	this->clearConsoleHistory();
 	LogManager::Instance()->clearLog();
+	LogManager::Instance()->info("Logs cleared by console command.");
 }

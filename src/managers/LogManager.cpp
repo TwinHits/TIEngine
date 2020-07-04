@@ -46,7 +46,10 @@ void LogManager::clearLog() {
 	if (!this->log.is_open()) {
 		std::cout << "Could not open '" + this->debugLogPath + "' after clearing." << std::endl;
 	}
-	this->logHistory.swap(std::queue<std::string>()); // Efficently clear queue
+
+	// Efficently clear queue
+	std::queue<std::string> swap;
+	this->logHistory.swap(swap);
 }
 
 
