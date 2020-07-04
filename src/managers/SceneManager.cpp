@@ -113,10 +113,10 @@ void SceneManager::render() {
 	window.clear();
 
 	ViewManager::Instance()->setActiveView(clientLayer.getViewId());
-	GraphicsComponentSystem::draw(clientLayer.getChildren(), window, states);
+	GraphicsComponentSystem::draw(clientLayer, window, states);
 
 	ViewManager::Instance()->setActiveView(engineLayer.getViewId());
-	GraphicsComponentSystem::draw(engineLayer.getChildren(), window, states);
+	GraphicsComponentSystem::draw(engineLayer, window, states);
 
 	window.display();
 }

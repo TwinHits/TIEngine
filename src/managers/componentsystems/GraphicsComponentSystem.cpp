@@ -4,28 +4,26 @@
 
 using namespace TIE;
 
-void GraphicsComponentSystem::draw(const std::vector<std::unique_ptr<TIEntity> >& entities, sf::RenderTarget& window, sf::RenderStates states) {
-	for (auto& entity : entities) {
-		SpriteComponent* spriteComponent = entity->getComponent<SpriteComponent>();
-		TextComponent* textComponent = entity->getComponent<TextComponent>();
-		
-		//Continue traversal if there's no graphics components, or if either component is drawn
-		bool continueTraversal = textComponent == nullptr && spriteComponent == nullptr;
-		if (spriteComponent != nullptr && spriteComponent->isDrawn()) {
-			sf::RenderStates combinedStates = states.transform * spriteComponent->getTransform();
-			window.draw(*dynamic_cast<sf::Sprite*>(spriteComponent), combinedStates);
-			continueTraversal = true;
-		}
+void GraphicsComponentSystem::draw(TIEntity& entity, sf::RenderTarget& window, sf::RenderStates states) {
+	SpriteComponent* spriteComponent = entity.getComponent<SpriteComponent>();
+	TextComponent* textComponent = entity.getComponent<TextComponent>();
+	
+	//Continue traversal if there's no graphics components, or if either component is drawn
+	bool continueTraversal = textComponent == nullptr && spriteComponent == nullptr;
+	if (spriteComponent != nullptr && spriteComponent->isDrawn()) {
+		sf::RenderStates combinedStates = states.transform * spriteComponent->getTransform();
+		window.draw(*dynamic_cast<sf::Sprite*>(spriteComponent), combinedStates);
+		continueTraversal = true;
+	}
 
-		if (textComponent != nullptr && textComponent->isDrawn()) {
-			window.draw(*dynamic_cast<sf::Text*>(textComponent));
-			continueTraversal = true;
-		}
+	if (textComponent != nullptr && textComponent->isDrawn()) {
+		window.draw(*dynamic_cast<sf::Text*>(textComponent));
+		continueTraversal = true;
+	}
 
-		if (continueTraversal) {
-			for (auto& child : entity->getChildren()) {
-				GraphicsComponentSystem::draw(entity->getChildren(), window, states);
-			}
+	if (continueTraversal) {
+		for (auto& child : entity.getChildren()) {
+			GraphicsComponentSystem::draw(*child, window, states);
 		}
 	}
 }

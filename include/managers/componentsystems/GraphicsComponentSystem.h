@@ -13,7 +13,7 @@ namespace TIE {
 
 class GraphicsComponentSystem : public ComponentSystem {
 	public:
-		static void draw(const std::vector<std::unique_ptr<TIEntity> >&, sf::RenderTarget&, sf::RenderStates);
+		static void draw(TIEntity&, sf::RenderTarget&, sf::RenderStates);
 
 		static SpriteComponent* addSpriteComponent(TIEntity&);
 		static TextComponent* addTextComponent(TIEntity&);
