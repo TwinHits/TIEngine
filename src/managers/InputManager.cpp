@@ -79,7 +79,7 @@ void InputManager::processInput() {
 				break;
 			case sf::Event::TextEntered:
 				if (consoleManager->checkConsole()) {
-					consoleManager->addToCommand(event.text.unicode);
+					consoleManager->addToInput(event.text.unicode);
 				}
 				break;
 			default:

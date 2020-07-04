@@ -24,8 +24,8 @@ class ConsoleManager : public Singleton<ConsoleManager> {
 		void scroll(Direction direction);
 		void traverseDownHistory();
 		void traverseUpHistory();
-		void addToCommand(unsigned int unicodeCharacter);
-		const std::string& getCommand();
+		void addToInput(unsigned int unicodeCharacter);
+		const std::string& getInput();
 
 		void setDevConsole(std::unique_ptr<DevConsole> devConsole);
 
@@ -37,7 +37,7 @@ class ConsoleManager : public Singleton<ConsoleManager> {
 		void clearDebugLog();
 
 		DevConsole* devConsole;
-		std::string command;
+		std::string input;
 		std::vector<std::string> commandHistory;
 		std::vector<std::string>::iterator historyIndex = commandHistory.begin();
 

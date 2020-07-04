@@ -40,39 +40,39 @@ bool ConsoleManager::checkConsole() {
 
 void ConsoleManager::runCommand() {
 	std::vector<std::string> commandArgs;
-	this->splitString(this->command, ' ', commandArgs);
+	this->splitString(this->input, ' ', commandArgs);
 	const std::string& command = commandArgs.front();
 	
-   	LogManager::Instance()->command(this->command);
-	this->commandHistory.push_back(this->command);
+   	LogManager::Instance()->command(this->input);
+	this->commandHistory.push_back(this->input);
 	this->historyIndex = commandHistory.end();
 
-	if (this->command == ConsoleCommands::TEST) {
+	if (command == ConsoleCommands::TEST) {
 		LogManager::Instance()->command("Test Command Please Ignore.");
-	} else if (this->command == ConsoleCommands::SCRIPT || this->command == ConsoleCommands::LOAD) {
+	} else if (command == ConsoleCommands::SCRIPT || command == ConsoleCommands::LOAD) {
 		const std::string& scriptName = commandArgs.at(1);
 		ScriptManager::Instance()->loadScript(scriptName);
-	} else if (this->command == ConsoleCommands::PRINT) {
+	} else if (command == ConsoleCommands::PRINT) {
 		if (!commandArgs.empty()) {
 			const std::string& printCommand = commandArgs.at(1);
 			if (printCommand == ConsoleCommands::SCENEGRAPH) {
 				this->printSceneGraph(SceneManager::Instance()->getSceneGraphRoot());
 			}
 		}
-	} else if (this->command == ConsoleCommands::CLEAR) {
+	} else if (command == ConsoleCommands::CLEAR) {
 		this->clearConsoleHistory();
-	} else if (this->command == ConsoleCommands::CLEARLOG) {
+	} else if (command == ConsoleCommands::CLEARLOG) {
 		this->clearDebugLog();
 	} else {
 		LogManager::Instance()->command("Unknown command.");
 	}
 
-	this->command = "";
+	this->input = "";
 }
 
 
-const std::string& ConsoleManager::getCommand() {
-	return this->command;
+const std::string& ConsoleManager::getInput() {
+	return this->input;
 }
 
 
@@ -109,11 +109,11 @@ void ConsoleManager::traverseDownHistory() {
 	if (this->historyIndex != this->commandHistory.end()) {
 		this->historyIndex++;
 		if (this->historyIndex != this->commandHistory.end()) {
-			this->command = *(this->historyIndex);
-			this->devConsole->getComponent<TextComponent>()->setString(this->command);
+			this->input = *(this->historyIndex);
+			this->devConsole->getComponent<TextComponent>()->setString(this->input);
 		} else {
-			this->command = "";
-			this->devConsole->getComponent<TextComponent>()->setString(this->command);
+			this->input = "";
+			this->devConsole->getComponent<TextComponent>()->setString(this->input);
 		}
 	}
 }
@@ -122,22 +122,22 @@ void ConsoleManager::traverseDownHistory() {
 void ConsoleManager::traverseUpHistory() {
 	if (this->historyIndex != this->commandHistory.begin()) {
 		this->historyIndex--;
-		this->command = *(this->historyIndex);
-		this->devConsole->getComponent<TextComponent>()->setString(this->command);
+		this->input = *(this->historyIndex);
+		this->devConsole->getComponent<TextComponent>()->setString(this->input);
 	}
 }
 
 
-void ConsoleManager::addToCommand(unsigned int unicodeCharacter) {
+void ConsoleManager::addToInput(unsigned int unicodeCharacter) {
 	if (unicodeCharacter < 128  //if it's a character
 	&& unicodeCharacter != 96 //tilde
 	&& unicodeCharacter != 13 //return
 	&& unicodeCharacter != 8) { // backspace
-		this->command += static_cast<char>(unicodeCharacter);
+		this->input += static_cast<char>(unicodeCharacter);
 	} else if (unicodeCharacter == 8) { //backspace
-		this->command = this->command.substr(0, this->command.length() - 1);
+		this->input = this->input.substr(0, this->input.length() - 1);
 	}
-	this->devConsole->getComponent<TextComponent>()->setString(this->command);
+	this->devConsole->getComponent<TextComponent>()->setString(this->input);
 }
 
 
