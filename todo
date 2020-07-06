@@ -1,6 +1,10 @@
 move component systems out of managers
 Convert log statements to streams?
 Convert devConsole history items into one text component
+LogManager should print the name of the class that called it.
+Common error messages should be constants
+Scroll zone does not update with window size change
+AssetsManager should return pointers
 
 ConsoleManager Scrolling Behavior
 	Should scroll within the devConsole window only

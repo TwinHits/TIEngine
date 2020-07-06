@@ -1,5 +1,7 @@
 #include "utilities/LuaHelpers.h"
 
+#include <string>
+
 #include "managers/LogManager.h"
 
 // https://eliasdaler.wordpress.com/2015/09/08/using-lua-with-cpp-in-practice-part-2/
@@ -13,7 +15,7 @@ bool TIE::Lua::loadScript(lua_State* L, const std::string& script) {
         if (errorCode == 0) {
             LogManager::Instance()->debug("Called global lua function for " + script);
         } else {
-            LogManager::Instance()->error("Could not call global lua function " + script + ": " + std::to_string(errorCode));
+            LogManager::Instance()->error("Could not call global lua function for " + script + ": " + std::to_string(errorCode));
             return false;
         }
 	} else if (errorCode == 7) {
@@ -23,7 +25,7 @@ bool TIE::Lua::loadScript(lua_State* L, const std::string& script) {
         LogManager::Instance()->error("Could not load lua script " + script + ": Syntax error.");
         return false;
     } else {
-        LogManager::Instance()->error("Could not load lua script " + script + ": " + std::to_string(errorCode));
+        LogManager::Instance()->error("Could not load lua script " + script + ": Error Code " + std::to_string(errorCode));
         return false;
     }
     return true;
@@ -102,7 +104,6 @@ std::vector<std::string> TIE::Lua::getTableKeys(lua_State* L, const std::string&
         LogManager::Instance()->error("Failed to call lua getKeys function: " + std::to_string(errorCode));
         return keys;
     }
-    LogManager::Instance()->debug("Called getKeys lua function.");
 
     lua_pushnil(L); //Magic sauce for some reason
     while (lua_next(L, -2)) { // get values one by one
@@ -114,4 +115,25 @@ std::vector<std::string> TIE::Lua::getTableKeys(lua_State* L, const std::string&
 
     lua_settop(L, 0); // remove s table from stack 
     return keys;
+}
+
+
+std::string TIE::Lua::getString(const std::string& key, const luabridge::LuaRef& table) {
+    luabridge::LuaRef luaRef = table[key];
+    std::string value = luaRef.cast<std::string>();
+    return value;
+}
+
+
+bool TIE::Lua::getBool(const std::string& key, const luabridge::LuaRef& table) {
+    luabridge::LuaRef luaRef = table[key];
+    bool value = luaRef.cast<bool>();
+    return value;
+}
+
+
+float TIE::Lua::getFloat(const std::string& key, const luabridge::LuaRef& table) {
+    luabridge::LuaRef luaRef = table[key];
+    float value = luaRef.cast<float>();
+    return value;
 }
