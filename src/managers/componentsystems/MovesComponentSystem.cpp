@@ -27,26 +27,10 @@ void MovesComponentSystem::move(MovesComponent* movesComponent, SpriteComponent*
 	sf::Vector2f velocity = movesComponent->getVelocity();
 	//float degrees = spriteComponent->getRotation(); //Move according to current rotation
 	float degrees = velocity.y; //Move according to velocity's rotation
-	float x = -1;
-	float y = -1;
+	float x, y = 0;
 
-	//Handle special values because of sin/cos handling the seminal values
-	if (degrees == -1.0) {
-		x = std::cos(ToRadians(degrees)) * velocity.x * delta;
-	}
-	else if (degrees == 89.0) {
-		y = std::sin(ToRadians(degrees)) * velocity.x * delta;
-	}
-	else if (degrees == 179.0) {
-		x = std::cos(ToRadians(degrees)) * velocity.x * delta;
-	}
-	else if (degrees == 269.0) {
-		y = std::sin(ToRadians(degrees)) * velocity.x * delta;
-	}
-	else {
-		x = std::cos(ToRadians(degrees)) * velocity.x * delta;
-		y = std::sin(ToRadians(degrees)) * velocity.x * delta;
-	}
+	x = std::cos(ToRadians(degrees)) * velocity.x * delta;
+	y = std::sin(ToRadians(degrees)) * velocity.x * delta;
 
 	spriteComponent->sf::Transformable::move(sf::Vector2f(x, y));
 }
