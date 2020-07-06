@@ -1,12 +1,12 @@
 #include <map>
 #include <sstream>
 
-#include <boost/filesystem.hpp>
-
 #include "managers/ConfigManager.h"
 
-#include "objects/enumeration/LogLevel.h"
+#include <boost/filesystem.hpp>
 
+#include "managers/ScriptManager.h"
+#include "objects/enumeration/LogLevel.h"
 #include "utilities/ParseLanguageString.h"
 
 using namespace TIE;
@@ -34,7 +34,6 @@ const std::string& ConfigManager::getScriptsPath() {
 LogLevel ConfigManager::getDebugLogLevel() {
 	return this->debugLogLevel;
 }
-
 
 void ConfigManager::setDebugLogLevel(LogLevel debugLogLevel) {
 	this->debugLogLevel = debugLogLevel;
@@ -107,8 +106,10 @@ void ConfigManager::parseConfig(std::ifstream& config) {
 				if (value == "true") {
 					this->showDegreeGuide = true; 
 				}
+			} else if (key == "ScriptsPath") {
+				this->scriptsPath = value;
 			}
-		} 
+		}	 
 	}
 }
 
@@ -117,5 +118,8 @@ void ConfigManager::restoreDefaultConfiguration() {
 	this->debugLogPath = this->defaultDebugLogPath;
 	this->assetsPath = this->defaultAssetsPath;
 	this->debugLogLevel = this->defaultDebugLogLevel;
+	this->scriptsPath = this->defaultScriptsPath;
 	this->defaultDisplayLanguage = this->defaultDefaultDisplayLanguage;
+	this->showDegreeGuide = this->defaultShowDegreeGuide;
+	this->showMousePtrCoords = this->showMousePtrCoords;
 }
