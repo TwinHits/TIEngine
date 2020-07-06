@@ -50,6 +50,7 @@ class TIEntity {
 
 		std::vector<std::unique_ptr<TIEntity> >& getChildren();
 		TIEntity& attachChild(std::unique_ptr<TIEntity>);
+		TIEntity& attachChild();
 
 		//TIEntity* findNode(sf::Vector0f);
 

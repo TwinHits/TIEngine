@@ -3,6 +3,7 @@
 #include <memory>
 
 #include "managers/HashManager.h"
+#include "templates/MakeUnique.h"
 
 using namespace TIE;
 
@@ -53,6 +54,13 @@ TIEntity& TIEntity::attachChild(std::unique_ptr<TIEntity> child) {
 	child->setParent(this);
 	children.push_back(std::move(child));
 	return *children.back();
+}
+
+TIEntity& TIEntity::attachChild() {
+	children.push_back(make_unique<TIEntity>());
+	TIEntity& child = *children.back();
+	child.setParent(this);
+	return child;
 }
 
 
