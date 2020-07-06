@@ -49,7 +49,7 @@ class ViewManager : public Singleton<ViewManager> {
 		GlobalId clientViewId;
 		GlobalId engineViewId;
 
-		float scrollSpeed = 5.0;
+		float scrollSpeed = 1.0;
 		
 		void operator=(const ViewManager&) {};
 		ViewManager(const ViewManager&);
