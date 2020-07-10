@@ -1,6 +1,7 @@
 #ifndef ASSETSMANAGER_H
 #define ASSETSMANAGER_H
 
+#include "managers/Manager.h"
 #include "templates/Singleton.h"
 
 #include <map>
@@ -13,8 +14,10 @@
 
 namespace TIE {
 
-class AssetsManager: public Singleton<AssetsManager> {
+class AssetsManager: public Singleton<AssetsManager>, Manager {
 	public:
+		bool initialize();
+
 		sf::Texture& getTexture(GlobalId);
 		sf::Texture& getTexture(const std::string&);
 		const sf::SoundBuffer& getAudio(GlobalId);
@@ -22,7 +25,7 @@ class AssetsManager: public Singleton<AssetsManager> {
 		const sf::Font& getFont(GlobalId);
 		const sf::Font& getFont(const std::string&);
 
-		AssetsManager();	
+		AssetsManager() {};
 		~AssetsManager() {};
 
 	private:

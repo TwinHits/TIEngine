@@ -16,7 +16,9 @@
 
 using namespace TIE;
 
-SceneManager::SceneManager() : clock(TimeManager::Instance()->addClock()) {
+SceneManager::SceneManager() : clock(TimeManager::Instance()->addClock()) {}
+
+bool SceneManager::initialize() {
 	this->sceneGraphRoot = make_unique<SceneLayer>();
 	this->sceneGraphRoot->setLayer(SceneLayer::Layer::ROOT);
 	this->sceneGraphRoot->setViewId(ViewManager::Instance()->getEngineViewId());
@@ -40,6 +42,7 @@ SceneManager::SceneManager() : clock(TimeManager::Instance()->addClock()) {
 	mousePtrCoords->initialize();
 	this->engineLayer->attachChild(std::move(mousePtrCoords));
 
+	return true;
 }
 
 

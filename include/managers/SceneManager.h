@@ -1,6 +1,7 @@
 #ifndef SCENEMANAGER_H
 #define SCENEMANAGER_H
 
+#include "managers/Manager.h"
 #include "templates/Singleton.h"
 
 #include <memory>
@@ -11,8 +12,10 @@
 
 namespace TIE {
 
-	class SceneManager : public Singleton<SceneManager> {
+	class SceneManager : public Singleton<SceneManager>, Manager {
 	public:
+		bool initialize();
+
 		SceneLayer& getSceneGraphRoot();
 		SceneLayer& getEngineLayer();
 		SceneLayer& getClientLayer();
@@ -31,8 +34,8 @@ namespace TIE {
 		float TimePerFrame = 1.f / 60.f; //Lock at 60 fps
 
 		std::unique_ptr<SceneLayer> sceneGraphRoot;
-		SceneLayer* engineLayer;
-		SceneLayer* clientLayer;
+		SceneLayer* engineLayer = nullptr;
+		SceneLayer* clientLayer = nullptr;
 
 		void executeComponentSystems(const std::vector<std::unique_ptr<TIEntity> >&);
 		void removeTIEntities(std::vector<std::unique_ptr<TIEntity> >&);

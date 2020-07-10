@@ -1,6 +1,7 @@
 #ifndef SCRIPTMANAGER_H
 #define SCRIPTMANAGER_H
 
+#include "managers/Manager.h"
 #include "templates/Singleton.h"
 
 #include <array>
@@ -12,22 +13,21 @@
 
 namespace TIE {
 
-class ScriptManager : public Singleton<ScriptManager> {
+class ScriptManager : public Singleton<ScriptManager>, Manager {
 	public:
-		ScriptManager();
-		~ScriptManager() {};
-
+		bool initialize();
 		void loadScript(const std::string& scriptName);
 
-	private:
-		lua_State* luaState;
+		ScriptManager() {};
+		~ScriptManager() {};
 
+	private:
+		lua_State* luaState = nullptr;
+
+		void loadSettings(const luabridge::LuaRef&);
 		void loadWindowProperties(const luabridge::LuaRef&);
 		void loadTIEntities(const std::vector<std::string>&);
 		void loadTIEntity(const std::string&, const luabridge::LuaRef&, TIEntity* parent);
-
-		//Schema, lets see how big it gets before moving it to a new home
-		std::array<std::string, 3> TIENTITY_COMPONENTS = { "drawn", "moves", "collides" };
 
 		ScriptManager(const ScriptManager&);
 		void operator=(const ScriptManager&) {};

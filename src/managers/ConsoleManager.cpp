@@ -17,9 +17,12 @@
 
 using namespace TIE;
 
-ConsoleManager::ConsoleManager() {
+#include <iostream>
+
+bool ConsoleManager::initialize() {
 	this->devConsole = &dynamic_cast<DevConsole&>(SceneManager::Instance()->getEngineLayer().attachChild(make_unique<DevConsole>()));
 	this->devConsole->initialize();
+	return true;
 }
 
 

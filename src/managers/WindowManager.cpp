@@ -2,14 +2,14 @@
 
 #include "managers/LogManager.h"
 #include "managers/StringManager.h"
-#include "managers/ViewManager.h"
 #include "templates/MakeUnique.h"
 
 using namespace TIE;
 
-WindowManager::WindowManager() {
+bool WindowManager::initialize() {
 	//Creating default window that can be replaced by client defined window
 	this->addWindow();
+	return true;
 }
 
 

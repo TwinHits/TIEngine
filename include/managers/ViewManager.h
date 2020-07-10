@@ -1,6 +1,7 @@
 #ifndef VIEWMANAGER_H
 #define VIEWMANAGER_H
 
+#include "managers/Manager.h"
 #include "templates/Singleton.h"
 
 #include <map>
@@ -13,8 +14,10 @@
 
 namespace TIE {
 
-class ViewManager : public Singleton<ViewManager> {
+class ViewManager : public Singleton<ViewManager>, Manager {
 	public:
+		bool initialize();
+		
 		GlobalId addView();
 		GlobalId addView(const sf::FloatRect&);
 		sf::View& getView(GlobalId);
@@ -39,15 +42,15 @@ class ViewManager : public Singleton<ViewManager> {
 		sf::View& getEngineView();
 		sf::View& getClientView();
 
-		ViewManager();
+		ViewManager() {};
 		~ViewManager() {};
 
 	private:
 		std::map<GlobalId, std::unique_ptr<sf::View> > views;
 
-		GlobalId activeViewId;
-		GlobalId clientViewId;
-		GlobalId engineViewId;
+		GlobalId activeViewId = 0;
+		GlobalId clientViewId = 0;
+		GlobalId engineViewId = 0;
 
 		float scrollSpeed = 1.0;
 		

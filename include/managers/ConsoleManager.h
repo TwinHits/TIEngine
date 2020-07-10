@@ -1,6 +1,7 @@
 #ifndef CONSOLEMANAGER_H
 #define CONSOLEMANAGER_H
 
+#include "managers/Manager.h"
 #include "templates/Singleton.h"
 
 #include <memory>
@@ -12,10 +13,9 @@
 
 namespace TIE {
 
-class ConsoleManager : public Singleton<ConsoleManager> {
+class ConsoleManager : public Singleton<ConsoleManager>, Manager {
 	public:
-		ConsoleManager();
-		~ConsoleManager() {};
+		bool initialize();
 
 		void showConsole();
 		void hideConsole();
@@ -29,6 +29,8 @@ class ConsoleManager : public Singleton<ConsoleManager> {
 
 		void setDevConsole(std::unique_ptr<DevConsole> devConsole);
 
+		ConsoleManager() {};
+		~ConsoleManager() {};
 	private:
 		std::vector<std::string>& splitString(const std::string& string, char delimiter, std::vector<std::string>& out);
 

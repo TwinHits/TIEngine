@@ -19,6 +19,7 @@
 	#include "managers/LogManager.h"
 	#include "managers/SceneManager.h"
 	#include "managers/ScriptManager.h"
+	#include "managers/StartUpManager.h"
 	#include "managers/StringManager.h"
 	#include "managers/TimeManager.h"
 	#include "managers/ViewManager.h"

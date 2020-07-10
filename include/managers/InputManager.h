@@ -1,6 +1,7 @@
 #ifndef INPUTMANAGER_H
 #define INPUTMANAGER_H
 
+#include "managers/Manager.h"
 #include "templates/Singleton.h"
 
 #include <memory>
@@ -10,8 +11,10 @@
 
 namespace TIE {
 
-class InputManager : public Singleton<InputManager> {
+class InputManager : public Singleton<InputManager>, Manager {
 	public:
+		bool initialize();
+
 		void processInput();
 		
 		void setInputMap(std::unique_ptr<InputMap> inputMap);
@@ -20,7 +23,7 @@ class InputManager : public Singleton<InputManager> {
 		const sf::Vector2f getMouseWindowPosition();
 		const sf::Vector2f getMouseWorldPosition();
 
-		InputManager();
+		InputManager() {};
 		~InputManager() {};
 
 	private:

@@ -11,7 +11,7 @@
 
 using namespace TIE;
 
-LogManager::LogManager()  {
+bool LogManager::initialize()  {
 	std::string debugLogPathConfig = ConfigManager::Instance()->getDebugLogPath();
 	boost::filesystem::path debugLogPath = boost::filesystem::path(debugLogPathConfig);
 	if (!boost::filesystem::exists(debugLogPath) || !boost::filesystem::is_directory(debugLogPath)) {
@@ -23,6 +23,7 @@ LogManager::LogManager()  {
 	if (!this->log.is_open()) {
 		std::cout << "Could not open '" + this->debugLogPath + "'." << std::endl;
 	}
+	return true;
 }
 
 

@@ -1,6 +1,7 @@
 #ifndef WINDOWMANAGER_H
 #define WINDOWMANAGER_H
 
+#include "managers/Manager.h"
 #include "templates/Singleton.h"
 
 #include <string>
@@ -10,8 +11,10 @@
 
 namespace TIE {
 
-class WindowManager : public Singleton<WindowManager> {
+class WindowManager : public Singleton<WindowManager>, Manager {
 	public:
+		bool initialize();
+
 		sf::RenderWindow& addWindow(sf::VideoMode mode=sf::VideoMode(800, 600), 
 									const std::string& title="Twin Ion Engine", 
 									int style=sf::Style::Default,
@@ -27,7 +30,7 @@ class WindowManager : public Singleton<WindowManager> {
 		const std::string& getTitle();
 		void setTitle(const std::string&);
 
-		WindowManager();
+		WindowManager() {};
 		~WindowManager();
 
 	private:

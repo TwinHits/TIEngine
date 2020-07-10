@@ -8,10 +8,11 @@
 
 using namespace TIE; 
 
-ViewManager::ViewManager() {
+bool ViewManager::initialize() {
 	sf::Vector2i windowSize = WindowManager::Instance()->getWindowSize();
 	this->engineViewId = this->addView(sf::FloatRect(0, 0, windowSize.x, windowSize.y));
 	this->clientViewId = this->addView(sf::FloatRect(0, 0, windowSize.x, windowSize.y));
+	return true;
 }
 
 

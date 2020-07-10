@@ -11,8 +11,9 @@
 
 using namespace TIE;
 
-ConfigManager::ConfigManager() {
+bool ConfigManager::initialize() {
 	this->loadConfig(this->defaultConfigPath);
+	return true;
 }
 
 

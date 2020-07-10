@@ -14,10 +14,11 @@
 using namespace luabridge;
 using namespace TIE;
 
-ScriptManager::ScriptManager() {
+bool ScriptManager::initialize() {
     this->luaState = luaL_newstate();
     luaL_openlibs(this->luaState);
     Lua::loadGetKeysFunction(this->luaState);
+	return true;
 }
 
 
@@ -26,6 +27,11 @@ void ScriptManager::loadScript(const std::string& scriptName) {
     std::string scriptFile = scriptsPath + scriptName;
 
     if (Lua::loadScript(this->luaState, scriptFile)) {
+
+		LuaRef settingsTable = getGlobal(this->luaState, "settings");
+        if (settingsTable.isTable()) {
+            this->loadSettings(settingsTable);
+        }
 
 		LuaRef windowTable = getGlobal(this->luaState, "window");
         if (windowTable.isTable()) {
@@ -37,6 +43,14 @@ void ScriptManager::loadScript(const std::string& scriptName) {
             this->loadTIEntities(tientities);
         }
     }
+}
+
+
+void TIE::ScriptManager::loadSettings(const luabridge::LuaRef& settingsTable) {
+	//Addtional Assets Paths	
+		//Fonts
+		//Textures
+		//Sounds
 }
 
 

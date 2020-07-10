@@ -1,6 +1,7 @@
 #ifndef CONFIGMANAGER_H
 #define CONFIGMANAGER_H 
 
+#include "managers/Manager.h"
 #include "templates/Singleton.h"
 
 #include <fstream>
@@ -12,12 +13,11 @@
 
 namespace TIE {
 
-class ConfigManager: public Singleton<ConfigManager> {
+class ConfigManager: public Singleton<ConfigManager>, Manager {
 	//Singleton manager of engine side configurable values defined in
 	//config.ini. Stores default values in case of no file found.
 	public:
-		ConfigManager();
-		~ConfigManager() {};
+		bool initialize();
 		
 		bool loadConfigFile(const std::string& path);
 
@@ -34,6 +34,8 @@ class ConfigManager: public Singleton<ConfigManager> {
 
 		void restoreDefaultConfiguration();
 		
+		ConfigManager() {};
+		~ConfigManager() {};
 	private:
 		bool loadConfig(const std::string& path);
 		void parseConfig(std::ifstream& config);

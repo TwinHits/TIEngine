@@ -6,13 +6,14 @@
 
 using namespace TIE;
 
-AssetsManager::AssetsManager() {
+bool AssetsManager::initialize() {
 	std::string assetsPath = ConfigManager::Instance()->getAssetsPath();
 	texturesPath = boost::filesystem::path(assetsPath + "textures");
 	audioPath = boost::filesystem::path(assetsPath + "audio");
 	fontsPath = boost::filesystem::path(assetsPath + "fonts");
 
 	this->parseAssets();
+	return true;
 }
 
 

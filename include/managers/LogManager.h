@@ -1,6 +1,7 @@
 #ifndef LOGMANAGER_H
 #define LOGMANAGER_H
 
+#include "managers/Manager.h"
 #include "templates/Singleton.h"
 
 #include <fstream>
@@ -11,8 +12,10 @@
 
 namespace TIE {
 
-class LogManager: public Singleton<LogManager> {
+class LogManager: public Singleton<LogManager>, Manager {
 	public:
+		bool initialize();
+
 		std::queue<std::string>& getQueueToDraw();
 		void clearQueueToDraw();
 
@@ -31,7 +34,7 @@ class LogManager: public Singleton<LogManager> {
 		void error(const std::string& message);
 		void command(const std::string& message);
 
-		LogManager();
+		LogManager() {};
 		~LogManager();
 	private:
 		std::string debugLogPath;

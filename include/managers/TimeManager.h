@@ -1,6 +1,7 @@
 #ifndef TIMEMANAGER_H
 #define TIMEMANAGER_H
 
+#include "managers/Manager.h"
 #include "templates/Singleton.h"
 
 #include <SFML/Graphics.hpp>
@@ -9,8 +10,10 @@
 
 namespace TIE {
 
-class TimeManager : public Singleton<TimeManager> {
+class TimeManager : public Singleton<TimeManager>, Manager {
 	public:
+		bool initialize();
+
 		sf::Clock& addClock();	
 		sf::Clock& getClock(GlobalId id);
 
@@ -22,7 +25,7 @@ class TimeManager : public Singleton<TimeManager> {
 
 		sf::Clock& addClock(GlobalId id);
 
-		TimeManager(const TimeManager&);
+		TimeManager(const TimeManager&) {};
 		void operator=(const TimeManager&) {};
 };
 
