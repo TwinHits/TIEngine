@@ -24,7 +24,7 @@ class ScriptManager : public Singleton<ScriptManager>, Manager {
 	private:
 		lua_State* luaState = nullptr;
 
-		void loadSettings(const luabridge::LuaRef&);
+		void loadAssets(const luabridge::LuaRef&);
 		void loadWindowProperties(const luabridge::LuaRef&);
 		void loadTIEntities(const std::vector<std::string>&);
 		void loadTIEntity(const std::string&, const luabridge::LuaRef&, TIEntity* parent);

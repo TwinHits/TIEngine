@@ -118,6 +118,19 @@ std::vector<std::string> TIE::Lua::getTableKeys(lua_State* L, const std::string&
 }
 
 
+std::vector<std::string>& TIE::Lua::getVector(const luabridge::LuaRef& table, std::vector<std::string>& out) {
+    int index = 1;
+    luabridge::LuaRef value = table[index];
+
+    while (value.isString()) {
+        out.push_back(value.cast<std::string>());
+        value = table[++index];
+    }
+
+    return out;
+}
+
+
 std::string TIE::Lua::getString(const std::string& key, const luabridge::LuaRef& table) {
     luabridge::LuaRef luaRef = table[key];
     std::string value = luaRef.cast<std::string>();

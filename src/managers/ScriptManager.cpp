@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 
+#include "managers/AssetsManager.h"
 #include "managers/ConfigManager.h"
 #include "managers/LogManager.h"
 #include "managers/SceneManager.h"
@@ -28,14 +29,14 @@ void ScriptManager::loadScript(const std::string& scriptName) {
 
     if (Lua::loadScript(this->luaState, scriptFile)) {
 
-		LuaRef settingsTable = getGlobal(this->luaState, "settings");
-        if (settingsTable.isTable()) {
-            this->loadSettings(settingsTable);
-        }
-
 		LuaRef windowTable = getGlobal(this->luaState, "window");
         if (windowTable.isTable()) {
             this->loadWindowProperties(windowTable);
+        }
+
+		LuaRef assetsTable = getGlobal(this->luaState, "assets");
+        if (assetsTable.isTable()) {
+            this->loadAssets(assetsTable);
         }
 
         std::vector<std::string> tientities = Lua::getTableKeys(this->luaState, "tientities");
@@ -46,11 +47,34 @@ void ScriptManager::loadScript(const std::string& scriptName) {
 }
 
 
-void TIE::ScriptManager::loadSettings(const luabridge::LuaRef& settingsTable) {
-	//Addtional Assets Paths	
-		//Fonts
-		//Textures
-		//Sounds
+void TIE::ScriptManager::loadAssets(const luabridge::LuaRef& settingsTable) {
+
+	LuaRef texturesTable = settingsTable["textures"];
+	std::vector<std::string> texturePaths;
+	if (texturesTable.isTable()) {
+		texturePaths = Lua::getVector(texturesTable, texturePaths);
+		for (auto path : texturePaths) {
+			AssetsManager::Instance()->loadTexturesFromPath(path);
+		}
+	}
+
+	LuaRef fontsTable = settingsTable["fonts"];
+	std::vector<std::string> fontsPath;
+	if (fontsTable.isTable()) {
+		fontsPath = Lua::getVector(fontsTable, fontsPath);
+		for (auto path : fontsPath) {
+			AssetsManager::Instance()->loadFontsFromPath(path);
+		}
+	}
+
+	LuaRef audioTable = settingsTable["audio"];
+	std::vector<std::string> audioPaths;
+	if (audioTable.isTable()) {
+		audioPaths = Lua::getVector(audioTable, audioPaths);
+		for (auto path : audioPaths) {
+			AssetsManager::Instance()->loadAudioFromPath(path);
+		}
+	}
 }
 
 
@@ -133,7 +157,7 @@ void ScriptManager::loadTIEntity(const std::string& tientityKey, const LuaRef& t
 
     TIEntity& tientity = tientityFactory.build();
 	LogManager::Instance()->info("Build entity " + tientityKey + " from Lua script.");
-    //Any other property is another entity
+    //Any other property is a child entity
 	for (auto& child : children) {
 		this->loadTIEntity(tientityKey + "." + child, tientityTable[child], &tientity);
 	}

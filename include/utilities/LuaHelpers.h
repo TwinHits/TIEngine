@@ -19,6 +19,8 @@ namespace TIE {
 		void loadGetKeysFunction(lua_State* L);
 		std::vector<std::string> getTableKeys(lua_State* L, const std::string& name);
 
+		std::vector<std::string>& getVector(const luabridge::LuaRef&, std::vector<std::string>&);
+
 		std::string getString(const std::string&, const luabridge::LuaRef&);
 		bool getBool(const std::string&, const luabridge::LuaRef&);
 		float getFloat(const std::string&, const luabridge::LuaRef&);
