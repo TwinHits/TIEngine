@@ -10,4 +10,4 @@ class Manager {
 
 }
 
-#endif MANAGER_H
+#endif

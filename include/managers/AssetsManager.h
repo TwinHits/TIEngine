@@ -5,6 +5,7 @@
 #include "templates/Singleton.h"
 
 #include <map>
+#include <set>
 
 #include <boost/filesystem.hpp>
 #include <SFML/Graphics.hpp>
@@ -18,6 +19,10 @@ class AssetsManager: public Singleton<AssetsManager>, Manager {
 	public:
 		bool initialize();
 
+		bool loadTexturesFromPath(const std::string&);
+		bool loadFontsFromPath(const std::string&);
+		bool loadAudioFromPath(const std::string&);
+
 		sf::Texture& getTexture(GlobalId);
 		sf::Texture& getTexture(const std::string&);
 		const sf::SoundBuffer& getAudio(GlobalId);
@@ -29,15 +34,17 @@ class AssetsManager: public Singleton<AssetsManager>, Manager {
 		~AssetsManager() {};
 
 	private:
-		boost::filesystem::path texturesPath;
-		boost::filesystem::path audioPath;
-		boost::filesystem::path fontsPath;
-
-		void parseAssets();
-
 		std::map<GlobalId, sf::Texture> textures;
 		std::map<GlobalId, sf::SoundBuffer> audio; 
 		std::map<GlobalId, sf::Font> fonts;
+
+		const boost::filesystem::path& addPathToTexturesCache(const std::string&);
+		const boost::filesystem::path& addPathToAudioCache(const std::string& path);
+		const boost::filesystem::path& addPathToFontsCache(const std::string& path);
+
+		std::set<boost::filesystem::path> texturesPathCache;
+		std::set<boost::filesystem::path> audioPathCache;
+		std::set<boost::filesystem::path> fontsPathCache;
 
 		AssetsManager(const AssetsManager&);
 		void operator=(const AssetsManager&) {};
