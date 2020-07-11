@@ -20,10 +20,10 @@ bool StartUpManager::initialize() {
 	WindowManager::Instance()->initialize();
 	ConfigManager::Instance()->initialize();
 	LogManager::Instance()->initialize();
+	AssetsManager::Instance()->initialize();
 	InputManager::Instance()->initialize();
 	ViewManager::Instance()->initialize();
 	SceneManager::Instance()->initialize();
-	AssetsManager::Instance()->initialize();
 	ConsoleManager::Instance()->initialize();
 	HashManager::Instance()->initialize();
 	TimeManager::Instance()->initialize();
