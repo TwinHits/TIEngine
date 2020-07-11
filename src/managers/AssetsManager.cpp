@@ -67,18 +67,28 @@ const sf::Font& AssetsManager::getFont(const std::string& name) {
 
 bool AssetsManager::loadTexturesFromPath(const std::string& folder) {
 	try {
-		const boost::filesystem::path& texturesPath = this->addPathToTexturesCache(folder);
-		for (boost::filesystem::directory_entry& i : boost::filesystem::directory_iterator(texturesPath)) {
-			sf::Texture t;
-			if (t.loadFromFile(i.path().string())) {
-				GlobalId id = HashManager::Instance()->getHash(i.path().filename().string());
-				this->textures[id] = t;
-				LogManager::Instance()->info("Loading texture '" + i.path().string() + ". Id: " + std::to_string(id));
-			} else {
-				LogManager::Instance()->error("SFML Texture load error: Cannot load " + i.path().string());
+		boost::filesystem::path path = boost::filesystem::path(folder);
+		if (boost::filesystem::exists(path) && boost::filesystem::is_directory(path)) {
+			this->fontsPathCache.insert(path);
+			for (boost::filesystem::directory_entry& i : boost::filesystem::directory_iterator(path)) {
+				sf::Texture t;
+				if (t.loadFromFile(i.path().string())) {
+					GlobalId id = HashManager::Instance()->getHash(i.path().filename().string());
+					this->textures[id] = t;
+					LogManager::Instance()->info("Loading texture '" + i.path().string() + ". Id: " + std::to_string(id));
+				} else {
+					LogManager::Instance()->error("SFML Texture load error: Cannot load " + i.path().string());
+				}
 			}
+			return true;
+		} else {
+			if (!boost::filesystem::exists(path)) {
+				LogManager::Instance()->error("Path '" + path.string() + "' does not exist.");
+			} else if (!boost::filesystem::is_directory(path)) {
+				LogManager::Instance()->error("Path '" + path.string() + "' is not a directory.");
+			}
+			return false;
 		}
-		return true;
 	} catch (const boost::filesystem::filesystem_error& e) {
 		LogManager::Instance()->error("Boost Textures load error: " + std::string(e.what()));
 		return false;
@@ -88,18 +98,28 @@ bool AssetsManager::loadTexturesFromPath(const std::string& folder) {
 
 bool AssetsManager::loadAudioFromPath(const std::string& folder) {
 	try {
-		const boost::filesystem::path& audioPath = this->addPathToAudioCache(folder);
-		for (boost::filesystem::directory_entry& i : boost::filesystem::directory_iterator(audioPath)) {
-			sf::SoundBuffer s;
-			if (s.loadFromFile(i.path().string())) {
-				GlobalId id = HashManager::Instance()->getHash(i.path().filename().string());
-				this->audio[id] = s;
-				LogManager::Instance()->info("Loaded audio '" + i.path().string() + "'. Id: " + std::to_string(id));
-			} else {
-				LogManager::Instance()->error("SFML audio load error: Cannot load " + i.path().string());
+		boost::filesystem::path path = boost::filesystem::path(folder);
+		if (boost::filesystem::exists(path) && boost::filesystem::is_directory(path)) {
+			this->audioPathCache.insert(path);
+			for (boost::filesystem::directory_entry& i : boost::filesystem::directory_iterator(path)) {
+				sf::SoundBuffer s;
+				if (s.loadFromFile(i.path().string())) {
+					GlobalId id = HashManager::Instance()->getHash(i.path().filename().string());
+					this->audio[id] = s;
+					LogManager::Instance()->info("Loaded audio '" + i.path().string() + "'. Id: " + std::to_string(id));
+				} else {
+					LogManager::Instance()->error("SFML audio load error: Cannot load " + i.path().string());
+				}
 			}
+			return true;
+		} else {
+			if (!boost::filesystem::exists(path)) {
+				LogManager::Instance()->error("Path '" + path.string() + "' does not exist.");
+			} else if (!boost::filesystem::is_directory(path)) {
+				LogManager::Instance()->error("Path '" + path.string() + "' is not a directory.");
+			}
+			return false;
 		}
-		return true;
 	} catch (const boost::filesystem::filesystem_error& e) {
 		LogManager::Instance()->error("Boost Audio load error: " + std::string(e.what()));
 		return false;
@@ -109,53 +129,32 @@ bool AssetsManager::loadAudioFromPath(const std::string& folder) {
 
 bool AssetsManager::loadFontsFromPath(const std::string& folder) {
 	try {
-		const boost::filesystem::path& fontsPath = this->addPathToFontsCache(folder);
-		for (boost::filesystem::directory_entry& i : boost::filesystem::directory_iterator(fontsPath)) {
-			sf::Font f;
-			if (f.loadFromFile(i.path().string())) {
-				GlobalId id = HashManager::Instance()->getHash(i.path().filename().string());
-				this->fonts[id] = f;
-				LogManager::Instance()->info("Loaded font '" + i.path().string() + "'. Id: " + std::to_string(id));
-			} else {
-				LogManager::Instance()->error("SFML Font load error: Cannot load " + i.path().string());
+		boost::filesystem::path path = boost::filesystem::path(folder);
+		if (boost::filesystem::exists(path) && boost::filesystem::is_directory(path)) {
+			this->fontsPathCache.insert(path);
+			for (boost::filesystem::directory_entry& i : boost::filesystem::directory_iterator(path)) {
+				sf::Font f;
+				if (f.loadFromFile(i.path().string())) {
+					GlobalId id = HashManager::Instance()->getHash(i.path().filename().string());
+					this->fonts[id] = f;
+					LogManager::Instance()->info("Loaded font '" + i.path().string() + "'. Id: " + std::to_string(id));
+				}
+				else {
+					LogManager::Instance()->error("SFML Font load error: Cannot load " + i.path().string());
+				}
 			}
+			return true;
+		} else {
+			if (!boost::filesystem::exists(path)) {
+				LogManager::Instance()->error("Path '" + path.string() + "' does not exist.");
+			} else if (!boost::filesystem::is_directory(path)) {
+				LogManager::Instance()->error("Path '" + path.string() + "' is not a directory.");
+			}
+			return false;
 		}
-		return true;
 	} catch (const boost::filesystem::filesystem_error& e) {
 		LogManager::Instance()->error("Boost Fonts load error: " + std::string(e.what()));
 		return false;
 	}
 }
 
-
-const boost::filesystem::path& AssetsManager::addPathToTexturesCache(const std::string& folder) {
-	boost::filesystem::path path = boost::filesystem::path(folder);
-	if (!boost::filesystem::exists(path) || !boost::filesystem::is_directory(path)) {
-		LogManager::Instance()->warn("Textures folder does not exist yet. Creating.");
-		boost::filesystem::create_directory(path);
-	}
-	auto iter = this->texturesPathCache.insert(path);
-	return *(iter.first);
-}
-
-
-const boost::filesystem::path& AssetsManager::addPathToFontsCache(const std::string& folder) {
-	boost::filesystem::path path = boost::filesystem::path(folder);
-	if (!boost::filesystem::exists(path) || !boost::filesystem::is_directory(path)) {
-		LogManager::Instance()->warn("Fonts folder does not exist yet. Creating.");
-		boost::filesystem::create_directory(path);
-	}
-	auto iter = this->fontsPathCache.insert(path);
-	return *(iter.first);
-}
-
-
-const boost::filesystem::path& AssetsManager::addPathToAudioCache(const std::string& folder) {
-	boost::filesystem::path path = boost::filesystem::path(folder);
-	if (!boost::filesystem::exists(path) || !boost::filesystem::is_directory(path)) {
-		LogManager::Instance()->warn("Audio folder does not exist yet. Creating.");
-		boost::filesystem::create_directory(path);
-	}
-	auto iter = this->audioPathCache.insert(path);
-	return *(iter.first);
-}

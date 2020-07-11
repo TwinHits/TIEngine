@@ -38,10 +38,6 @@ class AssetsManager: public Singleton<AssetsManager>, Manager {
 		std::map<GlobalId, sf::SoundBuffer> audio; 
 		std::map<GlobalId, sf::Font> fonts;
 
-		const boost::filesystem::path& addPathToTexturesCache(const std::string&);
-		const boost::filesystem::path& addPathToAudioCache(const std::string& path);
-		const boost::filesystem::path& addPathToFontsCache(const std::string& path);
-
 		std::set<boost::filesystem::path> texturesPathCache;
 		std::set<boost::filesystem::path> audioPathCache;
 		std::set<boost::filesystem::path> fontsPathCache;
