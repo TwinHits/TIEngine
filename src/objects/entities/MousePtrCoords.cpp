@@ -1,8 +1,8 @@
 #include "objects/entities/MousePtrCoords.h"
 
+#include "componentsystems/GraphicsComponentSystem.h"
 #include "managers/AssetsManager.h"
 #include "managers/ConfigManager.h"
-#include "managers/componentsystems/GraphicsComponentSystem.h"
 
 using namespace TIE;
 

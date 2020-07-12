@@ -2,13 +2,13 @@
 
 #include <functional>
 
+#include "componentsystems/CollidesComponentSystem.h"
+#include "componentsystems/GraphicsComponentSystem.h"
+#include "componentsystems/MovesComponentSystem.h"
 #include "managers/LogManager.h" 
 #include "managers/TimeManager.h"
 #include "managers/ViewManager.h"
 #include "managers/WindowManager.h"
-#include "managers/componentsystems/CollidesComponentSystem.h"
-#include "managers/componentsystems/GraphicsComponentSystem.h"
-#include "managers/componentsystems/MovesComponentSystem.h"
 #include "objects/SceneLayer.h"
 #include "objects/entities/DegreeGuide.h"
 #include "objects/entities/MousePtrCoords.h"

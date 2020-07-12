@@ -5,13 +5,13 @@
 #include <queue>
 #include <sstream>
 
+#include "componentsystems/GraphicsComponentSystem.h"
 #include "managers/ConfigManager.h"
 #include "managers/LogManager.h"
 #include "managers/SceneManager.h"
 #include "managers/ScriptManager.h"
 #include "managers/ViewManager.h"
 #include "managers/WindowManager.h"
-#include "managers/componentsystems/GraphicsComponentSystem.h"
 #include "objects/constants/ConsoleCommands.h"
 #include "templates/MakeUnique.h"
 

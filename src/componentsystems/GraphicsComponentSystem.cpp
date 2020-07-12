@@ -1,4 +1,4 @@
-#include "managers/componentsystems/GraphicsComponentSystem.h" 
+#include "componentsystems/GraphicsComponentSystem.h" 
 
 #include <SFML/Graphics.hpp>
 

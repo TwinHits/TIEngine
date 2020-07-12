@@ -7,7 +7,7 @@
 #include <memory>
 #include <set>
 
-#include "managers/componentsystems/ComponentSystem.h" 
+#include "componentsystems/ComponentSystem.h" 
 #include "objects/SceneLayer.h"
 
 namespace TIE {

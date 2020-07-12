@@ -1,4 +1,4 @@
-#include "managers/componentsystems/CollidesComponentSystem.h" 
+#include "componentsystems/CollidesComponentSystem.h" 
 
 #include <SFML/Graphics.hpp>
 
