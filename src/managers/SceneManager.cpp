@@ -5,6 +5,7 @@
 #include "componentsystems/CollidesComponentSystem.h"
 #include "componentsystems/GraphicsComponentSystem.h"
 #include "componentsystems/MovesComponentSystem.h"
+#include "componentsystems/SelectableComponentSystem.h"
 #include "managers/LogManager.h" 
 #include "managers/TimeManager.h"
 #include "managers/ViewManager.h"
@@ -94,9 +95,15 @@ void SceneManager::removeTIEntities(std::vector<std::unique_ptr<TIEntity> >& ent
 }
 
 void SceneManager::executeComponentSystems(const std::vector<std::unique_ptr<TIEntity> >& entities) {
+
+	SelectableComponentSystem selectableComponentSystem = SelectableComponentSystem();
+	MovesComponentSystem movesComponentSystem = MovesComponentSystem();
+	CollidesComponentSystem collidesComponentSystem = CollidesComponentSystem();
+
 	for (auto& entity : entities) {
-		MovesComponentSystem().execute(*entity, this->delta);
-		CollidesComponentSystem().execute(*entity, this->delta);
+		movesComponentSystem.execute(*entity, this->delta);
+		collidesComponentSystem.execute(*entity, this->delta);
+		selectableComponentSystem.execute(*entity, this->delta);
 		entity->update(this->delta);
 
 		for (auto& child : entity->getChildren()) {

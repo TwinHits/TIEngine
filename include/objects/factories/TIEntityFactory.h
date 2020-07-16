@@ -14,12 +14,14 @@ class TIEntityFactory {
 		TIEntityFactory& setParent(TIEntity*);
 		TIEntityFactory& setName(std::string);
 
-		TIEntityFactory& setDrawn(bool);
+		TIEntityFactory& setDrawn(const bool);
 		TIEntityFactory& setTexture(const std::string&);
 		TIEntityFactory& setText(const std::string&);
 
 		TIEntityFactory& setSpeed(const float);
 		TIEntityFactory& setDirection(const float);
+
+		TIEntityFactory& setSelectable(const bool);
 
 		TIEntityFactory() {};
 		~TIEntityFactory() {};
@@ -32,6 +34,7 @@ class TIEntityFactory {
 		static const std::string SPEED;
 		static const std::string DIRECTION;
 
+		static const std::string SELECTABLE;
 	private:
 		TIEntity* parent = nullptr;
 		std::string name = "";
@@ -45,6 +48,9 @@ class TIEntityFactory {
 		bool hasMoves = false;
 		float speed = 0;
 		float direction = 0;
+
+		bool hasSelectable = false;
+		bool isSelectable = false;
 };
 
 }

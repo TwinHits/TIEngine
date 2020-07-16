@@ -4,10 +4,10 @@
 #include "managers/LogManager.h"
 #include "managers/SceneManager.h"
 #include "objects/components/SpriteComponent.h"
+#include "objects/components/SelectableComponent.h"
 #include "objects/components/TextComponent.h"
 #include "objects/components/MovesComponent.h"
 #include "objects/entities/TIEntity.h"
-
 
 using namespace TIE;
 
@@ -17,6 +17,7 @@ const std::string TIEntityFactory::TEXT = "text";
 const std::string TIEntityFactory::MOVES = "moves";
 const std::string TIEntityFactory::SPEED = "speed";
 const std::string TIEntityFactory::DIRECTION = "direction";
+const std::string TIEntityFactory::SELECTABLE = "selectable";
 
 TIEntity& TIEntityFactory::build() {
 
@@ -46,6 +47,11 @@ TIEntity& TIEntityFactory::build() {
 		if (!this->hasSprite) {
 			LogManager::Instance()->warn("Entity " + this->name + " has a move component but no sprite component.");
 		}
+	}
+
+	if (this->hasSelectable) {
+		SelectableComponent* selectableComponent = tientity.addComponent<SelectableComponent>();
+		selectableComponent->setSelectable(this->isSelectable);
 	}
 
 	return tientity;
@@ -93,3 +99,10 @@ TIEntityFactory& TIEntityFactory::setDirection(const float direction) {
 	this->hasMoves = true;
 	return *this;
 }
+
+TIEntityFactory& TIEntityFactory::setSelectable(const bool selectable) {
+	this->isSelectable = selectable;
+	this->hasSelectable = true;
+	return *this;
+}
+
