@@ -67,22 +67,22 @@ bool GraphicsComponentSystem::isDrawn(TIEntity& entity) {
 	return false;
 }
 
+
 /*
-sf::Vector2f GraphicsComponentSystem::getWorldPosition() const {
-	return this->getWorldTransform() * sf::Vector2f();
-}
-
-
 sf::Transform GraphicsComponentSystem::getWorldTransform() const {
 	sf::Transform transform = sf::Transform::Identity;
 
-	for (const SceneNode* n = this; n != nullptr; n = n->parent) {
+	for (const TIEntity* n = this; n != nullptr; n = n->parent) {
 		transform = n->getTransform() * transform;
 	}
 
 	return transform;
 }
 
+
+sf::Vector2f GraphicsComponentSystem::getWorldPosition() const {
+	return this->getWorldTransform() * sf::Vector2f();
+}
 
 float GraphicsComponentSystem::getWorldRotation() const {
 	float rotation = 0;
