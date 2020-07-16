@@ -10,7 +10,6 @@ bool TimeManager::initialize() {
 }
 
 sf::Clock& TimeManager::addClock() {
-	std::cout << "TimeManager" << std::endl;
 	GlobalId id = HashManager::Instance()->getNewGlobalId();
 	return this->addClock(id);
 }

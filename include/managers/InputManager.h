@@ -6,8 +6,9 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 
-#include "objects/InputMap.h"
+#include <SFML/Graphics.hpp>
 
 namespace TIE {
 
@@ -17,11 +18,10 @@ class InputManager : public Singleton<InputManager>, Manager {
 
 		void processInput();
 		
-		void setInputMap(std::unique_ptr<InputMap> inputMap);
-		const InputMap& getInputMap();
-
 		const sf::Vector2f getMouseWindowPosition();
 		const sf::Vector2f getMouseWorldPosition();
+
+		const sf::Vector2f* const getClickPosition();
 
 		InputManager() {};
 		~InputManager() {};
@@ -30,7 +30,7 @@ class InputManager : public Singleton<InputManager>, Manager {
 		sf::Vector2f mouseWindowPosition;
 		sf::Vector2f mouseWorldPosition;
 		int scrollZone = 5;
-		std::unique_ptr<InputMap> inputMap;	
+		sf::Vector2f* lastClickPosition = nullptr;
 
 		void scroll(sf::RenderWindow&);
 

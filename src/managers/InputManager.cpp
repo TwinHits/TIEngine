@@ -1,6 +1,7 @@
 #include "managers/InputManager.h" 
 
 #include <cstdio>
+#include <iostream>
 
 #include <SFML/Graphics.hpp>
 
@@ -8,13 +9,11 @@
 #include "managers/LogManager.h"
 #include "managers/ViewManager.h"
 #include "managers/WindowManager.h"
-#include "objects/InputMap.h"
 #include "templates/MakeUnique.h"
 
 using namespace TIE;
 
 bool InputManager::initialize() { 
-	inputMap = TIE::make_unique<InputMap>();	
 	return true;
 }
 
@@ -29,77 +28,84 @@ const sf::Vector2f InputManager::getMouseWorldPosition() {
 }
 
 
+const sf::Vector2f* const InputManager::getClickPosition() {
+	return this->lastClickPosition;
+}
+
+
 void InputManager::processInput() {
 	sf::RenderWindow& window = WindowManager::Instance()->getWindow();
-	auto consoleManager = ConsoleManager::Instance();
+	sf::View& clientView = ViewManager::Instance()->getClientView();
+	sf::Vector2i position = sf::Mouse::getPosition(window);
+	this->mouseWindowPosition = window.mapPixelToCoords(position);
+	this->mouseWorldPosition = window.mapPixelToCoords(position, clientView); 
+	this->lastClickPosition = nullptr;
 
 	sf::Event event;
 	while (window.pollEvent(event)) {
-		//Engine event processing
-		switch (event.type) {
+
+		//Window Input Commands
+		if (!ConsoleManager::Instance()->checkConsole()) {
+			switch (event.type) {
 			case sf::Event::Closed:
 				window.close();
-				LogManager::Instance()->info("Window closed by user.");
+				LogManager::Instance()->info("Window closed.");
 				break;
 			case sf::Event::KeyPressed:
 				switch (event.key.code) {
-					case sf::Keyboard::Escape:
-						if (!consoleManager->checkConsole()) {
-							window.close();
-							LogManager::Instance()->info("Window closed by user.");
-						} else if (consoleManager->checkConsole()) {
-							consoleManager->hideConsole();
-						}	
-						break;
-					case sf::Keyboard::Tilde:
-						if (!consoleManager->checkConsole()) {
-							consoleManager->showConsole();
-						}
-						else if (consoleManager->checkConsole()) {
-							consoleManager->hideConsole();
-						}
-						break;
-					case sf::Keyboard::Return:
-						if (consoleManager->checkConsole()) {	
-							consoleManager->runCommand();
-						}
-						break;
-					case sf::Keyboard::Up:
-						if (consoleManager->checkConsole()) {	
-							consoleManager->traverseUpHistory();
-						}
-						break;
-					case sf::Keyboard::Down:
-						if (consoleManager->checkConsole()) {	
-							consoleManager->traverseDownHistory();
-						}
-						break;
-					default:
-						break;	
+				case sf::Keyboard::Escape:
+					window.close();
+					LogManager::Instance()->info("Window closed.");
+					break;
+				case sf::Keyboard::Tilde:
+					ConsoleManager::Instance()->showConsole();
+					break;
+				default:
+					break;
 				}
 				break;
-			case sf::Event::TextEntered:
-				if (consoleManager->checkConsole()) {
-					consoleManager->addToInput(event.text.unicode);
-				}
+			case sf::Event::MouseButtonPressed:
+				this->lastClickPosition = &(this->mouseWorldPosition);
 				break;
 			default:
 				break;
+			}
+			continue;
 		}
 
-		sf::View& clientView = ViewManager::Instance()->getClientView();
-		sf::Vector2i position = sf::Mouse::getPosition(window);
-		this->mouseWindowPosition = window.mapPixelToCoords(position);
-		this->mouseWorldPosition = window.mapPixelToCoords(position, clientView); 
 
-		//Do client side event processing if the console is not showing
-		if (!consoleManager->checkConsole()) {
-			//Client state processing
-			inputMap->processState(mouseWorldPosition);
-			//Client event processing
-			inputMap->processEvent(event, mouseWorldPosition);
+		//Console Input Commands
+		if (ConsoleManager::Instance()->checkConsole()) {
+			switch (event.type) {
+			case sf::Event::KeyPressed:
+				switch (event.key.code) {
+				case sf::Keyboard::Escape:
+					ConsoleManager::Instance()->hideConsole();
+					break;
+				case sf::Keyboard::Tilde:
+					ConsoleManager::Instance()->hideConsole();
+					break;
+				case sf::Keyboard::Return:
+					ConsoleManager::Instance()->runCommand();
+					break;
+				case sf::Keyboard::Up:
+					ConsoleManager::Instance()->traverseUpHistory();
+					break;
+				case sf::Keyboard::Down:
+					ConsoleManager::Instance()->traverseDownHistory();
+					break;
+				default:
+					break;
+				}
+				break;
+			case sf::Event::TextEntered:
+				ConsoleManager::Instance()->addToInput(event.text.unicode);
+				break;
+			default:
+				break;
+			}
+			continue;
 		}
-
 	}
 
 	//Check for camera scrolling
@@ -129,14 +135,4 @@ void InputManager::scroll(sf::RenderWindow& window) {
 		if (mousePosition.y >= WindowManager::Instance()->getWindowSize().y - scrollZone)
 			consoleManager->scroll(BOTTOM);
 	}
-}
-
-
-void InputManager::setInputMap(std::unique_ptr<InputMap> inputMap) {
-	this->inputMap = std::move(inputMap);
-}
-
-
-const InputMap& InputManager::getInputMap() {
-	return *inputMap;
 }

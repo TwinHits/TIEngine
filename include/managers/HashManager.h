@@ -8,8 +8,6 @@
 
 #include "objects/GlobalId.h"
 
-#include <iostream>
-
 namespace TIE {
 
 class HashManager : public Singleton<HashManager>, Manager {
