@@ -3,6 +3,7 @@
 #include <functional>
 
 #include "componentsystems/CollidesComponentSystem.h"
+#include "componentsystems/InputComponentSystem.h"
 #include "componentsystems/GraphicsComponentSystem.h"
 #include "componentsystems/MovesComponentSystem.h"
 #include "componentsystems/SelectableComponentSystem.h"
@@ -77,7 +78,7 @@ void SceneManager::updateGameState() {
 	while (this->delta > this->TimePerFrame) {
 
 		this->removeTIEntities(sceneGraphRoot->getChildren());
-		this->executeComponentSystems(sceneGraphRoot->getChildren());
+		this->updateComponentSystems(sceneGraphRoot->getChildren());
 
 		float fps = 60 / delta;
 		WindowManager::Instance()->showFPS(std::to_string(fps));
@@ -94,20 +95,24 @@ void SceneManager::removeTIEntities(std::vector<std::unique_ptr<TIEntity> >& ent
 	}
 }
 
-void SceneManager::executeComponentSystems(const std::vector<std::unique_ptr<TIEntity> >& entities) {
 
-	SelectableComponentSystem selectableComponentSystem = SelectableComponentSystem();
-	MovesComponentSystem movesComponentSystem = MovesComponentSystem();
+void SceneManager::updateComponentSystems(const std::vector<std::unique_ptr<TIEntity> >& entities) {
+
 	CollidesComponentSystem collidesComponentSystem = CollidesComponentSystem();
+	InputComponentSystem inputComponentSystem = InputComponentSystem();
+	MovesComponentSystem movesComponentSystem = MovesComponentSystem();
+	SelectableComponentSystem selectableComponentSystem = SelectableComponentSystem();
 
 	for (auto& entity : entities) {
 		movesComponentSystem.update(*entity, this->delta);
 		collidesComponentSystem.update(*entity, this->delta);
 		selectableComponentSystem.update(*entity, this->delta);
+		inputComponentSystem.update(*entity, this->delta);
+
 		entity->update(this->delta);
 
 		for (auto& child : entity->getChildren()) {
-			this->executeComponentSystems(entity->getChildren());
+			this->updateComponentSystems(entity->getChildren());
 		}
 	}
 }

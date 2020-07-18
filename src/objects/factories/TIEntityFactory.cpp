@@ -3,6 +3,7 @@
 #include "managers/AssetsManager.h"
 #include "managers/LogManager.h"
 #include "managers/SceneManager.h"
+#include "objects/components/InputComponent.h"
 #include "objects/components/SpriteComponent.h"
 #include "objects/components/SelectableComponent.h"
 #include "objects/components/TextComponent.h"
@@ -18,6 +19,9 @@ const std::string TIEntityFactory::MOVES = "moves";
 const std::string TIEntityFactory::SPEED = "speed";
 const std::string TIEntityFactory::DIRECTION = "direction";
 const std::string TIEntityFactory::SELECTABLE = "selectable";
+const std::string TIEntityFactory::INPUT = "input";
+const std::string TIEntityFactory::SELECTED = "selected";
+const std::string TIEntityFactory::CLICK = "click";
 
 TIEntity& TIEntityFactory::build() {
 
@@ -52,6 +56,11 @@ TIEntity& TIEntityFactory::build() {
 	if (this->hasSelectable) {
 		SelectableComponent* selectableComponent = tientity.addComponent<SelectableComponent>();
 		selectableComponent->setSelectable(this->isSelectable);
+	}
+
+	if (this->hasInput) {
+		InputComponent* inputComponent = tientity.addComponent<InputComponent>();
+		inputComponent->setClick(this->click);
 	}
 
 	return tientity;
@@ -103,6 +112,12 @@ TIEntityFactory& TIEntityFactory::setDirection(const float direction) {
 TIEntityFactory& TIEntityFactory::setSelectable(const bool selectable) {
 	this->isSelectable = selectable;
 	this->hasSelectable = true;
+	return *this;
+}
+
+TIEntityFactory& TIE::TIEntityFactory::setClick(const std::string& click) {
+	this->click = click;
+	this->hasInput = true;
 	return *this;
 }
 

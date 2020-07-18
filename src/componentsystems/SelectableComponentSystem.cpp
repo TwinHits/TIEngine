@@ -1,5 +1,7 @@
 #include "componentsystems/SelectableComponentSystem.h" 
 
+#include <iostream>
+
 #include <SFML/Graphics.hpp>
 
 #include "objects/components/SelectableComponent.h"
@@ -17,6 +19,7 @@ void SelectableComponentSystem::update(TIEntity& entity, const float delta) {
 		if (spriteComponent != nullptr) {
 			InputManager* inputManager = InputManager::Instance();
 			const sf::Vector2f* const mousePosition = inputManager->getClickPosition();
+			std::cout << "Selectable Component System" << std::endl;
 			if (mousePosition != nullptr) {
 				sf::FloatRect globalBounds = spriteComponent->getGlobalBounds();
 				if (globalBounds.contains(*mousePosition)) {

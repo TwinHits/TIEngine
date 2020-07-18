@@ -23,18 +23,28 @@ class TIEntityFactory {
 
 		TIEntityFactory& setSelectable(const bool);
 
+		TIEntityFactory& setClick(const std::string&);
+
 		TIEntityFactory() {};
 		~TIEntityFactory() {};
 
+		//Drawn component constants
 		static const std::string DRAWN;
 		static const std::string TEXTURE;
 		static const std::string TEXT;
 
+		//Moves component constants
 		static const std::string MOVES;
 		static const std::string SPEED;
 		static const std::string DIRECTION;
 
+		//Selectable component constants
 		static const std::string SELECTABLE;
+
+		//Input component constants
+		static const std::string INPUT;
+		static const std::string SELECTED;
+		static const std::string CLICK;
 	private:
 		TIEntity* parent = nullptr;
 		std::string name = "";
@@ -51,6 +61,10 @@ class TIEntityFactory {
 
 		bool hasSelectable = false;
 		bool isSelectable = false;
+
+		bool hasInput = false;
+		std::string click = "";
+		
 };
 
 }

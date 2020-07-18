@@ -167,8 +167,26 @@ void ScriptManager::loadTIEntity(const std::string& tientityKey, const LuaRef& t
 		}
 	}
 
+	LuaRef inputTable = tientityTable[TIEntityFactory::INPUT];
+	if (inputTable.isTable()) {
+		Vector::remove(children, std::string(TIEntityFactory::INPUT));
+
+		LuaRef selectableInputTable = inputTable[TIEntityFactory::SELECTED];
+		selectableInputTable.length();
+		if (selectableInputTable.isTable()) {
+			LuaRef click = selectableInputTable[TIEntityFactory::CLICK];
+			if (click.isString()) {
+				tientityFactory.setClick(click.cast<std::string>());
+			}
+			else if (!click.isNil()) {
+				LogManager::Instance()->error("Error casting value from script: " + tientityKey + "." + TIEntityFactory::INPUT);
+			}
+		}
+	}
+
     TIEntity& tientity = tientityFactory.build();
 	LogManager::Instance()->info("Built entity " + tientityKey + " from Lua script.");
+
     //Any other property is a child entity
 	for (auto& child : children) {
 		this->loadTIEntity(tientityKey + "." + child, tientityTable[child], &tientity);

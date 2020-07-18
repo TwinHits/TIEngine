@@ -40,6 +40,7 @@ void InputManager::processInput() {
 	this->mouseWindowPosition = window.mapPixelToCoords(position);
 	this->mouseWorldPosition = window.mapPixelToCoords(position, clientView); 
 	this->lastClickPosition = nullptr;
+	std::cout << "input manager" << std::endl;
 
 	sf::Event event;
 	while (window.pollEvent(event)) {
