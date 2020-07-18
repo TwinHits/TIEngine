@@ -27,8 +27,15 @@ const sf::Vector2f InputManager::getMouseWorldPosition() {
 }
 
 
-const sf::Vector2f* const InputManager::getClickPosition() {
-	return this->lastClickPosition;
+const sf::Event* const InputManager::getEvent(sf::Event::EventType eventType) {
+	if (this->events.find(eventType) != events.end()) {
+		return &(events.at(eventType));
+	}
+	return nullptr;
+}
+
+void InputManager::removeEvent(sf::Event::EventType eventType) {
+	this->events.erase(eventType);
 }
 
 
@@ -38,7 +45,7 @@ void InputManager::processInput() {
 	sf::Vector2i position = sf::Mouse::getPosition(window);
 	this->mouseWindowPosition = window.mapPixelToCoords(position);
 	this->mouseWorldPosition = window.mapPixelToCoords(position, clientView); 
-	this->lastClickPosition = nullptr;
+	this->events.clear();
 
 	sf::Event event;
 	while (window.pollEvent(event)) {
@@ -63,10 +70,8 @@ void InputManager::processInput() {
 					break;
 				}
 				break;
-			case sf::Event::MouseButtonPressed:
-				this->lastClickPosition = &(this->mouseWorldPosition);
-				break;
 			default:
+				this->events.insert({ event.type, event });
 				break;
 			}
 			continue;
@@ -76,6 +81,10 @@ void InputManager::processInput() {
 		//Console Input Commands
 		if (ConsoleManager::Instance()->checkConsole()) {
 			switch (event.type) {
+			case sf::Event::Closed:
+				window.close();
+				LogManager::Instance()->info("Window closed.");
+				break;
 			case sf::Event::KeyPressed:
 				switch (event.key.code) {
 				case sf::Keyboard::Escape:

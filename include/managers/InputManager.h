@@ -21,7 +21,8 @@ class InputManager : public Singleton<InputManager>, Manager {
 		const sf::Vector2f getMouseWindowPosition();
 		const sf::Vector2f getMouseWorldPosition();
 
-		const sf::Vector2f* const getClickPosition();
+		const sf::Event* const getEvent(sf::Event::EventType);
+		void removeEvent(sf::Event::EventType);
 
 		InputManager() {};
 		~InputManager() {};
@@ -30,7 +31,8 @@ class InputManager : public Singleton<InputManager>, Manager {
 		sf::Vector2f mouseWindowPosition;
 		sf::Vector2f mouseWorldPosition;
 		int scrollZone = 5;
-		sf::Vector2f* lastClickPosition = nullptr;
+
+		std::map<sf::Event::EventType, sf::Event> events;
 
 		void scroll(sf::RenderWindow&);
 
