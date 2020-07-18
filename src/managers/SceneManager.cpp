@@ -72,18 +72,14 @@ TIEntity* SceneManager::findTIEntity(sf::Vector2f point) {
 
 void SceneManager::updateGameState() {
 
-	this->delta += this->clock.restart().asSeconds();
+	this->delta = this->clock.restart().asSeconds();
 	TIEntity& sceneGraph = this->getSceneGraphRoot();
 
-	while (this->delta > this->TimePerFrame) {
+	this->removeTIEntities(sceneGraphRoot->getChildren());
+	this->updateGameState(sceneGraphRoot->getChildren());
 
-		this->removeTIEntities(sceneGraphRoot->getChildren());
-		this->updateComponentSystems(sceneGraphRoot->getChildren());
-
-		float fps = 60 / delta;
-		WindowManager::Instance()->showFPS(std::to_string(fps));
-		this->delta = 0;
-	}
+	float fps = 60 / delta;
+	WindowManager::Instance()->showFPS(std::to_string(fps));
 }
 
 
@@ -96,7 +92,7 @@ void SceneManager::removeTIEntities(std::vector<std::unique_ptr<TIEntity> >& ent
 }
 
 
-void SceneManager::updateComponentSystems(const std::vector<std::unique_ptr<TIEntity> >& entities) {
+void SceneManager::updateGameState(const std::vector<std::unique_ptr<TIEntity> >& entities) {
 
 	CollidesComponentSystem collidesComponentSystem = CollidesComponentSystem();
 	InputComponentSystem inputComponentSystem = InputComponentSystem();
@@ -112,7 +108,7 @@ void SceneManager::updateComponentSystems(const std::vector<std::unique_ptr<TIEn
 		entity->update(this->delta);
 
 		for (auto& child : entity->getChildren()) {
-			this->updateComponentSystems(entity->getChildren());
+			this->updateGameState(entity->getChildren());
 		}
 	}
 }

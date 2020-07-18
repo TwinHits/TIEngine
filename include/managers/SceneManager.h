@@ -37,7 +37,7 @@ namespace TIE {
 		SceneLayer* engineLayer = nullptr;
 		SceneLayer* clientLayer = nullptr;
 
-		void updateComponentSystems(const std::vector<std::unique_ptr<TIEntity> >&);
+		void updateGameState(const std::vector<std::unique_ptr<TIEntity> >&);
 		void removeTIEntities(std::vector<std::unique_ptr<TIEntity> >&);
 
 		SceneManager(const SceneManager&);
