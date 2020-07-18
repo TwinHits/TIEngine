@@ -7,7 +7,7 @@
 
 using namespace TIE;
 
-void CollidesComponentSystem::execute(TIEntity& entity, const float delta) {
+void CollidesComponentSystem::update(TIEntity& entity, const float delta) {
 	CollidesComponent* collidesComponent = entity.getComponent<CollidesComponent>();
 	if (collidesComponent != nullptr && collidesComponent->isCollidable()) {
 

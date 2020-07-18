@@ -10,7 +10,7 @@
 
 using namespace TIE;
 
-void SelectableComponentSystem::execute(TIEntity& entity, const float delta) {
+void SelectableComponentSystem::update(TIEntity& entity, const float delta) {
 	SelectableComponent* selectableComponent = entity.getComponent<SelectableComponent>();
 	if (selectableComponent != nullptr && selectableComponent->isSelectable()) {
 		SpriteComponent* spriteComponent = entity.getComponent<SpriteComponent>();

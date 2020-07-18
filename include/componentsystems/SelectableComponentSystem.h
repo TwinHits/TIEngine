@@ -11,7 +11,7 @@ class SelectableComponentSystem : public ComponentSystem {
 	public:
 		SelectableComponentSystem() {};
 
-		void execute(TIEntity&, const float);
+		void update(TIEntity&, const float);
 
 	private:
 };

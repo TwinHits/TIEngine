@@ -12,7 +12,7 @@
 
 using namespace TIE;
 
-void MovesComponentSystem::execute(TIEntity& entity, const float delta) {
+void MovesComponentSystem::update(TIEntity& entity, const float delta) {
 	MovesComponent* movesComponent = entity.getComponent<MovesComponent>();
 	if (movesComponent != nullptr) {
 		SpriteComponent* spriteComponent = entity.getComponent<SpriteComponent>();
@@ -25,12 +25,14 @@ void MovesComponentSystem::execute(TIEntity& entity, const float delta) {
 
 void MovesComponentSystem::move(MovesComponent* movesComponent, SpriteComponent* spriteComponent, const float delta) {
 	sf::Vector2f velocity = movesComponent->getVelocity();
-	//float degrees = spriteComponent->getRotation(); //Move according to current rotation
-	float degrees = velocity.y; //Move according to velocity's rotation
-	float x, y = 0;
+	//Destintation reached is when the distance between two positions is less than .25f
+	if (spriteComponent->getPosition() != movesComponent->getDestination()) {
+		float degrees = velocity.y; //Move according to velocity's rotation
+		float x, y = 0;
 
-	x = std::cos(ToRadians(degrees)) * velocity.x * delta;
-	y = std::sin(ToRadians(degrees)) * velocity.x * delta;
+		x = std::cos(ToRadians(degrees)) * velocity.x * delta;
+		y = std::sin(ToRadians(degrees)) * velocity.x * delta;
 
-	spriteComponent->sf::Transformable::move(sf::Vector2f(x, y));
+		spriteComponent->sf::Transformable::move(sf::Vector2f(x, y));
+	}
 }

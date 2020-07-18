@@ -101,9 +101,9 @@ void SceneManager::executeComponentSystems(const std::vector<std::unique_ptr<TIE
 	CollidesComponentSystem collidesComponentSystem = CollidesComponentSystem();
 
 	for (auto& entity : entities) {
-		movesComponentSystem.execute(*entity, this->delta);
-		collidesComponentSystem.execute(*entity, this->delta);
-		selectableComponentSystem.execute(*entity, this->delta);
+		movesComponentSystem.update(*entity, this->delta);
+		collidesComponentSystem.update(*entity, this->delta);
+		selectableComponentSystem.update(*entity, this->delta);
 		entity->update(this->delta);
 
 		for (auto& child : entity->getChildren()) {

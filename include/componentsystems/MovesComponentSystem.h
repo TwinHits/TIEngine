@@ -14,7 +14,7 @@ class MovesComponentSystem : public ComponentSystem {
 	public:
 		MovesComponentSystem() {};
 		
-		void execute(TIEntity&, const float);
+		void update(TIEntity&, const float);
 
 	private:
 		virtual void move(MovesComponent*, SpriteComponent*, const float);
