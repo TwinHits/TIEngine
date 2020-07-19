@@ -35,8 +35,9 @@ TIEntity& TIEntityFactory::build() {
 		SpriteComponent* spriteComponent = tientity.addComponent<SpriteComponent>();
 		spriteComponent->setDrawn(this->isDrawn);
 		const sf::Texture& texture = AssetsManager::Instance()->getTexture(this->texture);
-		spriteComponent->setTexture(texture);
-		spriteComponent->setTextureRect(sf::IntRect(sf::Vector2i(0, 0), sf::Vector2i(texture.getSize())));
+		spriteComponent->setTexture(texture, true);
+		sf::FloatRect size = spriteComponent->getLocalBounds();
+		spriteComponent->setOrigin(size.width/2, size.height/2);
 	}
 
 	if (this->hasText) {
@@ -56,6 +57,9 @@ TIEntity& TIEntityFactory::build() {
 	if (this->hasSelectable) {
 		SelectableComponent* selectableComponent = tientity.addComponent<SelectableComponent>();
 		selectableComponent->setSelectable(this->isSelectable);
+		if (!this->hasSprite) {
+			LogManager::Instance()->warn("Entity " + this->name + " has a selectable component but no sprite component.");
+		}
 	}
 
 	if (this->hasInput) {

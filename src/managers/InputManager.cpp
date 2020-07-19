@@ -70,6 +70,11 @@ void InputManager::processInput() {
 					break;
 				}
 				break;
+			case sf::Event::MouseButtonPressed:
+				event.mouseButton.x = this->mouseWorldPosition.x;
+				event.mouseButton.y = this->mouseWorldPosition.y;
+				this->events.insert({ event.type, event });
+				break;
 			default:
 				this->events.insert({ event.type, event });
 				break;

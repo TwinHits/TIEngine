@@ -7,7 +7,7 @@
 #include "managers/WindowManager.h"
 #include "objects/components/TextComponent.h"
 #include "templates/MakeUnique.h"
-#include "utilities/ToRadians.h"
+#include "utilities/TIEMath.h"
 
 using namespace TIE;
 
@@ -25,8 +25,8 @@ void DegreeGuide::initialize() {
 		textComponent->setCharacterSize(this->FONTSIZE);
 		textComponent->setOrigin(0, this->FONTSIZE / 2);
 		textComponent->setString(std::to_string(this->CARDINAL_DEGREES[i]));
-		float x = std::cos(ToRadians(this->CARDINAL_DEGREES[i])) * (windowSize.x / 2 * this->PADDING);
-		float y = std::sin(ToRadians(this->CARDINAL_DEGREES[i])) * (windowSize.y / 2 * this->PADDING);
+		float x = std::cos(Math::toRadians(this->CARDINAL_DEGREES[i])) * (windowSize.x / 2 * this->PADDING);
+		float y = std::sin(Math::toRadians(this->CARDINAL_DEGREES[i])) * (windowSize.y / 2 * this->PADDING);
 		textComponent->move(sf::Vector2f(x, y));
 		textComponent->setDrawn(drawn);
 	}

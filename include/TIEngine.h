@@ -31,7 +31,5 @@
 	#include "utilities/LocalTime.h"
 	#include "utilities/ParseLanguageString.h"
 	#include "utilities/StringToInt.h"
-	#include "utilities/ToDegrees.h"
-	#include "utilities/ToRadians.h"
 
 #endif
