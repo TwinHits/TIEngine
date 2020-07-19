@@ -24,11 +24,13 @@ void MovesComponentSystem::update(TIEntity& entity, const float delta) {
 
 
 void MovesComponentSystem::move(MovesComponent* movesComponent, SpriteComponent* spriteComponent, const float delta) {
-	if (Math::distanceBetweenTwoPoints(spriteComponent->getPosition(), movesComponent->getDestination()) > 0.25f) {
-		sf::Vector2f velocity = movesComponent->getVelocity();
-		velocity.y = Math::angleBetweenTwoPoints(spriteComponent->getPosition(), movesComponent->getDestination());
-		movesComponent->setVelocity(velocity);
-		spriteComponent->sf::Transformable::move(Math::translateVelocityByTime(velocity, delta));
+	if (Math::distanceBetweenTwoPoints(spriteComponent->getPosition(), movesComponent->getDestination()) > 0.5f) {
+		if (movesComponent->recalculateVelocity()) {
+			movesComponent->setVelocity(sf::Vector2f(movesComponent->getVelocity().x, Math::angleBetweenTwoPoints(spriteComponent->getPosition(), movesComponent->getDestination())));
+		}
+		spriteComponent->sf::Transformable::move(Math::translateVelocityByTime(movesComponent->getVelocity(), delta));
+	} else if (spriteComponent->getPosition() != movesComponent->getDestination()) {
+		spriteComponent->setPosition(movesComponent->getDestination());
 	}
 }
 

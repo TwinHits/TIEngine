@@ -40,11 +40,8 @@ void DevConsole::initialize() {
 
 void DevConsole::update(const float delta) {
 	//To get the messages to display in console, get not yet processed messages from the LogManager, turn them into scene texts, and draw them. This happens every frame.
-
-	std::queue<std::string>& queue = LogManager::Instance()->getQueueToDraw();
-
-	while (!queue.empty()) {
-		auto s = queue.front();
+	while (!this->queue.empty()) {
+		auto s = this->queue.front();
 
 		TIEntity& entity = this->attachChild(make_unique<TIEntity>());
 		entity.setName("DevConsoleHistoryItem");
@@ -56,7 +53,7 @@ void DevConsole::update(const float delta) {
 		this->textWritePosition.y += fontSize;
 		textComponent->setDrawn(true);
 
-		queue.pop();
+		this->queue.pop();
 	}
 }
 

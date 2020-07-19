@@ -20,3 +20,11 @@ void MovesComponent::setDestination(sf::Vector2f destination) {
 const sf::Vector2f MovesComponent::getDestination() {
 	return this->destination;
 }
+
+bool MovesComponent::recalculateVelocity() {
+	if (this->destination != this->cachedDesintation) {
+		this->cachedDesintation = this->destination;
+		return true;
+	}
+	return false;
+}

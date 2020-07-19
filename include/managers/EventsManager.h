@@ -10,6 +10,9 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "managers/WindowManager.h"
+#include "managers/ViewManager.h"
+
 namespace TIE {
 
 class EventsManager : public Singleton<EventsManager>, Manager {
@@ -28,13 +31,16 @@ class EventsManager : public Singleton<EventsManager>, Manager {
 		~EventsManager() {};
 
 	private:
+		sf::RenderWindow& window = WindowManager::Instance()->getWindow();
+		sf::View& clientView = ViewManager::Instance()->getClientView();
+
 		sf::Vector2f mouseWindowPosition;
 		sf::Vector2f mouseWorldPosition;
 		int scrollZone = 5;
 
 		std::map<sf::Event::EventType, sf::Event> events;
 
-		void scroll(sf::RenderWindow&);
+		void scroll();
 
 		EventsManager(const EventsManager&);
 		void operator=(const EventsManager&) {};

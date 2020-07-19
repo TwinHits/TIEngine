@@ -12,7 +12,7 @@ void EventsComponentSystem::update(TIEntity& entity, const float delta) {
 	if (eventsComponent != nullptr) {
 		const std::string& click = eventsComponent->getClick();
 		if (!click.empty()) {
-			const sf::Event* const clickEvent = EventsManager::Instance()->getEvent(sf::Event::MouseButtonPressed);
+			const sf::Event* const clickEvent = this->eventsManager->getEvent(sf::Event::MouseButtonPressed);
 			if (clickEvent != nullptr) {
 				sf::Vector2f mousePosition = sf::Vector2f(clickEvent->mouseButton.x, clickEvent->mouseButton.y);
 				if (click == "setDestination") {
@@ -20,7 +20,7 @@ void EventsComponentSystem::update(TIEntity& entity, const float delta) {
 					SelectableComponent* selectableComponent = entity.getComponent<SelectableComponent>();
 					if (movesComponent != nullptr && selectableComponent != nullptr && selectableComponent->isSelected()) {
 						movesComponent->setDestination(mousePosition);
-						EventsManager::Instance()->removeEvent(sf::Event::MouseButtonPressed);
+						this->eventsManager->removeEvent(sf::Event::MouseButtonPressed);
 					}
 				}
 			}

@@ -15,13 +15,11 @@ void SelectableComponentSystem::update(TIEntity& entity, const float delta) {
 	if (selectableComponent != nullptr && selectableComponent->isSelectable()) {
 		SpriteComponent* spriteComponent = entity.getComponent<SpriteComponent>();
 		if (spriteComponent != nullptr) {
-			const sf::Event* const clickEvent = EventsManager::Instance()->getEvent(sf::Event::MouseButtonPressed);
+			const sf::Event* const clickEvent = eventsManager->getEvent(sf::Event::MouseButtonPressed);
 			if (clickEvent != nullptr) {
-				sf::FloatRect globalBounds = spriteComponent->getGlobalBounds();
-				sf::Vector2f mousePosition = sf::Vector2f(clickEvent->mouseButton.x, clickEvent->mouseButton.y);
-				if (globalBounds.contains(mousePosition)) {
+				if (spriteComponent->getGlobalBounds().contains(sf::Vector2f(clickEvent->mouseButton.x, clickEvent->mouseButton.y))) {
 					selectableComponent->setSelected(true);
-					EventsManager::Instance()->removeEvent(sf::Event::MouseButtonPressed);
+					eventsManager->removeEvent(sf::Event::MouseButtonPressed);
 					/*
 					} else if (selectableComponent->isSelected()) {
 					selectableComponent->setSelected(false);

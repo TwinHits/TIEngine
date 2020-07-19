@@ -73,19 +73,17 @@ TIEntity* SceneManager::findTIEntity(sf::Vector2f point) {
 void SceneManager::updateGameState() {
 
 	this->delta = this->clock.restart().asSeconds();
-	TIEntity& sceneGraph = this->getSceneGraphRoot();
 
-	this->removeTIEntities(sceneGraphRoot->getChildren());
-	this->updateGameState(sceneGraphRoot->getChildren());
+	this->removeTIEntities(this->sceneGraphRoot->getChildren());
+	this->updateGameState(this->sceneGraphRoot->getChildren());
 
 	float fps = 60 / delta;
-	WindowManager::Instance()->showFPS(std::to_string(fps));
+	this->windowManager->showFPS(std::to_string(fps));
 }
 
 
 void SceneManager::removeTIEntities(std::vector<std::unique_ptr<TIEntity> >& entities) {
-	auto removesBegin = std::remove_if(entities.begin(), entities.end(), std::mem_fn(&TIEntity::getRemove));
-	entities.erase(removesBegin, entities.end());
+	entities.erase(std::remove_if(entities.begin(), entities.end(), std::mem_fn(&TIEntity::getRemove)), entities.end());
 	for (auto& entity : entities) {
 		this->removeTIEntities(entity->getChildren());
 	}
@@ -93,17 +91,11 @@ void SceneManager::removeTIEntities(std::vector<std::unique_ptr<TIEntity> >& ent
 
 
 void SceneManager::updateGameState(const std::vector<std::unique_ptr<TIEntity> >& entities) {
-
-	CollidesComponentSystem collidesComponentSystem = CollidesComponentSystem();
-	EventsComponentSystem eventsComponentSystem = EventsComponentSystem();
-	MovesComponentSystem movesComponentSystem = MovesComponentSystem();
-	SelectableComponentSystem selectableComponentSystem = SelectableComponentSystem();
-
 	for (auto& entity : entities) {
-		movesComponentSystem.update(*entity, this->delta);
-		collidesComponentSystem.update(*entity, this->delta);
-		selectableComponentSystem.update(*entity, this->delta);
-		eventsComponentSystem.update(*entity, this->delta);
+		this->movesComponentSystem.update(*entity, this->delta);
+		this->collidesComponentSystem.update(*entity, this->delta);
+		this->selectableComponentSystem.update(*entity, this->delta);
+		this->eventsComponentSystem.update(*entity, this->delta);
 
 		entity->update(this->delta);
 
@@ -116,18 +108,16 @@ void SceneManager::updateGameState(const std::vector<std::unique_ptr<TIEntity> >
 
 void SceneManager::render() {		
 
-	sf::RenderWindow& window = WindowManager::Instance()->getWindow();
-	sf::RenderStates states;
-	SceneLayer& clientLayer = this->getClientLayer();
-	SceneLayer& engineLayer = this->getEngineLayer();
 
 	window.clear();
 
-	ViewManager::Instance()->setActiveView(clientLayer.getViewId());
-	GraphicsComponentSystem::draw(clientLayer, window, states);
+	sf::RenderStates states;
 
-	ViewManager::Instance()->setActiveView(engineLayer.getViewId());
-	GraphicsComponentSystem::draw(engineLayer, window, states);
+	ViewManager::Instance()->setActiveView(this->clientLayer->getViewId());
+	GraphicsComponentSystem::draw(*(this->clientLayer), this->window, states);
+
+	ViewManager::Instance()->setActiveView(this->engineLayer->getViewId());
+	GraphicsComponentSystem::draw(*(this->engineLayer), this->window, states);
 
 	window.display();
 }

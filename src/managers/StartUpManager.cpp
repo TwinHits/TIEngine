@@ -21,8 +21,8 @@ bool StartUpManager::initialize() {
 	ConfigManager::Instance()->initialize();
 	LogManager::Instance()->initialize();
 	AssetsManager::Instance()->initialize();
-	EventsManager::Instance()->initialize();
 	ViewManager::Instance()->initialize();
+	EventsManager::Instance()->initialize();
 	SceneManager::Instance()->initialize();
 	ConsoleManager::Instance()->initialize();
 	HashManager::Instance()->initialize();

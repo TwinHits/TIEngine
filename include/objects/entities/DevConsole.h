@@ -4,9 +4,11 @@
 #include "TIEntity.h"
 
 #include <string>
-#include <vector>
+#include <queue>
 
 #include <SFML/Graphics.hpp>
+
+#include "managers/LogManager.h"
 
 namespace TIE {
 
@@ -28,6 +30,7 @@ class DevConsole : public TIEntity {
 		TIEntity& currentCommand;
 		int fontSize = 16;
 		sf::Vector2i textWritePosition;
+		std::queue<std::string>& queue = LogManager::Instance()->getQueueToDraw();
 };
 
 } 

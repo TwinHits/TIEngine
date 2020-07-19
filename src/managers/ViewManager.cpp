@@ -46,10 +46,12 @@ sf::View& ViewManager::getView(GlobalId id) {
 	}
 }
 
+
 sf::View& ViewManager::updateView(GlobalId id, const sf::FloatRect& size) {
 	sf::View& view = this->getView(id);
 	return this->updateView(view, size);
 }
+
 
 sf::View& ViewManager::updateView(sf::View& view, const sf::FloatRect& size) {
 	view.setCenter(sf::Vector2f(size.left, size.top));

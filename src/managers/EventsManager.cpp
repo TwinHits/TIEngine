@@ -40,27 +40,25 @@ void EventsManager::removeEvent(sf::Event::EventType eventType) {
 
 
 void EventsManager::processEvents() {
-	sf::RenderWindow& window = WindowManager::Instance()->getWindow();
-	sf::View& clientView = ViewManager::Instance()->getClientView();
 	sf::Vector2i position = sf::Mouse::getPosition(window);
 	this->mouseWindowPosition = window.mapPixelToCoords(position);
-	this->mouseWorldPosition = window.mapPixelToCoords(position, clientView); 
+	this->mouseWorldPosition = window.mapPixelToCoords(position, this->clientView); 
 	this->events.clear();
 
 	sf::Event event;
-	while (window.pollEvent(event)) {
+	while (this->window.pollEvent(event)) {
 
 		//Window Input Commands
 		if (!ConsoleManager::Instance()->checkConsole()) {
 			switch (event.type) {
 			case sf::Event::Closed:
-				window.close();
+				this->window.close();
 				LogManager::Instance()->info("Window closed.");
 				break;
 			case sf::Event::KeyPressed:
 				switch (event.key.code) {
 				case sf::Keyboard::Escape:
-					window.close();
+					this->window.close();
 					LogManager::Instance()->info("Window closed.");
 					break;
 				case sf::Keyboard::Tilde:
@@ -87,7 +85,7 @@ void EventsManager::processEvents() {
 		if (ConsoleManager::Instance()->checkConsole()) {
 			switch (event.type) {
 			case sf::Event::Closed:
-				window.close();
+				this->window.close();
 				LogManager::Instance()->info("Window closed.");
 				break;
 			case sf::Event::KeyPressed:
@@ -122,14 +120,14 @@ void EventsManager::processEvents() {
 	}
 
 	//Check for camera scrolling
-	this->scroll(window);
+	this->scroll();
 }
 
 
-void EventsManager::scroll(sf::RenderWindow& window) {
+void EventsManager::scroll() {
 
 	auto consoleManager = ConsoleManager::Instance();
-	auto mousePosition = sf::Mouse::getPosition(window);
+	auto mousePosition = sf::Mouse::getPosition(this->window);
 	GlobalId clientViewId = ViewManager::Instance()->getClientViewId();
 	Direction direction;
 	

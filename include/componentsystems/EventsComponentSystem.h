@@ -4,6 +4,7 @@
 #include "ComponentSystem.h"
 
 #include "objects/entities/TIEntity.h"
+#include "managers/EventsManager.h"
 
 namespace TIE {
 
@@ -13,6 +14,7 @@ class EventsComponentSystem : public ComponentSystem {
 		void update(TIEntity&, const float);
 
 	private:
+		EventsManager* eventsManager = EventsManager::Instance();
 };
 
 }
