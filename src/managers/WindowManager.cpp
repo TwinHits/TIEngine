@@ -29,6 +29,8 @@ sf::RenderWindow& WindowManager::addWindow(sf::VideoMode mode, const std::string
 	this->window = TIE::make_unique<sf::RenderWindow>(mode, this->title, style, settings);
 	LogManager::Instance()->debug("Created window.");
 
+	this->window->setMouseCursorGrabbed(true);
+
 	this->windowSize.x = this->window->getSize().x;
 	this->windowSize.y = this->window->getSize().y;
 
