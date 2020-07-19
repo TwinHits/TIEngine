@@ -6,7 +6,7 @@
 
 #include "objects/enumeration/Language.h"
 
-std::vector<std::string>& TIE::String::splitString(const std::string& string, char delimiter, std::vector<std::string>& out) {
+std::vector<std::string>& TIE::String::split(const std::string& string, char delimiter, std::vector<std::string>& out) {
 	std::istringstream iss(string);
 	std::string item;
 	while (std::getline(iss, item, delimiter)) {

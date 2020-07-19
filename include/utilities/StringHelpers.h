@@ -9,7 +9,7 @@
 
 namespace TIE {
 	namespace String {
-		std::vector<std::string>& splitString(const std::string&, char, std::vector<std::string>&);
+		std::vector<std::string>& split(const std::string&, char, std::vector<std::string>&);
 		int stringToInt(std::string&);
 		Language parseLanguageString(const std::string&);
 		LogLevel strToLogLevel(std::string&);

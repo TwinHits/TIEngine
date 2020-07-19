@@ -11,6 +11,7 @@
 #include "managers/WindowManager.h"
 #include "objects/factories/TIEntityFactory.h"
 #include "templates/VectorHelpers.h"
+#include "utilities/StringHelpers.h"
 
 using namespace luabridge;
 using namespace TIE;
@@ -26,6 +27,13 @@ bool ScriptManager::initialize() {
 void ScriptManager::loadScript(const std::string& scriptPath) {
     if (Lua::loadScript(this->luaState, scriptPath)) {
 
+		std::vector<std::string> parts;
+		String::split(scriptPath, '/', parts);
+		std::string scriptDirectory;
+		for (auto s = parts.begin(); s != parts.end() - 1; s++) {
+			scriptDirectory += *s + "/";
+		}
+
 		LuaRef windowTable = getGlobal(this->luaState, "window");
         if (windowTable.isTable()) {
             this->loadWindowProperties(windowTable);
@@ -33,7 +41,7 @@ void ScriptManager::loadScript(const std::string& scriptPath) {
 
 		LuaRef assetsTable = getGlobal(this->luaState, "assets");
         if (assetsTable.isTable()) {
-            this->loadAssets(assetsTable, scriptPath);
+            this->loadAssets(assetsTable, scriptDirectory);
         }
 
         std::vector<std::string> tientities = Lua::getTableKeys(this->luaState, "tientities");
