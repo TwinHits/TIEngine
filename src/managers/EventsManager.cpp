@@ -1,4 +1,4 @@
-#include "managers/InputManager.h" 
+#include "managers/EventsManager.h" 
 
 #include <cstdio>
 
@@ -12,34 +12,34 @@
 
 using namespace TIE;
 
-bool InputManager::initialize() { 
+bool EventsManager::initialize() { 
 	return true;
 }
 
 
-const sf::Vector2f InputManager::getMouseWindowPosition() {
+const sf::Vector2f EventsManager::getMouseWindowPosition() {
 	return this->mouseWindowPosition;
 }
 
 
-const sf::Vector2f InputManager::getMouseWorldPosition() {
+const sf::Vector2f EventsManager::getMouseWorldPosition() {
 	return this->mouseWorldPosition;
 }
 
 
-const sf::Event* const InputManager::getEvent(sf::Event::EventType eventType) {
+const sf::Event* const EventsManager::getEvent(sf::Event::EventType eventType) {
 	if (this->events.find(eventType) != events.end()) {
 		return &(events.at(eventType));
 	}
 	return nullptr;
 }
 
-void InputManager::removeEvent(sf::Event::EventType eventType) {
+void EventsManager::removeEvent(sf::Event::EventType eventType) {
 	this->events.erase(eventType);
 }
 
 
-void InputManager::processInput() {
+void EventsManager::processEvents() {
 	sf::RenderWindow& window = WindowManager::Instance()->getWindow();
 	sf::View& clientView = ViewManager::Instance()->getClientView();
 	sf::Vector2i position = sf::Mouse::getPosition(window);
@@ -126,7 +126,7 @@ void InputManager::processInput() {
 }
 
 
-void InputManager::scroll(sf::RenderWindow& window) {
+void EventsManager::scroll(sf::RenderWindow& window) {
 
 	auto consoleManager = ConsoleManager::Instance();
 	auto mousePosition = sf::Mouse::getPosition(window);

@@ -1,4 +1,4 @@
-#include "objects/components/InputComponent.h"
+#include "objects/components/EventsComponent.h"
 #include "objects/components/SelectableComponent.h"
 
 using namespace TIE;

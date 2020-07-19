@@ -1,5 +1,5 @@
-#ifndef INPUTCOMPONENT_H
-#define INPUTCOMPONENT_H
+#ifndef EVENTSCOMPONENT_H
+#define EVENTSCOMPONENT_H
 
 #include "objects/components/Component.h"
 
@@ -7,10 +7,10 @@
 
 namespace TIE {
 
-class InputComponent : public Component {
+class EventsComponent : public Component {
 	public: 
-		InputComponent() {};
-		~InputComponent() {};
+		EventsComponent() {};
+		~EventsComponent() {};
 
 		const std::string& getClick();
 		void setClick(const std::string&);

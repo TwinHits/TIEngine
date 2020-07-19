@@ -1,7 +1,7 @@
 #ifndef MOUSEPTRCOORDS_H
 #define MOUSEPTRCOORDS_H
 
-#include "managers/InputManager.h"
+#include "managers/EventsManager.h"
 #include "objects/entities/TIEntity.h"
 
 namespace TIE {
@@ -17,7 +17,7 @@ class MousePtrCoords : public TIEntity {
 	private:
 
 		const sf::Font& font;
-		InputManager* inputManager = InputManager::Instance();
+		EventsManager* eventsManager = EventsManager::Instance();
 };
 
 }

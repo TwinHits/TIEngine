@@ -4,7 +4,7 @@
 #include "managers/ConfigManager.h"
 #include "managers/ConsoleManager.h"
 #include "managers/HashManager.h"
-#include "managers/InputManager.h"
+#include "managers/EventsManager.h"
 #include "managers/LogManager.h"
 #include "managers/SceneManager.h"
 #include "managers/ScriptManager.h"
@@ -21,7 +21,7 @@ bool StartUpManager::initialize() {
 	ConfigManager::Instance()->initialize();
 	LogManager::Instance()->initialize();
 	AssetsManager::Instance()->initialize();
-	InputManager::Instance()->initialize();
+	EventsManager::Instance()->initialize();
 	ViewManager::Instance()->initialize();
 	SceneManager::Instance()->initialize();
 	ConsoleManager::Instance()->initialize();

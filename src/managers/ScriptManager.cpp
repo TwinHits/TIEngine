@@ -167,19 +167,19 @@ void ScriptManager::loadTIEntity(const std::string& tientityKey, const LuaRef& t
 		}
 	}
 
-	LuaRef inputTable = tientityTable[TIEntityFactory::INPUT];
-	if (inputTable.isTable()) {
-		Vector::remove(children, std::string(TIEntityFactory::INPUT));
+	LuaRef eventsTable = tientityTable[TIEntityFactory::EVENTS];
+	if (eventsTable.isTable()) {
+		Vector::remove(children, std::string(TIEntityFactory::EVENTS));
 
-		LuaRef selectableInputTable = inputTable[TIEntityFactory::SELECTED];
-		selectableInputTable.length();
-		if (selectableInputTable.isTable()) {
-			LuaRef click = selectableInputTable[TIEntityFactory::CLICK];
+		LuaRef selectableEventTable = eventsTable[TIEntityFactory::SELECTED];
+		selectableEventTable.length();
+		if (selectableEventTable.isTable()) {
+			LuaRef click = selectableEventTable[TIEntityFactory::CLICK];
 			if (click.isString()) {
 				tientityFactory.setClick(click.cast<std::string>());
 			}
 			else if (!click.isNil()) {
-				LogManager::Instance()->error("Error casting value from script: " + tientityKey + "." + TIEntityFactory::INPUT);
+				LogManager::Instance()->error("Error casting value from script: " + tientityKey + "." + TIEntityFactory::EVENTS);
 			}
 		}
 	}

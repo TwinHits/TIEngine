@@ -6,7 +6,7 @@ int main() {
 	sf::RenderWindow& window = TIE::WindowManager::Instance()->getWindow();
 
 	while (window.isOpen()) {
-		TIE::InputManager::Instance()->processInput();
+		TIE::EventsManager::Instance()->processEvents();
 		TIE::SceneManager::Instance()->updateGameState();
 		TIE::SceneManager::Instance()->render();		
 	}

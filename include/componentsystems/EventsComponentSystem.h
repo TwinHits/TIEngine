@@ -1,5 +1,5 @@
-#ifndef INPUTCOMPONENTSYSTEM_H
-#define INPUTCOMPONENTSYSTEM_H
+#ifndef EVENTSCOMPONENTSYSTEM_H
+#define EVENTSCOMPONENTSYSTEM_H
 
 #include "ComponentSystem.h"
 
@@ -7,9 +7,9 @@
 
 namespace TIE {
 
-class InputComponentSystem : public ComponentSystem {
+class EventsComponentSystem : public ComponentSystem {
 	public:
-		InputComponentSystem() {};
+		EventsComponentSystem() {};
 		void update(TIEntity&, const float);
 
 	private:

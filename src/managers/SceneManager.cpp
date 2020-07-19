@@ -3,7 +3,7 @@
 #include <functional>
 
 #include "componentsystems/CollidesComponentSystem.h"
-#include "componentsystems/InputComponentSystem.h"
+#include "componentsystems/EventsComponentSystem.h"
 #include "componentsystems/GraphicsComponentSystem.h"
 #include "componentsystems/MovesComponentSystem.h"
 #include "componentsystems/SelectableComponentSystem.h"
@@ -95,7 +95,7 @@ void SceneManager::removeTIEntities(std::vector<std::unique_ptr<TIEntity> >& ent
 void SceneManager::updateGameState(const std::vector<std::unique_ptr<TIEntity> >& entities) {
 
 	CollidesComponentSystem collidesComponentSystem = CollidesComponentSystem();
-	InputComponentSystem inputComponentSystem = InputComponentSystem();
+	EventsComponentSystem eventsComponentSystem = EventsComponentSystem();
 	MovesComponentSystem movesComponentSystem = MovesComponentSystem();
 	SelectableComponentSystem selectableComponentSystem = SelectableComponentSystem();
 
@@ -103,7 +103,7 @@ void SceneManager::updateGameState(const std::vector<std::unique_ptr<TIEntity> >
 		movesComponentSystem.update(*entity, this->delta);
 		collidesComponentSystem.update(*entity, this->delta);
 		selectableComponentSystem.update(*entity, this->delta);
-		inputComponentSystem.update(*entity, this->delta);
+		eventsComponentSystem.update(*entity, this->delta);
 
 		entity->update(this->delta);
 

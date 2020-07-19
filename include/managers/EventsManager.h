@@ -1,5 +1,5 @@
-#ifndef INPUTMANAGER_H
-#define INPUTMANAGER_H
+#ifndef EVENTSMANAGER_H
+#define EVENTSMANAGER_H
 
 #include "managers/Manager.h"
 #include "templates/Singleton.h"
@@ -12,11 +12,11 @@
 
 namespace TIE {
 
-class InputManager : public Singleton<InputManager>, Manager {
+class EventsManager : public Singleton<EventsManager>, Manager {
 	public:
 		bool initialize();
 
-		void processInput();
+		void processEvents();
 		
 		const sf::Vector2f getMouseWindowPosition();
 		const sf::Vector2f getMouseWorldPosition();
@@ -24,8 +24,8 @@ class InputManager : public Singleton<InputManager>, Manager {
 		const sf::Event* const getEvent(sf::Event::EventType);
 		void removeEvent(sf::Event::EventType);
 
-		InputManager() {};
-		~InputManager() {};
+		EventsManager() {};
+		~EventsManager() {};
 
 	private:
 		sf::Vector2f mouseWindowPosition;
@@ -36,8 +36,8 @@ class InputManager : public Singleton<InputManager>, Manager {
 
 		void scroll(sf::RenderWindow&);
 
-		InputManager(const InputManager&);
-		void operator=(const InputManager&) {};
+		EventsManager(const EventsManager&);
+		void operator=(const EventsManager&) {};
 };
 
 }

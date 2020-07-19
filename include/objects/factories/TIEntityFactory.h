@@ -41,8 +41,8 @@ class TIEntityFactory {
 		//Selectable component constants
 		static const std::string SELECTABLE;
 
-		//Input component constants
-		static const std::string INPUT;
+		//Events component constants
+		static const std::string EVENTS;
 		static const std::string SELECTED;
 		static const std::string CLICK;
 	private:
@@ -62,7 +62,7 @@ class TIEntityFactory {
 		bool hasSelectable = false;
 		bool isSelectable = false;
 
-		bool hasInput = false;
+		bool hasEvents = false;
 		std::string click = "";
 		
 };

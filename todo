@@ -12,6 +12,3 @@ ConsoleManager Scrolling Behavior
 
 Move Some TIEntity Factory or Lua Component Reading to the ComponentSystem
 Check for memory allocations and get<> caching oppurtunities
-
-Store events per frame in a map
-Rename input to event
