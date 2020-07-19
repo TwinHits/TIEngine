@@ -64,5 +64,8 @@ add_executable(${CMAKE_PROJECT_NAME} ${SOURCES} ${HEADERS})
 target_link_libraries(${CMAKE_PROJECT_NAME} sfml-graphics sfml-audio lua53)
 target_link_libraries(${CMAKE_PROJECT_NAME} ${Boost_LIBRARIES} )
 
+source_group(TREE src FILES ${SOURCES})
+source_group(TREE include FILES ${HEADERS})
+
 #add_subdirectory(tests)
 #add_subdirectory(lib/googletest)
