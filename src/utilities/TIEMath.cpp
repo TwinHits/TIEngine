@@ -17,7 +17,7 @@ float TIE::Math::distanceBetweenTwoPoints(const sf::Vector2f& p1, const sf::Vect
 
 
 float TIE::Math::angleBetweenTwoPoints(const sf::Vector2f& p1, const sf::Vector2f& p2) {
-	return TIE::Math::toDegrees(std::atan2f(p2.y - p1.y, p2.x - p1.x));
+	return TIE::Math::toDegrees(std::atan2(p2.y - p1.y, p2.x - p1.x));
 }
 
 

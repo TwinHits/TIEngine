@@ -16,4 +16,4 @@ namespace TIE {
 	}
 }
 
-#endif TIEMATH_H
+#endif
