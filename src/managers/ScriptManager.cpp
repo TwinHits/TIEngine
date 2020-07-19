@@ -36,7 +36,7 @@ void ScriptManager::loadScript(const std::string& scriptName) {
 
 		LuaRef assetsTable = getGlobal(this->luaState, "assets");
         if (assetsTable.isTable()) {
-            this->loadAssets(assetsTable);
+            this->loadAssets(assetsTable, scriptsPath);
         }
 
         std::vector<std::string> tientities = Lua::getTableKeys(this->luaState, "tientities");
@@ -47,14 +47,14 @@ void ScriptManager::loadScript(const std::string& scriptName) {
 }
 
 
-void TIE::ScriptManager::loadAssets(const luabridge::LuaRef& settingsTable) {
+void TIE::ScriptManager::loadAssets(const luabridge::LuaRef& settingsTable, const std::string& scriptsPath) {
 
 	LuaRef texturesTable = settingsTable["textures"];
 	std::vector<std::string> texturePaths;
 	if (texturesTable.isTable()) {
 		texturePaths = Lua::getVector(texturesTable, texturePaths);
 		for (auto path : texturePaths) {
-			AssetsManager::Instance()->loadTexturesFromPath(path);
+			AssetsManager::Instance()->loadTexturesFromPath(scriptsPath + "/" + path);
 		}
 	}
 
@@ -63,7 +63,7 @@ void TIE::ScriptManager::loadAssets(const luabridge::LuaRef& settingsTable) {
 	if (fontsTable.isTable()) {
 		fontsPath = Lua::getVector(fontsTable, fontsPath);
 		for (auto path : fontsPath) {
-			AssetsManager::Instance()->loadFontsFromPath(path);
+			AssetsManager::Instance()->loadFontsFromPath(scriptsPath + "/" + path);
 		}
 	}
 
@@ -72,7 +72,7 @@ void TIE::ScriptManager::loadAssets(const luabridge::LuaRef& settingsTable) {
 	if (audioTable.isTable()) {
 		audioPaths = Lua::getVector(audioTable, audioPaths);
 		for (auto path : audioPaths) {
-			AssetsManager::Instance()->loadAudioFromPath(path);
+			AssetsManager::Instance()->loadAudioFromPath(scriptsPath + "/" + path);
 		}
 	}
 }
