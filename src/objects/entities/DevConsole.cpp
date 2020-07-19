@@ -27,13 +27,9 @@ void DevConsole::initialize() {
 
 	SpriteComponent* spriteComponent = GraphicsComponentSystem::addSpriteComponent(*this);
 	sf::Texture& texture = AssetsManager::Instance()->getTexture("dev_console.png");
-	sf::Vector2u size = texture.getSize();
-	spriteComponent->setTexture(texture);
-	spriteComponent->setTextureRect(sf::Rect<int>(0, 0, windowSize.x * 2, windowSize.y));
-	spriteComponent->setOrigin(size.x/2, size.y/2);
-	spriteComponent->setPosition(sf::Vector2f(0,0));
-	spriteComponent->setRotation(0);
-	spriteComponent->setScale(1,1);
+	spriteComponent->setTexture(texture, true);
+	sf::FloatRect size = spriteComponent->getLocalBounds();
+	spriteComponent->setOrigin(size.width/2, size.height);
 
 	TextComponent* textComponent = GraphicsComponentSystem::addTextComponent(*this);
 	textComponent->setFont(font);

@@ -11,8 +11,8 @@ void GraphicsComponentSystem::draw(TIEntity& entity, sf::RenderTarget& window, s
 	//Continue traversal if there's no graphics components, or if either component is drawn
 	bool continueTraversal = textComponent == nullptr && spriteComponent == nullptr;
 	if (spriteComponent != nullptr && spriteComponent->isDrawn()) {
-		sf::RenderStates combinedStates = states.transform * spriteComponent->getTransform();
-		window.draw(*dynamic_cast<sf::Sprite*>(spriteComponent), combinedStates);
+		//states.transform *= spriteComponent->getTransform();
+		window.draw(*dynamic_cast<sf::Sprite*>(spriteComponent), states);
 		continueTraversal = true;
 	}
 
