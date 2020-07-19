@@ -23,11 +23,8 @@ bool ScriptManager::initialize() {
 }
 
 
-void ScriptManager::loadScript(const std::string& scriptName) {
-    const std::string& scriptsPath = ConfigManager::Instance()->getScriptsPath();
-    std::string scriptFile = scriptsPath + scriptName;
-
-    if (Lua::loadScript(this->luaState, scriptFile)) {
+void ScriptManager::loadScript(const std::string& scriptPath) {
+    if (Lua::loadScript(this->luaState, scriptPath)) {
 
 		LuaRef windowTable = getGlobal(this->luaState, "window");
         if (windowTable.isTable()) {
@@ -36,7 +33,7 @@ void ScriptManager::loadScript(const std::string& scriptName) {
 
 		LuaRef assetsTable = getGlobal(this->luaState, "assets");
         if (assetsTable.isTable()) {
-            this->loadAssets(assetsTable, scriptsPath);
+            this->loadAssets(assetsTable, scriptPath);
         }
 
         std::vector<std::string> tientities = Lua::getTableKeys(this->luaState, "tientities");

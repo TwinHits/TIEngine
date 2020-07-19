@@ -8,6 +8,7 @@
 #include "managers/ConsoleManager.h"
 #include "objects/enumeration/LogLevel.h"
 #include "utilities/LocalTime.h"
+#include "utilities/StringHelpers.h"
 
 using namespace TIE;
 

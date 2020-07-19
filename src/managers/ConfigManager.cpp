@@ -7,7 +7,7 @@
 
 #include "managers/ScriptManager.h"
 #include "objects/enumeration/LogLevel.h"
-#include "utilities/ParseLanguageString.h"
+#include "utilities/StringHelpers.h"
 
 using namespace TIE;
 
@@ -24,11 +24,6 @@ const std::string& ConfigManager::getDebugLogPath() {
 
 const std::string& ConfigManager::getAssetsPath() {
 	return this->assetsPath;
-}
-
-
-const std::string& ConfigManager::getScriptsPath() {
-	return this->scriptsPath;
 }
 
 
@@ -97,8 +92,8 @@ void ConfigManager::parseConfig(std::ifstream& config) {
 
 			if (key == "DebugLogPath") { debugLogPath = value; }
 			else if (key == "AssetsPath") { assetsPath = value; }
-			else if (key == "DebugLogLevel") { debugLogLevel = strToLogLevel(value); }
-			else if (key == "DefaultDisplayLanguage") { defaultDisplayLanguage = parseLanguageString(value); }
+			else if (key == "DebugLogLevel") { debugLogLevel = String::strToLogLevel(value); }
+			else if (key == "DefaultDisplayLanguage") { defaultDisplayLanguage = String::parseLanguageString(value); }
 			else if (key == "ShowMousePtrCoords") {
 				if (value == "true") {
 					this->showMousePtrCoords = true;
@@ -107,8 +102,6 @@ void ConfigManager::parseConfig(std::ifstream& config) {
 				if (value == "true") {
 					this->showDegreeGuide = true; 
 				}
-			} else if (key == "ScriptsPath") {
-				this->scriptsPath = value;
 			}
 		}	 
 	}
@@ -119,7 +112,6 @@ void ConfigManager::restoreDefaultConfiguration() {
 	this->debugLogPath = this->defaultDebugLogPath;
 	this->assetsPath = this->defaultAssetsPath;
 	this->debugLogLevel = this->defaultDebugLogLevel;
-	this->scriptsPath = this->defaultScriptsPath;
 	this->defaultDisplayLanguage = this->defaultDefaultDisplayLanguage;
 	this->showDegreeGuide = this->defaultShowDegreeGuide;
 	this->showMousePtrCoords = this->showMousePtrCoords;

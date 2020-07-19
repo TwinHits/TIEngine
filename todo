@@ -1,4 +1,3 @@
-move component systems out of managers
 Convert devConsole history items into one text component
 LogManager should print the name of the class that called it.
 Common error messages should be constants
@@ -11,4 +10,3 @@ ConsoleManager Scrolling Behavior
 	Should scoll on page up and page down
 
 Move Some TIEntity Factory or Lua Component Reading to the ComponentSystem
-Check for memory allocations and get<> caching oppurtunities

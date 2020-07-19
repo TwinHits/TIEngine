@@ -29,7 +29,5 @@
 	#include "templates/MakeUnique.h"
 	
 	#include "utilities/LocalTime.h"
-	#include "utilities/ParseLanguageString.h"
-	#include "utilities/StringToInt.h"
 
 #endif

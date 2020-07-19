@@ -14,6 +14,7 @@
 #include "managers/WindowManager.h"
 #include "objects/constants/ConsoleCommands.h"
 #include "templates/MakeUnique.h"
+#include "utilities/StringHelpers.h"
 
 using namespace TIE;
 
@@ -41,7 +42,7 @@ bool ConsoleManager::checkConsole() {
 
 void ConsoleManager::runCommand() {
 	std::vector<std::string> commandArgs;
-	this->splitString(this->input, ' ', commandArgs);
+	String::splitString(this->input, ' ', commandArgs);
 	const std::string& command = commandArgs.front();
 	
    	LogManager::Instance()->command(this->input);
@@ -139,19 +140,6 @@ void ConsoleManager::addToInput(unsigned int unicodeCharacter) {
 		this->input = this->input.substr(0, this->input.length() - 1);
 	}
 	this->devConsole->getComponent<TextComponent>()->setString(this->input);
-}
-
-
-std::vector<std::string>& ConsoleManager::splitString(const std::string& string, char delimiter, std::vector<std::string>& out) {
-	std::istringstream iss(string);
-	std::string item;
-	while (std::getline(iss, item, delimiter)) {
-		out.push_back(item);
-	}
-	if (out.empty()) {
-		out.push_back(string); //If there is no delmiter, include the whole string
-	}
-	return out;
 }
 
 
