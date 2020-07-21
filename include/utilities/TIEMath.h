@@ -13,6 +13,7 @@ namespace TIE {
 		float distanceBetweenTwoPoints(const sf::Vector2f&, const sf::Vector2f&);
 		float angleBetweenTwoPoints(const sf::Vector2f&, const sf::Vector2f&);
 		sf::Vector2f translateVelocityByTime(const sf::Vector2f&, float);
+		bool isNice(int);
 	}
 }
 

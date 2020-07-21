@@ -24,3 +24,8 @@ float TIE::Math::angleBetweenTwoPoints(const sf::Vector2f& p1, const sf::Vector2
 sf::Vector2f TIE::Math::translateVelocityByTime(const sf::Vector2f& velocity, float time) {
 	return sf::Vector2f(std::cos(TIE::Math::toRadians(velocity.y)) * velocity.x * time, std::sin(TIE::Math::toRadians(velocity.y)) * velocity.x * time);
 }
+
+
+bool TIE::Math::isNice(int number) {
+	return number == 69;
+}
