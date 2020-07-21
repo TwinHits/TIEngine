@@ -10,6 +10,8 @@
 #include "managers/SceneManager.h"
 #include "managers/WindowManager.h"
 #include "objects/factories/TIEntityFactory.h"
+#include "objects/components/GridComponent.h"
+#include "objects/components/SpriteComponent.h"
 #include "templates/VectorHelpers.h"
 #include "utilities/StringHelpers.h"
 
@@ -44,9 +46,15 @@ void ScriptManager::loadScript(const std::string& scriptPath) {
             this->loadAssets(assetsTable, scriptDirectory);
         }
 
+		LuaRef gridTable = getGlobal(this->luaState, "grid");
+		TIEntity* parent = nullptr;
+        if (gridTable.isTable()) {
+            parent = this->loadGrid(gridTable);
+        }
+
         std::vector<std::string> tientities = Lua::getTableKeys(this->luaState, "tientities");
         if (!tientities.empty()) {
-            this->loadTIEntities(tientities);
+            this->loadTIEntities(tientities, parent);
         }
     }
 }
@@ -100,18 +108,42 @@ void ScriptManager::loadWindowProperties(const LuaRef& windowTable) {
 	}
 }
 
+TIEntity* TIE::ScriptManager::loadGrid(const luabridge::LuaRef& gridTable) {
+	LuaRef width = gridTable["width"];
+	LuaRef height = gridTable["height"];
+	LuaRef texture = gridTable["texture"];
+	if (width.isNumber() && height.isNumber()) {
+		TIEntityFactory factory = TIEntityFactory();
+		factory.setGridSize(sf::Vector2i(width.cast<int>(), height.cast<int>()));
+		if (texture.isString()) {
+			factory.setDrawn(true).setTexture(texture.cast<std::string>());
+		} else if (!texture.isNil()) {
+			LogManager::Instance()->error("Error casting value from grid table: grid texture");
+		}
+		TIEntity& entity = factory.build();
+		return &entity;
+	} else if (!width.isNil() || !height.isNil()) {
+		std::string widthMsg = width.isNil() ? "" : std::to_string(width.cast<int>());
+		std::string heightMsg = height.isNil() ? "" : std::to_string(height.cast<int>());
+		LogManager::Instance()->error("Script is missing some grid size property: width: " + widthMsg + ", height: " + heightMsg);
+	} else if (!texture.isNil()) {
+		LogManager::Instance()->error("Script is missing some grid size height and width");
+	}
+	return nullptr;
+}
 
-void ScriptManager::loadTIEntities(const std::vector<std::string>& tientities) {
+
+void ScriptManager::loadTIEntities(const std::vector<std::string>& tientities, TIEntity* parent) {
 	LuaRef tientitiesTable = getGlobal(this->luaState, "tientities");
 	for (auto tientity : tientities) {
-		ScriptManager::loadTIEntity("tientities." + tientity, tientitiesTable[tientity], nullptr);
+		ScriptManager::loadTIEntity("tientities." + tientity, tientitiesTable[tientity], parent);
 	}
 }
 
 
 void ScriptManager::loadTIEntity(const std::string& tientityKey, const LuaRef& tientityTable, TIEntity* parent) {
     TIEntityFactory tientityFactory = TIEntityFactory();
-	tientityFactory.setParent(parent).setName(tientityKey);
+	tientityFactory.setName(tientityKey).setParent(parent);
     std::vector<std::string> children = Lua::getTableKeys(this->luaState, tientityKey);
 
     //Any known property name is a component of this entity

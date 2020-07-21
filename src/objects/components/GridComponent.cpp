@@ -2,5 +2,21 @@
 
 using namespace TIE;
 
-GridComponent::GridComponent(const Grid& grid) : grid(grid) {}
+const sf::Vector2i& TIE::GridComponent::getGridSize() {
+	return this->gridSize;
+}
 
+
+void TIE::GridComponent::setGridSize(const sf::Vector2i& gridSize) {
+	this->gridSize = gridSize;
+}
+
+
+const sf::Vector2i& TIE::GridComponent::getTileSize() {
+	return this->tileSize;
+}
+
+
+void TIE::GridComponent::setTileSize(const sf::Vector2i& tileSize) {
+	this->tileSize = tileSize;
+}

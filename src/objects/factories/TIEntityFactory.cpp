@@ -4,6 +4,7 @@
 #include "managers/LogManager.h"
 #include "managers/SceneManager.h"
 #include "objects/components/EventsComponent.h"
+#include "objects/components/GridComponent.h"
 #include "objects/components/SpriteComponent.h"
 #include "objects/components/SelectableComponent.h"
 #include "objects/components/TextComponent.h"
@@ -67,6 +68,11 @@ TIEntity& TIEntityFactory::build() {
 		eventsComponent->setClick(this->click);
 	}
 
+	if (this->hasGrid) {
+		GridComponent* gridComponent = tientity.addComponent<GridComponent>();
+		gridComponent->setGridSize(this->gridSize);
+	}
+
 	return tientity;
 }
 
@@ -122,6 +128,12 @@ TIEntityFactory& TIEntityFactory::setSelectable(const bool selectable) {
 TIEntityFactory& TIE::TIEntityFactory::setClick(const std::string& click) {
 	this->click = click;
 	this->hasEvents = true;
+	return *this;
+}
+
+TIEntityFactory& TIE::TIEntityFactory::setGridSize(sf::Vector2i gridSize) {
+	this->gridSize = gridSize;
+	this->hasGrid = true;
 	return *this;
 }
 

@@ -25,6 +25,8 @@ class TIEntityFactory {
 
 		TIEntityFactory& setClick(const std::string&);
 
+		TIEntityFactory& setGridSize(sf::Vector2i);
+
 		TIEntityFactory() {};
 		~TIEntityFactory() {};
 
@@ -45,6 +47,10 @@ class TIEntityFactory {
 		static const std::string EVENTS;
 		static const std::string SELECTED;
 		static const std::string CLICK;
+
+		//Grid component constants
+		static const std::string GIRD;
+
 	private:
 		TIEntity* parent = nullptr;
 		std::string name = "";
@@ -65,6 +71,9 @@ class TIEntityFactory {
 		bool hasEvents = false;
 		std::string click = "";
 		
+
+		bool hasGrid = true;
+		sf::Vector2i gridSize = sf::Vector2i(0, 0);
 };
 
 }

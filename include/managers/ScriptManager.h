@@ -26,8 +26,9 @@ class ScriptManager : public Singleton<ScriptManager>, Manager {
 
 		void loadAssets(const luabridge::LuaRef&, const std::string&);
 		void loadWindowProperties(const luabridge::LuaRef&);
-		void loadTIEntities(const std::vector<std::string>&);
-		void loadTIEntity(const std::string&, const luabridge::LuaRef&, TIEntity* parent);
+		TIEntity* loadGrid(const luabridge::LuaRef&);
+		void loadTIEntities(const std::vector<std::string>&, TIEntity*);
+		void loadTIEntity(const std::string&, const luabridge::LuaRef&, TIEntity*);
 
 		ScriptManager(const ScriptManager&);
 		void operator=(const ScriptManager&) {};

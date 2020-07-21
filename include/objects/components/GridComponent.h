@@ -3,19 +3,24 @@
 
 #include "objects/components/Component.h"
 
-#include <functional>
-
-#include "objects/entities/Grid.h"
+#include <SFML/Graphics.hpp>
 
 namespace TIE {
 
 class GridComponent : public Component {
 	public:
-		GridComponent(const Grid& grid);
-		~GridComponent() {};
 
+		const sf::Vector2i& getGridSize();
+		void setGridSize(const sf::Vector2i&);
+
+		const sf::Vector2i& getTileSize();
+		void setTileSize(const sf::Vector2i&);
+
+		GridComponent() {};
+		~GridComponent() {};
 	private:
-		const Grid& grid;
+		sf::Vector2i gridSize = sf::Vector2i(0, 0);
+		sf::Vector2i tileSize = sf::Vector2i(0, 0);
 };
 
 }
