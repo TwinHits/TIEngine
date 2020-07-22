@@ -6,6 +6,7 @@ tests/logs/*
 docs/todo.txt
 TIEngineVS*
 src/logs/*
+config.ini
 
 #Build Artifacts
 *TIEngine
