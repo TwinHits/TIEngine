@@ -10,6 +10,7 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "managers/ConsoleManager.h"
 #include "managers/WindowManager.h"
 #include "managers/ViewManager.h"
 
@@ -27,16 +28,27 @@ class EventsManager : public Singleton<EventsManager>, Manager {
 		const sf::Event* const getEvent(sf::Event::EventType);
 		void removeEvent(sf::Event::EventType);
 
+		void recalculateScrollZones();
+
 		EventsManager() {};
 		~EventsManager() {};
 
 	private:
 		sf::RenderWindow& window = WindowManager::Instance()->getWindow();
-		sf::View& clientView = ViewManager::Instance()->getClientView();
+		ConsoleManager* consoleManager = ConsoleManager::Instance();
+		ViewManager* viewManager = ViewManager::Instance();
+
+		sf::View& clientView = viewManager->getClientView();
+		GlobalId clientViewId = viewManager->getClientViewId();
 
 		sf::Vector2f mouseWindowPosition;
 		sf::Vector2f mouseWorldPosition;
-		int scrollZone = 5;
+
+		float scrollZone = 5.0;
+		sf::FloatRect scrollUpZone;
+		sf::FloatRect scrollLeftZone;
+		sf::FloatRect scrollDownZone;
+		sf::FloatRect scrollRightZone;
 
 		std::map<sf::Event::EventType, sf::Event> events;
 

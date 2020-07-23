@@ -13,6 +13,7 @@
 using namespace TIE;
 
 bool EventsManager::initialize() { 
+	this->recalculateScrollZones();
 	return true;
 }
 
@@ -49,7 +50,7 @@ void EventsManager::processEvents() {
 	while (this->window.pollEvent(event)) {
 
 		//Window Input Commands
-		if (!ConsoleManager::Instance()->checkConsole()) {
+		if (!consoleManager->checkConsole()) {
 			switch (event.type) {
 			case sf::Event::Closed:
 				this->window.close();
@@ -62,7 +63,7 @@ void EventsManager::processEvents() {
 					LogManager::Instance()->info("Window closed.");
 					break;
 				case sf::Keyboard::Tilde:
-					ConsoleManager::Instance()->showConsole();
+					consoleManager->showConsole();
 					break;
 				default:
 					break;
@@ -82,7 +83,7 @@ void EventsManager::processEvents() {
 
 
 		//Console Input Commands
-		if (ConsoleManager::Instance()->checkConsole()) {
+		if (consoleManager->checkConsole()) {
 			switch (event.type) {
 			case sf::Event::Closed:
 				this->window.close();
@@ -91,26 +92,26 @@ void EventsManager::processEvents() {
 			case sf::Event::KeyPressed:
 				switch (event.key.code) {
 				case sf::Keyboard::Escape:
-					ConsoleManager::Instance()->hideConsole();
+					consoleManager->hideConsole();
 					break;
 				case sf::Keyboard::Tilde:
-					ConsoleManager::Instance()->hideConsole();
+					consoleManager->hideConsole();
 					break;
 				case sf::Keyboard::Return:
-					ConsoleManager::Instance()->runCommand();
+					consoleManager->runCommand();
 					break;
 				case sf::Keyboard::Up:
-					ConsoleManager::Instance()->traverseUpHistory();
+					consoleManager->traverseUpHistory();
 					break;
 				case sf::Keyboard::Down:
-					ConsoleManager::Instance()->traverseDownHistory();
+					consoleManager->traverseDownHistory();
 					break;
 				default:
 					break;
 				}
 				break;
 			case sf::Event::TextEntered:
-				ConsoleManager::Instance()->addToInput(event.text.unicode);
+				consoleManager->addToInput(event.text.unicode);
 				break;
 			default:
 				break;
@@ -125,25 +126,41 @@ void EventsManager::processEvents() {
 
 
 void EventsManager::scroll() {
+		
+		if (!this->consoleManager->checkConsole()) {
 
-	auto consoleManager = ConsoleManager::Instance();
-	auto mousePosition = sf::Mouse::getPosition(this->window);
-	GlobalId clientViewId = ViewManager::Instance()->getClientViewId();
-	Direction direction;
-	
-	if (!consoleManager->checkConsole()) {
-		if (mousePosition.y <= scrollZone)
-			ViewManager::Instance()->scroll(clientViewId, TOP);
-		if (mousePosition.y >= WindowManager::Instance()->getWindowSize().y - scrollZone)
-			ViewManager::Instance()->scroll(clientViewId, BOTTOM);
-		if (mousePosition.x <= scrollZone)
-			ViewManager::Instance()->scroll(clientViewId, LEFT);
-		if (mousePosition.x >= WindowManager::Instance()->getWindowSize().x - scrollZone)
-			ViewManager::Instance()->scroll(clientViewId, RIGHT);
-	} else if (consoleManager->checkConsole()) {
-		if (mousePosition.y <= scrollZone)
-			consoleManager->scroll(TOP);
-		if (mousePosition.y >= WindowManager::Instance()->getWindowSize().y - scrollZone)
-			consoleManager->scroll(BOTTOM);
-	}
+			if (this->scrollUpZone.contains(this->mouseWindowPosition)) {
+				this->viewManager->scroll(this->clientViewId, TOP);
+			}
+
+			if (this->scrollLeftZone.contains(this->mouseWindowPosition)) {
+				this->viewManager->scroll(this->clientViewId, LEFT);
+			}
+
+			if (this->scrollDownZone.contains(this->mouseWindowPosition)) {
+				this->viewManager->scroll(this->clientViewId, BOTTOM);
+			}
+
+			if (this->scrollRightZone.contains(this->mouseWindowPosition)) {
+				this->viewManager->scroll(this->clientViewId, RIGHT);
+			}
+		} else if (consoleManager->checkConsole()) {
+
+			if (this->scrollUpZone.contains(this->mouseWindowPosition)) {
+				this->consoleManager->scroll(TOP);
+			}
+
+			if (this->scrollDownZone.contains(this->mouseWindowPosition)) {
+				this->consoleManager->scroll(BOTTOM);
+			}
+		}
+}
+
+
+void EventsManager::recalculateScrollZones() {
+	const sf::Vector2u& windowSize = this->window.getSize();
+	this->scrollUpZone = sf::FloatRect(-(int)windowSize.x / 2, -(int)windowSize.y / 2, windowSize.x, this->scrollZone);
+	this->scrollDownZone = sf::FloatRect(-(int)windowSize.x / 2, (int)windowSize.y / 2 - this->scrollZone, windowSize.x, this->scrollZone);
+	this->scrollLeftZone = sf::FloatRect(-(int)windowSize.x / 2, -(int)windowSize.y / 2, this->scrollZone, windowSize.y);
+	this->scrollRightZone = sf::FloatRect((int)windowSize.x / 2 - this->scrollZone, -(int)windowSize.y / 2, this->scrollZone, windowSize.y);
 }
