@@ -36,11 +36,10 @@ class ConsoleManager : public Singleton<ConsoleManager>, Manager {
 		void clearConsoleHistory();
 		void clearDebugLog();
 
-		DevConsole* devConsole;
+		DevConsole* devConsole = nullptr;
 		std::string input;
 		std::vector<std::string> commandHistory;
 		std::vector<std::string>::iterator historyIndex = commandHistory.begin();
-
 
 		void operator=(const ConsoleManager&) {};
 		ConsoleManager(const ConsoleManager&);

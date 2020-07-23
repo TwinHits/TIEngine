@@ -111,13 +111,13 @@ void ViewManager::scroll(GlobalId viewId, Direction direction) {
 
 void ViewManager::scroll(Direction direction) {
 	if (direction == TOP)
-		this->getActiveView().move(0, -scrollSpeed);
+		this->getActiveView().move(0, -this->scrollSpeed);
 	if (direction == RIGHT)
-		this->getActiveView().move(scrollSpeed, 0);
+		this->getActiveView().move(this->scrollSpeed, 0);
 	if (direction == BOTTOM)
-		this->getActiveView().move(0, scrollSpeed);
+		this->getActiveView().move(0, this->scrollSpeed);
 	if (direction == LEFT)
-		this->getActiveView().move(-scrollSpeed, 0);
+		this->getActiveView().move(-this->scrollSpeed, 0);
 }
 
 
