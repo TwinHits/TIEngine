@@ -72,7 +72,7 @@ class TIEntityFactory {
 		std::string click = "";
 		
 
-		bool hasGrid = true;
+		bool hasGrid = false;
 		sf::Vector2i gridSize = sf::Vector2i(0, 0);
 };
 

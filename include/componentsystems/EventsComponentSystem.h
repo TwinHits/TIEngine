@@ -5,6 +5,7 @@
 
 #include "objects/entities/TIEntity.h"
 #include "managers/EventsManager.h"
+#include "managers/GridManager.h"
 
 namespace TIE {
 
@@ -15,6 +16,7 @@ class EventsComponentSystem : public ComponentSystem {
 
 	private:
 		EventsManager* eventsManager = EventsManager::Instance();
+		GridManager* gridManager = GridManager::Instance();
 };
 
 }

@@ -71,20 +71,26 @@ TIEntity& TIEntityFactory::build() {
 	if (this->hasGrid) {
 		GridComponent* gridComponent = tientity.addComponent<GridComponent>();
 		gridComponent->setGridSize(this->gridSize);
+		SpriteComponent* spriteComponent = tientity.getComponent<SpriteComponent>();
+		sf::FloatRect textureSize = spriteComponent->getLocalBounds();
+		gridComponent->setTileSize(sf::Vector2f(textureSize.width / this->gridSize.x, textureSize.height / this->gridSize.y));
 	}
 
 	return tientity;
 }
+
 
 TIEntityFactory& TIEntityFactory::setParent(TIEntity* parent) {
 	this->parent = parent;
 	return *this;
 }
 
+
 TIEntityFactory& TIEntityFactory::setName(std::string name) {
 	this->name = name;
 	return *this;
 }
+
 
 TIEntityFactory& TIEntityFactory::setDrawn(bool drawn) {
 	this->isDrawn = drawn;
@@ -119,11 +125,13 @@ TIEntityFactory& TIEntityFactory::setDirection(const float direction) {
 	return *this;
 }
 
+
 TIEntityFactory& TIEntityFactory::setSelectable(const bool selectable) {
 	this->isSelectable = selectable;
 	this->hasSelectable = true;
 	return *this;
 }
+
 
 TIEntityFactory& TIE::TIEntityFactory::setClick(const std::string& click) {
 	this->click = click;
@@ -131,9 +139,9 @@ TIEntityFactory& TIE::TIEntityFactory::setClick(const std::string& click) {
 	return *this;
 }
 
+
 TIEntityFactory& TIE::TIEntityFactory::setGridSize(sf::Vector2i gridSize) {
 	this->gridSize = gridSize;
 	this->hasGrid = true;
 	return *this;
 }
-

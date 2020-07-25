@@ -12,11 +12,11 @@ void TIE::GridComponent::setGridSize(const sf::Vector2i& gridSize) {
 }
 
 
-const sf::Vector2i& TIE::GridComponent::getTileSize() {
+const sf::Vector2f& TIE::GridComponent::getTileSize() {
 	return this->tileSize;
 }
 
 
-void TIE::GridComponent::setTileSize(const sf::Vector2i& tileSize) {
+void TIE::GridComponent::setTileSize(const sf::Vector2f& tileSize) {
 	this->tileSize = tileSize;
 }

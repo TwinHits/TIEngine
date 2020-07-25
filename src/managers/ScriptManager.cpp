@@ -6,6 +6,7 @@
 
 #include "managers/AssetsManager.h"
 #include "managers/ConfigManager.h"
+#include "managers/GridManager.h"
 #include "managers/LogManager.h"
 #include "managers/SceneManager.h"
 #include "managers/WindowManager.h"
@@ -121,6 +122,7 @@ TIEntity* TIE::ScriptManager::loadGrid(const luabridge::LuaRef& gridTable) {
 			LogManager::Instance()->error("Error casting value from grid table: grid texture");
 		}
 		TIEntity& entity = factory.build();
+		GridManager::Instance()->setGridEntity(entity);
 		return &entity;
 	} else if (!width.isNil() || !height.isNil()) {
 		std::string widthMsg = width.isNil() ? "" : std::to_string(width.cast<int>());
