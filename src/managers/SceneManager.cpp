@@ -108,7 +108,6 @@ void SceneManager::updateGameState(const std::vector<std::unique_ptr<TIEntity> >
 
 void SceneManager::render() {		
 
-
 	window.clear();
 
 	sf::RenderStates states;

@@ -2,14 +2,19 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "objects/components/ShapeComponent.h"
+#include "objects/components/SpriteComponent.h"
+#include "objects/components/TextComponent.h"
+
 using namespace TIE;
 
 void GraphicsComponentSystem::draw(TIEntity& entity, sf::RenderTarget& window, sf::RenderStates states) {
 	SpriteComponent* spriteComponent = entity.getComponent<SpriteComponent>();
 	TextComponent* textComponent = entity.getComponent<TextComponent>();
+	ShapeComponent* shapeComponent = entity.getComponent<ShapeComponent>();
 	
 	//Continue traversal if there's no graphics components, or if either component is drawn
-	bool continueTraversal = textComponent == nullptr && spriteComponent == nullptr;
+	bool continueTraversal = textComponent == nullptr && spriteComponent == nullptr && shapeComponent == nullptr;
 	if (spriteComponent != nullptr && spriteComponent->isDrawn()) {
 		//states.transform *= spriteComponent->getTransform();
 		window.draw(*dynamic_cast<sf::Sprite*>(spriteComponent), states);
@@ -18,6 +23,11 @@ void GraphicsComponentSystem::draw(TIEntity& entity, sf::RenderTarget& window, s
 
 	if (textComponent != nullptr && textComponent->isDrawn()) {
 		window.draw(*dynamic_cast<sf::Text*>(textComponent));
+		continueTraversal = true;
+	}
+
+	if (shapeComponent != nullptr && shapeComponent->isDrawn()) {
+		window.draw(*dynamic_cast<sf::Shape*>(shapeComponent));
 		continueTraversal = true;
 	}
 
@@ -50,6 +60,11 @@ void GraphicsComponentSystem::setDrawn(TIEntity& entity, bool drawn) {
 	if (textComponent != nullptr) {
 		textComponent->setDrawn(drawn);
 	}
+
+	ShapeComponent* shapeComponent = entity.getComponent<ShapeComponent>();
+	if (shapeComponent != nullptr) {
+		shapeComponent->setDrawn(drawn);
+	}
 }
 
 bool GraphicsComponentSystem::isDrawn(TIEntity& entity) {
@@ -62,6 +77,11 @@ bool GraphicsComponentSystem::isDrawn(TIEntity& entity) {
 	TextComponent* textComponent = entity.getComponent<TextComponent>();
 	if (textComponent != nullptr && textComponent->isDrawn()) {
 		return textComponent->isDrawn();
+	}
+
+	ShapeComponent* shapeComponent = entity.getComponent<ShapeComponent>();
+	if (shapeComponent != nullptr && shapeComponent->isDrawn()) {
+		return shapeComponent->isDrawn();
 	}
 
 	return false;
