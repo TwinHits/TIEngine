@@ -1,17 +1,22 @@
 #include "managers/ViewManager.h"
 
+#include "managers/EventsManager.h"
 #include "managers/HashManager.h"
 #include "managers/LogManager.h"
 #include "managers/WindowManager.h"
 #include "objects/enumeration/Direction.h"
 #include "templates/MakeUnique.h"
+#include "utilities/TIEMath.h"
 
 using namespace TIE; 
 
 bool ViewManager::initialize() {
 	sf::Vector2i windowSize = WindowManager::Instance()->getWindowSize();
 	this->engineViewId = this->addView(sf::FloatRect(0, 0, windowSize.x, windowSize.y));
+	this->engineView = &this->getEngineView();
 	this->clientViewId = this->addView(sf::FloatRect(0, 0, windowSize.x, windowSize.y));
+	this->clientView = &this->getClientView();
+	this->recalculateScrollZones();
 	return true;
 }
 
@@ -88,41 +93,65 @@ void ViewManager::setActiveView(GlobalId id) {
 }
 
 
-void ViewManager::updateCamera() {
-	WindowManager::Instance()->getWindow().setView(this->getActiveView());
+void ViewManager::updateCamera(const float delta) {
+	const sf::Vector2f& mouseWindowPosition = this->eventsManager->getMouseWindowPosition();
+	if (!this->consoleManager->checkConsole()) {
+		this->clientView->move(this->calculateClientScroll(mouseWindowPosition, delta));
+		this->zoom(delta);
+	} else if (this->consoleManager->checkConsole()) {
+	
+	}
 }	
 
 
-void ViewManager::setScrollSpeed(float scrollSpeed) {
-	this->scrollSpeed = scrollSpeed;
+void ViewManager::zoom(const float delta) {
+
 }
 
 
-float ViewManager::getScrollSpeed() {
-	return this->scrollSpeed;
+const sf::Vector2f ViewManager::calculateClientScroll(const sf::Vector2f mousePosition, const float delta) {
+
+	if (this->scrollUpZone.contains(mousePosition)) {
+		return Math::translateVelocityByTime(sf::Vector2f(this->scrollSpeed, 270), delta);
+	}
+
+	if (this->scrollRightZone.contains(mousePosition)) {
+		return Math::translateVelocityByTime(sf::Vector2f(this->scrollSpeed, 0), delta);
+	}
+
+	if (this->scrollDownZone.contains(mousePosition)) {
+		 return Math::translateVelocityByTime(sf::Vector2f(this->scrollSpeed, 90), delta);
+	}
+
+	if (this->scrollLeftZone.contains(mousePosition)) {
+		return Math::translateVelocityByTime(sf::Vector2f(this->scrollSpeed, 180), delta);
+	}
+
+	return sf::Vector2f(0, 0);
+}
+
+const sf::Vector2f ViewManager::calculateEngineScroll(const sf::Vector2f& mousePosition, const float delta) {
+	/*
+	if (this->scrollUpZone.contains(mouseWindowPosition)) {
+		this->consoleManager->scroll(TOP);
+		this->getEngineView().move(0, -this->scrollSpeed);
+	}
+
+	if (this->scrollDownZone.contains(mouseWindowPosition)) {
+		//this->consoleManager->scroll(BOTTOM);
+		this->getEngineView().move(0, this->scrollSpeed);
+	}
+	*/
+	return sf::Vector2f(0, 0);
 }
 
 
-void ViewManager::scroll(GlobalId viewId, Direction direction) {
-	this->setActiveView(viewId);
-	this->scroll(direction);
-}
-
-
-void ViewManager::scroll(Direction direction) {
-	if (direction == TOP)
-		this->getActiveView().move(0, -this->scrollSpeed);
-	if (direction == RIGHT)
-		this->getActiveView().move(this->scrollSpeed, 0);
-	if (direction == BOTTOM)
-		this->getActiveView().move(0, this->scrollSpeed);
-	if (direction == LEFT)
-		this->getActiveView().move(-this->scrollSpeed, 0);
-}
-
-
-void ViewManager::zoom(void) {
-
+void ViewManager::recalculateScrollZones() {
+	const sf::Vector2i& windowSize = WindowManager::Instance()->getWindowSize();
+	this->scrollUpZone = sf::FloatRect(-windowSize.x / 2, -windowSize.y / 2, windowSize.x, this->scrollZone);
+	this->scrollDownZone = sf::FloatRect(-windowSize.x / 2, windowSize.y / 2 - this->scrollZone, windowSize.x, this->scrollZone);
+	this->scrollLeftZone = sf::FloatRect(-windowSize.x / 2, -windowSize.y / 2, this->scrollZone, windowSize.y);
+	this->scrollRightZone = sf::FloatRect(windowSize.x / 2 - this->scrollZone, -windowSize.y / 2, this->scrollZone, windowSize.y);
 }
 
 

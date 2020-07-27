@@ -11,6 +11,4 @@ ConsoleManager Scrolling Behavior
 
 Move Some TIEntity Factory or Lua Component Reading to the ComponentSystem
 
-4. Load script on load via config.ini
-5. Tie scrolling to the simulation
 3. Why are angles in grid helper different than the guide?

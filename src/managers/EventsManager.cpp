@@ -13,7 +13,6 @@
 using namespace TIE;
 
 bool EventsManager::initialize() { 
-	this->recalculateScrollZones();
 	return true;
 }
 
@@ -42,8 +41,9 @@ void EventsManager::removeEvent(sf::Event::EventType eventType) {
 
 void EventsManager::processEvents() {
 	sf::Vector2i position = sf::Mouse::getPosition(window);
+	sf::View& clientView = ViewManager::Instance()->getClientView();
 	this->mouseWindowPosition = window.mapPixelToCoords(position);
-	this->mouseWorldPosition = window.mapPixelToCoords(position, this->clientView); 
+	this->mouseWorldPosition = window.mapPixelToCoords(position, clientView); 
 	this->events.clear();
 
 	sf::Event event;
@@ -119,48 +119,5 @@ void EventsManager::processEvents() {
 			continue;
 		}
 	}
-
-	//Check for camera scrolling
-	this->scroll();
 }
 
-
-void EventsManager::scroll() {
-		
-		if (!this->consoleManager->checkConsole()) {
-
-			if (this->scrollUpZone.contains(this->mouseWindowPosition)) {
-				this->viewManager->scroll(this->clientViewId, TOP);
-			}
-
-			if (this->scrollLeftZone.contains(this->mouseWindowPosition)) {
-				this->viewManager->scroll(this->clientViewId, LEFT);
-			}
-
-			if (this->scrollDownZone.contains(this->mouseWindowPosition)) {
-				this->viewManager->scroll(this->clientViewId, BOTTOM);
-			}
-
-			if (this->scrollRightZone.contains(this->mouseWindowPosition)) {
-				this->viewManager->scroll(this->clientViewId, RIGHT);
-			}
-		} else if (consoleManager->checkConsole()) {
-
-			if (this->scrollUpZone.contains(this->mouseWindowPosition)) {
-				this->consoleManager->scroll(TOP);
-			}
-
-			if (this->scrollDownZone.contains(this->mouseWindowPosition)) {
-				this->consoleManager->scroll(BOTTOM);
-			}
-		}
-}
-
-
-void EventsManager::recalculateScrollZones() {
-	const sf::Vector2u& windowSize = this->window.getSize();
-	this->scrollUpZone = sf::FloatRect(-(int)windowSize.x / 2, -(int)windowSize.y / 2, windowSize.x, this->scrollZone);
-	this->scrollDownZone = sf::FloatRect(-(int)windowSize.x / 2, (int)windowSize.y / 2 - this->scrollZone, windowSize.x, this->scrollZone);
-	this->scrollLeftZone = sf::FloatRect(-(int)windowSize.x / 2, -(int)windowSize.y / 2, this->scrollZone, windowSize.y);
-	this->scrollRightZone = sf::FloatRect((int)windowSize.x / 2 - this->scrollZone, -(int)windowSize.y / 2, this->scrollZone, windowSize.y);
-}

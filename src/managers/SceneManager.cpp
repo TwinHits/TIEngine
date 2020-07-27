@@ -76,6 +76,7 @@ void SceneManager::updateGameState() {
 
 	this->removeTIEntities(this->sceneGraphRoot->getChildren());
 	this->updateGameState(this->sceneGraphRoot->getChildren());
+	TIE::ViewManager::Instance()->updateCamera(this->delta);
 
 	float fps = 60 / delta;
 	this->windowManager->showFPS(std::to_string(fps));

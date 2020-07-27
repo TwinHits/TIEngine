@@ -9,6 +9,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "managers/ConsoleManager.h"
+#include "managers/EventsManager.h"
 #include "objects/GlobalId.h"
 #include "objects/enumeration/Direction.h"
 
@@ -25,16 +27,11 @@ class ViewManager : public Singleton<ViewManager>, Manager {
 		sf::View& updateView(sf::View&, const sf::FloatRect&);
 		void removeView(GlobalId);
 
-		void updateCamera();
-		void scroll(GlobalId viewId, Direction direction);
-		void scroll(Direction direction);
-		void zoom(void);
+		void updateCamera(const float);
+		void recalculateScrollZones();
 
 		void setActiveView(GlobalId);
 		sf::View& getActiveView();
-
-		void setScrollSpeed(float scrollSpeed);
-		float getScrollSpeed();
 
 		GlobalId getEngineViewId();
 		GlobalId getClientViewId();
@@ -46,14 +43,29 @@ class ViewManager : public Singleton<ViewManager>, Manager {
 		~ViewManager() {};
 
 	private:
+		const sf::Vector2f calculateClientScroll(const sf::Vector2f, const float);
+		const sf::Vector2f calculateEngineScroll(const sf::Vector2f&, const float);
+		void zoom(const float);
+
+		EventsManager* eventsManager = EventsManager::Instance();
+		ConsoleManager* consoleManager = ConsoleManager::Instance();
+
 		std::map<GlobalId, std::unique_ptr<sf::View> > views;
 
 		GlobalId activeViewId = 0;
 		GlobalId clientViewId = 0;
 		GlobalId engineViewId = 0;
 
-		float scrollSpeed = 1.0;
-		
+		sf::View* clientView = nullptr;
+		sf::View* engineView = nullptr;
+
+		float scrollZone = 5.0;
+		float scrollSpeed = 500.0;
+		sf::FloatRect scrollUpZone;
+		sf::FloatRect scrollLeftZone;
+		sf::FloatRect scrollDownZone;
+		sf::FloatRect scrollRightZone;
+
 		void operator=(const ViewManager&) {};
 		ViewManager(const ViewManager&);
 };
