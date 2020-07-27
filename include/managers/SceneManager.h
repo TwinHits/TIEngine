@@ -49,7 +49,7 @@ namespace TIE {
 		MovesComponentSystem movesComponentSystem = MovesComponentSystem();
 		SelectableComponentSystem selectableComponentSystem = SelectableComponentSystem();
 
-		void updateGameState(const std::vector<std::unique_ptr<TIEntity> >&);
+		void updateTIEntities(const std::vector<std::unique_ptr<TIEntity> >&);
 		void removeTIEntities(std::vector<std::unique_ptr<TIEntity> >&);
 		std::string calculateRollingAverageFPS(const float delta);
 

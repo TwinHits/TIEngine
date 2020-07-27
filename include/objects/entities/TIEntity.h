@@ -29,9 +29,8 @@ class TIEntity {
 		//Experiment with if this can be seperated into declaration and implementation
 		template <typename T>
 		T* getComponent() {
-			auto it = components.find(typeid(T));
-			if (it != components.end()) {
-				return static_cast<T*>(it->second.get());
+			if (components.count(typeid(T))) {
+				return static_cast<T*>(components.at(typeid(T)).get());
 			}
 			return nullptr;
 		}

@@ -27,6 +27,11 @@ const sf::Vector2f EventsManager::getMouseWorldPosition() {
 }
 
 
+bool EventsManager::isEvents() {
+	return this->events.size() > 0;
+}
+
+
 const sf::Event* const EventsManager::getEvent(sf::Event::EventType eventType) {
 	if (this->events.find(eventType) != events.end()) {
 		return &(events.at(eventType));
@@ -74,8 +79,14 @@ void EventsManager::processEvents() {
 				event.mouseButton.y = this->mouseWorldPosition.y;
 				this->events.insert({ event.type, event });
 				break;
+			case sf::Event::MouseMoved:
+			case sf::Event::MouseEntered:
+			case sf::Event::MouseLeft:
+			case sf::Event::LostFocus:
+			case sf::Event::GainedFocus:
+				break;
 			default:
-				this->events.insert({ event.type, event });
+					this->events.insert({ event.type, event });
 				break;
 			}
 			continue;

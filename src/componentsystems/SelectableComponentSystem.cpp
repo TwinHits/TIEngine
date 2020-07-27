@@ -19,7 +19,7 @@ void SelectableComponentSystem::update(TIEntity& entity, const float delta) {
 			if (clickEvent != nullptr) {
 				if (spriteComponent->getGlobalBounds().contains(sf::Vector2f(clickEvent->mouseButton.x, clickEvent->mouseButton.y))) {
 					selectableComponent->setSelected(true);
-					eventsManager->removeEvent(sf::Event::MouseButtonPressed);
+					this->eventsManager->removeEvent(sf::Event::MouseButtonPressed);
 					/*
 					} else if (selectableComponent->isSelected()) {
 					selectableComponent->setSelected(false);
