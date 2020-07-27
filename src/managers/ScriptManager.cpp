@@ -23,6 +23,12 @@ bool ScriptManager::initialize() {
     this->luaState = luaL_newstate();
     luaL_openlibs(this->luaState);
     Lua::loadGetKeysFunction(this->luaState);
+
+	const std::string& startUpScript = ConfigManager::Instance()->getStartUpScript();
+	if (!startUpScript.empty()) {
+		this->loadScript(startUpScript);
+	}
+
 	return true;
 }
 

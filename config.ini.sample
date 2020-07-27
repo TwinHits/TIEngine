@@ -4,3 +4,4 @@ AssetsPath=assets/
 DefaultDisplayLanguage=en_US
 ShowMousePtrCoords=true
 ShowDegreeGuide=true
+StartUpScript=

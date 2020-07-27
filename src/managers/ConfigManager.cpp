@@ -49,6 +49,10 @@ const bool ConfigManager::getShowDegreeGuide() {
 	return this->showDegreeGuide;
 }
 
+const std::string& TIE::ConfigManager::getStartUpScript() {
+	return this->startUpScript;
+}
+
 
 void ConfigManager::setDefaultDisplayLanguage(const Language& defaultDisplayLanguage) {
 	this->defaultDisplayLanguage = defaultDisplayLanguage;
@@ -102,6 +106,8 @@ void ConfigManager::parseConfig(std::ifstream& config) {
 				if (value == "true") {
 					this->showDegreeGuide = true; 
 				}
+			} else if (key == "StartUpScript") {
+				this->startUpScript = value;
 			}
 		}	 
 	}
@@ -115,4 +121,5 @@ void ConfigManager::restoreDefaultConfiguration() {
 	this->defaultDisplayLanguage = this->defaultDefaultDisplayLanguage;
 	this->showDegreeGuide = this->defaultShowDegreeGuide;
 	this->showMousePtrCoords = this->showMousePtrCoords;
+	this->startUpScript = this->defaultStartUpScript;
 }
