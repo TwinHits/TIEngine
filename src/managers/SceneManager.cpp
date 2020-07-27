@@ -78,8 +78,8 @@ void SceneManager::updateGameState() {
 	this->updateGameState(this->sceneGraphRoot->getChildren());
 	TIE::ViewManager::Instance()->updateCamera(this->delta);
 
-	float fps = 60 / delta;
-	this->windowManager->showFPS(std::to_string(fps));
+	std::string fps = this->calculateRollingAverageFPS(this->delta);
+	this->windowManager->showFPS(fps);
 }
 
 
@@ -120,4 +120,23 @@ void SceneManager::render() {
 	GraphicsComponentSystem::draw(*(this->engineLayer), this->window, states);
 
 	window.display();
+}
+
+
+std::string SceneManager::calculateRollingAverageFPS(const float delta) {
+	static int index=0;
+	static int sum=0;
+	static int ticks[100] = { 0 };
+
+	int tick = 60 / delta;
+
+	sum -= ticks[index];
+	sum += tick;
+	ticks[index] = tick;
+	if (++index == 100) {
+		index = 0;
+	}
+
+	return std::to_string(sum / 100);
+
 }

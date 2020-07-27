@@ -7,6 +7,7 @@ docs/todo.txt
 TIEngineVS*
 src/logs/*
 config.ini
+profiling/
 
 #Build Artifacts
 *TIEngine

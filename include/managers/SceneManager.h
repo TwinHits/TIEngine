@@ -39,7 +39,6 @@ namespace TIE {
 
 		sf::Clock& clock;
 		float delta = 0;
-		float TimePerFrame = 1.f / 60.f; //Lock at 60 fps
 
 		std::unique_ptr<SceneLayer> sceneGraphRoot;
 		SceneLayer* engineLayer = nullptr;
@@ -52,6 +51,7 @@ namespace TIE {
 
 		void updateGameState(const std::vector<std::unique_ptr<TIEntity> >&);
 		void removeTIEntities(std::vector<std::unique_ptr<TIEntity> >&);
+		std::string calculateRollingAverageFPS(const float delta);
 
 		SceneManager(const SceneManager&);
 		void operator=(const SceneManager&) {};

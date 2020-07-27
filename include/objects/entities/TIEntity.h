@@ -4,6 +4,7 @@
 #include <memory>
 #include <string>
 #include <typeindex>
+#include <unordered_Map>
 #include <vector>
 
 #include <SFML/Graphics.hpp>
@@ -21,16 +22,16 @@ class TIEntity {
 
 		template<typename T>
 		T* addComponent() {
-			components[std::type_index(typeid(T))] = make_unique<T>();
+			components[typeid(T)] = make_unique<T>();
 			return this->getComponent<T>();
 		}
 		
 		//Experiment with if this can be seperated into declaration and implementation
 		template <typename T>
 		T* getComponent() {
-			auto it = components.find(std::type_index(typeid(T)));
+			auto it = components.find(typeid(T));
 			if (it != components.end()) {
-				return dynamic_cast<T*>(it->second.get());
+				return static_cast<T*>(it->second.get());
 			}
 			return nullptr;
 		}
@@ -57,7 +58,7 @@ class TIEntity {
 		bool operator==(const TIEntity&) const;
 		bool operator!=(const TIEntity&) const;
 	private:
-		std::map<std::type_index, std::unique_ptr<Component> > components;
+		std::unordered_map<std::type_index, std::unique_ptr<Component> > components;
 		GlobalId id = -1;
 		bool remove = false;
 		std::string name = "entity";
