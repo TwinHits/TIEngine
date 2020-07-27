@@ -7,6 +7,7 @@
 
 #include "componentsystems/GraphicsComponentSystem.h"
 #include "managers/ConfigManager.h"
+#include "managers/GridManager.h"
 #include "managers/LogManager.h"
 #include "managers/SceneManager.h"
 #include "managers/ScriptManager.h"
@@ -65,6 +66,8 @@ void ConsoleManager::runCommand() {
 		this->clearConsoleHistory();
 	} else if (command == ConsoleCommands::CLEARLOG) {
 		this->clearDebugLog();
+	} else if (command == ConsoleCommands::SHOW) {
+		this->showGridGuide();
 	} else {
 		LogManager::Instance()->command("Unknown command.");
 	}
@@ -150,6 +153,7 @@ void ConsoleManager::printSceneGraph(TIEntity& tientity) {
 	}
 }
 
+
 void TIE::ConsoleManager::clearConsoleHistory() {
 	for (auto& child : this->devConsole->getChildren()) {
 		child->setRemove(true);
@@ -158,8 +162,14 @@ void TIE::ConsoleManager::clearConsoleHistory() {
 	LogManager::Instance()->clearQueueToDraw();
 }
 
+
 void TIE::ConsoleManager::clearDebugLog() {
 	this->clearConsoleHistory();
 	LogManager::Instance()->clearLog();
 	LogManager::Instance()->info("Logs cleared by console command.");
+}
+
+
+void TIE::ConsoleManager::showGridGuide() {
+	GridManager::Instance()->showGridGuide(true);
 }

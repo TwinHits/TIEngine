@@ -35,6 +35,7 @@ class ConsoleManager : public Singleton<ConsoleManager>, Manager {
 		void printSceneGraph(TIEntity&);
 		void clearConsoleHistory();
 		void clearDebugLog();
+		void showGridGuide();
 
 		DevConsole* devConsole = nullptr;
 		std::string input;

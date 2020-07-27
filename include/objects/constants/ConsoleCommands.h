@@ -12,6 +12,7 @@ class ConsoleCommands {
 		const static std::string LOAD;
 		const static std::string SCRIPT;
 		const static std::string SCENEGRAPH;
+		const static std::string SHOW;
 };
 
 }
