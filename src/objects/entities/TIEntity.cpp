@@ -52,12 +52,12 @@ const std::string TIE::TIEntity::getName() const {
 
 TIEntity& TIEntity::attachChild(std::unique_ptr<TIEntity> child) {
 	child->setParent(this);
-	children.push_back(std::move(child));
+	this->children.push_back(std::move(child));
 	return *children.back();
 }
 
 TIEntity& TIEntity::attachChild() {
-	children.push_back(make_unique<TIEntity>());
+	this->children.push_back(make_unique<TIEntity>());
 	TIEntity& child = *children.back();
 	child.setParent(this);
 	return child;
@@ -65,11 +65,11 @@ TIEntity& TIEntity::attachChild() {
 
 
 std::unique_ptr<TIEntity> TIEntity::detachChild(const TIEntity& child) {
-	for (auto c = children.begin(); c != children.end(); ++c) {
+	for (auto c = this->children.begin(); c != this->children.end(); ++c) {
 		if (*(*c) == child) {
 			std::unique_ptr<TIEntity> result = std::move(*c);
 			result->setParent(nullptr);
-			children.erase(c);
+			this->children.erase(c);
 			return result;
 		}
 	}
@@ -102,7 +102,7 @@ TIEntity* TIEntity::findNode(sf::Vector2f point) {
 	if (this->getHitBox().contains(point)) {
 		return this;
 	} else {
-		for (auto& child : children) {
+		for (auto& child : this->children) {
 			TIEntity* ptr = child->findNode(point);
 			if (ptr != nullptr) {
 				return ptr;
