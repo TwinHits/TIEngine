@@ -88,6 +88,7 @@ void SceneManager::removeTIEntities(std::vector<std::unique_ptr<TIEntity> >& ent
 
 
 void SceneManager::updateTIEntities(const std::vector<std::unique_ptr<TIEntity> >& entities) {
+
 	for (auto& entity : entities) {
 
 		if (entity->getComponent<SpriteComponent>() != nullptr) {
@@ -102,10 +103,8 @@ void SceneManager::updateTIEntities(const std::vector<std::unique_ptr<TIEntity> 
 
 		entity->update(this->delta);
 
-		for (auto& child : entity->getChildren()) {
-			this->removeTIEntities(child->getChildren());
-			this->updateTIEntities(child->getChildren());
-		}
+		this->removeTIEntities(entity->getChildren());
+		this->updateTIEntities(entity->getChildren());
 	}
 }
 
@@ -141,5 +140,4 @@ std::string SceneManager::calculateRollingAverageFPS(const float delta) {
 	}
 
 	return std::to_string(sum / 100);
-
 }
