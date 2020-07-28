@@ -27,7 +27,7 @@ void EventsComponentSystem::update(TIEntity& entity, const float delta) {
 					if (movesComponent != nullptr && selectableComponent != nullptr && selectableComponent->isSelected()) {
 
 						if (gridManager->isGridConfigured()) {
-							mousePosition = GridComponentSystem::normalizePositionToGrid(this->gridManager->getGridComponent(), mousePosition);
+							mousePosition = GridComponentSystem::normalizePositionToGrid(mousePosition, *gridManager->getGridEntity());
 						}
 						movesComponent->setDestination(mousePosition);
 						this->eventsManager->removeEvent(sf::Event::MouseButtonPressed);

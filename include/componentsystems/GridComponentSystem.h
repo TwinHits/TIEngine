@@ -3,7 +3,7 @@
 
 #include "componentsystems/ComponentSystem.h"
 
-#include "objects/components/GridComponent.h"
+#include "objects/entities/TIEntity.h"
 
 namespace TIE {
 
@@ -12,7 +12,7 @@ class GridComponentSystem : public ComponentSystem {
 		GridComponentSystem() {};
 		void update(TIEntity&, const float);
 
-		static sf::Vector2f normalizePositionToGrid(GridComponent*, const sf::Vector2f&);
+		static sf::Vector2f normalizePositionToGrid(const sf::Vector2f&, TIEntity&);
 	private:
 };
 

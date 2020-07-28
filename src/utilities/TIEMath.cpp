@@ -26,6 +26,14 @@ sf::Vector2f TIE::Math::translateVelocityByTime(const sf::Vector2f& velocity, fl
 }
 
 
+sf::Vector2f TIE::Math::normalizePositionToGrid(const sf::Vector2f& position, const sf::FloatRect& bounds, const sf::Vector2f& tileSize) {
+	return sf::Vector2f(
+		bounds.left + floor(fabsf(bounds.left - position.x) / tileSize.x) * tileSize.x + tileSize.x / 2,
+		bounds.top + floor(fabsf(bounds.top - position.y) / tileSize.y) * tileSize.y + tileSize.y / 2
+	);
+}
+
+
 bool TIE::Math::isNice(int number) {
 	return number == 69;
 }

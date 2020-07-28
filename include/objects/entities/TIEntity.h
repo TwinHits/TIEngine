@@ -26,7 +26,6 @@ class TIEntity {
 			return this->getComponent<T>();
 		}
 		
-		//Experiment with if this can be seperated into declaration and implementation
 		template <typename T>
 		T* getComponent() {
 			if (components.count(typeid(T))) {
