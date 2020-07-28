@@ -7,32 +7,27 @@
 
 using namespace TIE;
 
-bool GridGuide::initialize(const sf::Vector2f& position, const sf::Vector2i& gridSize, const sf::Vector2f& tileSize) {
-
-	int GRID_LINE_WIDTH = 2;
-	float totalWidth = tileSize.x * gridSize.x;
-	float totalHeight = tileSize.y * gridSize.y;
-	sf::Vector2f normalizedPosition = sf::Vector2f(position.x - totalWidth / 2, position.y - totalHeight / 2);
+bool GridGuide::initialize(const sf::FloatRect& bounds, const sf::Vector2i& gridSize, const sf::Vector2f& tileSize) {
 	
 	// Y lines
-	for (int i = 0; i < gridSize.x; i++) {
+	for (int i = 0; i <= gridSize.x; i++) {
 		TIEntity& entity = this->attachChild();
 		ShapeComponent* shape = entity.addComponent<ShapeComponent>();
 		shape->setDrawn(true);
-		shape->setPosition(sf::Vector2f(normalizedPosition.x + tileSize.x * i, normalizedPosition.y));
+		shape->setPosition(sf::Vector2f(bounds.left + tileSize.x * i, bounds.top));
 		shape->setRotation(0); // Why is this different than the rotation guide?
-		shape->setSize(sf::Vector2f(GRID_LINE_WIDTH, totalHeight));
+		shape->setSize(sf::Vector2f(this->GRID_LINE_WIDTH, bounds.height));
 		shape->setFillColor(sf::Color::Yellow);
 	}
 
 	// X lines
-	 for (int i = 0; i < gridSize.y; i++) {
+	 for (int i = 0; i <= gridSize.y; i++) {
 		TIEntity& entity = this->attachChild();
 		ShapeComponent* shape = entity.addComponent<ShapeComponent>();
 		shape->setDrawn(true);
-		shape->setPosition(sf::Vector2f(normalizedPosition.x, normalizedPosition.y + tileSize.y * i));
+		shape->setPosition(sf::Vector2f(bounds.left, bounds.top + tileSize.y * i));
 		shape->setRotation(270); // Why is this difference than the rotation guide?
-		shape->setSize(sf::Vector2f(GRID_LINE_WIDTH, totalWidth));
+		shape->setSize(sf::Vector2f(this->GRID_LINE_WIDTH, bounds.width));
 		shape->setFillColor(sf::Color::Yellow);
 	}
 

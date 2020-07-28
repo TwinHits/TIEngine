@@ -62,7 +62,7 @@ void GridManager::recalculateGrideGuide(GridComponent* gridComponent) {
 		this->gridGuide = &dynamic_cast<GridGuide&>(SceneManager::Instance()->getClientLayer().attachChild(make_unique<GridGuide>()));
 		SpriteComponent* spriteComponent = this->gridEntity->getComponent<SpriteComponent>();
 		if (spriteComponent != nullptr) {
-			this->gridGuide->initialize(spriteComponent->getPosition(), this->gridComponent->getGridSize(), this->gridComponent->getTileSize());
+			this->gridGuide->initialize(spriteComponent->getGlobalBounds(), this->gridComponent->getGridSize(), this->gridComponent->getTileSize());
 		}
 	} else {
 		LogManager::Instance()->warn("No grid is currently configured.");

@@ -9,12 +9,13 @@ namespace TIE {
 
 class GridGuide : public TIEntity {
 	public:
-		bool initialize(const sf::Vector2f&, const sf::Vector2i&, const sf::Vector2f&);
+		bool initialize(const sf::FloatRect&, const sf::Vector2i&, const sf::Vector2f&);
 		void update(const float);
 
 		GridGuide() {};
 		~GridGuide() {};
 	private:
+		const int GRID_LINE_WIDTH = 2;
 
 };
 
