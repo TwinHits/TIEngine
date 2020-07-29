@@ -17,6 +17,8 @@ using namespace TIE;
 const std::string MovesComponentSystem::MOVES = "moves";
 const std::string MovesComponentSystem::SPEED = "speed";
 const std::string MovesComponentSystem::DIRECTION = "direction";
+const std::string MovesComponentSystem::SPEED_KEY = MovesComponentSystem::MOVES + '.' + MovesComponentSystem::SPEED;
+const std::string MovesComponentSystem::DIRECTION_KEY = MovesComponentSystem::MOVES + '.' + MovesComponentSystem::DIRECTION;
 
 void MovesComponentSystem::update(TIEntity& entity, const float delta) {
 	MovesComponent* movesComponent = entity.getComponent<MovesComponent>();
@@ -28,18 +30,19 @@ void MovesComponentSystem::update(TIEntity& entity, const float delta) {
 	}
 }
 
+
 MovesComponent* MovesComponentSystem::addMovesComponent(const TIEntityFactory& factory, TIEntity& entity) {
+
 	MovesComponent* movesComponent = nullptr;
-	auto speed = factory.floatValues.find("moves.speed");
-	auto direction = factory.floatValues.find("moves.direction");
-	
-	if (speed != factory.floatValues.end()) {
-		MovesComponent* movesComponent = entity.addComponent<MovesComponent>();
+	if (factory.floatValues.count(MovesComponentSystem::SPEED_KEY)) {
+		float speed = factory.floatValues.at(MovesComponentSystem::SPEED_KEY);
+		movesComponent = entity.addComponent<MovesComponent>();
 
 		sf::Vector2f velocity = sf::Vector2f();
-		velocity.x = speed->second;
-		if (direction != factory.floatValues.end()) {
-			velocity.y = direction->second;
+		velocity.x = speed;
+		if (factory.floatValues.count(MovesComponentSystem::DIRECTION_KEY)) {
+			float direction = factory.floatValues.at(MovesComponentSystem::DIRECTION_KEY);
+			velocity.y = direction;
 		} else {
 			velocity.y = 0;
 		}

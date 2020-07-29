@@ -14,6 +14,7 @@
 using namespace TIE;
 
 const std::string SelectableComponentSystem::SELECTABLE = "selectable";
+const std::string SelectableComponentSystem::SELECTABLE_KEY = SelectableComponentSystem::SELECTABLE + '.' + SelectableComponentSystem::SELECTABLE;
 
 void SelectableComponentSystem::update(TIEntity& entity, const float delta) {
 	SelectableComponent* selectableComponent = entity.getComponent<SelectableComponent>();
@@ -37,12 +38,12 @@ void SelectableComponentSystem::update(TIEntity& entity, const float delta) {
 }
 
 SelectableComponent* SelectableComponentSystem::addSelectableComponent(const TIEntityFactory& factory, TIEntity& entity) {
-	SelectableComponent* selectableComponent = nullptr;
-	auto isSelectable = factory.boolValues.find("selectable.selectable");
 
-	if (isSelectable != factory.boolValues.end()) {
+	SelectableComponent* selectableComponent = nullptr;
+	if (factory.boolValues.count(SelectableComponentSystem::SELECTABLE_KEY)) {
+		bool isSelectable = factory.boolValues.at(SelectableComponentSystem::SELECTABLE_KEY);
 		selectableComponent = entity.addComponent<SelectableComponent>();
-		selectableComponent->setSelectable(isSelectable->second);
+		selectableComponent->setSelectable(isSelectable);
 	}
 
 	return selectableComponent;

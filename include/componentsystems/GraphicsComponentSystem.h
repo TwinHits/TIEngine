@@ -29,6 +29,9 @@ class GraphicsComponentSystem : public ComponentSystem {
 		static const std::string DRAWN;
 		static const std::string TEXTURE;
 		static const std::string TEXT;
+		static const std::string DRAWN_KEY;
+		static const std::string TEXTURE_KEY;
+		static const std::string TEXT_KEY;
 	private: 
 		GraphicsComponentSystem() {};
 };

@@ -13,6 +13,10 @@
 using namespace TIE;
 
 const std::string GridComponentSystem::GRID = "grid";
+const std::string GridComponentSystem::WIDTH = "width";
+const std::string GridComponentSystem::HEIGHT = "height";
+const std::string GridComponentSystem::WIDTH_KEY = GridComponentSystem::GRID + '.' + GridComponentSystem::WIDTH;
+const std::string GridComponentSystem::HEIGHT_KEY = GridComponentSystem::GRID + '.' + GridComponentSystem::HEIGHT;
 
 void GridComponentSystem::update(TIEntity&, const float) {
 
@@ -20,19 +24,18 @@ void GridComponentSystem::update(TIEntity&, const float) {
 
 
 GridComponent* TIE::GridComponentSystem::addGridComponent(const TIEntityFactory& factory, TIEntity& entity) {
-	GridComponent* gridComponent = nullptr;
-	auto width = factory.floatValues.find("grid.width");
-	auto height = factory.floatValues.find("grid.height");
 
-	auto end = factory.floatValues.end();
-	if (width != end && height != end) {
+	GridComponent* gridComponent = nullptr;
+	if (factory.floatValues.count(GridComponentSystem::WIDTH_KEY) && factory.floatValues.count(GridComponentSystem::HEIGHT_KEY)) {
+		float width = factory.floatValues.at(GridComponentSystem::WIDTH_KEY);
+		float height = factory.floatValues.at(GridComponentSystem::HEIGHT_KEY);
 		gridComponent = entity.addComponent<GridComponent>();
-		gridComponent->setGridSize(sf::Vector2i(width->second, height->second));
+		gridComponent->setGridSize(sf::Vector2i(width, height));
 
 		SpriteComponent* spriteComponent = entity.getComponent<SpriteComponent>();
 		if (spriteComponent != nullptr) {
 			sf::FloatRect textureSize = spriteComponent->getLocalBounds();
-			gridComponent->setTileSize(sf::Vector2f(textureSize.width / width->second, textureSize.height / height->second));
+			gridComponent->setTileSize(sf::Vector2f(textureSize.width / width, textureSize.height / height));
 		}
 
 		GridManager::Instance()->setGridEntity(entity);

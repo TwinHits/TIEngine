@@ -16,6 +16,9 @@ using namespace TIE;
 const std::string GraphicsComponentSystem::DRAWN = "drawn";
 const std::string GraphicsComponentSystem::TEXTURE = "texture";
 const std::string GraphicsComponentSystem::TEXT = "text";
+const std::string GraphicsComponentSystem::TEXTURE_KEY = GraphicsComponentSystem::DRAWN + '.' + GraphicsComponentSystem::TEXTURE;
+const std::string GraphicsComponentSystem::DRAWN_KEY = GraphicsComponentSystem::DRAWN + '.' + GraphicsComponentSystem::DRAWN;
+const std::string GraphicsComponentSystem::TEXT_KEY = GraphicsComponentSystem::DRAWN + '.' + GraphicsComponentSystem::TEXT;
 
 void GraphicsComponentSystem::draw(TIEntity& entity, sf::RenderTarget& window, sf::RenderStates states) {
 	SpriteComponent* spriteComponent = entity.getComponent<SpriteComponent>();
@@ -54,22 +57,20 @@ SpriteComponent* GraphicsComponentSystem::addSpriteComponent(TIEntity& entity) {
 
 
 SpriteComponent* GraphicsComponentSystem::addSpriteComponent(const TIEntityFactory& factory, TIEntity& entity) {
-	SpriteComponent* spriteComponent = nullptr;
-	auto drawnValue = factory.boolValues.find("drawn.drawn");
-	auto textureValue = factory.stringValues.find("drawn.texture");
 
-	if (textureValue != factory.stringValues.end()) {
-		if (spriteComponent == nullptr) {
-			spriteComponent = entity.addComponent<SpriteComponent>();
-		}
-		const sf::Texture& texture = AssetsManager::Instance()->getTexture(textureValue->second);
+	SpriteComponent* spriteComponent = nullptr;
+	if (factory.stringValues.count(GraphicsComponentSystem::TEXTURE_KEY)) {
+		std::string textureName = factory.stringValues.at(GraphicsComponentSystem::TEXTURE_KEY);
+		const sf::Texture& texture = AssetsManager::Instance()->getTexture(textureName);
+		spriteComponent = entity.addComponent<SpriteComponent>();
 		spriteComponent->setTexture(texture, true);
 		sf::FloatRect size = spriteComponent->getLocalBounds();
 		spriteComponent->setOrigin(size.width/2, size.height/2);
 	}
 
-	if (spriteComponent != nullptr && drawnValue != factory.boolValues.end()) {
-		spriteComponent->setDrawn(drawnValue->second);
+	if (spriteComponent != nullptr && factory.boolValues.count(GraphicsComponentSystem::DRAWN_KEY)) {
+		bool drawn = factory.boolValues.at(GraphicsComponentSystem::DRAWN_KEY);
+		spriteComponent->setDrawn(drawn);
 	}
 
 	return spriteComponent;
@@ -81,19 +82,17 @@ TextComponent* GraphicsComponentSystem::addTextComponent(TIEntity& entity) {
 }
 
 TextComponent* GraphicsComponentSystem::addTextComponent(const TIEntityFactory& factory, TIEntity& entity) {
-	TextComponent* textComponent = nullptr;
-	auto drawnValue = factory.boolValues.find("drawn.drawn");
-	auto textValue = factory.stringValues.find("drawn.text");
 
-	if (textValue != factory.stringValues.end()) {
-		if (textComponent == nullptr) {
-			textComponent = entity.addComponent<TextComponent>();
-		}
-		textComponent->setString(textValue->second);
+	TextComponent* textComponent = nullptr;
+	if (factory.stringValues.count(GraphicsComponentSystem::TEXT_KEY)) {
+		std::string textValue = factory.stringValues.at(GraphicsComponentSystem::TEXT_KEY);
+		textComponent = entity.addComponent<TextComponent>();
+		textComponent->setString(textValue);
 	}
 
-	if (textComponent != nullptr && drawnValue != factory.boolValues.end()) {
-		textComponent->setDrawn(drawnValue->second);
+	if (textComponent != nullptr && factory.boolValues.count(GraphicsComponentSystem::DRAWN_KEY)) {
+		bool drawnValue = factory.boolValues.at(GraphicsComponentSystem::DRAWN_KEY);
+		textComponent->setDrawn(drawnValue);
 	}
 
 	return textComponent;

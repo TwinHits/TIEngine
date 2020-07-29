@@ -21,6 +21,10 @@ class GridComponentSystem : public ComponentSystem {
 		static sf::Vector2f normalizePositionToGrid(const sf::Vector2f&, TIEntity&);
 
 		static const std::string GRID;
+		static const std::string WIDTH;
+		static const std::string HEIGHT;
+		static const std::string WIDTH_KEY;
+		static const std::string HEIGHT_KEY;
 	private:
 };
 

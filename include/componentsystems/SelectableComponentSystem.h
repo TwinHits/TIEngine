@@ -21,6 +21,7 @@ class SelectableComponentSystem : public ComponentSystem {
 		static SelectableComponent* addSelectableComponent(const TIEntityFactory&, TIEntity&);
 
 		static const std::string SELECTABLE;
+		static const std::string SELECTABLE_KEY;
 	private:
 		EventsManager* eventsManager = EventsManager::Instance();
 };
