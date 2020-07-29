@@ -1,14 +1,19 @@
 #include "componentsystems/SelectableComponentSystem.h" 
 
+#include <string>
+
 #include <SFML/Graphics.hpp>
 
 #include "objects/components/SelectableComponent.h"
 #include "objects/components/SpriteComponent.h"
 #include "objects/entities/TIEntity.h"
+#include "objects/factories/TIEntityFactory.h"
 #include "managers/EventsManager.h"
 #include "templates/VectorHelpers.h"
 
 using namespace TIE;
+
+const std::string SelectableComponentSystem::SELECTABLE = "selectable";
 
 void SelectableComponentSystem::update(TIEntity& entity, const float delta) {
 	SelectableComponent* selectableComponent = entity.getComponent<SelectableComponent>();
@@ -29,4 +34,16 @@ void SelectableComponentSystem::update(TIEntity& entity, const float delta) {
 			}
 		}
 	}
+}
+
+SelectableComponent* SelectableComponentSystem::addSelectableComponent(const TIEntityFactory& factory, TIEntity& entity) {
+	SelectableComponent* selectableComponent = nullptr;
+	auto isSelectable = factory.boolValues.find("selectable.selectable");
+
+	if (isSelectable != factory.boolValues.end()) {
+		selectableComponent = entity.addComponent<SelectableComponent>();
+		selectableComponent->setSelectable(isSelectable->second);
+	}
+
+	return selectableComponent;
 }

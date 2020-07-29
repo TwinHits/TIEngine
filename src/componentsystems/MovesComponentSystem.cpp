@@ -1,16 +1,22 @@
 #include "componentsystems/MovesComponentSystem.h" 
 
 #include <cmath>
+#include <string>
 
 #include <SFML/Graphics.hpp>
 
 #include "managers/LogManager.h" 
 #include "objects/components/MovesComponent.h"
 #include "objects/components/SpriteComponent.h"
+#include "objects/factories/TIEntityFactory.h"
 #include "objects/entities/TIEntity.h"
 #include "utilities/TIEMath.h"
 
 using namespace TIE;
+
+const std::string MovesComponentSystem::MOVES = "moves";
+const std::string MovesComponentSystem::SPEED = "speed";
+const std::string MovesComponentSystem::DIRECTION = "direction";
 
 void MovesComponentSystem::update(TIEntity& entity, const float delta) {
 	MovesComponent* movesComponent = entity.getComponent<MovesComponent>();
@@ -20,6 +26,27 @@ void MovesComponentSystem::update(TIEntity& entity, const float delta) {
 			this->move(movesComponent, spriteComponent, delta);
 		}
 	}
+}
+
+MovesComponent* MovesComponentSystem::addMovesComponent(const TIEntityFactory& factory, TIEntity& entity) {
+	MovesComponent* movesComponent = nullptr;
+	auto speed = factory.floatValues.find("moves.speed");
+	auto direction = factory.floatValues.find("moves.direction");
+	
+	if (speed != factory.floatValues.end()) {
+		MovesComponent* movesComponent = entity.addComponent<MovesComponent>();
+
+		sf::Vector2f velocity = sf::Vector2f();
+		velocity.x = speed->second;
+		if (direction != factory.floatValues.end()) {
+			velocity.y = direction->second;
+		} else {
+			velocity.y = 0;
+		}
+		movesComponent->setVelocity(velocity);
+	}
+
+	return movesComponent;
 }
 
 

@@ -1,6 +1,8 @@
 #ifndef TIENTITYFACTORY_H
 #define TIENTITYFACTORY_H
 
+#include <array>
+#include <map>
 #include <string>
 
 #include "objects/entities/TIEntity.h" 
@@ -9,71 +11,26 @@ namespace TIE {
 
 class TIEntityFactory {
 	public:
+		TIEntityFactory();
+
 		TIEntity& build();
 
-		TIEntityFactory& setParent(TIEntity*);
 		TIEntityFactory& setName(std::string);
+		TIEntityFactory& setParent(TIEntity*);
 
-		TIEntityFactory& setDrawn(const bool);
-		TIEntityFactory& setTexture(const std::string&);
-		TIEntityFactory& setText(const std::string&);
+		bool isValidComponentName(const std::string&);
 
-		TIEntityFactory& setSpeed(const float);
-		TIEntityFactory& setDirection(const float);
+		std::map<std::string, bool> boolValues;
+		std::map<std::string, float> floatValues;
+		std::map<std::string, std::string> stringValues;
 
-		TIEntityFactory& setSelectable(const bool);
-
-		TIEntityFactory& setClick(const std::string&);
-
-		TIEntityFactory& setGridSize(sf::Vector2i);
-
-		TIEntityFactory() {};
 		~TIEntityFactory() {};
-
-		//Drawn component constants
-		static const std::string DRAWN;
-		static const std::string TEXTURE;
-		static const std::string TEXT;
-
-		//Moves component constants
-		static const std::string MOVES;
-		static const std::string SPEED;
-		static const std::string DIRECTION;
-
-		//Selectable component constants
-		static const std::string SELECTABLE;
-
-		//Events component constants
-		static const std::string EVENTS;
-		static const std::string SELECTED;
-		static const std::string CLICK;
-
-		//Grid component constants
-		static const std::string GIRD;
 
 	private:
 		TIEntity* parent = nullptr;
 		std::string name = "";
 
-		bool hasSprite = false;
-		bool hasText = false;
-		bool isDrawn = false;
-		std::string texture = "";
-		std::string text = "";
-
-		bool hasMoves = false;
-		float speed = 0;
-		float direction = 0;
-
-		bool hasSelectable = false;
-		bool isSelectable = false;
-
-		bool hasEvents = false;
-		std::string click = "";
-		
-
-		bool hasGrid = false;
-		sf::Vector2i gridSize = sf::Vector2i(0, 0);
+		std::array<std::string, 5> validComponentNames;
 };
 
 }

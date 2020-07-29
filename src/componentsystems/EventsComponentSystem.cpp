@@ -2,12 +2,17 @@
 
 #include "componentsystems/GridComponentSystem.h"
 #include "objects/components/EventsComponent.h"
+#include "objects/components/GridComponent.h"
 #include "objects/components/MovesComponent.h"
 #include "objects/components/SelectableComponent.h"
-#include "objects/components/GridComponent.h"
+#include "objects/entities/TIEntity.h"
 #include "managers/EventsManager.h"
 
 using namespace TIE;
+
+const std::string EventsComponentSystem::EVENTS = "events";
+const std::string EventsComponentSystem::SELECTED = "selected";
+const std::string EventsComponentSystem::CLICK = "click";
 
 void EventsComponentSystem::update(TIEntity& entity, const float delta) {
 	EventsComponent* eventsComponent = entity.getComponent<EventsComponent>();
@@ -36,4 +41,15 @@ void EventsComponentSystem::update(TIEntity& entity, const float delta) {
 			}
 		}
 	}
+}
+
+EventsComponent* TIE::EventsComponentSystem::addEventsComponent(const TIEntityFactory& factory, TIEntity& entity) {
+	EventsComponent* eventsComponent = nullptr;
+
+	/*
+	EventsComponent* eventsComponent = tientity.addComponent<EventsComponent>();
+	eventsComponent->setClick(this->click);
+	*/
+
+	return eventsComponent;
 }

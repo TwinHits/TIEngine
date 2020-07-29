@@ -1,19 +1,13 @@
 #include "managers/ScriptManager.h"
 
-#include <algorithm>
 #include <string>
 #include <vector>
 
 #include "managers/AssetsManager.h"
 #include "managers/ConfigManager.h"
-#include "managers/GridManager.h"
 #include "managers/LogManager.h"
-#include "managers/SceneManager.h"
 #include "managers/WindowManager.h"
 #include "objects/factories/TIEntityFactory.h"
-#include "objects/components/GridComponent.h"
-#include "objects/components/SpriteComponent.h"
-#include "templates/VectorHelpers.h"
 #include "utilities/StringHelpers.h"
 
 using namespace luabridge;
@@ -116,28 +110,19 @@ void ScriptManager::loadWindowProperties(const LuaRef& windowTable) {
 }
 
 TIEntity* TIE::ScriptManager::loadGrid(const luabridge::LuaRef& gridTable) {
-	LuaRef width = gridTable["width"];
-	LuaRef height = gridTable["height"];
-	LuaRef texture = gridTable["texture"];
-	if (width.isNumber() && height.isNumber()) {
-		TIEntityFactory factory = TIEntityFactory();
-		factory.setGridSize(sf::Vector2i(width.cast<int>(), height.cast<int>()));
-		if (texture.isString()) {
-			factory.setDrawn(true).setTexture(texture.cast<std::string>());
-		} else if (!texture.isNil()) {
-			LogManager::Instance()->error("Error casting value from grid table: grid texture");
+	TIEntityFactory factory = TIEntityFactory();
+	std::vector<std::string> components = Lua::getTableKeys(this->luaState, "grid");
+	for (auto component : components) {
+		if (factory.isValidComponentName(component)) {
+			LuaRef table = gridTable[component];
+			if (table.isTable()) {
+				this->readComponentValues(factory, component, table, "grid." + component);
+			}
 		}
-		TIEntity& entity = factory.build();
-		GridManager::Instance()->setGridEntity(entity);
-		return &entity;
-	} else if (!width.isNil() || !height.isNil()) {
-		std::string widthMsg = width.isNil() ? "" : std::to_string(width.cast<int>());
-		std::string heightMsg = height.isNil() ? "" : std::to_string(height.cast<int>());
-		LogManager::Instance()->error("Script is missing some grid size property: width: " + widthMsg + ", height: " + heightMsg);
-	} else if (!texture.isNil()) {
-		LogManager::Instance()->error("Script is missing some grid size height and width");
 	}
-	return nullptr;
+	TIEntity& tientity = factory.build();
+	LogManager::Instance()->info("Configured grid from Lua script.");
+	return &tientity;
 }
 
 
@@ -150,90 +135,47 @@ void ScriptManager::loadTIEntities(const std::vector<std::string>& tientities, T
 
 
 void ScriptManager::loadTIEntity(const std::string& tientityKey, const LuaRef& tientityTable, TIEntity* parent) {
-    TIEntityFactory tientityFactory = TIEntityFactory();
-	tientityFactory.setName(tientityKey).setParent(parent);
-    std::vector<std::string> children = Lua::getTableKeys(this->luaState, tientityKey);
-
-    //Any known property name is a component of this entity
-	LuaRef drawnTable = tientityTable[TIEntityFactory::DRAWN];
-	if (drawnTable.isTable()) {
-		Vector::remove(children, std::string(TIEntityFactory::DRAWN));
-
-		LuaRef drawn = drawnTable[TIEntityFactory::DRAWN];
-		if (drawn.isBool()) {
-			tientityFactory.setDrawn(drawn.cast<bool>());
-		} else if (!drawn.isNil()) {
-			LogManager::Instance()->error("Error casting value from script: " + tientityKey + "." + TIEntityFactory::DRAWN);
-		}
-
-		LuaRef texture = drawnTable[TIEntityFactory::TEXTURE];
-		if (texture.isString()) {
-			tientityFactory.setTexture(texture.cast<std::string>());
-		} else if (!texture.isNil()) {
-			LogManager::Instance()->error("Error casting value from script: " + tientityKey + "." + TIEntityFactory::TEXTURE);
-		}
-
-		LuaRef text = drawnTable[TIEntityFactory::TEXT];
-		if (text.isString()) {
-			tientityFactory.setText(text.cast<std::string>());
-		} else if (!text.isNil()) {
-			LogManager::Instance()->error("Error casting value from script: " + tientityKey + "." + TIEntityFactory::TEXT);
-		}
-	}
-
-	LuaRef movesTable = tientityTable[TIEntityFactory::MOVES];
-	if (movesTable.isTable()) {
-		Vector::remove(children, std::string(TIEntityFactory::MOVES));
-
-		LuaRef speed = movesTable[TIEntityFactory::SPEED];
-		if (speed.isNumber()) {
-			tientityFactory.setSpeed(speed.cast<float>());
-		} else if (!speed.isNil()) {
-			LogManager::Instance()->error("Error casting value from script: " + tientityKey + "." + TIEntityFactory::SPEED);
-		}
-
-		LuaRef direction = movesTable[TIEntityFactory::DIRECTION];
-		if (direction.isNumber()) {
-			tientityFactory.setDirection(direction.cast<float>());
-		} else if (!direction.isNil()) {
-			LogManager::Instance()->error("Error casting value from script: " + tientityKey + "." + TIEntityFactory::DIRECTION);
-		}
-	}
-
-	LuaRef selectableTable = tientityTable[TIEntityFactory::SELECTABLE];
-	if (selectableTable.isTable()) {
-		Vector::remove(children, std::string(TIEntityFactory::SELECTABLE));
-
-		LuaRef selectable = selectableTable[TIEntityFactory::SELECTABLE];
-		if (selectable.isBool()) {
-			tientityFactory.setSelectable(selectable.cast<bool>());
-		} else if (!selectable.isNil()) {
-			LogManager::Instance()->error("Error casting value from script: " + tientityKey + "." + TIEntityFactory::SELECTABLE);
-		}
-	}
-
-	LuaRef eventsTable = tientityTable[TIEntityFactory::EVENTS];
-	if (eventsTable.isTable()) {
-		Vector::remove(children, std::string(TIEntityFactory::EVENTS));
-
-		LuaRef selectableEventTable = eventsTable[TIEntityFactory::SELECTED];
-		selectableEventTable.length();
-		if (selectableEventTable.isTable()) {
-			LuaRef click = selectableEventTable[TIEntityFactory::CLICK];
-			if (click.isString()) {
-				tientityFactory.setClick(click.cast<std::string>());
+	TIEntityFactory factory = TIEntityFactory();
+	factory.setName(tientityKey).setParent(parent);
+	std::vector<std::string> components = Lua::getTableKeys(this->luaState, tientityKey);
+	std::vector<std::string> children;
+	for (auto component : components) {
+		if (factory.isValidComponentName(component)) {
+			LuaRef table = tientityTable[component];
+			if (table.isTable()) {
+				this->readComponentValues(factory, component, table, tientityKey + "." + component);
 			}
-			else if (!click.isNil()) {
-				LogManager::Instance()->error("Error casting value from script: " + tientityKey + "." + TIEntityFactory::EVENTS);
-			}
+		} else {
+			children.push_back(component);
 		}
 	}
 
-    TIEntity& tientity = tientityFactory.build();
+	TIEntity& tientity = factory.build();
 	LogManager::Instance()->info("Built entity " + tientityKey + " from Lua script.");
 
-    //Any other property is a child entity
+	//Any other property is a child entity
 	for (auto& child : children) {
 		this->loadTIEntity(tientityKey + "." + child, tientityTable[child], &tientity);
+	}
+}
+
+
+void ScriptManager::readComponentValues(TIEntityFactory& factory, const std::string& component, const LuaRef& table, const std::string& globalKey) {
+	std::vector<std::string> keys = Lua::getTableKeys(this->luaState, globalKey);
+	for (auto key : keys) {
+		LuaRef value = table[key];
+		if (!value.isNil()) {
+			if (value.isBool()) {
+				factory.boolValues.insert({ component + "." + key, value.cast<bool>() });
+			} else if (value.isNumber()) {
+				factory.floatValues.insert({ component + "." + key, value.cast<float>() });
+			} else if (value.isString()) {
+				factory.stringValues.insert({ component + "." + key, value.cast<std::string>() });
+			} else if (value.isTable()) {
+				this->readComponentValues(factory, component + "." + key, value, globalKey + "." + key);
+			} else {
+				LogManager::Instance()->error("Error casting value from script: " + key + ".");
+			}
+		}
 	}
 }

@@ -3,7 +3,11 @@
 
 #include "ComponentSystem.h"
 
+#include <string>
+
+#include "objects/components/EventsComponent.h"
 #include "objects/entities/TIEntity.h"
+#include "objects/factories/TIEntityFactory.h"
 #include "managers/EventsManager.h"
 #include "managers/GridManager.h"
 
@@ -14,6 +18,11 @@ class EventsComponentSystem : public ComponentSystem {
 		EventsComponentSystem() {};
 		void update(TIEntity&, const float);
 
+		static EventsComponent* addEventsComponent(const TIEntityFactory&, TIEntity&);
+
+		static const std::string EVENTS;
+		static const std::string SELECTED;
+		static const std::string CLICK;
 	private:
 		EventsManager* eventsManager = EventsManager::Instance();
 		GridManager* gridManager = GridManager::Instance();
