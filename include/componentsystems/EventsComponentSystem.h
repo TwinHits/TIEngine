@@ -24,6 +24,8 @@ class EventsComponentSystem : public ComponentSystem {
 		static const std::string SELECTED;
 		static const std::string CLICK;
 	private:
+		std::vector<std::string>& getStates(TIEntity&, std::vector<std::string>&);
+
 		EventsManager* eventsManager = EventsManager::Instance();
 		GridManager* gridManager = GridManager::Instance();
 };

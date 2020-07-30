@@ -45,11 +45,14 @@ GridComponent* TIE::GridComponentSystem::addGridComponent(const TIEntityFactory&
 }
 
 
-sf::Vector2f GridComponentSystem::normalizePositionToGrid(const sf::Vector2f& position, TIEntity& gridEntity) {
-	GridComponent* gridComponent = gridEntity.getComponent<GridComponent>();
-	SpriteComponent* spriteComponent = gridEntity.getComponent<SpriteComponent>();
-	if (gridComponent != nullptr && spriteComponent != nullptr) {
-		return Math::normalizePositionToGrid(position, spriteComponent->getGlobalBounds(), gridComponent->getTileSize());
+sf::Vector2f GridComponentSystem::normalizePositionToGrid(const sf::Vector2f& position) {
+	if (GridManager::Instance()->isGridConfigured()) {
+		TIEntity* gridEntity = GridManager::Instance()->getGridEntity();
+		GridComponent* gridComponent = gridEntity->getComponent<GridComponent>();
+		SpriteComponent* spriteComponent = gridEntity->getComponent<SpriteComponent>();
+		if (gridComponent != nullptr && spriteComponent != nullptr) {
+			return Math::normalizePositionToGrid(position, spriteComponent->getGlobalBounds(), gridComponent->getTileSize());
+		}
 	}
 	return position;
 }

@@ -15,10 +15,11 @@ namespace TIE {
 class SelectableComponentSystem : public ComponentSystem {
 	public:
 		SelectableComponentSystem() {};
-
 		void update(TIEntity&, const float);
 
 		static SelectableComponent* addSelectableComponent(const TIEntityFactory&, TIEntity&);
+
+		static bool isSelected(TIEntity&);
 
 		static const std::string SELECTABLE;
 		static const std::string SELECTABLE_KEY;

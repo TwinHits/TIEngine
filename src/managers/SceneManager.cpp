@@ -96,7 +96,7 @@ void SceneManager::updateTIEntities(const std::vector<std::unique_ptr<TIEntity> 
 			this->collidesComponentSystem.update(*entity, this->delta);
 		}
 
-		if (EventsManager::Instance()->isEvents()) {
+		if (EventsManager::Instance()->hasEvents()) {
 			this->selectableComponentSystem.update(*entity, this->delta);
 			this->eventsComponentSystem.update(*entity, this->delta);
 		}

@@ -18,7 +18,7 @@ class GridComponentSystem : public ComponentSystem {
 
 		static GridComponent* addGridComponent(const TIEntityFactory&, TIEntity&);
 
-		static sf::Vector2f normalizePositionToGrid(const sf::Vector2f&, TIEntity&);
+		static sf::Vector2f normalizePositionToGrid(const sf::Vector2f&);
 
 		static const std::string GRID;
 		static const std::string WIDTH;

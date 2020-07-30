@@ -27,8 +27,13 @@ const sf::Vector2f EventsManager::getMouseWorldPosition() {
 }
 
 
-bool EventsManager::isEvents() {
-	return this->events.size() > 0;
+bool EventsManager::hasEvents() {
+	return this->events.size();
+}
+
+
+const std::map<sf::Event::EventType, sf::Event>& EventsManager::getEvents() {
+	return this->events;
 }
 
 
@@ -38,6 +43,7 @@ const sf::Event* const EventsManager::getEvent(sf::Event::EventType eventType) {
 	}
 	return nullptr;
 }
+
 
 void EventsManager::removeEvent(sf::Event::EventType eventType) {
 	this->events.erase(eventType);
@@ -71,6 +77,7 @@ void EventsManager::processEvents() {
 					consoleManager->showConsole();
 					break;
 				default:
+					this->events.insert({ event.type, event });
 					break;
 				}
 				break;

@@ -48,3 +48,9 @@ SelectableComponent* SelectableComponentSystem::addSelectableComponent(const TIE
 
 	return selectableComponent;
 }
+
+
+bool SelectableComponentSystem::isSelected(TIEntity& tientity) {
+	SelectableComponent* selectableComponent = tientity.getComponent<SelectableComponent>();
+	return selectableComponent != nullptr && selectableComponent->isSelected();
+}

@@ -5,7 +5,9 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "componentsystems/GridComponentSystem.h"
 #include "managers/LogManager.h" 
+#include "managers/EventsManager.h"
 #include "objects/components/MovesComponent.h"
 #include "objects/components/SpriteComponent.h"
 #include "objects/factories/TIEntityFactory.h"
@@ -51,6 +53,15 @@ MovesComponent* MovesComponentSystem::addMovesComponent(const TIEntityFactory& f
 
 	return movesComponent;
 }
+
+void MovesComponentSystem::setDestination(TIEntity& tientity) {
+	MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
+	if (movesComponent != nullptr) {
+		sf::Vector2f mousePosition = EventsManager::Instance()->getMouseWorldPosition();
+		mousePosition = GridComponentSystem::normalizePositionToGrid(mousePosition);
+		movesComponent->setDestination(mousePosition);
+	}
+};
 
 
 void MovesComponentSystem::move(MovesComponent* movesComponent, SpriteComponent* spriteComponent, const float delta) {

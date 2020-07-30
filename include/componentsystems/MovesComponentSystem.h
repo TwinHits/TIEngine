@@ -17,20 +17,19 @@ namespace TIE {
 class MovesComponentSystem : public ComponentSystem {
 	public:
 		MovesComponentSystem() {};
-		
 		void update(TIEntity&, const float);
 
 		static MovesComponent* addMovesComponent(const TIEntityFactory&, TIEntity&);
+		
+		static void setDestination(TIEntity& entity);
 
 		static const std::string MOVES;
 		static const std::string SPEED;
 		static const std::string DIRECTION;
 		static const std::string SPEED_KEY;
 		static const std::string DIRECTION_KEY;
-
 	private:
 		virtual void move(MovesComponent*, SpriteComponent*, const float);
-
 };
 
 }
