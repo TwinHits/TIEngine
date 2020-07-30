@@ -22,7 +22,6 @@ class EventsComponentSystem : public ComponentSystem {
 
 		static const std::string EVENTS;
 		static const std::string SELECTED;
-		static const std::string CLICK;
 	private:
 		std::vector<std::string>& getStates(TIEntity&, std::vector<std::string>&);
 

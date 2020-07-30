@@ -11,6 +11,7 @@
 #include "objects/components/SpriteComponent.h"
 #include "objects/factories/TIEntityFactory.h"
 #include "objects/entities/TIEntity.h"
+#include "objects/enumeration/Direction.h"
 
 namespace TIE {
 
@@ -21,7 +22,8 @@ class MovesComponentSystem : public ComponentSystem {
 
 		static MovesComponent* addMovesComponent(const TIEntityFactory&, TIEntity&);
 		
-		static void setDestination(TIEntity& entity);
+		static void setDestination(TIEntity&, Direction);
+		static void setDestination(TIEntity&, sf::Vector2f&);
 
 		static const std::string MOVES;
 		static const std::string SPEED;

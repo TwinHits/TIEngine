@@ -7,6 +7,7 @@
 #include "componentsystems/SelectableComponentSystem.h"
 #include "objects/components/EventsComponent.h"
 #include "objects/entities/TIEntity.h"
+#include "objects/enumeration/Direction.h"
 #include "managers/EventsManager.h"
 #include "utilities/StringHelpers.h"
 
@@ -14,7 +15,6 @@ using namespace TIE;
 
 const std::string EventsComponentSystem::EVENTS = "events";
 const std::string EventsComponentSystem::SELECTED = "selected";
-const std::string EventsComponentSystem::CLICK = "click";
 
 void EventsComponentSystem::update(TIEntity& entity, const float delta) {
 	EventsComponent* eventsComponent = entity.getComponent<EventsComponent>();
@@ -27,7 +27,15 @@ void EventsComponentSystem::update(TIEntity& entity, const float delta) {
 				const std::string* eventHandler = eventsComponent->getEventHandler(state, event.second);
 				if (eventHandler != nullptr) {
 					if (*eventHandler == "setDestination") {
-						MovesComponentSystem::setDestination(entity);
+						MovesComponentSystem::setDestination(entity, sf::Vector2f(event.second.mouseButton.x, event.second.mouseButton.y));
+					} else if (*eventHandler == "up") {
+						MovesComponentSystem::setDestination(entity, Direction::TOP);
+					} else if (*eventHandler == "down") {
+						MovesComponentSystem::setDestination(entity, Direction::BOTTOM);
+					} else if (*eventHandler == "right") {
+						MovesComponentSystem::setDestination(entity, Direction::RIGHT);
+					} else if (*eventHandler == "left") {
+						MovesComponentSystem::setDestination(entity, Direction::LEFT);
 					}
 				}
 			}

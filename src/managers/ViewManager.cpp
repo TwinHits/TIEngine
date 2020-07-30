@@ -44,8 +44,7 @@ GlobalId ViewManager::addView(const sf::FloatRect& rect) {
 sf::View& ViewManager::getView(GlobalId id) {
 	if (this->views.find(id) != this->views.end()) {
 		return *this->views[id];
-	}
-	else {
+	} else {
 		LogManager::Instance()->error("No view found by id '" + std::to_string(id) + "'. Returning nullptr.");	
 		return *this->views[id];
 	}
@@ -79,8 +78,7 @@ void ViewManager::removeView(GlobalId id) {
 	auto view = this->views.find(id);
 	if (view != this->views.end()) {
 		this->views.erase(view);
-	}
-	else if (view == this->views.end()) {
+	} else if (view == this->views.end()) {
 		LogManager::Instance()->warn("No view found by id '" + std::to_string(id) + "'. Doing nothing.");	
 	}
 }

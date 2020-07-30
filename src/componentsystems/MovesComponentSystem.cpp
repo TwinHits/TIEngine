@@ -54,14 +54,32 @@ MovesComponent* MovesComponentSystem::addMovesComponent(const TIEntityFactory& f
 	return movesComponent;
 }
 
-void MovesComponentSystem::setDestination(TIEntity& tientity) {
+
+void MovesComponentSystem::setDestination(TIEntity& tientity, Direction direction) {
+	MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
+	SpriteComponent* spriteComponent = tientity.getComponent<SpriteComponent>();
+	sf::Vector2f destination = spriteComponent->getPosition();
+	const sf::Vector2f& velocity = movesComponent->getVelocity();
+	if (direction == Direction::TOP) {
+		destination += sf::Vector2f(0, -velocity.x);
+	} else if (direction == Direction::LEFT) {
+		destination += sf::Vector2f(-velocity.x, 0);
+	} else if (direction == Direction::RIGHT) {
+		destination += sf::Vector2f(velocity.x, 0);
+	} else if (direction == Direction::BOTTOM) {
+		destination += sf::Vector2f(0, velocity.x);
+	}
+	MovesComponentSystem::setDestination(tientity, destination);
+}
+
+
+void MovesComponentSystem::setDestination(TIEntity& tientity, sf::Vector2f& position) {
 	MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
 	if (movesComponent != nullptr) {
-		sf::Vector2f mousePosition = EventsManager::Instance()->getMouseWorldPosition();
-		mousePosition = GridComponentSystem::normalizePositionToGrid(mousePosition);
-		movesComponent->setDestination(mousePosition);
+		position = GridComponentSystem::normalizePositionToGrid(position);
+		movesComponent->setDestination(position);
 	}
-};
+}
 
 
 void MovesComponentSystem::move(MovesComponent* movesComponent, SpriteComponent* spriteComponent, const float delta) {
