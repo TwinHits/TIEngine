@@ -111,23 +111,24 @@ void ViewManager::zoom(const float delta) {
 
 const sf::Vector2f ViewManager::calculateClientScroll(const sf::Vector2f mousePosition, const float delta) {
 
+	sf::Vector2f translation = sf::Vector2f(0, 0);
 	if (this->scrollUpZone.contains(mousePosition)) {
-		return Math::translateVelocityByTime(sf::Vector2f(this->scrollSpeed, 270), delta);
+		translation += Math::translateVelocityByTime(sf::Vector2f(this->scrollSpeed, 270), delta);
 	}
 
 	if (this->scrollRightZone.contains(mousePosition)) {
-		return Math::translateVelocityByTime(sf::Vector2f(this->scrollSpeed, 0), delta);
+		translation += Math::translateVelocityByTime(sf::Vector2f(this->scrollSpeed, 0), delta);
 	}
 
 	if (this->scrollDownZone.contains(mousePosition)) {
-		 return Math::translateVelocityByTime(sf::Vector2f(this->scrollSpeed, 90), delta);
+		translation += Math::translateVelocityByTime(sf::Vector2f(this->scrollSpeed, 90), delta);
 	}
 
 	if (this->scrollLeftZone.contains(mousePosition)) {
-		return Math::translateVelocityByTime(sf::Vector2f(this->scrollSpeed, 180), delta);
+		translation += Math::translateVelocityByTime(sf::Vector2f(this->scrollSpeed, 180), delta);
 	}
 
-	return sf::Vector2f(0, 0);
+	return translation;
 }
 
 const sf::Vector2f ViewManager::calculateEngineScroll(const sf::Vector2f& mousePosition, const float delta) {
