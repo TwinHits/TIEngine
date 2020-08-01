@@ -27,7 +27,8 @@ void EventsComponentSystem::update(TIEntity& entity, const float delta) {
 				const std::string* eventHandler = eventsComponent->getEventHandler(state, event.second);
 				if (eventHandler != nullptr) {
 					if (*eventHandler == "setDestination") {
-						MovesComponentSystem::setDestination(entity, sf::Vector2f(event.second.mouseButton.x, event.second.mouseButton.y));
+						sf::Vector2f position = sf::Vector2f(event.second.mouseButton.x, event.second.mouseButton.y);
+						MovesComponentSystem::setDestination(entity, position);
 					} else if (*eventHandler == "up") {
 						MovesComponentSystem::setDestination(entity, Direction::TOP);
 					} else if (*eventHandler == "down") {
