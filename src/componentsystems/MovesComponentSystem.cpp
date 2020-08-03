@@ -36,10 +36,10 @@ void MovesComponentSystem::update(TIEntity& entity, const float delta) {
 
 MovesComponent* MovesComponentSystem::addMovesComponent(const TIEntityFactory& factory, TIEntity& entity) {
 
-	MovesComponent* movesComponent = nullptr;
+	MovesComponent* movesPtr = nullptr;
 	if (factory.floatValues.count(MovesComponentSystem::SPEED_KEY)) {
 		float speed = factory.floatValues.at(MovesComponentSystem::SPEED_KEY);
-		movesComponent = entity.addComponent<MovesComponent>();
+		MovesComponent& movesComponent = entity.addComponent<MovesComponent>();
 
 		sf::Vector2f velocity = sf::Vector2f();
 		velocity.x = speed;
@@ -49,10 +49,10 @@ MovesComponent* MovesComponentSystem::addMovesComponent(const TIEntityFactory& f
 		} else {
 			velocity.y = 0;
 		}
-		movesComponent->setVelocity(velocity);
+		movesComponent.setVelocity(velocity);
 	}
 
-	return movesComponent;
+	return movesPtr;
 }
 
 

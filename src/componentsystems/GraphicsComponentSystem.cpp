@@ -51,51 +51,54 @@ void GraphicsComponentSystem::draw(TIEntity& entity, sf::RenderTarget& window, s
 }
 
 
-SpriteComponent* GraphicsComponentSystem::addSpriteComponent(TIEntity& entity) {
+SpriteComponent& GraphicsComponentSystem::addSpriteComponent(TIEntity& entity) {
 	return entity.addComponent<SpriteComponent>();
 }
 
 
 SpriteComponent* GraphicsComponentSystem::addSpriteComponent(const TIEntityFactory& factory, TIEntity& entity) {
 
-	SpriteComponent* spriteComponent = nullptr;
+	SpriteComponent* spritePtr = nullptr;
 	if (factory.stringValues.count(GraphicsComponentSystem::TEXTURE_KEY)) {
 		std::string textureName = factory.stringValues.at(GraphicsComponentSystem::TEXTURE_KEY);
 		const sf::Texture& texture = AssetsManager::Instance()->getTexture(textureName);
-		spriteComponent = entity.addComponent<SpriteComponent>();
-		spriteComponent->setTexture(texture, true);
-		sf::FloatRect size = spriteComponent->getLocalBounds();
-		spriteComponent->setOrigin(size.width/2, size.height/2);
+		SpriteComponent& spriteComponent = entity.addComponent<SpriteComponent>();
+		spriteComponent.setTexture(texture, true);
+		sf::FloatRect size = spriteComponent.getLocalBounds();
+		spriteComponent.setOrigin(size.width/2, size.height/2);
+
+		if (factory.boolValues.count(GraphicsComponentSystem::DRAWN_KEY)) {
+			bool drawn = factory.boolValues.at(GraphicsComponentSystem::DRAWN_KEY);
+			spriteComponent.setDrawn(drawn);
+		}
+		spritePtr = &spriteComponent;
 	}
 
-	if (spriteComponent != nullptr && factory.boolValues.count(GraphicsComponentSystem::DRAWN_KEY)) {
-		bool drawn = factory.boolValues.at(GraphicsComponentSystem::DRAWN_KEY);
-		spriteComponent->setDrawn(drawn);
-	}
-
-	return spriteComponent;
+	return spritePtr;
 }
 
 
-TextComponent* GraphicsComponentSystem::addTextComponent(TIEntity& entity) {
+TextComponent& GraphicsComponentSystem::addTextComponent(TIEntity& entity) {
 	return entity.addComponent<TextComponent>();
 }
 
 TextComponent* GraphicsComponentSystem::addTextComponent(const TIEntityFactory& factory, TIEntity& entity) {
 
-	TextComponent* textComponent = nullptr;
+	TextComponent* textPtr = nullptr;
 	if (factory.stringValues.count(GraphicsComponentSystem::TEXT_KEY)) {
 		std::string textValue = factory.stringValues.at(GraphicsComponentSystem::TEXT_KEY);
-		textComponent = entity.addComponent<TextComponent>();
-		textComponent->setString(textValue);
+		TextComponent& textComponent = entity.addComponent<TextComponent>();
+		textComponent.setString(textValue);
+
+		if (factory.boolValues.count(GraphicsComponentSystem::DRAWN_KEY)) {
+			bool drawnValue = factory.boolValues.at(GraphicsComponentSystem::DRAWN_KEY);
+			textComponent.setDrawn(drawnValue);
+		}
+
+		textPtr = &textComponent;
 	}
 
-	if (textComponent != nullptr && factory.boolValues.count(GraphicsComponentSystem::DRAWN_KEY)) {
-		bool drawnValue = factory.boolValues.at(GraphicsComponentSystem::DRAWN_KEY);
-		textComponent->setDrawn(drawnValue);
-	}
-
-	return textComponent;
+	return textPtr;
 }
 
 void GraphicsComponentSystem::setDrawn(TIEntity& entity, bool drawn) {

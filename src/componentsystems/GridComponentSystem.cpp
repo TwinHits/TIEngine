@@ -25,23 +25,23 @@ void GridComponentSystem::update(TIEntity&, const float) {
 
 GridComponent* TIE::GridComponentSystem::addGridComponent(const TIEntityFactory& factory, TIEntity& entity) {
 
-	GridComponent* gridComponent = nullptr;
+	GridComponent* gridPtr = nullptr;
 	if (factory.floatValues.count(GridComponentSystem::WIDTH_KEY) && factory.floatValues.count(GridComponentSystem::HEIGHT_KEY)) {
 		float width = factory.floatValues.at(GridComponentSystem::WIDTH_KEY);
 		float height = factory.floatValues.at(GridComponentSystem::HEIGHT_KEY);
-		gridComponent = entity.addComponent<GridComponent>();
-		gridComponent->setGridSize(sf::Vector2i(width, height));
+		GridComponent& gridComponent = entity.addComponent<GridComponent>();
+		gridComponent.setGridSize(sf::Vector2i(width, height));
 
 		SpriteComponent* spriteComponent = entity.getComponent<SpriteComponent>();
 		if (spriteComponent != nullptr) {
 			sf::FloatRect textureSize = spriteComponent->getLocalBounds();
-			gridComponent->setTileSize(sf::Vector2f(textureSize.width / width, textureSize.height / height));
+			gridComponent.setTileSize(sf::Vector2f(textureSize.width / width, textureSize.height / height));
 		}
 
 		GridManager::Instance()->setGridEntity(entity);
 	}
 
-	return gridComponent;
+	return gridPtr;
 }
 
 

@@ -18,9 +18,9 @@ class GraphicsComponentSystem : public ComponentSystem {
 	public:
 		static void draw(TIEntity&, sf::RenderTarget&, sf::RenderStates);
 
-		static SpriteComponent* addSpriteComponent(TIEntity&);
+		static SpriteComponent& addSpriteComponent(TIEntity&);
 		static SpriteComponent* addSpriteComponent(const TIEntityFactory&, TIEntity&);
-		static TextComponent* addTextComponent(TIEntity&);
+		static TextComponent& addTextComponent(TIEntity&);
 		static TextComponent* addTextComponent(const TIEntityFactory&, TIEntity&);
 
 		static void setDrawn(TIEntity&, bool);

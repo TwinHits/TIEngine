@@ -25,16 +25,16 @@ void DevConsole::initialize() {
 	textWritePosition.x = -windowSize.x/2;	
 	textWritePosition.y = -windowSize.y/2;
 
-	SpriteComponent* spriteComponent = GraphicsComponentSystem::addSpriteComponent(*this);
+	SpriteComponent& spriteComponent = GraphicsComponentSystem::addSpriteComponent(*this);
 	sf::Texture& texture = AssetsManager::Instance()->getTexture("dev_console.png");
-	spriteComponent->setTexture(texture, true);
-	sf::FloatRect size = spriteComponent->getLocalBounds();
-	spriteComponent->setOrigin(size.width/2, size.height);
+	spriteComponent.setTexture(texture, true);
+	sf::FloatRect size = spriteComponent.getLocalBounds();
+	spriteComponent.setOrigin(size.width/2, size.height);
 
-	TextComponent* textComponent = GraphicsComponentSystem::addTextComponent(*this);
-	textComponent->setFont(font);
-	textComponent->setCharacterSize(fontSize);
-	textComponent->setPosition(-(windowSize.x / 2) + 3, -fontSize - 5);
+	TextComponent& textComponent = GraphicsComponentSystem::addTextComponent(*this);
+	textComponent.setFont(font);
+	textComponent.setCharacterSize(fontSize);
+	textComponent.setPosition(-(windowSize.x / 2) + 3, -fontSize - 5);
 }
 
 
@@ -45,13 +45,13 @@ void DevConsole::update(const float delta) {
 
 		TIEntity& entity = this->attachChild(make_unique<TIEntity>());
 		entity.setName("DevConsoleHistoryItem");
-		TextComponent* textComponent = GraphicsComponentSystem::addTextComponent(entity);
-		textComponent->setString(s);
-		textComponent->setFont(font);
-		textComponent->setCharacterSize(fontSize);
-		textComponent->setPosition(textWritePosition.x, textWritePosition.y);
+		TextComponent& textComponent = GraphicsComponentSystem::addTextComponent(entity);
+		textComponent.setString(s);
+		textComponent.setFont(font);
+		textComponent.setCharacterSize(fontSize);
+		textComponent.setPosition(textWritePosition.x, textWritePosition.y);
 		this->textWritePosition.y += fontSize;
-		textComponent->setDrawn(true);
+		textComponent.setDrawn(true);
 
 		this->queue.pop();
 	}

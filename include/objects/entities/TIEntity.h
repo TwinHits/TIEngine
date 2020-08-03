@@ -21,9 +21,9 @@ class TIEntity {
 		virtual ~TIEntity() {};
 
 		template<typename T>
-		T* addComponent() {
+		T& addComponent() {
 			components[typeid(T)] = make_unique<T>();
-			return this->getComponent<T>();
+			return *this->getComponent<T>();
 		}
 		
 		template <typename T>

@@ -16,12 +16,12 @@ void MousePtrCoords::initialize() {
 
 	sf::Vector2f mouseWindowPosition = this->eventsManager->getMouseWindowPosition();
 
-	TextComponent* textComponent = GraphicsComponentSystem::addTextComponent(*this);
-	textComponent->setString("0, 0");
-	textComponent->setFont(font);
-	textComponent->setCharacterSize(14);
-	textComponent->setPosition(mouseWindowPosition.x + 20, mouseWindowPosition.y);
-	textComponent->setDrawn(ConfigManager::Instance()->getShowMousePtrCoords());
+	TextComponent& textComponent = GraphicsComponentSystem::addTextComponent(*this);
+	textComponent.setString("0, 0");
+	textComponent.setFont(font);
+	textComponent.setCharacterSize(14);
+	textComponent.setPosition(mouseWindowPosition.x + 20, mouseWindowPosition.y);
+	textComponent.setDrawn(ConfigManager::Instance()->getShowMousePtrCoords());
 }
 
 

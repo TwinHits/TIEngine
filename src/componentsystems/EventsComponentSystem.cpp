@@ -46,7 +46,7 @@ void EventsComponentSystem::update(TIEntity& entity, const float delta) {
 
 
 EventsComponent* TIE::EventsComponentSystem::addEventsComponent(const TIEntityFactory& factory, TIEntity& entity) {
-	EventsComponent* eventsComponent = nullptr;
+	EventsComponent* eventsPtr = nullptr;
 
 	// Get all the keys containing events from the stringValues map 
 	std::vector<std::string> eventKeys;
@@ -57,7 +57,7 @@ EventsComponent* TIE::EventsComponentSystem::addEventsComponent(const TIEntityFa
 	}
 
 	if (eventKeys.size()) {
-		eventsComponent = entity.addComponent<EventsComponent>();
+		EventsComponent& eventsComponent = entity.addComponent<EventsComponent>();
 
 		for (auto key : eventKeys) {
 			// Split the key into parts for state, event, and handler
@@ -70,18 +70,19 @@ EventsComponent* TIE::EventsComponentSystem::addEventsComponent(const TIEntityFa
 			// If it's an event value store it in the events map
 			sf::Event::EventType sfEvent = String::stringToEvent(event);
 			if (sfEvent != sf::Event::Count) {
-				eventsComponent->setEventHandler(state, sfEvent, handler);
+				eventsComponent.setEventHandler(state, sfEvent, handler);
 			}
 
 			// If it's a keypress value store it in the keypress map
 			sf::Keyboard::Key sfKey = String::stringToKey(event);
 			if (sfKey != sf::Keyboard::Unknown) {
-				eventsComponent->setKeyHandler(state, sfKey, handler);
+				eventsComponent.setKeyHandler(state, sfKey, handler);
 			}
 		}
+		eventsPtr = &eventsComponent;
 	}
 
-	return eventsComponent;
+	return eventsPtr;
 }
 
 

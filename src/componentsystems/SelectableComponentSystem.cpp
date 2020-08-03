@@ -39,14 +39,14 @@ void SelectableComponentSystem::update(TIEntity& entity, const float delta) {
 
 SelectableComponent* SelectableComponentSystem::addSelectableComponent(const TIEntityFactory& factory, TIEntity& entity) {
 
-	SelectableComponent* selectableComponent = nullptr;
+	SelectableComponent* selectablePtr = nullptr;
 	if (factory.boolValues.count(SelectableComponentSystem::SELECTABLE_KEY)) {
 		bool isSelectable = factory.boolValues.at(SelectableComponentSystem::SELECTABLE_KEY);
-		selectableComponent = entity.addComponent<SelectableComponent>();
-		selectableComponent->setSelectable(isSelectable);
+		SelectableComponent& selectableComponent = entity.addComponent<SelectableComponent>();
+		selectableComponent.setSelectable(isSelectable);
 	}
 
-	return selectableComponent;
+	return selectablePtr;
 }
 
 
