@@ -31,7 +31,10 @@ class MovesComponentSystem : public ComponentSystem {
 		static const std::string SPEED_KEY;
 		static const std::string DIRECTION_KEY;
 	private:
-		virtual void move(MovesComponent*, SpriteComponent*, const float);
+		virtual void move(MovesComponent&, SpriteComponent&, const float);
+		static bool arePositionsCloseEnough(const sf::Vector2f&, const sf::Vector2f&);
+
+		static const float CLOSE_ENOUGH;
 };
 
 }

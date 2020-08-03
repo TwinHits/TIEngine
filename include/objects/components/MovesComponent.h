@@ -16,7 +16,7 @@ class MovesComponent : public Component {
 		const sf::Vector2f& getVelocity();
 
 		void setDestination(const sf::Vector2f&);
-		const sf::Vector2f& getDestination();
+		const sf::Vector2f& getDestination() const;
 
 		//If the destintation has changed, then this component's velocity needs to be recalcuated
 		bool recalculateVelocity();

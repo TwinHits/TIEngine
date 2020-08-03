@@ -21,13 +21,14 @@ const std::string MovesComponentSystem::SPEED = "speed";
 const std::string MovesComponentSystem::DIRECTION = "direction";
 const std::string MovesComponentSystem::SPEED_KEY = MovesComponentSystem::MOVES + '.' + MovesComponentSystem::SPEED;
 const std::string MovesComponentSystem::DIRECTION_KEY = MovesComponentSystem::MOVES + '.' + MovesComponentSystem::DIRECTION;
+const float MovesComponentSystem::CLOSE_ENOUGH = 0.5f;
 
 void MovesComponentSystem::update(TIEntity& entity, const float delta) {
 	MovesComponent* movesComponent = entity.getComponent<MovesComponent>();
 	if (movesComponent != nullptr) {
 		SpriteComponent* spriteComponent = entity.getComponent<SpriteComponent>();
 		if (spriteComponent != nullptr) {
-			this->move(movesComponent, spriteComponent, delta);
+			this->move(*movesComponent, *spriteComponent, delta);
 		}
 	}
 }
@@ -58,18 +59,20 @@ MovesComponent* MovesComponentSystem::addMovesComponent(const TIEntityFactory& f
 void MovesComponentSystem::setDestination(TIEntity& tientity, Direction direction) {
 	MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
 	SpriteComponent* spriteComponent = tientity.getComponent<SpriteComponent>();
-	sf::Vector2f destination = spriteComponent->getPosition();
-	const sf::Vector2f& velocity = movesComponent->getVelocity();
-	if (direction == Direction::TOP) {
-		destination += sf::Vector2f(0, -velocity.x);
-	} else if (direction == Direction::LEFT) {
-		destination += sf::Vector2f(-velocity.x, 0);
-	} else if (direction == Direction::RIGHT) {
-		destination += sf::Vector2f(velocity.x, 0);
-	} else if (direction == Direction::BOTTOM) {
-		destination += sf::Vector2f(0, velocity.x);
+	if (MovesComponentSystem::arePositionsCloseEnough(movesComponent->getDestination(), spriteComponent->getPosition())) {
+		sf::Vector2f destination = spriteComponent->getPosition();
+		const sf::Vector2f& velocity = movesComponent->getVelocity();
+		if (direction == Direction::TOP) {
+			destination += sf::Vector2f(0, -velocity.x);
+		} else if (direction == Direction::LEFT) {
+			destination += sf::Vector2f(-velocity.x, 0);
+		} else if (direction == Direction::RIGHT) {
+			destination += sf::Vector2f(velocity.x, 0);
+		} else if (direction == Direction::BOTTOM) {
+			destination += sf::Vector2f(0, velocity.x);
+		}
+		MovesComponentSystem::setDestination(tientity, destination);
 	}
-	MovesComponentSystem::setDestination(tientity, destination);
 }
 
 
@@ -82,14 +85,18 @@ void MovesComponentSystem::setDestination(TIEntity& tientity, sf::Vector2f& posi
 }
 
 
-void MovesComponentSystem::move(MovesComponent* movesComponent, SpriteComponent* spriteComponent, const float delta) {
-	if (Math::distanceBetweenTwoPoints(spriteComponent->getPosition(), movesComponent->getDestination()) > 0.5f) {
-		if (movesComponent->recalculateVelocity()) {
-			movesComponent->setVelocity(sf::Vector2f(movesComponent->getVelocity().x, Math::angleBetweenTwoPoints(spriteComponent->getPosition(), movesComponent->getDestination())));
+void MovesComponentSystem::move(MovesComponent& movesComponent, SpriteComponent& spriteComponent, const float delta) {
+	if (!MovesComponentSystem::arePositionsCloseEnough(movesComponent.getDestination(), spriteComponent.getPosition())) {
+		if (movesComponent.recalculateVelocity()) {
+			movesComponent.setVelocity(sf::Vector2f(movesComponent.getVelocity().x, Math::angleBetweenTwoPoints(spriteComponent.getPosition(), movesComponent.getDestination())));
 		}
-		spriteComponent->sf::Transformable::move(Math::translateVelocityByTime(movesComponent->getVelocity(), delta));
-	} else if (spriteComponent->getPosition() != movesComponent->getDestination()) {
-		spriteComponent->setPosition(movesComponent->getDestination());
+		spriteComponent.sf::Transformable::move(Math::translateVelocityByTime(movesComponent.getVelocity(), delta));
+	} else if (spriteComponent.getPosition() != movesComponent.getDestination()) {
+		spriteComponent.setPosition(movesComponent.getDestination());
 	}
 }
 
+
+bool MovesComponentSystem::arePositionsCloseEnough(const sf::Vector2f& position1, const sf::Vector2f& position2) {
+	return Math::distanceBetweenTwoPoints(position1, position2) <= MovesComponentSystem::CLOSE_ENOUGH;
+}

@@ -17,7 +17,7 @@ void MovesComponent::setDestination(const sf::Vector2f& destination) {
 }
 
 
-const sf::Vector2f& MovesComponent::getDestination() {
+const sf::Vector2f& MovesComponent::getDestination() const {
 	return this->destination;
 }
 
