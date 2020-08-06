@@ -15,16 +15,16 @@ class MovesComponent : public Component {
 		void setVelocity(const sf::Vector2f&); //x = speed, y = direction
 		const sf::Vector2f& getVelocity();
 
-		void setDestination(const sf::Vector2f&);
-		const sf::Vector2f& getDestination() const;
+		void setTargetPosition(const sf::Vector2f&);
+		const sf::Vector2f& getTargetPosition() const;
 
-		void setCachedDestination(const sf::Vector2f&);
-		const sf::Vector2f& getCachedDestination() const;
+		void setCachedTargetPosition(const sf::Vector2f&);
+		const sf::Vector2f& getCachedTargetPosition() const;
 
 	private: 
 		sf::Vector2f velocity;
-		sf::Vector2f destination;
-		sf::Vector2f cachedDesintation;
+		sf::Vector2f targetPosition;
+		sf::Vector2f cachedTargetPosition;
 };
 
 }

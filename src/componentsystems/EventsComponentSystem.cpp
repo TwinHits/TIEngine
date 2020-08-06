@@ -28,15 +28,15 @@ void EventsComponentSystem::update(TIEntity& entity, const float delta) {
 				if (eventHandler != nullptr) {
 					if (*eventHandler == "setDestination") {
 						sf::Vector2f position = sf::Vector2f(event.second.mouseButton.x, event.second.mouseButton.y);
-						MovesComponentSystem::setDestination(entity, position);
+						MovesComponentSystem::setTargetPosition(entity, position);
 					} else if (*eventHandler == "up") {
-						MovesComponentSystem::setDestination(entity, Direction::TOP);
+						MovesComponentSystem::setTargetPosition(entity, Direction::TOP);
 					} else if (*eventHandler == "down") {
-						MovesComponentSystem::setDestination(entity, Direction::BOTTOM);
+						MovesComponentSystem::setTargetPosition(entity, Direction::BOTTOM);
 					} else if (*eventHandler == "right") {
-						MovesComponentSystem::setDestination(entity, Direction::RIGHT);
+						MovesComponentSystem::setTargetPosition(entity, Direction::RIGHT);
 					} else if (*eventHandler == "left") {
-						MovesComponentSystem::setDestination(entity, Direction::LEFT);
+						MovesComponentSystem::setTargetPosition(entity, Direction::LEFT);
 					}
 				}
 			}

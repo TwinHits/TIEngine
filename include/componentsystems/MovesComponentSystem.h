@@ -22,8 +22,8 @@ class MovesComponentSystem : public ComponentSystem {
 
 		static MovesComponent* addMovesComponent(const TIEntityFactory&, TIEntity&);
 		
-		static void setDestination(TIEntity&, Direction);
-		static void setDestination(TIEntity&, sf::Vector2f&);
+		static void setTargetPosition(TIEntity&, Direction);
+		static void setTargetPosition(TIEntity&, sf::Vector2f&);
 
 		static const std::string MOVES;
 		static const std::string SPEED;

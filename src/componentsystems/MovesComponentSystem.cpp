@@ -56,44 +56,44 @@ MovesComponent* MovesComponentSystem::addMovesComponent(const TIEntityFactory& f
 }
 
 
-void MovesComponentSystem::setDestination(TIEntity& tientity, Direction direction) {
+void MovesComponentSystem::setTargetPosition(TIEntity& tientity, Direction direction) {
 	MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
 	SpriteComponent* spriteComponent = tientity.getComponent<SpriteComponent>();
-	if (MovesComponentSystem::arePositionsCloseEnough(movesComponent->getDestination(), spriteComponent->getPosition())) {
-		sf::Vector2f destination = spriteComponent->getPosition();
+	if (MovesComponentSystem::arePositionsCloseEnough(movesComponent->getTargetPosition(), spriteComponent->getPosition())) {
+		sf::Vector2f targetPosition = spriteComponent->getPosition();
 		const sf::Vector2f& velocity = movesComponent->getVelocity();
 		if (direction == Direction::TOP) {
-			destination += sf::Vector2f(0, -velocity.x);
+			targetPosition += sf::Vector2f(0, -velocity.x);
 		} else if (direction == Direction::LEFT) {
-			destination += sf::Vector2f(-velocity.x, 0);
+			targetPosition += sf::Vector2f(-velocity.x, 0);
 		} else if (direction == Direction::RIGHT) {
-			destination += sf::Vector2f(velocity.x, 0);
+			targetPosition += sf::Vector2f(velocity.x, 0);
 		} else if (direction == Direction::BOTTOM) {
-			destination += sf::Vector2f(0, velocity.x);
+			targetPosition += sf::Vector2f(0, velocity.x);
 		}
-		MovesComponentSystem::setDestination(tientity, destination);
+		MovesComponentSystem::setTargetPosition(tientity, targetPosition);
 	}
 }
 
 
-void MovesComponentSystem::setDestination(TIEntity& tientity, sf::Vector2f& position) {
+void MovesComponentSystem::setTargetPosition(TIEntity& tientity, sf::Vector2f& position) {
 	MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
 	if (movesComponent != nullptr) {
 		position = GridComponentSystem::normalizePositionToGrid(position);
-		movesComponent->setDestination(position);
+		movesComponent->setTargetPosition(position);
 	}
 }
 
 
 void MovesComponentSystem::move(MovesComponent& movesComponent, SpriteComponent& spriteComponent, const float delta) {
-	if (!MovesComponentSystem::arePositionsCloseEnough(movesComponent.getDestination(), spriteComponent.getPosition())) {
+	if (!MovesComponentSystem::arePositionsCloseEnough(movesComponent.getTargetPosition(), spriteComponent.getPosition())) {
 		if (MovesComponentSystem::recalculateVelocity(movesComponent)) {
-			movesComponent.setCachedDestination(movesComponent.getDestination());
-			movesComponent.setVelocity(sf::Vector2f(movesComponent.getVelocity().x, Math::angleBetweenTwoPoints(spriteComponent.getPosition(), movesComponent.getDestination())));
+			movesComponent.setCachedTargetPosition(movesComponent.getTargetPosition());
+			movesComponent.setVelocity(sf::Vector2f(movesComponent.getVelocity().x, Math::angleBetweenTwoPoints(spriteComponent.getPosition(), movesComponent.getTargetPosition())));
 		}
 		spriteComponent.sf::Transformable::move(Math::translateVelocityByTime(movesComponent.getVelocity(), delta));
-	} else if (spriteComponent.getPosition() != movesComponent.getDestination()) {
-		spriteComponent.setPosition(movesComponent.getDestination());
+	} else if (spriteComponent.getPosition() != movesComponent.getTargetPosition()) {
+		spriteComponent.setPosition(movesComponent.getTargetPosition());
 	}
 }
 
@@ -104,7 +104,7 @@ bool MovesComponentSystem::arePositionsCloseEnough(const sf::Vector2f& position1
 
 
 bool MovesComponentSystem::recalculateVelocity(MovesComponent& movesComponent) {
-	if (movesComponent.getDestination() != movesComponent.getCachedDestination()) {
+	if (movesComponent.getTargetPosition() != movesComponent.getCachedTargetPosition()) {
 		return true;
 	}
 	return false;

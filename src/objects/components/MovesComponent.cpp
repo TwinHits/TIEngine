@@ -12,22 +12,22 @@ const sf::Vector2f& MovesComponent::getVelocity() {
 }
 
 
-void MovesComponent::setDestination(const sf::Vector2f& destination) {
-	this->destination = destination;
+void MovesComponent::setTargetPosition(const sf::Vector2f& targetPosition) {
+	this->targetPosition = targetPosition;
 }
 
 
-const sf::Vector2f& MovesComponent::getDestination() const {
-	return this->destination;
+const sf::Vector2f& MovesComponent::getTargetPosition() const {
+	return this->targetPosition;
 }
 
 
-void MovesComponent::setCachedDestination(const sf::Vector2f& cachedDestination) {
-	this->cachedDesintation = cachedDestination;
+void MovesComponent::setCachedTargetPosition(const sf::Vector2f& cachedTargetDestination) {
+	this->cachedTargetPosition = cachedTargetDestination;
 }
 
 
-const sf::Vector2f& MovesComponent::getCachedDestination() const {
-	return this->cachedDesintation;
+const sf::Vector2f& MovesComponent::getCachedTargetPosition() const {
+	return this->cachedTargetPosition;
 }
 
