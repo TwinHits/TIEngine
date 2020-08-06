@@ -33,6 +33,7 @@ class MovesComponentSystem : public ComponentSystem {
 	private:
 		virtual void move(MovesComponent&, SpriteComponent&, const float);
 		static bool arePositionsCloseEnough(const sf::Vector2f&, const sf::Vector2f&);
+		bool recalculateVelocity(MovesComponent& movesComponent);
 
 		static const float CLOSE_ENOUGH;
 };

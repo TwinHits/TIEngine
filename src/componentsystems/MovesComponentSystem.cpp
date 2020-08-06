@@ -87,7 +87,8 @@ void MovesComponentSystem::setDestination(TIEntity& tientity, sf::Vector2f& posi
 
 void MovesComponentSystem::move(MovesComponent& movesComponent, SpriteComponent& spriteComponent, const float delta) {
 	if (!MovesComponentSystem::arePositionsCloseEnough(movesComponent.getDestination(), spriteComponent.getPosition())) {
-		if (movesComponent.recalculateVelocity()) {
+		if (MovesComponentSystem::recalculateVelocity(movesComponent)) {
+			movesComponent.setCachedDestination(movesComponent.getDestination());
 			movesComponent.setVelocity(sf::Vector2f(movesComponent.getVelocity().x, Math::angleBetweenTwoPoints(spriteComponent.getPosition(), movesComponent.getDestination())));
 		}
 		spriteComponent.sf::Transformable::move(Math::translateVelocityByTime(movesComponent.getVelocity(), delta));
@@ -100,3 +101,12 @@ void MovesComponentSystem::move(MovesComponent& movesComponent, SpriteComponent&
 bool MovesComponentSystem::arePositionsCloseEnough(const sf::Vector2f& position1, const sf::Vector2f& position2) {
 	return Math::distanceBetweenTwoPoints(position1, position2) <= MovesComponentSystem::CLOSE_ENOUGH;
 }
+
+
+bool MovesComponentSystem::recalculateVelocity(MovesComponent& movesComponent) {
+	if (movesComponent.getDestination() != movesComponent.getCachedDestination()) {
+		return true;
+	}
+	return false;
+}
+

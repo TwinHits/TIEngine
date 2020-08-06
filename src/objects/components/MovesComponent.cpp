@@ -21,10 +21,13 @@ const sf::Vector2f& MovesComponent::getDestination() const {
 	return this->destination;
 }
 
-bool MovesComponent::recalculateVelocity() {
-	if (this->destination != this->cachedDesintation) {
-		this->cachedDesintation = this->destination;
-		return true;
-	}
-	return false;
+
+void MovesComponent::setCachedDestination(const sf::Vector2f& cachedDestination) {
+	this->cachedDesintation = cachedDestination;
 }
+
+
+const sf::Vector2f& MovesComponent::getCachedDestination() const {
+	return this->cachedDesintation;
+}
+
