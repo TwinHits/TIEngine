@@ -4,6 +4,7 @@
 #include "managers/Manager.h"
 #include "templates/Singleton.h"
 
+#include <iostream>
 #include <fstream>
 #include <string>
 #include <queue>
@@ -33,6 +34,11 @@ class LogManager: public Singleton<LogManager>, Manager {
 		void warn(const std::string& message);
 		void error(const std::string& message);
 		void command(const std::string& message);
+		
+		template <typename T>
+		void standardOut(const T& message) {
+			std::cout << message << std::endl;
+		}
 
 		LogManager() {};
 		~LogManager();
