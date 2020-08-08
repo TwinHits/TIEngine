@@ -65,13 +65,13 @@ void EventsManager::processEvents() {
 			switch (event.type) {
 			case sf::Event::Closed:
 				this->window.close();
-				LogManager::Instance()->info("Window closed.");
+				LogManager::Instance()->debug("Window closed by X.");
 				break;
 			case sf::Event::KeyPressed:
 				switch (event.key.code) {
 				case sf::Keyboard::Escape:
 					this->window.close();
-					LogManager::Instance()->info("Window closed.");
+					LogManager::Instance()->debug("Window closed by escape.");
 					break;
 				case sf::Keyboard::Tilde:
 					consoleManager->showConsole();

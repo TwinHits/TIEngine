@@ -39,7 +39,7 @@ sf::RenderWindow& WindowManager::addWindow(sf::VideoMode mode, const std::string
 
 
 void WindowManager::removeWindow() {
-	this->window.reset();
+	this->window->close();
 }
 
 
