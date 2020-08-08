@@ -9,12 +9,12 @@ float TIE::Math::toRadians(float degrees) {
 
 //Takes a double to supress a warning
 float TIE::Math::toDegrees(double radians) { 
-	return (radians * 180) / M_PI; 
+	return fmod((radians * 180) / M_PI + 360.0f, 360.0f);
 }
 
 
 float TIE::Math::distanceBetweenTwoPoints(const sf::Vector2f& p1, const sf::Vector2f& p2) {
-	return std::sqrt(std::pow(p1.x - p2.x, 2) + std::pow(p1.y - p2.y, 2));
+	return fabsf(std::sqrt(std::pow(p1.x - p2.x, 2) + std::pow(p1.y - p2.y, 2)));
 }
 
 
@@ -24,12 +24,7 @@ float TIE::Math::distanceBetweenTwoAngles(const float f1, const float f2) {
 
 
 float TIE::Math::angleBetweenTwoPoints(const sf::Vector2f& p1, const sf::Vector2f& p2) {
-	return TIE::Math::convertTo360Degrees(TIE::Math::toDegrees(std::atan2(p2.y - p1.y, p2.x - p1.x)));
-}
-
-
-float TIE::Math::convertTo360Degrees(const float degrees) {
-	return (static_cast<int>(degrees) + 360) % 360;
+	return TIE::Math::toDegrees(std::atan2(p2.y - p1.y, p2.x - p1.x));
 }
 
 

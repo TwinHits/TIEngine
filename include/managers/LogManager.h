@@ -36,7 +36,7 @@ class LogManager: public Singleton<LogManager>, Manager {
 		void command(const std::string& message);
 		
 		template <typename T>
-		void standardOut(const T& message) {
+		void out(const T& message) {
 			std::cout << message << std::endl;
 		}
 

@@ -95,8 +95,10 @@ void MovesComponentSystem::setTargetPosition(TIEntity& tientity, sf::Vector2f& p
 	SpriteComponent* spriteComponent = tientity.getComponent<SpriteComponent>();
 	if (movesComponent != nullptr && spriteComponent != nullptr) {
 		position = GridComponentSystem::normalizePositionToGrid(position);
-		movesComponent->setTargetPosition(position);
-		movesComponent->setTargetAngle(Math::angleBetweenTwoPoints(spriteComponent->getPosition(), movesComponent->getTargetPosition()));
+		if (position != movesComponent->getTargetPosition()) {
+			movesComponent->setTargetPosition(position);
+			movesComponent->setTargetAngle(Math::angleBetweenTwoPoints(spriteComponent->getPosition(), movesComponent->getTargetPosition()));
+		}
 	}
 }
 
