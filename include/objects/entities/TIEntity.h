@@ -22,7 +22,9 @@ class TIEntity {
 
 		template<typename T>
 		T& addComponent() {
-			components[typeid(T)] = make_unique<T>();
+			if (!components.count(typeid(T))) {
+				components[typeid(T)] = make_unique<T>();
+			}
 			return *this->getComponent<T>();
 		}
 		
