@@ -21,10 +21,22 @@ class MovesComponent : public Component {
 		void setCachedTargetPosition(const sf::Vector2f&);
 		const sf::Vector2f& getCachedTargetPosition() const;
 
+		void setAngularVelocity(const sf::Vector2f&); //x = speed, y = direction
+		const sf::Vector2f& getAngularVelocity() const;
+
+		void setTargetAngle(const float);
+		const float getTargetAngle() const;
+
+		void setCachedTargetAngle(const float);
+		const float getCachedTargetAngle() const;
 	private: 
-		sf::Vector2f velocity;
-		sf::Vector2f targetPosition;
-		sf::Vector2f cachedTargetPosition;
+		sf::Vector2f velocity = sf::Vector2f(0, 0);
+		sf::Vector2f targetPosition = sf::Vector2f(0, 0);
+		sf::Vector2f cachedTargetPosition = targetPosition;
+
+		sf::Vector2f angularVelocity = sf::Vector2f(0, 0);
+		float targetAngle = 0.0f;
+		float cachedTargetAngle = targetAngle;
 };
 
 }
