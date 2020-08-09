@@ -1,6 +1,8 @@
 #include "managers/ViewManager.h"
 
+#include "objects/components/SpriteComponent.h"
 #include "managers/EventsManager.h"
+#include "managers/GridManager.h"
 #include "managers/HashManager.h"
 #include "managers/LogManager.h"
 #include "managers/WindowManager.h"
@@ -110,20 +112,24 @@ void ViewManager::zoom(const float delta) {
 const sf::Vector2f ViewManager::calculateClientScroll(const sf::Vector2f mousePosition, const float delta) {
 
 	sf::Vector2f translation = sf::Vector2f(0, 0);
-	if (this->scrollUpZone.contains(mousePosition)) {
-		translation += Math::translateVelocityByTime(sf::Vector2f(this->scrollSpeed, 270), delta);
-	}
+	sf::Vector2f mouseWorldPosition = eventsManager->getMouseWorldPosition();
+	
+	if (this->scrollBounds.contains(mouseWorldPosition)) {
+		if (this->scrollUpZone.contains(mousePosition)) {
+			translation += Math::translateVelocityByTime(sf::Vector2f(this->scrollSpeed, 270), delta);
+		}
 
-	if (this->scrollRightZone.contains(mousePosition)) {
-		translation += Math::translateVelocityByTime(sf::Vector2f(this->scrollSpeed, 0), delta);
-	}
+		if (this->scrollRightZone.contains(mousePosition)) {
+			translation += Math::translateVelocityByTime(sf::Vector2f(this->scrollSpeed, 0), delta);
+		}
 
-	if (this->scrollDownZone.contains(mousePosition)) {
-		translation += Math::translateVelocityByTime(sf::Vector2f(this->scrollSpeed, 90), delta);
-	}
+		if (this->scrollDownZone.contains(mousePosition)) {
+			translation += Math::translateVelocityByTime(sf::Vector2f(this->scrollSpeed, 90), delta);
+		}
 
-	if (this->scrollLeftZone.contains(mousePosition)) {
-		translation += Math::translateVelocityByTime(sf::Vector2f(this->scrollSpeed, 180), delta);
+		if (this->scrollLeftZone.contains(mousePosition)) {
+			translation += Math::translateVelocityByTime(sf::Vector2f(this->scrollSpeed, 180), delta);
+		}
 	}
 
 	return translation;
@@ -166,6 +172,16 @@ GlobalId ViewManager::getEngineViewId() {
 
 sf::View& ViewManager::getClientView() {
 	return this->getView(this->clientViewId);
+}
+
+
+void ViewManager::setScrollBounds(const sf::FloatRect& scrollBounds) {
+	this->scrollBounds = scrollBounds;
+}
+
+
+const sf::FloatRect& ViewManager::getScrollBounds() {
+	return this->scrollBounds;
 }
 
 

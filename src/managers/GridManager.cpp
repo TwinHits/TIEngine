@@ -6,6 +6,7 @@
 #include "objects/entities/GridGuide.h"
 #include "managers/LogManager.h"
 #include "managers/SceneManager.h"
+#include "managers/ViewManager.h"
 #include "templates/MakeUnique.h"
 
 using namespace TIE;
@@ -29,6 +30,8 @@ void GridManager::setGridEntity(TIEntity& tientity) {
 	this->gridComponent = tientity.getComponent<GridComponent>();
 	if (this->gridComponent != nullptr) {
 		this->gridEntity = &tientity;
+		SpriteComponent* spriteComponent = this->gridEntity->getComponent<SpriteComponent>();
+		this->recalculateScrollBounds(*spriteComponent);
 	} else {
 		this->gridEntity = nullptr;
 		this->gridComponent = nullptr;
@@ -63,9 +66,14 @@ void GridManager::recalculateGrideGuide(GridComponent* gridComponent) {
 		SpriteComponent* spriteComponent = this->gridEntity->getComponent<SpriteComponent>();
 		if (spriteComponent != nullptr) {
 			this->gridGuide->initialize(spriteComponent->getGlobalBounds(), this->gridComponent->getGridSize(), this->gridComponent->getTileSize());
+			this->recalculateScrollBounds(*spriteComponent);
 		}
 	} else {
 		LogManager::Instance()->warn("No grid is currently configured.");
 	}
 }
 
+
+void GridManager::recalculateScrollBounds(const SpriteComponent& spriteComponent) {
+	ViewManager::Instance()->setScrollBounds(spriteComponent.getGlobalBounds());
+}

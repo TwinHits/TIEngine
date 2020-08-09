@@ -39,6 +39,9 @@ class ViewManager : public Singleton<ViewManager>, Manager {
 		sf::View& getEngineView();
 		sf::View& getClientView();
 
+		void setScrollBounds(const sf::FloatRect&);
+		const sf::FloatRect& getScrollBounds();
+
 		ViewManager() {};
 		~ViewManager() {};
 
@@ -65,6 +68,7 @@ class ViewManager : public Singleton<ViewManager>, Manager {
 		sf::FloatRect scrollLeftZone;
 		sf::FloatRect scrollDownZone;
 		sf::FloatRect scrollRightZone;
+		sf::FloatRect scrollBounds;
 
 		void operator=(const ViewManager&) {};
 		ViewManager(const ViewManager&);

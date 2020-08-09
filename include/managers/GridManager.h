@@ -5,6 +5,7 @@
 #include "templates/Singleton.h"
 
 #include "objects/components/GridComponent.h"
+#include "objects/components/SpriteComponent.h"
 #include "objects/entities/GridGuide.h"
 #include "objects/entities/TIEntity.h"
 
@@ -28,6 +29,7 @@ class GridManager : public Singleton<GridManager>, Manager {
 
 	private:
 		void recalculateGrideGuide(GridComponent*);
+		void recalculateScrollBounds(const SpriteComponent&);
 
 		TIEntity* gridEntity = nullptr;
 		GridComponent* gridComponent = nullptr;
