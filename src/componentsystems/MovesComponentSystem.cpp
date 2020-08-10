@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "componentsystems/GridComponentSystem.h"
+#include "managers/GridManager.h"
 #include "managers/LogManager.h" 
 #include "managers/EventsManager.h"
 #include "objects/components/MovesComponent.h"
@@ -75,7 +76,13 @@ void MovesComponentSystem::setTargetPosition(TIEntity& tientity, Direction direc
 	SpriteComponent* spriteComponent = tientity.getComponent<SpriteComponent>();
 	if (MovesComponentSystem::arePositionsCloseEnough(movesComponent->getTargetPosition(), spriteComponent->getPosition())) {
 		sf::Vector2f targetPosition = spriteComponent->getPosition();
-		const sf::Vector2f& velocity = movesComponent->getVelocity();
+
+		sf::Vector2f velocity = movesComponent->getVelocity();
+		if (GridManager::Instance()->isGridConfigured()) {
+			const sf::Vector2f& tileSize = GridManager::Instance()->getGridComponent()->getTileSize();
+			velocity.x = tileSize.x;
+		}
+
 		if (direction == Direction::TOP) {
 			targetPosition += sf::Vector2f(0, -velocity.x);
 		} else if (direction == Direction::LEFT) {
