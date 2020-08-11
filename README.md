@@ -15,24 +15,18 @@ This engine uses these versions for it's dependenices:
 
 Windows:
 1. Clone this repo.
-2. Install dependencies into a folder called 'lib'.
-	1. sfml
-	2. boost
-	3. luabridge
-	4. lua
+2. Install dependencies into a folder called 'lib' with a folder name with version and -win appened
+	ex. SFML-2.5.1-win
 3. Run cmake . to build a visual studio solution.
 4. Copy the DLL's for SFML, lua, and boost-filesystem to src/Debug.
 5. Open the solution and build all.
 4. Run Debug to run TIEngine
 
 
-Linux:
+Linux/WSL:
 1. Clone this repo
-2. Install dependencies into a folder called 'lib'.
-	1. sfml
-	2. boost
-	3. luabridge
-	4. lua
+2. Install dependencies into a folder called 'lib' with a folder name with version and -gnu appened
+	ex. SFML-2.5.1-gnu
 2. Run cmake . to build a MakeFile.
 3. Run make to build.
 4. Run ./TIEngine to run TIEngine
