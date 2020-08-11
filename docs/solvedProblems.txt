@@ -26,3 +26,11 @@ and .cpp.
 I fixed by googling the names of those so. I followed this post but without the i386
 https://askubuntu.com/questions/608418/error-while-loading-shared-libraries-libopenal-so-1-game-pacapong-in-ubuntu
  https://ubuntu.pkgs.org/16.04/ubuntu-main-i386/libvorbisfile3_1.3.5-3_i386.deb.html
+
+8/10/2020
+I got a similar warning to above on a fresh WSL2 install and solved it with
+sudo apt-get install libopenal-dev
+
+8/11/2020
+windows could not find boost until I b2.exe'd with flags
+.\b2.exe  release debug threading=multi --build-type=complete --toolset=msvc address-model=64 stage
