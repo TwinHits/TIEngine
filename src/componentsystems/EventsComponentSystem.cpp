@@ -23,7 +23,7 @@ void EventsComponentSystem::update(TIEntity& entity, const float delta) {
 		std::vector<std::string> states;
 		states = this->getStates(entity, states);
 		for (const std::string& state : states) {
-			for (auto event : events) {
+			for (auto& event : events) {
 				const std::string* eventHandler = eventsComponent->getEventHandler(state, event.second);
 				if (eventHandler != nullptr) {
 					if (*eventHandler == "setDestination") {

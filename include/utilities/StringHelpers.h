@@ -18,6 +18,8 @@ namespace TIE {
 		LogLevel strToLogLevel(std::string&);
 		sf::Event::EventType stringToEvent(std::string&);
 		sf::Keyboard::Key stringToKey(std::string&);
+		sf::FloatRect stringToFloatRect(const std::string&);
+		sf::IntRect stringToIntRect(const std::string&);
 	}
 }
 

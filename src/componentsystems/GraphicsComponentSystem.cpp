@@ -10,15 +10,18 @@
 #include "objects/entities/TIEntity.h"
 #include "objects/factories/TIEntityFactory.h"
 #include "managers/AssetsManager.h"
+#include "utilities/StringHelpers.h"
 
 using namespace TIE;
 
 const std::string GraphicsComponentSystem::DRAWN = "drawn";
 const std::string GraphicsComponentSystem::TEXTURE = "texture";
 const std::string GraphicsComponentSystem::TEXT = "text";
+const std::string GraphicsComponentSystem::FRAME = "frame";
 const std::string GraphicsComponentSystem::TEXTURE_KEY = GraphicsComponentSystem::DRAWN + '.' + GraphicsComponentSystem::TEXTURE;
 const std::string GraphicsComponentSystem::DRAWN_KEY = GraphicsComponentSystem::DRAWN + '.' + GraphicsComponentSystem::DRAWN;
 const std::string GraphicsComponentSystem::TEXT_KEY = GraphicsComponentSystem::DRAWN + '.' + GraphicsComponentSystem::TEXT;
+const std::string GraphicsComponentSystem::FRAME_KEY = GraphicsComponentSystem::DRAWN + '.' + GraphicsComponentSystem::FRAME;
 
 void GraphicsComponentSystem::draw(TIEntity& entity, sf::RenderTarget& window, sf::RenderStates states) {
 	SpriteComponent* spriteComponent = entity.getComponent<SpriteComponent>();
@@ -63,9 +66,17 @@ SpriteComponent* GraphicsComponentSystem::addSpriteComponent(const TIEntityFacto
 		std::string textureName = factory.stringValues.at(GraphicsComponentSystem::TEXTURE_KEY);
 		const sf::Texture& texture = AssetsManager::Instance()->getTexture(textureName);
 		SpriteComponent& spriteComponent = entity.addComponent<SpriteComponent>();
+
 		spriteComponent.setTexture(texture, true);
-		sf::FloatRect size = spriteComponent.getLocalBounds();
-		spriteComponent.setOrigin(size.width/2, size.height/2);
+		if (factory.stringValues.count(GraphicsComponentSystem::FRAME_KEY)) {
+			std::string frameString = factory.stringValues.at(GraphicsComponentSystem::FRAME_KEY);
+			sf::IntRect frameRect = String::stringToIntRect(frameString);
+			spriteComponent.setTextureRect(frameRect);
+			spriteComponent.setOrigin(frameRect.width / 2, frameRect.height / 2);
+		} else {
+			sf::FloatRect size = spriteComponent.getLocalBounds();
+			spriteComponent.setOrigin(size.width / 2, size.height / 2);
+		}
 
 		if (factory.boolValues.count(GraphicsComponentSystem::DRAWN_KEY)) {
 			bool drawn = factory.boolValues.at(GraphicsComponentSystem::DRAWN_KEY);

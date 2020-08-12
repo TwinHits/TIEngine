@@ -3,9 +3,12 @@
 #include <algorithm>
 #include <map>
 #include <sstream>
+#include <string>
+#include <stdexcept>
 
 #include <SFML/Graphics.hpp>
 
+#include "managers/LogManager.h"
 #include "objects/enumeration/Language.h"
 
 std::vector<std::string>& TIE::String::split(const std::string& string, char delimiter, std::vector<std::string>& out) {
@@ -182,3 +185,34 @@ sf::Keyboard::Key TIE::String::stringToKey(std::string& key) {
     return sf::Keyboard::Unknown;
 }
 
+
+sf::IntRect TIE::String::stringToIntRect(const std::string& string) {
+    std::vector<std::string> out;
+    TIE::String::split(string, ' ', out);
+    float points[4] = { 0 };
+    for (int i = 0; i < out.size(); i++) {
+        try {
+            points[i] = std::stoi(out[i]);
+        } catch (const std::invalid_argument& ia) {
+            points[i] = 0;
+            LogManager::Instance()->warn("Cannot convert " + out[i] + " to a int.");
+        }
+    }
+    return sf::IntRect(points[0], points[1], points[2], points[3]);
+}
+
+
+sf::FloatRect TIE::String::stringToFloatRect(const std::string& string) {
+    std::vector<std::string> out;
+    TIE::String::split(string, ' ', out);
+    float points[4] = { 0 };
+    for (int i = 0; i < out.size(); i++) {
+        try {
+            points[i] = std::stof(out[i]);
+        } catch (const std::invalid_argument& ia) {
+            points[i] = 0;
+            LogManager::Instance()->warn("Cannot convert " + out[i] + " to a float.");
+        }
+    }
+    return sf::FloatRect(points[0], points[1], points[2], points[3]);
+}
