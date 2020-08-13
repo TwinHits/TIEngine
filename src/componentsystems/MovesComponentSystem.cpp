@@ -116,9 +116,7 @@ void MovesComponentSystem::move(MovesComponent& movesComponent, SpriteComponent&
 			movesComponent.setCachedTargetPosition(movesComponent.getTargetPosition());
 			movesComponent.setVelocity(sf::Vector2f(movesComponent.getVelocity().x, movesComponent.getTargetAngle()));
 		}
-		if (MovesComponentSystem::areRotationsCloseEnough(movesComponent.getTargetAngle(), spriteComponent.getRotation())) {
-			spriteComponent.sf::Transformable::move(Math::translateVelocityByTime(movesComponent.getVelocity(), delta));
-		}
+		spriteComponent.sf::Transformable::move(Math::translateVelocityByTime(movesComponent.getVelocity(), delta));
 	} else if (spriteComponent.getPosition() != movesComponent.getTargetPosition()) {
 		spriteComponent.setPosition(movesComponent.getTargetPosition());
 	}
