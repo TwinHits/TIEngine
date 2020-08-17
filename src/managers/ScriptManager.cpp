@@ -61,7 +61,7 @@ void ScriptManager::loadScript(const std::string& scriptPath) {
 }
 
 
-void TIE::ScriptManager::loadAssets(const luabridge::LuaRef& settingsTable, const std::string& scriptsPath) {
+void ScriptManager::loadAssets(const luabridge::LuaRef& settingsTable, const std::string& scriptsPath) {
 
 	LuaRef texturesTable = settingsTable["textures"];
 	std::vector<std::string> texturePaths;
@@ -109,7 +109,8 @@ void ScriptManager::loadWindowProperties(const LuaRef& windowTable) {
 	}
 }
 
-TIEntity* TIE::ScriptManager::loadGrid(const luabridge::LuaRef& gridTable) {
+
+TIEntity* ScriptManager::loadGrid(const luabridge::LuaRef& gridTable) {
 	TIEntityFactory factory = TIEntityFactory();
 	std::vector<std::string> components = Lua::getTableKeys(this->luaState, "grid");
 	for (auto component : components) {
@@ -179,3 +180,4 @@ void ScriptManager::readComponentValues(TIEntityFactory& factory, const std::str
 		}
 	}
 }
+

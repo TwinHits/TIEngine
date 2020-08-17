@@ -7,6 +7,7 @@
 #include <memory>
 #include <set>
 
+#include "componentsystems/AnimatedComponentSystem.h"
 #include "componentsystems/CollidesComponentSystem.h"
 #include "componentsystems/EventsComponentSystem.h"
 #include "componentsystems/GraphicsComponentSystem.h"
@@ -44,6 +45,7 @@ namespace TIE {
 		SceneLayer* engineLayer = nullptr;
 		SceneLayer* clientLayer = nullptr;
 
+		AnimatedComponentSystem animatedComponentSystem = AnimatedComponentSystem();
 		CollidesComponentSystem collidesComponentSystem = CollidesComponentSystem();
 		EventsComponentSystem eventsComponentSystem = EventsComponentSystem();
 		MovesComponentSystem movesComponentSystem = MovesComponentSystem();

@@ -216,3 +216,18 @@ sf::FloatRect TIE::String::stringToFloatRect(const std::string& string) {
     }
     return sf::FloatRect(points[0], points[1], points[2], points[3]);
 }
+
+sf::Vector2f TIE::String::stringToVector2f(const std::string& string) {
+    std::vector<std::string> out;
+    TIE::String::split(string, ' ', out);
+    float points[2] = { 0 };
+    for (int i = 0; i < out.size(); i++) {
+        try {
+            points[i] = std::stof(out[i]);
+        } catch (const std::invalid_argument& ia) {
+            points[i] = 0;
+            LogManager::Instance()->warn("Cannot convert " + out[i] + " to a float.");
+        }
+    }
+    return sf::Vector2f(points[0], points[1]);
+}

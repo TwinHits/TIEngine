@@ -13,11 +13,11 @@ namespace TIE {
 		float distanceBetweenTwoPoints(const sf::Vector2f&, const sf::Vector2f&);
 		float distanceBetweenTwoAngles(const float, const float);
 		float angleBetweenTwoPoints(const sf::Vector2f&, const sf::Vector2f&);
-		float convertTo360Degrees(const float);
 		sf::Vector2f translateVelocityByTime(const sf::Vector2f&, const float);
 		sf::Vector2f normalizePositionToGrid(const sf::Vector2f& position, const sf::FloatRect& bounds, const sf::Vector2f& tileSize);
 		const int directionFromAngleToAngle(const float, const float);
 		const bool areFloatsEqual(const float, const float);
+		const bool isAngleBetweenAngles(const float, const float, const float);
 		bool isNice(int);
 	}
 }

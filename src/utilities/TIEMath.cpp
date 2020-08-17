@@ -50,6 +50,19 @@ const bool TIE::Math::areFloatsEqual(const float f1, const float f2) {
 	return fabs(f1 - f2) < std::numeric_limits<float>::epsilon();
 }
 
+
+const bool TIE::Math::isAngleBetweenAngles(const float angle, const float left, const float right) {
+	/*
+	const float halfDifference = TIE::Math::distanceBetweenTwoAngles(left, right) / 2;
+	const float leftDistance = TIE::Math::distanceBetweenTwoAngles(angle, left);
+	const float rightDistance = TIE::Math::distanceBetweenTwoAngles(angle, right);
+	return leftDistance <= halfDifference && rightDistance <= halfDifference;
+	*/
+	return angle > left && angle <= right;
+}
+
+
 bool TIE::Math::isNice(int number) {
 	return number == 69;
 }
+

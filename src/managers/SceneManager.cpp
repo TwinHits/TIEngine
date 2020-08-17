@@ -2,6 +2,7 @@
 
 #include <functional>
 
+#include "componentsystems/AnimatedComponentSystem.h"
 #include "componentsystems/CollidesComponentSystem.h"
 #include "componentsystems/EventsComponentSystem.h"
 #include "componentsystems/GraphicsComponentSystem.h"
@@ -94,6 +95,7 @@ void SceneManager::updateTIEntities(const std::vector<std::unique_ptr<TIEntity> 
 		if (entity->getComponent<SpriteComponent>() != nullptr) {
 			this->movesComponentSystem.update(*entity, this->delta);
 			this->collidesComponentSystem.update(*entity, this->delta);
+			this->animatedComponentSystem.update(*entity, this->delta);
 		}
 
 		if (EventsManager::Instance()->hasEvents()) {

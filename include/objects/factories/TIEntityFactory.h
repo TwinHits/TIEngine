@@ -30,7 +30,7 @@ class TIEntityFactory {
 		TIEntity* parent = nullptr;
 		std::string name = "";
 
-		std::array<std::string, 5> validComponentNames;
+		std::array<std::string, 6> validComponentNames;
 };
 
 }

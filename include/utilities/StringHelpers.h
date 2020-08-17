@@ -20,6 +20,7 @@ namespace TIE {
 		sf::Keyboard::Key stringToKey(std::string&);
 		sf::IntRect stringToIntRect(const std::string&);
 		sf::FloatRect stringToFloatRect(const std::string&);
+		sf::Vector2f stringToVector2f(const std::string&);
 	}
 }
 
