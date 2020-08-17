@@ -45,7 +45,7 @@ void EventsComponentSystem::update(TIEntity& entity, const float delta) {
 }
 
 
-EventsComponent* TIE::EventsComponentSystem::addEventsComponent(const TIEntityFactory& factory, TIEntity& entity) {
+EventsComponent* EventsComponentSystem::addEventsComponent(const TIEntityFactory& factory, TIEntity& entity) {
 	EventsComponent* eventsPtr = nullptr;
 
 	// Get all the keys containing events from the stringValues map 
