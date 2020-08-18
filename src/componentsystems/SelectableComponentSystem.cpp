@@ -37,7 +37,7 @@ void SelectableComponentSystem::update(TIEntity& entity, const float delta) {
 	}
 }
 
-SelectableComponent* SelectableComponentSystem::addSelectableComponent(const TIEntityFactory& factory, TIEntity& entity) {
+SelectableComponent* SelectableComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& entity) {
 
 	SelectableComponent* selectablePtr = nullptr;
 	if (factory.boolValues.count(SelectableComponentSystem::SELECTABLE_KEY)) {

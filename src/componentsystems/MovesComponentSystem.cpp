@@ -38,7 +38,7 @@ void MovesComponentSystem::update(TIEntity& entity, const float delta) {
 }
 
 
-MovesComponent* MovesComponentSystem::addMovesComponent(const TIEntityFactory& factory, TIEntity& entity) {
+MovesComponent* MovesComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& entity) {
 
 	MovesComponent* movesPtr = nullptr;
 	if (factory.floatValues.count(MovesComponentSystem::SPEED_KEY)) {
@@ -74,7 +74,7 @@ MovesComponent* MovesComponentSystem::addMovesComponent(const TIEntityFactory& f
 void MovesComponentSystem::setTargetPosition(TIEntity& tientity, Direction direction) {
 	MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
 	SpriteComponent* spriteComponent = tientity.getComponent<SpriteComponent>();
-	if (MovesComponentSystem::arePositionsCloseEnough(movesComponent->getTargetPosition(), spriteComponent->getPosition())) {
+	if (this->arePositionsCloseEnough(movesComponent->getTargetPosition(), spriteComponent->getPosition())) {
 		sf::Vector2f targetPosition = spriteComponent->getPosition();
 
 		sf::Vector2f velocity = movesComponent->getVelocity();
@@ -92,7 +92,7 @@ void MovesComponentSystem::setTargetPosition(TIEntity& tientity, Direction direc
 		} else if (direction == Direction::BOTTOM) {
 			targetPosition += sf::Vector2f(0, velocity.x);
 		}
-		MovesComponentSystem::setTargetPosition(tientity, targetPosition);
+		this->setTargetPosition(tientity, targetPosition);
 	}
 }
 
@@ -101,7 +101,7 @@ void MovesComponentSystem::setTargetPosition(TIEntity& tientity, sf::Vector2f& p
 	MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
 	SpriteComponent* spriteComponent = tientity.getComponent<SpriteComponent>();
 	if (movesComponent != nullptr && spriteComponent != nullptr) {
-		position = GridComponentSystem::normalizePositionToGrid(position);
+		position = GridComponentSystem::Instance()->normalizePositionToGrid(position);
 		if (position != movesComponent->getTargetPosition()) {
 			movesComponent->setTargetPosition(position);
 			movesComponent->setTargetAngle(Math::angleBetweenTwoPoints(spriteComponent->getPosition(), movesComponent->getTargetPosition()));
@@ -111,8 +111,8 @@ void MovesComponentSystem::setTargetPosition(TIEntity& tientity, sf::Vector2f& p
 
 
 void MovesComponentSystem::move(MovesComponent& movesComponent, SpriteComponent& spriteComponent, const float delta) {
-	if (!MovesComponentSystem::arePositionsCloseEnough(movesComponent.getTargetPosition(), spriteComponent.getPosition())) {
-		if (MovesComponentSystem::recalculateVelocity(movesComponent)) {
+	if (!this->arePositionsCloseEnough(movesComponent.getTargetPosition(), spriteComponent.getPosition())) {
+		if (this->recalculateVelocity(movesComponent)) {
 			movesComponent.setCachedTargetPosition(movesComponent.getTargetPosition());
 			movesComponent.setVelocity(sf::Vector2f(movesComponent.getVelocity().x, movesComponent.getTargetAngle()));
 		}
@@ -125,8 +125,8 @@ void MovesComponentSystem::move(MovesComponent& movesComponent, SpriteComponent&
 
 void MovesComponentSystem::rotate(MovesComponent& movesComponent, SpriteComponent& spriteComponent, const float delta) {
 	if (spriteComponent.getRotation() != movesComponent.getTargetAngle()) {
-		if (!MovesComponentSystem::areRotationsCloseEnough(movesComponent.getTargetAngle(), spriteComponent.getRotation())) {
-			if (MovesComponentSystem::recalculateAngularVelocity(movesComponent)) {
+		if (!this->areRotationsCloseEnough(movesComponent.getTargetAngle(), spriteComponent.getRotation())) {
+			if (this->recalculateAngularVelocity(movesComponent)) {
 				movesComponent.setCachedTargetAngle(movesComponent.getTargetAngle());
 				movesComponent.setAngularVelocity(sf::Vector2f(movesComponent.getAngularVelocity().x, Math::directionFromAngleToAngle(spriteComponent.getRotation(), movesComponent.getTargetAngle())));
 			}

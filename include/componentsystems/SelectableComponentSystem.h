@@ -1,7 +1,8 @@
 #ifndef SELECTABLECOMPONENTSYSTEM_H
 #define SELECTABLECOMPONENTSYSTEM_H
 
-#include "ComponentSystem.h"
+#include "componentSystems/ComponentSystem.h"
+#include "templates/Singleton.h"
 
 #include <string>
 
@@ -12,14 +13,14 @@
 
 namespace TIE {
 
-class SelectableComponentSystem : public ComponentSystem {
+class SelectableComponentSystem : public Singleton<SelectableComponentSystem>, ComponentSystem {
 	public:
 		SelectableComponentSystem() {};
 		void update(TIEntity&, const float);
 
-		static SelectableComponent* addSelectableComponent(const TIEntityFactory&, TIEntity&);
+		SelectableComponent* addComponent(const TIEntityFactory&, TIEntity&);
 
-		static bool isSelected(TIEntity&);
+		bool isSelected(TIEntity&);
 
 		static const std::string SELECTABLE;
 		static const std::string SELECTABLE_KEY;

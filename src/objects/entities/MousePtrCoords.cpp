@@ -1,8 +1,9 @@
 #include "objects/entities/MousePtrCoords.h"
 
-#include "componentsystems/GraphicsComponentSystem.h"
+#include "componentsystems/TextComponentSystem.h"
 #include "managers/AssetsManager.h"
 #include "managers/ConfigManager.h"
+#include "utilities/Graphics.h"
 
 using namespace TIE;
 
@@ -16,7 +17,7 @@ void MousePtrCoords::initialize() {
 
 	sf::Vector2f mouseWindowPosition = this->eventsManager->getMouseWindowPosition();
 
-	TextComponent& textComponent = GraphicsComponentSystem::addTextComponent(*this);
+	TextComponent& textComponent = TextComponentSystem::Instance()->addComponent(*this);
 	textComponent.setString("0, 0");
 	textComponent.setFont(font);
 	textComponent.setCharacterSize(14);
@@ -26,7 +27,7 @@ void MousePtrCoords::initialize() {
 
 
 void MousePtrCoords::update(const float delta) {
-	if (GraphicsComponentSystem::isDrawn(*this)) {
+	if (Graphics::isDrawn(*this)) {
 		TextComponent* textComponent = this->getComponent<TextComponent>();
 		sf::Vector2f mouseWorldPosition = this->eventsManager->getMouseWorldPosition();
 		sf::Vector2f mouseWindowPosition = this->eventsManager->getMouseWindowPosition();

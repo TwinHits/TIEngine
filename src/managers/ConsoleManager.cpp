@@ -5,7 +5,7 @@
 #include <queue>
 #include <sstream>
 
-#include "componentsystems/GraphicsComponentSystem.h"
+#include "componentsystems/SpriteComponentSystem.h"
 #include "managers/ConfigManager.h"
 #include "managers/GridManager.h"
 #include "managers/LogManager.h"
@@ -13,9 +13,11 @@
 #include "managers/ScriptManager.h"
 #include "managers/ViewManager.h"
 #include "managers/WindowManager.h"
+#include "objects/components/TextComponent.h"
 #include "objects/constants/ConsoleCommands.h"
 #include "templates/MakeUnique.h"
 #include "utilities/StringHelpers.h"
+#include "utilities/Graphics.h"
 
 using namespace TIE;
 
@@ -27,17 +29,17 @@ bool ConsoleManager::initialize() {
 
 
 void ConsoleManager::showConsole() {
-	GraphicsComponentSystem::setDrawn(*this->devConsole, true);
+	Graphics::setDrawn(*this->devConsole, true);
 }
 
 
 void ConsoleManager::hideConsole() {
-	GraphicsComponentSystem::setDrawn(*this->devConsole, false);
+	Graphics::setDrawn(*this->devConsole, false);
 }
 
 
 bool ConsoleManager::checkConsole() {
-	return GraphicsComponentSystem::isDrawn(*this->devConsole);
+	return Graphics::isDrawn(*this->devConsole);
 }
 
 

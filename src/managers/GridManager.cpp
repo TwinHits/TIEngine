@@ -1,5 +1,6 @@
 #include "managers/GridManager.h"
 
+#include "componentsystems/ShapeComponentSystem.h"
 #include "objects/components/GridComponent.h"
 #include "objects/components/SpriteComponent.h"
 #include "objects/entities/TIEntity.h"
@@ -8,6 +9,7 @@
 #include "managers/SceneManager.h"
 #include "managers/ViewManager.h"
 #include "templates/MakeUnique.h"
+#include "utilities/Graphics.h"
 
 using namespace TIE;
 
@@ -51,7 +53,7 @@ void GridManager::showGridGuide(bool visibility) {
 	}
 
 	if (this->gridGuide != nullptr) {
-		GraphicsComponentSystem::setDrawn(*(this->gridGuide), visibility);
+		Graphics::setDrawn(*(this->gridGuide), visibility);
 	} 
 }
 

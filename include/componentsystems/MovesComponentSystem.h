@@ -1,7 +1,8 @@
 #ifndef MOVESCOMPONENTSYSTEM_H
 #define MOVESCOMPONENTSYSTEM_H
 
-#include "ComponentSystem.h"
+#include "componentSystems/ComponentSystem.h"
+#include "templates/Singleton.h"
 
 #include <string>
 
@@ -15,15 +16,15 @@
 
 namespace TIE {
 
-class MovesComponentSystem : public ComponentSystem {
+class MovesComponentSystem : public Singleton<MovesComponentSystem>, ComponentSystem {
 	public:
 		MovesComponentSystem() {};
 		void update(TIEntity&, const float);
 
-		static MovesComponent* addMovesComponent(const TIEntityFactory&, TIEntity&);
+		MovesComponent* addComponent(const TIEntityFactory&, TIEntity&);
 		
-		static void setTargetPosition(TIEntity&, Direction);
-		static void setTargetPosition(TIEntity&, sf::Vector2f&);
+		void setTargetPosition(TIEntity&, Direction);
+		void setTargetPosition(TIEntity&, sf::Vector2f&);
 
 		static const std::string MOVES;
 		static const std::string SPEED;

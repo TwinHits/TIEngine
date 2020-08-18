@@ -2,6 +2,7 @@
 #define GRIDCOMPONENTSYSTEM_H
 
 #include "componentsystems/ComponentSystem.h"
+#include "templates/Singleton.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -11,14 +12,14 @@
 
 namespace TIE {
 
-class GridComponentSystem : public ComponentSystem {
+class GridComponentSystem : public Singleton<GridComponentSystem>, ComponentSystem {
 	public:
 		GridComponentSystem() {};
 		void update(TIEntity&, const float);
 
-		static GridComponent* addGridComponent(const TIEntityFactory&, TIEntity&);
+		GridComponent* addComponent(const TIEntityFactory&, TIEntity&);
 
-		static sf::Vector2f normalizePositionToGrid(const sf::Vector2f&);
+		sf::Vector2f normalizePositionToGrid(const sf::Vector2f&);
 
 		static const std::string GRID;
 		static const std::string WIDTH;

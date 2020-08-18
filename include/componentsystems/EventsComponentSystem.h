@@ -1,7 +1,8 @@
 #ifndef EVENTSCOMPONENTSYSTEM_H
 #define EVENTSCOMPONENTSYSTEM_H
 
-#include "ComponentSystem.h"
+#include "componentSystems/ComponentSystem.h"
+#include "templates/Singleton.h"
 
 #include <string>
 
@@ -13,12 +14,12 @@
 
 namespace TIE {
 
-class EventsComponentSystem : public ComponentSystem {
+class EventsComponentSystem : public Singleton<EventsComponentSystem>, ComponentSystem {
 	public:
 		EventsComponentSystem() {};
 		void update(TIEntity&, const float);
 
-		static EventsComponent* addEventsComponent(const TIEntityFactory&, TIEntity&);
+		EventsComponent* addComponent(const TIEntityFactory&, TIEntity&);
 
 		static const std::string EVENTS;
 		static const std::string SELECTED;

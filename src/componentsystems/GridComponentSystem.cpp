@@ -23,7 +23,7 @@ void GridComponentSystem::update(TIEntity&, const float) {
 }
 
 
-GridComponent* TIE::GridComponentSystem::addGridComponent(const TIEntityFactory& factory, TIEntity& entity) {
+GridComponent* GridComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& entity) {
 
 	GridComponent* gridPtr = nullptr;
 	if (factory.floatValues.count(GridComponentSystem::WIDTH_KEY) && factory.floatValues.count(GridComponentSystem::HEIGHT_KEY)) {

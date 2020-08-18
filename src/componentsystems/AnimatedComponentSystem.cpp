@@ -30,7 +30,7 @@ void AnimatedComponentSystem::update(TIEntity& tientity, const float delta) {
 }
 
 
-AnimatedComponent* AnimatedComponentSystem::addComponent(TIEntityFactory& factory, TIEntity& tientity) {
+AnimatedComponent* AnimatedComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
 	AnimatedComponent* animatedPtr = nullptr;
 
 	// Get all the keys containing animations from the stringValues map 
@@ -93,7 +93,7 @@ AnimatedComponent* AnimatedComponentSystem::addComponent(TIEntityFactory& factor
         }
 
         animatedComponent.setAnimations(animations);
-        AnimatedComponentSystem::updateCurrentAnimation(animatedComponent, tientity);
+        this->updateCurrentAnimation(animatedComponent, tientity);
         animatedPtr = &animatedComponent;
     }
 
@@ -114,7 +114,7 @@ void AnimatedComponentSystem::updateCurrentAnimation(AnimatedComponent& animated
             if (Math::isAngleBetweenAngles(rotation, animation.second.range.x, animation.second.range.y)) {
                 animation.second.currentFrame = animation.second.frames.begin();
                 animatedComponent.setCurrentAnimation(animation.second);
-                AnimatedComponentSystem::setTextureRect(animation.second, *spriteComponent);
+                this->setTextureRect(animation.second, *spriteComponent);
                 break;
             }
         }

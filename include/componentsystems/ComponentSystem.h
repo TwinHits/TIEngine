@@ -2,6 +2,7 @@
 #define COMPONENTSYSTEM_H
 
 #include "objects/entities/TIEntity.h"
+#include "objects/factories/TIEntityFactory.h"
 
 namespace TIE {
 
@@ -9,6 +10,7 @@ class ComponentSystem {
 	public:
 		virtual ~ComponentSystem() {};
 		virtual void update(TIEntity&, const float) = 0;
+		virtual Component* addComponent(const TIEntityFactory&, TIEntity&) = 0;
 };
 
 }

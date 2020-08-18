@@ -2,6 +2,7 @@
 #define ANIMATEDCOMPONENTSYSTEM_H
 
 #include "componentsystems/ComponentSystem.h"
+#include "templates/Singleton.h"
 
 #include "objects/components/AnimatedComponent.h"
 #include "objects/components/SpriteComponent.h"
@@ -10,10 +11,11 @@
 
 namespace TIE {
 
-class AnimatedComponentSystem : public ComponentSystem {
+class AnimatedComponentSystem : public Singleton<AnimatedComponentSystem>, ComponentSystem {
     public:
+        AnimatedComponentSystem() {};
         void update(TIEntity&, const float);
-        static AnimatedComponent* addComponent(TIEntityFactory&, TIEntity&);
+        AnimatedComponent* addComponent(const TIEntityFactory&, TIEntity&);
 
 		static const std::string ANIMATED;
 		static const std::string FRAMES;
@@ -22,8 +24,8 @@ class AnimatedComponentSystem : public ComponentSystem {
 		static const std::string DIRECTION;
     private:
         bool progressAnimation(Animation*, const float);
-        static void setTextureRect(const Animation&, SpriteComponent&);
-        static void updateCurrentAnimation(AnimatedComponent&, TIEntity&);
+        void setTextureRect(const Animation&, SpriteComponent&);
+        void updateCurrentAnimation(AnimatedComponent&, TIEntity&);
 };
 
 }

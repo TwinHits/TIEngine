@@ -1,4 +1,4 @@
-#include "AnimatedComponent.h"
+#include "objects/components/AnimatedComponent.h"
 
 using namespace TIE;
 

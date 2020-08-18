@@ -28,15 +28,15 @@ void EventsComponentSystem::update(TIEntity& entity, const float delta) {
 				if (eventHandler != nullptr) {
 					if (*eventHandler == "setDestination") {
 						sf::Vector2f position = sf::Vector2f(event.second.mouseButton.x, event.second.mouseButton.y);
-						MovesComponentSystem::setTargetPosition(entity, position);
+						MovesComponentSystem::Instance()->setTargetPosition(entity, position);
 					} else if (*eventHandler == "up") {
-						MovesComponentSystem::setTargetPosition(entity, Direction::TOP);
+						MovesComponentSystem::Instance()->setTargetPosition(entity, Direction::TOP);
 					} else if (*eventHandler == "down") {
-						MovesComponentSystem::setTargetPosition(entity, Direction::BOTTOM);
+						MovesComponentSystem::Instance()->setTargetPosition(entity, Direction::BOTTOM);
 					} else if (*eventHandler == "right") {
-						MovesComponentSystem::setTargetPosition(entity, Direction::RIGHT);
+						MovesComponentSystem::Instance()->setTargetPosition(entity, Direction::RIGHT);
 					} else if (*eventHandler == "left") {
-						MovesComponentSystem::setTargetPosition(entity, Direction::LEFT);
+						MovesComponentSystem::Instance()->setTargetPosition(entity, Direction::LEFT);
 					}
 				}
 			}
@@ -45,7 +45,7 @@ void EventsComponentSystem::update(TIEntity& entity, const float delta) {
 }
 
 
-EventsComponent* EventsComponentSystem::addEventsComponent(const TIEntityFactory& factory, TIEntity& entity) {
+EventsComponent* EventsComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& entity) {
 	EventsComponent* eventsPtr = nullptr;
 
 	// Get all the keys containing events from the stringValues map 
@@ -87,7 +87,7 @@ EventsComponent* EventsComponentSystem::addEventsComponent(const TIEntityFactory
 
 
 std::vector<std::string>& EventsComponentSystem::getStates(TIEntity& tientity, std::vector<std::string>& states) {
-	if (SelectableComponentSystem::isSelected(tientity)) {
+	if (SelectableComponentSystem::Instance()->isSelected(tientity)) {
 		states.push_back("selected");
 	} else {
 		states.push_back("unselected");

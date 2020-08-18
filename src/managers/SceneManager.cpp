@@ -5,7 +5,6 @@
 #include "componentsystems/AnimatedComponentSystem.h"
 #include "componentsystems/CollidesComponentSystem.h"
 #include "componentsystems/EventsComponentSystem.h"
-#include "componentsystems/GraphicsComponentSystem.h"
 #include "componentsystems/MovesComponentSystem.h"
 #include "componentsystems/SelectableComponentSystem.h"
 #include "managers/LogManager.h" 
@@ -13,6 +12,9 @@
 #include "managers/ViewManager.h"
 #include "managers/WindowManager.h"
 #include "objects/SceneLayer.h"
+#include "objects/components/ShapeComponent.h"
+#include "objects/components/SpriteComponent.h"
+#include "objects/components/TextComponent.h"
 #include "objects/entities/DegreeGuide.h"
 #include "objects/entities/MousePtrCoords.h"
 #include "templates/MakeUnique.h"
@@ -93,14 +95,14 @@ void SceneManager::updateTIEntities(const std::vector<std::unique_ptr<TIEntity> 
 	for (auto& entity : entities) {
 
 		if (entity->getComponent<SpriteComponent>() != nullptr) {
-			this->movesComponentSystem.update(*entity, this->delta);
-			this->collidesComponentSystem.update(*entity, this->delta);
-			this->animatedComponentSystem.update(*entity, this->delta);
+			MovesComponentSystem::Instance()->update(*entity, this->delta);
+			CollidesComponentSystem::Instance()->update(*entity, this->delta);
+			AnimatedComponentSystem::Instance()->update(*entity, this->delta);
 		}
 
 		if (EventsManager::Instance()->hasEvents()) {
-			this->selectableComponentSystem.update(*entity, this->delta);
-			this->eventsComponentSystem.update(*entity, this->delta);
+			SelectableComponentSystem::Instance()->update(*entity, this->delta);
+			EventsComponentSystem::Instance()->update(*entity, this->delta);
 		}
 
 		entity->update(this->delta);
@@ -118,10 +120,10 @@ void SceneManager::render() {
 	sf::RenderStates states;
 
 	ViewManager::Instance()->setActiveView(this->clientLayer->getViewId());
-	GraphicsComponentSystem::draw(*(this->clientLayer), this->window, states);
+	this->render(*(this->clientLayer), this->window, states);
 
 	ViewManager::Instance()->setActiveView(this->engineLayer->getViewId());
-	GraphicsComponentSystem::draw(*(this->engineLayer), this->window, states);
+	this->render(*(this->engineLayer), this->window, states);
 
 	window.display();
 }
@@ -142,4 +144,35 @@ std::string SceneManager::calculateRollingAverageFPS(const float delta) {
 	}
 
 	return std::to_string(sum / 100);
+}
+
+
+void SceneManager::render(TIEntity& entity, sf::RenderWindow& window, sf::RenderStates states) {
+	SpriteComponent* spriteComponent = entity.getComponent<SpriteComponent>();
+	TextComponent* textComponent = entity.getComponent<TextComponent>();
+	ShapeComponent* shapeComponent = entity.getComponent<ShapeComponent>();
+	
+	//Continue traversal if there's no graphics components, or if either component is drawn
+	bool continueTraversal = textComponent == nullptr && spriteComponent == nullptr && shapeComponent == nullptr;
+	if (spriteComponent != nullptr && spriteComponent->isDrawn()) {
+		//states.transform *= spriteComponent->getTransform();
+		window.draw(*dynamic_cast<sf::Sprite*>(spriteComponent), states);
+		continueTraversal = true;
+	}
+
+	if (textComponent != nullptr && textComponent->isDrawn()) {
+		window.draw(*dynamic_cast<sf::Text*>(textComponent));
+		continueTraversal = true;
+	}
+
+	if (shapeComponent != nullptr && shapeComponent->isDrawn()) {
+		window.draw(*dynamic_cast<sf::Shape*>(shapeComponent));
+		continueTraversal = true;
+	}
+
+	if (continueTraversal) {
+		for (auto& child : entity.getChildren()) {
+			this->render(*child, window, states);
+		}
+	}
 }
