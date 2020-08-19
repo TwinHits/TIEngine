@@ -14,8 +14,8 @@ void CollidesComponentSystem::update(TIEntity& entity, const float delta) {
 	}
 }
 
-CollidesComponent* CollidesComponentSystem::addComponent(const TIEntityFactory& tientityFactory, TIEntity& tientity) {
-	return nullptr;
+void CollidesComponentSystem::addComponent(const TIEntityFactory& tientityFactory, TIEntity& tientity) {
+	return;
 }
 
 	/*

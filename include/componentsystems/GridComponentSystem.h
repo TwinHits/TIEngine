@@ -12,12 +12,14 @@
 
 namespace TIE {
 
+// Grid Component
+
 class GridComponentSystem : public Singleton<GridComponentSystem>, ComponentSystem {
 	public:
 		GridComponentSystem() {};
 		void update(TIEntity&, const float);
 
-		GridComponent* addComponent(const TIEntityFactory&, TIEntity&);
+		void addComponent(const TIEntityFactory&, TIEntity&);
 
 		sf::Vector2f normalizePositionToGrid(const sf::Vector2f&);
 

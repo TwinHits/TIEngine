@@ -29,7 +29,7 @@ SpriteComponent& SpriteComponentSystem::addComponent(TIEntity& entity) {
 }
 
 
-SpriteComponent* SpriteComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& entity) {
+void SpriteComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& entity) {
 
 	SpriteComponent* spritePtr = nullptr;
 	if (factory.stringValues.count(SpriteComponentSystem::TEXTURE_KEY)) {
@@ -49,10 +49,7 @@ SpriteComponent* SpriteComponentSystem::addComponent(const TIEntityFactory& fact
 			bool drawn = factory.boolValues.at(SpriteComponentSystem::DRAWN_KEY);
 			spriteComponent.setDrawn(drawn);
 		}
-		spritePtr = &spriteComponent;
 	}
-
-	return spritePtr;
 }
 
 

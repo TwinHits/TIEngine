@@ -78,6 +78,7 @@ void SceneManager::updateGameState() {
 	this->delta = this->clock.restart().asSeconds();
 
 	this->updateTIEntities(this->sceneGraphRoot->getChildren());
+	AnimatedComponentSystem::Instance()->update(this->delta);
 	ViewManager::Instance()->updateCamera(this->delta);
 
 	std::string fps = this->calculateRollingAverageFPS(this->delta);
@@ -97,7 +98,6 @@ void SceneManager::updateTIEntities(const std::vector<std::unique_ptr<TIEntity> 
 		if (entity->getComponent<SpriteComponent>() != nullptr) {
 			MovesComponentSystem::Instance()->update(*entity, this->delta);
 			CollidesComponentSystem::Instance()->update(*entity, this->delta);
-			AnimatedComponentSystem::Instance()->update(*entity, this->delta);
 		}
 
 		if (EventsManager::Instance()->hasEvents()) {

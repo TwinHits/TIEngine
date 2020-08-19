@@ -13,12 +13,14 @@
 
 namespace TIE {
 
+// Selectable:w
+
 class SelectableComponentSystem : public Singleton<SelectableComponentSystem>, ComponentSystem {
 	public:
 		SelectableComponentSystem() {};
 		void update(TIEntity&, const float);
 
-		SelectableComponent* addComponent(const TIEntityFactory&, TIEntity&);
+		void addComponent(const TIEntityFactory&, TIEntity&);
 
 		bool isSelected(TIEntity&);
 

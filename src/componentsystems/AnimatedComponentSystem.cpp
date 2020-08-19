@@ -18,20 +18,17 @@ const std::string AnimatedComponentSystem::RANGE = "range";
 const std::string AnimatedComponentSystem::SPEED = "speed";
 const std::string AnimatedComponentSystem::DIRECTION = "direction";
 
-void AnimatedComponentSystem::update(TIEntity& tientity, const float delta) {
-    AnimatedComponent* animatedComponent = tientity.getComponent<AnimatedComponent>();
-    SpriteComponent* spriteComponent = tientity.getComponent<SpriteComponent>();
-    if (animatedComponent != nullptr && spriteComponent != nullptr) {
-        this->updateCurrentAnimation(*animatedComponent, tientity);
-        if (this->progressAnimation(animatedComponent->getCurrentAnimation(), delta)) {
-            this->setTextureRect(*animatedComponent->getCurrentAnimation(), *spriteComponent);
+void AnimatedComponentSystem::update(const float delta) {
+    for (auto c : this->components) {
+        this->updateCurrentAnimation(c);
+        if (this->progressAnimation(c.animatedComponent.getCurrentAnimation(), delta)) {
+            this->setTextureRect(*c.animatedComponent.getCurrentAnimation(), c.spriteComponent);
         }
     }
 }
 
 
-AnimatedComponent* AnimatedComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
-	AnimatedComponent* animatedPtr = nullptr;
+void AnimatedComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
 
 	// Get all the keys containing animations from the stringValues map 
 	std::vector<std::string> animatedStringKeys;
@@ -50,7 +47,14 @@ AnimatedComponent* AnimatedComponentSystem::addComponent(const TIEntityFactory& 
 
     if (animatedStringKeys.size()) {
         AnimatedComponent& animatedComponent = tientity.addComponent<AnimatedComponent>();
+        SpriteComponent* spriteComponent = tientity.getComponent<SpriteComponent>();
+        MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
         
+        if (spriteComponent == nullptr || movesComponent == nullptr) {
+            return;
+        }
+        Components components = { animatedComponent, *spriteComponent, *movesComponent };
+
         std::map<std::string, Animation> animations;
         for (auto key : animatedStringKeys) {
             std::vector<std::string> parts;
@@ -93,32 +97,27 @@ AnimatedComponent* AnimatedComponentSystem::addComponent(const TIEntityFactory& 
         }
 
         animatedComponent.setAnimations(animations);
-        this->updateCurrentAnimation(animatedComponent, tientity);
-        animatedPtr = &animatedComponent;
+        this->updateCurrentAnimation(components);
+        this->components.push_back(components);
     }
 
-    return animatedPtr;
+    return;
 }
 
 
-void AnimatedComponentSystem::updateCurrentAnimation(AnimatedComponent& animatedComponent, TIEntity& tientity) {
+void AnimatedComponentSystem::updateCurrentAnimation(Components& components) {
 
-    SpriteComponent* spriteComponent = tientity.getComponent<SpriteComponent>();
-    MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
-
-    if (movesComponent != nullptr) {
         // float rotation = movesComponent->getVelocity().y;
-        float rotation = spriteComponent->getRotation();
-        std::map<std::string, Animation> animations = animatedComponent.getAnimations();
+        float rotation = components.spriteComponent.getRotation();
+        std::map<std::string, Animation> animations = components.animatedComponent.getAnimations();
         for (auto animation : animations) {
             if (Math::isAngleBetweenAngles(rotation, animation.second.range.x, animation.second.range.y)) {
                 animation.second.currentFrame = animation.second.frames.begin();
-                animatedComponent.setCurrentAnimation(animation.second);
-                this->setTextureRect(animation.second, *spriteComponent);
+                components.animatedComponent.setCurrentAnimation(animation.second);
+                this->setTextureRect(animation.second, components.spriteComponent);
                 break;
             }
         }
-    }
 }
 
 

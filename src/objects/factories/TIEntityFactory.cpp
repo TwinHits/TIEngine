@@ -44,15 +44,15 @@ TIEntity& TIEntityFactory::build() {
 	TIEntity& tientity = this->parent->attachChild();
 	tientity.setName(this->name);
 
-	SpriteComponent* spriteComponent = SpriteComponentSystem::Instance()->addComponent(*this, tientity);
-	TextComponent* textComponent = TextComponentSystem::Instance()->addComponent(*this, tientity);
-	ShapeComponent* shapeComponent = ShapeComponentSystem::Instance()->addComponent(*this, tientity);
-	AnimatedComponent* animatedComponent = AnimatedComponentSystem::Instance()->addComponent(*this, tientity);
-	CollidesComponent* collidesComponent = CollidesComponentSystem::Instance()->addComponent(*this, tientity);
-	MovesComponent* movesComponent = MovesComponentSystem::Instance()->addComponent(*this, tientity);
-	SelectableComponent* selectableComponent = SelectableComponentSystem::Instance()->addComponent(*this, tientity);
-	EventsComponent* eventsComponent = EventsComponentSystem::Instance()->addComponent(*this, tientity);
-	GridComponent* gridComponent = GridComponentSystem::Instance()->addComponent(*this, tientity);
+	SpriteComponentSystem::Instance()->addComponent(*this, tientity);
+	TextComponentSystem::Instance()->addComponent(*this, tientity);
+	ShapeComponentSystem::Instance()->addComponent(*this, tientity);
+	GridComponentSystem::Instance()->addComponent(*this, tientity);
+	MovesComponentSystem::Instance()->addComponent(*this, tientity);
+	CollidesComponentSystem::Instance()->addComponent(*this, tientity);
+	AnimatedComponentSystem::Instance()->addComponent(*this, tientity);
+	SelectableComponentSystem::Instance()->addComponent(*this, tientity);
+	EventsComponentSystem::Instance()->addComponent(*this, tientity);
 
 	return tientity;
 }

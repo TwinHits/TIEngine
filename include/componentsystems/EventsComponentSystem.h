@@ -14,12 +14,14 @@
 
 namespace TIE {
 
+// Events
+
 class EventsComponentSystem : public Singleton<EventsComponentSystem>, ComponentSystem {
 	public:
 		EventsComponentSystem() {};
 		void update(TIEntity&, const float);
 
-		EventsComponent* addComponent(const TIEntityFactory&, TIEntity&);
+		void addComponent(const TIEntityFactory&, TIEntity&);
 
 		static const std::string EVENTS;
 		static const std::string SELECTED;

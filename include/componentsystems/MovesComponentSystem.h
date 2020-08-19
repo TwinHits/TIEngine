@@ -16,12 +16,16 @@
 
 namespace TIE {
 
+// Moves
+// Sprite
+// Grid
+
 class MovesComponentSystem : public Singleton<MovesComponentSystem>, ComponentSystem {
 	public:
 		MovesComponentSystem() {};
 		void update(TIEntity&, const float);
 
-		MovesComponent* addComponent(const TIEntityFactory&, TIEntity&);
+		void addComponent(const TIEntityFactory&, TIEntity&);
 		
 		void setTargetPosition(TIEntity&, Direction);
 		void setTargetPosition(TIEntity&, sf::Vector2f&);

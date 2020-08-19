@@ -22,8 +22,8 @@ ShapeComponent& ShapeComponentSystem::addComponent(TIEntity& entity) {
 }
 
 
-ShapeComponent* ShapeComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& entity) {
-	return &entity.addComponent<ShapeComponent>();
+void ShapeComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& entity) {
+	this->addComponent(entity);
 }
 
 /*

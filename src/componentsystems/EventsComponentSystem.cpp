@@ -45,7 +45,7 @@ void EventsComponentSystem::update(TIEntity& entity, const float delta) {
 }
 
 
-EventsComponent* EventsComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& entity) {
+void EventsComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& entity) {
 	EventsComponent* eventsPtr = nullptr;
 
 	// Get all the keys containing events from the stringValues map 
@@ -79,10 +79,7 @@ EventsComponent* EventsComponentSystem::addComponent(const TIEntityFactory& fact
 				eventsComponent.setKeyHandler(state, sfKey, handler);
 			}
 		}
-		eventsPtr = &eventsComponent;
 	}
-
-	return eventsPtr;
 }
 
 

@@ -38,7 +38,7 @@ void MovesComponentSystem::update(TIEntity& entity, const float delta) {
 }
 
 
-MovesComponent* MovesComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& entity) {
+void MovesComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& entity) {
 
 	MovesComponent* movesPtr = nullptr;
 	if (factory.floatValues.count(MovesComponentSystem::SPEED_KEY)) {
@@ -67,7 +67,6 @@ MovesComponent* MovesComponentSystem::addComponent(const TIEntityFactory& factor
 		movesPtr->setAngularVelocity(sf::Vector2f(rotationalSpeed, 0.0f));
 	}
 
-	return movesPtr;
 }
 
 

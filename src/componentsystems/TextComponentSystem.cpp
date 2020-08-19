@@ -25,7 +25,7 @@ TextComponent& TextComponentSystem::addComponent(TIEntity& entity) {
 	return entity.addComponent<TextComponent>();
 }
 
-TextComponent* TextComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& entity) {
+void TextComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& entity) {
 
 	TextComponent* textPtr = nullptr;
 	if (factory.stringValues.count(TextComponentSystem::TEXT_KEY)) {
@@ -37,11 +37,8 @@ TextComponent* TextComponentSystem::addComponent(const TIEntityFactory& factory,
 			bool drawnValue = factory.boolValues.at(TextComponentSystem::DRAWN_KEY);
 			textComponent.setDrawn(drawnValue);
 		}
-
-		textPtr = &textComponent;
 	}
 
-	return textPtr;
 }
 
 
