@@ -34,3 +34,7 @@ sudo apt-get install libopenal-dev
 8/11/2020
 windows could not find boost until I b2.exe'd with flags
 .\b2.exe  release debug threading=multi --build-type=complete --toolset=msvc address-model=64 stage
+
+8/20/2020
+Git would show that there were tons of changes in linux hacing to do with ending all of the lines with ^M. I fixed this with git command
+git config --global core.autocrlf true
