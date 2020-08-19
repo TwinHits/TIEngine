@@ -69,10 +69,11 @@ bool AssetsManager::loadTexturesFromPath(const std::string& folder) {
 	try {
 		boost::filesystem::path path = boost::filesystem::path(folder);
 		if (boost::filesystem::exists(path) && boost::filesystem::is_directory(path)) {
-			this->fontsPathCache.insert(path);
+			this->texturesPathCache.insert(path);
 			for (boost::filesystem::directory_entry& i : boost::filesystem::directory_iterator(path)) {
 				sf::Texture t;
 				if (t.loadFromFile(i.path().string())) {
+					t.setSmooth(true);
 					GlobalId id = HashManager::Instance()->getHash(i.path().filename().string());
 					this->textures[id] = t;
 					LogManager::Instance()->info("Loading texture '" + i.path().string() + ". Id: " + std::to_string(id));

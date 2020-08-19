@@ -12,18 +12,19 @@
 
 namespace TIE {
 
-// Sprite
-
 class SpriteComponentSystem : public Singleton<SpriteComponentSystem>, ComponentSystem {
 	public:
 		SpriteComponentSystem() {};
-		void update(TIEntity&, const float);
+		void update(const float);
 		SpriteComponent& addComponent(TIEntity&);
 		void addComponent(const TIEntityFactory&, TIEntity&);
 
 		static const std::string DRAWN;
 		static const std::string TEXTURE;
 		static const std::string ROTATION;
+		static const std::string WIDTH;
+		static const std::string HEIGHT;
+		static const std::string REPEATED;
 		static const std::string DRAWN_KEY;
 		static const std::string TEXTURE_KEY;
 		static const std::string ROTATION_KEY;

@@ -7,7 +7,7 @@
 
 #include "managers/ScriptManager.h"
 #include "objects/enumeration/LogLevel.h"
-#include "utilities/StringHelpers.h"
+#include "utils/StringHelpers.h"
 
 using namespace TIE;
 

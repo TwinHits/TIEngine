@@ -10,12 +10,10 @@
 
 namespace TIE {
 
-// Shape
-
 class ShapeComponentSystem : public Singleton<ShapeComponentSystem>, ComponentSystem {
 	public:
 		ShapeComponentSystem() {};
-		void update(TIEntity&, const float);
+		void update(const float);
 		ShapeComponent& addComponent(TIEntity&);
 		void addComponent(const TIEntityFactory&, TIEntity&);
 

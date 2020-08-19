@@ -12,7 +12,9 @@ namespace TIE {
 
 class EventsComponent : public Component {
 	public: 
-		EventsComponent() {};
+		EventsComponent() {
+			this->addState("unselected");
+		};
 		~EventsComponent() {};
 
 		bool hasHandlers();
@@ -27,10 +29,14 @@ class EventsComponent : public Component {
 		const std::string* getKeyHandler(const std::string&, const sf::Keyboard::Key&);
 		bool hasKeyHandlers();
 
+		bool hasState(const std::string&);
+		void addState(const std::string&);
+		void removeState(const std::string&);
+		const std::vector<std::string>& getStates();
 	private:
 		std::map<std::string, std::map<sf::Event::EventType, std::string> > eventHandlers;
 		std::map<std::string, std::map<sf::Keyboard::Key, std::string> > keyHandlers;
-
+		std::vector<std::string> states;
 };
 
 }

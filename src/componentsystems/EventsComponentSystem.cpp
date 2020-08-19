@@ -4,39 +4,47 @@
 #include <vector>
 
 #include "componentsystems/MovesComponentSystem.h"
-#include "componentsystems/SelectableComponentSystem.h"
 #include "objects/components/EventsComponent.h"
+#include "objects/components/SpriteComponent.h"
+#include "objects/components/MovesComponent.h"
 #include "objects/entities/TIEntity.h"
 #include "objects/enumeration/Direction.h"
 #include "managers/EventsManager.h"
-#include "utilities/StringHelpers.h"
+#include "utils/StringHelpers.h"
 
 using namespace TIE;
 
 const std::string EventsComponentSystem::EVENTS = "events";
 const std::string EventsComponentSystem::SELECTED = "selected";
+const std::string EventsComponentSystem::SELECTABLE = "selectable";
+const std::string EventsComponentSystem::SELECTABLE_KEY = EventsComponentSystem::SELECTABLE + '.' + EventsComponentSystem::SELECTABLE;
 
-void EventsComponentSystem::update(TIEntity& entity, const float delta) {
-	EventsComponent* eventsComponent = entity.getComponent<EventsComponent>();
-	if (eventsComponent != nullptr && eventsComponent->hasHandlers() && eventsManager->hasEvents()) {
-		const std::map<sf::Event::EventType, sf::Event>& events = eventsManager->getEvents();
-		std::vector<std::string> states;
-		states = this->getStates(entity, states);
-		for (const std::string& state : states) {
-			for (auto& event : events) {
-				const std::string* eventHandler = eventsComponent->getEventHandler(state, event.second);
-				if (eventHandler != nullptr) {
-					if (*eventHandler == "setDestination") {
-						sf::Vector2f position = sf::Vector2f(event.second.mouseButton.x, event.second.mouseButton.y);
-						MovesComponentSystem::Instance()->setTargetPosition(entity, position);
-					} else if (*eventHandler == "up") {
-						MovesComponentSystem::Instance()->setTargetPosition(entity, Direction::TOP);
-					} else if (*eventHandler == "down") {
-						MovesComponentSystem::Instance()->setTargetPosition(entity, Direction::BOTTOM);
-					} else if (*eventHandler == "right") {
-						MovesComponentSystem::Instance()->setTargetPosition(entity, Direction::RIGHT);
-					} else if (*eventHandler == "left") {
-						MovesComponentSystem::Instance()->setTargetPosition(entity, Direction::LEFT);
+void EventsComponentSystem::update(const float delta) {
+	for (auto& c : this->components) {
+		if (c.eventsComponent.hasHandlers() && eventsManager->hasEvents()) {
+			const std::map<sf::Event::EventType, sf::Event>& events = eventsManager->getEvents();
+			for (const std::string& state : c.eventsComponent.getStates()) {
+				for (auto& event : events) {
+					const std::string* eventHandler = c.eventsComponent.getEventHandler(state, event.second);
+					if (eventHandler != nullptr) {
+						if (*eventHandler == "setDestination") {
+							sf::Vector2f position = sf::Vector2f(event.second.mouseButton.x, event.second.mouseButton.y);
+							MovesComponentSystem::Instance()->setTargetPosition(c.movesComponent, c.spriteComponent, position);
+						} else if (*eventHandler == "up") {
+							MovesComponentSystem::Instance()->setTargetPosition(c.movesComponent, c.spriteComponent, Direction::TOP);
+						} else if (*eventHandler == "down") {
+							MovesComponentSystem::Instance()->setTargetPosition(c.movesComponent, c.spriteComponent, Direction::BOTTOM);
+						} else if (*eventHandler == "right") {
+							MovesComponentSystem::Instance()->setTargetPosition(c.movesComponent, c.spriteComponent, Direction::RIGHT);
+						} else if (*eventHandler == "left") {
+							MovesComponentSystem::Instance()->setTargetPosition(c.movesComponent, c.spriteComponent, Direction::LEFT);
+						} else if (*eventHandler == "select") {
+							const sf::Event* const clickEvent = eventsManager->getEvent(sf::Event::MouseButtonPressed);
+							if (clickEvent != nullptr && c.spriteComponent.getGlobalBounds().contains(sf::Vector2f(clickEvent->mouseButton.x, clickEvent->mouseButton.y))) {
+								c.eventsComponent.removeState("unselected");
+								c.eventsComponent.addState("selected");
+							}
+						}
 					}
 				}
 			}
@@ -46,7 +54,6 @@ void EventsComponentSystem::update(TIEntity& entity, const float delta) {
 
 
 void EventsComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& entity) {
-	EventsComponent* eventsPtr = nullptr;
 
 	// Get all the keys containing events from the stringValues map 
 	std::vector<std::string> eventKeys;
@@ -58,8 +65,11 @@ void EventsComponentSystem::addComponent(const TIEntityFactory& factory, TIEntit
 
 	if (eventKeys.size()) {
 		EventsComponent& eventsComponent = entity.addComponent<EventsComponent>();
+		SpriteComponent& spriteComponent = entity.addComponent<SpriteComponent>();
+		MovesComponent& movesComponent = entity.addComponent<MovesComponent>();
+		Components components = { eventsComponent, spriteComponent, movesComponent };
 
-		for (auto key : eventKeys) {
+		for (auto& key : eventKeys) {
 			// Split the key into parts for state, event, and handler
 			std::vector<std::string> parts;
 			String::split(key, '.', parts);
@@ -79,15 +89,7 @@ void EventsComponentSystem::addComponent(const TIEntityFactory& factory, TIEntit
 				eventsComponent.setKeyHandler(state, sfKey, handler);
 			}
 		}
-	}
-}
 
-
-std::vector<std::string>& EventsComponentSystem::getStates(TIEntity& tientity, std::vector<std::string>& states) {
-	if (SelectableComponentSystem::Instance()->isSelected(tientity)) {
-		states.push_back("selected");
-	} else {
-		states.push_back("unselected");
+		this->components.push_back(components);
 	}
-	return states;
 }

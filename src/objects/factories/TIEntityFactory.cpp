@@ -8,7 +8,6 @@
 #include "componentsystems/EventsComponentSystem.h"
 #include "componentsystems/GridComponentSystem.h"
 #include "componentsystems/MovesComponentSystem.h"
-#include "componentsystems/SelectableComponentSystem.h"
 #include "componentsystems/SpriteComponentSystem.h"
 #include "componentsystems/TextComponentSystem.h"
 #include "componentsystems/ShapeComponentSystem.h"
@@ -16,7 +15,6 @@
 #include "objects/components/EventsComponent.h"
 #include "objects/components/GridComponent.h"
 #include "objects/components/SpriteComponent.h"
-#include "objects/components/SelectableComponent.h"
 #include "objects/components/TextComponent.h"
 #include "objects/components/MovesComponent.h"
 #include "objects/entities/TIEntity.h"
@@ -28,7 +26,6 @@ TIEntityFactory::TIEntityFactory() {
 			AnimatedComponentSystem::ANIMATED,
 			SpriteComponentSystem::DRAWN,
 			MovesComponentSystem::MOVES,
-			SelectableComponentSystem::SELECTABLE,
 			EventsComponentSystem::EVENTS,
 			GridComponentSystem::GRID
 		};
@@ -51,7 +48,6 @@ TIEntity& TIEntityFactory::build() {
 	MovesComponentSystem::Instance()->addComponent(*this, tientity);
 	CollidesComponentSystem::Instance()->addComponent(*this, tientity);
 	AnimatedComponentSystem::Instance()->addComponent(*this, tientity);
-	SelectableComponentSystem::Instance()->addComponent(*this, tientity);
 	EventsComponentSystem::Instance()->addComponent(*this, tientity);
 
 	return tientity;

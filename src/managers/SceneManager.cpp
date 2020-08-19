@@ -6,7 +6,6 @@
 #include "componentsystems/CollidesComponentSystem.h"
 #include "componentsystems/EventsComponentSystem.h"
 #include "componentsystems/MovesComponentSystem.h"
-#include "componentsystems/SelectableComponentSystem.h"
 #include "managers/LogManager.h" 
 #include "managers/TimeManager.h"
 #include "managers/ViewManager.h"
@@ -17,6 +16,7 @@
 #include "objects/components/TextComponent.h"
 #include "objects/entities/DegreeGuide.h"
 #include "objects/entities/MousePtrCoords.h"
+#include "objects/entities/PerformanceDisplay.h"
 #include "templates/MakeUnique.h"
 
 using namespace TIE;
@@ -46,6 +46,10 @@ bool SceneManager::initialize() {
 	std::unique_ptr<MousePtrCoords> mousePtrCoords = make_unique<MousePtrCoords>();
 	mousePtrCoords->initialize();
 	this->engineLayer->attachChild(std::move(mousePtrCoords));
+	
+	std::unique_ptr<PerformanceDisplay> performanceDisplay = make_unique<PerformanceDisplay>();
+	performanceDisplay->initialize();
+	this->engineLayer->attachChild(std::move(performanceDisplay));
 
 	return true;
 }
@@ -74,15 +78,18 @@ TIEntity* SceneManager::findTIEntity(sf::Vector2f point) {
 
 
 void SceneManager::updateGameState() {
-
 	this->delta = this->clock.restart().asSeconds();
 
-	this->updateTIEntities(this->sceneGraphRoot->getChildren());
 	AnimatedComponentSystem::Instance()->update(this->delta);
+	MovesComponentSystem::Instance()->update(this->delta);
+	CollidesComponentSystem::Instance()->update(this->delta);
+	EventsComponentSystem::Instance()->update(this->delta);
+	
+	this->updateEngineEntity(*(this->engineLayer));
+
 	ViewManager::Instance()->updateCamera(this->delta);
 
-	std::string fps = this->calculateRollingAverageFPS(this->delta);
-	this->windowManager->showFPS(fps);
+	this->fps = this->calculateRollingAverageFPS(this->delta);
 }
 
 
@@ -91,24 +98,14 @@ void SceneManager::removeTIEntities(std::vector<std::unique_ptr<TIEntity> >& ent
 }
 
 
-void SceneManager::updateTIEntities(const std::vector<std::unique_ptr<TIEntity> >& entities) {
+void SceneManager::updateEngineEntity(TIEntity& tientity) {
 
-	for (auto& entity : entities) {
-
-		if (entity->getComponent<SpriteComponent>() != nullptr) {
-			MovesComponentSystem::Instance()->update(*entity, this->delta);
-			CollidesComponentSystem::Instance()->update(*entity, this->delta);
+	tientity.update(this->delta);
+	if (tientity.getChildren().size() > 0) {
+		this->removeTIEntities(tientity.getChildren());
+		for (auto& child : tientity.getChildren()) {
+			this->updateEngineEntity(*child);
 		}
-
-		if (EventsManager::Instance()->hasEvents()) {
-			SelectableComponentSystem::Instance()->update(*entity, this->delta);
-			EventsComponentSystem::Instance()->update(*entity, this->delta);
-		}
-
-		entity->update(this->delta);
-
-		this->removeTIEntities(entity->getChildren());
-		this->updateTIEntities(entity->getChildren());
 	}
 }
 
@@ -129,12 +126,17 @@ void SceneManager::render() {
 }
 
 
-std::string SceneManager::calculateRollingAverageFPS(const float delta) {
-	static int index=0;
-	static int sum=0;
-	static int ticks[100] = { 0 };
+float SceneManager::getFPS() {
+	return this->fps;
+}
 
-	int tick = 60 / delta;
+
+float SceneManager::calculateRollingAverageFPS(const float delta) {
+	static int index=0;
+	static float sum=0;
+	static float ticks[100] = { 0 };
+
+	float tick = 1 / delta;
 
 	sum -= ticks[index];
 	sum += tick;
@@ -143,7 +145,7 @@ std::string SceneManager::calculateRollingAverageFPS(const float delta) {
 		index = 0;
 	}
 
-	return std::to_string(sum / 100);
+	return sum / 100;
 }
 
 

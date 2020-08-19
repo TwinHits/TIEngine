@@ -8,7 +8,7 @@
 #include "objects/entities/TIEntity.h"
 #include "objects/factories/TIEntityFactory.h"
 #include "managers/AssetsManager.h"
-#include "utilities/StringHelpers.h"
+#include "utils/StringHelpers.h"
 
 using namespace TIE;
 
@@ -17,7 +17,7 @@ const std::string TextComponentSystem::TEXT = "text";
 const std::string TextComponentSystem::DRAWN_KEY = TextComponentSystem::DRAWN + '.' + TextComponentSystem::DRAWN;
 const std::string TextComponentSystem::TEXT_KEY = TextComponentSystem::DRAWN + '.' + TextComponentSystem::TEXT;
 
-void TextComponentSystem::update(TIEntity& tientity, const float delta) {
+void TextComponentSystem::update(const float delta) {
 
 }
 
@@ -27,7 +27,6 @@ TextComponent& TextComponentSystem::addComponent(TIEntity& entity) {
 
 void TextComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& entity) {
 
-	TextComponent* textPtr = nullptr;
 	if (factory.stringValues.count(TextComponentSystem::TEXT_KEY)) {
 		std::string textValue = factory.stringValues.at(TextComponentSystem::TEXT_KEY);
 		TextComponent& textComponent = entity.addComponent<TextComponent>();

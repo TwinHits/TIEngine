@@ -1,9 +1,13 @@
 #include "objects/entities/MousePtrCoords.h"
 
+#include <sstream>
+
+#include <SFML/Graphics.hpp>
+
 #include "componentsystems/TextComponentSystem.h"
 #include "managers/AssetsManager.h"
 #include "managers/ConfigManager.h"
-#include "utilities/Graphics.h"
+#include "utils/Graphics.h"
 
 using namespace TIE;
 
@@ -28,11 +32,18 @@ void MousePtrCoords::initialize() {
 
 void MousePtrCoords::update(const float delta) {
 	if (Graphics::isDrawn(*this)) {
-		TextComponent* textComponent = this->getComponent<TextComponent>();
-		sf::Vector2f mouseWorldPosition = this->eventsManager->getMouseWorldPosition();
-		sf::Vector2f mouseWindowPosition = this->eventsManager->getMouseWindowPosition();
-		textComponent->setString(std::to_string(int(mouseWorldPosition.x)) + ", " + std::to_string(int(mouseWorldPosition.y)));
-		textComponent->setString(textComponent->getString() + "\n" + (std::to_string(int(mouseWindowPosition.x)) + ", " + std::to_string(int(mouseWindowPosition.y))));
-		textComponent->setPosition(mouseWindowPosition.x + 20, mouseWindowPosition.y);
+		if (this->cachedMouseWorldPostion != this->eventsManager->getMouseWorldPosition() || this->cachedMouseWindowPostion == this->eventsManager->getMouseWindowPosition()) {
+			this->cachedMouseWorldPostion = this->eventsManager->getMouseWorldPosition();
+			this->cachedMouseWindowPostion = this->eventsManager->getMouseWindowPosition();
+			TextComponent* textComponent = this->getComponent<TextComponent>();
+
+			std::stringstream ss;
+			ss << int(this->cachedMouseWorldPostion.x) << ", " << int(this->cachedMouseWorldPostion.y);
+			ss << std::endl;
+			ss << int(this->cachedMouseWindowPostion.x) << ", " << int(this->cachedMouseWindowPostion.y);
+
+			textComponent->setString(ss.str());
+			textComponent->setPosition(this->cachedMouseWindowPostion.x + 20, this->cachedMouseWindowPostion.y);
+		}
 	}
 }

@@ -7,15 +7,12 @@
 
 using namespace TIE;
 
-void CollidesComponentSystem::update(TIEntity& entity, const float delta) {
-	CollidesComponent* collidesComponent = entity.getComponent<CollidesComponent>();
-	if (collidesComponent != nullptr && collidesComponent->isCollidable()) {
+void CollidesComponentSystem::update(const float delta) {
 
-	}
 }
 
 void CollidesComponentSystem::addComponent(const TIEntityFactory& tientityFactory, TIEntity& tientity) {
-	return;
+	
 }
 
 	/*

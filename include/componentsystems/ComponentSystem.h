@@ -9,7 +9,7 @@ namespace TIE {
 class ComponentSystem {
 	public:
 		virtual ~ComponentSystem() {};
-		virtual void update(TIEntity&, const float) = 0;
+		virtual void update(const float) = 0;
 		virtual void addComponent(const TIEntityFactory&, TIEntity&) = 0;
 };
 

@@ -4,7 +4,7 @@
 #include "managers/ConfigManager.h"
 #include "managers/ConsoleManager.h"
 #include "managers/EventsManager.h"
-#include "managers/GridManager.h"
+#include "managers/LevelManager.h"
 #include "managers/HashManager.h"
 #include "managers/LogManager.h"
 #include "managers/SceneManager.h"
@@ -30,7 +30,7 @@ bool StartUpManager::initialize() {
 	TimeManager::Instance()->initialize();
 	ScriptManager::Instance()->initialize();
 	StringManager::Instance()->initialize();
-	GridManager::Instance()->initialize();
+	LevelManager::Instance()->initialize();
 
 	return true;
 }

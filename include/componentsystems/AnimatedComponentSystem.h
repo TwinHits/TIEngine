@@ -14,13 +14,9 @@
 
 namespace TIE {
 
-// Animated
-// Sprite
-
 class AnimatedComponentSystem : public Singleton<AnimatedComponentSystem>, ComponentSystem {
     public:
         AnimatedComponentSystem() {};
-        void update(TIEntity&, const float) {};
         void update(const float);
         void addComponent(const TIEntityFactory&, TIEntity&);
 
@@ -39,7 +35,7 @@ class AnimatedComponentSystem : public Singleton<AnimatedComponentSystem>, Compo
         
         bool progressAnimation(Animation*, const float);
         void setTextureRect(const Animation&, SpriteComponent&);
-        void updateCurrentAnimation(Components&);
+        void updateCurrentAnimation(AnimatedComponent&, MovesComponent&, SpriteComponent&);
 };
 
 }

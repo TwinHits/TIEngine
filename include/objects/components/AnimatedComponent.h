@@ -15,10 +15,10 @@ struct AnimationFrame {
 
 struct Animation {
     std::vector<AnimationFrame> frames;
+    std::vector<AnimationFrame>::iterator currentFrame = frames.end();
     sf::Vector2f range = sf::Vector2f(0, 0);
     float speed = 0;
     float elapsedTime = 0;
-    std::vector<AnimationFrame>::iterator currentFrame = frames.end();
     int direction = 1;
 };
 
@@ -26,7 +26,7 @@ struct Animation {
 class AnimatedComponent : public Component {
     public:
         void setAnimations(std::map<std::string, Animation>);
-        std::map<std::string, Animation> getAnimations();
+        std::map<std::string, Animation>& getAnimations();
         
         void setCurrentAnimation(Animation&);
         Animation* getCurrentAnimation();

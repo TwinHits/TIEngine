@@ -7,7 +7,7 @@
 
 #include "componentsystems/SpriteComponentSystem.h"
 #include "managers/ConfigManager.h"
-#include "managers/GridManager.h"
+#include "managers/LevelManager.h"
 #include "managers/LogManager.h"
 #include "managers/SceneManager.h"
 #include "managers/ScriptManager.h"
@@ -16,8 +16,8 @@
 #include "objects/components/TextComponent.h"
 #include "objects/constants/ConsoleCommands.h"
 #include "templates/MakeUnique.h"
-#include "utilities/StringHelpers.h"
-#include "utilities/Graphics.h"
+#include "utils/StringHelpers.h"
+#include "utils/Graphics.h"
 
 using namespace TIE;
 
@@ -54,6 +54,8 @@ void ConsoleManager::runCommand() {
 
 	if (command == ConsoleCommands::TEST) {
 		LogManager::Instance()->command("Test Command Please Ignore.");
+	} else if (command == ConsoleCommands::QUIT) {
+		WindowManager::Instance()->removeWindow();
 	} else if (command == ConsoleCommands::SCRIPT || command == ConsoleCommands::LOAD) {
 		const std::string& scriptName = commandArgs.at(1);
 		ScriptManager::Instance()->loadScript(scriptName);
@@ -170,5 +172,5 @@ void TIE::ConsoleManager::clearDebugLog() {
 
 
 void TIE::ConsoleManager::showGridGuide() {
-	GridManager::Instance()->showGridGuide(true);
+	LevelManager::Instance()->showGridGuide(true);
 }

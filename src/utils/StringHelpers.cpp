@@ -1,4 +1,4 @@
-#include "utilities/StringHelpers.h"
+#include "utils/StringHelpers.h"
 
 #include <algorithm>
 #include <map>

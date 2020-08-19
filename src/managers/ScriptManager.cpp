@@ -6,9 +6,10 @@
 #include "managers/AssetsManager.h"
 #include "managers/ConfigManager.h"
 #include "managers/LogManager.h"
+#include "managers/LevelManager.h"
 #include "managers/WindowManager.h"
 #include "objects/factories/TIEntityFactory.h"
-#include "utilities/StringHelpers.h"
+#include "utils/StringHelpers.h"
 
 using namespace luabridge;
 using namespace TIE;
@@ -33,7 +34,7 @@ void ScriptManager::loadScript(const std::string& scriptPath) {
 		std::vector<std::string> parts;
 		String::split(scriptPath, '/', parts);
 		std::string scriptDirectory;
-		for (auto s = parts.begin(); s != parts.end() - 1; s++) {
+		for (auto& s = parts.begin(); s != parts.end() - 1; s++) {
 			scriptDirectory += *s + "/";
 		}
 
@@ -47,10 +48,10 @@ void ScriptManager::loadScript(const std::string& scriptPath) {
             this->loadAssets(assetsTable, scriptDirectory);
         }
 
-		LuaRef gridTable = getGlobal(this->luaState, "grid");
+		LuaRef gridTable = getGlobal(this->luaState, "level");
 		TIEntity* parent = nullptr;
         if (gridTable.isTable()) {
-            parent = this->loadGrid(gridTable);
+            parent = this->loadLevel(gridTable);
         }
 
         std::vector<std::string> tientities = Lua::getTableKeys(this->luaState, "tientities");
@@ -67,7 +68,7 @@ void ScriptManager::loadAssets(const luabridge::LuaRef& settingsTable, const std
 	std::vector<std::string> texturePaths;
 	if (texturesTable.isTable()) {
 		texturePaths = Lua::getVector(texturesTable, texturePaths);
-		for (auto path : texturePaths) {
+		for (auto& path : texturePaths) {
 			AssetsManager::Instance()->loadTexturesFromPath(scriptsPath + "/" + path);
 		}
 	}
@@ -76,7 +77,7 @@ void ScriptManager::loadAssets(const luabridge::LuaRef& settingsTable, const std
 	std::vector<std::string> fontsPath;
 	if (fontsTable.isTable()) {
 		fontsPath = Lua::getVector(fontsTable, fontsPath);
-		for (auto path : fontsPath) {
+		for (auto& path : fontsPath) {
 			AssetsManager::Instance()->loadFontsFromPath(scriptsPath + "/" + path);
 		}
 	}
@@ -85,7 +86,7 @@ void ScriptManager::loadAssets(const luabridge::LuaRef& settingsTable, const std
 	std::vector<std::string> audioPaths;
 	if (audioTable.isTable()) {
 		audioPaths = Lua::getVector(audioTable, audioPaths);
-		for (auto path : audioPaths) {
+		for (auto& path : audioPaths) {
 			AssetsManager::Instance()->loadAudioFromPath(scriptsPath + "/" + path);
 		}
 	}
@@ -110,26 +111,27 @@ void ScriptManager::loadWindowProperties(const LuaRef& windowTable) {
 }
 
 
-TIEntity* ScriptManager::loadGrid(const luabridge::LuaRef& gridTable) {
+TIEntity* ScriptManager::loadLevel(const luabridge::LuaRef& gridTable) {
 	TIEntityFactory factory = TIEntityFactory();
-	std::vector<std::string> components = Lua::getTableKeys(this->luaState, "grid");
-	for (auto component : components) {
+	std::vector<std::string> components = Lua::getTableKeys(this->luaState, "level");
+	for (auto& component : components) {
 		if (factory.isValidComponentName(component)) {
 			LuaRef table = gridTable[component];
 			if (table.isTable()) {
-				this->readComponentValues(factory, component, table, "grid." + component);
+				this->readComponentValues(factory, component, table, "level." + component);
 			}
 		}
 	}
 	TIEntity& tientity = factory.build();
-	LogManager::Instance()->info("Configured grid from Lua script.");
+	LevelManager::Instance()->setLevelEntity(tientity);
+	LogManager::Instance()->info("Configured level from Lua script.");
 	return &tientity;
 }
 
 
 void ScriptManager::loadTIEntities(const std::vector<std::string>& tientities, TIEntity* parent) {
 	LuaRef tientitiesTable = getGlobal(this->luaState, "tientities");
-	for (auto tientity : tientities) {
+	for (auto& tientity : tientities) {
 		ScriptManager::loadTIEntity("tientities." + tientity, tientitiesTable[tientity], parent);
 	}
 }
@@ -140,7 +142,7 @@ void ScriptManager::loadTIEntity(const std::string& tientityKey, const LuaRef& t
 	factory.setName(tientityKey).setParent(parent);
 	std::vector<std::string> components = Lua::getTableKeys(this->luaState, tientityKey);
 	std::vector<std::string> children;
-	for (auto component : components) {
+	for (auto& component : components) {
 		if (factory.isValidComponentName(component)) {
 			LuaRef table = tientityTable[component];
 			if (table.isTable()) {
@@ -163,7 +165,7 @@ void ScriptManager::loadTIEntity(const std::string& tientityKey, const LuaRef& t
 
 void ScriptManager::readComponentValues(TIEntityFactory& factory, const std::string& component, const LuaRef& table, const std::string& globalKey) {
 	std::vector<std::string> keys = Lua::getTableKeys(this->luaState, globalKey);
-	for (auto key : keys) {
+	for (auto& key : keys) {
 		LuaRef value = table[key];
 		if (!value.isNil()) {
 			if (value.isBool()) {

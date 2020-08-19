@@ -7,7 +7,7 @@
 #include "managers/WindowManager.h"
 #include "objects/components/TextComponent.h"
 #include "templates/MakeUnique.h"
-#include "utilities/TIEMath.h"
+#include "utils/TIEMath.h"
 
 using namespace TIE;
 
