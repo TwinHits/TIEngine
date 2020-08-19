@@ -5,6 +5,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "templates/VectorHelpers.h"
+
 using namespace TIE;
 
 bool EventsComponent::hasHandlers() {
@@ -68,3 +70,25 @@ const std::string* EventsComponent::getKeyHandler(const std::string& state, cons
 bool EventsComponent::hasKeyHandlers() {
 	return this->keyHandlers.size();
 }
+
+
+bool EventsComponent::hasState(const std::string& state) {
+	return Vector::contains(this->states, state);
+}
+
+
+void EventsComponent::addState(const std::string& state) {
+	if (!this->hasState(state)) {
+		this->states.push_back(state);
+	}
+}
+
+void TIE::EventsComponent::removeState(const std::string& state) {
+	Vector::remove(this->states, state);
+}
+
+
+const std::vector<std::string>& TIE::EventsComponent::getStates() {
+	return this->states;
+}
+
