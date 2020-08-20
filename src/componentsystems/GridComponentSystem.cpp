@@ -8,7 +8,7 @@
 #include "objects/factories/TIEntityFactory.h"
 #include "managers/GridManager.h"
 #include "managers/LogManager.h"
-#include "utilities/TIEMath.h"
+#include "utils/TIEMath.h"
 
 using namespace TIE;
 

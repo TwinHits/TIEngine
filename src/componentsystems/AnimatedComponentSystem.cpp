@@ -7,8 +7,8 @@
 #include "objects/components/SpriteComponent.h"
 #include "objects/entities/TIEntity.h"
 #include "objects/factories/TIEntityFactory.h"
-#include "utilities/StringHelpers.h"
-#include "utilities/TIEMath.h"
+#include "utils/StringHelpers.h"
+#include "utils/TIEMath.h"
 
 using namespace TIE;
 

@@ -8,7 +8,7 @@
 #include "managers/LogManager.h"
 #include "managers/WindowManager.h"
 #include "objects/factories/TIEntityFactory.h"
-#include "utilities/StringHelpers.h"
+#include "utils/StringHelpers.h"
 
 using namespace luabridge;
 using namespace TIE;

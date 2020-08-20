@@ -3,7 +3,7 @@
 #include "componentsystems/TextComponentSystem.h"
 #include "managers/AssetsManager.h"
 #include "managers/ConfigManager.h"
-#include "utilities/Graphics.h"
+#include "utils/Graphics.h"
 
 using namespace TIE;
 

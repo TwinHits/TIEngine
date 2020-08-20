@@ -8,7 +8,7 @@
 #include "managers/WindowManager.h"
 #include "objects/enumeration/Direction.h"
 #include "templates/MakeUnique.h"
-#include "utilities/TIEMath.h"
+#include "utils/TIEMath.h"
 
 using namespace TIE; 
 

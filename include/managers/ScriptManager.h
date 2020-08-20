@@ -9,7 +9,7 @@
 
 #include "objects/entities/TIEntity.h"
 #include "objects/factories/TIEntityFactory.h"
-#include "utilities/LuaHelpers.h"
+#include "utils/LuaHelpers.h"
 
 namespace TIE {
 

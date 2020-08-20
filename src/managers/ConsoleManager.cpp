@@ -16,8 +16,8 @@
 #include "objects/components/TextComponent.h"
 #include "objects/constants/ConsoleCommands.h"
 #include "templates/MakeUnique.h"
-#include "utilities/StringHelpers.h"
-#include "utilities/Graphics.h"
+#include "utils/StringHelpers.h"
+#include "utils/Graphics.h"
 
 using namespace TIE;
 

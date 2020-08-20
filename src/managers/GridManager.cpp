@@ -9,7 +9,7 @@
 #include "managers/SceneManager.h"
 #include "managers/ViewManager.h"
 #include "templates/MakeUnique.h"
-#include "utilities/Graphics.h"
+#include "utils/Graphics.h"
 
 using namespace TIE;
 
