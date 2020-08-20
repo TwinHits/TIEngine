@@ -14,13 +14,9 @@
 
 namespace TIE {
 
-// Animated
-// Sprite
-
 class AnimatedComponentSystem : public Singleton<AnimatedComponentSystem>, ComponentSystem {
     public:
         AnimatedComponentSystem() {};
-        void update(TIEntity&, const float) {};
         void update(const float);
         void addComponent(const TIEntityFactory&, TIEntity&);
 

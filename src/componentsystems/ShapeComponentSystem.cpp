@@ -12,7 +12,7 @@
 
 using namespace TIE;
 
-void ShapeComponentSystem::update(TIEntity& tientity, const float delta) {
+void ShapeComponentSystem::update(const float delta) {
 
 }
 

@@ -14,12 +14,10 @@
 
 namespace TIE {
 
-// Text
-
 class TextComponentSystem : public Singleton<TextComponentSystem>, ComponentSystem {
 	public:
 		TextComponentSystem() {};
-		void update(TIEntity&, const float);
+		void update(const float);
 		TextComponent& addComponent(TIEntity&);
 		void addComponent(const TIEntityFactory&, TIEntity&);
 

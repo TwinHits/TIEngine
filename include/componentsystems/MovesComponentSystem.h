@@ -16,19 +16,15 @@
 
 namespace TIE {
 
-// Moves
-// Sprite
-// Grid
-
 class MovesComponentSystem : public Singleton<MovesComponentSystem>, ComponentSystem {
 	public:
 		MovesComponentSystem() {};
-		void update(TIEntity&, const float);
+		void update(const float);
 
 		void addComponent(const TIEntityFactory&, TIEntity&);
 		
-		void setTargetPosition(TIEntity&, Direction);
-		void setTargetPosition(TIEntity&, sf::Vector2f&);
+		void setTargetPosition(MovesComponent&, SpriteComponent&, Direction);
+		void setTargetPosition(MovesComponent&, SpriteComponent&, sf::Vector2f&);
 
 		static const std::string MOVES;
 		static const std::string SPEED;
@@ -38,6 +34,12 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, ComponentSy
 		static const std::string DIRECTION_KEY;
 		static const std::string ROTATIONSPEED_KEY;
 	private:
+		struct Components {
+			MovesComponent& movesComponent;
+			SpriteComponent& spriteComponent;
+		};
+		std::vector<Components> components;
+
 		virtual void move(MovesComponent&, SpriteComponent&, const float);
 		virtual void rotate(MovesComponent&, SpriteComponent&, const float);
 

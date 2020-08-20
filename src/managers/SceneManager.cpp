@@ -6,7 +6,6 @@
 #include "componentsystems/CollidesComponentSystem.h"
 #include "componentsystems/EventsComponentSystem.h"
 #include "componentsystems/MovesComponentSystem.h"
-#include "componentsystems/SelectableComponentSystem.h"
 #include "managers/LogManager.h" 
 #include "managers/TimeManager.h"
 #include "managers/ViewManager.h"
@@ -78,7 +77,12 @@ void SceneManager::updateGameState() {
 	this->delta = this->clock.restart().asSeconds();
 
 	this->updateTIEntities(this->sceneGraphRoot->getChildren());
+
 	AnimatedComponentSystem::Instance()->update(this->delta);
+	MovesComponentSystem::Instance()->update(this->delta);
+	CollidesComponentSystem::Instance()->update(this->delta);
+	EventsComponentSystem::Instance()->update(this->delta);
+	
 	ViewManager::Instance()->updateCamera(this->delta);
 
 	std::string fps = this->calculateRollingAverageFPS(this->delta);
@@ -94,19 +98,7 @@ void SceneManager::removeTIEntities(std::vector<std::unique_ptr<TIEntity> >& ent
 void SceneManager::updateTIEntities(const std::vector<std::unique_ptr<TIEntity> >& entities) {
 
 	for (auto& entity : entities) {
-
-		if (entity->getComponent<SpriteComponent>() != nullptr) {
-			MovesComponentSystem::Instance()->update(*entity, this->delta);
-			CollidesComponentSystem::Instance()->update(*entity, this->delta);
-		}
-
-		if (EventsManager::Instance()->hasEvents()) {
-			SelectableComponentSystem::Instance()->update(*entity, this->delta);
-			EventsComponentSystem::Instance()->update(*entity, this->delta);
-		}
-
 		entity->update(this->delta);
-
 		this->removeTIEntities(entity->getChildren());
 		this->updateTIEntities(entity->getChildren());
 	}

@@ -19,7 +19,7 @@ const std::string SpriteComponentSystem::TEXTURE_KEY = SpriteComponentSystem::DR
 const std::string SpriteComponentSystem::DRAWN_KEY = SpriteComponentSystem::DRAWN + '.' + SpriteComponentSystem::DRAWN;
 const std::string SpriteComponentSystem::ROTATION_KEY = SpriteComponentSystem::DRAWN + '.' + SpriteComponentSystem::ROTATION;
 
-void SpriteComponentSystem::update(TIEntity& tientity, const float delta) {
+void SpriteComponentSystem::update(const float delta) {
 
 }
 
@@ -31,7 +31,6 @@ SpriteComponent& SpriteComponentSystem::addComponent(TIEntity& entity) {
 
 void SpriteComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& entity) {
 
-	SpriteComponent* spritePtr = nullptr;
 	if (factory.stringValues.count(SpriteComponentSystem::TEXTURE_KEY)) {
 		std::string textureName = factory.stringValues.at(SpriteComponentSystem::TEXTURE_KEY);
 		const sf::Texture& texture = AssetsManager::Instance()->getTexture(textureName);

@@ -7,6 +7,7 @@
 #include <set>
 
 #include "objects/components/CollidesComponent.h"
+#include "objects/components/SpriteComponent.h"
 #include "objects/entities/TIEntity.h"
 #include "objects/factories/TIEntityFactory.h"
 
@@ -18,13 +19,19 @@ namespace TIE {
 class CollidesComponentSystem : public Singleton<CollidesComponentSystem>, ComponentSystem {
 	public:
 		CollidesComponentSystem() {};
-		void update(TIEntity&, const float);
+		void update(const float);
 		void addComponent(const TIEntityFactory&, TIEntity&);
 
 	//	virtual sf::FloatRect getHitBox() const;
 		void checkForCollisions();
 
-	private:
+	private:        
+		struct Components {
+			CollidesComponent& collidesComponent;
+			SpriteComponent& spriteComponent;
+		};
+		std::vector<Components> components;
+
 		std::set<std::pair<TIEntity*, TIEntity*> > collisions;
 };
 

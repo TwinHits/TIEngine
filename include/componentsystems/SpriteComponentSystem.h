@@ -12,12 +12,10 @@
 
 namespace TIE {
 
-// Sprite
-
 class SpriteComponentSystem : public Singleton<SpriteComponentSystem>, ComponentSystem {
 	public:
 		SpriteComponentSystem() {};
-		void update(TIEntity&, const float);
+		void update(const float);
 		SpriteComponent& addComponent(TIEntity&);
 		void addComponent(const TIEntityFactory&, TIEntity&);
 

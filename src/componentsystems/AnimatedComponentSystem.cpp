@@ -47,13 +47,9 @@ void AnimatedComponentSystem::addComponent(const TIEntityFactory& factory, TIEnt
 
     if (animatedStringKeys.size()) {
         AnimatedComponent& animatedComponent = tientity.addComponent<AnimatedComponent>();
-        SpriteComponent* spriteComponent = tientity.getComponent<SpriteComponent>();
-        MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
-        
-        if (spriteComponent == nullptr || movesComponent == nullptr) {
-            return;
-        }
-        Components components = { animatedComponent, *spriteComponent, *movesComponent };
+        SpriteComponent& spriteComponent = tientity.addComponent<SpriteComponent>();
+        MovesComponent& movesComponent = tientity.addComponent<MovesComponent>();
+        Components components = { animatedComponent, spriteComponent, movesComponent };
 
         std::map<std::string, Animation> animations;
         for (auto key : animatedStringKeys) {

@@ -26,25 +26,21 @@ const std::string MovesComponentSystem::DIRECTION_KEY = MovesComponentSystem::MO
 const std::string MovesComponentSystem::ROTATIONSPEED_KEY = MovesComponentSystem::MOVES + '.' + MovesComponentSystem::ROTATIONSPEED;
 const float MovesComponentSystem::CLOSE_ENOUGH = 0.5f;
 
-void MovesComponentSystem::update(TIEntity& entity, const float delta) {
-	MovesComponent* movesComponent = entity.getComponent<MovesComponent>();
-	if (movesComponent != nullptr) {
-		SpriteComponent* spriteComponent = entity.getComponent<SpriteComponent>();
-		if (spriteComponent != nullptr) {
-			this->move(*movesComponent, *spriteComponent, delta);
-			this->rotate(*movesComponent, *spriteComponent, delta);
-		}
+void MovesComponentSystem::update(const float delta) {
+	for (auto c : components) {
+		this->move(c.movesComponent, c.spriteComponent, delta);
+		this->rotate(c.movesComponent, c.spriteComponent, delta);
 	}
 }
 
 
 void MovesComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& entity) {
+	MovesComponent& movesComponent = entity.addComponent<MovesComponent>();
+	SpriteComponent& spriteComponent = entity.addComponent<SpriteComponent>();
+	Components components = { movesComponent, spriteComponent };
 
-	MovesComponent* movesPtr = nullptr;
 	if (factory.floatValues.count(MovesComponentSystem::SPEED_KEY)) {
 		float speed = factory.floatValues.at(MovesComponentSystem::SPEED_KEY);
-
-		movesPtr = &entity.addComponent<MovesComponent>();
 
 		sf::Vector2f velocity = sf::Vector2f();
 		velocity.x = speed;
@@ -54,29 +50,23 @@ void MovesComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity
 		} else {
 			velocity.y = 0;
 		}
-		movesPtr->setVelocity(velocity);
+		movesComponent.setVelocity(velocity);
 	}
 
 	if (factory.floatValues.count(MovesComponentSystem::ROTATIONSPEED_KEY)) {
 		float rotationalSpeed = factory.floatValues.at(MovesComponentSystem::ROTATIONSPEED_KEY);
-
-		if (movesPtr == nullptr) {
-			movesPtr = &entity.addComponent<MovesComponent>();
-		}
-
-		movesPtr->setAngularVelocity(sf::Vector2f(rotationalSpeed, 0.0f));
+		movesComponent.setAngularVelocity(sf::Vector2f(rotationalSpeed, 0.0f));
 	}
 
+	this->components.push_back(components);
 }
 
 
-void MovesComponentSystem::setTargetPosition(TIEntity& tientity, Direction direction) {
-	MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
-	SpriteComponent* spriteComponent = tientity.getComponent<SpriteComponent>();
-	if (this->arePositionsCloseEnough(movesComponent->getTargetPosition(), spriteComponent->getPosition())) {
-		sf::Vector2f targetPosition = spriteComponent->getPosition();
+void MovesComponentSystem::setTargetPosition(MovesComponent& movesComponent, SpriteComponent& spriteComponent, Direction direction) {
+	if (this->arePositionsCloseEnough(movesComponent.getTargetPosition(), spriteComponent.getPosition())) {
+		sf::Vector2f targetPosition = spriteComponent.getPosition();
 
-		sf::Vector2f velocity = movesComponent->getVelocity();
+		sf::Vector2f velocity = movesComponent.getVelocity();
 		if (GridManager::Instance()->isGridConfigured()) {
 			const sf::Vector2f& tileSize = GridManager::Instance()->getGridComponent()->getTileSize();
 			velocity.x = tileSize.x;
@@ -91,20 +81,16 @@ void MovesComponentSystem::setTargetPosition(TIEntity& tientity, Direction direc
 		} else if (direction == Direction::BOTTOM) {
 			targetPosition += sf::Vector2f(0, velocity.x);
 		}
-		this->setTargetPosition(tientity, targetPosition);
+		this->setTargetPosition(movesComponent, spriteComponent, targetPosition);
 	}
 }
 
 
-void MovesComponentSystem::setTargetPosition(TIEntity& tientity, sf::Vector2f& position) {
-	MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
-	SpriteComponent* spriteComponent = tientity.getComponent<SpriteComponent>();
-	if (movesComponent != nullptr && spriteComponent != nullptr) {
-		position = GridComponentSystem::Instance()->normalizePositionToGrid(position);
-		if (position != movesComponent->getTargetPosition()) {
-			movesComponent->setTargetPosition(position);
-			movesComponent->setTargetAngle(Math::angleBetweenTwoPoints(spriteComponent->getPosition(), movesComponent->getTargetPosition()));
-		}
+void MovesComponentSystem::setTargetPosition(MovesComponent& movesComponent, SpriteComponent& spriteComponent, sf::Vector2f& position) {
+	position = GridComponentSystem::Instance()->normalizePositionToGrid(position);
+	if (position != movesComponent.getTargetPosition()) {
+		movesComponent.setTargetPosition(position);
+		movesComponent.setTargetAngle(Math::angleBetweenTwoPoints(spriteComponent.getPosition(), movesComponent.getTargetPosition()));
 	}
 }
 
