@@ -19,8 +19,8 @@ const std::string AnimatedComponentSystem::SPEED = "speed";
 const std::string AnimatedComponentSystem::DIRECTION = "direction";
 
 void AnimatedComponentSystem::update(const float delta) {
-    for (auto c : this->components) {
-        this->updateCurrentAnimation(c.animatedComponent, c.movesComponent);
+    for (auto& c : this->components) {
+        this->updateCurrentAnimation(c.animatedComponent, c.movesComponent, c.spriteComponent);
         if (this->progressAnimation(c.animatedComponent.getCurrentAnimation(), delta)) {
             this->setTextureRect(*c.animatedComponent.getCurrentAnimation(), c.spriteComponent);
         }
@@ -32,7 +32,7 @@ void AnimatedComponentSystem::addComponent(const TIEntityFactory& factory, TIEnt
 
 	// Get all the keys containing animations from the stringValues map 
 	std::vector<std::string> animatedStringKeys;
-	for (auto i : factory.stringValues) {
+	for (auto& i : factory.stringValues) {
 		if (i.first.find("animated.") != std::string::npos) {
 			animatedStringKeys.push_back(i.first);
 		}
@@ -51,8 +51,8 @@ void AnimatedComponentSystem::addComponent(const TIEntityFactory& factory, TIEnt
         MovesComponent& movesComponent = tientity.addComponent<MovesComponent>();
         Components components = { animatedComponent, spriteComponent, movesComponent };
 
-        std::map<std::string, Animation> animations;
-        for (auto key : animatedStringKeys) {
+        std::map<std::string, Animation>& animations = animatedComponent.getAnimations();
+        for (auto& key : animatedStringKeys) {
             std::vector<std::string> parts;
             String::split(key, '.', parts);
             std::string animationName = parts.at(1);
@@ -73,7 +73,7 @@ void AnimatedComponentSystem::addComponent(const TIEntityFactory& factory, TIEnt
             }
         }
 
-        for (auto key : animatedFloatKeys) {
+        for (auto& key : animatedFloatKeys) {
             std::vector<std::string> parts;
             String::split(key, '.', parts);
             std::string animationName = parts.at(1);
@@ -92,7 +92,11 @@ void AnimatedComponentSystem::addComponent(const TIEntityFactory& factory, TIEnt
             }
         }
 
-        animatedComponent.setAnimations(animations);
+        for (auto& animation : animations) {
+            animation.second.currentFrame = animation.second.frames.begin();
+        }
+        animatedComponent.setCurrentAnimation(animations.begin().operator*().second);
+
         this->updateCurrentAnimation(animatedComponent, movesComponent, spriteComponent);
         this->components.push_back(components);
     }
@@ -104,16 +108,21 @@ void AnimatedComponentSystem::addComponent(const TIEntityFactory& factory, TIEnt
 void AnimatedComponentSystem::updateCurrentAnimation(AnimatedComponent& animatedComponent, MovesComponent& movesComponent, SpriteComponent& spriteComponent) {
 
         float rotation = movesComponent.getVelocity().y;
+        float targetAngle = movesComponent.getTargetAngle();
         // float rotation = components.spriteComponent.getRotation();
-        std::map<std::string, Animation> animations = animatedComponent.getAnimations();
-        for (auto animation : animations) {
-            if (Math::isAngleBetweenAngles(rotation, animation.second.range.x, animation.second.range.y)) {
-                animation.second.currentFrame = animation.second.frames.begin();
-                animatedComponent.setCurrentAnimation(animation.second);
-                this->setTextureRect(animation.second, spriteComponent);
-                break;
+        if (animatedComponent.getCurrentAnimation() == nullptr || !Math::isAngleBetweenAngles(rotation, animatedComponent.getCurrentAnimation()->range.x, animatedComponent.getCurrentAnimation()->range.y)) {
+            std::map<std::string, Animation> animations = animatedComponent.getAnimations();
+			for (auto& animation : animations) {
+					if (Math::isAngleBetweenAngles(rotation, animation.second.range.x, animation.second.range.y)) {
+						animation.second.currentFrame = animation.second.frames.begin();
+						animatedComponent.setCurrentAnimation(animation.second);
+						this->setTextureRect(animation.second, spriteComponent);
+						break;
+					}
             }
-        }
+		} else if (!Math::areFloatsEqual(rotation, targetAngle)) {
+
+		}
 }
 
 

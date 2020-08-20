@@ -6,7 +6,8 @@ void AnimatedComponent::setAnimations(std::map<std::string, Animation> animation
     this->animations = animations;
 }
 
-std::map<std::string, Animation> AnimatedComponent::getAnimations() {
+
+std::map<std::string, Animation>& AnimatedComponent::getAnimations() {
     return this->animations;
 }
 

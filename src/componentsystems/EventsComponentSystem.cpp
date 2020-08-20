@@ -20,7 +20,7 @@ const std::string EventsComponentSystem::SELECTABLE = "selectable";
 const std::string EventsComponentSystem::SELECTABLE_KEY = EventsComponentSystem::SELECTABLE + '.' + EventsComponentSystem::SELECTABLE;
 
 void EventsComponentSystem::update(const float delta) {
-	for (auto c : this->components) {
+	for (auto& c : this->components) {
 		if (c.eventsComponent.hasHandlers() && eventsManager->hasEvents()) {
 			const std::map<sf::Event::EventType, sf::Event>& events = eventsManager->getEvents();
 			for (const std::string& state : c.eventsComponent.getStates()) {
@@ -69,7 +69,7 @@ void EventsComponentSystem::addComponent(const TIEntityFactory& factory, TIEntit
 		MovesComponent& movesComponent = entity.addComponent<MovesComponent>();
 		Components components = { eventsComponent, spriteComponent, movesComponent };
 
-		for (auto key : eventKeys) {
+		for (auto& key : eventKeys) {
 			// Split the key into parts for state, event, and handler
 			std::vector<std::string> parts;
 			String::split(key, '.', parts);

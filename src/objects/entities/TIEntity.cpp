@@ -65,7 +65,7 @@ TIEntity& TIEntity::attachChild() {
 
 
 std::unique_ptr<TIEntity> TIEntity::detachChild(const TIEntity& child) {
-	for (auto c = this->children.begin(); c != this->children.end(); ++c) {
+	for (auto& c = this->children.begin(); c != this->children.end(); ++c) {
 		if (*(*c) == child) {
 			std::unique_ptr<TIEntity> result = std::move(*c);
 			result->setParent(nullptr);
