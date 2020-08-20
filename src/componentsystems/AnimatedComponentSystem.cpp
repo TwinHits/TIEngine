@@ -96,8 +96,6 @@ void AnimatedComponentSystem::addComponent(const TIEntityFactory& factory, TIEnt
             animation.second.currentFrame = animation.second.frames.begin();
         }
         animatedComponent.setCurrentAnimation(animations.begin().operator*().second);
-
-        this->updateCurrentAnimation(animatedComponent, movesComponent, spriteComponent);
         this->components.push_back(components);
     }
 
@@ -111,7 +109,7 @@ void AnimatedComponentSystem::updateCurrentAnimation(AnimatedComponent& animated
         float targetAngle = movesComponent.getTargetAngle();
         // float rotation = components.spriteComponent.getRotation();
         if (animatedComponent.getCurrentAnimation() == nullptr || !Math::isAngleBetweenAngles(rotation, animatedComponent.getCurrentAnimation()->range.x, animatedComponent.getCurrentAnimation()->range.y)) {
-            std::map<std::string, Animation> animations = animatedComponent.getAnimations();
+            std::map<std::string, Animation>& animations = animatedComponent.getAnimations();
 			for (auto& animation : animations) {
 					if (Math::isAngleBetweenAngles(rotation, animation.second.range.x, animation.second.range.y)) {
 						animation.second.currentFrame = animation.second.frames.begin();
