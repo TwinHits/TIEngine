@@ -54,6 +54,8 @@ void ConsoleManager::runCommand() {
 
 	if (command == ConsoleCommands::TEST) {
 		LogManager::Instance()->command("Test Command Please Ignore.");
+	} else if (command == ConsoleCommands::QUIT) {
+		WindowManager::Instance()->removeWindow();
 	} else if (command == ConsoleCommands::SCRIPT || command == ConsoleCommands::LOAD) {
 		const std::string& scriptName = commandArgs.at(1);
 		ScriptManager::Instance()->loadScript(scriptName);
