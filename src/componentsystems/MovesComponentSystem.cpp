@@ -29,7 +29,7 @@ const float MovesComponentSystem::CLOSE_ENOUGH = 0.5f;
 void MovesComponentSystem::update(const float delta) {
 	for (auto c : components) {
 		this->move(c.movesComponent, c.spriteComponent, delta);
-		this->rotate(c.movesComponent, c.spriteComponent, delta);
+		// this->rotate(c.movesComponent, c.spriteComponent, delta);
 	}
 }
 

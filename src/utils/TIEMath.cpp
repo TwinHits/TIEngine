@@ -19,7 +19,8 @@ float TIE::Math::distanceBetweenTwoPoints(const sf::Vector2f& p1, const sf::Vect
 
 
 float TIE::Math::distanceBetweenTwoAngles(const float f1, const float f2) {
-	return fabsf(f1 - f2);
+	float diff = fmod(f2 - f1 + 180, 360) - 180;
+	return fabsf(diff < -180 ? diff + 360 : diff);
 }
 
 
@@ -52,13 +53,10 @@ const bool TIE::Math::areFloatsEqual(const float f1, const float f2) {
 
 
 const bool TIE::Math::isAngleBetweenAngles(const float angle, const float left, const float right) {
-	/*
-	const float halfDifference = TIE::Math::distanceBetweenTwoAngles(left, right) / 2;
+	const float difference = TIE::Math::distanceBetweenTwoAngles(left, right);
 	const float leftDistance = TIE::Math::distanceBetweenTwoAngles(angle, left);
 	const float rightDistance = TIE::Math::distanceBetweenTwoAngles(angle, right);
-	return leftDistance <= halfDifference && rightDistance <= halfDifference;
-	*/
-	return angle > left && angle <= right;
+	return leftDistance <= difference && rightDistance <= difference;
 }
 
 

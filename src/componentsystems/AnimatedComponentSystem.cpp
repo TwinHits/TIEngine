@@ -20,7 +20,7 @@ const std::string AnimatedComponentSystem::DIRECTION = "direction";
 
 void AnimatedComponentSystem::update(const float delta) {
     for (auto c : this->components) {
-        this->updateCurrentAnimation(c);
+        this->updateCurrentAnimation(c.animatedComponent, c.movesComponent);
         if (this->progressAnimation(c.animatedComponent.getCurrentAnimation(), delta)) {
             this->setTextureRect(*c.animatedComponent.getCurrentAnimation(), c.spriteComponent);
         }
@@ -93,7 +93,7 @@ void AnimatedComponentSystem::addComponent(const TIEntityFactory& factory, TIEnt
         }
 
         animatedComponent.setAnimations(animations);
-        this->updateCurrentAnimation(components);
+        this->updateCurrentAnimation(animatedComponent, movesComponent, spriteComponent);
         this->components.push_back(components);
     }
 
@@ -101,16 +101,16 @@ void AnimatedComponentSystem::addComponent(const TIEntityFactory& factory, TIEnt
 }
 
 
-void AnimatedComponentSystem::updateCurrentAnimation(Components& components) {
+void AnimatedComponentSystem::updateCurrentAnimation(AnimatedComponent& animatedComponent, MovesComponent& movesComponent, SpriteComponent& spriteComponent) {
 
-        // float rotation = movesComponent->getVelocity().y;
-        float rotation = components.spriteComponent.getRotation();
-        std::map<std::string, Animation> animations = components.animatedComponent.getAnimations();
+        float rotation = movesComponent.getVelocity().y;
+        // float rotation = components.spriteComponent.getRotation();
+        std::map<std::string, Animation> animations = animatedComponent.getAnimations();
         for (auto animation : animations) {
             if (Math::isAngleBetweenAngles(rotation, animation.second.range.x, animation.second.range.y)) {
                 animation.second.currentFrame = animation.second.frames.begin();
-                components.animatedComponent.setCurrentAnimation(animation.second);
-                this->setTextureRect(animation.second, components.spriteComponent);
+                animatedComponent.setCurrentAnimation(animation.second);
+                this->setTextureRect(animation.second, spriteComponent);
                 break;
             }
         }

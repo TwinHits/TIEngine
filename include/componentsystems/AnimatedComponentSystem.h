@@ -35,7 +35,7 @@ class AnimatedComponentSystem : public Singleton<AnimatedComponentSystem>, Compo
         
         bool progressAnimation(Animation*, const float);
         void setTextureRect(const Animation&, SpriteComponent&);
-        void updateCurrentAnimation(Components&);
+        void updateCurrentAnimation(AnimatedComponent&, MovesComponent&, SpriteComponent&);
 };
 
 }
