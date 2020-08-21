@@ -104,23 +104,20 @@ void AnimatedComponentSystem::addComponent(const TIEntityFactory& factory, TIEnt
 
 
 void AnimatedComponentSystem::updateCurrentAnimation(AnimatedComponent& animatedComponent, MovesComponent& movesComponent, SpriteComponent& spriteComponent) {
+	float rotation = movesComponent.getVelocity().y;
+	float targetAngle = movesComponent.getTargetAngle();
 
-        float rotation = movesComponent.getVelocity().y;
-        float targetAngle = movesComponent.getTargetAngle();
-        // float rotation = components.spriteComponent.getRotation();
-        if (animatedComponent.getCurrentAnimation() == nullptr || !Math::isAngleBetweenAngles(rotation, animatedComponent.getCurrentAnimation()->range.x, animatedComponent.getCurrentAnimation()->range.y)) {
-            std::map<std::string, Animation>& animations = animatedComponent.getAnimations();
-			for (auto& animation : animations) {
-					if (Math::isAngleBetweenAngles(rotation, animation.second.range.x, animation.second.range.y)) {
-						animation.second.currentFrame = animation.second.frames.begin();
-						animatedComponent.setCurrentAnimation(animation.second);
-						this->setTextureRect(animation.second, spriteComponent);
-						break;
-					}
-            }
-		} else if (!Math::areFloatsEqual(rotation, targetAngle)) {
-
+	if (animatedComponent.getCurrentAnimation() == nullptr || !Math::isAngleBetweenAngles(targetAngle, animatedComponent.getCurrentAnimation()->range.x, animatedComponent.getCurrentAnimation()->range.y)) {
+		std::map<std::string, Animation>& animations = animatedComponent.getAnimations();
+		for (auto& animation : animations) {
+			if (Math::isAngleBetweenAngles(rotation, animation.second.range.x, animation.second.range.y)) {
+				animation.second.currentFrame = animation.second.frames.begin();
+				animatedComponent.setCurrentAnimation(animation.second);
+				this->setTextureRect(animation.second, spriteComponent);
+				break;
+			}
 		}
+    }
 }
 
 
