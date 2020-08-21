@@ -39,7 +39,7 @@ namespace TIE {
 		SceneLayer* engineLayer = nullptr;
 		SceneLayer* clientLayer = nullptr;
 
-		void updateTIEntities(const std::vector<std::unique_ptr<TIEntity> >&);
+		void updateEngineEntity(TIEntity&);
 		void removeTIEntities(std::vector<std::unique_ptr<TIEntity> >&);
 		std::string calculateRollingAverageFPS(const float delta);
 		void render(TIEntity&, sf::RenderWindow&, sf::RenderStates);

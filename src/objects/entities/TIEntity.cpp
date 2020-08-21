@@ -41,9 +41,11 @@ bool TIEntity::getRemove() const {
 	return this->remove;
 }
 
+
 void TIE::TIEntity::setName(std::string name) {
 	this->name = name;
 }
+
 
 const std::string TIE::TIEntity::getName() const {
 	return this->name;
@@ -55,6 +57,7 @@ TIEntity& TIEntity::attachChild(std::unique_ptr<TIEntity> child) {
 	this->children.push_back(std::move(child));
 	return *children.back();
 }
+
 
 TIEntity& TIEntity::attachChild() {
 	this->children.push_back(make_unique<TIEntity>());

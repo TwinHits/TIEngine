@@ -76,13 +76,14 @@ void SceneManager::updateGameState() {
 
 	this->delta = this->clock.restart().asSeconds();
 
-	this->updateTIEntities(this->sceneGraphRoot->getChildren());
 
 	AnimatedComponentSystem::Instance()->update(this->delta);
 	MovesComponentSystem::Instance()->update(this->delta);
 	CollidesComponentSystem::Instance()->update(this->delta);
 	EventsComponentSystem::Instance()->update(this->delta);
 	
+	this->updateEngineEntity(*(this->engineLayer));
+
 	ViewManager::Instance()->updateCamera(this->delta);
 
 	std::string fps = this->calculateRollingAverageFPS(this->delta);
@@ -95,12 +96,14 @@ void SceneManager::removeTIEntities(std::vector<std::unique_ptr<TIEntity> >& ent
 }
 
 
-void SceneManager::updateTIEntities(const std::vector<std::unique_ptr<TIEntity> >& entities) {
+void SceneManager::updateEngineEntity(TIEntity& tientity) {
 
-	for (auto& entity : entities) {
-		entity->update(this->delta);
-		this->removeTIEntities(entity->getChildren());
-		this->updateTIEntities(entity->getChildren());
+	tientity.update(this->delta);
+	if (tientity.getChildren().size() > 0) {
+		this->removeTIEntities(tientity.getChildren());
+		for (auto& child : tientity.getChildren()) {
+			this->updateEngineEntity(*child);
+		}
 	}
 }
 
