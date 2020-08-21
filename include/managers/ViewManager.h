@@ -62,7 +62,7 @@ class ViewManager : public Singleton<ViewManager>, Manager {
 		sf::View* clientView = nullptr;
 		sf::View* engineView = nullptr;
 
-		float scrollZone = 5.0;
+		float scrollZone = 2.0;
 		float scrollSpeed = 500.0;
 		sf::FloatRect scrollUpZone;
 		sf::FloatRect scrollLeftZone;
