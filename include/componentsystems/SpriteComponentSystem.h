@@ -22,6 +22,9 @@ class SpriteComponentSystem : public Singleton<SpriteComponentSystem>, Component
 		static const std::string DRAWN;
 		static const std::string TEXTURE;
 		static const std::string ROTATION;
+		static const std::string WIDTH;
+		static const std::string HEIGHT;
+		static const std::string REPEATED;
 		static const std::string DRAWN_KEY;
 		static const std::string TEXTURE_KEY;
 		static const std::string ROTATION_KEY;

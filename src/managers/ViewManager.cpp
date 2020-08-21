@@ -2,7 +2,7 @@
 
 #include "objects/components/SpriteComponent.h"
 #include "managers/EventsManager.h"
-#include "managers/GridManager.h"
+#include "managers/LevelManager.h"
 #include "managers/HashManager.h"
 #include "managers/LogManager.h"
 #include "managers/WindowManager.h"

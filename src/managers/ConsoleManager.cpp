@@ -7,7 +7,7 @@
 
 #include "componentsystems/SpriteComponentSystem.h"
 #include "managers/ConfigManager.h"
-#include "managers/GridManager.h"
+#include "managers/LevelManager.h"
 #include "managers/LogManager.h"
 #include "managers/SceneManager.h"
 #include "managers/ScriptManager.h"
@@ -172,5 +172,5 @@ void TIE::ConsoleManager::clearDebugLog() {
 
 
 void TIE::ConsoleManager::showGridGuide() {
-	GridManager::Instance()->showGridGuide(true);
+	LevelManager::Instance()->showGridGuide(true);
 }

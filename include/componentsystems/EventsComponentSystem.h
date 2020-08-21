@@ -12,7 +12,7 @@
 #include "objects/entities/TIEntity.h"
 #include "objects/factories/TIEntityFactory.h"
 #include "managers/EventsManager.h"
-#include "managers/GridManager.h"
+#include "managers/LevelManager.h"
 
 namespace TIE {
 

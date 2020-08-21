@@ -6,6 +6,7 @@
 #include "managers/AssetsManager.h"
 #include "managers/ConfigManager.h"
 #include "managers/LogManager.h"
+#include "managers/LevelManager.h"
 #include "managers/WindowManager.h"
 #include "objects/factories/TIEntityFactory.h"
 #include "utils/StringHelpers.h"
@@ -47,10 +48,10 @@ void ScriptManager::loadScript(const std::string& scriptPath) {
             this->loadAssets(assetsTable, scriptDirectory);
         }
 
-		LuaRef gridTable = getGlobal(this->luaState, "grid");
+		LuaRef gridTable = getGlobal(this->luaState, "level");
 		TIEntity* parent = nullptr;
         if (gridTable.isTable()) {
-            parent = this->loadGrid(gridTable);
+            parent = this->loadLevel(gridTable);
         }
 
         std::vector<std::string> tientities = Lua::getTableKeys(this->luaState, "tientities");
@@ -110,19 +111,20 @@ void ScriptManager::loadWindowProperties(const LuaRef& windowTable) {
 }
 
 
-TIEntity* ScriptManager::loadGrid(const luabridge::LuaRef& gridTable) {
+TIEntity* ScriptManager::loadLevel(const luabridge::LuaRef& gridTable) {
 	TIEntityFactory factory = TIEntityFactory();
-	std::vector<std::string> components = Lua::getTableKeys(this->luaState, "grid");
+	std::vector<std::string> components = Lua::getTableKeys(this->luaState, "level");
 	for (auto& component : components) {
 		if (factory.isValidComponentName(component)) {
 			LuaRef table = gridTable[component];
 			if (table.isTable()) {
-				this->readComponentValues(factory, component, table, "grid." + component);
+				this->readComponentValues(factory, component, table, "level." + component);
 			}
 		}
 	}
 	TIEntity& tientity = factory.build();
-	LogManager::Instance()->info("Configured grid from Lua script.");
+	LevelManager::Instance()->setLevelEntity(tientity);
+	LogManager::Instance()->info("Configured level from Lua script.");
 	return &tientity;
 }
 
