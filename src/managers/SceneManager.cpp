@@ -73,9 +73,7 @@ TIEntity* SceneManager::findTIEntity(sf::Vector2f point) {
 
 
 void SceneManager::updateGameState() {
-
 	this->delta = this->clock.restart().asSeconds();
-
 
 	AnimatedComponentSystem::Instance()->update(this->delta);
 	MovesComponentSystem::Instance()->update(this->delta);
@@ -88,6 +86,7 @@ void SceneManager::updateGameState() {
 
 	std::string fps = this->calculateRollingAverageFPS(this->delta);
 	this->windowManager->showFPS(fps);
+
 }
 
 
@@ -126,10 +125,10 @@ void SceneManager::render() {
 
 std::string SceneManager::calculateRollingAverageFPS(const float delta) {
 	static int index=0;
-	static int sum=0;
-	static int ticks[100] = { 0 };
+	static float sum=0;
+	static float ticks[100] = { 0 };
 
-	int tick = 60 / delta;
+	float tick = 1 / delta;
 
 	sum -= ticks[index];
 	sum += tick;
