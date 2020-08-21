@@ -16,6 +16,7 @@
 #include "objects/components/TextComponent.h"
 #include "objects/entities/DegreeGuide.h"
 #include "objects/entities/MousePtrCoords.h"
+#include "objects/entities/PerformanceDisplay.h"
 #include "templates/MakeUnique.h"
 
 using namespace TIE;
@@ -45,6 +46,10 @@ bool SceneManager::initialize() {
 	std::unique_ptr<MousePtrCoords> mousePtrCoords = make_unique<MousePtrCoords>();
 	mousePtrCoords->initialize();
 	this->engineLayer->attachChild(std::move(mousePtrCoords));
+	
+	std::unique_ptr<PerformanceDisplay> performanceDisplay = make_unique<PerformanceDisplay>();
+	performanceDisplay->initialize();
+	this->engineLayer->attachChild(std::move(performanceDisplay));
 
 	return true;
 }
@@ -84,9 +89,7 @@ void SceneManager::updateGameState() {
 
 	ViewManager::Instance()->updateCamera(this->delta);
 
-	std::string fps = this->calculateRollingAverageFPS(this->delta);
-	this->windowManager->showFPS(fps);
-
+	this->fps = this->calculateRollingAverageFPS(this->delta);
 }
 
 
@@ -123,7 +126,12 @@ void SceneManager::render() {
 }
 
 
-std::string SceneManager::calculateRollingAverageFPS(const float delta) {
+float SceneManager::getFPS() {
+	return this->fps;
+}
+
+
+float SceneManager::calculateRollingAverageFPS(const float delta) {
 	static int index=0;
 	static float sum=0;
 	static float ticks[100] = { 0 };
@@ -137,7 +145,7 @@ std::string SceneManager::calculateRollingAverageFPS(const float delta) {
 		index = 0;
 	}
 
-	return std::to_string(sum / 100);
+	return sum / 100;
 }
 
 

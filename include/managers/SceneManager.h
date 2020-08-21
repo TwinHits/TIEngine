@@ -26,6 +26,8 @@ namespace TIE {
 		void updateGameState();
 		void render();
 
+		float getFPS();
+
 		SceneManager();
 		~SceneManager() {};
 	private:
@@ -33,6 +35,8 @@ namespace TIE {
 		sf::RenderWindow& window = windowManager->getWindow();
 
 		sf::Clock& clock;
+		float calculateRollingAverageFPS(const float delta);
+		float fps = 0;
 		float delta = 0;
 
 		std::unique_ptr<SceneLayer> sceneGraphRoot;
@@ -41,7 +45,6 @@ namespace TIE {
 
 		void updateEngineEntity(TIEntity&);
 		void removeTIEntities(std::vector<std::unique_ptr<TIEntity> >&);
-		std::string calculateRollingAverageFPS(const float delta);
 		void render(TIEntity&, sf::RenderWindow&, sf::RenderStates);
 
 		SceneManager(const SceneManager&);
