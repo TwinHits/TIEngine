@@ -7,7 +7,7 @@
 
 #include "componentsystems/SpriteComponentSystem.h"
 #include "managers/ConfigManager.h"
-#include "managers/LevelManager.h"
+#include "managers/WorldManager.h"
 #include "managers/LogManager.h"
 #include "managers/SceneManager.h"
 #include "managers/ScriptManager.h"
@@ -72,6 +72,9 @@ void ConsoleManager::runCommand() {
 		this->clearDebugLog();
 	} else if (command == ConsoleCommands::SHOW) {
 		this->showGridGuide();
+	} else if (command == ConsoleCommands::SPAWN) {
+		const std::string& name = commandArgs.at(1);
+		WorldManager::Instance()->spawnTIEntity(name);
 	} else {
 		LogManager::Instance()->command("Unknown command.");
 	}
@@ -172,5 +175,5 @@ void TIE::ConsoleManager::clearDebugLog() {
 
 
 void TIE::ConsoleManager::showGridGuide() {
-	LevelManager::Instance()->showGridGuide(true);
+	WorldManager::Instance()->showGridGuide(true);
 }

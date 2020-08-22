@@ -6,7 +6,7 @@
 #include "objects/components/SpriteComponent.h"
 #include "objects/entities/TIEntity.h"
 #include "objects/factories/TIEntityFactory.h"
-#include "managers/LevelManager.h"
+#include "managers/WorldManager.h"
 #include "managers/LogManager.h"
 #include "utils/TIEMath.h"
 
@@ -37,15 +37,15 @@ void GridComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity&
 		sf::FloatRect textureSize = spriteComponent.getLocalBounds();
 		gridComponent.setTileSize(sf::Vector2f(textureSize.width / width, textureSize.height / height));
 
-		LevelManager::Instance()->setLevelEntity(entity);
+		WorldManager::Instance()->setLevelEntity(entity);
 		this->components.push_back(components);
 	}
 }
 
 
 sf::Vector2f GridComponentSystem::normalizePositionToGrid(const sf::Vector2f& position) {
-	if (LevelManager::Instance()->isGridConfigured()) {
-		TIEntity* levelEntity = LevelManager::Instance()->getLevelEntity();
+	if (WorldManager::Instance()->isGridConfigured()) {
+		TIEntity* levelEntity = WorldManager::Instance()->getLevelEntity();
 		GridComponent* gridComponent = levelEntity->getComponent<GridComponent>();
 		SpriteComponent* spriteComponent = levelEntity->getComponent<SpriteComponent>();
 		if (gridComponent != nullptr && spriteComponent != nullptr) {

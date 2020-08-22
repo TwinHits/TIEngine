@@ -8,5 +8,6 @@ const std::string TIE::ConsoleCommands::LOAD = "load";
 const std::string TIE::ConsoleCommands::SCRIPT = "script";
 const std::string TIE::ConsoleCommands::SHOW = "show";
 const std::string TIE::ConsoleCommands::QUIT = "quit";
+const std::string TIE::ConsoleCommands::SPAWN = "spawn";
 
 const std::string TIE::ConsoleCommands::SCENEGRAPH = "scenegraph";

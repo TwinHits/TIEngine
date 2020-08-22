@@ -1,4 +1,4 @@
-#include "managers/LevelManager.h"
+#include "managers/WorldManager.h"
 
 #include "componentsystems/ShapeComponentSystem.h"
 #include "objects/components/GridComponent.h"
@@ -13,22 +13,22 @@
 
 using namespace TIE;
 
-bool LevelManager::initialize() {
+bool WorldManager::initialize() {
 	return true;
 }
 
 
-bool LevelManager::isGridConfigured() {
+bool WorldManager::isGridConfigured() {
 	return this->gridComponent != nullptr;
 }
 
 
-TIEntity* LevelManager::getLevelEntity() {
+TIEntity* WorldManager::getLevelEntity() {
 	return this->levelEntity;
 }
 
 
-void LevelManager::setLevelEntity(TIEntity& tientity) {
+void WorldManager::setLevelEntity(TIEntity& tientity) {
 	this->levelEntity = &tientity;
 	this->gridComponent = tientity.getComponent<GridComponent>();
 	SpriteComponent* spriteComponent = this->levelEntity->getComponent<SpriteComponent>();
@@ -36,12 +36,12 @@ void LevelManager::setLevelEntity(TIEntity& tientity) {
 }
 
 
-GridComponent* LevelManager::getGridComponent() {
+GridComponent* WorldManager::getGridComponent() {
 	return this->gridComponent;
 }
 
 
-void LevelManager::showGridGuide(bool visibility) {
+void WorldManager::showGridGuide(bool visibility) {
 	if (this->isGridConfigured()) {
 		if (this->gridGuide == nullptr) {
 			this->recalculateGrideGuide(this->gridComponent);
@@ -56,7 +56,22 @@ void LevelManager::showGridGuide(bool visibility) {
 }
 
 
-void LevelManager::recalculateGrideGuide(GridComponent* gridComponent) {
+TIEntityFactory& WorldManager::registerTIEntity(const std::string& entityName) {
+	this->tientityDefinitions.insert({ entityName, TIEntityFactory() });
+	return this->tientityDefinitions.at(entityName);
+}
+
+
+bool WorldManager::spawnTIEntity(const std::string& entityName) {
+	if (this->tientityDefinitions.count(entityName)) {
+		this->tientityDefinitions.at(entityName).build();
+		return true;
+	}
+	return false;
+}
+
+
+void WorldManager::recalculateGrideGuide(GridComponent* gridComponent) {
 	if (this->gridGuide != nullptr) {
 		this->gridGuide->setRemove(true);
 	}
@@ -74,6 +89,6 @@ void LevelManager::recalculateGrideGuide(GridComponent* gridComponent) {
 }
 
 
-void LevelManager::recalculateScrollBounds(const SpriteComponent& spriteComponent) {
+void WorldManager::recalculateScrollBounds(const SpriteComponent& spriteComponent) {
 	ViewManager::Instance()->setScrollBounds(spriteComponent.getGlobalBounds());
 }

@@ -6,7 +6,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "componentsystems/GridComponentSystem.h"
-#include "managers/LevelManager.h"
+#include "managers/WorldManager.h"
 #include "managers/LogManager.h" 
 #include "managers/EventsManager.h"
 #include "objects/components/MovesComponent.h"
@@ -67,8 +67,8 @@ void MovesComponentSystem::setTargetPosition(MovesComponent& movesComponent, Spr
 		sf::Vector2f targetPosition = spriteComponent.getPosition();
 
 		sf::Vector2f velocity = movesComponent.getVelocity();
-		if (LevelManager::Instance()->isGridConfigured()) {
-			const sf::Vector2f& tileSize = LevelManager::Instance()->getGridComponent()->getTileSize();
+		if (WorldManager::Instance()->isGridConfigured()) {
+			const sf::Vector2f& tileSize = WorldManager::Instance()->getGridComponent()->getTileSize();
 			velocity.x = tileSize.x;
 		}
 

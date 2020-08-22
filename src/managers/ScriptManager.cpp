@@ -6,7 +6,7 @@
 #include "managers/AssetsManager.h"
 #include "managers/ConfigManager.h"
 #include "managers/LogManager.h"
-#include "managers/LevelManager.h"
+#include "managers/WorldManager.h"
 #include "managers/WindowManager.h"
 #include "objects/factories/TIEntityFactory.h"
 #include "utils/StringHelpers.h"
@@ -51,12 +51,12 @@ void ScriptManager::loadScript(const std::string& scriptPath) {
 		LuaRef gridTable = getGlobal(this->luaState, "level");
 		TIEntity* parent = nullptr;
         if (gridTable.isTable()) {
-            parent = this->loadLevel(gridTable);
+            this->loadLevel(gridTable);
         }
 
         std::vector<std::string> tientities = Lua::getTableKeys(this->luaState, "tientities");
         if (!tientities.empty()) {
-            this->loadTIEntities(tientities, parent);
+            this->loadTIEntities(tientities);
         }
     }
 }
@@ -111,7 +111,7 @@ void ScriptManager::loadWindowProperties(const LuaRef& windowTable) {
 }
 
 
-TIEntity* ScriptManager::loadLevel(const luabridge::LuaRef& gridTable) {
+void ScriptManager::loadLevel(const luabridge::LuaRef& gridTable) {
 	TIEntityFactory factory = TIEntityFactory();
 	std::vector<std::string> components = Lua::getTableKeys(this->luaState, "level");
 	for (auto& component : components) {
@@ -123,23 +123,22 @@ TIEntity* ScriptManager::loadLevel(const luabridge::LuaRef& gridTable) {
 		}
 	}
 	TIEntity& tientity = factory.build();
-	LevelManager::Instance()->setLevelEntity(tientity);
+	WorldManager::Instance()->setLevelEntity(tientity);
 	LogManager::Instance()->info("Configured level from Lua script.");
-	return &tientity;
 }
 
 
-void ScriptManager::loadTIEntities(const std::vector<std::string>& tientities, TIEntity* parent) {
+void ScriptManager::loadTIEntities(const std::vector<std::string>& tientities) {
 	LuaRef tientitiesTable = getGlobal(this->luaState, "tientities");
 	for (auto& tientity : tientities) {
-		ScriptManager::loadTIEntity("tientities." + tientity, tientitiesTable[tientity], parent);
+		ScriptManager::loadTIEntity("tientities." + tientity, tientitiesTable[tientity], nullptr);
 	}
 }
 
 
-void ScriptManager::loadTIEntity(const std::string& tientityKey, const LuaRef& tientityTable, TIEntity* parent) {
-	TIEntityFactory factory = TIEntityFactory();
-	factory.setName(tientityKey).setParent(parent);
+void ScriptManager::loadTIEntity(const std::string& tientityKey, const LuaRef& tientityTable, TIEntityFactory* parent) {
+
+	TIEntityFactory& factory = this->getFactory(tientityKey, parent);
 	std::vector<std::string> components = Lua::getTableKeys(this->luaState, tientityKey);
 	std::vector<std::string> children;
 	for (auto& component : components) {
@@ -153,13 +152,22 @@ void ScriptManager::loadTIEntity(const std::string& tientityKey, const LuaRef& t
 		}
 	}
 
-	TIEntity& tientity = factory.build();
-	LogManager::Instance()->info("Built entity " + tientityKey + " from Lua script.");
+	LogManager::Instance()->info("Registered entity " + tientityKey + " from Lua script.");
 
 	//Any other property is a child entity
 	for (auto& child : children) {
-		this->loadTIEntity(tientityKey + "." + child, tientityTable[child], &tientity);
+		this->loadTIEntity(tientityKey + "." + child, tientityTable[child], &factory);
 	}
+}
+
+
+TIEntityFactory& ScriptManager::getFactory(const std::string& name, TIEntityFactory* parent) {
+	if (parent == nullptr) {
+		return WorldManager::Instance()->registerTIEntity(name);
+	} else {
+		return parent->registerChild();
+	}
+
 }
 
 

@@ -50,6 +50,11 @@ TIEntity& TIEntityFactory::build() {
 	AnimatedComponentSystem::Instance()->addComponent(*this, tientity);
 	EventsComponentSystem::Instance()->addComponent(*this, tientity);
 
+	for (auto & child : this->children) {
+		child.setParent(&tientity);
+		child.build();
+	}
+
 	return tientity;
 }
 
@@ -57,6 +62,12 @@ TIEntity& TIEntityFactory::build() {
 TIEntityFactory& TIEntityFactory::setParent(TIEntity* parent) {
 	this->parent = parent;
 	return *this;
+}
+
+TIEntityFactory& TIEntityFactory::registerChild() {
+	this->children.push_back(TIEntityFactory());
+	TIEntityFactory& child = this->children.back();
+	return child;
 }
 
 

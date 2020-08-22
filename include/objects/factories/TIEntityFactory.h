@@ -3,6 +3,7 @@
 
 #include <array>
 #include <map>
+#include <vector>
 #include <string>
 
 #include "objects/entities/TIEntity.h" 
@@ -17,6 +18,7 @@ class TIEntityFactory {
 
 		TIEntityFactory& setName(std::string);
 		TIEntityFactory& setParent(TIEntity*);
+		TIEntityFactory& registerChild();
 
 		bool isValidComponentName(const std::string&);
 
@@ -27,8 +29,9 @@ class TIEntityFactory {
 		~TIEntityFactory() {};
 
 	private:
-		TIEntity* parent = nullptr;
 		std::string name = "";
+		TIEntity* parent = nullptr;
+		std::vector<TIEntityFactory> children;
 
 		std::array<std::string, 6> validComponentNames;
 };

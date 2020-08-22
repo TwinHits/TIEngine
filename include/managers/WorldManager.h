@@ -1,5 +1,5 @@
-#ifndef LEVELMANAGER_H
-#define LEVELMANAGER_H
+#ifndef WORLDMANAGER_H
+#define WORLDMANAGER_H
 
 #include "managers/Manager.h"
 #include "templates/Singleton.h"
@@ -8,28 +8,33 @@
 #include "objects/components/SpriteComponent.h"
 #include "objects/entities/GridGuide.h"
 #include "objects/entities/TIEntity.h"
+#include "objects/factories/TIEntityFactory.h"
 
 namespace TIE {
 
-class LevelManager : public Singleton<LevelManager>, Manager {
+class WorldManager : public Singleton<WorldManager>, Manager {
 	public:
 		bool initialize();
-
-		bool isGridConfigured();
 
 		TIEntity* getLevelEntity();
 		void setLevelEntity(TIEntity&);
 
+		bool isGridConfigured();
 		GridComponent* getGridComponent();
 
 		void showGridGuide(bool);
 
-		LevelManager() {};
-		~LevelManager() {};
+		TIEntityFactory& registerTIEntity(const std::string& entityName);
+		bool spawnTIEntity(const std::string& entityName);
+
+		WorldManager() {};
+		~WorldManager() {};
 
 	private:
 		void recalculateGrideGuide(GridComponent*);
 		void recalculateScrollBounds(const SpriteComponent&);
+
+		std::map<std::string, TIEntityFactory> tientityDefinitions;
 
 		TIEntity* levelEntity = nullptr;
 		GridComponent* gridComponent = nullptr;
