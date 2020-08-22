@@ -138,7 +138,10 @@ void ScriptManager::loadTIEntities(const std::vector<std::string>& tientities) {
 
 void ScriptManager::loadTIEntity(const std::string& tientityKey, const LuaRef& tientityTable, TIEntityFactory* parent) {
 
-	TIEntityFactory& factory = this->getFactory(tientityKey, parent);
+    std::vector<std::string> parts;
+    String::split(tientityKey, '.', parts);
+	std::string name = parts.back();
+	TIEntityFactory& factory = this->getFactory(name, parent);
 	std::vector<std::string> components = Lua::getTableKeys(this->luaState, tientityKey);
 	std::vector<std::string> children;
 	for (auto& component : components) {
@@ -152,7 +155,7 @@ void ScriptManager::loadTIEntity(const std::string& tientityKey, const LuaRef& t
 		}
 	}
 
-	LogManager::Instance()->info("Registered entity " + tientityKey + " from Lua script.");
+	LogManager::Instance()->info("Registered entity " + name + " from Lua script.");
 
 	//Any other property is a child entity
 	for (auto& child : children) {
