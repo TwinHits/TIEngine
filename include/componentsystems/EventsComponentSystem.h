@@ -35,7 +35,7 @@ class EventsComponentSystem : public Singleton<EventsComponentSystem>, Component
 		};
 		std::vector<Components> components;
 
-		EventsManager* eventsManager = EventsManager::Instance();
+		void updateSelectedStates();
 };
 
 }

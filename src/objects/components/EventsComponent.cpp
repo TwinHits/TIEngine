@@ -9,6 +9,8 @@
 
 using namespace TIE;
 
+std::vector<EventsComponent*> EventsComponent::cachedSelectedComponents;
+
 bool EventsComponent::hasHandlers() {
 	return hasEventHandlers() && hasKeyHandlers();
 }
@@ -83,12 +85,32 @@ void EventsComponent::addState(const std::string& state) {
 	}
 }
 
-void TIE::EventsComponent::removeState(const std::string& state) {
+
+void EventsComponent::removeState(const std::string& state) {
 	Vector::remove(this->states, state);
 }
 
 
 const std::vector<std::string>& TIE::EventsComponent::getStates() {
 	return this->states;
+}
+
+
+void EventsComponent::addSelectedComponent(EventsComponent& eventsComponent) {
+	this->cachedSelectedComponents.push_back(&eventsComponent);
+}
+
+std::vector<EventsComponent*>& EventsComponent::getSelectedComponents() {
+	return this->cachedSelectedComponents;
+}
+
+
+void EventsComponent::removeSelectedComponent(EventsComponent& eventsComponent) {
+	Vector::remove(this->cachedSelectedComponents, &eventsComponent);
+}
+
+
+void EventsComponent::clearSelectedComponents() {
+	this->cachedSelectedComponents.clear();
 }
 

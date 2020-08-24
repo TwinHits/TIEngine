@@ -20,9 +20,11 @@ const std::string EventsComponentSystem::SELECTABLE = "selectable";
 const std::string EventsComponentSystem::SELECTABLE_KEY = EventsComponentSystem::SELECTABLE + '.' + EventsComponentSystem::SELECTABLE;
 
 void EventsComponentSystem::update(const float delta) {
+	this->updateSelectedStates();
+
 	for (auto& c : this->components) {
-		if (c.eventsComponent.hasHandlers() && eventsManager->hasEvents()) {
-			const std::map<sf::Event::EventType, sf::Event>& events = eventsManager->getEvents();
+		if (c.eventsComponent.hasHandlers() && EventsManager::Instance()->hasEvents()) {
+			const std::map<sf::Event::EventType, sf::Event>& events = EventsManager::Instance()->getEvents();
 			for (const std::string& state : c.eventsComponent.getStates()) {
 				for (auto& event : events) {
 					const std::string* eventHandler = c.eventsComponent.getEventHandler(state, event.second);
@@ -38,12 +40,6 @@ void EventsComponentSystem::update(const float delta) {
 							MovesComponentSystem::Instance()->setTargetPosition(c.movesComponent, c.spriteComponent, Direction::RIGHT);
 						} else if (*eventHandler == "left") {
 							MovesComponentSystem::Instance()->setTargetPosition(c.movesComponent, c.spriteComponent, Direction::LEFT);
-						} else if (*eventHandler == "select") {
-							const sf::Event* const clickEvent = eventsManager->getEvent(sf::Event::MouseButtonPressed);
-							if (clickEvent != nullptr && c.spriteComponent.getGlobalBounds().contains(sf::Vector2f(clickEvent->mouseButton.x, clickEvent->mouseButton.y))) {
-								c.eventsComponent.removeState("unselected");
-								c.eventsComponent.addState("selected");
-							}
 						}
 					}
 				}
@@ -91,5 +87,27 @@ void EventsComponentSystem::addComponent(const TIEntityFactory& factory, TIEntit
 		}
 
 		this->components.push_back(components);
+	}
+}
+
+
+void EventsComponentSystem::updateSelectedStates() {
+	const sf::Event* clickEvent = EventsManager::Instance()->getEvent(sf::Event::MouseButtonPressed);
+	if (clickEvent != nullptr) {
+		for (auto& c : this->components) {
+			if (!c.eventsComponent.hasState("selected") && c.eventsComponent.getEventHandler("unselected", clickEvent->MouseButtonPressed) != nullptr) {
+				if (c.spriteComponent.getGlobalBounds().contains(sf::Vector2f(clickEvent->mouseButton.x, clickEvent->mouseButton.y))) {
+					c.eventsComponent.removeState("unselected");
+					c.eventsComponent.addState("selected");
+					for (auto& eventsComponent : c.eventsComponent.getSelectedComponents()) {
+						eventsComponent->removeState("selected");
+						eventsComponent->addState("unselected");
+					}
+					c.eventsComponent.clearSelectedComponents();
+					c.eventsComponent.addSelectedComponent(c.eventsComponent);
+					EventsManager::Instance()->removeEvent(sf::Event::MouseButtonPressed);
+				}
+			}
+		}
 	}
 }

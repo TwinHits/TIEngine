@@ -33,10 +33,16 @@ class EventsComponent : public Component {
 		void addState(const std::string&);
 		void removeState(const std::string&);
 		const std::vector<std::string>& getStates();
+
+		void addSelectedComponent(EventsComponent&);
+		std::vector<EventsComponent*>& getSelectedComponents();
+		void removeSelectedComponent(EventsComponent&);
+		void clearSelectedComponents();
 	private:
+		std::vector<std::string> states;
 		std::map<std::string, std::map<sf::Event::EventType, std::string> > eventHandlers;
 		std::map<std::string, std::map<sf::Keyboard::Key, std::string> > keyHandlers;
-		std::vector<std::string> states;
+		static std::vector<EventsComponent*> cachedSelectedComponents;
 };
 
 }
