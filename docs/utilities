@@ -1,5 +1,0 @@
-int StringToInt(std::string s): 
-	Converts a std::string to an integer.
-
-std::string LocalTime():
-	Returns the local time as a string.

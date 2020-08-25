@@ -38,3 +38,13 @@ windows could not find boost until I b2.exe'd with flags
 8/20/2020
 Git would show that there were tons of changes in linux hacing to do with ending all of the lines with ^M. I fixed this with git command
 git config --global core.autocrlf true
+
+8/24/2020
+Notes.txt before I deleted it:
+Put the SFML libraries downloaded from the website in the lib folder
+Set the CMAKE variable to the correct folder.
+	set(SFML_DIR "./SFML-2.5.1/lib/cmake/SFML")
+
+Need Xming running on windows or there will be an X error.
+
+For I think the third time, I forgot about that you're supposed to do ./boostrap and then ./b2 to build boost once you've downloaded it. It could not find filesystem until I did.

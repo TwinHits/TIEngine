@@ -1,2 +1,0 @@
-SFML/Graphics
-boost/filesystem
