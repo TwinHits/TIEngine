@@ -48,15 +48,15 @@ void ScriptManager::loadScript(const std::string& scriptPath) {
             this->loadAssets(assetsTable, scriptDirectory);
         }
 
-		LuaRef gridTable = getGlobal(this->luaState, "level");
-		TIEntity* parent = nullptr;
-        if (gridTable.isTable()) {
-            this->loadLevel(gridTable);
-        }
-
         std::vector<std::string> tientities = Lua::getTableKeys(this->luaState, "tientities");
         if (!tientities.empty()) {
             this->loadTIEntities(tientities);
+        }
+
+		LuaRef gridTable = getGlobal(this->luaState, "world");
+		TIEntity* parent = nullptr;
+        if (gridTable.isTable()) {
+            this->loadWorld(gridTable);
         }
     }
 }
@@ -111,20 +111,31 @@ void ScriptManager::loadWindowProperties(const LuaRef& windowTable) {
 }
 
 
-void ScriptManager::loadLevel(const luabridge::LuaRef& gridTable) {
+void ScriptManager::loadWorld(const luabridge::LuaRef& worldTable) {
 	TIEntityFactory factory = TIEntityFactory();
-	std::vector<std::string> components = Lua::getTableKeys(this->luaState, "level");
+	std::vector<std::string> components = Lua::getTableKeys(this->luaState, "world");
 	for (auto& component : components) {
 		if (factory.isValidComponentName(component)) {
-			LuaRef table = gridTable[component];
+			LuaRef table = worldTable[component];
 			if (table.isTable()) {
-				this->readComponentValues(factory, component, table, "level." + component);
+				this->readComponentValues(factory, component, table, "world." + component);
 			}
 		}
 	}
+
 	TIEntity& tientity = factory.build();
 	WorldManager::Instance()->setLevelEntity(tientity);
-	LogManager::Instance()->info("Configured level from Lua script.");
+	LogManager::Instance()->info("Configured world from Lua script.");
+
+	LuaRef table = worldTable["spawns"];
+	if (table.isTable()) {
+		for (luabridge::Iterator iterator(table); !iterator.isNil(); ++iterator) {
+			if (iterator.value().isString()) {
+				WorldManager::Instance()->spawnTIEntity(iterator.value().cast<std::string>());
+			}
+		}
+	}
+
 }
 
 
