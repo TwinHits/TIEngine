@@ -29,7 +29,7 @@ const float MovesComponentSystem::CLOSE_ENOUGH = 0.5f;
 void MovesComponentSystem::update(const float delta) {
 	for (auto& c : components) {
 		this->move(c.movesComponent, c.spriteComponent, delta);
-		// this->rotate(c.movesComponent, c.spriteComponent, delta);
+		this->rotate(c.movesComponent, c.spriteComponent, delta);
 	}
 }
 
@@ -64,7 +64,6 @@ void MovesComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity
 
 void MovesComponentSystem::setTargetPosition(MovesComponent& movesComponent, SpriteComponent& spriteComponent, Direction direction) {
 	if (this->arePositionsCloseEnough(movesComponent.getTargetPosition(), spriteComponent.getPosition())) {
-		sf::Vector2f targetPosition = spriteComponent.getPosition();
 
 		sf::Vector2f velocity = movesComponent.getVelocity();
 		if (WorldManager::Instance()->isGridConfigured()) {
@@ -72,6 +71,7 @@ void MovesComponentSystem::setTargetPosition(MovesComponent& movesComponent, Spr
 			velocity.x = tileSize.x;
 		}
 
+		sf::Vector2f targetPosition = spriteComponent.getPosition();
 		if (direction == Direction::TOP) {
 			targetPosition += sf::Vector2f(0, -velocity.x);
 		} else if (direction == Direction::LEFT) {
@@ -97,10 +97,6 @@ void MovesComponentSystem::setTargetPosition(MovesComponent& movesComponent, Spr
 
 void MovesComponentSystem::move(MovesComponent& movesComponent, SpriteComponent& spriteComponent, const float delta) {
 	if (!this->arePositionsCloseEnough(movesComponent.getTargetPosition(), spriteComponent.getPosition())) {
-		if (this->recalculateVelocity(movesComponent)) {
-			movesComponent.setCachedTargetPosition(movesComponent.getTargetPosition());
-			movesComponent.setVelocity(sf::Vector2f(movesComponent.getVelocity().x, movesComponent.getTargetAngle()));
-		}
 		spriteComponent.sf::Transformable::move(Math::translateVelocityByTime(movesComponent.getVelocity(), delta));
 	} else if (spriteComponent.getPosition() != movesComponent.getTargetPosition()) {
 		spriteComponent.setPosition(movesComponent.getTargetPosition());
@@ -109,16 +105,18 @@ void MovesComponentSystem::move(MovesComponent& movesComponent, SpriteComponent&
 
 
 void MovesComponentSystem::rotate(MovesComponent& movesComponent, SpriteComponent& spriteComponent, const float delta) {
-	if (spriteComponent.getRotation() != movesComponent.getTargetAngle()) {
-		if (!this->areRotationsCloseEnough(movesComponent.getTargetAngle(), spriteComponent.getRotation())) {
-			if (this->recalculateAngularVelocity(movesComponent)) {
-				movesComponent.setCachedTargetAngle(movesComponent.getTargetAngle());
-				movesComponent.setAngularVelocity(sf::Vector2f(movesComponent.getAngularVelocity().x, Math::directionFromAngleToAngle(spriteComponent.getRotation(), movesComponent.getTargetAngle())));
-			}
-			spriteComponent.sf::Transformable::rotate(Math::translateVelocityByTime(movesComponent.getAngularVelocity(), delta).x * movesComponent.getAngularVelocity().y);
-		} else if (spriteComponent.getRotation() != movesComponent.getTargetAngle()) {
-			spriteComponent.setRotation(movesComponent.getTargetAngle());
-		}
+    sf::Vector2f& velocity = movesComponent.getVelocity();
+	if (!Math::areFloatsEqual(velocity.y, movesComponent.getTargetAngle())) {
+		if (!this->areRotationsCloseEnough(velocity.y, movesComponent.getTargetAngle())) {
+			sf::Vector2f& angularVelocity = movesComponent.getAngularVelocity();
+            movesComponent.setTargetAngle(Math::angleBetweenTwoPoints(spriteComponent.getPosition(), movesComponent.getTargetPosition()));
+            angularVelocity.y = Math::directionFromAngleToAngle(velocity.y, movesComponent.getTargetAngle());
+            movesComponent.setAngularVelocity(angularVelocity);
+            velocity.y = velocity.y + (movesComponent.getAngularVelocity().x * movesComponent.getAngularVelocity().y * delta);
+		} else if (this->areRotationsCloseEnough(velocity.y, movesComponent.getTargetAngle())) {
+			velocity.y = movesComponent.getTargetAngle();
+        }
+        movesComponent.setVelocity(velocity);
 	}
 }
 
@@ -130,21 +128,5 @@ bool MovesComponentSystem::arePositionsCloseEnough(const sf::Vector2f& position1
 
 bool MovesComponentSystem::areRotationsCloseEnough(const float rotation1, const float rotation2) {
 	return Math::distanceBetweenTwoAngles(rotation1, rotation2) <= MovesComponentSystem::CLOSE_ENOUGH;
-}
-
-
-bool MovesComponentSystem::recalculateVelocity(MovesComponent& movesComponent) {
-	if (movesComponent.getTargetPosition() != movesComponent.getCachedTargetPosition()) {
-		return true;
-	}
-	return false;
-}
-
-
-bool MovesComponentSystem::recalculateAngularVelocity(MovesComponent& movesComponent) {
-	if (!Math::areFloatsEqual(movesComponent.getTargetAngle(), movesComponent.getCachedTargetAngle())) {
-		return true;
-	}
-	return false;
 }
 

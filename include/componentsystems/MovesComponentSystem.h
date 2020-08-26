@@ -45,8 +45,6 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, ComponentSy
 
 		static bool arePositionsCloseEnough(const sf::Vector2f&, const sf::Vector2f&);
 		static bool areRotationsCloseEnough(const float, const float);
-		bool recalculateVelocity(MovesComponent& movesComponent);
-		bool recalculateAngularVelocity(MovesComponent& movesComponent);
 
 		static const float CLOSE_ENOUGH;
 };

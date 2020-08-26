@@ -15,7 +15,7 @@ class WindowManager : public Singleton<WindowManager>, Manager {
 	public:
 		bool initialize();
 
-		sf::RenderWindow& addWindow(sf::VideoMode mode=sf::VideoMode(800, 600), 
+		sf::RenderWindow& addWindow(sf::VideoMode mode=sf::VideoMode(1280, 720), 
 									const std::string& title="Twin Ion Engine", 
 									int style=sf::Style::Default,
 									const sf::ContextSettings& settings=sf::ContextSettings());

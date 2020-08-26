@@ -7,7 +7,7 @@ void MovesComponent::setVelocity(const sf::Vector2f& velocity) {
 };
 
 
-const sf::Vector2f& MovesComponent::getVelocity() {
+sf::Vector2f& MovesComponent::getVelocity() {
 	return this->velocity;
 }
 
@@ -17,18 +17,8 @@ void MovesComponent::setTargetPosition(const sf::Vector2f& targetPosition) {
 }
 
 
-const sf::Vector2f& MovesComponent::getTargetPosition() const {
+sf::Vector2f& MovesComponent::getTargetPosition() {
 	return this->targetPosition;
-}
-
-
-void MovesComponent::setCachedTargetPosition(const sf::Vector2f& cachedTargetPosition) {
-	this->cachedTargetPosition = cachedTargetPosition;
-}
-
-
-const sf::Vector2f& MovesComponent::getCachedTargetPosition() const {
-	return this->cachedTargetPosition;
 }
 
 
@@ -37,7 +27,7 @@ void MovesComponent::setAngularVelocity(const sf::Vector2f& angularVelocity) {
 }
 
 
-const sf::Vector2f& MovesComponent::getAngularVelocity() const {
+sf::Vector2f& MovesComponent::getAngularVelocity() {
 	return this->angularVelocity;
 }
 
@@ -47,17 +37,7 @@ void MovesComponent::setTargetAngle(const float targetAngle) {
 }
 
 
-const float MovesComponent::getTargetAngle() const {
+float MovesComponent::getTargetAngle() {
 	return this->targetAngle;
-}
-
-
-void MovesComponent::setCachedTargetAngle(const float cachedTargetAngle) {
-	this->cachedTargetAngle = cachedTargetAngle;
-}
-
-
-const float MovesComponent::getCachedTargetAngle() const {
-	return this->cachedTargetAngle;
 }
 
