@@ -3,7 +3,7 @@
 
 namespace TIE {
 
-enum Direction { TOP, RIGHT, BOTTOM, LEFT };
+enum class Direction { TOP, RIGHT, BOTTOM, LEFT };
 
 }
 #endif

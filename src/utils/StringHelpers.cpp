@@ -40,17 +40,16 @@ TIE::Language TIE::String::parseLanguageString(const std::string& string) {
 	//Take a string and figure out with language it's referring to.
 
 	std::map<std::string, Language> languages;
-	languages["en_US"] = en_US;
-	languages["es_ES"] = es_ES;
-	languages["fe_FR"] = fe_FR;
-	languages["de_DE"] = de_DE;
-	languages["ja_JP"] = ja_JP;
+	languages["en_US"] = Language::en_US;
+    languages["es_ES"] = Language::es_ES;
+	languages["fe_FR"] = Language::fe_FR;
+    languages["de_DE"] = Language::de_DE;
+	languages["ja_JP"] = Language::ja_JP;
 
-	TIE::Language l = languages[string];
-	if (l == 0) {
-		return en_US;
+	if (languages.count(string)) {
+        return languages.at(string);
 	} else {
-		return l;
+        return Language::en_US;
 	}
 }
 

@@ -3,7 +3,7 @@
 
 namespace TIE {
 
-enum LogLevel {
+enum class LogLevel {
 	COMMAND, ERROR, WARN, INFO, DEBUG
 };
 

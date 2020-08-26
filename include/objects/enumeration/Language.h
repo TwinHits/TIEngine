@@ -3,7 +3,7 @@
 
 namespace TIE {
 
-enum Language {
+enum class Language {
 	en_US, fe_FR, es_ES, de_DE, ja_JP
 };
 

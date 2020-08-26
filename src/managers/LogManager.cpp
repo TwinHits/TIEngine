@@ -115,9 +115,7 @@ void LogManager::error(const std::string& message) {
 
 
 void LogManager::command(const std::string& message) {
-	if (ConfigManager::Instance()->getDebugLogLevel() > 0) {
-		std::string logString = "[" +  LocalTime() +  "]" + " COMMAND: " +  message;
-		logHistory.push(logString);
-		log << logString << std::endl;
-	}
+    std::string logString = "[" +  LocalTime() +  "]" + " COMMAND: " +  message;
+    logHistory.push(logString);
+    log << logString << std::endl;
 }
