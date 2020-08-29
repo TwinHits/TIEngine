@@ -11,7 +11,6 @@
 #include "componentsystems/TextComponentSystem.h"
 #include "componentsystems/ShapeComponentSystem.h"
 #include "managers/SceneManager.h"
-#include "managers/ScriptManager.h"
 #include "objects/components/AnimatedComponent.h"
 #include "objects/components/EventsComponent.h"
 #include "objects/components/GridComponent.h"
@@ -50,10 +49,6 @@ TIEntity& TIEntityFactory::build() {
 	CollidesComponentSystem::Instance()->addComponent(*this, tientity);
 	AnimatedComponentSystem::Instance()->addComponent(*this, tientity);
 	EventsComponentSystem::Instance()->addComponent(*this, tientity);
-
-	for (auto& function : functionValues) {
-		ScriptManager::Instance()->runFunction(function.second, tientity);
-	}
 
 	for (auto & child : this->children) {
 		child.setParent(&tientity);
