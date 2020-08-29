@@ -196,6 +196,9 @@ void ScriptManager::readComponentValues(TIEntityFactory& factory, const std::str
 				factory.floatValues.insert({ component + "." + key, value.cast<float>() });
 			} else if (value.isString()) {
 				factory.stringValues.insert({ component + "." + key, value.cast<std::string>() });
+			} else if (value.isFunction()) {
+				LogManager::Instance()->out("found function");
+				factory.functionValues.insert({ component + "." + key, value });
 			} else if (value.isTable()) {
 				this->readComponentValues(factory, component + "." + key, value, globalKey + "." + key);
 			} else {
