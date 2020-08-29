@@ -7,7 +7,7 @@ namespace TIE {
 
 class SceneLayer : public TIEntity {
 	public:
-		enum Layer {
+		enum class Layer {
 			ROOT,
 			ENGINE,
 			CLIENT
