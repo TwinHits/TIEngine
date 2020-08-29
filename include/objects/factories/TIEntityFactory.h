@@ -7,6 +7,7 @@
 #include <string>
 
 #include "objects/entities/TIEntity.h" 
+#include "utils/LuaHelpers.h"
 
 namespace TIE {
 
@@ -25,7 +26,7 @@ class TIEntityFactory {
 		std::map<std::string, bool> boolValues;
 		std::map<std::string, float> floatValues;
 		std::map<std::string, std::string> stringValues;
-		std::map<std::string, void(*)> functionValues;
+		std::map<std::string, luabridge::LuaRef> functionValues;
 
 		~TIEntityFactory() {};
 

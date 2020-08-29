@@ -50,6 +50,10 @@ TIEntity& TIEntityFactory::build() {
 	AnimatedComponentSystem::Instance()->addComponent(*this, tientity);
 	EventsComponentSystem::Instance()->addComponent(*this, tientity);
 
+	for (auto& function : functionValues) {
+		function.second();
+	}
+
 	for (auto & child : this->children) {
 		child.setParent(&tientity);
 		child.build();
