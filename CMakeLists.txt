@@ -1,7 +1,7 @@
 #Settings
 cmake_minimum_required(VERSION 3.15)
 project(TIEngine)
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_BUILD_TYPE Debug)
 
 #Dependencies
@@ -27,9 +27,8 @@ set(CMAKE_BUILD_TYPE Debug)
 	#link_directories("lib/boost_1_72_0-msvc-14.2-64/lib64-msvc-14.2")
 	link_directories("lib/boost_1_72_0-win/stage/lib")
 
-	#Lua
-	include_directories("lib/LuaBridge/Source/LuaBridge")
-	include_directories("lib/LuaBridge/Source")
+	#Sol3
+	include_directories("lib/sol3/include")
 	if(${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU")
 		include_directories("lib/lua-5.3.5-gnu/include")
 		link_directories("lib/lua-5.3.5-gnu")

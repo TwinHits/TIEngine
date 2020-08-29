@@ -8,8 +8,8 @@ This project is cross platform and has been tested on Visual Studio 19.0 and g++
 This engine uses these versions for it's dependenices:
 	SFML - 2.5
 	Boost - 1.72.0
-	LuaBridge - 2.4
-		https://github.com/vinniefalco/LuaBridge
+	sol2 - 3.2.1
+		https://github.com/ThePhD/sol2
 	Lua - 5.3.5
 		https://sourceforge.net/projects/luabinaries/files/5.3.5/
 
