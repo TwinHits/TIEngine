@@ -2,7 +2,6 @@
 
 #include <algorithm>
 
-#include "managers/SceneManager.h"
 #include "componentsystems/AnimatedComponentSystem.h"
 #include "componentsystems/CollidesComponentSystem.h"
 #include "componentsystems/EventsComponentSystem.h"
@@ -11,6 +10,8 @@
 #include "componentsystems/SpriteComponentSystem.h"
 #include "componentsystems/TextComponentSystem.h"
 #include "componentsystems/ShapeComponentSystem.h"
+#include "managers/SceneManager.h"
+#include "managers/ScriptManager.h"
 #include "objects/components/AnimatedComponent.h"
 #include "objects/components/EventsComponent.h"
 #include "objects/components/GridComponent.h"
@@ -51,7 +52,7 @@ TIEntity& TIEntityFactory::build() {
 	EventsComponentSystem::Instance()->addComponent(*this, tientity);
 
 	for (auto& function : functionValues) {
-		function.second();
+		ScriptManager::Instance()->runFunction(function.second, tientity);
 	}
 
 	for (auto & child : this->children) {

@@ -16,7 +16,8 @@ namespace TIE {
 class ScriptManager : public Singleton<ScriptManager>, Manager {
 	public:
 		bool initialize();
-		void loadScript(const std::string& scriptName);
+		void loadScript(const std::string&);
+		void runFunction(const std::string&, TIEntity&);
 
 		ScriptManager() {};
 		~ScriptManager() {};

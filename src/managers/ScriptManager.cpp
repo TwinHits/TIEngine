@@ -54,11 +54,21 @@ void ScriptManager::loadScript(const std::string& scriptPath) {
         }
 
 		LuaRef gridTable = getGlobal(this->luaState, "world");
-		TIEntity* parent = nullptr;
         if (gridTable.isTable()) {
             this->loadWorld(gridTable);
         }
     }
+}
+
+void TIE::ScriptManager::runFunction(const std::string& functionKey, TIEntity& tientity) {
+	LuaRef function = getGlobal(this->luaState, functionKey);
+	if (function.isFunction()) {
+		function();
+	} else if (function.isNil()) {
+		LogManager::Instance()->warn("Registered function " + functionKey + " does not exist.");
+	} else if (!function.isNil()) {
+		LogManager::Instance()->warn("Registered function " + functionKey + " exists, but is not a function.");
+	}
 }
 
 
@@ -184,7 +194,9 @@ TIEntityFactory& ScriptManager::getFactory(const std::string& name, TIEntityFact
 
 }
 
-
+// Iterate through each key of the table looking for values that can be casted to types.
+// Store those types in the revelant TIEfactory map for use by any given component
+// Call recursively if it finds another table
 void ScriptManager::readComponentValues(TIEntityFactory& factory, const std::string& component, const LuaRef& table, const std::string& globalKey) {
 	std::vector<std::string> keys = Lua::getTableKeys(this->luaState, globalKey);
 	for (auto& key : keys) {
@@ -197,8 +209,7 @@ void ScriptManager::readComponentValues(TIEntityFactory& factory, const std::str
 			} else if (value.isString()) {
 				factory.stringValues.insert({ component + "." + key, value.cast<std::string>() });
 			} else if (value.isFunction()) {
-				LogManager::Instance()->out("found function");
-				factory.functionValues.insert({ component + "." + key, value });
+				factory.functionValues.insert({ component + "." + key, globalKey + "." + key });
 			} else if (value.isTable()) {
 				this->readComponentValues(factory, component + "." + key, value, globalKey + "." + key);
 			} else {
