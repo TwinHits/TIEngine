@@ -27,10 +27,12 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, ComponentSy
 		void setTargetPosition(MovesComponent&, SpriteComponent&, sf::Vector2f&);
 
 		static const std::string MOVES;
-		static const std::string SPEED;
+		static const std::string MAXSPEED;
+		static const std::string ACCELERATION;
 		static const std::string DIRECTION;
 		static const std::string ROTATIONSPEED;
-		static const std::string SPEED_KEY;
+		static const std::string MAXSPEED_KEY;
+		static const std::string ACCELERATION_KEY;
 		static const std::string DIRECTION_KEY;
 		static const std::string ROTATIONSPEED_KEY;
 	private:
@@ -42,9 +44,11 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, ComponentSy
 
 		virtual void move(MovesComponent&, SpriteComponent&, const float);
 		virtual void rotate(MovesComponent&, SpriteComponent&, const float);
+		virtual void accelerate(MovesComponent&, const float);
 
-		static bool arePositionsCloseEnough(const sf::Vector2f&, const sf::Vector2f&);
-		static bool areRotationsCloseEnough(const float, const float);
+		bool arePositionsCloseEnough(const sf::Vector2f&, const sf::Vector2f&);
+		bool areRotationsCloseEnough(const float, const float);
+		bool areFloatsCloseEnough(const float, const float);
 
 		static const float CLOSE_ENOUGH;
 };

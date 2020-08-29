@@ -11,6 +11,12 @@ class MovesComponent : public Component {
 	public:
 		MovesComponent() {};
 		virtual ~MovesComponent() {};
+
+		void setMaxSpeed(const float);
+		float getMaxSpeed();
+		
+		void setAcceleration(const float);
+		float getAcceleration();
 		
 		void setVelocity(const sf::Vector2f&); //x = speed, y = direction
 		sf::Vector2f& getVelocity();
@@ -24,6 +30,9 @@ class MovesComponent : public Component {
 		void setTargetAngle(const float);
 		float getTargetAngle();
 	private: 
+		float maxSpeed = 0.0f;
+		float acceleration = 0.0f;
+
 		sf::Vector2f velocity = sf::Vector2f(0, 0);
 		sf::Vector2f targetPosition = sf::Vector2f(0, 0);
 

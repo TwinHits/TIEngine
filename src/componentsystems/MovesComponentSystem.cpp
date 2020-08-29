@@ -18,10 +18,12 @@
 using namespace TIE;
 
 const std::string MovesComponentSystem::MOVES = "moves";
-const std::string MovesComponentSystem::SPEED = "speed";
+const std::string MovesComponentSystem::MAXSPEED = "maxSpeed";
+const std::string MovesComponentSystem::ACCELERATION = "acceleration";
 const std::string MovesComponentSystem::DIRECTION = "direction";
 const std::string MovesComponentSystem::ROTATIONSPEED = "rotationSpeed";
-const std::string MovesComponentSystem::SPEED_KEY = MovesComponentSystem::MOVES + '.' + MovesComponentSystem::SPEED;
+const std::string MovesComponentSystem::MAXSPEED_KEY = MovesComponentSystem::MOVES + '.' + MovesComponentSystem::MAXSPEED;
+const std::string MovesComponentSystem::ACCELERATION_KEY = MovesComponentSystem::MOVES + '.' + MovesComponentSystem::ACCELERATION;
 const std::string MovesComponentSystem::DIRECTION_KEY = MovesComponentSystem::MOVES + '.' + MovesComponentSystem::DIRECTION;
 const std::string MovesComponentSystem::ROTATIONSPEED_KEY = MovesComponentSystem::MOVES + '.' + MovesComponentSystem::ROTATIONSPEED;
 const float MovesComponentSystem::CLOSE_ENOUGH = 0.5f;
@@ -39,18 +41,19 @@ void MovesComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity
 	SpriteComponent& spriteComponent = entity.addComponent<SpriteComponent>();
 	Components components = { movesComponent, spriteComponent };
 
-	if (factory.floatValues.count(MovesComponentSystem::SPEED_KEY)) {
-		float speed = factory.floatValues.at(MovesComponentSystem::SPEED_KEY);
+	if (factory.floatValues.count(MovesComponentSystem::MAXSPEED_KEY)) {
+		float maxSpeed = factory.floatValues.at(MovesComponentSystem::MAXSPEED_KEY);
+		movesComponent.setMaxSpeed(maxSpeed);
+	}
 
-		sf::Vector2f velocity = sf::Vector2f();
-		velocity.x = speed;
-		if (factory.floatValues.count(MovesComponentSystem::DIRECTION_KEY)) {
-			float direction = factory.floatValues.at(MovesComponentSystem::DIRECTION_KEY);
-			velocity.y = direction;
-		} else {
-			velocity.y = 0;
-		}
-		movesComponent.setVelocity(velocity);
+	if (factory.floatValues.count(MovesComponentSystem::ACCELERATION_KEY)) {
+		float acceleration = factory.floatValues.at(MovesComponentSystem::ACCELERATION_KEY);
+		movesComponent.setAcceleration(acceleration);
+	}
+
+	if (factory.floatValues.count(MovesComponentSystem::DIRECTION_KEY)) {
+        float direction = factory.floatValues.at(MovesComponentSystem::DIRECTION_KEY);
+		movesComponent.setVelocity(sf::Vector2f(0, direction));
 	}
 
 	if (factory.floatValues.count(MovesComponentSystem::ROTATIONSPEED_KEY)) {
@@ -97,9 +100,26 @@ void MovesComponentSystem::setTargetPosition(MovesComponent& movesComponent, Spr
 
 void MovesComponentSystem::move(MovesComponent& movesComponent, SpriteComponent& spriteComponent, const float delta) {
 	if (!this->arePositionsCloseEnough(movesComponent.getTargetPosition(), spriteComponent.getPosition())) {
+		this->accelerate(movesComponent, delta);
 		spriteComponent.sf::Transformable::move(Math::translateVelocityByTime(movesComponent.getVelocity(), delta));
 	} else if (spriteComponent.getPosition() != movesComponent.getTargetPosition()) {
+		movesComponent.setVelocity(sf::Vector2f(0, movesComponent.getVelocity().y));
 		spriteComponent.setPosition(movesComponent.getTargetPosition());
+	}
+}
+
+
+void MovesComponentSystem::accelerate(MovesComponent& movesComponent, const float delta) {
+	if (!Math::areFloatsEqual(movesComponent.getVelocity().x, movesComponent.getMaxSpeed())) {
+		if (!this->areFloatsCloseEnough(movesComponent.getVelocity().x, movesComponent.getMaxSpeed())) {
+			float speed = movesComponent.getVelocity().x + (movesComponent.getAcceleration() * delta);
+			if (speed >= movesComponent.getMaxSpeed()) {
+				speed = movesComponent.getMaxSpeed();
+			}
+			movesComponent.setVelocity(sf::Vector2f(speed, movesComponent.getVelocity().y));
+		} else {
+			movesComponent.setVelocity(sf::Vector2f(movesComponent.getMaxSpeed(), movesComponent.getVelocity().y));
+		}
 	}
 }
 
@@ -113,7 +133,7 @@ void MovesComponentSystem::rotate(MovesComponent& movesComponent, SpriteComponen
             angularVelocity.y = Math::directionFromAngleToAngle(velocity.y, movesComponent.getTargetAngle());
             movesComponent.setAngularVelocity(angularVelocity);
             velocity.y = velocity.y + (movesComponent.getAngularVelocity().x * movesComponent.getAngularVelocity().y * delta);
-		} else if (this->areRotationsCloseEnough(velocity.y, movesComponent.getTargetAngle())) {
+		} else {
 			velocity.y = movesComponent.getTargetAngle();
         }
         movesComponent.setVelocity(velocity);
@@ -128,5 +148,10 @@ bool MovesComponentSystem::arePositionsCloseEnough(const sf::Vector2f& position1
 
 bool MovesComponentSystem::areRotationsCloseEnough(const float rotation1, const float rotation2) {
 	return Math::distanceBetweenTwoAngles(rotation1, rotation2) <= MovesComponentSystem::CLOSE_ENOUGH;
+}
+
+
+bool MovesComponentSystem::areFloatsCloseEnough(const float f1, const float f2) {
+	return fabsf(f1 - f2) <= MovesComponentSystem::CLOSE_ENOUGH;
 }
 

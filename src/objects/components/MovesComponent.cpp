@@ -2,6 +2,22 @@
 
 using namespace TIE;
 
+void MovesComponent::setMaxSpeed(const float maxSpeed) {
+	this->maxSpeed = maxSpeed;
+}
+
+float MovesComponent::getMaxSpeed() {
+	return this->maxSpeed;
+}
+
+void MovesComponent::setAcceleration(const float acceleration) {
+	this->acceleration = acceleration;
+}
+
+float MovesComponent::getAcceleration() {
+	return this->acceleration;
+}
+
 void MovesComponent::setVelocity(const sf::Vector2f& velocity) {
 	this->velocity = velocity;
 };
