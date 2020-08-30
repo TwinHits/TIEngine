@@ -44,8 +44,7 @@ bool ConsoleManager::checkConsole() {
 
 
 void ConsoleManager::runCommand() {
-	std::vector<std::string> commandArgs;
-	String::split(this->input, ' ', commandArgs);
+	std::vector<std::string> commandArgs = String::slice(this->input, ' ', 0);
 	const std::string& command = commandArgs.front();
 	
    	LogManager::Instance()->command(this->input);
