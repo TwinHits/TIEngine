@@ -68,21 +68,21 @@ void MovesComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity
 void MovesComponentSystem::setTargetPosition(MovesComponent& movesComponent, SpriteComponent& spriteComponent, Direction direction) {
 	if (this->arePositionsCloseEnough(movesComponent.getTargetPosition(), spriteComponent.getPosition())) {
 
-		sf::Vector2f velocity = movesComponent.getVelocity();
+		float distance = movesComponent.getMaxSpeed();
 		if (WorldManager::Instance()->isGridConfigured()) {
 			const sf::Vector2f& tileSize = WorldManager::Instance()->getGridComponent()->getTileSize();
-			velocity.x = tileSize.x;
+			distance = tileSize.x;
 		}
 
 		sf::Vector2f targetPosition = spriteComponent.getPosition();
 		if (direction == Direction::TOP) {
-			targetPosition += sf::Vector2f(0, -velocity.x);
+			targetPosition += sf::Vector2f(0, -distance);
 		} else if (direction == Direction::LEFT) {
-			targetPosition += sf::Vector2f(-velocity.x, 0);
+			targetPosition += sf::Vector2f(-distance, 0);
 		} else if (direction == Direction::RIGHT) {
-			targetPosition += sf::Vector2f(velocity.x, 0);
+			targetPosition += sf::Vector2f(distance, 0);
 		} else if (direction == Direction::BOTTOM) {
-			targetPosition += sf::Vector2f(0, velocity.x);
+			targetPosition += sf::Vector2f(0, distance);
 		}
 		this->setTargetPosition(movesComponent, spriteComponent, targetPosition);
 	}

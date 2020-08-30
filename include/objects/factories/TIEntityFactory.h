@@ -25,7 +25,6 @@ class TIEntityFactory {
 		std::map<std::string, bool> boolValues;
 		std::map<std::string, float> floatValues;
 		std::map<std::string, std::string> stringValues;
-		std::map<std::string, std::string> functionValues;
 
 		~TIEntityFactory() {};
 

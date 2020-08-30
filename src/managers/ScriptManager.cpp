@@ -11,13 +11,14 @@
 #include "managers/WindowManager.h"
 #include "managers/WorldManager.h"
 #include "objects/factories/TIEntityFactory.h"
+#include "objects/entities/TIEntityScriptInterface.h"
 #include "utils/StringHelpers.h"
 
 using namespace TIE;
 
 bool ScriptManager::initialize() {
 
-	luaState.open_libraries(sol::lib::base);
+	this->luaState.open_libraries(sol::lib::base);
 
 	const std::string& startUpScript = ConfigManager::Instance()->getStartUpScript();
 	if (!startUpScript.empty()) {
@@ -61,7 +62,21 @@ void ScriptManager::loadScript(const std::string& scriptPath) {
 
 void TIE::ScriptManager::runFunction(const std::string& functionKey, TIEntity& tientity) {
 	if (this->functions.count(functionKey)) {
-		this->functions.at(functionKey)();
+		/*
+		this->luaState.set_function("moveRight", &TIEntityScriptInterface::moveRight);
+		*/
+
+		/*
+		this->luaState.new_usertype<TIEntityScriptInterface>("tientity", sol::no_constructor,
+			"moveRight", &TIEntityScriptInterface::moveRight);
+		*/
+
+		//sol::usertype<TIEntityScriptInterface> interface_type = this->luaState.new_usertype<TIEntityScriptInterface>("tientity", "moveRight", &TIEntityScriptInterface::moveRight);
+		sol::usertype<TIEntityScriptInterface> interface_type = this->luaState.new_usertype<TIEntityScriptInterface>("tientity");
+		//interface_type["moveRight"] = &TIEntityScriptInterface::moveRight;
+
+		TIEntityScriptInterface interface(tientity);
+		this->functions.at(functionKey)(interface);
 	} else {
 		LogManager::Instance()->warn("Registered function " + functionKey + " does not exist.");
 	}
@@ -210,7 +225,7 @@ void ScriptManager::readComponentValues(TIEntityFactory& factory, const std::str
 			} else if (value.is<std::string>()) {
 				factory.stringValues.insert({ key, value.as<std::string>() });
 			} else if (value.is<sol::function>()) {
-				factory.functionValues.insert({ key, key });
+				factory.stringValues.insert({ key, key });
 				this->functions.insert({ key, value.as<sol::function>() });
 			} else if (value.is<sol::table>()) {
 				this->readComponentValues(factory, key, value);

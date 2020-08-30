@@ -32,6 +32,7 @@ class EventsComponentSystem : public Singleton<EventsComponentSystem>, Component
 			EventsComponent& eventsComponent;
 			SpriteComponent& spriteComponent;
 			MovesComponent& movesComponent;
+			TIEntity& tientity;
 		};
 		std::vector<Components> components;
 

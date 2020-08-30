@@ -10,6 +10,7 @@
 #include "objects/entities/TIEntity.h"
 #include "objects/enumeration/Direction.h"
 #include "managers/EventsManager.h"
+#include "managers/ScriptManager.h"
 #include "utils/StringHelpers.h"
 
 using namespace TIE;
@@ -32,6 +33,10 @@ void EventsComponentSystem::update(const float delta) {
 						if (*eventHandler == "setDestination") {
 							sf::Vector2f position = sf::Vector2f(event.second.mouseButton.x, event.second.mouseButton.y);
 							MovesComponentSystem::Instance()->setTargetPosition(c.movesComponent, c.spriteComponent, position);
+						} else {
+							ScriptManager::Instance()->runFunction(*eventHandler, c.tientity);
+						}
+							/*
 						} else if (*eventHandler == "up") {
 							MovesComponentSystem::Instance()->setTargetPosition(c.movesComponent, c.spriteComponent, Direction::TOP);
 						} else if (*eventHandler == "down") {
@@ -41,6 +46,7 @@ void EventsComponentSystem::update(const float delta) {
 						} else if (*eventHandler == "left") {
 							MovesComponentSystem::Instance()->setTargetPosition(c.movesComponent, c.spriteComponent, Direction::LEFT);
 						}
+						*/
 					}
 				}
 			}
@@ -63,7 +69,7 @@ void EventsComponentSystem::addComponent(const TIEntityFactory& factory, TIEntit
 		EventsComponent& eventsComponent = entity.addComponent<EventsComponent>();
 		SpriteComponent& spriteComponent = entity.addComponent<SpriteComponent>();
 		MovesComponent& movesComponent = entity.addComponent<MovesComponent>();
-		Components components = { eventsComponent, spriteComponent, movesComponent };
+		Components components = { eventsComponent, spriteComponent, movesComponent, entity };
 
 		for (auto& key : eventKeys) {
 			// Split the key into parts for state, event, and handler
