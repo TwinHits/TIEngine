@@ -18,7 +18,9 @@ const std::string TextComponentSystem::DRAWN_KEY = TextComponentSystem::DRAWN + 
 const std::string TextComponentSystem::TEXT_KEY = TextComponentSystem::DRAWN + '.' + TextComponentSystem::TEXT;
 
 void TextComponentSystem::update(const float delta) {
+	for (auto& c : this->components) {	
 
+	}
 }
 
 TextComponent& TextComponentSystem::addComponent(TIEntity& entity) {

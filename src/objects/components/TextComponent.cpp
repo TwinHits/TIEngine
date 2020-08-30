@@ -12,6 +12,14 @@ TextComponent::TextComponent() {
 	this->setPosition(sf::Vector2f(0, 0));
 }
 
+void TextComponent::setOffset(const sf::Vector2f& offset) {
+	this->offset = offset;
+}
+
+sf::Vector2f& TextComponent::getOffset() {
+	return this->offset;
+}
+
 void TextComponent::setDrawn(bool drawn) {
 	this->drawn = drawn;
 }
