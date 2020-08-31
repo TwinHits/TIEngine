@@ -62,12 +62,13 @@ TIEntityFactory& WorldManager::registerTIEntity(const std::string& entityName) {
 }
 
 
-bool WorldManager::spawnTIEntity(const std::string& entityName) {
+TIEntity* WorldManager::spawnTIEntity(const std::string& entityName) {
 	if (this->tientityDefinitions.count(entityName)) {
-		this->tientityDefinitions.at(entityName).build();
-		return true;
+		return &this->tientityDefinitions.at(entityName).build();
+	} else {
+		LogManager::Instance()->warn("Entity " + entityName + " does not exist.");
 	}
-	return false;
+	return nullptr;
 }
 
 

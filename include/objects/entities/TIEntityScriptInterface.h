@@ -11,6 +11,7 @@ class TIEntityScriptInterface {
         ~TIEntityScriptInterface() {};
 
         // Movement
+        sf::Vector2f getPosition();
         void setDestination();
         void moveUp();
         void moveRight();
@@ -18,7 +19,7 @@ class TIEntityScriptInterface {
         void moveDown();
 
         // Spawn
-        void spawn();
+        void spawn(const std::string&);
 
     private:
         TIEntity* tientity = nullptr;

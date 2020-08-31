@@ -25,6 +25,14 @@ bool ScriptManager::initialize() {
 		this->loadScript(startUpScript);
 	}
 
+    sol::usertype<TIEntityScriptInterface> interface_type = this->luaState.new_usertype<TIEntityScriptInterface>("tientity");
+	interface_type["getPosition"] = &TIEntityScriptInterface::getPosition;
+    interface_type["moveRight"] = &TIEntityScriptInterface::moveRight;
+    interface_type["moveLeft"] = &TIEntityScriptInterface::moveLeft;
+    interface_type["moveUp"] = &TIEntityScriptInterface::moveUp;
+    interface_type["moveDown"] = &TIEntityScriptInterface::moveDown;
+    interface_type["spawn"] = &TIEntityScriptInterface::spawn;
+
 	return true;
 }
 
@@ -62,19 +70,6 @@ void ScriptManager::loadScript(const std::string& scriptPath) {
 
 void TIE::ScriptManager::runFunction(const std::string& functionKey, TIEntity& tientity) {
 	if (this->functions.count(functionKey)) {
-		/*
-		this->luaState.set_function("moveRight", &TIEntityScriptInterface::moveRight);
-		*/
-
-		/*
-		this->luaState.new_usertype<TIEntityScriptInterface>("tientity", sol::no_constructor,
-			"moveRight", &TIEntityScriptInterface::moveRight);
-		*/
-
-		//sol::usertype<TIEntityScriptInterface> interface_type = this->luaState.new_usertype<TIEntityScriptInterface>("tientity", "moveRight", &TIEntityScriptInterface::moveRight);
-		sol::usertype<TIEntityScriptInterface> interface_type = this->luaState.new_usertype<TIEntityScriptInterface>("tientity");
-		//interface_type["moveRight"] = &TIEntityScriptInterface::moveRight;
-
 		TIEntityScriptInterface interface(tientity);
 		this->functions.at(functionKey)(interface);
 	} else {
