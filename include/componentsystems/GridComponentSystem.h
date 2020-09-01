@@ -27,8 +27,6 @@ class GridComponentSystem : public Singleton<GridComponentSystem>, ComponentSyst
 		static const std::string GRID;
 		static const std::string WIDTH;
 		static const std::string HEIGHT;
-		static const std::string WIDTH_KEY;
-		static const std::string HEIGHT_KEY;
 	private:
 		struct Components {
 			GridComponent& gridComponent;

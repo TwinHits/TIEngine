@@ -31,10 +31,6 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, ComponentSy
 		static const std::string ACCELERATION;
 		static const std::string DIRECTION;
 		static const std::string ROTATIONSPEED;
-		static const std::string MAXSPEED_KEY;
-		static const std::string ACCELERATION_KEY;
-		static const std::string DIRECTION_KEY;
-		static const std::string ROTATIONSPEED_KEY;
 	private:
 		struct Components {
 			MovesComponent& movesComponent;

@@ -23,8 +23,6 @@ class TextComponentSystem : public Singleton<TextComponentSystem>, ComponentSyst
 
 		static const std::string DRAWN;
 		static const std::string TEXT;
-		static const std::string DRAWN_KEY;
-		static const std::string TEXT_KEY;
 	private:		
 		struct Components {
 			TextComponent& textComponent;

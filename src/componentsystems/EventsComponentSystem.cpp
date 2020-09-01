@@ -17,9 +17,6 @@
 using namespace TIE;
 
 const std::string EventsComponentSystem::EVENTS = "events";
-const std::string EventsComponentSystem::SELECTED = "selected";
-const std::string EventsComponentSystem::SELECTABLE = "selectable";
-const std::string EventsComponentSystem::SELECTABLE_KEY = EventsComponentSystem::SELECTABLE + '.' + EventsComponentSystem::SELECTABLE;
 
 void EventsComponentSystem::update(const float delta) {
 	this->updateSelectedStates();

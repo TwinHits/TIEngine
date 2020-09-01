@@ -12,10 +12,8 @@
 
 using namespace TIE;
 
-const std::string TextComponentSystem::DRAWN = "drawn";
-const std::string TextComponentSystem::TEXT = "text";
-const std::string TextComponentSystem::DRAWN_KEY = TextComponentSystem::DRAWN + '.' + TextComponentSystem::DRAWN;
-const std::string TextComponentSystem::TEXT_KEY = TextComponentSystem::DRAWN + '.' + TextComponentSystem::TEXT;
+const std::string TextComponentSystem::DRAWN = "draw.drawn";
+const std::string TextComponentSystem::TEXT = "drawn.text";
 
 void TextComponentSystem::update(const float delta) {
 	for (auto& c : this->components) {	
@@ -29,13 +27,13 @@ TextComponent& TextComponentSystem::addComponent(TIEntity& entity) {
 
 void TextComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& entity) {
 
-	if (factory.stringValues.count(TextComponentSystem::TEXT_KEY)) {
-		std::string textValue = factory.stringValues.at(TextComponentSystem::TEXT_KEY);
+	if (factory.stringValues.count(TextComponentSystem::TEXT)) {
+		std::string textValue = factory.stringValues.at(TextComponentSystem::TEXT);
 		TextComponent& textComponent = entity.addComponent<TextComponent>();
 		textComponent.setString(textValue);
 
-		if (factory.boolValues.count(TextComponentSystem::DRAWN_KEY)) {
-			bool drawnValue = factory.boolValues.at(TextComponentSystem::DRAWN_KEY);
+		if (factory.boolValues.count(TextComponentSystem::DRAWN)) {
+			bool drawnValue = factory.boolValues.at(TextComponentSystem::DRAWN);
 			textComponent.setDrawn(drawnValue);
 		}
 	}

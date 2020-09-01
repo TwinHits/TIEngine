@@ -18,12 +18,9 @@
 using namespace TIE;
 
 const std::string MovesComponentSystem::MOVES = "moves";
-const std::string MovesComponentSystem::MAXSPEED = "maxSpeed";
-const std::string MovesComponentSystem::ACCELERATION = "acceleration";
-const std::string MovesComponentSystem::ROTATIONSPEED = "rotationSpeed";
-const std::string MovesComponentSystem::MAXSPEED_KEY = MovesComponentSystem::MOVES + '.' + MovesComponentSystem::MAXSPEED;
-const std::string MovesComponentSystem::ACCELERATION_KEY = MovesComponentSystem::MOVES + '.' + MovesComponentSystem::ACCELERATION;
-const std::string MovesComponentSystem::ROTATIONSPEED_KEY = MovesComponentSystem::MOVES + '.' + MovesComponentSystem::ROTATIONSPEED;
+const std::string MovesComponentSystem::MAXSPEED = "moves.maxSpeed";
+const std::string MovesComponentSystem::ACCELERATION = "moves.acceleration";
+const std::string MovesComponentSystem::ROTATIONSPEED = "moves.rotationSpeed";
 const float MovesComponentSystem::CLOSE_ENOUGH = 0.5f;
 
 void MovesComponentSystem::update(const float delta) {
@@ -39,18 +36,18 @@ void MovesComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity
 	PositionComponent& positionComponent = entity.addComponent<PositionComponent>();
 	Components components = { movesComponent, positionComponent };
 
-	if (factory.floatValues.count(MovesComponentSystem::MAXSPEED_KEY)) {
-		float maxSpeed = factory.floatValues.at(MovesComponentSystem::MAXSPEED_KEY);
+	if (factory.floatValues.count(MovesComponentSystem::MAXSPEED)) {
+		float maxSpeed = factory.floatValues.at(MovesComponentSystem::MAXSPEED);
 		movesComponent.setMaxSpeed(maxSpeed);
 	}
 
-	if (factory.floatValues.count(MovesComponentSystem::ACCELERATION_KEY)) {
-		float acceleration = factory.floatValues.at(MovesComponentSystem::ACCELERATION_KEY);
+	if (factory.floatValues.count(MovesComponentSystem::ACCELERATION)) {
+		float acceleration = factory.floatValues.at(MovesComponentSystem::ACCELERATION);
 		movesComponent.setAcceleration(acceleration);
 	}
 
-	if (factory.floatValues.count(MovesComponentSystem::ROTATIONSPEED_KEY)) {
-		float rotationalSpeed = factory.floatValues.at(MovesComponentSystem::ROTATIONSPEED_KEY);
+	if (factory.floatValues.count(MovesComponentSystem::ROTATIONSPEED)) {
+		float rotationalSpeed = factory.floatValues.at(MovesComponentSystem::ROTATIONSPEED);
 		movesComponent.setAngularVelocity(sf::Vector2f(rotationalSpeed, 0.0f));
 	}
 

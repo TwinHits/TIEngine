@@ -20,7 +20,7 @@ class AnimatedComponentSystem : public Singleton<AnimatedComponentSystem>, Compo
         void update(const float);
         void addComponent(const TIEntityFactory&, TIEntity&);
 
-		static const std::string ANIMATED;
+        static const std::string ANIMATED;
 		static const std::string FRAMES;
 		static const std::string RANGE;
 		static const std::string SPEED;

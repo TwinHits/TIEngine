@@ -28,8 +28,6 @@ class SpriteComponentSystem : public Singleton<SpriteComponentSystem>, Component
 		static const std::string REPEATED;
 		static const std::string POSITION_X;
 		static const std::string POSITION_Y;
-		static const std::string DRAWN_KEY;
-		static const std::string TEXTURE_KEY;
 	private: 
 		struct Components {
 			SpriteComponent& spriteComponent;

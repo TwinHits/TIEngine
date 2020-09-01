@@ -13,10 +13,8 @@
 using namespace TIE;
 
 const std::string GridComponentSystem::GRID = "grid";
-const std::string GridComponentSystem::WIDTH = "width";
-const std::string GridComponentSystem::HEIGHT = "height";
-const std::string GridComponentSystem::WIDTH_KEY = GridComponentSystem::GRID + '.' + GridComponentSystem::WIDTH;
-const std::string GridComponentSystem::HEIGHT_KEY = GridComponentSystem::GRID + '.' + GridComponentSystem::HEIGHT;
+const std::string GridComponentSystem::WIDTH = "grid.width";
+const std::string GridComponentSystem::HEIGHT = "grid.height";
 
 void GridComponentSystem::update(const float) {
 
@@ -25,13 +23,13 @@ void GridComponentSystem::update(const float) {
 
 void GridComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& entity) {
 
-	if (factory.floatValues.count(GridComponentSystem::WIDTH_KEY) && factory.floatValues.count(GridComponentSystem::HEIGHT_KEY)) {
+	if (factory.floatValues.count(GridComponentSystem::WIDTH) && factory.floatValues.count(GridComponentSystem::HEIGHT)) {
 		GridComponent& gridComponent = entity.addComponent<GridComponent>();
 		SpriteComponent& spriteComponent = entity.addComponent<SpriteComponent>();
 		Components components = { gridComponent, spriteComponent };
 
-		float width = factory.floatValues.at(GridComponentSystem::WIDTH_KEY);
-		float height = factory.floatValues.at(GridComponentSystem::HEIGHT_KEY);
+		float width = factory.floatValues.at(GridComponentSystem::WIDTH);
+		float height = factory.floatValues.at(GridComponentSystem::HEIGHT);
 		gridComponent.setGridSize(sf::Vector2i(width, height));
 
 		sf::FloatRect textureSize = spriteComponent.getLocalBounds();

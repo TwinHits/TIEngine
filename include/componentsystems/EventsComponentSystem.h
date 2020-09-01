@@ -24,10 +24,7 @@ class EventsComponentSystem : public Singleton<EventsComponentSystem>, Component
 
 		void addComponent(const TIEntityFactory&, TIEntity&);
 
-		static const std::string EVENTS;
-		static const std::string SELECTED;
-		static const std::string SELECTABLE;
-		static const std::string SELECTABLE_KEY;
+		const static std::string EVENTS;
 	private:
 		struct Components {
 			EventsComponent& eventsComponent;
