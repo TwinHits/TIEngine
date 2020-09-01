@@ -12,7 +12,7 @@ using namespace TIE;
 std::vector<EventsComponent*> EventsComponent::cachedSelectedComponents;
 
 bool EventsComponent::hasHandlers() {
-	return hasEventHandlers() && hasKeyHandlers();
+	return hasEventHandlers() || hasKeyHandlers();
 }
 
 
