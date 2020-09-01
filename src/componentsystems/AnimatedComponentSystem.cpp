@@ -3,7 +3,7 @@
 #include <map>
 
 #include "objects/components/AnimatedComponent.h"
-#include "objects/components/MovesComponent.h"
+#include "objects/components/PositionComponent.h"
 #include "objects/components/SpriteComponent.h"
 #include "objects/entities/TIEntity.h"
 #include "objects/factories/TIEntityFactory.h"
@@ -20,7 +20,7 @@ const std::string AnimatedComponentSystem::DIRECTION = "direction";
 
 void AnimatedComponentSystem::update(const float delta) {
     for (auto& c : this->components) {
-        this->updateCurrentAnimation(c.animatedComponent, c.movesComponent, c.spriteComponent);
+        this->updateCurrentAnimation(c.animatedComponent, c.positionComponent, c.spriteComponent);
         if (this->progressAnimation(c.animatedComponent.getCurrentAnimation(), delta)) {
             this->setTextureRect(*c.animatedComponent.getCurrentAnimation(), c.spriteComponent);
         }
@@ -47,9 +47,9 @@ void AnimatedComponentSystem::addComponent(const TIEntityFactory& factory, TIEnt
 
     if (animatedStringKeys.size()) {
         AnimatedComponent& animatedComponent = tientity.addComponent<AnimatedComponent>();
+        PositionComponent& positionComponent = tientity.addComponent<PositionComponent>();
         SpriteComponent& spriteComponent = tientity.addComponent<SpriteComponent>();
-        MovesComponent& movesComponent = tientity.addComponent<MovesComponent>();
-        Components components = { animatedComponent, spriteComponent, movesComponent };
+        Components components = { animatedComponent, positionComponent, spriteComponent };
 
         std::map<std::string, Animation>& animations = animatedComponent.getAnimations();
         for (auto& key : animatedStringKeys) {
@@ -103,11 +103,10 @@ void AnimatedComponentSystem::addComponent(const TIEntityFactory& factory, TIEnt
 }
 
 
-void AnimatedComponentSystem::updateCurrentAnimation(AnimatedComponent& animatedComponent, MovesComponent& movesComponent, SpriteComponent& spriteComponent) {
-	float rotation = movesComponent.getVelocity().y;
-	float targetAngle = movesComponent.getTargetAngle();
+void AnimatedComponentSystem::updateCurrentAnimation(AnimatedComponent& animatedComponent, PositionComponent& positionComponent, SpriteComponent& spriteComponent) {
+    float rotation = positionComponent.getAngle();
 
-	if (animatedComponent.getCurrentAnimation() == nullptr || !Math::isAngleBetweenAngles(targetAngle, animatedComponent.getCurrentAnimation()->range.x, animatedComponent.getCurrentAnimation()->range.y)) {
+	if (animatedComponent.getCurrentAnimation() == nullptr || !Math::isAngleBetweenAngles(rotation, animatedComponent.getCurrentAnimation()->range.x, animatedComponent.getCurrentAnimation()->range.y)) {
 		std::map<std::string, Animation>& animations = animatedComponent.getAnimations();
 		for (auto& animation : animations) {
 			if (Math::isAngleBetweenAngles(rotation, animation.second.range.x, animation.second.range.y)) {

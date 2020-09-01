@@ -7,7 +7,7 @@
 #include <vector>
 
 #include "objects/components/AnimatedComponent.h"
-#include "objects/components/MovesComponent.h"
+#include "objects/components/PositionComponent.h"
 #include "objects/components/SpriteComponent.h"
 #include "objects/entities/TIEntity.h"
 #include "objects/factories/TIEntityFactory.h"
@@ -28,14 +28,14 @@ class AnimatedComponentSystem : public Singleton<AnimatedComponentSystem>, Compo
     private:
         struct Components {
             AnimatedComponent& animatedComponent;
+            PositionComponent& positionComponent;
             SpriteComponent& spriteComponent;
-            MovesComponent& movesComponent;
         };
         std::vector<Components> components;
         
         bool progressAnimation(Animation*, const float);
         void setTextureRect(const Animation&, SpriteComponent&);
-        void updateCurrentAnimation(AnimatedComponent&, MovesComponent&, SpriteComponent&);
+        void updateCurrentAnimation(AnimatedComponent&, PositionComponent&, SpriteComponent&);
 };
 
 }
