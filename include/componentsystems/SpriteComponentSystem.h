@@ -6,6 +6,7 @@
 
 #include <string>
 
+#include "objects/components/PositionComponent.h"
 #include "objects/components/SpriteComponent.h"
 #include "objects/factories/TIEntityFactory.h"
 #include "objects/entities/TIEntity.h"
@@ -25,10 +26,16 @@ class SpriteComponentSystem : public Singleton<SpriteComponentSystem>, Component
 		static const std::string WIDTH;
 		static const std::string HEIGHT;
 		static const std::string REPEATED;
+		static const std::string POSITION_X;
+		static const std::string POSITION_Y;
 		static const std::string DRAWN_KEY;
 		static const std::string TEXTURE_KEY;
-		static const std::string ROTATION_KEY;
 	private: 
+		struct Components {
+			SpriteComponent& spriteComponent;
+			PositionComponent& positionComponent;
+		};
+		std::vector<Components> components;
 };
 
 }

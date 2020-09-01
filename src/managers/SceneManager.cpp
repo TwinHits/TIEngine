@@ -6,6 +6,7 @@
 #include "componentsystems/CollidesComponentSystem.h"
 #include "componentsystems/EventsComponentSystem.h"
 #include "componentsystems/MovesComponentSystem.h"
+#include "componentsystems/SpriteComponentSystem.h"
 #include "managers/LogManager.h" 
 #include "managers/TimeManager.h"
 #include "managers/ViewManager.h"
@@ -80,11 +81,12 @@ TIEntity* SceneManager::findTIEntity(sf::Vector2f point) {
 void SceneManager::updateGameState() {
 	this->delta = this->clock.restart().asSeconds();
 
+	SpriteComponentSystem::Instance()->update(this->delta);
 	AnimatedComponentSystem::Instance()->update(this->delta);
 	MovesComponentSystem::Instance()->update(this->delta);
 	CollidesComponentSystem::Instance()->update(this->delta);
 	EventsComponentSystem::Instance()->update(this->delta);
-	
+
 	this->updateEngineEntity(*(this->engineLayer));
 
 	ViewManager::Instance()->updateCamera(this->delta);

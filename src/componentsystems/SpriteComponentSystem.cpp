@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "objects/components/SpriteComponent.h"
+#include "objects/components/PositionComponent.h"
 #include "objects/entities/TIEntity.h"
 #include "objects/factories/TIEntityFactory.h"
 #include "managers/AssetsManager.h"
@@ -14,16 +15,19 @@ using namespace TIE;
 
 const std::string SpriteComponentSystem::DRAWN = "drawn";
 const std::string SpriteComponentSystem::TEXTURE = "texture";
-const std::string SpriteComponentSystem::ROTATION = "rotation";
 const std::string SpriteComponentSystem::WIDTH = "width";
 const std::string SpriteComponentSystem::HEIGHT = "height";
 const std::string SpriteComponentSystem::REPEATED = "repeated";
+const std::string SpriteComponentSystem::POSITION_X = "drawn.position.x";
+const std::string SpriteComponentSystem::POSITION_Y = "drawn.position.y";
+const std::string SpriteComponentSystem::ROTATION = "drawn.rotation";
 const std::string SpriteComponentSystem::TEXTURE_KEY = SpriteComponentSystem::DRAWN + '.' + SpriteComponentSystem::TEXTURE;
 const std::string SpriteComponentSystem::DRAWN_KEY = SpriteComponentSystem::DRAWN + '.' + SpriteComponentSystem::DRAWN;
-const std::string SpriteComponentSystem::ROTATION_KEY = SpriteComponentSystem::DRAWN + '.' + SpriteComponentSystem::ROTATION;
 
 void SpriteComponentSystem::update(const float delta) {
-
+	for (auto& c : this->components) {
+		c.spriteComponent.setPosition(c.positionComponent.getPosition());
+	}
 }
 
 
@@ -34,15 +38,30 @@ SpriteComponent& SpriteComponentSystem::addComponent(TIEntity& entity) {
 
 void SpriteComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& entity) {
 
-	SpriteComponent& spriteComponent = entity.addComponent<SpriteComponent>();
 	if (factory.stringValues.count(SpriteComponentSystem::TEXTURE_KEY)) {
+        SpriteComponent& spriteComponent = entity.addComponent<SpriteComponent>();
+        PositionComponent& positionComponent = entity.addComponent<PositionComponent>();
+        Components components = { spriteComponent, positionComponent };
+		this->components.push_back(components);
+
 		std::string textureName = factory.stringValues.at(SpriteComponentSystem::TEXTURE_KEY);
 		sf::Texture& texture = AssetsManager::Instance()->getTexture(textureName);
 
-		if (factory.floatValues.count(SpriteComponentSystem::ROTATION_KEY)) {
-			float rotation = factory.floatValues.at(SpriteComponentSystem::ROTATION_KEY);
-			spriteComponent.setRotation(rotation);
+		sf::Vector2f position = sf::Vector2f(0, 0);
+		float angle = 0;
+		if (factory.floatValues.count(SpriteComponentSystem::POSITION_X)) {
+			position.x = factory.floatValues.at(SpriteComponentSystem::POSITION_X);
 		}
+
+		if (factory.floatValues.count(SpriteComponentSystem::POSITION_Y)) {
+			position.y = factory.floatValues.at(SpriteComponentSystem::POSITION_Y);
+		}
+		
+		if (factory.floatValues.count(SpriteComponentSystem::ROTATION)) {
+			angle = factory.floatValues.at(SpriteComponentSystem::ROTATION);
+		}
+		positionComponent.setPosition(position);
+		positionComponent.setAngle(angle);
 
 		if (factory.boolValues.count(SpriteComponentSystem::DRAWN_KEY)) {
 			bool drawn = factory.boolValues.at(SpriteComponentSystem::DRAWN_KEY);

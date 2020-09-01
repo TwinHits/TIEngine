@@ -8,6 +8,7 @@
 
 #include "objects/components/EventsComponent.h"
 #include "objects/components/MovesComponent.h"
+#include "objects/components/PositionComponent.h"
 #include "objects/components/SpriteComponent.h"
 #include "objects/entities/TIEntity.h"
 #include "objects/factories/TIEntityFactory.h"
@@ -30,8 +31,9 @@ class EventsComponentSystem : public Singleton<EventsComponentSystem>, Component
 	private:
 		struct Components {
 			EventsComponent& eventsComponent;
-			SpriteComponent& spriteComponent;
 			MovesComponent& movesComponent;
+			PositionComponent& positionComponent;
+			SpriteComponent& spriteComponent;
 			TIEntity& tientity;
 		};
 		std::vector<Components> components;

@@ -4,6 +4,7 @@
 #include "managers/LogManager.h"
 #include "managers/WorldManager.h"
 #include "objects/components/MovesComponent.h"
+#include "objects/components/PositionComponent.h"
 #include "objects/enumeration/Direction.h"
 
 using namespace TIE;
@@ -13,9 +14,9 @@ TIEntityScriptInterface::TIEntityScriptInterface(TIEntity& tientity) {
 }
 
 sf::Vector2f TIEntityScriptInterface::getPosition() {
-    SpriteComponent* spriteComponent = this->tientity->getComponent<SpriteComponent>();
-    if (spriteComponent != nullptr) {
-        return spriteComponent->getPosition();
+    PositionComponent* positionComponent = this->tientity->getComponent<PositionComponent>();
+    if (positionComponent != nullptr) {
+        return positionComponent->getPosition();
     }
 }
 
@@ -27,36 +28,36 @@ void TIEntityScriptInterface::setDestination() {
 
 void TIEntityScriptInterface::moveUp() {
     MovesComponent* movesComponent = this->tientity->getComponent<MovesComponent>();
-    SpriteComponent* spriteComponent = this->tientity->getComponent<SpriteComponent>();
-    if (movesComponent != nullptr) {
-        MovesComponentSystem::Instance()->setTargetPosition(*movesComponent, *spriteComponent, Direction::TOP);
+    PositionComponent* positionComponent = this->tientity->getComponent<PositionComponent>();
+    if (movesComponent != nullptr && positionComponent != nullptr) {
+        MovesComponentSystem::Instance()->setTargetPosition(*movesComponent, *positionComponent, Direction::TOP);
     }
 }
 
 
 void TIEntityScriptInterface::moveRight() {
     MovesComponent* movesComponent = this->tientity->getComponent<MovesComponent>();
-    SpriteComponent* spriteComponent = this->tientity->getComponent<SpriteComponent>();
-    if (movesComponent != nullptr && spriteComponent != nullptr) {
-        MovesComponentSystem::Instance()->setTargetPosition(*movesComponent, *spriteComponent, Direction::RIGHT);
+    PositionComponent* positionComponent = this->tientity->getComponent<PositionComponent>();
+    if (movesComponent != nullptr && positionComponent != nullptr) {
+        MovesComponentSystem::Instance()->setTargetPosition(*movesComponent, *positionComponent, Direction::RIGHT);
     }
 }
 
 
 void TIEntityScriptInterface::moveLeft() {
     MovesComponent* movesComponent = this->tientity->getComponent<MovesComponent>();
-    SpriteComponent* spriteComponent = this->tientity->getComponent<SpriteComponent>();
-    if (movesComponent != nullptr && spriteComponent != nullptr) {
-        MovesComponentSystem::Instance()->setTargetPosition(*movesComponent, *spriteComponent, Direction::LEFT);
+    PositionComponent* positionComponent = this->tientity->getComponent<PositionComponent>();
+    if (movesComponent != nullptr && positionComponent != nullptr) {
+        MovesComponentSystem::Instance()->setTargetPosition(*movesComponent, *positionComponent, Direction::LEFT);
     }
 }
 
 
 void TIEntityScriptInterface::moveDown() {
     MovesComponent* movesComponent = this->tientity->getComponent<MovesComponent>();
-    SpriteComponent* spriteComponent = this->tientity->getComponent<SpriteComponent>();
-    if (movesComponent != nullptr && spriteComponent != nullptr) {
-        MovesComponentSystem::Instance()->setTargetPosition(*movesComponent, *spriteComponent, Direction::BOTTOM);
+    PositionComponent* positionComponent = this->tientity->getComponent<PositionComponent>();
+    if (movesComponent != nullptr && positionComponent != nullptr) {
+        MovesComponentSystem::Instance()->setTargetPosition(*movesComponent, *positionComponent, Direction::BOTTOM);
     }
 }
 

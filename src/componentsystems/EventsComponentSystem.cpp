@@ -5,8 +5,9 @@
 
 #include "componentsystems/MovesComponentSystem.h"
 #include "objects/components/EventsComponent.h"
-#include "objects/components/SpriteComponent.h"
 #include "objects/components/MovesComponent.h"
+#include "objects/components/PositionComponent.h"
+#include "objects/components/SpriteComponent.h"
 #include "objects/entities/TIEntity.h"
 #include "objects/enumeration/Direction.h"
 #include "managers/EventsManager.h"
@@ -32,21 +33,10 @@ void EventsComponentSystem::update(const float delta) {
 					if (eventHandler != nullptr) {
 						if (*eventHandler == "setDestination") {
 							sf::Vector2f position = sf::Vector2f(event.second.mouseButton.x, event.second.mouseButton.y);
-							MovesComponentSystem::Instance()->setTargetPosition(c.movesComponent, c.spriteComponent, position);
+							MovesComponentSystem::Instance()->setTargetPosition(c.movesComponent, c.positionComponent, position);
 						} else {
 							ScriptManager::Instance()->runFunction(*eventHandler, c.tientity);
 						}
-							/*
-						} else if (*eventHandler == "up") {
-							MovesComponentSystem::Instance()->setTargetPosition(c.movesComponent, c.spriteComponent, Direction::TOP);
-						} else if (*eventHandler == "down") {
-							MovesComponentSystem::Instance()->setTargetPosition(c.movesComponent, c.spriteComponent, Direction::BOTTOM);
-						} else if (*eventHandler == "right") {
-							MovesComponentSystem::Instance()->setTargetPosition(c.movesComponent, c.spriteComponent, Direction::RIGHT);
-						} else if (*eventHandler == "left") {
-							MovesComponentSystem::Instance()->setTargetPosition(c.movesComponent, c.spriteComponent, Direction::LEFT);
-						}
-						*/
 					}
 				}
 			}
@@ -67,9 +57,10 @@ void EventsComponentSystem::addComponent(const TIEntityFactory& factory, TIEntit
 
 	if (eventKeys.size()) {
 		EventsComponent& eventsComponent = entity.addComponent<EventsComponent>();
-		SpriteComponent& spriteComponent = entity.addComponent<SpriteComponent>();
 		MovesComponent& movesComponent = entity.addComponent<MovesComponent>();
-		Components components = { eventsComponent, spriteComponent, movesComponent, entity };
+		PositionComponent& positionComponent = entity.addComponent<PositionComponent>();
+		SpriteComponent& spriteComponent = entity.addComponent<SpriteComponent>();
+		Components components = { eventsComponent, movesComponent, positionComponent, spriteComponent, entity };
 
 		for (auto& key : eventKeys) {
 			// Split the key into parts for state, event, and handler

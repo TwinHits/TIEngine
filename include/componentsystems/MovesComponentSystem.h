@@ -9,7 +9,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "objects/components/MovesComponent.h"
-#include "objects/components/SpriteComponent.h"
+#include "objects/components/PositionComponent.h"
 #include "objects/factories/TIEntityFactory.h"
 #include "objects/entities/TIEntity.h"
 #include "objects/enumeration/Direction.h"
@@ -23,8 +23,8 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, ComponentSy
 
 		void addComponent(const TIEntityFactory&, TIEntity&);
 		
-		void setTargetPosition(MovesComponent&, SpriteComponent&, Direction);
-		void setTargetPosition(MovesComponent&, SpriteComponent&, sf::Vector2f&);
+		void setTargetPosition(MovesComponent&, PositionComponent&, Direction);
+		void setTargetPosition(MovesComponent&, PositionComponent&, sf::Vector2f&);
 
 		static const std::string MOVES;
 		static const std::string MAXSPEED;
@@ -38,12 +38,12 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, ComponentSy
 	private:
 		struct Components {
 			MovesComponent& movesComponent;
-			SpriteComponent& spriteComponent;
+			PositionComponent& positionComponent;
 		};
 		std::vector<Components> components;
 
-		virtual void move(MovesComponent&, SpriteComponent&, const float);
-		virtual void rotate(MovesComponent&, SpriteComponent&, const float);
+		virtual void move(MovesComponent&, PositionComponent&, const float);
+		virtual void rotate(MovesComponent&, PositionComponent&, const float);
 		virtual void accelerate(MovesComponent&, const float);
 
 		bool arePositionsCloseEnough(const sf::Vector2f&, const sf::Vector2f&);
