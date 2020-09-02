@@ -50,15 +50,15 @@ void MovesComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity
 		movesComponent.angularVelocity.x = rotationalSpeed;
 	}
 
-	movesComponent.targetPosition = positionComponent.getPosition();
-	movesComponent.targetAngle = positionComponent.getAngle();
+	movesComponent.targetPosition = positionComponent.position;
+	movesComponent.targetAngle = positionComponent.angle;
 
 	this->components.push_back(components);
 }
 
 
 void MovesComponentSystem::setTargetPosition(MovesComponent& movesComponent, PositionComponent& positionComponent, Direction direction) {
-	if (this->arePositionsCloseEnough(movesComponent.targetPosition, positionComponent.getPosition())) {
+	if (this->arePositionsCloseEnough(movesComponent.targetPosition, positionComponent.position)) {
 
 		float distance = movesComponent.maxSpeed;
 		if (WorldManager::Instance()->isGridConfigured()) {
@@ -66,7 +66,7 @@ void MovesComponentSystem::setTargetPosition(MovesComponent& movesComponent, Pos
 			distance = tileSize.x;
 		}
 
-		sf::Vector2f targetPosition = positionComponent.getPosition();
+		sf::Vector2f targetPosition = positionComponent.position;
 		if (direction == Direction::TOP) {
 			targetPosition += sf::Vector2f(0, -distance);
 		} else if (direction == Direction::LEFT) {
@@ -85,21 +85,21 @@ void MovesComponentSystem::setTargetPosition(MovesComponent& movesComponent, Pos
 	targetPosition = GridComponentSystem::Instance()->normalizePositionToGrid(targetPosition);
 	if (targetPosition != movesComponent.targetPosition) {
 		movesComponent.targetPosition = targetPosition;
-		movesComponent.targetAngle = Math::angleBetweenTwoPoints(positionComponent.getPosition(), movesComponent.targetPosition);
+		movesComponent.targetAngle = Math::angleBetweenTwoPoints(positionComponent.position, movesComponent.targetPosition);
 	}
 }
 
 
 void MovesComponentSystem::move(MovesComponent& movesComponent, PositionComponent& positionComponent, const float delta) {
-	if (!this->arePositionsCloseEnough(movesComponent.targetPosition, positionComponent.getPosition())) {
+	if (!this->arePositionsCloseEnough(movesComponent.targetPosition, positionComponent.position)) {
 		this->accelerate(movesComponent, delta);
-		movesComponent.targetAngle = Math::angleBetweenTwoPoints(positionComponent.getPosition(), movesComponent.targetPosition);
-		sf::Vector2f velocity = sf::Vector2f(movesComponent.speed, positionComponent.getAngle());
+		movesComponent.targetAngle = Math::angleBetweenTwoPoints(positionComponent.position, movesComponent.targetPosition);
+		sf::Vector2f velocity = sf::Vector2f(movesComponent.speed, positionComponent.angle);
 		sf::Vector2f distance = Math::translateVelocityByTime(velocity, delta);
-		sf::Vector2f newPosition = sf::Vector2f(positionComponent.getPosition().x + distance.x, positionComponent.getPosition().y + distance.y);
-		positionComponent.setPosition(newPosition);
-	} else if (positionComponent.getPosition() != movesComponent.targetPosition) {
-		positionComponent.setPosition(movesComponent.targetPosition);
+		sf::Vector2f newPosition = sf::Vector2f(positionComponent.position.x + distance.x, positionComponent.position.y + distance.y);
+		positionComponent.position = newPosition;
+	} else if (positionComponent.position != movesComponent.targetPosition) {
+		positionComponent.position = movesComponent.targetPosition;
 		movesComponent.speed = 0;
 	}
 }
@@ -118,12 +118,12 @@ void MovesComponentSystem::accelerate(MovesComponent& movesComponent, const floa
 
 
 void MovesComponentSystem::rotate(MovesComponent& movesComponent, PositionComponent& positionComponent, const float delta) {
-		if (!this->areRotationsCloseEnough(positionComponent.getAngle(), movesComponent.targetAngle)) {
-            movesComponent.angularVelocity.y = Math::directionFromAngleToAngle(positionComponent.getAngle(), movesComponent.targetAngle);
-			positionComponent.setAngle(positionComponent.getAngle() + movesComponent.angularVelocity.x * movesComponent.angularVelocity.y * delta);
-		} else {
-			positionComponent.setAngle(movesComponent.targetAngle);
-        }
+    if (!this->areRotationsCloseEnough(positionComponent.angle, movesComponent.targetAngle)) {
+        movesComponent.angularVelocity.y = Math::directionFromAngleToAngle(positionComponent.angle, movesComponent.targetAngle);
+        positionComponent.angle = positionComponent.angle + movesComponent.angularVelocity.x * movesComponent.angularVelocity.y * delta;
+    } else {
+        positionComponent.angle = movesComponent.targetAngle;
+    }
 }
 
 

@@ -24,7 +24,7 @@ const std::string SpriteComponentSystem::ROTATION = "drawn.rotation";
 
 void SpriteComponentSystem::update(const float delta) {
 	for (auto& c : this->components) {
-		c.spriteComponent.setPosition(c.positionComponent.getPosition());
+		c.spriteComponent.setPosition(c.positionComponent.position);
 	}
 }
 
@@ -58,8 +58,8 @@ void SpriteComponentSystem::addComponent(const TIEntityFactory& factory, TIEntit
 		if (factory.floatValues.count(SpriteComponentSystem::ROTATION)) {
 			angle = factory.floatValues.at(SpriteComponentSystem::ROTATION);
 		}
-		positionComponent.setPosition(position);
-		positionComponent.setAngle(angle);
+		positionComponent.position = position;
+		positionComponent.angle = angle;
 
 		spriteComponent.setDrawn(true);
 

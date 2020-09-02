@@ -16,7 +16,7 @@ TIEntityScriptInterface::TIEntityScriptInterface(TIEntity& tientity) {
 sf::Vector2f TIEntityScriptInterface::getPosition() {
     PositionComponent* positionComponent = this->tientity->getComponent<PositionComponent>();
     if (positionComponent != nullptr) {
-        return positionComponent->getPosition();
+        return positionComponent->position;
     }
 }
 

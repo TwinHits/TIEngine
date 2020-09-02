@@ -104,7 +104,7 @@ void AnimatedComponentSystem::addComponent(const TIEntityFactory& factory, TIEnt
 
 
 void AnimatedComponentSystem::updateCurrentAnimation(AnimatedComponent& animatedComponent, PositionComponent& positionComponent, SpriteComponent& spriteComponent) {
-    float rotation = positionComponent.getAngle();
+    float rotation = positionComponent.angle;
 
 	if (animatedComponent.getCurrentAnimation() == nullptr || !Math::isAngleBetweenAngles(rotation, animatedComponent.getCurrentAnimation()->range.x, animatedComponent.getCurrentAnimation()->range.y)) {
 		std::map<std::string, Animation>& animations = animatedComponent.getAnimations();
