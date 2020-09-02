@@ -9,6 +9,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "objects/components/TextComponent.h"
+#include "objects/components/PositionComponent.h"
 #include "objects/factories/TIEntityFactory.h"
 #include "objects/entities/TIEntity.h"
 
@@ -23,9 +24,12 @@ class TextComponentSystem : public Singleton<TextComponentSystem>, ComponentSyst
 
 		static const std::string DRAWN;
 		static const std::string TEXT;
+		static const std::string OFFSET_X;
+		static const std::string OFFSET_Y;
 	private:		
 		struct Components {
 			TextComponent& textComponent;
+			PositionComponent& positionComponent;
 		};
 		std::vector<Components> components;
 };

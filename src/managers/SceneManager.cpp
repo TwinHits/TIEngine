@@ -7,6 +7,7 @@
 #include "componentsystems/EventsComponentSystem.h"
 #include "componentsystems/MovesComponentSystem.h"
 #include "componentsystems/SpriteComponentSystem.h"
+#include "componentsystems/TextComponentSystem.h"
 #include "managers/LogManager.h" 
 #include "managers/TimeManager.h"
 #include "managers/ViewManager.h"
@@ -82,6 +83,7 @@ void SceneManager::updateGameState() {
 	this->delta = this->clock.restart().asSeconds();
 
 	SpriteComponentSystem::Instance()->update(this->delta);
+	TextComponentSystem::Instance()->update(this->delta);
 	AnimatedComponentSystem::Instance()->update(this->delta);
 	MovesComponentSystem::Instance()->update(this->delta);
 	CollidesComponentSystem::Instance()->update(this->delta);
