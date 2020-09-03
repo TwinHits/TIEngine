@@ -17,13 +17,8 @@ void ShapeComponentSystem::update(const float delta) {
 }
 
 
-ShapeComponent& ShapeComponentSystem::addComponent(TIEntity& entity) {
-	return entity.addComponent<ShapeComponent>();
-}
-
-
 void ShapeComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& entity) {
-	this->addComponent(entity);
+
 }
 
 /*

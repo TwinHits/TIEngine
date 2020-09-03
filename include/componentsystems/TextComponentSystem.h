@@ -19,7 +19,6 @@ class TextComponentSystem : public Singleton<TextComponentSystem>, ComponentSyst
 	public:
 		TextComponentSystem() {};
 		void update(const float);
-		TextComponent& addComponent(TIEntity&);
 		void addComponent(const TIEntityFactory&, TIEntity&);
 
 		static const std::string DRAWN;

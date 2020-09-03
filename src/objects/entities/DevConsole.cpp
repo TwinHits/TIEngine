@@ -26,13 +26,13 @@ void DevConsole::initialize() {
 	textWritePosition.x = -windowSize.x/2;	
 	textWritePosition.y = -windowSize.y/2;
 
-	SpriteComponent& spriteComponent = SpriteComponentSystem::Instance()->addComponent(*this);
+	SpriteComponent& spriteComponent = this->addComponent<SpriteComponent>();
 	sf::Texture& texture = AssetsManager::Instance()->getTexture("dev_console.png");
 	spriteComponent.setTexture(texture, true);
 	sf::FloatRect size = spriteComponent.getLocalBounds();
 	spriteComponent.setOrigin(size.width/2, size.height);
 
-	TextComponent& textComponent = TextComponentSystem::Instance()->addComponent(*this);
+	TextComponent& textComponent = this->addComponent<TextComponent>();
 	textComponent.setFont(font);
 	textComponent.setCharacterSize(fontSize);
 	textComponent.setPosition(-(windowSize.x / 2) + 3, -fontSize - 5);
@@ -46,7 +46,7 @@ void DevConsole::update(const float delta) {
 
 		TIEntity& entity = this->attachChild(make_unique<TIEntity>());
 		entity.setName("DevConsoleHistoryItem");
-		TextComponent& textComponent = TextComponentSystem::Instance()->addComponent(entity);
+		TextComponent& textComponent = entity.addComponent<TextComponent>();
 		textComponent.setString(s);
 		textComponent.setFont(font);
 		textComponent.setCharacterSize(fontSize);

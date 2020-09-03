@@ -29,11 +29,6 @@ void SpriteComponentSystem::update(const float delta) {
 }
 
 
-SpriteComponent& SpriteComponentSystem::addComponent(TIEntity& entity) {
-	return entity.addComponent<SpriteComponent>();
-}
-
-
 void SpriteComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& entity) {
 
 	if (factory.stringValues.count(SpriteComponentSystem::TEXTURE)) {

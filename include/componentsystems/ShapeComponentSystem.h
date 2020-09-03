@@ -14,7 +14,6 @@ class ShapeComponentSystem : public Singleton<ShapeComponentSystem>, ComponentSy
 	public:
 		ShapeComponentSystem() {};
 		void update(const float);
-		ShapeComponent& addComponent(TIEntity&);
 		void addComponent(const TIEntityFactory&, TIEntity&);
 
 	private: 

@@ -25,11 +25,6 @@ void TextComponentSystem::update(const float delta) {
 }
 
 
-TextComponent& TextComponentSystem::addComponent(TIEntity& entity) {
-	return entity.addComponent<TextComponent>();
-}
-
-
 void TextComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& entity) {
 
 	if (factory.stringValues.count(TextComponentSystem::TEXT)) {

@@ -21,7 +21,7 @@ void MousePtrCoords::initialize() {
 
 	sf::Vector2f mouseWindowPosition = this->eventsManager->getMouseWindowPosition();
 
-	TextComponent& textComponent = TextComponentSystem::Instance()->addComponent(*this);
+	TextComponent& textComponent = this->addComponent<TextComponent>();
 	textComponent.setString("0, 0");
 	textComponent.setFont(font);
 	textComponent.setCharacterSize(14);
