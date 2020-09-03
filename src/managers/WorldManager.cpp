@@ -56,19 +56,27 @@ void WorldManager::showGridGuide(bool visibility) {
 }
 
 
-TIEntityFactory& WorldManager::registerTIEntity(const std::string& entityName) {
-	this->tientityDefinitions.insert({ entityName, TIEntityFactory() });
-	return this->tientityDefinitions.at(entityName);
+TIEntityFactory& WorldManager::registerTIEntity(const std::string& tientityName) {
+	this->tientityDefinitions.insert({ tientityName, TIEntityFactory() });
+	return this->tientityDefinitions.at(tientityName);
 }
 
 
-TIEntity* WorldManager::spawnTIEntity(const std::string& entityName) {
-	if (this->tientityDefinitions.count(entityName)) {
-		return &this->tientityDefinitions.at(entityName).build();
+TIEntity* WorldManager::spawnTIEntity(const std::string& tientityName) {
+	if (this->tientityDefinitions.count(tientityName)) {
+		this->spawnedTIEntityDefinitions.push_back(tientityName);
 	} else {
-		LogManager::Instance()->warn("Entity " + entityName + " does not exist.");
+		LogManager::Instance()->warn("Entity " + tientityName + " does not exist.");
 	}
 	return nullptr;
+}
+
+
+void WorldManager::attachNewTIEntities() {
+	for (auto& definition : this->spawnedTIEntityDefinitions) {
+		tientityDefinitions.at(definition).build();
+	}
+	this->spawnedTIEntityDefinitions.clear();
 }
 
 

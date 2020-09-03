@@ -12,6 +12,7 @@
 #include "managers/TimeManager.h"
 #include "managers/ViewManager.h"
 #include "managers/WindowManager.h"
+#include "managers/WorldManager.h"
 #include "objects/SceneLayer.h"
 #include "objects/components/ShapeComponent.h"
 #include "objects/components/SpriteComponent.h"
@@ -81,6 +82,8 @@ TIEntity* SceneManager::findTIEntity(sf::Vector2f point) {
 
 void SceneManager::updateGameState() {
 	this->delta = this->clock.restart().asSeconds();
+
+	WorldManager::Instance()->attachNewTIEntities();
 
 	SpriteComponentSystem::Instance()->update(this->delta);
 	TextComponentSystem::Instance()->update(this->delta);

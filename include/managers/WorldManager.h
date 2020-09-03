@@ -26,6 +26,7 @@ class WorldManager : public Singleton<WorldManager>, Manager {
 
 		TIEntityFactory& registerTIEntity(const std::string& entityName);
 		TIEntity* spawnTIEntity(const std::string& entityName);
+		void attachNewTIEntities();
 
 		WorldManager() {};
 		~WorldManager() {};
@@ -35,6 +36,7 @@ class WorldManager : public Singleton<WorldManager>, Manager {
 		void recalculateScrollBounds(const SpriteComponent&);
 
 		std::map<std::string, TIEntityFactory> tientityDefinitions;
+		std::vector<std::string> spawnedTIEntityDefinitions;
 
 		TIEntity* levelEntity = nullptr;
 		GridComponent* gridComponent = nullptr;
