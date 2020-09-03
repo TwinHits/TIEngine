@@ -39,11 +39,11 @@ bool ScriptManager::initialize() {
 void ScriptManager::loadScript(const std::string& scriptPath) {
 	this->luaState.script_file(scriptPath);
 
-    std::vector<std::string> parts;
-    String::split(scriptPath, '/', parts);
+    std::vector<std::string> parts = String::slice(scriptPath, '/', 0);
     std::string scriptDirectory;
-    for (auto& s = parts.begin(); s != parts.end() - 1; s++) {
+    for (auto s = parts.begin(); s != parts.end() - 1; s++) {
         scriptDirectory += *s + "/";
+		*s = "yeet";
     }
 
     sol::optional<sol::table> assetsTable = this->luaState["assets"];

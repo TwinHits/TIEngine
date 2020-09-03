@@ -61,10 +61,9 @@ void EventsComponentSystem::addComponent(const TIEntityFactory& factory, TIEntit
 
 		for (auto& key : eventKeys) {
 			// Split the key into parts for state, event, and handler
-			std::vector<std::string> parts;
-			String::split(key, '.', parts);
-			std::string state = parts.at(1);
-			std::string event = parts.at(2);
+			std::vector<std::string> keyParts = String::slice(key, '.', 1);
+			std::string state = keyParts.at(0);
+			std::string event = keyParts.at(1);
 			std::string handler = factory.stringValues.at(key);
 
 			// If it's an event value store it in the events map

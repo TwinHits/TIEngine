@@ -53,10 +53,9 @@ void AnimatedComponentSystem::addComponent(const TIEntityFactory& factory, TIEnt
 
         std::map<std::string, Animation>& animations = animatedComponent.getAnimations();
         for (auto& key : animatedStringKeys) {
-            std::vector<std::string> parts;
-            String::split(key, '.', parts);
-            std::string animationName = parts.at(1);
-            std::string animationField = parts.at(2);
+            std::vector<std::string> keyParts = String::slice(key, '.', 1);
+            std::string animationName = keyParts.at(0);
+            std::string animationField = keyParts.at(1);
 			std::string value = factory.stringValues.at(key);
 
             if (!animations.count(animationName)) {
@@ -74,10 +73,9 @@ void AnimatedComponentSystem::addComponent(const TIEntityFactory& factory, TIEnt
         }
 
         for (auto& key : animatedFloatKeys) {
-            std::vector<std::string> parts;
-            String::split(key, '.', parts);
-            std::string animationName = parts.at(1);
-            std::string animationField = parts.at(2);
+            std::vector<std::string> keyParts = String::slice(key, '.', 1);
+            std::string animationName = keyParts.at(0);
+            std::string animationField = keyParts.at(1);
 			float value = factory.floatValues.at(key);
 
             if (!animations.count(animationName)) {

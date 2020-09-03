@@ -11,7 +11,9 @@
 
 namespace TIE {
 	namespace String {
-		std::vector<std::string>& split(const std::string&, char, std::vector<std::string>&);
+		std::vector<std::string> slice(const std::string&, const char, const int);
+		std::vector<std::string> slice(const std::string&, const char, const int, const int);
+		std::vector<std::string>& split(const std::string&, const char, std::vector<std::string>&);
 		std::string& toUpper(std::string&);
 		int stringToInt(std::string&);
 		Language parseLanguageString(const std::string&);

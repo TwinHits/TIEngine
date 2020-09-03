@@ -11,7 +11,31 @@
 #include "managers/LogManager.h"
 #include "objects/enumeration/Language.h"
 
-std::vector<std::string>& TIE::String::split(const std::string& string, char delimiter, std::vector<std::string>& out) {
+
+std::vector<std::string> TIE::String::slice(const std::string& string, const char delimiter, const int start) {
+    std::vector<std::string> parts;
+    TIE::String::split(string, delimiter, parts);
+    if (start < parts.size()) {
+        return std::vector<std::string>(parts.begin() + start, parts.end());
+    } else {
+        return std::vector<std::string>(parts.end(), parts.end());
+    }
+}
+
+std::vector<std::string> TIE::String::slice(const std::string& string, const char delimiter, const int start, const int end) {
+    std::vector<std::string> parts;
+    TIE::String::split(string, delimiter, parts);
+    if (start < parts.size() && end < parts.size()) {
+        return std::vector<std::string>(parts.begin() + start, parts.begin() + end);
+    } else if (end < parts.size()) {
+        return std::vector<std::string>(parts.begin() + start, parts.end());
+    } else {
+        return std::vector<std::string>(parts.end(), parts.end());
+    }
+}
+
+
+std::vector<std::string>& TIE::String::split(const std::string& string, const char delimiter, std::vector<std::string>& out) {
 	std::istringstream iss(string);
 	std::string item;
 	while (std::getline(iss, item, delimiter)) {
@@ -22,6 +46,7 @@ std::vector<std::string>& TIE::String::split(const std::string& string, char del
 	}
 	return out;
 }
+
 
 std::string& TIE::String::toUpper(std::string& string) {
 	std::transform(string.begin(), string.end(), string.begin(), ::toupper);
