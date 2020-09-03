@@ -60,7 +60,7 @@ void ConsoleManager::runCommand() {
 		const std::string& scriptName = commandArgs.at(1);
 		ScriptManager::Instance()->loadScript(scriptName);
 	} else if (command == ConsoleCommands::PRINT) {
-		if (!commandArgs.empty()) {
+		if (commandArgs.size() > 1) {
 			const std::string& printCommand = commandArgs.at(1);
 			if (printCommand == ConsoleCommands::SCENEGRAPH) {
 				this->printSceneGraph(SceneManager::Instance()->getSceneGraphRoot());
