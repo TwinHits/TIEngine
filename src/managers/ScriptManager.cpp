@@ -18,7 +18,11 @@ using namespace TIE;
 
 bool ScriptManager::initialize() {
 
-	this->luaState.open_libraries(sol::lib::base);
+	this->luaState.open_libraries(
+		sol::lib::base, 
+		sol::lib::math,
+		sol::lib::os
+	);
 
 	const std::string& startUpScript = ConfigManager::Instance()->getStartUpScript();
 	if (!startUpScript.empty()) {

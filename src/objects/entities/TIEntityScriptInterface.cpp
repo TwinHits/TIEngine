@@ -63,5 +63,5 @@ void TIEntityScriptInterface::moveDown() {
 
 
 void TIEntityScriptInterface::spawn(const std::string& entityName) {
-    TIEntity* tientity = WorldManager::Instance()->spawnTIEntity(entityName);
+    WorldManager::Instance()->spawnTIEntity(entityName);
 }
