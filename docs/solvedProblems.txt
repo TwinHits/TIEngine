@@ -48,3 +48,9 @@ Set the CMAKE variable to the correct folder.
 Need Xming running on windows or there will be an X error.
 
 For I think the third time, I forgot about that you're supposed to do ./boostrap and then ./b2 to build boost once you've downloaded it. It could not find filesystem until I did.
+
+10/18/2020
+I had a ton of problems installing boost, first abut not being able to find cl and then some header problems.
+1. Make sure you download the right version of boost
+2. make sure when installing visual studio that you check mark the desktop build tools or no compiler will actually be installed, and the 'universal' tools box as well. Not sure if both these are necessary.
+
