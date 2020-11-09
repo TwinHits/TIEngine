@@ -3,6 +3,7 @@
 #include <algorithm>
 
 #include "componentsystems/AnimatedComponentSystem.h"
+#include "componentsystems/BehaviorComponentSystem.h"
 #include "componentsystems/CollidesComponentSystem.h"
 #include "componentsystems/EventsComponentSystem.h"
 #include "componentsystems/GridComponentSystem.h"
@@ -11,12 +12,6 @@
 #include "componentsystems/TextComponentSystem.h"
 #include "componentsystems/ShapeComponentSystem.h"
 #include "managers/SceneManager.h"
-#include "objects/components/AnimatedComponent.h"
-#include "objects/components/EventsComponent.h"
-#include "objects/components/GridComponent.h"
-#include "objects/components/SpriteComponent.h"
-#include "objects/components/TextComponent.h"
-#include "objects/components/MovesComponent.h"
 #include "objects/entities/TIEntity.h"
 
 using namespace TIE;
@@ -24,10 +19,11 @@ using namespace TIE;
 TIEntityFactory::TIEntityFactory() {
 	this->validComponentNames = {
 			AnimatedComponentSystem::ANIMATED,
+			BehaviorComponentSystem::BEHAVES,
 			SpriteComponentSystem::DRAWN,
 			MovesComponentSystem::MOVES,
 			EventsComponentSystem::EVENTS,
-			GridComponentSystem::GRID
+			GridComponentSystem::GRID,
 		};
 }
 
@@ -49,6 +45,7 @@ TIEntity& TIEntityFactory::build() {
 	CollidesComponentSystem::Instance()->addComponent(*this, tientity);
 	AnimatedComponentSystem::Instance()->addComponent(*this, tientity);
 	EventsComponentSystem::Instance()->addComponent(*this, tientity);
+	BehaviorComponentSystem::Instance()->addComponent(*this, tientity);
 
 	for (auto & child : this->children) {
 		child.setParent(&tientity);

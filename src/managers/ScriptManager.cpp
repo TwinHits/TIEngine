@@ -29,13 +29,13 @@ bool ScriptManager::initialize() {
 		this->loadScript(startUpScript);
 	}
 
-    sol::usertype<TIEntityScriptInterface> interface_type = this->luaState.new_usertype<TIEntityScriptInterface>("tientity");
-	interface_type["getPosition"] = &TIEntityScriptInterface::getPosition;
-    interface_type["moveRight"] = &TIEntityScriptInterface::moveRight;
-    interface_type["moveLeft"] = &TIEntityScriptInterface::moveLeft;
-    interface_type["moveUp"] = &TIEntityScriptInterface::moveUp;
-    interface_type["moveDown"] = &TIEntityScriptInterface::moveDown;
-    interface_type["spawn"] = &TIEntityScriptInterface::spawn;
+    sol::usertype<TIEntityScriptInterface> interfaceUserType = this->luaState.new_usertype<TIEntityScriptInterface>("tientity");
+	interfaceUserType["getPosition"] = &TIEntityScriptInterface::getPosition;
+    interfaceUserType["moveRight"] = &TIEntityScriptInterface::moveRight;
+    interfaceUserType["moveLeft"] = &TIEntityScriptInterface::moveLeft;
+    interfaceUserType["moveUp"] = &TIEntityScriptInterface::moveUp;
+    interfaceUserType["moveDown"] = &TIEntityScriptInterface::moveDown;
+    interfaceUserType["spawn"] = &TIEntityScriptInterface::spawn;
 
 	return true;
 }
@@ -176,6 +176,7 @@ void ScriptManager::loadTIEntities(const sol::table& tientities) {
 TIEntityFactory& ScriptManager::loadTIEntity(const std::string& name, const sol::table& tientityTable, TIEntityFactory* parent) {
 
 	TIEntityFactory& factory = this->getFactory(name, parent);
+	factory.setName(name);
 	std::vector<std::string> children;
 	for (auto& possibleComponent : tientityTable) {
 		sol::optional<std::string> componentName = possibleComponent.first.as<sol::optional<std::string> >();

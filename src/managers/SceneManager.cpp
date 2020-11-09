@@ -3,6 +3,7 @@
 #include <functional>
 
 #include "componentsystems/AnimatedComponentSystem.h"
+#include "componentsystems/BehaviorComponentSystem.h"
 #include "componentsystems/CollidesComponentSystem.h"
 #include "componentsystems/EventsComponentSystem.h"
 #include "componentsystems/MovesComponentSystem.h"
@@ -91,6 +92,7 @@ void SceneManager::updateGameState() {
 	MovesComponentSystem::Instance()->update(this->delta);
 	CollidesComponentSystem::Instance()->update(this->delta);
 	EventsComponentSystem::Instance()->update(this->delta);
+	BehaviorComponentSystem::Instance()->update(this->delta);
 
 	this->updateEngineEntity(*(this->engineLayer));
 
