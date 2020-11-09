@@ -33,7 +33,7 @@ set(CMAKE_BUILD_TYPE Debug)
 		include_directories("lib/lua-5.3.5-gnu/include")
 		link_directories("lib/lua-5.3.5-gnu")
 	elseif(${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC)
-		include_directories("lib/lua-5.3.5-gnu/include")
+		include_directories("lib/lua-5.3.5-win/include")
 		link_directories("lib/lua-5.3.5-win")
 	endif()
 
