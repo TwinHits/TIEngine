@@ -1,14 +1,14 @@
-#ifndef TIENTITYSCRIPTINTERFACE_H
-#define TIENTITYSCRIPTINTERFACE_H
+#ifndef TIENTITYINTERFACE_H
+#define TIENTITYINTERFACE_H
 
 #include "objects/entities/TIEntity.h"
 
 namespace TIE {
 
-class TIEntityScriptInterface {
+class TIEntityInterface {
     public:
-        TIEntityScriptInterface(TIEntity&);
-        ~TIEntityScriptInterface() {};
+        TIEntityInterface(TIEntity&);
+        ~TIEntityInterface() {};
 
         // Movement
         sf::Vector2f getPosition();

@@ -8,7 +8,7 @@
 #include "managers/HashManager.h"
 #include "managers/LogManager.h"
 #include "managers/SceneManager.h"
-#include "managers/ScriptManager.h"
+#include "managers/ScriptManagerV2.h"
 #include "managers/StringManager.h"
 #include "managers/TimeManager.h"
 #include "managers/ViewManager.h"
@@ -28,7 +28,7 @@ bool StartUpManager::initialize() {
 	ConsoleManager::Instance()->initialize();
 	HashManager::Instance()->initialize();
 	TimeManager::Instance()->initialize();
-	ScriptManager::Instance()->initialize();
+	ScriptManagerV2::Instance()->initialize();
 	StringManager::Instance()->initialize();
 	WorldManager::Instance()->initialize();
 

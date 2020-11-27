@@ -1,4 +1,4 @@
-#include "objects/entities/TIEntityScriptInterface.h"
+#include "interfaces/TIEntityInterface.h"
 
 #include "componentsystems/MovesComponentSystem.h"
 #include "managers/LogManager.h"
@@ -9,11 +9,11 @@
 
 using namespace TIE;
 
-TIEntityScriptInterface::TIEntityScriptInterface(TIEntity& tientity) {
+TIEntityInterface::TIEntityInterface(TIEntity& tientity) {
     this->tientity = &tientity;
 }
 
-sf::Vector2f TIEntityScriptInterface::getPosition() {
+sf::Vector2f TIEntityInterface::getPosition() {
     PositionComponent* positionComponent = this->tientity->getComponent<PositionComponent>();
     if (positionComponent != nullptr) {
         return positionComponent->position;
@@ -21,12 +21,12 @@ sf::Vector2f TIEntityScriptInterface::getPosition() {
 }
 
 
-void TIEntityScriptInterface::setDestination() {
+void TIEntityInterface::setDestination() {
 
 }
 
 
-void TIEntityScriptInterface::moveUp() {
+void TIEntityInterface::moveUp() {
     MovesComponent* movesComponent = this->tientity->getComponent<MovesComponent>();
     PositionComponent* positionComponent = this->tientity->getComponent<PositionComponent>();
     if (movesComponent != nullptr && positionComponent != nullptr) {
@@ -35,7 +35,7 @@ void TIEntityScriptInterface::moveUp() {
 }
 
 
-void TIEntityScriptInterface::moveRight() {
+void TIEntityInterface::moveRight() {
     MovesComponent* movesComponent = this->tientity->getComponent<MovesComponent>();
     PositionComponent* positionComponent = this->tientity->getComponent<PositionComponent>();
     if (movesComponent != nullptr && positionComponent != nullptr) {
@@ -44,7 +44,7 @@ void TIEntityScriptInterface::moveRight() {
 }
 
 
-void TIEntityScriptInterface::moveLeft() {
+void TIEntityInterface::moveLeft() {
     MovesComponent* movesComponent = this->tientity->getComponent<MovesComponent>();
     PositionComponent* positionComponent = this->tientity->getComponent<PositionComponent>();
     if (movesComponent != nullptr && positionComponent != nullptr) {
@@ -53,7 +53,7 @@ void TIEntityScriptInterface::moveLeft() {
 }
 
 
-void TIEntityScriptInterface::moveDown() {
+void TIEntityInterface::moveDown() {
     MovesComponent* movesComponent = this->tientity->getComponent<MovesComponent>();
     PositionComponent* positionComponent = this->tientity->getComponent<PositionComponent>();
     if (movesComponent != nullptr && positionComponent != nullptr) {
@@ -62,6 +62,6 @@ void TIEntityScriptInterface::moveDown() {
 }
 
 
-void TIEntityScriptInterface::spawn(const std::string& entityName) {
+void TIEntityInterface::spawn(const std::string& entityName) {
     WorldManager::Instance()->spawnTIEntity(entityName);
 }

@@ -5,13 +5,13 @@
 
 #include <sol/sol.hpp>
 
+#include "interfaces/TIEntityInterface.h"
 #include "managers/AssetsManager.h"
 #include "managers/ConfigManager.h"
 #include "managers/LogManager.h"
 #include "managers/WindowManager.h"
 #include "managers/WorldManager.h"
 #include "objects/factories/TIEntityFactory.h"
-#include "objects/entities/TIEntityScriptInterface.h"
 #include "utils/StringHelpers.h"
 
 using namespace TIE;
@@ -29,13 +29,13 @@ bool ScriptManager::initialize() {
 		this->loadScript(startUpScript);
 	}
 
-    sol::usertype<TIEntityScriptInterface> interfaceUserType = this->luaState.new_usertype<TIEntityScriptInterface>("tientity");
-	interfaceUserType["getPosition"] = &TIEntityScriptInterface::getPosition;
-    interfaceUserType["moveRight"] = &TIEntityScriptInterface::moveRight;
-    interfaceUserType["moveLeft"] = &TIEntityScriptInterface::moveLeft;
-    interfaceUserType["moveUp"] = &TIEntityScriptInterface::moveUp;
-    interfaceUserType["moveDown"] = &TIEntityScriptInterface::moveDown;
-    interfaceUserType["spawn"] = &TIEntityScriptInterface::spawn;
+    sol::usertype<TIEntityInterface> interfaceUserType = this->luaState.new_usertype<TIEntityInterface>("tientity");
+	interfaceUserType["getPosition"] = &TIEntityInterface::getPosition;
+    interfaceUserType["moveRight"] = &TIEntityInterface::moveRight;
+    interfaceUserType["moveLeft"] = &TIEntityInterface::moveLeft;
+    interfaceUserType["moveUp"] = &TIEntityInterface::moveUp;
+    interfaceUserType["moveDown"] = &TIEntityInterface::moveDown;
+    interfaceUserType["spawn"] = &TIEntityInterface::spawn;
 
 	return true;
 }
@@ -74,7 +74,7 @@ void ScriptManager::loadScript(const std::string& scriptPath) {
 
 void TIE::ScriptManager::runFunction(const std::string& functionKey, TIEntity& tientity) {
 	if (this->functions.count(functionKey)) {
-		TIEntityScriptInterface interface(tientity);
+		TIEntityInterface interface(tientity);
 		this->functions.at(functionKey)(interface);
 	} else {
 		LogManager::Instance()->warn("Registered function " + functionKey + " does not exist.");
