@@ -7,6 +7,7 @@
 #include "managers/AssetsManager.h"
 #include "managers/ScriptManagerV2.h"
 #include "managers/WindowManager.h"
+#include "managers/WorldManager.h"
 
 using namespace TIE;
 
@@ -19,6 +20,7 @@ TIEngineInterface::TIEngineInterface(sol::state& luaState) {
     engineInterfaceUserType["setWindowTitle"] = &TIEngineInterface::setWindowTitle;
     engineInterfaceUserType["setWindowSize"] = &TIEngineInterface::setWindowSize;
 	engineInterfaceUserType["registerTIEntity"] = &TIEngineInterface::registerTIEntityDefinition;
+	engineInterfaceUserType["spawn"] = &TIEngineInterface::spawnTIEntity;
 }
 
 
@@ -56,6 +58,12 @@ bool TIEngineInterface::setWindowTitle(const std::string& title) {
 
 bool TIEngineInterface::registerTIEntityDefinition(const std::string& name, const sol::table& definition) {
     ScriptManagerV2::Instance()->loadTIEntityDefinition(name, definition);
+    return true;
+}
+
+
+bool TIEngineInterface::spawnTIEntity(const std::string& name) {
+    WorldManager::Instance()->spawnTIEntity(name);
     return true;
 }
 

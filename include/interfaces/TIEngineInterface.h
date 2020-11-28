@@ -22,6 +22,7 @@ class TIEngineInterface {
         bool setWindowTitle(const std::string&);
 
         bool registerTIEntityDefinition(const std::string&, const sol::table&);
+        bool spawnTIEntity(const std::string&);
 
         void setScriptWorkingDirectory(const std::string&);
         const std::string& getScriptWorkingDirectory();
