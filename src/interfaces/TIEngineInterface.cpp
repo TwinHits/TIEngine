@@ -30,17 +30,17 @@ bool TIEngineInterface::isValid() {
 
 
 bool TIEngineInterface::registerTexturesDirectory(const std::string& directory) {
-    return AssetsManager::Instance()->loadTexturesFromPath(this->getScriptWorkingDirectory() + directory);
+    return AssetsManager::Instance()->loadTexturesFromPath(ScriptManagerV2::Instance()->getScriptWorkingDirectory() + directory);
 }
 
 
 bool TIEngineInterface::registerFontsDirectory(const std::string& directory) {
-    return AssetsManager::Instance()->loadFontsFromPath(this->getScriptWorkingDirectory() + directory);
+    return AssetsManager::Instance()->loadFontsFromPath(ScriptManagerV2::Instance()->getScriptWorkingDirectory() + directory);
 }
 
 
 bool TIEngineInterface::registerAudioDirectory(const std::string& directory) {
-    return AssetsManager::Instance()->loadAudioFromPath(this->getScriptWorkingDirectory() + directory);
+    return AssetsManager::Instance()->loadAudioFromPath(ScriptManagerV2::Instance()->getScriptWorkingDirectory() + directory);
 }
 
 
@@ -67,12 +67,3 @@ bool TIEngineInterface::spawnTIEntity(const std::string& name) {
     return true;
 }
 
-
-const std::string& TIEngineInterface::getScriptWorkingDirectory() {
-    return this->scriptWorkingDirectory;
-}
-
-
-void TIEngineInterface::setScriptWorkingDirectory(const std::string& scriptWorkingDirectory) {
-    this->scriptWorkingDirectory = scriptWorkingDirectory;
-}

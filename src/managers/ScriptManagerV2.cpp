@@ -29,6 +29,7 @@ bool ScriptManagerV2::initialize() {
 
 	const std::string& startUpScript = ConfigManager::Instance()->getStartUpScript();
 	if (!startUpScript.empty()) {
+		this->setScriptWorkingDirectory(String::getDirectoryFromPath(startUpScript));
 		this->loadScript(startUpScript);
 	}
 
@@ -45,7 +46,6 @@ void ScriptManagerV2::loadScript(const std::string& scriptPath) {
         LogManager::Instance()->error("Lua Script " + scriptPath + " syntax error: " + errorMessage);
     } else {
         TIEngineInterface engineInterface(this->luaState);
-        engineInterface.setScriptWorkingDirectory(String::getDirectoryFromPath(scriptPath));
         sol::protected_function_result result = script(engineInterface);
         if (!result.valid()) {
             sol::error error = result;
@@ -55,6 +55,16 @@ void ScriptManagerV2::loadScript(const std::string& scriptPath) {
             return;
         }
     }
+}
+
+
+const std::string& ScriptManagerV2::getScriptWorkingDirectory() {
+    return this->scriptWorkingDirectory;
+}
+
+
+void ScriptManagerV2::setScriptWorkingDirectory(const std::string& scriptWorkingDirectory) {
+    this->scriptWorkingDirectory = scriptWorkingDirectory;
 }
 
 

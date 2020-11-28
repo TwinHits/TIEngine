@@ -19,11 +19,15 @@ public:
 	void loadScript(const std::string&);
 	TIEntityFactory& loadTIEntityDefinition(const std::string&, const sol::table&);
 
+    void setScriptWorkingDirectory(const std::string&);
+    const std::string& getScriptWorkingDirectory();
+
 	ScriptManagerV2() {};
 	~ScriptManagerV2() {};
 
 private:
 	sol::state luaState;
+	std::string scriptWorkingDirectory = "";
 
 	TIEntityFactory& loadTIEntityDefinition(const std::string&, const sol::table&, TIEntityFactory*);
 	TIEntityFactory& getFactory(const std::string&, TIEntityFactory*);
