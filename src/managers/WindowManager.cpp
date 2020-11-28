@@ -51,7 +51,7 @@ sf::RenderWindow& WindowManager::getWindow() {
 	return *this->window;
 }
 
-sf::RenderWindow& TIE::WindowManager::updateWindowSize(int width, int height) {
+sf::RenderWindow& TIE::WindowManager::updateWindowSize(const int width, const int height) {
 	sf::RenderWindow& window = this->getWindow();
 	window.setSize(sf::Vector2u(width, height));
 

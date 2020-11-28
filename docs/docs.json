@@ -21,6 +21,36 @@
 				  "description": "Register a directory to search for textures.",
 				  "returns": "boolean"
 			  		
+			  },
+			  {
+				  "name": "setWindowTitle",
+				  "params": [
+					  {
+						  "name": "title",
+						  "type": "const std::string&",
+						  "description": "What title should appear on the window header bar."
+					  }
+				  ],
+				  "description": "Change the title that appears in the window header.",
+				  "returns": "boolean"
+			  		
+			  },
+			  {
+				  "name": "setWindowSize",
+				  "params": [
+					  {
+						  "name": "width",
+						  "type": "const int",
+						  "description": "Width of the window."
+					  },
+					  {
+						  "name": "height",
+						  "type": "const int",
+						  "description": "Height of the window."
+					  }
+				  ],
+				  "description": "Change the size of the window.",
+				  "returns": "boolean"
 			  }
 		  ]
 	  },

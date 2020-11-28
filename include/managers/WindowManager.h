@@ -20,7 +20,7 @@ class WindowManager : public Singleton<WindowManager>, Manager {
 									int style=sf::Style::Default,
 									const sf::ContextSettings& settings=sf::ContextSettings());
 		sf::RenderWindow& getWindow();
-		sf::RenderWindow& updateWindowSize(int, int);
+		sf::RenderWindow& updateWindowSize(const int, const int);
 		void removeWindow();
 
 

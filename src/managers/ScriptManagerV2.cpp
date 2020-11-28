@@ -73,5 +73,7 @@ void ScriptManagerV2::registerTIEngineInterface() {
 	sol::usertype<TIEngineInterface> engineInterfaceUserType = this->luaState.new_usertype<TIEngineInterface>("tiengine");
     engineInterfaceUserType["isValid"] = &TIEngineInterface::isValid;
     engineInterfaceUserType["registerTexturesDirectory"] = &TIEngineInterface::registerTexturesDirectory;
+    engineInterfaceUserType["setWindowTitle"] = &TIEngineInterface::setWindowTitle;
+    engineInterfaceUserType["setWindowSize"] = &TIEngineInterface::setWindowSize;
 }
 

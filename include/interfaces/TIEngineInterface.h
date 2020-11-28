@@ -11,7 +11,11 @@ class TIEngineInterface {
         ~TIEngineInterface() {};
 
         bool isValid();
+
         bool registerTexturesDirectory(const std::string&);
+
+        bool setWindowSize(const int, const int);
+        bool setWindowTitle(const std::string&);
 
         void setScriptWorkingDirectory(const std::string&);
         const std::string& getScriptWorkingDirectory();
