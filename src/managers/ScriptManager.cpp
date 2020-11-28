@@ -37,8 +37,8 @@ void ScriptManager::loadScript(const std::string& scriptPath) {
 
 void TIE::ScriptManager::runFunction(const std::string& functionKey, TIEntity& tientity) {
 	if (this->functions.count(functionKey)) {
-		TIEntityInterface interface(tientity);
-		this->functions.at(functionKey)(interface);
+		//TIEntityInterface interface(tientity);
+		//this->functions.at(functionKey)(interface);
 	} else {
 		LogManager::Instance()->warn("Registered function " + functionKey + " does not exist.");
 	}

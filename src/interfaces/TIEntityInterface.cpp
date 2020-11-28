@@ -1,5 +1,7 @@
 #include "interfaces/TIEntityInterface.h"
 
+#include "sol/sol.hpp"
+
 #include "componentsystems/MovesComponentSystem.h"
 #include "managers/LogManager.h"
 #include "managers/WorldManager.h"
@@ -9,9 +11,18 @@
 
 using namespace TIE;
 
-TIEntityInterface::TIEntityInterface(TIEntity& tientity) {
+TIEntityInterface::TIEntityInterface(TIEntity& tientity, sol::state& luaState) {
     this->tientity = &tientity;
+
+    sol::usertype<TIEntityInterface> interfaceUserType = luaState.new_usertype<TIEntityInterface>("tientity");
+	interfaceUserType["getPosition"] = &TIEntityInterface::getPosition;
+    interfaceUserType["moveRight"] = &TIEntityInterface::moveRight;
+    interfaceUserType["moveLeft"] = &TIEntityInterface::moveLeft;
+    interfaceUserType["moveUp"] = &TIEntityInterface::moveUp;
+    interfaceUserType["moveDown"] = &TIEntityInterface::moveDown;
+    interfaceUserType["spawn"] = &TIEntityInterface::spawn;
 }
+
 
 sf::Vector2f TIEntityInterface::getPosition() {
     PositionComponent* positionComponent = this->tientity->getComponent<PositionComponent>();

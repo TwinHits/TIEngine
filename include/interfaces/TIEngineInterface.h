@@ -9,7 +9,7 @@ namespace TIE {
 
 class TIEngineInterface {
     public:
-        TIEngineInterface() {};
+        TIEngineInterface(sol::state&);
         ~TIEngineInterface() {};
 
         bool isValid();

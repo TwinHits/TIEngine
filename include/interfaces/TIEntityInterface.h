@@ -3,11 +3,13 @@
 
 #include "objects/entities/TIEntity.h"
 
+#include <sol/sol.hpp>
+
 namespace TIE {
 
 class TIEntityInterface {
     public:
-        TIEntityInterface(TIEntity&);
+        TIEntityInterface(TIEntity&, sol::state&);
         ~TIEntityInterface() {};
 
         // Movement

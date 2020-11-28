@@ -29,9 +29,6 @@ private:
 	TIEntityFactory& getFactory(const std::string&, TIEntityFactory*);
 	void readComponentValues(TIEntityFactory&, const std::string&, const sol::table&);
 
-	void registerTIEntityInterface();
-	void registerTIEngineInterface();
-
 	ScriptManagerV2(const ScriptManagerV2&);
 	void operator=(const ScriptManagerV2&) {};
 };

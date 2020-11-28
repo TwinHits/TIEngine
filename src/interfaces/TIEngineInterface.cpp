@@ -10,6 +10,18 @@
 
 using namespace TIE;
 
+TIEngineInterface::TIEngineInterface(sol::state& luaState) {
+	sol::usertype<TIEngineInterface> engineInterfaceUserType = luaState.new_usertype<TIEngineInterface>("tiengine");
+    engineInterfaceUserType["isValid"] = &TIEngineInterface::isValid;
+    engineInterfaceUserType["registerTexturesDirectory"] = &TIEngineInterface::registerTexturesDirectory;
+    engineInterfaceUserType["registerFontDirectory"] = &TIEngineInterface::registerFontsDirectory;
+    engineInterfaceUserType["registerAudioDirectory"] = &TIEngineInterface::registerAudioDirectory;
+    engineInterfaceUserType["setWindowTitle"] = &TIEngineInterface::setWindowTitle;
+    engineInterfaceUserType["setWindowSize"] = &TIEngineInterface::setWindowSize;
+	engineInterfaceUserType["registerTIEntity"] = &TIEngineInterface::registerTIEntityDefinition;
+}
+
+
 bool TIEngineInterface::isValid() {
     return this != nullptr;
 }

@@ -27,9 +27,6 @@ bool ScriptManagerV2::initialize() {
         sol::lib::package
 	);
 
-    this->registerTIEngineInterface();
-    this->registerTIEntityInterface();
-
 	const std::string& startUpScript = ConfigManager::Instance()->getStartUpScript();
 	if (!startUpScript.empty()) {
 		this->loadScript(startUpScript);
@@ -47,7 +44,7 @@ void ScriptManagerV2::loadScript(const std::string& scriptPath) {
         std::string errorMessage = error.what();
         LogManager::Instance()->error("Lua Script " + scriptPath + " syntax error: " + errorMessage);
     } else {
-        TIEngineInterface engineInterface = TIEngineInterface();
+        TIEngineInterface engineInterface(this->luaState);
         engineInterface.setScriptWorkingDirectory(String::getDirectoryFromPath(scriptPath));
         sol::protected_function_result result = script(engineInterface);
         if (!result.valid()) {
@@ -126,28 +123,5 @@ void ScriptManagerV2::readComponentValues(TIEntityFactory& factory, const std::s
 			}
 		}
 	}
-}
-
-
-void ScriptManagerV2::registerTIEntityInterface() {
-    sol::usertype<TIEntityInterface> interfaceUserType = this->luaState.new_usertype<TIEntityInterface>("tientity");
-	interfaceUserType["getPosition"] = &TIEntityInterface::getPosition;
-    interfaceUserType["moveRight"] = &TIEntityInterface::moveRight;
-    interfaceUserType["moveLeft"] = &TIEntityInterface::moveLeft;
-    interfaceUserType["moveUp"] = &TIEntityInterface::moveUp;
-    interfaceUserType["moveDown"] = &TIEntityInterface::moveDown;
-    interfaceUserType["spawn"] = &TIEntityInterface::spawn;
-}
-
-
-void ScriptManagerV2::registerTIEngineInterface() {
-	sol::usertype<TIEngineInterface> engineInterfaceUserType = this->luaState.new_usertype<TIEngineInterface>("tiengine");
-    engineInterfaceUserType["isValid"] = &TIEngineInterface::isValid;
-    engineInterfaceUserType["registerTexturesDirectory"] = &TIEngineInterface::registerTexturesDirectory;
-    engineInterfaceUserType["registerFontDirectory"] = &TIEngineInterface::registerFontsDirectory;
-    engineInterfaceUserType["registerAudioDirectory"] = &TIEngineInterface::registerAudioDirectory;
-    engineInterfaceUserType["setWindowTitle"] = &TIEngineInterface::setWindowTitle;
-    engineInterfaceUserType["setWindowSize"] = &TIEngineInterface::setWindowSize;
-	engineInterfaceUserType["registerTIEntity"] = &TIEngineInterface::registerTIEntityDefinition;
 }
 
