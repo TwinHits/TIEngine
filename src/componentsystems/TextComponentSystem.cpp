@@ -13,11 +13,6 @@
 
 using namespace TIE;
 
-const std::string TextComponentSystem::DRAWN = "drawn.drawn";
-const std::string TextComponentSystem::TEXT = "drawn.text";
-const std::string TextComponentSystem::OFFSET_X = "drawn.offset.x";
-const std::string TextComponentSystem::OFFSET_Y = "drawn.offset.y";
-
 void TextComponentSystem::update(const float delta) {
 	for (auto& c : this->components) {	
 		c.textComponent.setPosition(c.positionComponent.position + c.textComponent.getOffset());

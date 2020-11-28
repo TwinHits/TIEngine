@@ -5,10 +5,6 @@
 
 using namespace TIE;
 
-const std::string BehaviorComponentSystem::BEHAVIORS = "behaviors";
-const std::string BehaviorComponentSystem::BEHAVIOR = "behaves.behavior";
-const std::string BehaviorComponentSystem::BEHAVES = "behaves";
-
 void BehaviorComponentSystem::update(const float) {
 
 }

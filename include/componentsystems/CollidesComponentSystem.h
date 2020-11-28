@@ -23,7 +23,7 @@ class CollidesComponentSystem : public Singleton<CollidesComponentSystem>, publi
 		void addComponent(const TIEntityFactory&, TIEntity&);
 		const std::string& getName();
 
-		const static std::string COLLIDES;
+		const static inline std::string COLLIDES = "collides";
 
 	//	virtual sf::FloatRect getHitBox() const;
 		void checkForCollisions();

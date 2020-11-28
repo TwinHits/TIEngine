@@ -16,8 +16,6 @@
 
 using namespace TIE;
 
-const std::string EventsComponentSystem::EVENTS = "events";
-
 void EventsComponentSystem::update(const float delta) {
 	this->updateSelectedStates();
 

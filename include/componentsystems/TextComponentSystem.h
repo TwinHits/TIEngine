@@ -22,10 +22,11 @@ class TextComponentSystem : public Singleton<TextComponentSystem>, public Compon
 		void addComponent(const TIEntityFactory&, TIEntity&);
 		const std::string& getName();
 
-		static const std::string DRAWN;
-		static const std::string TEXT;
-		static const std::string OFFSET_X;
-		static const std::string OFFSET_Y;
+		static const inline std::string DRAWN = "drawn.drawn";
+		static const inline std::string TEXT = "drawn.text";
+		static const inline std::string OFFSET_X = "drawn.offset.x";
+		static const inline std::string OFFSET_Y = "drawn.offset.y";
+
 	private:		
 		struct Components {
 			TextComponent& textComponent;

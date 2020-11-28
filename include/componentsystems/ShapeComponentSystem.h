@@ -17,7 +17,7 @@ class ShapeComponentSystem : public Singleton<ShapeComponentSystem>, public Comp
 		void addComponent(const TIEntityFactory&, TIEntity&);
 		const std::string& getName();
 
-		static const std::string DRAWN;
+		static const inline std::string DRAWN = "drawn";
 
 	private: 
 };

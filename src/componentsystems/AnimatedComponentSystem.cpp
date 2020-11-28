@@ -12,12 +12,6 @@
 
 using namespace TIE;
 
-const std::string AnimatedComponentSystem::ANIMATED = "animated";
-const std::string AnimatedComponentSystem::FRAMES = "frames";
-const std::string AnimatedComponentSystem::RANGE = "range";
-const std::string AnimatedComponentSystem::SPEED = "speed";
-const std::string AnimatedComponentSystem::DIRECTION = "direction";
-
 void AnimatedComponentSystem::update(const float delta) {
     for (auto& c : this->components) {
         this->updateCurrentAnimation(c.animatedComponent, c.positionComponent, c.spriteComponent);

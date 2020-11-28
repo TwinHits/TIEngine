@@ -18,9 +18,10 @@ public:
     void addComponent(const TIEntityFactory&, TIEntity&);
     const std::string& getName();
 
-    static const std::string BEHAVIORS;
-    static const std::string BEHAVIOR;
-    static const std::string BEHAVES;
+    static const inline std::string BEHAVIORS = "behaviors";
+    static const inline std::string BEHAVIOR = "behaves.behavior";
+    static const inline std::string BEHAVES = "behaves";
+
 private:
     struct Components {
         TIEntity& tientity;

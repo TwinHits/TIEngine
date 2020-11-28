@@ -7,8 +7,6 @@
 
 using namespace TIE;
 
-const std::string CollidesComponentSystem::COLLIDES = "collides";
-
 void CollidesComponentSystem::update(const float delta) {
 
 }

@@ -21,11 +21,12 @@ class AnimatedComponentSystem : public Singleton<AnimatedComponentSystem>, publi
         void addComponent(const TIEntityFactory&, TIEntity&);
         const std::string& getName();
 
-        static const std::string ANIMATED;
-		static const std::string FRAMES;
-		static const std::string RANGE;
-		static const std::string SPEED;
-		static const std::string DIRECTION;
+        static const inline std::string ANIMATED = "animated";
+		static const inline std::string FRAMES = "frames";
+		static const inline std::string RANGE = "range";
+		static const inline std::string SPEED = "speed";
+		static const inline std::string DIRECTION = "direction";
+
     private:
         struct Components {
             AnimatedComponent& animatedComponent;

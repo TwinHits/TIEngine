@@ -16,12 +16,6 @@
 
 using namespace TIE;
 
-const std::string MovesComponentSystem::MOVES = "moves";
-const std::string MovesComponentSystem::MAXSPEED = "moves.maxSpeed";
-const std::string MovesComponentSystem::ACCELERATION = "moves.acceleration";
-const std::string MovesComponentSystem::ROTATIONSPEED = "moves.rotationSpeed";
-const float MovesComponentSystem::CLOSE_ENOUGH = 0.5f;
-
 void MovesComponentSystem::update(const float delta) {
 	for (auto& c : components) {
 		this->move(c.movesComponent, c.positionComponent, delta);

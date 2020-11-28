@@ -26,11 +26,10 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, public Comp
 		void setTargetPosition(MovesComponent&, PositionComponent&, Direction);
 		void setTargetPosition(MovesComponent&, PositionComponent&, sf::Vector2f&);
 
-		static const std::string MOVES;
-		static const std::string MAXSPEED;
-		static const std::string ACCELERATION;
-		static const std::string DIRECTION;
-		static const std::string ROTATIONSPEED;
+		static const inline std::string MOVES = "moves";
+		static const inline std::string MAXSPEED = "moves.maxSpeed";
+		static const inline std::string ACCELERATION = "moves.acceleration";
+		static const inline std::string ROTATIONSPEED = "moves.rotationSpeed";
 	private:
 		struct Components {
 			MovesComponent& movesComponent;
@@ -46,7 +45,7 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, public Comp
 		bool areRotationsCloseEnough(const float, const float);
 		bool areFloatsCloseEnough(const float, const float);
 
-		static const float CLOSE_ENOUGH;
+		static const inline float CLOSE_ENOUGH = 0.5f;
 };
 
 }

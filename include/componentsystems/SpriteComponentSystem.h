@@ -20,14 +20,14 @@ class SpriteComponentSystem : public Singleton<SpriteComponentSystem>, public Co
 		void addComponent(const TIEntityFactory&, TIEntity&);
 		const std::string& getName();
 
-		static const std::string DRAWN;
-		static const std::string TEXTURE;
-		static const std::string ROTATION;
-		static const std::string WIDTH;
-		static const std::string HEIGHT;
-		static const std::string REPEATED;
-		static const std::string POSITION_X;
-		static const std::string POSITION_Y;
+		static const inline std::string DRAWN = "drawn";
+		static const inline std::string TEXTURE = "drawn.texture";
+		static const inline std::string ROTATION = "drawn.rotation";
+		static const inline std::string WIDTH = "drawn.width";
+		static const inline std::string HEIGHT = "drawn.height";
+		static const inline std::string REPEATED = "drawn.repeated";
+		static const inline std::string POSITION_X = "drawn.position.x";
+		static const inline std::string POSITION_Y = "drawn.position.y";
 	private: 
 		struct Components {
 			SpriteComponent& spriteComponent;

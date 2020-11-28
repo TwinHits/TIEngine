@@ -5,16 +5,16 @@ namespace TIE {
 
 class ConsoleCommands {
 	public:
-		const static std::string TEST;
-		const static std::string PRINT;
-		const static std::string CLEAR;
-		const static std::string CLEARLOG;
-		const static std::string LOAD;
-		const static std::string SCRIPT;
-		const static std::string SCENEGRAPH;
-		const static std::string SHOW;
-		const static std::string QUIT;
-		const static std::string SPAWN;
+		const static inline std::string TEST = "test";
+		const static inline std::string PRINT = "print";
+		const static inline std::string CLEAR = "clear";
+		const static inline std::string CLEARLOG = "clearlog";
+		const static inline std::string LOAD = "load";
+		const static inline std::string SCRIPT = "script";
+		const static inline std::string SCENEGRAPH = "scenegraph";
+		const static inline std::string SHOW = "show";
+		const static inline std::string QUIT = "quit";
+		const static inline std::string SPAWN = "spawn";
 };
 
 }

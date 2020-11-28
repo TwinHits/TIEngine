@@ -12,10 +12,6 @@
 
 using namespace TIE;
 
-const std::string GridComponentSystem::GRID = "grid";
-const std::string GridComponentSystem::WIDTH = "grid.width";
-const std::string GridComponentSystem::HEIGHT = "grid.height";
-
 void GridComponentSystem::update(const float) {
 
 }

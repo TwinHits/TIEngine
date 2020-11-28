@@ -13,14 +13,6 @@
 
 using namespace TIE;
 
-const std::string SpriteComponentSystem::DRAWN = "drawn";
-const std::string SpriteComponentSystem::TEXTURE = "drawn.texture";
-const std::string SpriteComponentSystem::WIDTH = "drawn.width";
-const std::string SpriteComponentSystem::HEIGHT = "drawn.height";
-const std::string SpriteComponentSystem::REPEATED = "drawn.repeated";
-const std::string SpriteComponentSystem::POSITION_X = "drawn.position.x";
-const std::string SpriteComponentSystem::POSITION_Y = "drawn.position.y";
-const std::string SpriteComponentSystem::ROTATION = "drawn.rotation";
 
 void SpriteComponentSystem::update(const float delta) {
 	for (auto& c : this->components) {

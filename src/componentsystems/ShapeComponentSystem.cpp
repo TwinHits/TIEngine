@@ -12,8 +12,6 @@
 
 using namespace TIE;
 
-const std::string ShapeComponentSystem::DRAWN = "drawn";
-
 void ShapeComponentSystem::update(const float delta) {
 
 }

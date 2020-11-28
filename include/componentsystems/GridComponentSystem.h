@@ -13,8 +13,6 @@
 
 namespace TIE {
 
-// Grid Component
-
 class GridComponentSystem : public Singleton<GridComponentSystem>, public ComponentSystem {
 	public:
 		GridComponentSystem() {};
@@ -25,9 +23,9 @@ class GridComponentSystem : public Singleton<GridComponentSystem>, public Compon
 
 		sf::Vector2f normalizePositionToGrid(const sf::Vector2f&);
 
-		static const std::string GRID;
-		static const std::string WIDTH;
-		static const std::string HEIGHT;
+		static const inline std::string GRID = "grid";
+		static const inline std::string WIDTH = "grid.width";
+		static const inline std::string HEIGHT = "grid.height";
 	private:
 		struct Components {
 			GridComponent& gridComponent;
