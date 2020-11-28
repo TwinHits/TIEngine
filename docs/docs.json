@@ -23,6 +23,32 @@
 			  		
 			  },
 			  {
+				  "name": "registerFontsDirectory",
+				  "params": [
+					  {
+						  "name": "directory",
+						  "type": "const std::string&",
+						  "description": "Directory to append to the script's working directory."
+					  }
+				  ],
+				  "description": "Register a directory to search for fonts.",
+				  "returns": "boolean"
+			  		
+			  },
+			  {
+				  "name": "registerAudioDirectory",
+				  "params": [
+					  {
+						  "name": "directory",
+						  "type": "const std::string&",
+						  "description": "Directory to append to the script's working directory."
+					  }
+				  ],
+				  "description": "Register a directory to search for audio.",
+				  "returns": "boolean"
+			  		
+			  },
+			  {
 				  "name": "setWindowTitle",
 				  "params": [
 					  {

@@ -15,6 +15,14 @@ bool TIEngineInterface::registerTexturesDirectory(const std::string& directory) 
     return AssetsManager::Instance()->loadTexturesFromPath(this->getScriptWorkingDirectory() + directory);
 }
 
+bool TIEngineInterface::registerFontsDirectory(const std::string& directory) {
+    return AssetsManager::Instance()->loadFontsFromPath(this->getScriptWorkingDirectory() + directory);
+}
+
+bool TIEngineInterface::registerAudioDirectory(const std::string& directory) {
+    return AssetsManager::Instance()->loadAudioFromPath(this->getScriptWorkingDirectory() + directory);
+}
+
 bool TIEngineInterface::setWindowSize(const int width, const int height) {
 	WindowManager::Instance()->updateWindowSize(width, height);
     return true;
