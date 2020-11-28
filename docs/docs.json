@@ -1,3 +1,33 @@
 {
-  "name":
+  "interfaces": [
+	  {
+		  "name": "TIEngineInterface",Î
+		  "description": "Interface for dealing with the engine managers.",
+		  "methods": [
+			  {
+			 	"name": "isValid",
+				"description": "Method to determine that interface has been properly initialized.",
+				"returns": "boolean"
+			  },
+			  {
+				  "name": "registerTexturesDirectory",
+				  "params": [
+					  {
+						  "name": "directory",
+						  "type": "const std::string&",
+						  "description": "Directoty to search for textures."
+					  }
+				  ],
+				  "description": "Method to register a directory that contains textures.",
+				  "returns": "boolean"
+			  		
+			  }
+		  ]
+	  },
+	  {
+		  "name": "TIEntityInterface",
+		  "description": "Interface for interacting with a single TIEntity.",
+		  "methods": []
+	  }
+  ]
 }

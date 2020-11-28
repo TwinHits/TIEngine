@@ -26,6 +26,9 @@ bool ScriptManagerV2::initialize() {
         sol::lib::package
 	);
 
+    this->registerTIEngineInterface();
+    this->registerTIEntityInterface();
+
 	const std::string& startUpScript = ConfigManager::Instance()->getStartUpScript();
 	if (!startUpScript.empty()) {
 		this->loadScript(startUpScript);
@@ -42,7 +45,8 @@ void ScriptManagerV2::loadScript(const std::string& scriptPath) {
         std::string errorMessage = error.what();
         LogManager::Instance()->error("Lua Script " + scriptPath + " syntax error: " + errorMessage);
     } else {
-        sol::protected_function_result result = script();
+        TIEngineInterface engineInterface = TIEngineInterface();
+        sol::protected_function_result result = script(engineInterface);
         if (!result.valid()) {
             sol::error error = result;
             std::string errorMessage = error.what();
@@ -66,4 +70,6 @@ void ScriptManagerV2::registerTIEntityInterface() {
 
 void ScriptManagerV2::registerTIEngineInterface() {
 	sol::usertype<TIEngineInterface> engineInterfaceUserType = this->luaState.new_usertype<TIEngineInterface>("tiengine");
+    engineInterfaceUserType["isValid"] = &TIEngineInterface::isValid;
+    engineInterfaceUserType["registerTexturesDirectory"] = &TIEngineInterface::registerTexturesDirectory;
 }
