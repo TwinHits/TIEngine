@@ -137,9 +137,10 @@ void ConsoleManager::traverseUpHistory() {
 
 
 void ConsoleManager::addToInput(unsigned int unicodeCharacter) {
-	if (unicodeCharacter < 128  //if it's a character
-	&& unicodeCharacter != 96 //tilde
-	&& unicodeCharacter != 13 //return
+	if (unicodeCharacter < 128  // if it's a character
+	&& unicodeCharacter != 126 // tilde
+	&& unicodeCharacter != 96 // back tick/open quote
+	&& unicodeCharacter != 13 // return
 	&& unicodeCharacter != 8) { // backspace
 		this->input += static_cast<char>(unicodeCharacter);
 	} else if (unicodeCharacter == 8) { //backspace
