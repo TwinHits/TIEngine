@@ -15,10 +15,10 @@
 					  {
 						  "name": "directory",
 						  "type": "const std::string&",
-						  "description": "Directoty to search for textures."
+						  "description": "Directory to append to the script's working directory."
 					  }
 				  ],
-				  "description": "Method to register a directory that contains textures.",
+				  "description": "Register a directory to search for textures.",
 				  "returns": "boolean"
 			  		
 			  }

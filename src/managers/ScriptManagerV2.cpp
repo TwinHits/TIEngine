@@ -46,6 +46,7 @@ void ScriptManagerV2::loadScript(const std::string& scriptPath) {
         LogManager::Instance()->error("Lua Script " + scriptPath + " syntax error: " + errorMessage);
     } else {
         TIEngineInterface engineInterface = TIEngineInterface();
+        engineInterface.setScriptWorkingDirectory(String::getDirectoryFromPath(scriptPath));
         sol::protected_function_result result = script(engineInterface);
         if (!result.valid()) {
             sol::error error = result;
@@ -73,3 +74,4 @@ void ScriptManagerV2::registerTIEngineInterface() {
     engineInterfaceUserType["isValid"] = &TIEngineInterface::isValid;
     engineInterfaceUserType["registerTexturesDirectory"] = &TIEngineInterface::registerTexturesDirectory;
 }
+

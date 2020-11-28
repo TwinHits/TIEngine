@@ -23,6 +23,7 @@ namespace TIE {
 		sf::IntRect stringToIntRect(const std::string&);
 		sf::FloatRect stringToFloatRect(const std::string&);
 		sf::Vector2f stringToVector2f(const std::string&);
+		std::string getDirectoryFromPath(const std::string&);
 	}
 }
 

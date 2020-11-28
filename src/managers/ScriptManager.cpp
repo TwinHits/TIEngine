@@ -47,7 +47,6 @@ void ScriptManager::loadScript(const std::string& scriptPath) {
     std::string scriptDirectory;
     for (auto s = parts.begin(); s != parts.end() - 1; s++) {
         scriptDirectory += *s + "/";
-		*s = "yeet";
     }
 
     sol::optional<sol::table> assetsTable = this->luaState["assets"];

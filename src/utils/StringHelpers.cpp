@@ -255,3 +255,12 @@ sf::Vector2f TIE::String::stringToVector2f(const std::string& string) {
     }
     return sf::Vector2f(points[0], points[1]);
 }
+
+std::string TIE::String::getDirectoryFromPath(const std::string& scriptPath) {
+    std::vector<std::string> parts = String::slice(scriptPath, '/', 0);
+    std::string scriptDirectory = "";
+    for (auto s = parts.begin(); s != parts.end() - 1; s++) {
+        scriptDirectory += *s + "/";
+    }
+    return scriptDirectory;
+}

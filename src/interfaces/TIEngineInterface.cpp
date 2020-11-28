@@ -11,5 +11,13 @@ bool TIEngineInterface::isValid() {
 }
 
 bool TIEngineInterface::registerTexturesDirectory(const std::string& directory) {
-    return AssetsManager::Instance()->loadTexturesFromPath(directory);
+    return AssetsManager::Instance()->loadTexturesFromPath(this->getScriptWorkingDirectory() + directory);
+}
+
+const std::string& TIEngineInterface::getScriptWorkingDirectory() {
+    return this->scriptWorkingDirectory;
+}
+
+void TIEngineInterface::setScriptWorkingDirectory(const std::string& scriptWorkingDirectory) {
+    this->scriptWorkingDirectory = scriptWorkingDirectory;
 }
