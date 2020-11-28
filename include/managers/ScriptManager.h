@@ -27,14 +27,7 @@ private:
 	sol::state luaState;
 	std::map<std::string, sol::function> functions;
 
-	void loadAssets(const sol::table&, const std::string&);
-	void loadWindowProperties(const sol::table&);
 	void loadWorld(const sol::table&);
-
-	void loadTIEntities(const sol::table&);
-	TIEntityFactory& loadTIEntity(const std::string&, const sol::table&, TIEntityFactory*);
-	TIEntityFactory& getFactory(const std::string&, TIEntityFactory*);
-	void readComponentValues(TIEntityFactory&, const std::string&, const sol::table&);
 
 	ScriptManager(const ScriptManager&);
 	void operator=(const ScriptManager&) {};

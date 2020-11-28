@@ -24,46 +24,10 @@ bool ScriptManager::initialize() {
 		sol::lib::os
 	);
 
-	const std::string& startUpScript = ConfigManager::Instance()->getStartUpScript();
-	if (!startUpScript.empty()) {
-		this->loadScript(startUpScript);
-	}
-
-    sol::usertype<TIEntityInterface> interfaceUserType = this->luaState.new_usertype<TIEntityInterface>("tientity");
-	interfaceUserType["getPosition"] = &TIEntityInterface::getPosition;
-    interfaceUserType["moveRight"] = &TIEntityInterface::moveRight;
-    interfaceUserType["moveLeft"] = &TIEntityInterface::moveLeft;
-    interfaceUserType["moveUp"] = &TIEntityInterface::moveUp;
-    interfaceUserType["moveDown"] = &TIEntityInterface::moveDown;
-    interfaceUserType["spawn"] = &TIEntityInterface::spawn;
-
 	return true;
 }
 
 void ScriptManager::loadScript(const std::string& scriptPath) {
-	this->luaState.script_file(scriptPath);
-
-    std::vector<std::string> parts = String::slice(scriptPath, '/', 0);
-    std::string scriptDirectory;
-    for (auto s = parts.begin(); s != parts.end() - 1; s++) {
-        scriptDirectory += *s + "/";
-    }
-
-    sol::optional<sol::table> assetsTable = this->luaState["assets"];
-    if (assetsTable && (*assetsTable).valid()) {
-        this->loadAssets(*assetsTable, scriptDirectory);
-    }
-
-    sol::optional<sol::table> windowTable = this->luaState["window"];
-    if (windowTable && (*windowTable).valid()) {
-        this->loadWindowProperties(*windowTable);
-    }
-
-
-    sol::optional<sol::table> tientitiesTable = this->luaState["tientities"];
-    if (tientitiesTable && (*tientitiesTable).valid()) {
-        this->loadTIEntities(*tientitiesTable);
-	}
 
     sol::optional<sol::table> worldTable = this->luaState["world"];
     if (worldTable && (*worldTable).valid()) {
@@ -80,59 +44,6 @@ void TIE::ScriptManager::runFunction(const std::string& functionKey, TIEntity& t
 	}
 }
 
-
-void ScriptManager::loadAssets(const sol::table& settingsTable, const std::string& scriptsPath) {
-
-	sol::optional<sol::table> texturesPaths = settingsTable["textures"];
-	if (texturesPaths && (*texturesPaths).valid()) {
-		for (auto& i : *texturesPaths) {
-			sol::optional<std::string> path = i.second.as<sol::optional<std::string> >();
-			if (path) {
-				AssetsManager::Instance()->loadTexturesFromPath(scriptsPath + *path);
-			}
-		}
-	}
-
-	sol::optional<sol::table> fontPaths = settingsTable["fonts"];
-	if (fontPaths && (*fontPaths).valid()) {
-		for (auto& i : *fontPaths) {
-			sol::optional<std::string> path = i.second.as<sol::optional<std::string> >();
-			if (path) {
-				AssetsManager::Instance()->loadFontsFromPath(scriptsPath + *path);
-			}
-		}
-	}
-
-	sol::optional<sol::table> audioPaths = settingsTable["audio"];
-	if (audioPaths && (*audioPaths).valid()) {
-		for (auto& i : *audioPaths) {
-			sol::optional<std::string> path = i.second.as<sol::optional<std::string> >();
-			if (path) {
-				AssetsManager::Instance()->loadAudioFromPath(scriptsPath + *path);
-			}
-		}
-	}
-}
-
-
-void ScriptManager::loadWindowProperties(const sol::table& windowTable) {
-	sol::optional<std::string> title = windowTable["title"];
-	if (title) {
-		WindowManager::Instance()->setTitle(*title);
-	}
-
-	sol::optional<int> width = windowTable["width"];
-	sol::optional<int> height = windowTable["height"];
-	if (width && height) {
-		WindowManager::Instance()->updateWindowSize(*width, *height);
-	} else if (!width || !height) {
-		std::string widthMsg = width ? "" : std::to_string(*width);
-		std::string heightMsg = height ? "" : std::to_string(*height);
-		LogManager::Instance()->error("Script is missing some windows size property: width: " + widthMsg + ", height: " + heightMsg);
-	}
-}
-
-
 void ScriptManager::loadWorld(const sol::table& worldTable) {
 	TIEntityFactory factory = TIEntityFactory();
 	for (auto& component : worldTable) {
@@ -140,7 +51,7 @@ void ScriptManager::loadWorld(const sol::table& worldTable) {
 		if (componentName && factory.isValidComponentName(*componentName)) {
 			sol::optional<sol::table> table = worldTable[*componentName];
 			if (table && (*table).valid()) {
-				this->readComponentValues(factory, *componentName, *table);
+				//this->readComponentValues(factory, *componentName, *table);
 			}
 		}
 	}
@@ -160,77 +71,3 @@ void ScriptManager::loadWorld(const sol::table& worldTable) {
 
 }
 
-
-void ScriptManager::loadTIEntities(const sol::table& tientities) {
-	for (auto& tientity : tientities) {
-		sol::optional<std::string> name = tientity.first.as<sol::optional<std::string> >();
-		sol::optional<sol::table> defintion = tientity.second.as<sol::optional<sol::table> >();
-		if (name && defintion) {
-			ScriptManager::loadTIEntity(*name, *defintion, nullptr);
-		}
-	}
-}
-
-
-TIEntityFactory& ScriptManager::loadTIEntity(const std::string& name, const sol::table& tientityTable, TIEntityFactory* parent) {
-
-	TIEntityFactory& factory = this->getFactory(name, parent);
-	factory.setName(name);
-	std::vector<std::string> children;
-	for (auto& possibleComponent : tientityTable) {
-		sol::optional<std::string> componentName = possibleComponent.first.as<sol::optional<std::string> >();
-		sol::optional<sol::table> defintion = possibleComponent.second.as<sol::optional<sol::table> >();
-		if (componentName && defintion) {
-			if (factory.isValidComponentName(*componentName)) {
-				this->readComponentValues(factory, *componentName, *defintion);
-			} else {
-				children.push_back(*componentName);
-			}
-		}
-	}
-
-	LogManager::Instance()->info("Registered entity " + name + " from Lua script.");
-
-	//Any other property is a child entity
-	for (auto& child : children) {
-		this->loadTIEntity(child, tientityTable[child], &factory);
-	}
-
-	return factory;
-}
-
-
-TIEntityFactory& ScriptManager::getFactory(const std::string& name, TIEntityFactory* parent) {
-	if (parent == nullptr) {
-		return WorldManager::Instance()->registerTIEntity(name);
-	} else {
-		return parent->registerChild();
-	}
-
-}
-
-// Iterate through each key of the table looking for values that can be casted to types.
-// Store those types in the revelant TIEfactory map for use by any given component
-// Call recursively if it finds another table
-void ScriptManager::readComponentValues(TIEntityFactory& factory, const std::string& componentName, const sol::table& component) {
-	for (auto& pair : component) {
-		const std::string& key = componentName + "." + pair.first.as<std::string>();
-		const sol::object& value = pair.second;
-		if (value.valid()) {
-			if (value.is<bool>()) {
-				factory.boolValues.insert({ key, value.as<bool>() });
-			} else if (value.is<float>()) {
-				factory.floatValues.insert({ key, value.as<float>() });
-			} else if (value.is<std::string>()) {
-				factory.stringValues.insert({ key, value.as<std::string>() });
-			} else if (value.is<sol::function>()) {
-				factory.stringValues.insert({ key, key });
-				this->functions.insert({ key, value.as<sol::function>() });
-			} else if (value.is<sol::table>()) {
-				this->readComponentValues(factory, key, value);
-			} else {
-				LogManager::Instance()->error("Error casting value from script: " + key + ".");
-			}
-		}
-	}
-}

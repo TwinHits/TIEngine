@@ -4,7 +4,6 @@
 #include "managers/Manager.h"
 #include "templates/Singleton.h"
 
-#define SOL_ALL_SAFETIES_ON 1
 #include <sol/sol.hpp>
 
 #include <string>
@@ -18,12 +17,17 @@ class ScriptManagerV2 : public Singleton<ScriptManagerV2>, Manager {
 public:
 	bool initialize();
 	void loadScript(const std::string&);
+	TIEntityFactory& loadTIEntityDefinition(const std::string&, const sol::table&);
 
 	ScriptManagerV2() {};
 	~ScriptManagerV2() {};
 
 private:
 	sol::state luaState;
+
+	TIEntityFactory& loadTIEntityDefinition(const std::string&, const sol::table&, TIEntityFactory*);
+	TIEntityFactory& getFactory(const std::string&, TIEntityFactory*);
+	void readComponentValues(TIEntityFactory&, const std::string&, const sol::table&);
 
 	void registerTIEntityInterface();
 	void registerTIEngineInterface();

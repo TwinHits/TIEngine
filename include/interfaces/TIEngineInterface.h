@@ -3,6 +3,8 @@
 
 #include <string>
 
+#include <sol/sol.hpp>
+
 namespace TIE {
 
 class TIEngineInterface {
@@ -18,6 +20,8 @@ class TIEngineInterface {
 
         bool setWindowSize(const int, const int);
         bool setWindowTitle(const std::string&);
+
+        bool registerTIEntityDefinition(const std::string&, const sol::table&);
 
         void setScriptWorkingDirectory(const std::string&);
         const std::string& getScriptWorkingDirectory();
