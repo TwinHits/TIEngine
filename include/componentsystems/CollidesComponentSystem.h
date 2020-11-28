@@ -16,11 +16,14 @@ namespace TIE {
 // Collides
 // Sprite
 
-class CollidesComponentSystem : public Singleton<CollidesComponentSystem>, ComponentSystem {
+class CollidesComponentSystem : public Singleton<CollidesComponentSystem>, public ComponentSystem {
 	public:
 		CollidesComponentSystem() {};
 		void update(const float);
 		void addComponent(const TIEntityFactory&, TIEntity&);
+		const std::string& getName();
+
+		const static std::string COLLIDES;
 
 	//	virtual sf::FloatRect getHitBox() const;
 		void checkForCollisions();

@@ -13,11 +13,12 @@
 
 namespace TIE {
 
-class SpriteComponentSystem : public Singleton<SpriteComponentSystem>, ComponentSystem {
+class SpriteComponentSystem : public Singleton<SpriteComponentSystem>, public ComponentSystem {
 	public:
 		SpriteComponentSystem() {};
 		void update(const float);
 		void addComponent(const TIEntityFactory&, TIEntity&);
+		const std::string& getName();
 
 		static const std::string DRAWN;
 		static const std::string TEXTURE;

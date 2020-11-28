@@ -1,11 +1,12 @@
 #ifndef SCENEMANAGER_H
 #define SCENEMANAGER_H
 
+#include "componentsystems/ComponentSystem.h"
 #include "managers/Manager.h"
 #include "templates/Singleton.h"
 
 #include <memory>
-#include <set>
+#include <vector>
 
 #include "objects/SceneLayer.h"
 #include "managers/WindowManager.h"
@@ -19,6 +20,8 @@ namespace TIE {
 		SceneLayer& getSceneGraphRoot();
 		SceneLayer& getEngineLayer();
 		SceneLayer& getClientLayer();
+
+		const std::vector<ComponentSystem*>& getComponentSystems();
 
 		//Investigate with collides component
 		//TIEntity* findTIEntity(sf::Vector2f);
@@ -42,6 +45,8 @@ namespace TIE {
 		std::unique_ptr<SceneLayer> sceneGraphRoot;
 		SceneLayer* engineLayer = nullptr;
 		SceneLayer* clientLayer = nullptr;
+
+		std::vector<ComponentSystem*> componentSystems;
 
 		void updateEngineEntity(TIEntity&);
 		void removeTIEntities(std::vector<std::unique_ptr<TIEntity> >&);

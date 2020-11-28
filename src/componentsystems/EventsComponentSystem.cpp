@@ -84,6 +84,11 @@ void EventsComponentSystem::addComponent(const TIEntityFactory& factory, TIEntit
 }
 
 
+const std::string& EventsComponentSystem::getName() {
+	return EventsComponentSystem::EVENTS;
+}
+
+
 void EventsComponentSystem::updateSelectedStates() {
 	const sf::Event* clickEvent = EventsManager::Instance()->getEvent(sf::Event::MouseButtonPressed);
 	if (clickEvent != nullptr) {

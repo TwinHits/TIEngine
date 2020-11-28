@@ -12,6 +12,8 @@
 
 using namespace TIE;
 
+const std::string ShapeComponentSystem::DRAWN = "drawn";
+
 void ShapeComponentSystem::update(const float delta) {
 
 }
@@ -19,6 +21,10 @@ void ShapeComponentSystem::update(const float delta) {
 
 void ShapeComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& entity) {
 
+}
+
+const std::string& ShapeComponentSystem::getName() {
+	return ShapeComponentSystem::DRAWN;
 }
 
 /*

@@ -17,12 +17,12 @@
 
 namespace TIE {
 
-class EventsComponentSystem : public Singleton<EventsComponentSystem>, ComponentSystem {
+class EventsComponentSystem : public Singleton<EventsComponentSystem>, public ComponentSystem {
 	public:
 		EventsComponentSystem() {};
 		void update(const float);
-
 		void addComponent(const TIEntityFactory&, TIEntity&);
+		const std::string& getName();
 
 		const static std::string EVENTS;
 	private:

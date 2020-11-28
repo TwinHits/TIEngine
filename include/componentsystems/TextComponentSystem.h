@@ -15,11 +15,12 @@
 
 namespace TIE {
 
-class TextComponentSystem : public Singleton<TextComponentSystem>, ComponentSystem {
+class TextComponentSystem : public Singleton<TextComponentSystem>, public ComponentSystem {
 	public:
 		TextComponentSystem() {};
 		void update(const float);
 		void addComponent(const TIEntityFactory&, TIEntity&);
+		const std::string& getName();
 
 		static const std::string DRAWN;
 		static const std::string TEXT;

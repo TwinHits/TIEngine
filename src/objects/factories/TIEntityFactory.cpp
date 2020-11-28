@@ -2,29 +2,16 @@
 
 #include <algorithm>
 
-#include "componentsystems/AnimatedComponentSystem.h"
-#include "componentsystems/BehaviorComponentSystem.h"
-#include "componentsystems/CollidesComponentSystem.h"
-#include "componentsystems/EventsComponentSystem.h"
-#include "componentsystems/GridComponentSystem.h"
-#include "componentsystems/MovesComponentSystem.h"
-#include "componentsystems/SpriteComponentSystem.h"
-#include "componentsystems/TextComponentSystem.h"
-#include "componentsystems/ShapeComponentSystem.h"
+#include "componentsystems/ComponentSystem.h"
 #include "managers/SceneManager.h"
 #include "objects/entities/TIEntity.h"
 
 using namespace TIE;
 
 TIEntityFactory::TIEntityFactory() {
-	this->validComponentNames = {
-			AnimatedComponentSystem::ANIMATED,
-			BehaviorComponentSystem::BEHAVES,
-			SpriteComponentSystem::DRAWN,
-			MovesComponentSystem::MOVES,
-			EventsComponentSystem::EVENTS,
-			GridComponentSystem::GRID,
-		};
+	for (ComponentSystem* componentSystem : SceneManager::Instance()->getComponentSystems()) {
+		this->validComponentNames.push_back(componentSystem->getName());
+	}
 }
 
 
@@ -37,15 +24,9 @@ TIEntity& TIEntityFactory::build() {
 	TIEntity& tientity = this->parent->attachChild();
 	tientity.setName(this->name);
 
-	SpriteComponentSystem::Instance()->addComponent(*this, tientity);
-	TextComponentSystem::Instance()->addComponent(*this, tientity);
-	ShapeComponentSystem::Instance()->addComponent(*this, tientity);
-	GridComponentSystem::Instance()->addComponent(*this, tientity);
-	MovesComponentSystem::Instance()->addComponent(*this, tientity);
-	CollidesComponentSystem::Instance()->addComponent(*this, tientity);
-	AnimatedComponentSystem::Instance()->addComponent(*this, tientity);
-	EventsComponentSystem::Instance()->addComponent(*this, tientity);
-	BehaviorComponentSystem::Instance()->addComponent(*this, tientity);
+	for (ComponentSystem* componentSystem : SceneManager::Instance()->getComponentSystems()) {
+		componentSystem->addComponent(*this, tientity);
+	}
 
 	for (auto & child : this->children) {
 		child.setParent(&tientity);

@@ -101,6 +101,11 @@ void AnimatedComponentSystem::addComponent(const TIEntityFactory& factory, TIEnt
 }
 
 
+const std::string& AnimatedComponentSystem::getName() {
+    return AnimatedComponentSystem::ANIMATED;
+}
+
+
 void AnimatedComponentSystem::updateCurrentAnimation(AnimatedComponent& animatedComponent, PositionComponent& positionComponent, SpriteComponent& spriteComponent) {
     float rotation = positionComponent.angle;
 

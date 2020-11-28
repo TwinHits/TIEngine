@@ -10,12 +10,13 @@
 
 namespace TIE {
 
-class BehaviorComponentSystem : public Singleton<BehaviorComponentSystem>, ComponentSystem {
+class BehaviorComponentSystem : public Singleton<BehaviorComponentSystem>, public ComponentSystem {
 
 public:
     BehaviorComponentSystem() {};
     void update(const float);
     void addComponent(const TIEntityFactory&, TIEntity&);
+    const std::string& getName();
 
     static const std::string BEHAVIORS;
     static const std::string BEHAVIOR;

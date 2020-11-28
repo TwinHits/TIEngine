@@ -1,7 +1,6 @@
 #ifndef TIENTITYFACTORY_H
 #define TIENTITYFACTORY_H
 
-#include <array>
 #include <map>
 #include <vector>
 #include <string>
@@ -33,7 +32,7 @@ class TIEntityFactory {
 		TIEntity* parent = nullptr;
 		std::vector<TIEntityFactory> children;
 
-		std::array<std::string, 6> validComponentNames;
+		std::vector<std::string> validComponentNames;
 };
 
 }

@@ -15,10 +15,11 @@ namespace TIE {
 
 // Grid Component
 
-class GridComponentSystem : public Singleton<GridComponentSystem>, ComponentSystem {
+class GridComponentSystem : public Singleton<GridComponentSystem>, public ComponentSystem {
 	public:
 		GridComponentSystem() {};
 		void update(const float);
+		const std::string& getName();
 
 		void addComponent(const TIEntityFactory&, TIEntity&);
 

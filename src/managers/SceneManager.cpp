@@ -1,12 +1,17 @@
 #include "managers/SceneManager.h"
 
 #include <functional>
+#include <memory>
+#include <vector>
 
 #include "componentsystems/AnimatedComponentSystem.h"
 #include "componentsystems/BehaviorComponentSystem.h"
 #include "componentsystems/CollidesComponentSystem.h"
+#include "componentsystems/ComponentSystem.h"
 #include "componentsystems/EventsComponentSystem.h"
+#include "componentsystems/GridComponentSystem.h"
 #include "componentsystems/MovesComponentSystem.h"
+#include "componentsystems/ShapeComponentSystem.h"
 #include "componentsystems/SpriteComponentSystem.h"
 #include "componentsystems/TextComponentSystem.h"
 #include "managers/LogManager.h" 
@@ -55,6 +60,16 @@ bool SceneManager::initialize() {
 	performanceDisplay->initialize();
 	this->engineLayer->attachChild(std::move(performanceDisplay));
 
+	this->componentSystems.push_back(SpriteComponentSystem::Instance());
+	this->componentSystems.push_back(TextComponentSystem::Instance());
+	this->componentSystems.push_back(ShapeComponentSystem::Instance());
+	this->componentSystems.push_back(GridComponentSystem::Instance());
+	this->componentSystems.push_back(MovesComponentSystem::Instance());
+	this->componentSystems.push_back(AnimatedComponentSystem::Instance());
+	this->componentSystems.push_back(CollidesComponentSystem::Instance());
+	this->componentSystems.push_back(EventsComponentSystem::Instance());
+	this->componentSystems.push_back(BehaviorComponentSystem::Instance());
+
 	return true;
 }
 
@@ -74,6 +89,10 @@ SceneLayer& SceneManager::getClientLayer() {
 }
 
 
+const std::vector<ComponentSystem*>& SceneManager::getComponentSystems() {
+	return this->componentSystems;
+}
+
 /* //Investigate with collides component
 TIEntity* SceneManager::findTIEntity(sf::Vector2f point) {
 	return this->getClientLayer().findNode(point);	
@@ -86,13 +105,9 @@ void SceneManager::updateGameState() {
 
 	WorldManager::Instance()->attachNewTIEntities();
 
-	SpriteComponentSystem::Instance()->update(this->delta);
-	TextComponentSystem::Instance()->update(this->delta);
-	AnimatedComponentSystem::Instance()->update(this->delta);
-	MovesComponentSystem::Instance()->update(this->delta);
-	CollidesComponentSystem::Instance()->update(this->delta);
-	EventsComponentSystem::Instance()->update(this->delta);
-	BehaviorComponentSystem::Instance()->update(this->delta);
+	for (ComponentSystem* componentSystem : this->componentSystems) {
+		componentSystem->update(this->delta);
+	}
 
 	this->updateEngineEntity(*(this->engineLayer));
 

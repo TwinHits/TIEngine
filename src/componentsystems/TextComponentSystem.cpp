@@ -53,6 +53,11 @@ void TextComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity&
 }
 
 
+const std::string& TextComponentSystem::getName() {
+	return TextComponentSystem::DRAWN;
+}
+
+
 /*
 sf::Transform GraphicsComponentSystem::getWorldTransform() const {
 	sf::Transform transform = sf::Transform::Identity;

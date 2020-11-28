@@ -57,6 +57,11 @@ void MovesComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity
 }
 
 
+const std::string& MovesComponentSystem::getName() {
+	return MovesComponentSystem::MOVES;
+}
+
+
 void MovesComponentSystem::setTargetPosition(MovesComponent& movesComponent, PositionComponent& positionComponent, Direction direction) {
 	if (this->arePositionsCloseEnough(movesComponent.targetPosition, positionComponent.position)) {
 

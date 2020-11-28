@@ -14,11 +14,12 @@
 
 namespace TIE {
 
-class AnimatedComponentSystem : public Singleton<AnimatedComponentSystem>, ComponentSystem {
+class AnimatedComponentSystem : public Singleton<AnimatedComponentSystem>, public ComponentSystem {
     public:
         AnimatedComponentSystem() {};
         void update(const float);
         void addComponent(const TIEntityFactory&, TIEntity&);
+        const std::string& getName();
 
         static const std::string ANIMATED;
 		static const std::string FRAMES;

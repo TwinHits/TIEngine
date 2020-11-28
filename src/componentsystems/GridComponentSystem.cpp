@@ -41,6 +41,11 @@ void GridComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity&
 }
 
 
+const std::string& GridComponentSystem::getName() {
+	return GridComponentSystem::GRID;
+}
+
+
 sf::Vector2f GridComponentSystem::normalizePositionToGrid(const sf::Vector2f& position) {
 	if (WorldManager::Instance()->isGridConfigured()) {
 		TIEntity* levelEntity = WorldManager::Instance()->getLevelEntity();

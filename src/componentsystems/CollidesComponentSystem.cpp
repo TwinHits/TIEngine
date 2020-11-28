@@ -7,12 +7,19 @@
 
 using namespace TIE;
 
+const std::string CollidesComponentSystem::COLLIDES = "collides";
+
 void CollidesComponentSystem::update(const float delta) {
 
 }
 
 void CollidesComponentSystem::addComponent(const TIEntityFactory& tientityFactory, TIEntity& tientity) {
 	
+}
+
+
+const std::string& CollidesComponentSystem::getName() {
+	return CollidesComponentSystem::COLLIDES;
 }
 
 	/*

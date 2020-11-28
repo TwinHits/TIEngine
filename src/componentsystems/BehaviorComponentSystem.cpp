@@ -23,3 +23,9 @@ void BehaviorComponentSystem::addComponent(const TIEntityFactory& tientityFactor
 		behaviorComponent.behavior = behavior;
 	}
 }
+
+
+const std::string& BehaviorComponentSystem::getName() {
+    return BehaviorComponentSystem::BEHAVES;
+}
+

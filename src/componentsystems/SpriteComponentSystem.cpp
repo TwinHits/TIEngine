@@ -84,6 +84,11 @@ void SpriteComponentSystem::addComponent(const TIEntityFactory& factory, TIEntit
 }
 
 
+const std::string& SpriteComponentSystem::getName() {
+	return SpriteComponentSystem::DRAWN;
+}
+
+
 /*
 sf::Transform GraphicsComponentSystem::getWorldTransform() const {
 	sf::Transform transform = sf::Transform::Identity;
