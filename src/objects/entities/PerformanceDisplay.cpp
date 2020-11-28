@@ -30,7 +30,7 @@ void PerformanceDisplay::update(const float delta) {
     std::stringstream ss;
     ss << "Frames: " << this->framesCounter << std::endl;
     ss << "FPS: " << SceneManager::Instance()->getFPS() << std::endl;
-    ss << "Runtime: " << std::setprecision(2) << this->clock.getElapsedTime().asSeconds() << std::endl;
+    ss << "Runtime: " << static_cast<int>(this->clock.getElapsedTime().asSeconds()) << std::endl;
     this->textComponent.setString(ss.str());
 	this->framesCounter++;
 }
