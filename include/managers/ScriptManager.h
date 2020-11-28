@@ -17,7 +17,6 @@ namespace TIE {
 class ScriptManager : public Singleton<ScriptManager>, Manager {
 public:
 	bool initialize();
-	void loadScript(const std::string&);
 	void runFunction(const std::string&, TIEntity&);
 
 	ScriptManager() {};
@@ -26,8 +25,6 @@ public:
 private:
 	sol::state luaState;
 	std::map<std::string, sol::function> functions;
-
-	void loadWorld(const sol::table&);
 
 	ScriptManager(const ScriptManager&);
 	void operator=(const ScriptManager&) {};

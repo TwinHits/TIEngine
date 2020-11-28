@@ -62,6 +62,16 @@ TIEntityFactory& WorldManager::registerTIEntity(const std::string& tientityName)
 }
 
 
+bool WorldManager::isTIEntityRegistered(const std::string& name) {
+	return this->tientityDefinitions.count(name);
+}
+
+
+TIEntityFactory& WorldManager::getTIEntityFactory(const std::string& name) {
+	return this->tientityDefinitions.at(name);
+}
+
+
 void WorldManager::spawnTIEntity(const std::string& tientityName) {
 	if (this->tientityDefinitions.count(tientityName)) {
 		this->spawnedTIEntityDefinitions.push_back(tientityName);

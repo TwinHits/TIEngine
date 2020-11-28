@@ -5,6 +5,7 @@
 #include <sol/sol.hpp>
 
 #include "managers/AssetsManager.h"
+#include "managers/LogManager.h"
 #include "managers/ScriptManagerV2.h"
 #include "managers/WindowManager.h"
 #include "managers/WorldManager.h"
@@ -19,6 +20,8 @@ TIEngineInterface::TIEngineInterface(sol::state& luaState) {
     engineInterfaceUserType["registerAudioDirectory"] = &TIEngineInterface::registerAudioDirectory;
     engineInterfaceUserType["setWindowTitle"] = &TIEngineInterface::setWindowTitle;
     engineInterfaceUserType["setWindowSize"] = &TIEngineInterface::setWindowSize;
+    engineInterfaceUserType["registerLevel"] = &TIEngineInterface::registerLevel;
+    engineInterfaceUserType["setLevel"] = &TIEngineInterface::setLevel;
 	engineInterfaceUserType["registerTIEntity"] = &TIEngineInterface::registerTIEntityDefinition;
 	engineInterfaceUserType["spawn"] = &TIEngineInterface::spawnTIEntity;
 }
@@ -53,6 +56,24 @@ bool TIEngineInterface::setWindowSize(const int width, const int height) {
 bool TIEngineInterface::setWindowTitle(const std::string& title) {
 	WindowManager::Instance()->setTitle(title);
     return true;
+}
+
+
+bool TIEngineInterface::registerLevel(const std::string& name, const sol::table& definition) {
+    ScriptManagerV2::Instance()->loadTIEntityDefinition(name, definition);
+    return true;
+}
+
+
+bool TIEngineInterface::setLevel(const std::string& name) {
+    if (WorldManager::Instance()->isTIEntityRegistered(name)) {
+        TIEntityFactory& factory = WorldManager::Instance()->getTIEntityFactory(name);
+        WorldManager::Instance()->setLevelEntity(factory.build());
+        return true;
+    } else {
+        LogManager::Instance()->warn("Level with name " + name + " is not registered.");
+        return false;
+    }
 }
 
 

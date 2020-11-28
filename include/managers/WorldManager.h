@@ -24,8 +24,10 @@ class WorldManager : public Singleton<WorldManager>, Manager {
 
 		void showGridGuide(bool);
 
-		TIEntityFactory& registerTIEntity(const std::string& entityName);
-		void spawnTIEntity(const std::string& entityName);
+		TIEntityFactory& registerTIEntity(const std::string&);
+		bool isTIEntityRegistered(const std::string&);
+		TIEntityFactory& getTIEntityFactory(const std::string&);
+		void spawnTIEntity(const std::string&);
 		void attachNewTIEntities();
 
 		WorldManager() {};

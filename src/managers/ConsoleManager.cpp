@@ -10,7 +10,7 @@
 #include "managers/WorldManager.h"
 #include "managers/LogManager.h"
 #include "managers/SceneManager.h"
-#include "managers/ScriptManager.h"
+#include "managers/ScriptManagerV2.h"
 #include "managers/ViewManager.h"
 #include "managers/WindowManager.h"
 #include "objects/components/TextComponent.h"
@@ -57,7 +57,7 @@ void ConsoleManager::runCommand() {
 		WindowManager::Instance()->removeWindow();
 	} else if (command == ConsoleCommands::SCRIPT || command == ConsoleCommands::LOAD) {
 		const std::string& scriptName = commandArgs.at(1);
-		ScriptManager::Instance()->loadScript(scriptName);
+		ScriptManagerV2::Instance()->loadScript(scriptName);
 	} else if (command == ConsoleCommands::PRINT) {
 		if (commandArgs.size() > 1) {
 			const std::string& printCommand = commandArgs.at(1);

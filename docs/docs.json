@@ -77,6 +77,64 @@
 				  ],
 				  "description": "Change the size of the window.",
 				  "returns": "boolean"
+			  },
+			  {
+				  "name": "registerLevel",
+				  "params": [
+					  {
+						  "name": "name",
+						  "type": "const string&",
+						  "description": "Name of the level."
+					  },
+					  {
+						  "name": "definition",
+						  "type": "lua table",
+						  "description": "Correctly consturcted TIEntity definition"
+					  }
+				  ],
+				  "description": "Registers a level in the world.",
+				  "returns": "boolean"
+			  },
+			  {
+				  "name": "setLevel",
+				  "params": [
+					  {
+						  "name": "name",
+						  "type": "const string&",
+						  "description": "Name of the level."
+					  },
+				  ],
+				  "description": "Sets the current level of the world.",
+				  "returns": "boolean"
+			  },
+			  {
+				  "name": "registerTIEntity",
+				  "params": [
+					  {
+						  "name": "name",
+						  "type": "const string&",
+						  "description": "Name of the TIEntity."
+					  },
+					  {
+						  "name": "definition",
+						  "type": "lua table",
+						  "description": "Correctly consturcted TIEntity definition"
+					  }
+				  ],
+				  "description": "Registers a spawnable TIEntity.",
+				  "returns": "boolean"
+			  },
+			  {
+				  "name": "spawn",
+				  "params": [
+					  {
+						  "name": "name",
+						  "type": "const string&",
+						  "description": "Name of the TIEntity."
+					  }
+				  ],
+				  "description": "Builds the named TIEntity and spawns it into the world.",
+				  "returns": "boolean"
 			  }
 		  ]
 	  },
