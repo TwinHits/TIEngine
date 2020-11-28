@@ -25,7 +25,7 @@ class StringManager : public Singleton<StringManager>, Manager {
 		StringManager() {};
 		~StringManager() {};
 	private:
-		Language displayLanguage;
+		Language displayLanguage = Language::en_US;
 
 		StringManager(const StringManager&);
 		void operator=(const StringManager&) {};
