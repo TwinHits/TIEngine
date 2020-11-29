@@ -11,9 +11,12 @@
 
 using namespace TIE;
 
-TIEntityInterface::TIEntityInterface(TIEntity& tientity, sol::state& luaState) {
+TIEntityInterface::TIEntityInterface(TIEntity& tientity) {
     this->tientity = &tientity;
+}
 
+
+void TIEntityInterface::registerUserType(sol::state& luaState) {
     sol::usertype<TIEntityInterface> interfaceUserType = luaState.new_usertype<TIEntityInterface>("tientity");
 	interfaceUserType["getPosition"] = &TIEntityInterface::getPosition;
     interfaceUserType["moveRight"] = &TIEntityInterface::moveRight;

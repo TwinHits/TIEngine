@@ -5,12 +5,16 @@
 
 #include <sol/sol.hpp>
 
+#include "interfaces/TIEntityInterface.h"
+
 namespace TIE {
 
 class TIEngineInterface {
     public:
-        TIEngineInterface(sol::state&);
+        TIEngineInterface() {};
         ~TIEngineInterface() {};
+
+        static void registerUserType(sol::state&);
 
         bool isValid();
 

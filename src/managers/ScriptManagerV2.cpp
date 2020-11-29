@@ -27,6 +27,9 @@ bool ScriptManagerV2::initialize() {
         sol::lib::package
 	);
 
+    TIEngineInterface::registerUserType(this->luaState);
+    TIEntityInterface::registerUserType(this->luaState);
+
 	const std::string& startUpScript = ConfigManager::Instance()->getStartUpScript();
 	if (!startUpScript.empty()) {
 		this->setScriptWorkingDirectory(String::getDirectoryFromPath(startUpScript));
@@ -45,7 +48,7 @@ void ScriptManagerV2::loadScript(const std::string& scriptPath) {
         std::string errorMessage = error.what();
         LogManager::Instance()->error("Lua Script " + scriptPath + " syntax error: " + errorMessage);
     } else {
-        TIEngineInterface engineInterface(this->luaState);
+        TIEngineInterface engineInterface = TIEngineInterface();
         sol::protected_function_result result = script(engineInterface);
         if (!result.valid()) {
             sol::error error = result;

@@ -9,8 +9,10 @@ namespace TIE {
 
 class TIEntityInterface {
     public:
-        TIEntityInterface(TIEntity&, sol::state&);
+        TIEntityInterface(TIEntity&);
         ~TIEntityInterface() {};
+
+        static void registerUserType(sol::state&);
 
         // Movement
         sf::Vector2f getPosition();

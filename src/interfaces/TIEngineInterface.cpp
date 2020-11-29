@@ -4,6 +4,7 @@
 
 #include <sol/sol.hpp>
 
+#include "interfaces/TIEntityInterface.h"
 #include "managers/AssetsManager.h"
 #include "managers/LogManager.h"
 #include "managers/ScriptManagerV2.h"
@@ -12,7 +13,7 @@
 
 using namespace TIE;
 
-TIEngineInterface::TIEngineInterface(sol::state& luaState) {
+void TIEngineInterface::registerUserType(sol::state& luaState) {
 	sol::usertype<TIEngineInterface> engineInterfaceUserType = luaState.new_usertype<TIEngineInterface>("tiengine");
     engineInterfaceUserType["isValid"] = &TIEngineInterface::isValid;
     engineInterfaceUserType["registerTexturesDirectory"] = &TIEngineInterface::registerTexturesDirectory;
@@ -86,5 +87,6 @@ bool TIEngineInterface::registerTIEntityDefinition(const std::string& name, cons
 bool TIEngineInterface::spawnTIEntity(const std::string& name) {
     WorldManager::Instance()->spawnTIEntity(name);
     return true;
+    //return TIEntityInterface(nullptr, this->luaState);
 }
 
