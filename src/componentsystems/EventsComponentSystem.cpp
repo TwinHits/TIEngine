@@ -11,7 +11,6 @@
 #include "objects/entities/TIEntity.h"
 #include "objects/enumeration/Direction.h"
 #include "managers/EventsManager.h"
-#include "managers/ScriptManager.h"
 #include "utils/StringHelpers.h"
 
 using namespace TIE;
@@ -29,8 +28,6 @@ void EventsComponentSystem::update(const float delta) {
 						if (*eventHandler == "setDestination") {
 							sf::Vector2f position = sf::Vector2f(event.second.mouseButton.x, event.second.mouseButton.y);
 							MovesComponentSystem::Instance()->setTargetPosition(c.movesComponent, c.positionComponent, position);
-						} else {
-							ScriptManager::Instance()->runFunction(*eventHandler, c.tientity);
 						}
 					}
 				}

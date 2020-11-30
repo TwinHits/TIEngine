@@ -57,7 +57,7 @@ void ConsoleManager::runCommand() {
 		WindowManager::Instance()->removeWindow();
 	} else if (command == ConsoleCommands::SCRIPT || command == ConsoleCommands::LOAD) {
 		const std::string& scriptName = commandArgs.at(1);
-		ScriptManagerV2::Instance()->loadScript(scriptName);
+		ScriptManager::Instance()->loadScript(scriptName);
 	} else if (command == ConsoleCommands::PRINT) {
 		if (commandArgs.size() > 1) {
 			const std::string& printCommand = commandArgs.at(1);

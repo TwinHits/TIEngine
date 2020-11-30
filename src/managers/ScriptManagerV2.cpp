@@ -10,6 +10,7 @@
 #include "interfaces/TIEntityInterface.h"
 #include "managers/AssetsManager.h"
 #include "managers/ConfigManager.h"
+#include "managers/HashManager.h"
 #include "managers/LogManager.h"
 #include "managers/WindowManager.h"
 #include "managers/WorldManager.h"
@@ -18,7 +19,7 @@
 
 using namespace TIE;
 
-bool ScriptManagerV2::initialize() {
+bool ScriptManager::initialize() {
 
 	this->luaState.open_libraries(
 		sol::lib::base, 
@@ -40,7 +41,7 @@ bool ScriptManagerV2::initialize() {
 }
 
 
-void ScriptManagerV2::loadScript(const std::string& scriptPath) {
+void ScriptManager::loadScript(const std::string& scriptPath) {
 
     sol::load_result script = this->luaState.load_file(scriptPath);
     if (!script.valid()) {
@@ -61,22 +62,30 @@ void ScriptManagerV2::loadScript(const std::string& scriptPath) {
 }
 
 
-const std::string& ScriptManagerV2::getScriptWorkingDirectory() {
+const std::string& ScriptManager::getScriptWorkingDirectory() {
     return this->scriptWorkingDirectory;
 }
 
 
-void ScriptManagerV2::setScriptWorkingDirectory(const std::string& scriptWorkingDirectory) {
+void ScriptManager::setScriptWorkingDirectory(const std::string& scriptWorkingDirectory) {
     this->scriptWorkingDirectory = scriptWorkingDirectory;
 }
 
 
-TIEntityFactory& ScriptManagerV2::loadTIEntityDefinition(const std::string& name, const sol::table& definition) {
+TIEntityFactory& ScriptManager::loadTIEntityDefinition(const std::string& name, const sol::table& definition) {
 	return this->loadTIEntityDefinition(name, definition, nullptr);
 }
 
 
-TIEntityFactory& ScriptManagerV2::loadTIEntityDefinition(const std::string& name, const sol::table& definition, TIEntityFactory* parent) {
+void ScriptManager::runFunction(const GlobalId functionId, TIEntity& tientity) {
+	if (this->functions.count(functionId)) {
+		TIEntityInterface interface(tientity);
+		this->functions.at(functionId)(interface);
+	}
+}
+
+
+TIEntityFactory& ScriptManager::loadTIEntityDefinition(const std::string& name, const sol::table& definition, TIEntityFactory* parent) {
 
 	TIEntityFactory& factory = this->getFactory(name, parent);
 	factory.setName(name);
@@ -103,7 +112,7 @@ TIEntityFactory& ScriptManagerV2::loadTIEntityDefinition(const std::string& name
 }
 
 
-TIEntityFactory& ScriptManagerV2::getFactory(const std::string& name, TIEntityFactory* parent) {
+TIEntityFactory& ScriptManager::getFactory(const std::string& name, TIEntityFactory* parent) {
 	if (parent == nullptr) {
 		return WorldManager::Instance()->registerTIEntity(name);
 	} else {
@@ -115,7 +124,7 @@ TIEntityFactory& ScriptManagerV2::getFactory(const std::string& name, TIEntityFa
 // Iterate through each key of the table looking for values that can be casted to types.
 // Store those types in the revelant TIEfactory map for use by any given component
 // Call recursively if it finds another table
-void ScriptManagerV2::readComponentValues(TIEntityFactory& factory, const std::string& componentName, const sol::table& component) {
+void ScriptManager::readComponentValues(TIEntityFactory& factory, const std::string& componentName, const sol::table& component) {
 	for (auto& pair : component) {
 		const std::string& key = componentName + "." + pair.first.as<std::string>();
 		const sol::object& value = pair.second;
@@ -127,8 +136,9 @@ void ScriptManagerV2::readComponentValues(TIEntityFactory& factory, const std::s
 			} else if (value.is<std::string>()) {
 				factory.stringValues.insert({ key, value.as<std::string>() });
 			} else if (value.is<sol::function>()) {
-				factory.stringValues.insert({ key, key });
-				//this->functions.insert({ key, value.as<sol::function>() });
+				GlobalId functionId = HashManager::Instance()->getNewGlobalId();
+				factory.functionValues.insert({key, functionId });
+				this->functions.insert({ functionId, value.as<sol::function>() });
 			} else if (value.is<sol::table>()) {
 				this->readComponentValues(factory, key, value);
 			} else {

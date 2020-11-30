@@ -5,7 +5,6 @@
 
 #include <boost/filesystem.hpp>
 
-#include "managers/ScriptManager.h"
 #include "objects/enumeration/LogLevel.h"
 #include "utils/StringHelpers.h"
 
