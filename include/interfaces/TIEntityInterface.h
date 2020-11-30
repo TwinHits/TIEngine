@@ -5,6 +5,8 @@
 
 #include <sol/sol.hpp>
 
+#include "interfaces/Vector2fInterface.h"
+
 namespace TIE {
 
 class TIEntityInterface {
@@ -15,8 +17,8 @@ class TIEntityInterface {
         static void registerUserType(sol::state&);
 
         // Movement
-        sf::Vector2f getPosition();
-        void setDestination();
+        Vector2fInterface getPosition();
+        void setDestination(const float, const float);
         void moveUp();
         void moveRight();
         void moveLeft();

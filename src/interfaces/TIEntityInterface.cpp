@@ -3,6 +3,7 @@
 #include "sol/sol.hpp"
 
 #include "componentsystems/MovesComponentSystem.h"
+#include "interfaces/Vector2fInterface.h"
 #include "managers/LogManager.h"
 #include "managers/WorldManager.h"
 #include "objects/components/MovesComponent.h"
@@ -19,6 +20,7 @@ TIEntityInterface::TIEntityInterface(TIEntity& tientity) {
 void TIEntityInterface::registerUserType(sol::state& luaState) {
     sol::usertype<TIEntityInterface> interfaceUserType = luaState.new_usertype<TIEntityInterface>("tientity");
 	interfaceUserType["getPosition"] = &TIEntityInterface::getPosition;
+	interfaceUserType["setDestination"] = &TIEntityInterface::setDestination;
     interfaceUserType["moveRight"] = &TIEntityInterface::moveRight;
     interfaceUserType["moveLeft"] = &TIEntityInterface::moveLeft;
     interfaceUserType["moveUp"] = &TIEntityInterface::moveUp;
@@ -27,16 +29,22 @@ void TIEntityInterface::registerUserType(sol::state& luaState) {
 }
 
 
-sf::Vector2f TIEntityInterface::getPosition() {
+Vector2fInterface TIEntityInterface::getPosition() {
     PositionComponent* positionComponent = this->tientity->getComponent<PositionComponent>();
     if (positionComponent != nullptr) {
-        return positionComponent->position;
+        return Vector2fInterface(positionComponent->position.x, positionComponent->position.y);
+    } else {
+        return Vector2fInterface(0.0F, 0.0F);
     }
 }
 
 
-void TIEntityInterface::setDestination() {
-
+void TIEntityInterface::setDestination(const float x, const float y) {
+    MovesComponent* movesComponent = this->tientity->getComponent<MovesComponent>();
+    PositionComponent* positionComponent = this->tientity->getComponent<PositionComponent>();
+    if (movesComponent != nullptr && positionComponent != nullptr) {
+        MovesComponentSystem::Instance()->setTargetPosition(*movesComponent, *positionComponent, sf::Vector2f(x, y));
+    }
 }
 
 

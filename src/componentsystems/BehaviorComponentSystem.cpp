@@ -1,22 +1,25 @@
 #include "componentsystems\BehaviorComponentSystem.h"
 
+#include "managers/ScriptManagerV2.h"
 #include "objects/entities/TIEntity.h"
 #include "objects/factories/TIEntityFactory.h"
 
 using namespace TIE;
 
 void BehaviorComponentSystem::update(const float) {
-
+	for (Components& components : this->components) {
+		ScriptManager::Instance()->runFunction(components.behaviorComponent.behaviorFunctionId, components.tientity);
+	}
 }
 
 
 void BehaviorComponentSystem::addComponent(const TIEntityFactory& tientityFactory, TIEntity& tientity) {
-	BehaviorComponent& behaviorComponent = tientity.addComponent<BehaviorComponent>();
-	Components components = { tientity, behaviorComponent };
+	if (tientityFactory.functionValues.count(BehaviorComponentSystem::BEHAVIOR)) {
+        BehaviorComponent& behaviorComponent = tientity.addComponent<BehaviorComponent>();
+        Components components = { tientity, behaviorComponent };
 
-	if (tientityFactory.stringValues.count(BehaviorComponentSystem::BEHAVIOR)) {
-		std::string behavior = tientityFactory.stringValues.at(BehaviorComponentSystem::BEHAVIOR);
-		behaviorComponent.behavior = behavior;
+		behaviorComponent.behaviorFunctionId = tientityFactory.functionValues.at(BehaviorComponentSystem::BEHAVIOR);
+		this->components.push_back(components);
 	}
 }
 

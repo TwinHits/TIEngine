@@ -1,7 +1,8 @@
-#ifndef BEHAVOIRCOMPONENT_H
-#define BEHAVOIRCOMPONENT_H
+#ifndef BEHAVIORCOMPONENT_H
+#define BEHAVIORCOMPONENT_H
 
 #include "objects/components/Component.h"
+#include "objects/GlobalId.h"
 
 namespace TIE {
 
@@ -11,9 +12,9 @@ public:
     BehaviorComponent() {};
     virtual ~BehaviorComponent() {};
 
-    std::string behavior = "";
-    std::vector<std::string> instructions;
-    std::vector<std::string>::iterator currentInstruction = instructions.end();
+    GlobalId behaviorFunctionId = 0;
+    //std::vector<std::string> instructions;
+    //std::vector<std::string>::iterator currentInstruction = instructions.end();
 };
 
 }

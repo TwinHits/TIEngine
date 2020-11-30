@@ -34,17 +34,17 @@ bool TIEngineInterface::isValid() {
 
 
 bool TIEngineInterface::registerTexturesDirectory(const std::string& directory) {
-    return AssetsManager::Instance()->loadTexturesFromPath(ScriptManagerV2::Instance()->getScriptWorkingDirectory() + directory);
+    return AssetsManager::Instance()->loadTexturesFromPath(ScriptManager::Instance()->getScriptWorkingDirectory() + directory);
 }
 
 
 bool TIEngineInterface::registerFontsDirectory(const std::string& directory) {
-    return AssetsManager::Instance()->loadFontsFromPath(ScriptManagerV2::Instance()->getScriptWorkingDirectory() + directory);
+    return AssetsManager::Instance()->loadFontsFromPath(ScriptManager::Instance()->getScriptWorkingDirectory() + directory);
 }
 
 
 bool TIEngineInterface::registerAudioDirectory(const std::string& directory) {
-    return AssetsManager::Instance()->loadAudioFromPath(ScriptManagerV2::Instance()->getScriptWorkingDirectory() + directory);
+    return AssetsManager::Instance()->loadAudioFromPath(ScriptManager::Instance()->getScriptWorkingDirectory() + directory);
 }
 
 
@@ -61,7 +61,7 @@ bool TIEngineInterface::setWindowTitle(const std::string& title) {
 
 
 bool TIEngineInterface::registerLevel(const std::string& name, const sol::table& definition) {
-    ScriptManagerV2::Instance()->loadTIEntityDefinition(name, definition);
+    ScriptManager::Instance()->loadTIEntityDefinition(name, definition);
     return true;
 }
 
@@ -79,7 +79,7 @@ bool TIEngineInterface::setLevel(const std::string& name) {
 
 
 bool TIEngineInterface::registerTIEntityDefinition(const std::string& name, const sol::table& definition) {
-    ScriptManagerV2::Instance()->loadTIEntityDefinition(name, definition);
+    ScriptManager::Instance()->loadTIEntityDefinition(name, definition);
     return true;
 }
 
@@ -87,6 +87,5 @@ bool TIEngineInterface::registerTIEntityDefinition(const std::string& name, cons
 bool TIEngineInterface::spawnTIEntity(const std::string& name) {
     WorldManager::Instance()->spawnTIEntity(name);
     return true;
-    //return TIEntityInterface(nullptr, this->luaState);
 }
 
