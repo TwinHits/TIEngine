@@ -77,14 +77,6 @@ TIEntityFactory& ScriptManager::loadTIEntityDefinition(const std::string& name, 
 }
 
 
-void ScriptManager::runFunction(const GlobalId functionId, TIEntity& tientity) {
-	if (this->functions.count(functionId)) {
-		TIEntityInterface interface(tientity);
-		this->functions.at(functionId)(interface);
-	}
-}
-
-
 TIEntityFactory& ScriptManager::loadTIEntityDefinition(const std::string& name, const sol::table& definition, TIEntityFactory* parent) {
 
 	TIEntityFactory& factory = this->getFactory(name, parent);

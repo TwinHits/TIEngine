@@ -9,6 +9,7 @@
 #include <map>
 #include <string>
 
+#include "interfaces/TIEntityInterface.h"
 #include "objects/GlobalId.h"
 #include "objects/entities/TIEntity.h"
 #include "objects/factories/TIEntityFactory.h"
@@ -20,7 +21,12 @@ public:
 	bool initialize();
 	void loadScript(const std::string&);
 	TIEntityFactory& loadTIEntityDefinition(const std::string&, const sol::table&);
-	void runFunction(const GlobalId, TIEntity&);
+
+	template <typename T>
+	T runFunction(const GlobalId functionId, TIEntity& tientity) {
+        TIEntityInterface interface(tientity);
+        return this->functions.at(functionId)(interface);
+	}
 
     void setScriptWorkingDirectory(const std::string&);
     const std::string& getScriptWorkingDirectory();
