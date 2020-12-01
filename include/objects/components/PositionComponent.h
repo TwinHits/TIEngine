@@ -10,7 +10,7 @@ namespace TIE {
 class PositionComponent : public Component {
     public:
         sf::Vector2f position = sf::Vector2f(0, 0);
-        float angle = 0;
+        float angle = 0.0f;
 };
 
 }

@@ -1,5 +1,5 @@
-#ifndef SCRIPTMANAGER_V2_H
-#define SCRIPTMANAGER_V2_H
+#ifndef SCRIPTMANAGER_H
+#define SCRIPTMANAGER_H
 
 #include "managers/Manager.h"
 #include "templates/Singleton.h"

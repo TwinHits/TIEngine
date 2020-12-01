@@ -6,8 +6,9 @@
 #include <SFML/Graphics.hpp>
 
 #include "componentsystems/GridComponentSystem.h"
-#include "managers/WorldManager.h"
+#include "managers/ScriptManagerV2.h"
 #include "managers/LogManager.h" 
+#include "managers/WorldManager.h"
 #include "objects/components/MovesComponent.h"
 #include "objects/components/PositionComponent.h"
 #include "objects/factories/TIEntityFactory.h"
@@ -25,27 +26,36 @@ void MovesComponentSystem::update(const float delta) {
 
 
 void MovesComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
-	MovesComponent& movesComponent = tientity.addComponent<MovesComponent>();
-	PositionComponent& positionComponent = tientity.addComponent<PositionComponent>();
-	Components components = { movesComponent, positionComponent };
+
+	float maxSpeed = 0;
+	float acceleration = 0;
+	float rotationalSpeed = 0;
 
 	if (factory.floatValues.count(MovesComponentSystem::MAXSPEED)) {
-		float maxSpeed = factory.floatValues.at(MovesComponentSystem::MAXSPEED);
-		movesComponent.maxSpeed = maxSpeed;
+		maxSpeed = factory.floatValues.at(MovesComponentSystem::MAXSPEED);
+	} else if (factory.functionValues.count(MovesComponentSystem::MAXSPEED)) {
+		maxSpeed = ScriptManager::Instance()->runFunction(factory.functionValues.at(MovesComponentSystem::MAXSPEED), tientity);
 	}
 
 	if (factory.floatValues.count(MovesComponentSystem::ACCELERATION)) {
 		float acceleration = factory.floatValues.at(MovesComponentSystem::ACCELERATION);
-		movesComponent.acceleration = acceleration;
 	}
 
 	if (factory.floatValues.count(MovesComponentSystem::ROTATIONSPEED)) {
 		float rotationalSpeed = factory.floatValues.at(MovesComponentSystem::ROTATIONSPEED);
-		movesComponent.angularVelocity.x = rotationalSpeed;
 	}
 
-	movesComponent.targetPosition = positionComponent.position;
-	movesComponent.targetAngle = positionComponent.angle;
+    float maxSpeed = factory.floatValues.at(MovesComponentSystem::MAXSPEED);
+    float acceleration = factory.floatValues.at(MovesComponentSystem::ACCELERATION);
+    float rotationalSpeed = factory.floatValues.at(MovesComponentSystem::ROTATIONSPEED);
+
+	MovesComponent& movesComponent = tientity.addComponent<MovesComponent>();
+	PositionComponent& positionComponent = tientity.addComponent<PositionComponent>();
+	Components components = { movesComponent, positionComponent };
+
+		movesComponent.angularVelocity.x = rotationalSpeed;
+		movesComponent.acceleration = acceleration;
+		movesComponent.maxSpeed = maxSpeed;
 
 	this->components.push_back(components);
 }
