@@ -25,6 +25,7 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, public Comp
 		
 		void setTargetPosition(MovesComponent&, PositionComponent&, Direction);
 		void setTargetPosition(MovesComponent&, PositionComponent&, sf::Vector2f&);
+		bool atTargetPosition(TIEntity&);
 
 		static const inline std::string MOVES = "moves";
 		static const inline std::string MAXSPEED = "moves.maxSpeed";

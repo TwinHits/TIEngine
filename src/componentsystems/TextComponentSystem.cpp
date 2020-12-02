@@ -8,8 +8,7 @@
 #include "objects/components/PositionComponent.h"
 #include "objects/entities/TIEntity.h"
 #include "objects/factories/TIEntityFactory.h"
-#include "managers/AssetsManager.h"
-#include "utils/StringHelpers.h"
+#include "utils/ComponentSystems.h"
 
 using namespace TIE;
 
@@ -22,29 +21,22 @@ void TextComponentSystem::update(const float delta) {
 
 void TextComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& entity) {
 
-	if (factory.stringValues.count(TextComponentSystem::TEXT)) {
+	std::string text = ComponentSystems::getFactoryValue<std::string>(factory, TextComponentSystem::TEXT, "", entity);
+	bool drawn = ComponentSystems::getFactoryValue<bool>(factory, TextComponentSystem::DRAWN, false, entity);
+	float offsetX = ComponentSystems::getFactoryValue<float>(factory, TextComponentSystem::OFFSET_X, 0.0f, entity);
+	float offsetY = ComponentSystems::getFactoryValue<float>(factory, TextComponentSystem::OFFSET_Y, 0.0f, entity);
+
+	if (!text.empty()) {
 		TextComponent& textComponent = entity.addComponent<TextComponent>();
 		PositionComponent& positionComponent = entity.addComponent<PositionComponent>();
 		Components components = { textComponent, positionComponent };
+
+		textComponent.setString(text);
+		textComponent.setDrawn(drawn);
+		textComponent.setOffset(sf::Vector2f(offsetX, offsetY));
+
 		this->components.push_back(components);
-
-		std::string textValue = factory.stringValues.at(TextComponentSystem::TEXT);
-		textComponent.setString(textValue);
-
-		if (factory.boolValues.count(TextComponentSystem::DRAWN)) {
-			bool drawnValue = factory.boolValues.at(TextComponentSystem::DRAWN);
-			textComponent.setDrawn(drawnValue);
-		}
-
-		if (factory.floatValues.count(TextComponentSystem::OFFSET_X)) {
-			textComponent.getOffset().x = factory.floatValues.at(TextComponentSystem::OFFSET_X);
-		}
-		
-		if (factory.floatValues.count(TextComponentSystem::OFFSET_Y)) {
-			textComponent.getOffset().y = factory.floatValues.at(TextComponentSystem::OFFSET_Y);
-		}
 	}
-
 }
 
 

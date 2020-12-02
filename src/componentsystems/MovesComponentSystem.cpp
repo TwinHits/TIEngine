@@ -6,13 +6,13 @@
 #include <SFML/Graphics.hpp>
 
 #include "componentsystems/GridComponentSystem.h"
-#include "managers/ScriptManagerV2.h"
 #include "managers/LogManager.h" 
 #include "managers/WorldManager.h"
 #include "objects/components/MovesComponent.h"
 #include "objects/components/PositionComponent.h"
 #include "objects/factories/TIEntityFactory.h"
 #include "objects/entities/TIEntity.h"
+#include "utils/ComponentSystems.h"
 #include "utils/TIEMath.h"
 
 using namespace TIE;
@@ -27,37 +27,21 @@ void MovesComponentSystem::update(const float delta) {
 
 void MovesComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
 
-	float maxSpeed = 0;
-	float acceleration = 0;
-	float rotationalSpeed = 0;
+	float maxSpeed = ComponentSystems::getFactoryValue<float>(factory, MovesComponentSystem::MAXSPEED, 0.0F, tientity);
+	float acceleration = ComponentSystems::getFactoryValue<float>(factory, MovesComponentSystem::ACCELERATION, 0.0F, tientity);
+	float rotationalSpeed = ComponentSystems::getFactoryValue<float>(factory, MovesComponentSystem::ROTATIONSPEED, 0.0F, tientity);
 
-	if (factory.floatValues.count(MovesComponentSystem::MAXSPEED)) {
-		maxSpeed = factory.floatValues.at(MovesComponentSystem::MAXSPEED);
-	} else if (factory.functionValues.count(MovesComponentSystem::MAXSPEED)) {
-		maxSpeed = ScriptManager::Instance()->runFunction(factory.functionValues.at(MovesComponentSystem::MAXSPEED), tientity);
+	if (maxSpeed || acceleration || maxSpeed) {
+		MovesComponent& movesComponent = tientity.addComponent<MovesComponent>();
+		PositionComponent& positionComponent = tientity.addComponent<PositionComponent>();
+		Components components = { movesComponent, positionComponent };
+
+        movesComponent.angularVelocity.x = rotationalSpeed;
+        movesComponent.acceleration = acceleration;
+        movesComponent.maxSpeed = maxSpeed;
+
+        this->components.push_back(components);
 	}
-
-	if (factory.floatValues.count(MovesComponentSystem::ACCELERATION)) {
-		float acceleration = factory.floatValues.at(MovesComponentSystem::ACCELERATION);
-	}
-
-	if (factory.floatValues.count(MovesComponentSystem::ROTATIONSPEED)) {
-		float rotationalSpeed = factory.floatValues.at(MovesComponentSystem::ROTATIONSPEED);
-	}
-
-    float maxSpeed = factory.floatValues.at(MovesComponentSystem::MAXSPEED);
-    float acceleration = factory.floatValues.at(MovesComponentSystem::ACCELERATION);
-    float rotationalSpeed = factory.floatValues.at(MovesComponentSystem::ROTATIONSPEED);
-
-	MovesComponent& movesComponent = tientity.addComponent<MovesComponent>();
-	PositionComponent& positionComponent = tientity.addComponent<PositionComponent>();
-	Components components = { movesComponent, positionComponent };
-
-		movesComponent.angularVelocity.x = rotationalSpeed;
-		movesComponent.acceleration = acceleration;
-		movesComponent.maxSpeed = maxSpeed;
-
-	this->components.push_back(components);
 }
 
 
@@ -95,6 +79,16 @@ void MovesComponentSystem::setTargetPosition(MovesComponent& movesComponent, Pos
 	if (targetPosition != movesComponent.targetPosition) {
 		movesComponent.targetPosition = targetPosition;
 		movesComponent.targetAngle = Math::angleBetweenTwoPoints(positionComponent.position, movesComponent.targetPosition);
+	}
+}
+
+bool MovesComponentSystem::atTargetPosition(TIEntity& tientity) {
+    MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
+    PositionComponent* positionComponent = tientity.getComponent<PositionComponent>();
+    if (movesComponent != nullptr && positionComponent != nullptr) {
+		return this->arePositionsCloseEnough(movesComponent->targetPosition, positionComponent->position);
+	} else {
+		return false;
 	}
 }
 

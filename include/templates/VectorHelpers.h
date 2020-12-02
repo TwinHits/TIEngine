@@ -1,3 +1,6 @@
+#ifndef VECTOR_UTILS_H
+#define VECTOR_UTILS_H
+
 #include <algorithm>
 #include <string>
 #include <vector>
@@ -16,3 +19,5 @@ namespace TIE {
         }
     }
 }
+
+#endif
