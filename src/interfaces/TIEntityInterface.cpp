@@ -21,6 +21,7 @@ void TIEntityInterface::registerUserType(sol::state& luaState) {
     sol::usertype<TIEntityInterface> interfaceUserType = luaState.new_usertype<TIEntityInterface>("tientity");
 	interfaceUserType["getPosition"] = &TIEntityInterface::getPosition;
 	interfaceUserType["setDestination"] = &TIEntityInterface::setDestination;
+	interfaceUserType["atDestination"] = &TIEntityInterface::atDestination;
     interfaceUserType["moveRight"] = &TIEntityInterface::moveRight;
     interfaceUserType["moveLeft"] = &TIEntityInterface::moveLeft;
     interfaceUserType["moveUp"] = &TIEntityInterface::moveUp;
@@ -45,6 +46,10 @@ void TIEntityInterface::setDestination(const float x, const float y) {
     if (movesComponent != nullptr && positionComponent != nullptr) {
         MovesComponentSystem::Instance()->setTargetPosition(*movesComponent, *positionComponent, sf::Vector2f(x, y));
     }
+}
+
+bool TIEntityInterface::atDestination() {
+    return MovesComponentSystem::Instance()->atTargetPosition(*this->tientity);
 }
 
 
