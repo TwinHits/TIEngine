@@ -9,6 +9,7 @@
 #include <map>
 #include <string>
 
+#include "interfaces/TIEngineInterface.h"
 #include "interfaces/TIEntityInterface.h"
 #include "objects/GlobalId.h"
 #include "objects/entities/TIEntity.h"
@@ -24,8 +25,9 @@ public:
 
 	template <typename T>
 	T runFunction(const GlobalId functionId, TIEntity& tientity) {
-        TIEntityInterface interface(tientity);
-        return this->functions.at(functionId)(interface);
+        TIEntityInterface tientityInterface(tientity);
+        TIEngineInterface engineInterface = TIEngineInterface();
+        return this->functions.at(functionId)(tientityInterface, engineInterface);
 	}
 
     void setScriptWorkingDirectory(const std::string&);

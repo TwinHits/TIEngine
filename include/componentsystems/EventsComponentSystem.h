@@ -24,6 +24,11 @@ class EventsComponentSystem : public Singleton<EventsComponentSystem>, public Co
 		void addComponent(const TIEntityFactory&, TIEntity&);
 		const std::string& getName();
 
+		// Helpers
+		bool addState(TIEntity&, const std::string&);
+		bool removeState(TIEntity&, const std::string&);
+
+
 		const static inline std::string EVENTS = "events";
 	private:
 		struct Components {

@@ -84,6 +84,28 @@ const std::string& EventsComponentSystem::getName() {
 }
 
 
+bool EventsComponentSystem::addState(TIEntity& tientity, const std::string& state) {
+	EventsComponent* eventsComponent = tientity.getComponent<EventsComponent>();
+	if (eventsComponent != nullptr) {
+		eventsComponent->addState(state);
+		return true;
+	} else {
+		return false;
+	}
+}
+
+
+bool EventsComponentSystem::removeState(TIEntity& tientity, const std::string& state) {
+	EventsComponent* eventsComponent = tientity.getComponent<EventsComponent>();
+	if (eventsComponent != nullptr) {
+		eventsComponent->removeState(state);
+		return true;
+	} else {
+		return false;
+	}
+}
+
+
 void EventsComponentSystem::updateSelectedStates() {
 	const sf::Event* clickEvent = EventsManager::Instance()->getEvent(sf::Event::MouseButtonPressed);
 	if (clickEvent != nullptr) {

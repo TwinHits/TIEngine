@@ -3,6 +3,7 @@
 #include "sol/sol.hpp"
 
 #include "componentsystems/MovesComponentSystem.h"
+#include "componentsystems/EventsComponentSystem.h"
 #include "interfaces/Vector2fInterface.h"
 #include "managers/LogManager.h"
 #include "managers/WorldManager.h"
@@ -27,6 +28,8 @@ void TIEntityInterface::registerUserType(sol::state& luaState) {
     interfaceUserType["moveUp"] = &TIEntityInterface::moveUp;
     interfaceUserType["moveDown"] = &TIEntityInterface::moveDown;
     interfaceUserType["spawn"] = &TIEntityInterface::spawn;
+    interfaceUserType["addState"] = &TIEntityInterface::addState;
+    interfaceUserType["removeState"] = &TIEntityInterface::removeState;
 }
 
 
@@ -91,4 +94,14 @@ void TIEntityInterface::moveDown() {
 
 void TIEntityInterface::spawn(const std::string& entityName) {
     WorldManager::Instance()->spawnTIEntity(entityName);
+}
+
+
+void TIEntityInterface::addState(const std::string& state) {
+    EventsComponentSystem::Instance()->addState(*this->tientity, state);
+}
+
+
+void TIEntityInterface::removeState(const std::string& state) {
+    EventsComponentSystem::Instance()->removeState(*this->tientity, state);
 }

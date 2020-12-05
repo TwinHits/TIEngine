@@ -6,10 +6,12 @@
 
 #include "interfaces/TIEntityInterface.h"
 #include "managers/AssetsManager.h"
+#include "managers/EventsManager.h"
 #include "managers/LogManager.h"
 #include "managers/ScriptManagerV2.h"
 #include "managers/WindowManager.h"
 #include "managers/WorldManager.h"
+#include "utils/StringHelpers.h"
 
 using namespace TIE;
 
@@ -25,6 +27,8 @@ void TIEngineInterface::registerUserType(sol::state& luaState) {
     engineInterfaceUserType["setLevel"] = &TIEngineInterface::setLevel;
 	engineInterfaceUserType["registerTIEntity"] = &TIEngineInterface::registerTIEntityDefinition;
 	engineInterfaceUserType["spawn"] = &TIEngineInterface::spawnTIEntity;
+	engineInterfaceUserType["hasEvent"] = &TIEngineInterface::hasEvent;
+	engineInterfaceUserType["getMouseClickPosition"] = &TIEngineInterface::getMouseClickPosition;
 }
 
 
@@ -87,5 +91,21 @@ bool TIEngineInterface::registerTIEntityDefinition(const std::string& name, cons
 bool TIEngineInterface::spawnTIEntity(const std::string& name) {
     WorldManager::Instance()->spawnTIEntity(name);
     return true;
+}
+
+
+bool TIEngineInterface::hasEvent(std::string& event) {
+    const sf::Event* eventPtr = EventsManager::Instance()->getEvent(String::stringToEvent(event));
+    return eventPtr != nullptr;
+}
+
+
+Vector2fInterface TIEngineInterface::getMouseClickPosition() {
+	const sf::Event* clickEvent = EventsManager::Instance()->getEvent(sf::Event::MouseButtonPressed);
+    if (clickEvent != nullptr) {
+        return Vector2fInterface(clickEvent->mouseButton.x, clickEvent->mouseButton.y);
+    } else {
+        return Vector2fInterface();
+    }
 }
 

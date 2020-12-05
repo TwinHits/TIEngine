@@ -28,6 +28,10 @@ class TIEntityInterface {
         // Spawn
         void spawn(const std::string&);
 
+        // Events
+        void addState(const std::string&);
+        void removeState(const std::string&);
+
     private:
         TIEntity* tientity = nullptr;
 };
