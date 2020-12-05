@@ -1,5 +1,5 @@
 <img src="https://github.com/TwinHits/TIEngine/blob/master/assets/textures/logo.png" alt="TIEngine Logo"
-	title="TIEngine Logo" width="350" />
+	title="TIEngine Logo" width="350" margin-right="auto" margin-left="auto" />
 # TIEngine
 
 This is Twin Ion Engine (TIEngine), a 2D game engine utilizing the SFML libray. 
