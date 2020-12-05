@@ -13,14 +13,12 @@ This project is cross platform and has been tested on Visual Studio 19.0 and g++
 
 ## Installation
 This engine uses these versions for it's dependenices:
-	* SFML - 2.5
-	* Boost - 1.72.0
-	* sol2 - 3.2.1
-		https://github.com/ThePhD/sol2
-	* Lua - 5.3.5
-		https://sourceforge.net/projects/luabinaries/files/5.3.5/
+* SFML - 2.5
+* Boost - 1.72.0
+* sol2 - 3.2.1 https://github.com/ThePhD/sol2
+* Lua - 5.3.5 https://sourceforge.net/projects/luabinaries/files/5.3.5/
 
-# Windows:
+### Windows:
 1. Clone this repo.
 1. Install dependencies into a folder called 'lib' with a folder name with version and -win appened
 	ex. SFML-2.5.1-win
@@ -30,7 +28,7 @@ This engine uses these versions for it's dependenices:
 1. Run Debug to run TIEngine
 
 
-# Linux/WSL:
+### Linux/WSL:
 1. Clone this repo
 1. Install dependencies into a folder called 'lib' with a folder name with version and -gnu appened
 	ex. SFML-2.5.1-gnu
