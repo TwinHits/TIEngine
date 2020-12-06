@@ -82,10 +82,12 @@ void WorldManager::spawnTIEntity(const std::string& tientityName) {
 
 
 void WorldManager::attachNewTIEntities() {
-	for (auto& definition : this->spawnedTIEntityDefinitions) {
-		tientityDefinitions.at(definition).build();
+	if (!this->spawnedTIEntityDefinitions.empty()) {
+		for (auto& definition : this->spawnedTIEntityDefinitions) {
+			tientityDefinitions.at(definition).build();
+		}
+		this->spawnedTIEntityDefinitions.clear();
 	}
-	this->spawnedTIEntityDefinitions.clear();
 }
 
 

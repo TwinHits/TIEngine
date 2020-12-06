@@ -27,7 +27,7 @@ public:
 	T runFunction(const GlobalId functionId, TIEntity& tientity) {
         TIEntityInterface tientityInterface(tientity);
         TIEngineInterface engineInterface = TIEngineInterface();
-        return this->functions.at(functionId)(tientityInterface, engineInterface);
+		return this->functions.at(functionId)(std::tuple<TIEntityInterface, TIEngineInterface>(tientityInterface, engineInterface));
 	}
 	template <> void runFunction<void>(const GlobalId, TIEntity&);
 
