@@ -101,34 +101,48 @@ TIEntity* SceneManager::findTIEntity(sf::Vector2f point) {
 
 
 void SceneManager::updateGameState() {
-	this->delta = this->clock.restart().asSeconds();
 
 	WorldManager::Instance()->attachNewTIEntities();
-
+	this->delta = this->clock.restart().asSeconds();
 	for (ComponentSystem* componentSystem : this->componentSystems) {
 		componentSystem->update(this->delta);
 	}
+	this->updateEngineEntities(*(this->engineLayer));
+	this->removeTIEntities(*this->sceneGraphRoot);
 
-	this->updateEngineEntity(*(this->engineLayer));
-
+	//Update Camera and FPS
 	ViewManager::Instance()->updateCamera(this->delta);
-
 	this->fps = this->calculateRollingAverageFPS(this->delta);
 }
 
 
-void SceneManager::removeTIEntities(std::vector<std::unique_ptr<TIEntity> >& entities) {
-	entities.erase(std::remove_if(entities.begin(), entities.end(), std::mem_fn(&TIEntity::getRemove)), entities.end());
+void SceneManager::removeTIEntities(TIEntity& tientity) {
+	auto& children = tientity.getChildren();
+	if (children.size() > 0) {
+		for (auto child = children.begin(); child != children.end(); ++child) {
+			this->removeTIEntities(**child);
+			if ((*child)->getRemove()) {
+				this->removeComponents(**child);
+			}
+		}
+		children.erase(std::remove_if(children.begin(), children.end(), std::mem_fn(&TIEntity::getRemove)), children.end());
+	}
 }
 
 
-void SceneManager::updateEngineEntity(TIEntity& tientity) {
+void SceneManager::removeComponents(TIEntity& tientity) {
+	for (ComponentSystem* componentSystem : this->componentSystems) {
+		componentSystem->removeComponent(tientity);
+	}
+}
+
+
+void SceneManager::updateEngineEntities(TIEntity& tientity) {
 
 	tientity.update(this->delta);
 	if (tientity.getChildren().size() > 0) {
-		this->removeTIEntities(tientity.getChildren());
 		for (auto& child : tientity.getChildren()) {
-			this->updateEngineEntity(*child);
+			this->updateEngineEntities(*child);
 		}
 	}
 }

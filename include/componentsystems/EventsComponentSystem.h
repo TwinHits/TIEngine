@@ -22,6 +22,7 @@ class EventsComponentSystem : public Singleton<EventsComponentSystem>, public Co
 		EventsComponentSystem() {};
 		void update(const float);
 		void addComponent(const TIEntityFactory&, TIEntity&);
+		bool removeComponent(TIEntity&);
 		const std::string& getName();
 
 		// Helpers
@@ -38,7 +39,7 @@ class EventsComponentSystem : public Singleton<EventsComponentSystem>, public Co
 			SpriteComponent& spriteComponent;
 			TIEntity& tientity;
 		};
-		std::vector<Components> components;
+		std::list<Components> components;
 
 		void updateSelectedStates();
 };

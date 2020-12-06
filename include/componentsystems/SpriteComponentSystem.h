@@ -18,6 +18,7 @@ class SpriteComponentSystem : public Singleton<SpriteComponentSystem>, public Co
 		SpriteComponentSystem() {};
 		void update(const float);
 		void addComponent(const TIEntityFactory&, TIEntity&);
+		bool removeComponent(TIEntity&);
 		const std::string& getName();
 
 		static const inline std::string DRAWN = "drawn";
@@ -33,7 +34,7 @@ class SpriteComponentSystem : public Singleton<SpriteComponentSystem>, public Co
 			SpriteComponent& spriteComponent;
 			PositionComponent& positionComponent;
 		};
-		std::vector<Components> components;
+		std::list<Components> components;
 };
 
 }

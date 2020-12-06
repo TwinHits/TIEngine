@@ -21,6 +21,7 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, public Comp
 		MovesComponentSystem() {};
 		void update(const float);
 		void addComponent(const TIEntityFactory&, TIEntity&);
+		bool removeComponent(TIEntity&);
 		const std::string& getName();
 		
 		void setTargetPosition(MovesComponent&, PositionComponent&, Direction);
@@ -36,7 +37,7 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, public Comp
 			MovesComponent& movesComponent;
 			PositionComponent& positionComponent;
 		};
-		std::vector<Components> components;
+		std::list<Components> components;
 
 		virtual void move(MovesComponent&, PositionComponent&, const float);
 		virtual void rotate(MovesComponent&, PositionComponent&, const float);

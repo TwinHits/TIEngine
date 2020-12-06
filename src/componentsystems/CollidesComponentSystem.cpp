@@ -15,6 +15,22 @@ void CollidesComponentSystem::addComponent(const TIEntityFactory& tientityFactor
 	
 }
 
+bool CollidesComponentSystem::removeComponent(TIEntity& tientity) {
+	CollidesComponent* collidesComponent = tientity.getComponent<CollidesComponent>();
+	if (collidesComponent != nullptr) {
+		for (auto i = this->components.begin(); i != this->components.end(); ++i) {
+			if (&i->collidesComponent == collidesComponent) {
+				this->components.erase(i);
+				break;
+			}
+		}
+		return tientity.removeComponent<CollidesComponent>();
+	} else {
+		return false;
+	}
+}
+
+
 
 const std::string& CollidesComponentSystem::getName() {
 	return CollidesComponentSystem::COLLIDES;

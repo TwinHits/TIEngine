@@ -21,6 +21,23 @@ void ShapeComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity
 
 }
 
+
+bool ShapeComponentSystem::removeComponent(TIEntity& tientity) {
+	ShapeComponent* shapeComponent = tientity.getComponent<ShapeComponent>();
+	if (shapeComponent != nullptr) {
+		for (auto i = this->components.begin(); i != this->components.end(); ++i) {
+			if (&i->shapeComponent == shapeComponent) {
+				this->components.erase(i);
+				break;
+			}
+		}
+		return tientity.removeComponent<ShapeComponent>();
+	} else {
+		return false;
+	}
+}
+
+
 const std::string& ShapeComponentSystem::getName() {
 	return ShapeComponentSystem::DRAWN;
 }

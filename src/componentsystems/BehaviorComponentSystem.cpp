@@ -23,6 +23,21 @@ void BehaviorComponentSystem::addComponent(const TIEntityFactory& tientityFactor
 	}
 }
 
+bool BehaviorComponentSystem::removeComponent(TIEntity& tientity) {
+    BehaviorComponent* behaviorComponent = tientity.getComponent<BehaviorComponent>();
+    if (behaviorComponent != nullptr) {
+        for (auto i = this->components.begin(); i != this->components.end(); ++i) {
+            if (&i->behaviorComponent == behaviorComponent) {
+                this->components.erase(i);
+                break;
+            }
+        }
+        return tientity.removeComponent<BehaviorComponent>();
+    } else {
+        return false;
+    }
+}
+
 
 const std::string& BehaviorComponentSystem::getName() {
     return BehaviorComponentSystem::BEHAVES;

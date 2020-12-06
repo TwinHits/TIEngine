@@ -20,6 +20,7 @@ class GridComponentSystem : public Singleton<GridComponentSystem>, public Compon
 		const std::string& getName();
 
 		void addComponent(const TIEntityFactory&, TIEntity&);
+		bool removeComponent(TIEntity&);
 
 		sf::Vector2f normalizePositionToGrid(const sf::Vector2f&);
 
@@ -31,7 +32,7 @@ class GridComponentSystem : public Singleton<GridComponentSystem>, public Compon
 			GridComponent& gridComponent;
 			SpriteComponent& spriteComponent;
 		};
-		std::vector<Components> components;
+		std::list<Components> components;
 };
 
 }

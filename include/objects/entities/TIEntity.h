@@ -36,6 +36,15 @@ class TIEntity {
 			return nullptr;
 		}
 
+		template <typename T>
+		bool removeComponent() {
+			if (components.count(typeid(T))) {
+				components.erase(typeid(T));
+				return true;
+			}
+			return false;
+		}
+
 		virtual void update(const float) {};
 
 		GlobalId getId() const;

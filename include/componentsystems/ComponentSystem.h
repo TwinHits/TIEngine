@@ -13,6 +13,7 @@ class ComponentSystem {
 		virtual ~ComponentSystem() {};
 		virtual void update(const float) = 0;
 		virtual void addComponent(const TIEntityFactory&, TIEntity&) = 0;
+		virtual bool removeComponent(TIEntity&) = 0;
 		virtual const std::string& getName() = 0;
 };
 

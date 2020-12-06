@@ -16,6 +16,7 @@ public:
     BehaviorComponentSystem() {};
     void update(const float);
     void addComponent(const TIEntityFactory&, TIEntity&);
+    bool removeComponent(TIEntity&);
     const std::string& getName();
 
     static const inline std::string BEHAVIORS = "behaviors";
@@ -27,7 +28,7 @@ private:
         TIEntity& tientity;
         BehaviorComponent& behaviorComponent;
     };
-    std::vector<Components> components;
+    std::list<Components> components;
 };
 
 }

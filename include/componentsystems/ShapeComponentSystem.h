@@ -4,6 +4,7 @@
 #include "componentSystems/ComponentSystem.h"
 #include "templates/Singleton.h"
 
+#include "objects/components/PositionComponent.h"
 #include "objects/components/ShapeComponent.h"
 #include "objects/factories/TIEntityFactory.h"
 #include "objects/entities/TIEntity.h"
@@ -15,11 +16,17 @@ class ShapeComponentSystem : public Singleton<ShapeComponentSystem>, public Comp
 		ShapeComponentSystem() {};
 		void update(const float);
 		void addComponent(const TIEntityFactory&, TIEntity&);
+		bool removeComponent(TIEntity&);
 		const std::string& getName();
 
 		static const inline std::string DRAWN = "drawn";
 
 	private: 
+		struct Components {
+			ShapeComponent& shapeComponent;
+			PositionComponent& positionComponent;
+		};
+		std::list<Components> components;
 };
 
 }

@@ -20,6 +20,7 @@ class TextComponentSystem : public Singleton<TextComponentSystem>, public Compon
 		TextComponentSystem() {};
 		void update(const float);
 		void addComponent(const TIEntityFactory&, TIEntity&);
+		bool removeComponent(TIEntity&);
 		const std::string& getName();
 
 		static const inline std::string DRAWN = "drawn.drawn";
@@ -32,7 +33,7 @@ class TextComponentSystem : public Singleton<TextComponentSystem>, public Compon
 			TextComponent& textComponent;
 			PositionComponent& positionComponent;
 		};
-		std::vector<Components> components;
+		std::list<Components> components;
 };
 
 }

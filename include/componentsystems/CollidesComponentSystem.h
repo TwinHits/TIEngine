@@ -21,6 +21,7 @@ class CollidesComponentSystem : public Singleton<CollidesComponentSystem>, publi
 		CollidesComponentSystem() {};
 		void update(const float);
 		void addComponent(const TIEntityFactory&, TIEntity&);
+		bool removeComponent(TIEntity&);
 		const std::string& getName();
 
 		const static inline std::string COLLIDES = "collides";
@@ -33,7 +34,7 @@ class CollidesComponentSystem : public Singleton<CollidesComponentSystem>, publi
 			CollidesComponent& collidesComponent;
 			SpriteComponent& spriteComponent;
 		};
-		std::vector<Components> components;
+		std::list<Components> components;
 
 		std::set<std::pair<TIEntity*, TIEntity*> > collisions;
 };

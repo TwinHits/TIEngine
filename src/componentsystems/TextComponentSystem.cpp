@@ -40,6 +40,23 @@ void TextComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity&
 }
 
 
+bool TextComponentSystem::removeComponent(TIEntity& tientity) {
+	TextComponent* textComponent = tientity.getComponent<TextComponent>();
+	if (textComponent != nullptr) {
+		for (auto i = this->components.begin(); i != this->components.end(); ++i) {
+			if (&i->textComponent == textComponent) {
+				this->components.erase(i);
+				break;
+			}
+		}
+		return tientity.removeComponent<TextComponent>();
+	} else {
+		return false;
+	}
+}
+
+
+
 const std::string& TextComponentSystem::getName() {
 	return TextComponentSystem::DRAWN;
 }

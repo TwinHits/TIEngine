@@ -48,8 +48,9 @@ namespace TIE {
 
 		std::vector<ComponentSystem*> componentSystems;
 
-		void updateEngineEntity(TIEntity&);
-		void removeTIEntities(std::vector<std::unique_ptr<TIEntity> >&);
+		void removeTIEntities(TIEntity&);
+		void removeComponents(TIEntity&);
+		void updateEngineEntities(TIEntity&);
 		void render(TIEntity&, sf::RenderWindow&, sf::RenderStates);
 
 		SceneManager(const SceneManager&);

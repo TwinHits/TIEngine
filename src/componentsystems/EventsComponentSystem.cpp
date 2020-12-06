@@ -80,6 +80,23 @@ void EventsComponentSystem::addComponent(const TIEntityFactory& factory, TIEntit
 }
 
 
+bool EventsComponentSystem::removeComponent(TIEntity& tientity) {
+	EventsComponent* eventsComponent = tientity.getComponent<EventsComponent>();
+	if (eventsComponent != nullptr) {
+		for (auto i = this->components.begin(); i != this->components.end(); ++i) {
+			if (&i->eventsComponent == eventsComponent) {
+				this->components.erase(i);
+				break;
+			}
+		}
+		return tientity.removeComponent<EventsComponent>();
+	} else {
+		return false;
+	}
+}
+
+
+
 const std::string& EventsComponentSystem::getName() {
 	return EventsComponentSystem::EVENTS;
 }

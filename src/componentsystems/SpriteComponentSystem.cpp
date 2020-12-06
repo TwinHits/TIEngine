@@ -76,6 +76,22 @@ void SpriteComponentSystem::addComponent(const TIEntityFactory& factory, TIEntit
 }
 
 
+bool SpriteComponentSystem::removeComponent(TIEntity& tientity) {
+    SpriteComponent* spriteComponent = tientity.getComponent<SpriteComponent>();
+	if (spriteComponent != nullptr) {
+		for (auto i = this->components.begin(); i != this->components.end(); ++i) {
+			if (&i->spriteComponent == spriteComponent) {
+				this->components.erase(i);
+				break;
+			}
+		}
+		return tientity.removeComponent<SpriteComponent>();
+	} else {
+		return false;
+	}
+}
+
+
 const std::string& SpriteComponentSystem::getName() {
 	return SpriteComponentSystem::DRAWN;
 }

@@ -95,6 +95,22 @@ void AnimatedComponentSystem::addComponent(const TIEntityFactory& factory, TIEnt
 }
 
 
+bool AnimatedComponentSystem::removeComponent(TIEntity& tientity) {
+    AnimatedComponent* animatedComponent = tientity.getComponent<AnimatedComponent>();
+    if (animatedComponent != nullptr) {
+        for (auto i = this->components.begin(); i != this->components.end(); ++i) {
+            if (&i->animatedComponent == animatedComponent) {
+                this->components.erase(i);
+                break;
+            }
+        }
+        return tientity.removeComponent<AnimatedComponent>();
+    } else {
+        return false;
+    }
+}
+
+
 const std::string& AnimatedComponentSystem::getName() {
     return AnimatedComponentSystem::ANIMATED;
 }

@@ -37,6 +37,23 @@ void GridComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity&
 }
 
 
+bool GridComponentSystem::removeComponent(TIEntity& tientity) {
+	GridComponent* gridComponent = tientity.getComponent<GridComponent>();
+	if (gridComponent != nullptr) {
+		for (auto i = this->components.begin(); i != this->components.end(); ++i) {
+			if (&i->gridComponent == gridComponent) {
+				this->components.erase(i);
+				break;
+			}
+		}
+		return tientity.removeComponent<GridComponent>();
+	} else {
+		return false;
+	}
+}
+
+
+
 const std::string& GridComponentSystem::getName() {
 	return GridComponentSystem::GRID;
 }

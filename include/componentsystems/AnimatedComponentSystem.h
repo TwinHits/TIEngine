@@ -19,6 +19,7 @@ class AnimatedComponentSystem : public Singleton<AnimatedComponentSystem>, publi
         AnimatedComponentSystem() {};
         void update(const float);
         void addComponent(const TIEntityFactory&, TIEntity&);
+        bool removeComponent(TIEntity&);
         const std::string& getName();
 
         static const inline std::string ANIMATED = "animated";
@@ -33,7 +34,7 @@ class AnimatedComponentSystem : public Singleton<AnimatedComponentSystem>, publi
             PositionComponent& positionComponent;
             SpriteComponent& spriteComponent;
         };
-        std::vector<Components> components;
+        std::list<Components> components;
         
         bool progressAnimation(Animation*, const float);
         void setTextureRect(const Animation&, SpriteComponent&);

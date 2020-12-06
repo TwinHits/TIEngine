@@ -45,6 +45,22 @@ void MovesComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity
 }
 
 
+bool MovesComponentSystem::removeComponent(TIEntity& tientity) {
+	MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
+	if (movesComponent != nullptr) {
+		for (auto i = this->components.begin(); i != this->components.end(); ++i) {
+			if (&i->movesComponent == movesComponent) {
+				this->components.erase(i);
+				break;
+			}
+		}
+		return tientity.removeComponent<MovesComponent>();
+	} else {
+		return false;
+	}
+}
+
+
 const std::string& MovesComponentSystem::getName() {
 	return MovesComponentSystem::MOVES;
 }
