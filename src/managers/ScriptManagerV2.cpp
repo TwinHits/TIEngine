@@ -62,6 +62,14 @@ void ScriptManager::loadScript(const std::string& scriptPath) {
 }
 
 
+template <>
+void ScriptManager::runFunction<void>(const GlobalId functionId, TIEntity& tientity) {
+	TIEntityInterface tientityInterface(tientity);
+    TIEngineInterface engineInterface = TIEngineInterface();
+	this->functions.at(functionId)(std::tuple<TIEntityInterface, TIEngineInterface>(tientityInterface, engineInterface));
+}
+
+
 const std::string& ScriptManager::getScriptWorkingDirectory() {
     return this->scriptWorkingDirectory;
 }

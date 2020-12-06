@@ -27,6 +27,7 @@ class TIEntityInterface {
 
         // Spawn
         void spawn(const std::string&);
+        void despawn();
 
         // Events
         void addState(const std::string&);

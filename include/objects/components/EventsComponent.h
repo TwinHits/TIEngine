@@ -8,6 +8,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "objects/GlobalId.h"
+
 namespace TIE {
 
 class EventsComponent : public Component {
@@ -19,20 +21,23 @@ class EventsComponent : public Component {
 
 		bool hasHandlers();
 
-		const std::string* getEventHandler(const std::string&, const sf::Event&);
+		const GlobalId getEventHandler(const std::string&, const sf::Event&);
 
-		void setEventHandler(const std::string&, const sf::Event::EventType&, const std::string&);
-		const std::string* getEventHandler(const std::string&, const sf::Event::EventType&);
+		void setEventHandler(const std::string&, const sf::Event::EventType&, const GlobalId);
+		const GlobalId getEventHandler(const std::string&, const sf::Event::EventType&);
 		bool hasEventHandlers();
 
-		void setKeyHandler(const std::string&, const sf::Keyboard::Key&, const std::string&);
-		const std::string* getKeyHandler(const std::string&, const sf::Keyboard::Key&);
+		void setKeyHandler(const std::string&, const sf::Keyboard::Key&, const GlobalId);
+		const GlobalId getKeyHandler(const std::string&, const sf::Keyboard::Key&);
 		bool hasKeyHandlers();
 
 		bool hasState(const std::string&);
 		void addState(const std::string&);
 		void removeState(const std::string&);
 		const std::vector<std::string>& getStates();
+		
+		void setSelectable(bool);
+		bool isSelectable();
 
 		void addSelectedComponent(EventsComponent&);
 		std::vector<EventsComponent*>& getSelectedComponents();
@@ -40,8 +45,10 @@ class EventsComponent : public Component {
 		void clearSelectedComponents();
 	private:
 		std::vector<std::string> states;
-		std::map<std::string, std::map<sf::Event::EventType, std::string> > eventHandlers;
-		std::map<std::string, std::map<sf::Keyboard::Key, std::string> > keyHandlers;
+		// Map of state to event to Lua function id
+		std::map<std::string, std::map<sf::Event::EventType, GlobalId> > eventHandlers;
+		std::map<std::string, std::map<sf::Keyboard::Key, GlobalId> > keyHandlers;
+		bool selectable = false;
 		static std::vector<EventsComponent*> cachedSelectedComponents;
 };
 

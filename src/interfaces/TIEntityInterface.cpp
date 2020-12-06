@@ -30,6 +30,7 @@ void TIEntityInterface::registerUserType(sol::state& luaState) {
     interfaceUserType["spawn"] = &TIEntityInterface::spawn;
     interfaceUserType["addState"] = &TIEntityInterface::addState;
     interfaceUserType["removeState"] = &TIEntityInterface::removeState;
+    interfaceUserType["despawn"] = &TIEntityInterface::despawn;
 }
 
 
@@ -50,6 +51,7 @@ void TIEntityInterface::setDestination(const float x, const float y) {
         MovesComponentSystem::Instance()->setTargetPosition(*movesComponent, *positionComponent, sf::Vector2f(x, y));
     }
 }
+
 
 bool TIEntityInterface::atDestination() {
     return MovesComponentSystem::Instance()->atTargetPosition(*this->tientity);
@@ -94,6 +96,10 @@ void TIEntityInterface::moveDown() {
 
 void TIEntityInterface::spawn(const std::string& entityName) {
     WorldManager::Instance()->spawnTIEntity(entityName);
+}
+
+void TIE::TIEntityInterface::despawn() {
+    this->tientity->setRemove(true);
 }
 
 

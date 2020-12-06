@@ -29,6 +29,7 @@ public:
         TIEngineInterface engineInterface = TIEngineInterface();
         return this->functions.at(functionId)(tientityInterface, engineInterface);
 	}
+	template <> void runFunction<void>(const GlobalId, TIEntity&);
 
     void setScriptWorkingDirectory(const std::string&);
     const std::string& getScriptWorkingDirectory();

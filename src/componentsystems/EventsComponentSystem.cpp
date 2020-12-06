@@ -3,14 +3,15 @@
 #include <string>
 #include <vector>
 
-#include "componentsystems/MovesComponentSystem.h"
 #include "objects/components/EventsComponent.h"
 #include "objects/components/MovesComponent.h"
 #include "objects/components/PositionComponent.h"
 #include "objects/components/SpriteComponent.h"
 #include "objects/entities/TIEntity.h"
 #include "objects/enumeration/Direction.h"
+#include "objects/GlobalId.h"
 #include "managers/EventsManager.h"
+#include "managers/ScriptManagerV2.h"
 #include "utils/StringHelpers.h"
 
 using namespace TIE;
@@ -23,12 +24,9 @@ void EventsComponentSystem::update(const float delta) {
 			const std::map<sf::Event::EventType, sf::Event>& events = EventsManager::Instance()->getEvents();
 			for (const std::string& state : c.eventsComponent.getStates()) {
 				for (auto& event : events) {
-					const std::string* eventHandler = c.eventsComponent.getEventHandler(state, event.second);
-					if (eventHandler != nullptr) {
-						if (*eventHandler == "setDestination") {
-							sf::Vector2f position = sf::Vector2f(event.second.mouseButton.x, event.second.mouseButton.y);
-							MovesComponentSystem::Instance()->setTargetPosition(c.movesComponent, c.positionComponent, position);
-						}
+					const GlobalId eventHandler = c.eventsComponent.getEventHandler(state, event.second);
+					if (eventHandler) {
+						ScriptManager::Instance()->runFunction<bool>(eventHandler, c.tientity);
 					}
 				}
 			}
@@ -39,9 +37,9 @@ void EventsComponentSystem::update(const float delta) {
 
 void EventsComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& entity) {
 
-	// Get all the keys containing events from the stringValues map 
+	// Get all the keys containing events from the functionValues map 
 	std::vector<std::string> eventKeys;
-	for (auto i : factory.stringValues) {
+	for (auto& i : factory.functionValues) {
 		if (i.first.find("events.") != std::string::npos) {
 			eventKeys.push_back(i.first);
 		}
@@ -59,7 +57,7 @@ void EventsComponentSystem::addComponent(const TIEntityFactory& factory, TIEntit
 			std::vector<std::string> keyParts = String::slice(key, '.', 1);
 			std::string state = keyParts.at(0);
 			std::string event = keyParts.at(1);
-			std::string handler = factory.stringValues.at(key);
+			const GlobalId handler = factory.functionValues.at(key);
 
 			// If it's an event value store it in the events map
 			sf::Event::EventType sfEvent = String::stringToEvent(event);
@@ -72,6 +70,9 @@ void EventsComponentSystem::addComponent(const TIEntityFactory& factory, TIEntit
 			if (sfKey != sf::Keyboard::Unknown) {
 				eventsComponent.setKeyHandler(state, sfKey, handler);
 			}
+
+			// If it's for the selected state than this component is selectable
+			eventsComponent.setSelectable(true);
 		}
 
 		this->components.push_back(components);
@@ -110,7 +111,7 @@ void EventsComponentSystem::updateSelectedStates() {
 	const sf::Event* clickEvent = EventsManager::Instance()->getEvent(sf::Event::MouseButtonPressed);
 	if (clickEvent != nullptr) {
 		for (auto& c : this->components) {
-			if (!c.eventsComponent.hasState("selected") && c.eventsComponent.getEventHandler("unselected", clickEvent->MouseButtonPressed) != nullptr) {
+			if (!c.eventsComponent.hasState("selected") && c.eventsComponent.isSelectable()) {
 				if (c.spriteComponent.getGlobalBounds().contains(sf::Vector2f(clickEvent->mouseButton.x, clickEvent->mouseButton.y))) {
 					c.eventsComponent.removeState("unselected");
 					c.eventsComponent.addState("selected");
