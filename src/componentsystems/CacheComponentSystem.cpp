@@ -11,12 +11,20 @@ using namespace TIE;
 void CacheComponentSystem::update(const float delta) {
 }
 
+
 void CacheComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
+    this->addComponent(tientity);
+}
+
+
+CacheComponent& CacheComponentSystem::addComponent(TIEntity& tientity) {
     CacheComponent& cacheComponent = tientity.addComponent<CacheComponent>();
     cacheComponent.setCache(ScriptManager::Instance()->getNewTable());
     Components components = { cacheComponent };
     this->components.push_back(components);
+    return cacheComponent;
 }
+
 
 bool CacheComponentSystem::removeComponent(TIEntity& tientity) {
     CacheComponent* cacheComponent = tientity.getComponent<CacheComponent>();
@@ -52,6 +60,7 @@ sol::table& CacheComponentSystem::getCache(TIEntity& tientity) {
     CacheComponent* cacheComponent = tientity.getComponent<CacheComponent>();
     if (cacheComponent != nullptr) {
         return cacheComponent->getCache();
+    } else {
     }
-    return sol::table();
+    return this->addComponent(tientity).getCache();
 }

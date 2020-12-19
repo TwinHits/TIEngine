@@ -5,7 +5,7 @@
 #include "componentsystems/CacheComponentSystem.h"
 #include "componentsystems/MovesComponentSystem.h"
 #include "componentsystems/EventsComponentSystem.h"
-#include "interfaces/Vector2fInterface.h"
+#include "interfaces/Vector2Interface.h"
 #include "managers/LogManager.h"
 #include "managers/WorldManager.h"
 #include "objects/components/MovesComponent.h"

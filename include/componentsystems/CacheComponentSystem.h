@@ -26,6 +26,7 @@ private:
     };
     std::list<Components> components;
 
+    CacheComponent& addComponent(TIEntity&);
 };
 
 }

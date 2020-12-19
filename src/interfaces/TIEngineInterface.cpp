@@ -5,6 +5,7 @@
 #include <sol/sol.hpp>
 
 #include "interfaces/TIEntityInterface.h"
+#include "interfaces/Vector2Interface.h"
 #include "managers/AssetsManager.h"
 #include "managers/EventsManager.h"
 #include "managers/LogManager.h"
@@ -100,12 +101,12 @@ bool TIEngineInterface::hasEvent(std::string& event) {
 }
 
 
-Vector2fInterface TIEngineInterface::getMouseClickPosition() {
+Vector2iInterface TIEngineInterface::getMouseClickPosition() {
 	const sf::Event* clickEvent = EventsManager::Instance()->getEvent(sf::Event::MouseButtonPressed);
     if (clickEvent != nullptr) {
-        return Vector2fInterface(clickEvent->mouseButton.x, clickEvent->mouseButton.y);
+        return Vector2iInterface(clickEvent->mouseButton.x, clickEvent->mouseButton.y);
     } else {
-        return Vector2fInterface();
+        return Vector2iInterface();
     }
 }
 

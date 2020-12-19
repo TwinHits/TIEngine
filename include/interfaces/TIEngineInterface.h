@@ -6,7 +6,7 @@
 #include <sol/sol.hpp>
 
 #include "interfaces/TIEntityInterface.h"
-#include "interfaces/Vector2fInterface.h"
+#include "interfaces/Vector2Interface.h"
 
 namespace TIE {
 
@@ -33,7 +33,7 @@ class TIEngineInterface {
         bool spawnTIEntity(const std::string&);
 
         bool hasEvent(std::string& event);
-        Vector2fInterface getMouseClickPosition();
+        Vector2iInterface getMouseClickPosition();
 };
 
 }

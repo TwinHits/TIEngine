@@ -174,7 +174,7 @@ float SceneManager::getFPS() {
 }
 
 void SceneManager::setTIEntitiesMarkedForRemove(bool flag) {
-	this->setTIEntitiesMarkedForRemove(flag);
+	this->tientitiesMarkedForRemove = flag;
 }
 
 

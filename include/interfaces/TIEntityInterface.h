@@ -5,7 +5,7 @@
 
 #include <sol/sol.hpp>
 
-#include "interfaces/Vector2fInterface.h"
+#include "interfaces/Vector2Interface.h"
 
 namespace TIE {
 
