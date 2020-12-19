@@ -1,6 +1,6 @@
 #include "componentsystems\BehaviorComponentSystem.h"
 
-#include "managers/ScriptManagerV2.h"
+#include "managers/ScriptManager.h"
 #include "objects/entities/TIEntity.h"
 #include "objects/factories/TIEntityFactory.h"
 

@@ -11,7 +11,7 @@
 #include "objects/enumeration/Direction.h"
 #include "objects/GlobalId.h"
 #include "managers/EventsManager.h"
-#include "managers/ScriptManagerV2.h"
+#include "managers/ScriptManager.h"
 #include "utils/StringHelpers.h"
 
 using namespace TIE;

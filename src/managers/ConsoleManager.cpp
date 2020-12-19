@@ -10,7 +10,7 @@
 #include "managers/WorldManager.h"
 #include "managers/LogManager.h"
 #include "managers/SceneManager.h"
-#include "managers/ScriptManagerV2.h"
+#include "managers/ScriptManager.h"
 #include "managers/ViewManager.h"
 #include "managers/WindowManager.h"
 #include "objects/components/TextComponent.h"

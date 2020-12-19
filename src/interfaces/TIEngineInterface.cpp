@@ -8,7 +8,7 @@
 #include "managers/AssetsManager.h"
 #include "managers/EventsManager.h"
 #include "managers/LogManager.h"
-#include "managers/ScriptManagerV2.h"
+#include "managers/ScriptManager.h"
 #include "managers/WindowManager.h"
 #include "managers/WorldManager.h"
 #include "utils/StringHelpers.h"

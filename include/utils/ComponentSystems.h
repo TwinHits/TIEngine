@@ -5,7 +5,7 @@
 
 #include "objects/entities/TIEntity.h"
 #include "objects/factories/TIEntityFactory.h"
-#include "managers/ScriptManagerV2.h"
+#include "managers/ScriptManager.h"
 
 namespace TIE {
     namespace ComponentSystems {

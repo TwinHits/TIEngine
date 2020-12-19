@@ -8,7 +8,7 @@
 #include "managers/HashManager.h"
 #include "managers/LogManager.h"
 #include "managers/SceneManager.h"
-#include "managers/ScriptManagerV2.h"
+#include "managers/ScriptManager.h"
 #include "managers/StringManager.h"
 #include "managers/TimeManager.h"
 #include "managers/ViewManager.h"

@@ -1,4 +1,4 @@
-#include "managers/ScriptManagerV2.h"
+#include "managers/ScriptManager.h"
 
 #include <string>
 #include <vector>

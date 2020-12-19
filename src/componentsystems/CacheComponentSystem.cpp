@@ -4,7 +4,7 @@
 
 #include "objects/entities/TIEntity.h"
 #include "objects/components/CacheComponent.h"
-#include "managers/ScriptManagerV2.h"
+#include "managers/ScriptManager.h"
 
 using namespace TIE;
 
