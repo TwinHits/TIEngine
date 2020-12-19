@@ -33,6 +33,10 @@ class TIEntityInterface {
         void addState(const std::string&);
         void removeState(const std::string&);
 
+        // Cache
+        void setCache(sol::table&);
+        sol::table& getCache();
+
     private:
         TIEntity* tientity = nullptr;
 };

@@ -2,6 +2,7 @@
 
 #include "sol/sol.hpp"
 
+#include "componentsystems/CacheComponentSystem.h"
 #include "componentsystems/MovesComponentSystem.h"
 #include "componentsystems/EventsComponentSystem.h"
 #include "interfaces/Vector2fInterface.h"
@@ -31,6 +32,8 @@ void TIEntityInterface::registerUserType(sol::state& luaState) {
     interfaceUserType["addState"] = &TIEntityInterface::addState;
     interfaceUserType["removeState"] = &TIEntityInterface::removeState;
     interfaceUserType["despawn"] = &TIEntityInterface::despawn;
+    interfaceUserType["setCache"] = &TIEntityInterface::setCache;
+    interfaceUserType["getCache"] = &TIEntityInterface::getCache;
 }
 
 
@@ -110,4 +113,14 @@ void TIEntityInterface::addState(const std::string& state) {
 
 void TIEntityInterface::removeState(const std::string& state) {
     EventsComponentSystem::Instance()->removeState(*this->tientity, state);
+}
+
+
+void TIEntityInterface::setCache(sol::table& cache) {
+    CacheComponentSystem::Instance()->updateCache(*this->tientity, cache);
+}
+
+
+sol::table& TIEntityInterface::getCache() {
+    return CacheComponentSystem::Instance()->getCache(*this->tientity);
 }

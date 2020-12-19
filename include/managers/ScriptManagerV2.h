@@ -34,6 +34,8 @@ public:
     void setScriptWorkingDirectory(const std::string&);
     const std::string& getScriptWorkingDirectory();
 
+	sol::table getNewTable();
+
 	ScriptManager() {};
 	~ScriptManager() {};
 

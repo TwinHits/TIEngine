@@ -74,6 +74,10 @@ const std::string& ScriptManager::getScriptWorkingDirectory() {
     return this->scriptWorkingDirectory;
 }
 
+sol::table ScriptManager::getNewTable() {
+	return sol::table(this->luaState, sol::create);
+}
+
 
 void ScriptManager::setScriptWorkingDirectory(const std::string& scriptWorkingDirectory) {
     this->scriptWorkingDirectory = scriptWorkingDirectory;

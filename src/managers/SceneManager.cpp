@@ -8,6 +8,7 @@
 #include "componentsystems/BehaviorComponentSystem.h"
 #include "componentsystems/CollidesComponentSystem.h"
 #include "componentsystems/ComponentSystem.h"
+#include "componentsystems/CacheComponentSystem.h"
 #include "componentsystems/EventsComponentSystem.h"
 #include "componentsystems/GridComponentSystem.h"
 #include "componentsystems/MovesComponentSystem.h"
@@ -69,6 +70,7 @@ bool SceneManager::initialize() {
 	this->componentSystems.push_back(CollidesComponentSystem::Instance());
 	this->componentSystems.push_back(EventsComponentSystem::Instance());
 	this->componentSystems.push_back(BehaviorComponentSystem::Instance());
+	this->componentSystems.push_back(CacheComponentSystem::Instance());
 
 	return true;
 }
