@@ -3,6 +3,7 @@
 #include <memory>
 
 #include "managers/HashManager.h"
+#include "managers/SceneManager.h"
 #include "templates/MakeUnique.h"
 
 using namespace TIE;
@@ -33,6 +34,7 @@ std::vector<std::unique_ptr<TIEntity> >& TIEntity::getChildren() {
 
 
 void TIEntity::setRemove(bool remove) {
+	SceneManager::Instance()->setTIEntitiesMarkedForRemove(true);
 	this->remove = remove;
 }
 

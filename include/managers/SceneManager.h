@@ -31,6 +31,8 @@ namespace TIE {
 
 		float getFPS();
 
+		void setTIEntitiesMarkedForRemove(bool);
+
 		SceneManager();
 		~SceneManager() {};
 	private:
@@ -48,6 +50,7 @@ namespace TIE {
 
 		std::vector<ComponentSystem*> componentSystems;
 
+		bool tientitiesMarkedForRemove = false;
 		void removeTIEntities(TIEntity&);
 		void removeComponents(TIEntity&);
 		void updateEngineEntities(TIEntity&);

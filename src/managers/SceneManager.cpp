@@ -110,7 +110,10 @@ void SceneManager::updateGameState() {
 		componentSystem->update(this->delta);
 	}
 	this->updateEngineEntities(*(this->engineLayer));
-	this->removeTIEntities(*this->sceneGraphRoot);
+
+	if (this->tientitiesMarkedForRemove) {
+		this->removeTIEntities(*this->sceneGraphRoot);
+	}
 
 	//Update Camera and FPS
 	ViewManager::Instance()->updateCamera(this->delta);
@@ -168,6 +171,10 @@ void SceneManager::render() {
 
 float SceneManager::getFPS() {
 	return this->fps;
+}
+
+void SceneManager::setTIEntitiesMarkedForRemove(bool flag) {
+	this->setTIEntitiesMarkedForRemove(flag);
 }
 
 
