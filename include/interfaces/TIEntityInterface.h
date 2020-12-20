@@ -12,6 +12,7 @@ namespace TIE {
 class TIEntityInterface {
     public:
         TIEntityInterface(TIEntity&);
+        TIEntityInterface(TIEntity*);
         ~TIEntityInterface() {};
 
         static void registerUserType(sol::state&);

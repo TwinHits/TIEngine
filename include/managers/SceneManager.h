@@ -33,6 +33,7 @@ namespace TIE {
 
 		void setTIEntitiesMarkedForRemove(bool);
 
+
 		SceneManager();
 		~SceneManager() {};
 	private:

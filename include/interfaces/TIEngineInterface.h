@@ -7,6 +7,7 @@
 
 #include "interfaces/TIEntityInterface.h"
 #include "interfaces/Vector2Interface.h"
+#include "objects//GlobalId.h"
 
 namespace TIE {
 
@@ -34,6 +35,8 @@ class TIEngineInterface {
 
         bool hasEvent(std::string& event);
         Vector2iInterface getMouseClickPosition();
+
+        TIEntityInterface findTIEntityById(GlobalId);
 };
 
 }

@@ -29,6 +29,7 @@ class WorldManager : public Singleton<WorldManager>, Manager {
 		TIEntityFactory& getTIEntityFactory(const std::string&);
 		void spawnTIEntity(const std::string&);
 		void attachNewTIEntities();
+		TIEntity* getTIEntityById(GlobalId);
 
 		WorldManager() {};
 		~WorldManager() {};
@@ -39,6 +40,7 @@ class WorldManager : public Singleton<WorldManager>, Manager {
 
 		std::map<std::string, TIEntityFactory> tientityDefinitions;
 		std::vector<std::string> spawnedTIEntityDefinitions;
+		std::map<GlobalId, TIEntity*> tientities;
 
 		TIEntity* levelEntity = nullptr;
 		GridComponent* gridComponent = nullptr;

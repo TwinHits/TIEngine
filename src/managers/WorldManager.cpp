@@ -84,10 +84,15 @@ void WorldManager::spawnTIEntity(const std::string& tientityName) {
 void WorldManager::attachNewTIEntities() {
 	if (!this->spawnedTIEntityDefinitions.empty()) {
 		for (auto& definition : this->spawnedTIEntityDefinitions) {
-			tientityDefinitions.at(definition).build();
+			TIEntity& tientity = tientityDefinitions.at(definition).build();
+			this->tientities[tientity.getId()] = &tientity;
 		}
 		this->spawnedTIEntityDefinitions.clear();
 	}
+}
+
+TIEntity* WorldManager::getTIEntityById(GlobalId id) {
+	return this->tientities.count(id) ? this->tientities.at(id) : nullptr;
 }
 
 

@@ -110,3 +110,12 @@ Vector2iInterface TIEngineInterface::getMouseClickPosition() {
     }
 }
 
+TIEntityInterface TIE::TIEngineInterface::findTIEntityById(GlobalId id) {
+    TIEntity* tientity = WorldManager::Instance()->getTIEntityById(id);
+    if (tientity != nullptr) {
+        return TIEntityInterface(tientity);
+    } else {
+        return nullptr;
+    }
+}
+
