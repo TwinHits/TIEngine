@@ -43,7 +43,6 @@ namespace TIE {
 		sf::Clock& clock;
 		float calculateRollingAverageFPS(const float delta);
 		float fps = 0;
-		float delta = 0;
 
 		std::unique_ptr<SceneLayer> sceneGraphRoot;
 		SceneLayer* engineLayer = nullptr;
@@ -54,7 +53,7 @@ namespace TIE {
 		bool tientitiesMarkedForRemove = false;
 		void removeTIEntities(TIEntity&);
 		void removeComponents(TIEntity&);
-		void updateEngineEntities(TIEntity&);
+		void updateEngineEntities(TIEntity&, const float);
 		void render(TIEntity&, sf::RenderWindow&, sf::RenderStates);
 
 		SceneManager(const SceneManager&);

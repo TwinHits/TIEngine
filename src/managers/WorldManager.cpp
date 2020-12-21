@@ -72,24 +72,12 @@ TIEntityFactory& WorldManager::getTIEntityFactory(const std::string& name) {
 }
 
 
-void WorldManager::spawnTIEntity(const std::string& tientityName) {
-	if (this->tientityDefinitions.count(tientityName)) {
-		this->spawnedTIEntityDefinitions.push_back(tientityName);
-	} else {
-		LogManager::Instance()->warn("Entity " + tientityName + " does not exist.");
-	}
+TIEntity& WorldManager::spawnTIEntity(const std::string& tientityName) {
+    TIEntity& tientity = tientityDefinitions.at(tientityName).build();
+    this->tientities[tientity.getId()] = &tientity;
+    return tientity;
 }
 
-
-void WorldManager::attachNewTIEntities() {
-	if (!this->spawnedTIEntityDefinitions.empty()) {
-		for (auto& definition : this->spawnedTIEntityDefinitions) {
-			TIEntity& tientity = tientityDefinitions.at(definition).build();
-			this->tientities[tientity.getId()] = &tientity;
-		}
-		this->spawnedTIEntityDefinitions.clear();
-	}
-}
 
 TIEntity* WorldManager::getTIEntityById(GlobalId id) {
 	return this->tientities.count(id) ? this->tientities.at(id) : nullptr;

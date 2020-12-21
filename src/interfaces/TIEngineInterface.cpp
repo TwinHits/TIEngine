@@ -89,9 +89,13 @@ bool TIEngineInterface::registerTIEntityDefinition(const std::string& name, cons
 }
 
 
-bool TIEngineInterface::spawnTIEntity(const std::string& name) {
-    WorldManager::Instance()->spawnTIEntity(name);
-    return true;
+TIEntityInterface TIEngineInterface::spawnTIEntity(const std::string& name) {
+    if (WorldManager::Instance()->isTIEntityRegistered(name)) {
+        TIEntity& tientity = WorldManager::Instance()->spawnTIEntity(name);
+        return TIEntityInterface(tientity);
+    } else {
+        return nullptr;
+    }
 }
 
 

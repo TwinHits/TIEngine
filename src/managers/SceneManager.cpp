@@ -61,16 +61,17 @@ bool SceneManager::initialize() {
 	performanceDisplay->initialize();
 	this->engineLayer->attachChild(std::move(performanceDisplay));
 
+	// Component System registration and order of update
+	this->componentSystems.push_back(EventsComponentSystem::Instance());
+	this->componentSystems.push_back(BehaviorComponentSystem::Instance());
+	this->componentSystems.push_back(MovesComponentSystem::Instance());
+	this->componentSystems.push_back(CollidesComponentSystem::Instance());
+	this->componentSystems.push_back(CacheComponentSystem::Instance());
+	this->componentSystems.push_back(GridComponentSystem::Instance());
+	this->componentSystems.push_back(AnimatedComponentSystem::Instance());
 	this->componentSystems.push_back(SpriteComponentSystem::Instance());
 	this->componentSystems.push_back(TextComponentSystem::Instance());
 	this->componentSystems.push_back(ShapeComponentSystem::Instance());
-	this->componentSystems.push_back(GridComponentSystem::Instance());
-	this->componentSystems.push_back(MovesComponentSystem::Instance());
-	this->componentSystems.push_back(AnimatedComponentSystem::Instance());
-	this->componentSystems.push_back(CollidesComponentSystem::Instance());
-	this->componentSystems.push_back(EventsComponentSystem::Instance());
-	this->componentSystems.push_back(BehaviorComponentSystem::Instance());
-	this->componentSystems.push_back(CacheComponentSystem::Instance());
 
 	return true;
 }
@@ -104,20 +105,19 @@ TIEntity* SceneManager::findTIEntity(sf::Vector2f point) {
 
 void SceneManager::updateGameState() {
 
-	WorldManager::Instance()->attachNewTIEntities();
-	this->delta = this->clock.restart().asSeconds();
+	const float delta = this->clock.restart().asSeconds();
 	for (ComponentSystem* componentSystem : this->componentSystems) {
-		componentSystem->update(this->delta);
+		componentSystem->update(delta);
 	}
-	this->updateEngineEntities(*(this->engineLayer));
+	this->updateEngineEntities(*(this->engineLayer), delta);
 
 	if (this->tientitiesMarkedForRemove) {
 		this->removeTIEntities(*this->sceneGraphRoot);
 	}
 
 	//Update Camera and FPS
-	ViewManager::Instance()->updateCamera(this->delta);
-	this->fps = this->calculateRollingAverageFPS(this->delta);
+	ViewManager::Instance()->updateCamera(delta);
+	this->fps = this->calculateRollingAverageFPS(delta);
 }
 
 
@@ -142,12 +142,12 @@ void SceneManager::removeComponents(TIEntity& tientity) {
 }
 
 
-void SceneManager::updateEngineEntities(TIEntity& tientity) {
+void SceneManager::updateEngineEntities(TIEntity& tientity, const float delta) {
 
-	tientity.update(this->delta);
+	tientity.update(delta);
 	if (tientity.getChildren().size() > 0) {
 		for (auto& child : tientity.getChildren()) {
-			this->updateEngineEntities(*child);
+			this->updateEngineEntities(*child, delta);
 		}
 	}
 }

@@ -31,7 +31,7 @@ class TIEngineInterface {
         bool setLevel(const std::string&);
 
         bool registerTIEntityDefinition(const std::string&, const sol::table&);
-        bool spawnTIEntity(const std::string&);
+        TIEntityInterface spawnTIEntity(const std::string&);
 
         bool hasEvent(std::string& event);
         Vector2iInterface getMouseClickPosition();
