@@ -8,6 +8,7 @@
 #include "interfaces/Vector2Interface.h"
 #include "managers/LogManager.h"
 #include "managers/WorldManager.h"
+#include "objects/GlobalId.h"
 #include "objects/components/MovesComponent.h"
 #include "objects/components/PositionComponent.h"
 #include "objects/enumeration/Direction.h"
@@ -26,6 +27,7 @@ TIEntityInterface::TIEntityInterface(TIEntity* tientity) {
 
 void TIEntityInterface::registerUserType(sol::state& luaState) {
     sol::usertype<TIEntityInterface> interfaceUserType = luaState.new_usertype<TIEntityInterface>("tientity");
+    interfaceUserType["getId"] = &TIEntityInterface::getId;
 	interfaceUserType["getPosition"] = &TIEntityInterface::getPosition;
 	interfaceUserType["setDestination"] = &TIEntityInterface::setDestination;
 	interfaceUserType["atDestination"] = &TIEntityInterface::atDestination;
@@ -39,6 +41,11 @@ void TIEntityInterface::registerUserType(sol::state& luaState) {
     interfaceUserType["despawn"] = &TIEntityInterface::despawn;
     interfaceUserType["setCache"] = &TIEntityInterface::setCache;
     interfaceUserType["getCache"] = &TIEntityInterface::getCache;
+}
+
+
+GlobalId TIEntityInterface::getId() {
+    return this->tientity->getId();
 }
 
 

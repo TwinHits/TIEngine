@@ -1,6 +1,7 @@
 #ifndef TIENTITYINTERFACE_H
 #define TIENTITYINTERFACE_H
 
+#include "objects/GlobalId.h"
 #include "objects/entities/TIEntity.h"
 
 #include <sol/sol.hpp>
@@ -16,6 +17,9 @@ class TIEntityInterface {
         ~TIEntityInterface() {};
 
         static void registerUserType(sol::state&);
+
+        // Information
+        GlobalId getId();
 
         // Movement
         Vector2fInterface getPosition();
