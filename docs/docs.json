@@ -1,5 +1,5 @@
 {
-   "interfaces":[
+   "classes":[
       {
          "name":"TIEngineInterface",
          "description":"Interface for dealing with the engine managers.",
