@@ -42,6 +42,8 @@ class TIEntityInterface {
         void setCache(sol::table&);
         sol::table& getCache();
 
+        // Behavior
+
     private:
         TIEntity* tientity = nullptr;
 };

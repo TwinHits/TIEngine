@@ -1,147 +1,145 @@
 {
-  "interfaces": [
-	  {
-		  "name": "TIEngineInterface",Î
-		  "description": "Interface for dealing with the engine managers.",
-		  "methods": [
-			  {
-			 	"name": "isValid",
-				"description": "Method to determine that interface has been properly initialized.",
-				"returns": "boolean"
-			  },
-			  {
-				  "name": "registerTexturesDirectory",
-				  "params": [
-					  {
-						  "name": "directory",
-						  "type": "const std::string&",
-						  "description": "Directory to append to the script's working directory."
-					  }
-				  ],
-				  "description": "Register a directory to search for textures.",
-				  "returns": "boolean"
-			  		
-			  },
-			  {
-				  "name": "registerFontsDirectory",
-				  "params": [
-					  {
-						  "name": "directory",
-						  "type": "const std::string&",
-						  "description": "Directory to append to the script's working directory."
-					  }
-				  ],
-				  "description": "Register a directory to search for fonts.",
-				  "returns": "boolean"
-			  		
-			  },
-			  {
-				  "name": "registerAudioDirectory",
-				  "params": [
-					  {
-						  "name": "directory",
-						  "type": "const std::string&",
-						  "description": "Directory to append to the script's working directory."
-					  }
-				  ],
-				  "description": "Register a directory to search for audio.",
-				  "returns": "boolean"
-			  		
-			  },
-			  {
-				  "name": "setWindowTitle",
-				  "params": [
-					  {
-						  "name": "title",
-						  "type": "const std::string&",
-						  "description": "What title should appear on the window header bar."
-					  }
-				  ],
-				  "description": "Change the title that appears in the window header.",
-				  "returns": "boolean"
-			  		
-			  },
-			  {
-				  "name": "setWindowSize",
-				  "params": [
-					  {
-						  "name": "width",
-						  "type": "const int",
-						  "description": "Width of the window."
-					  },
-					  {
-						  "name": "height",
-						  "type": "const int",
-						  "description": "Height of the window."
-					  }
-				  ],
-				  "description": "Change the size of the window.",
-				  "returns": "boolean"
-			  },
-			  {
-				  "name": "registerLevel",
-				  "params": [
-					  {
-						  "name": "name",
-						  "type": "const string&",
-						  "description": "Name of the level."
-					  },
-					  {
-						  "name": "definition",
-						  "type": "lua table",
-						  "description": "Correctly consturcted TIEntity definition"
-					  }
-				  ],
-				  "description": "Registers a level in the world.",
-				  "returns": "boolean"
-			  },
-			  {
-				  "name": "setLevel",
-				  "params": [
-					  {
-						  "name": "name",
-						  "type": "const string&",
-						  "description": "Name of the level."
-					  },
-				  ],
-				  "description": "Sets the current level of the world.",
-				  "returns": "boolean"
-			  },
-			  {
-				  "name": "registerTIEntity",
-				  "params": [
-					  {
-						  "name": "name",
-						  "type": "const string&",
-						  "description": "Name of the TIEntity."
-					  },
-					  {
-						  "name": "definition",
-						  "type": "lua table",
-						  "description": "Correctly consturcted TIEntity definition"
-					  }
-				  ],
-				  "description": "Registers a spawnable TIEntity.",
-				  "returns": "boolean"
-			  },
-			  {
-				  "name": "spawn",
-				  "params": [
-					  {
-						  "name": "name",
-						  "type": "const string&",
-						  "description": "Name of the TIEntity."
-					  }
-				  ],
-				  "description": "Builds the named TIEntity and spawns it into the world.",
-				  "returns": "boolean"
-			  }
-		  ]
-	  },
-	  {
-		  "name": "TIEntityInterface",
-		  "description": "Interface for interacting with a single TIEntity.",
-		  "methods": []
-	  }
-  ]
+   "classes":[
+      {
+         "name":"TIEngineInterface",
+         "description":"Interface for dealing with the engine managers.",
+         "methods":[
+            {
+               "name":"isValid",
+               "description":"Method to determine that interface has been properly initialized.",
+               "returns":"boolean"
+            },
+            {
+               "name":"registerTexturesDirectory",
+               "parameters":[
+                  {
+                     "name":"directory",
+                     "type":"const std::string&",
+                     "description":"Directory to append to the script's working directory."
+                  }
+               ],
+               "description":"Register a directory to search for textures.",
+               "returns":"boolean"
+            },
+            {
+               "name":"registerFontsDirectory",
+               "parameters":[
+                  {
+                     "name":"directory",
+                     "type":"const std::string&",
+                     "description":"Directory to append to the script's working directory."
+                  }
+               ],
+               "description":"Register a directory to search for fonts.",
+               "returns":"boolean"
+            },
+            {
+               "name":"registerAudioDirectory",
+               "parameters":[
+                  {
+                     "name":"directory",
+                     "type":"const std::string&",
+                     "description":"Directory to append to the script's working directory."
+                  }
+               ],
+               "description":"Register a directory to search for audio.",
+               "returns":"boolean"
+            },
+            {
+               "name":"setWindowTitle",
+               "parameters":[
+                  {
+                     "name":"title",
+                     "type":"const std::string&",
+                     "description":"What title should appear on the window header bar."
+                  }
+               ],
+               "description":"Change the title that appears in the window header.",
+               "returns":"boolean"
+            },
+            {
+               "name":"setWindowSize",
+               "parameters":[
+                  {
+                     "name":"width",
+                     "type":"const int",
+                     "description":"Width of the window."
+                  },
+                  {
+                     "name":"height",
+                     "type":"const int",
+                     "description":"Height of the window."
+                  }
+               ],
+               "description":"Change the size of the window.",
+               "returns":"boolean"
+            },
+            {
+               "name":"registerLevel",
+               "parameters":[
+                  {
+                     "name":"name",
+                     "type":"const string&",
+                     "description":"Name of the level."
+                  },
+                  {
+                     "name":"definition",
+                     "type":"lua table",
+                     "description":"Correctly consturcted TIEntity definition"
+                  }
+               ],
+               "description":"Registers a level in the world.",
+               "returns":"boolean"
+            },
+            {
+               "name":"setLevel",
+               "parameters":[
+                  {
+                     "name":"name",
+                     "type":"const string&",
+                     "description":"Name of the level."
+                  }
+               ],
+               "description":"Sets the current level of the world.",
+               "returns":"boolean"
+            },
+            {
+               "name":"registerTIEntity",
+               "parameters":[
+                  {
+                     "name":"name",
+                     "type":"const string&",
+                     "description":"Name of the TIEntity."
+                  },
+                  {
+                     "name":"definition",
+                     "type":"lua table",
+                     "description":"Correctly consturcted TIEntity definition"
+                  }
+               ],
+               "description":"Registers a spawnable TIEntity.",
+               "returns":"boolean"
+            },
+            {
+               "name":"spawn",
+               "parameters":[
+                  {
+                     "name":"name",
+                     "type":"const string&",
+                     "description":"Name of the TIEntity."
+                  }
+               ],
+               "description":"Builds the named TIEntity and spawns it into the world.",
+               "returns":"boolean"
+            }
+         ]
+      },
+      {
+         "name":"TIEntityInterface",
+         "description":"Interface for interacting with a single TIEntity.",
+         "methods":[
+            
+         ]
+      }
+   ]
 }
