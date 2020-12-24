@@ -25,7 +25,8 @@ bool ScriptManager::initialize() {
 		sol::lib::base, 
 		sol::lib::math,
 		sol::lib::os,
-        sol::lib::package
+        sol::lib::package,
+		sol::lib::table
 	);
 
     TIEngineInterface::registerUserType(this->luaState);
