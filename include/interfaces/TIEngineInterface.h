@@ -36,7 +36,9 @@ class TIEngineInterface {
         bool hasEvent(std::string& event);
         Vector2iInterface getMouseClickPosition();
 
-        TIEntityInterface findTIEntityById(GlobalId);
+        TIEntityInterface getTIEntityById(GlobalId);
+
+        GlobalId registerBehavior(const std::string&, const sol::function&);
 };
 
 }

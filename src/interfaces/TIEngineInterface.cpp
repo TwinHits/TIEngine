@@ -30,6 +30,8 @@ void TIEngineInterface::registerUserType(sol::state& luaState) {
 	engineInterfaceUserType["spawn"] = &TIEngineInterface::spawnTIEntity;
 	engineInterfaceUserType["hasEvent"] = &TIEngineInterface::hasEvent;
 	engineInterfaceUserType["getMouseClickPosition"] = &TIEngineInterface::getMouseClickPosition;
+    engineInterfaceUserType["getTIEntityById"] = &TIEngineInterface::getTIEntityById;
+    engineInterfaceUserType["registerBehavior"] = &TIEngineInterface::registerBehavior;
 }
 
 
@@ -114,7 +116,8 @@ Vector2iInterface TIEngineInterface::getMouseClickPosition() {
     }
 }
 
-TIEntityInterface TIE::TIEngineInterface::findTIEntityById(GlobalId id) {
+
+TIEntityInterface TIEngineInterface::getTIEntityById(GlobalId id) {
     TIEntity* tientity = WorldManager::Instance()->getTIEntityById(id);
     if (tientity != nullptr) {
         return TIEntityInterface(tientity);
@@ -123,3 +126,7 @@ TIEntityInterface TIE::TIEngineInterface::findTIEntityById(GlobalId id) {
     }
 }
 
+
+GlobalId TIEngineInterface::registerBehavior(const std::string& name, const sol::function& behavior) {
+    return ScriptManager::Instance()->registerFunctionByName(name, behavior);
+}

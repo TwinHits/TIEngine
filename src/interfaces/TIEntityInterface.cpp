@@ -2,6 +2,7 @@
 
 #include "sol/sol.hpp"
 
+#include "componentsystems/BehaviorComponentSystem.h"
 #include "componentsystems/CacheComponentSystem.h"
 #include "componentsystems/MovesComponentSystem.h"
 #include "componentsystems/EventsComponentSystem.h"
@@ -41,6 +42,8 @@ void TIEntityInterface::registerUserType(sol::state& luaState) {
     interfaceUserType["despawn"] = &TIEntityInterface::despawn;
     interfaceUserType["setCache"] = &TIEntityInterface::setCache;
     interfaceUserType["getCache"] = &TIEntityInterface::getCache;
+    interfaceUserType["setBehaviorById"] = &TIEntityInterface::setBehaviorById;
+    interfaceUserType["setBehaviorByName"] = &TIEntityInterface::setBehaviorByName;
 }
 
 
@@ -135,4 +138,15 @@ void TIEntityInterface::setCache(sol::table& cache) {
 
 sol::table& TIEntityInterface::getCache() {
     return CacheComponentSystem::Instance()->getCache(*this->tientity);
+}
+
+
+void TIEntityInterface::setBehaviorById(GlobalId functionId) {
+    BehaviorComponentSystem::Instance()->setBehavior(*this->tientity, functionId);
+}
+
+
+void TIEntityInterface::setBehaviorByName(const std::string& name) {
+    LogManager::Instance()->out(name);
+    BehaviorComponentSystem::Instance()->setBehavior(*this->tientity, name);
 }

@@ -4,8 +4,10 @@
 #include "templates/Singleton.h"
 #include "componentsystems/ComponentSystem.h"
 
+#include <string>
 #include <vector>
 
+#include "objects/GlobalId.h"
 #include "objects/components/BehaviorComponent.h"
 
 namespace TIE {
@@ -18,6 +20,9 @@ public:
     void addComponent(const TIEntityFactory&, TIEntity&);
     bool removeComponent(TIEntity&);
     const std::string& getName();
+
+    void setBehavior(TIEntity&, GlobalId);
+    void setBehavior(TIEntity&, const std::string&);
 
     static const inline std::string BEHAVIORS = "behaviors";
     static const inline std::string BEHAVIOR = "behaves.behavior";

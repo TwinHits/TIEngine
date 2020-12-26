@@ -1,12 +1,13 @@
 #ifndef TIENTITYINTERFACE_H
 #define TIENTITYINTERFACE_H
 
-#include "objects/GlobalId.h"
-#include "objects/entities/TIEntity.h"
+#include <string>
 
 #include <sol/sol.hpp>
 
 #include "interfaces/Vector2Interface.h"
+#include "objects/GlobalId.h"
+#include "objects/entities/TIEntity.h"
 
 namespace TIE {
 
@@ -43,6 +44,8 @@ class TIEntityInterface {
         sol::table& getCache();
 
         // Behavior
+        void setBehaviorById(GlobalId);
+        void setBehaviorByName(const std::string&);
 
     private:
         TIEntity* tientity = nullptr;

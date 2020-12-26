@@ -25,7 +25,8 @@ bool ScriptManager::initialize() {
 		sol::lib::base, 
 		sol::lib::math,
 		sol::lib::os,
-        sol::lib::package
+        sol::lib::package,
+		sol::lib::table
 	);
 
     TIEngineInterface::registerUserType(this->luaState);
@@ -67,6 +68,34 @@ void ScriptManager::runFunction<void>(const GlobalId functionId, TIEntity& tient
 	TIEntityInterface tientityInterface(tientity);
     TIEngineInterface engineInterface = TIEngineInterface();
 	this->functions.at(functionId)(std::tuple<TIEntityInterface, TIEngineInterface>(tientityInterface, engineInterface));
+}
+
+
+template <>
+void ScriptManager::runFunction<void>(const std::string& name, TIEntity& tientity) {
+	TIEntityInterface tientityInterface(tientity);
+	TIEngineInterface engineInterface = TIEngineInterface();
+	this->getFunctionByName(name)(std::tuple<TIEntityInterface, TIEngineInterface>(tientityInterface, engineInterface));
+}
+
+
+GlobalId ScriptManager::registerFunctionByName(const std::string& name, const sol::function& function) {
+	if (!this->functionsByName.count(name)) {
+		GlobalId functionId = HashManager::Instance()->getNewGlobalId();
+		this->functionsByName.insert({ name, functionId });
+		this->functions.insert({ functionId, function });
+		return functionId;
+	} else {
+		return this->functionsByName.at(name);
+	}
+}
+
+GlobalId ScriptManager::getFunctionIdByName(const std::string& name) {
+	if (this->functionsByName.count(name)) {
+		return this->functionsByName.at(name);
+	} else {
+		return 0;
+	}
 }
 
 
@@ -150,6 +179,15 @@ void ScriptManager::readComponentValues(TIEntityFactory& factory, const std::str
 				LogManager::Instance()->error("Error casting value from script: " + key + ".");
 			}
 		}
+	}
+}
+
+const sol::function& ScriptManager::getFunctionByName(const std::string& name) {
+	if (this->functionsByName.count(name)) {
+		GlobalId id = this->functionsByName.at(name);
+		return this->functions.at(id);
+	} else {
+		return nullptr;
 	}
 }
 

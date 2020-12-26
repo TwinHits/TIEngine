@@ -43,3 +43,17 @@ const std::string& BehaviorComponentSystem::getName() {
     return BehaviorComponentSystem::BEHAVES;
 }
 
+
+void BehaviorComponentSystem::setBehavior(TIEntity& tientity, GlobalId functionId) {
+    BehaviorComponent* behaviorComponent = tientity.getComponent<BehaviorComponent>();
+    if (behaviorComponent != nullptr) {
+        behaviorComponent->behaviorFunctionId = functionId;
+    }
+}
+
+
+void BehaviorComponentSystem::setBehavior(TIEntity& tientity, const std::string& name) {
+    GlobalId functionId = ScriptManager::Instance()->getFunctionIdByName(name);
+    this->setBehavior(tientity, functionId);
+}
+

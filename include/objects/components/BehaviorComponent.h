@@ -13,8 +13,6 @@ public:
     virtual ~BehaviorComponent() {};
 
     GlobalId behaviorFunctionId = 0;
-    //std::vector<std::string> instructions;
-    //std::vector<std::string>::iterator currentInstruction = instructions.end();
 };
 
 }
