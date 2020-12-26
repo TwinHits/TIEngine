@@ -1,3 +1,7 @@
+#include "objects/components/SpriteComponent.h"
+#include "objects/components/TextComponent.h"
+#include "objects/components/ShapeComponent.h"
+#include "objects/components/SpriteComponent.h"
 #include "utils/ComponentSystems.h"
 
 using namespace TIE;
@@ -33,4 +37,23 @@ std::string ComponentSystems::getFactoryValue<std::string>(const TIEntityFactory
     } else {
         return defaultReturn;
     }
+}
+
+void ComponentSystems::setDrawn(TIEntity& entity, bool drawn) {
+    SpriteComponent* spriteComponent = entity.getComponent<SpriteComponent>();
+    TextComponent* textComponent = entity.getComponent<TextComponent>();
+    ShapeComponent* shapeComponent = entity.getComponent<ShapeComponent>();
+    
+    if (spriteComponent != nullptr) {
+        spriteComponent->setDrawn(drawn);
+    }
+
+    if (textComponent != nullptr) {
+        textComponent->setDrawn(drawn);
+    }
+
+    if (shapeComponent != nullptr) {
+        shapeComponent->setDrawn(drawn);
+    }
+
 }

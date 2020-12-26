@@ -23,6 +23,8 @@ namespace TIE {
 
         template<>
         std::string getFactoryValue<std::string>(const TIEntityFactory&, const std::string&, std::string, TIEntity&);
+
+        void setDrawn(TIEntity&, bool);
     }
 }
 

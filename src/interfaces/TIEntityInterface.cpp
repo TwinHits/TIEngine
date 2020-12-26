@@ -13,6 +13,7 @@
 #include "objects/components/MovesComponent.h"
 #include "objects/components/PositionComponent.h"
 #include "objects/enumeration/Direction.h"
+#include "utils/ComponentSystems.h"
 
 using namespace TIE;
 
@@ -117,7 +118,7 @@ void TIEntityInterface::spawn(const std::string& entityName) {
 }
 
 void TIE::TIEntityInterface::despawn() {
-    this->tientity->setRemove(true);
+    ComponentSystems::setDrawn(*this->tientity, false);
 }
 
 
@@ -147,6 +148,5 @@ void TIEntityInterface::setBehaviorById(GlobalId functionId) {
 
 
 void TIEntityInterface::setBehaviorByName(const std::string& name) {
-    LogManager::Instance()->out(name);
     BehaviorComponentSystem::Instance()->setBehavior(*this->tientity, name);
 }
