@@ -31,6 +31,7 @@ void TIEntityInterface::registerUserType(sol::state& luaState) {
     sol::usertype<TIEntityInterface> interfaceUserType = luaState.new_usertype<TIEntityInterface>("tientity");
     interfaceUserType["getId"] = &TIEntityInterface::getId;
 	interfaceUserType["getPosition"] = &TIEntityInterface::getPosition;
+	interfaceUserType["setPosition"] = &TIEntityInterface::setPosition;
 	interfaceUserType["setDestination"] = &TIEntityInterface::setDestination;
 	interfaceUserType["atDestination"] = &TIEntityInterface::atDestination;
     interfaceUserType["moveRight"] = &TIEntityInterface::moveRight;
@@ -59,6 +60,14 @@ Vector2fInterface TIEntityInterface::getPosition() {
         return Vector2fInterface(positionComponent->position.x, positionComponent->position.y);
     } else {
         return Vector2fInterface(0.0F, 0.0F);
+    }
+}
+
+void TIEntityInterface::setPosition(const float x, const float y) {
+    PositionComponent* positionComponent = this->tientity->getComponent<PositionComponent>();
+    if (positionComponent != nullptr) {
+        sf::Vector2f newPosition = sf::Vector2f(x, y);
+        positionComponent->position = newPosition;
     }
 }
 
