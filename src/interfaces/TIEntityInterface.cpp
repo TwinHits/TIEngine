@@ -63,6 +63,7 @@ Vector2fInterface TIEntityInterface::getPosition() {
     }
 }
 
+
 void TIEntityInterface::setPosition(const float x, const float y) {
     PositionComponent* positionComponent = this->tientity->getComponent<PositionComponent>();
     if (positionComponent != nullptr) {
@@ -73,11 +74,7 @@ void TIEntityInterface::setPosition(const float x, const float y) {
 
 
 void TIEntityInterface::setDestination(const float x, const float y) {
-    MovesComponent* movesComponent = this->tientity->getComponent<MovesComponent>();
-    PositionComponent* positionComponent = this->tientity->getComponent<PositionComponent>();
-    if (movesComponent != nullptr && positionComponent != nullptr) {
-        MovesComponentSystem::Instance()->setTargetPosition(*movesComponent, *positionComponent, sf::Vector2f(x, y));
-    }
+    MovesComponentSystem::Instance()->setTargetPosition(*this->tientity, sf::Vector2f(x, y));
 }
 
 
@@ -87,38 +84,22 @@ bool TIEntityInterface::atDestination() {
 
 
 void TIEntityInterface::moveUp() {
-    MovesComponent* movesComponent = this->tientity->getComponent<MovesComponent>();
-    PositionComponent* positionComponent = this->tientity->getComponent<PositionComponent>();
-    if (movesComponent != nullptr && positionComponent != nullptr) {
-        MovesComponentSystem::Instance()->setTargetPosition(*movesComponent, *positionComponent, Direction::TOP);
-    }
+    MovesComponentSystem::Instance()->setTargetPosition(*this->tientity, Direction::TOP);
 }
 
 
 void TIEntityInterface::moveRight() {
-    MovesComponent* movesComponent = this->tientity->getComponent<MovesComponent>();
-    PositionComponent* positionComponent = this->tientity->getComponent<PositionComponent>();
-    if (movesComponent != nullptr && positionComponent != nullptr) {
-        MovesComponentSystem::Instance()->setTargetPosition(*movesComponent, *positionComponent, Direction::RIGHT);
-    }
+    MovesComponentSystem::Instance()->setTargetPosition(*this->tientity, Direction::RIGHT);
 }
 
 
 void TIEntityInterface::moveLeft() {
-    MovesComponent* movesComponent = this->tientity->getComponent<MovesComponent>();
-    PositionComponent* positionComponent = this->tientity->getComponent<PositionComponent>();
-    if (movesComponent != nullptr && positionComponent != nullptr) {
-        MovesComponentSystem::Instance()->setTargetPosition(*movesComponent, *positionComponent, Direction::LEFT);
-    }
+    MovesComponentSystem::Instance()->setTargetPosition(*this->tientity, Direction::LEFT);
 }
 
 
 void TIEntityInterface::moveDown() {
-    MovesComponent* movesComponent = this->tientity->getComponent<MovesComponent>();
-    PositionComponent* positionComponent = this->tientity->getComponent<PositionComponent>();
-    if (movesComponent != nullptr && positionComponent != nullptr) {
-        MovesComponentSystem::Instance()->setTargetPosition(*movesComponent, *positionComponent, Direction::BOTTOM);
-    }
+    MovesComponentSystem::Instance()->setTargetPosition(*this->tientity, Direction::BOTTOM);
 }
 
 

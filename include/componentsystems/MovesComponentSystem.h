@@ -24,8 +24,8 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, public Comp
 		bool removeComponent(TIEntity&);
 		const std::string& getName();
 		
-		void setTargetPosition(MovesComponent&, PositionComponent&, Direction);
-		void setTargetPosition(MovesComponent&, PositionComponent&, sf::Vector2f&);
+		void setTargetPosition(TIEntity&, Direction);
+		void setTargetPosition(TIEntity&, sf::Vector2f&);
 		bool atTargetPosition(TIEntity&);
 
 		static const inline std::string MOVES = "moves";
@@ -42,12 +42,6 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, public Comp
 		virtual void move(MovesComponent&, PositionComponent&, const float);
 		virtual void rotate(MovesComponent&, PositionComponent&, const float);
 		virtual void accelerate(MovesComponent&, const float);
-
-		bool arePositionsCloseEnough(const sf::Vector2f&, const sf::Vector2f&);
-		bool areRotationsCloseEnough(const float, const float);
-		bool areFloatsCloseEnough(const float, const float);
-
-		static const inline float CLOSE_ENOUGH = 0.5f;
 };
 
 }

@@ -46,9 +46,15 @@ const int TIE::Math::directionFromAngleToAngle(const float start, const float en
 	return fmod(start - end + 360, 360) > 180 ? 1 : -1;
 }
 
+
 const bool TIE::Math::areFloatsEqual(const float f1, const float f2) {
 	// https://www.tutorialspoint.com/what-is-the-most-effective-way-for-float-and-double-comparison-in-c-cplusplus
 	return fabs(f1 - f2) < std::numeric_limits<float>::epsilon();
+}
+
+
+const bool TIE::Math::areVectorsEqual(const sf::Vector2f& v1, const sf::Vector2f& v2) {
+	return TIE::Math::areFloatsEqual(v1.x, v2.x) && TIE::Math::areFloatsEqual(v1.y, v2.y);
 }
 
 
@@ -57,6 +63,26 @@ const bool TIE::Math::isAngleBetweenAngles(const float angle, const float left, 
 	const float leftDistance = TIE::Math::distanceBetweenTwoAngles(angle, left);
 	const float rightDistance = TIE::Math::distanceBetweenTwoAngles(angle, right);
 	return leftDistance <= difference && rightDistance <= difference;
+}
+
+
+const bool TIE::Math::isVectorBetweenVectors(const sf::Vector2f& endA, const sf::Vector2f& endB, const sf::Vector2f& mid) {
+	return TIE::Math::areFloatsEqual(TIE::Math::distanceBetweenTwoPoints(endA, mid) + TIE::Math::distanceBetweenTwoPoints(endB, mid), TIE::Math::distanceBetweenTwoPoints(endA, endB));
+}
+
+
+const float TIE::Math::getDotProduct(const sf::Vector2f& a, const sf::Vector2f& b) {
+	return a.x * b.x + a.y * b.y;
+}
+
+
+const sf::Vector2f TIE::Math::getProjectedVector(const sf::Vector2f& project, const sf::Vector2f& onto) {
+	float d = TIE::Math::getDotProduct(onto, onto);
+    if (d > 0) {
+		float dp = TIE::Math::getDotProduct(project, onto);
+		return onto * (dp / d);
+    }
+	return onto;
 }
 
 
