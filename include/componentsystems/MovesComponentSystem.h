@@ -41,7 +41,7 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, public Comp
 
 		virtual void move(MovesComponent&, PositionComponent&, const float);
 		virtual void rotate(MovesComponent&, PositionComponent&, const float);
-		virtual void accelerate(MovesComponent&, const float);
+		virtual void accelerate(MovesComponent&, PositionComponent&, const float);
 };
 
 }
