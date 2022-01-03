@@ -8,10 +8,12 @@
 using namespace TIE;
 
 bool GridGuide::initialize(const sf::FloatRect& bounds, const sf::Vector2i& gridSize, const sf::Vector2f& tileSize) {
+	this->setName("GridGuide");
 	
 	// Y lines
 	for (int i = 0; i <= gridSize.x; i++) {
 		TIEntity& entity = this->attachChild();
+		entity.setName("GridGuide Y " + std::to_string(i));
 		ShapeComponent& shape = entity.addComponent<ShapeComponent>();
 		shape.setDrawn(true);
 		shape.setPosition(sf::Vector2f(bounds.left + tileSize.x * i, bounds.top));
@@ -23,6 +25,7 @@ bool GridGuide::initialize(const sf::FloatRect& bounds, const sf::Vector2i& grid
 	// X lines
 	 for (int i = 0; i <= gridSize.y; i++) {
 		TIEntity& entity = this->attachChild();
+		entity.setName("GridGuide X " + std::to_string(i));
 		ShapeComponent& shape = entity.addComponent<ShapeComponent>();
 		shape.setDrawn(true);
 		shape.setPosition(sf::Vector2f(bounds.left, bounds.top + tileSize.y * i));
