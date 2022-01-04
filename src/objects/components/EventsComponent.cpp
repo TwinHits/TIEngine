@@ -5,6 +5,7 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "objects/components/structs/EventState.h"
 #include "templates/VectorHelpers.h"
 
 using namespace TIE;
@@ -73,24 +74,45 @@ bool EventsComponent::hasKeyHandlers() {
 }
 
 
-bool EventsComponent::hasState(const std::string& state) {
-	return Vector::contains(this->states, state);
+bool EventsComponent::hasState(const std::string& name) {
+	for (const auto& state : this->states) {
+		if (state.name == name) {
+			return true;
+		}
+	}
+	return false;
 }
 
 
-void EventsComponent::addState(const std::string& state) {
-	if (!this->hasState(state)) {
-		this->states.push_back(state);
+void EventsComponent::addState(const std::string& name) {
+	if (!this->hasState(name)) {
+		this->states.push_back({ name, 0 });
 	}
 }
 
 
-void EventsComponent::removeState(const std::string& state) {
-	Vector::remove(this->states, state);
+void EventsComponent::removeState(const std::string& name) {
+	this->states.erase(remove_if(begin(states), end(states), [name](EventState const& state)
+		{
+			return state.name == name;
+		}), end(states));
 }
 
 
-const std::vector<std::string>& TIE::EventsComponent::getStates() {
+EventState* EventsComponent::getState(const std::string& name) {
+	auto result = std::find_if(this->states.begin(), this->states.end(), [&](const EventState& state) {
+		return state.name == name;
+		});
+
+	if (result != this->states.end()) {
+		return &(*result);
+	} else {
+		return nullptr;
+	}
+}
+
+
+std::vector<EventState>& EventsComponent::getStates() {
 	return this->states;
 }
 

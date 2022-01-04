@@ -9,6 +9,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "objects/GlobalId.h"
+#include "objects/components/structs/EventState.h"
 
 namespace TIE {
 
@@ -34,7 +35,8 @@ class EventsComponent : public Component {
 		bool hasState(const std::string&);
 		void addState(const std::string&);
 		void removeState(const std::string&);
-		const std::vector<std::string>& getStates();
+		EventState* getState(const std::string&);
+		std::vector<EventState>& getStates();
 		
 		void setSelectable(bool);
 		bool isSelectable();
@@ -44,8 +46,8 @@ class EventsComponent : public Component {
 		void removeSelectedComponent(EventsComponent&);
 		void clearSelectedComponents();
 	private:
-		std::vector<std::string> states;
-		// Map of state to event to Lua function id
+		std::vector<EventState> states;
+		// Map of state name to event to Lua function id
 		std::map<std::string, std::map<sf::Event::EventType, GlobalId> > eventHandlers;
 		std::map<std::string, std::map<sf::Keyboard::Key, GlobalId> > keyHandlers;
 		bool selectable = false;

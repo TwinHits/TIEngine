@@ -12,6 +12,7 @@
 #include "objects/GlobalId.h"
 #include "objects/components/MovesComponent.h"
 #include "objects/components/PositionComponent.h"
+#include "objects/components/structs/EventState.h"
 #include "objects/enumeration/Direction.h"
 #include "utils/ComponentSystems.h"
 
@@ -43,6 +44,7 @@ void TIEntityInterface::registerUserType(sol::state& luaState) {
     interfaceUserType["moveDown"] = &TIEntityInterface::moveDown;
     interfaceUserType["addState"] = &TIEntityInterface::addState;
     interfaceUserType["removeState"] = &TIEntityInterface::removeState;
+    interfaceUserType["getState"] = &TIEntityInterface::getState;
     interfaceUserType["setCache"] = &TIEntityInterface::setCache;
     interfaceUserType["getCache"] = &TIEntityInterface::getCache;
     interfaceUserType["setBehaviorById"] = &TIEntityInterface::setBehaviorById;
@@ -126,6 +128,15 @@ void TIEntityInterface::addState(const std::string& state) {
 
 void TIEntityInterface::removeState(const std::string& state) {
     EventsComponentSystem::Instance()->removeState(*this->tientity, state);
+}
+
+
+EventState* TIEntityInterface::getState(const std::string& state) {
+    EventState* eventState = EventsComponentSystem::Instance()->getState(*this->tientity, state);
+    if (eventState == nullptr) {
+        LogManager::Instance()->error("TIEntity " + this->tientity->getName() + " " + std::to_string(this->tientity->getId()) + " does not have event state " + state + ".");
+    }
+    return eventState;
 }
 
 

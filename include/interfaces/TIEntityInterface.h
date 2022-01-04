@@ -7,6 +7,7 @@
 
 #include "interfaces/Vector2Interface.h"
 #include "objects/GlobalId.h"
+#include "objects/components/structs/EventState.h"
 #include "objects/entities/TIEntity.h"
 
 namespace TIE {
@@ -42,6 +43,7 @@ class TIEntityInterface {
         // Events
         void addState(const std::string&);
         void removeState(const std::string&);
+        EventState* getState(const std::string&);
 
         // Cache
         void setCache(sol::table&);

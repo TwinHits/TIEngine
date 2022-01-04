@@ -7,7 +7,7 @@
 
 #include "interfaces/TIEntityInterface.h"
 #include "interfaces/Vector2Interface.h"
-#include "objects//GlobalId.h"
+#include "objects/GlobalId.h"
 
 namespace TIE {
 

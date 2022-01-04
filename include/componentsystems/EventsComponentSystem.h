@@ -10,6 +10,7 @@
 #include "objects/components/MovesComponent.h"
 #include "objects/components/PositionComponent.h"
 #include "objects/components/SpriteComponent.h"
+#include "objects/components/structs/EventState.h"
 #include "objects/entities/TIEntity.h"
 #include "objects/factories/TIEntityFactory.h"
 #include "managers/EventsManager.h"
@@ -28,6 +29,7 @@ class EventsComponentSystem : public Singleton<EventsComponentSystem>, public Co
 		// Helpers
 		bool addState(TIEntity&, const std::string&);
 		bool removeState(TIEntity&, const std::string&);
+		EventState* getState(TIEntity&, const std::string&);
 
 		const static inline std::string EVENTS = "events";
 	private:

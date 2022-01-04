@@ -7,6 +7,7 @@
 #include "objects/components/MovesComponent.h"
 #include "objects/components/PositionComponent.h"
 #include "objects/components/SpriteComponent.h"
+#include "objects/components/structs/EventState.h"
 #include "objects/entities/TIEntity.h"
 #include "objects/enumeration/Direction.h"
 #include "objects/GlobalId.h"
@@ -20,11 +21,18 @@ void EventsComponentSystem::update(const float delta) {
 	this->updateSelectedStates();
 
 	for (auto& c : this->components) {
+
+		// Add time elapsed to each state
+		for (auto& state : c.eventsComponent.getStates()) {
+			state.timeElapsed += delta;
+		}
+
+		// Check if any handlers run from events
 		if (c.eventsComponent.hasHandlers() && EventsManager::Instance()->hasEvents()) {
 			const std::map<sf::Event::EventType, sf::Event>& events = EventsManager::Instance()->getEvents();
-			for (const std::string& state : c.eventsComponent.getStates()) {
+			for (const EventState& state : c.eventsComponent.getStates()) {
 				for (auto& event : events) {
-					const GlobalId eventHandler = c.eventsComponent.getEventHandler(state, event.second);
+					const GlobalId eventHandler = c.eventsComponent.getEventHandler(state.name, event.second);
 					if (eventHandler) {
 						ScriptManager::Instance()->runFunction<bool>(eventHandler, c.tientity);
 					}
@@ -120,6 +128,15 @@ bool EventsComponentSystem::removeState(TIEntity& tientity, const std::string& s
 		return true;
 	} else {
 		return false;
+	}
+}
+
+EventState* EventsComponentSystem::getState(TIEntity& tientity, const std::string& name) {
+	EventsComponent* eventsComponent = tientity.getComponent<EventsComponent>();
+	if (eventsComponent != nullptr) {
+		return eventsComponent->getState(name);
+	} else {
+		return nullptr;
 	}
 }
 

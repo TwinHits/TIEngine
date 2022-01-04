@@ -6,6 +6,7 @@
 #include <sol/sol.hpp>
 #define SOL_ALL_SAFETIES_ON 1
 
+#include "interfaces/EventStateInterface.h"
 #include "interfaces/TIEngineInterface.h"
 #include "interfaces/TIEntityInterface.h"
 #include "managers/AssetsManager.h"
@@ -29,6 +30,8 @@ bool ScriptManager::initialize() {
 		sol::lib::table
 	);
 
+	//Register user types with lua state
+    EventStateInterface::registerUserType(this->luaState);
     TIEngineInterface::registerUserType(this->luaState);
     TIEntityInterface::registerUserType(this->luaState);
 
