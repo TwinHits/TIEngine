@@ -56,7 +56,7 @@ class TIEntity {
 		bool getRemove() const;
 
 		void setName(std::string);
-		const std::string getName() const;
+		const std::string& getName() const;
 
 		std::vector<std::unique_ptr<TIEntity> >& getChildren();
 		TIEntity& attachChild(std::unique_ptr<TIEntity>);

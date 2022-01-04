@@ -35,6 +35,8 @@ class TIEntityFactory {
 		std::vector<TIEntityFactory> children;
 
 		std::vector<std::string> validComponentNames;
+		static const inline std::string LIFECYCLE = "lifecycle";
+		static const inline std::string LIFECYCLE_CREATED = LIFECYCLE + ".created";
 };
 
 }

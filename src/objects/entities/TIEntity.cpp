@@ -49,7 +49,7 @@ void TIE::TIEntity::setName(std::string name) {
 }
 
 
-const std::string TIE::TIEntity::getName() const {
+const std::string& TIE::TIEntity::getName() const {
 	return this->name;
 }
 
