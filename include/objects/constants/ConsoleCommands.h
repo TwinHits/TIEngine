@@ -1,4 +1,6 @@
-#include <array>
+#ifndef CONSOLECOMMANDS_H
+#define CONSOLECOMMANDS_H
+
 #include <string>
 
 namespace TIE {
@@ -18,3 +20,5 @@ class ConsoleCommands {
 };
 
 }
+
+#endif

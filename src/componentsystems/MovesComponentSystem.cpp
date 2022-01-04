@@ -71,7 +71,7 @@ void MovesComponentSystem::setTargetPosition(TIEntity& tientity, Direction direc
 	PositionComponent* positionComponent = tientity.getComponent<PositionComponent>();
 
 	if (movesComponent != nullptr && positionComponent != nullptr) {
-		if (TIE::Math::areVectorsEqual(movesComponent->targetPosition, positionComponent->position)) {
+		if (this->atTargetPosition(*movesComponent, *positionComponent)) {
 
 			float distance = movesComponent->maxSpeed;
 			if (WorldManager::Instance()->isGridConfigured()) {
@@ -115,16 +115,21 @@ bool MovesComponentSystem::atTargetPosition(TIEntity& tientity) {
     MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
     PositionComponent* positionComponent = tientity.getComponent<PositionComponent>();
     if (movesComponent != nullptr && positionComponent != nullptr) {
-		return Math::areVectorsEqual(movesComponent->targetPosition, positionComponent->position);
+		return this->atTargetPosition(*movesComponent, *positionComponent);
 	} else {
 		return false;
 	}
 }
 
 
+bool MovesComponentSystem::atTargetPosition(MovesComponent& movesComponent, PositionComponent& positionComponent) {
+	return Math::areVectorsEqual(movesComponent.targetPosition, positionComponent.position);
+}
+
+
 void MovesComponentSystem::move(MovesComponent& movesComponent, PositionComponent& positionComponent, const float delta) {
 	if (movesComponent.speed != 0) {
-        if (!Math::areVectorsEqual(movesComponent.targetPosition, positionComponent.position)) {
+        if (!this->atTargetPosition(movesComponent, positionComponent)) {
             sf::Vector2f velocity = sf::Vector2f(movesComponent.speed, positionComponent.angle);
             sf::Vector2f distance = Math::translateVelocityByTime(velocity, delta);
             sf::Vector2f newPosition = sf::Vector2f(positionComponent.position.x + distance.x, positionComponent.position.y + distance.y);
@@ -141,7 +146,7 @@ void MovesComponentSystem::move(MovesComponent& movesComponent, PositionComponen
 
 
 void MovesComponentSystem::accelerate(MovesComponent& movesComponent, PositionComponent& positionComponent,  const float delta) {
-	if (!Math::areVectorsEqual(movesComponent.targetPosition, positionComponent.position)) {
+	if (!this->atTargetPosition(movesComponent, positionComponent)) {
 		float distanceToTarget = Math::distanceBetweenTwoPoints(positionComponent.position, movesComponent.targetPosition);
 
 		float direction = 1.0f;
@@ -162,6 +167,9 @@ void MovesComponentSystem::accelerate(MovesComponent& movesComponent, PositionCo
 		} else {
 			movesComponent.rotationalVelocity.x = 0;
 		}
+	} else {
+		movesComponent.speed = 0;
+		movesComponent.rotationalVelocity.x = 0;
 	}
 }
 

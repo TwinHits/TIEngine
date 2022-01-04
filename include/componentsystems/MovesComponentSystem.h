@@ -39,6 +39,8 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, public Comp
 		};
 		std::list<Components> components;
 
+		bool atTargetPosition(MovesComponent&, PositionComponent&);
+
 		virtual void move(MovesComponent&, PositionComponent&, const float);
 		virtual void rotate(MovesComponent&, PositionComponent&, const float);
 		virtual void accelerate(MovesComponent&, PositionComponent&, const float);

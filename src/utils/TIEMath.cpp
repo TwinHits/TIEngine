@@ -1,6 +1,7 @@
 #include "utils/TIEMath.h"
 
 #include "managers/LogManager.h"
+#include "utils/constants/MathConstants.h"
 
 float TIE::Math::toRadians(float degrees) { 
 	return (degrees * M_PI) / 180; 
@@ -49,7 +50,7 @@ const int TIE::Math::directionFromAngleToAngle(const float start, const float en
 
 const bool TIE::Math::areFloatsEqual(const float f1, const float f2) {
 	// https://www.tutorialspoint.com/what-is-the-most-effective-way-for-float-and-double-comparison-in-c-cplusplus
-	return fabs(f1 - f2) < std::numeric_limits<float>::epsilon();
+	return fabs(f1 - f2) <= TIE::TIEMathConstants::FLOAT_COMPARISION_EPSILION;
 }
 
 
