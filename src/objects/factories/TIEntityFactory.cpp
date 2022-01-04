@@ -3,6 +3,7 @@
 #include <algorithm>
 
 #include "componentsystems/ComponentSystem.h"
+#include "componentsystems/LifecycleComponentSystem.h"
 #include "managers/SceneManager.h"
 #include "managers/ScriptManager.h"
 #include "objects/entities/TIEntity.h"
@@ -13,7 +14,6 @@ TIEntityFactory::TIEntityFactory() {
 	for (ComponentSystem* componentSystem : SceneManager::Instance()->getComponentSystems()) {
 		this->validComponentNames.push_back(componentSystem->getName());
 	}
-	this->validComponentNames.push_back(this->LIFECYCLE);
 }
 
 
@@ -30,13 +30,11 @@ TIEntity& TIEntityFactory::build() {
 		componentSystem->addComponent(*this, tientity);
 	}
 
+	LifecycleComponentSystem::Instance()->runCreated(tientity);
+
 	for (auto & child : this->children) {
 		child.setParent(&tientity);
 		child.build();
-	}
-
-	if (this->functionValues.count(this->LIFECYCLE_CREATED)) {
-		ScriptManager::Instance()->runFunction<bool>(this->functionValues.at(this->LIFECYCLE_CREATED), tientity);
 	}
 
 	return tientity;

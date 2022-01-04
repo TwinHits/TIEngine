@@ -8,7 +8,9 @@ using namespace TIE;
 
 void BehaviorComponentSystem::update(const float) {
 	for (Components& components : this->components) {
-		ScriptManager::Instance()->runFunction<bool>(components.behaviorComponent.behaviorFunctionId, components.tientity);
+        if (components.behaviorComponent.behaviorFunctionId) {
+            ScriptManager::Instance()->runFunction<bool>(components.behaviorComponent.behaviorFunctionId, components.tientity);
+        }
 	}
 }
 

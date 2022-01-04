@@ -11,6 +11,7 @@
 #include "componentsystems/CacheComponentSystem.h"
 #include "componentsystems/EventsComponentSystem.h"
 #include "componentsystems/GridComponentSystem.h"
+#include "componentsystems/LifecycleComponentSystem.h"
 #include "componentsystems/MovesComponentSystem.h"
 #include "componentsystems/ShapeComponentSystem.h"
 #include "componentsystems/SpriteComponentSystem.h"
@@ -63,6 +64,7 @@ bool SceneManager::initialize() {
 
 	// Component System registration and order of update
 	this->componentSystems.push_back(EventsComponentSystem::Instance());
+	this->componentSystems.push_back(LifecycleComponentSystem::Instance());
 	this->componentSystems.push_back(BehaviorComponentSystem::Instance());
 	this->componentSystems.push_back(MovesComponentSystem::Instance());
 	this->componentSystems.push_back(CollidesComponentSystem::Instance());
@@ -136,6 +138,7 @@ void SceneManager::removeTIEntities(TIEntity& tientity) {
 
 
 void SceneManager::removeComponents(TIEntity& tientity) {
+	LifecycleComponentSystem::Instance()->runRemoved(tientity);
 	for (ComponentSystem* componentSystem : this->componentSystems) {
 		componentSystem->removeComponent(tientity);
 	}
@@ -172,6 +175,7 @@ void SceneManager::render() {
 float SceneManager::getFPS() {
 	return this->fps;
 }
+
 
 void SceneManager::setTIEntitiesMarkedForRemove(bool flag) {
 	this->tientitiesMarkedForRemove = flag;
