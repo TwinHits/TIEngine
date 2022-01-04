@@ -1,7 +1,7 @@
 #include "utils/TIEMath.h"
 
 #include "managers/LogManager.h"
-#include "utils/constants/MathConstants.h"
+#include "utils/constants/TIEMathConstants.h"
 
 float TIE::Math::toRadians(float degrees) { 
 	return (degrees * M_PI) / 180; 
