@@ -133,9 +133,6 @@ void TIEntityInterface::removeState(const std::string& state) {
 
 EventState* TIEntityInterface::getState(const std::string& state) {
     EventState* eventState = EventsComponentSystem::Instance()->getState(*this->tientity, state);
-    if (eventState == nullptr) {
-        LogManager::Instance()->error("TIEntity " + this->tientity->getName() + " " + std::to_string(this->tientity->getId()) + " does not have event state " + state + ".");
-    }
     return eventState;
 }
 

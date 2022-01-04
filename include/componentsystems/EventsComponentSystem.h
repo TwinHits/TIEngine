@@ -23,11 +23,12 @@ class EventsComponentSystem : public Singleton<EventsComponentSystem>, public Co
 		EventsComponentSystem() {};
 		void update(const float);
 		void addComponent(const TIEntityFactory&, TIEntity&);
+		EventsComponent& addComponent(TIEntity&);
 		bool removeComponent(TIEntity&);
 		const std::string& getName();
 
 		// Helpers
-		bool addState(TIEntity&, const std::string&);
+		void addState(TIEntity&, const std::string&);
 		bool removeState(TIEntity&, const std::string&);
 		EventState* getState(TIEntity&, const std::string&);
 

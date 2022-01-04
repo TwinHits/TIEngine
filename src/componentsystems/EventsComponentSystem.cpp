@@ -88,6 +88,18 @@ void EventsComponentSystem::addComponent(const TIEntityFactory& factory, TIEntit
 }
 
 
+EventsComponent& EventsComponentSystem::addComponent(TIEntity& tientity) {
+	EventsComponent& eventsComponent = tientity.addComponent<EventsComponent>();
+	MovesComponent& movesComponent = tientity.addComponent<MovesComponent>();
+	PositionComponent& positionComponent = tientity.addComponent<PositionComponent>();
+	SpriteComponent& spriteComponent = tientity.addComponent<SpriteComponent>();
+	Components components = { eventsComponent, movesComponent, positionComponent, spriteComponent, tientity };
+	this->components.push_back(components);
+
+	return eventsComponent;
+}
+
+
 bool EventsComponentSystem::removeComponent(TIEntity& tientity) {
 	EventsComponent* eventsComponent = tientity.getComponent<EventsComponent>();
 	if (eventsComponent != nullptr) {
@@ -110,14 +122,12 @@ const std::string& EventsComponentSystem::getName() {
 }
 
 
-bool EventsComponentSystem::addState(TIEntity& tientity, const std::string& state) {
+void EventsComponentSystem::addState(TIEntity& tientity, const std::string& state) {
 	EventsComponent* eventsComponent = tientity.getComponent<EventsComponent>();
-	if (eventsComponent != nullptr) {
-		eventsComponent->addState(state);
-		return true;
-	} else {
-		return false;
+	if (eventsComponent == nullptr) {
+		eventsComponent = &(this->addComponent(tientity));
 	}
+	eventsComponent->addState(state);
 }
 
 
