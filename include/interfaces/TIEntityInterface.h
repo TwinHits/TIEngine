@@ -22,6 +22,13 @@ class TIEntityInterface {
         // Information
         GlobalId getId();
 
+        // Spawn
+        void spawn(const std::string&);
+        void despawn();
+
+        // Rendering
+        void setDrawn(bool);
+
         // Movement
         Vector2fInterface getPosition();
         void setPosition(const float, const float);
@@ -31,10 +38,6 @@ class TIEntityInterface {
         void moveRight();
         void moveLeft();
         void moveDown();
-
-        // Spawn
-        void spawn(const std::string&);
-        void despawn();
 
         // Events
         void addState(const std::string&);

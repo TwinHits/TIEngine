@@ -30,6 +30,9 @@ TIEntityInterface::TIEntityInterface(TIEntity* tientity) {
 void TIEntityInterface::registerUserType(sol::state& luaState) {
     sol::usertype<TIEntityInterface> interfaceUserType = luaState.new_usertype<TIEntityInterface>("tientity");
     interfaceUserType["getId"] = &TIEntityInterface::getId;
+    interfaceUserType["spawn"] = &TIEntityInterface::spawn;
+    interfaceUserType["despawn"] = &TIEntityInterface::despawn;
+    interfaceUserType["setDrawn"] = &TIEntityInterface::setDrawn;
 	interfaceUserType["getPosition"] = &TIEntityInterface::getPosition;
 	interfaceUserType["setPosition"] = &TIEntityInterface::setPosition;
 	interfaceUserType["setDestination"] = &TIEntityInterface::setDestination;
@@ -38,10 +41,8 @@ void TIEntityInterface::registerUserType(sol::state& luaState) {
     interfaceUserType["moveLeft"] = &TIEntityInterface::moveLeft;
     interfaceUserType["moveUp"] = &TIEntityInterface::moveUp;
     interfaceUserType["moveDown"] = &TIEntityInterface::moveDown;
-    interfaceUserType["spawn"] = &TIEntityInterface::spawn;
     interfaceUserType["addState"] = &TIEntityInterface::addState;
     interfaceUserType["removeState"] = &TIEntityInterface::removeState;
-    interfaceUserType["despawn"] = &TIEntityInterface::despawn;
     interfaceUserType["setCache"] = &TIEntityInterface::setCache;
     interfaceUserType["getCache"] = &TIEntityInterface::getCache;
     interfaceUserType["setBehaviorById"] = &TIEntityInterface::setBehaviorById;
@@ -51,6 +52,21 @@ void TIEntityInterface::registerUserType(sol::state& luaState) {
 
 GlobalId TIEntityInterface::getId() {
     return this->tientity->getId();
+}
+
+
+void TIEntityInterface::spawn(const std::string& entityName) {
+    WorldManager::Instance()->spawnTIEntity(entityName);
+}
+
+
+void TIEntityInterface::despawn() {
+    this->setDrawn(false);
+}
+
+
+void TIEntityInterface::setDrawn(bool drawn) {
+    ComponentSystems::setDrawn(*this->tientity, drawn);
 }
 
 
@@ -100,15 +116,6 @@ void TIEntityInterface::moveLeft() {
 
 void TIEntityInterface::moveDown() {
     MovesComponentSystem::Instance()->setTargetPosition(*this->tientity, Direction::BOTTOM);
-}
-
-
-void TIEntityInterface::spawn(const std::string& entityName) {
-    WorldManager::Instance()->spawnTIEntity(entityName);
-}
-
-void TIE::TIEntityInterface::despawn() {
-    ComponentSystems::setDrawn(*this->tientity, false);
 }
 
 
