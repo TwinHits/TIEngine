@@ -39,6 +39,8 @@ class TIEngineInterface {
         TIEntityInterface getTIEntityById(GlobalId);
 
         GlobalId registerBehavior(const std::string&, const sol::function&);
+
+        TIEntityInterface registerSceneLayer(const std::string&);
 };
 
 }

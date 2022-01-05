@@ -4,6 +4,7 @@
 #include "managers/Manager.h"
 #include "templates/Singleton.h"
 
+#include "objects/SceneLayer.h"
 #include "objects/components/GridComponent.h"
 #include "objects/components/SpriteComponent.h"
 #include "objects/entities/GridGuide.h"
@@ -17,7 +18,7 @@ class WorldManager : public Singleton<WorldManager>, Manager {
 		bool initialize();
 
 		TIEntity* getLevelEntity();
-		void setLevelEntity(TIEntity&);
+		void setLevelEntity(const std::string&);
 
 		bool isGridConfigured();
 		GridComponent* getGridComponent();
@@ -28,6 +29,7 @@ class WorldManager : public Singleton<WorldManager>, Manager {
 		bool isTIEntityRegistered(const std::string&);
 		TIEntityFactory& getTIEntityFactory(const std::string&);
 		TIEntity& spawnTIEntity(const std::string&);
+		TIEntity& spawnTIEntity(const std::string&, TIEntity*);
 		TIEntity* getTIEntityById(GlobalId);
 
 		WorldManager() {};
@@ -40,6 +42,7 @@ class WorldManager : public Singleton<WorldManager>, Manager {
 		std::map<std::string, TIEntityFactory> tientityDefinitions;
 		std::map<GlobalId, TIEntity*> tientities;
 
+		SceneLayer* worldLayer = nullptr;
 		TIEntity* levelEntity = nullptr;
 		GridComponent* gridComponent = nullptr;
 		GridGuide* gridGuide = nullptr;

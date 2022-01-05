@@ -5,6 +5,7 @@
 #include "objects/components/SpriteComponent.h"
 #include "objects/entities/TIEntity.h"
 #include "objects/entities/GridGuide.h"
+#include "objects/factories/SceneLayerFactory.h"
 #include "managers/LogManager.h"
 #include "managers/SceneManager.h"
 #include "managers/ViewManager.h"
@@ -14,6 +15,7 @@
 using namespace TIE;
 
 bool WorldManager::initialize() {
+	this->worldLayer = &SceneLayerFactory().setLayer(SceneLayer::Layer::WORLD).setParent(SceneManager::Instance()->getClientLayer()).setViewId(ViewManager::Instance()->getClientViewId()).setName("WorldLayer").build();
 	return true;
 }
 
@@ -28,9 +30,9 @@ TIEntity* WorldManager::getLevelEntity() {
 }
 
 
-void WorldManager::setLevelEntity(TIEntity& tientity) {
-	this->levelEntity = &tientity;
-	this->gridComponent = tientity.getComponent<GridComponent>();
+void WorldManager::setLevelEntity(const std::string& name) {
+	this->levelEntity = &this->getTIEntityFactory(name).setParent(this->worldLayer).build();
+	this->gridComponent = this->levelEntity->getComponent<GridComponent>();
 	SpriteComponent* spriteComponent = this->levelEntity->getComponent<SpriteComponent>();
 	this->recalculateScrollBounds(*spriteComponent);
 }
@@ -71,9 +73,12 @@ TIEntityFactory& WorldManager::getTIEntityFactory(const std::string& name) {
 	return this->tientityDefinitions.at(name);
 }
 
-
 TIEntity& WorldManager::spawnTIEntity(const std::string& tientityName) {
-    TIEntity& tientity = tientityDefinitions.at(tientityName).build();
+	return this->spawnTIEntity(tientityName, &SceneManager::Instance()->getClientLayer());
+}
+
+TIEntity& WorldManager::spawnTIEntity(const std::string& tientityName, TIEntity* parent) {
+    TIEntity& tientity = tientityDefinitions.at(tientityName).setParent(parent).build();
     this->tientities[tientity.getId()] = &tientity;
     return tientity;
 }

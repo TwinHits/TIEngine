@@ -9,9 +9,12 @@
 #include "managers/AssetsManager.h"
 #include "managers/EventsManager.h"
 #include "managers/LogManager.h"
+#include "managers/SceneManager.h"
 #include "managers/ScriptManager.h"
+#include "managers/ViewManager.h"
 #include "managers/WindowManager.h"
 #include "managers/WorldManager.h"
+#include "objects/factories/SceneLayerFactory.h"
 #include "utils/StringHelpers.h"
 
 using namespace TIE;
@@ -32,6 +35,7 @@ void TIEngineInterface::registerUserType(sol::state& luaState) {
 	engineInterfaceUserType["getMouseClickPosition"] = &TIEngineInterface::getMouseClickPosition;
     engineInterfaceUserType["getTIEntityById"] = &TIEngineInterface::getTIEntityById;
     engineInterfaceUserType["registerBehavior"] = &TIEngineInterface::registerBehavior;
+    engineInterfaceUserType["registerSceneLayer"] = &TIEngineInterface::registerSceneLayer;
 }
 
 
@@ -75,8 +79,7 @@ bool TIEngineInterface::registerLevel(const std::string& name, const sol::table&
 
 bool TIEngineInterface::setLevel(const std::string& name) {
     if (WorldManager::Instance()->isTIEntityRegistered(name)) {
-        TIEntityFactory& factory = WorldManager::Instance()->getTIEntityFactory(name);
-        WorldManager::Instance()->setLevelEntity(factory.build());
+        WorldManager::Instance()->setLevelEntity(name);
         return true;
     } else {
         LogManager::Instance()->warn("Level with name " + name + " is not registered.");
@@ -129,4 +132,14 @@ TIEntityInterface TIEngineInterface::getTIEntityById(GlobalId id) {
 
 GlobalId TIEngineInterface::registerBehavior(const std::string& name, const sol::function& behavior) {
     return ScriptManager::Instance()->registerFunctionByName(name, behavior);
+}
+
+
+TIEntityInterface TIEngineInterface::registerSceneLayer(const std::string& name) {
+    SceneLayerFactory sceneLayerFactory = SceneLayerFactory();
+    sceneLayerFactory.setName(name);
+    sceneLayerFactory.setParent(SceneManager::Instance()->getClientLayer());
+    sceneLayerFactory.setViewId(ViewManager::Instance()->getClientViewId());
+    SceneLayer& sceneLayer = sceneLayerFactory.build();
+    return TIEntityInterface(sceneLayer);
 }

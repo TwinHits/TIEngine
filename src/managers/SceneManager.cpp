@@ -28,6 +28,7 @@
 #include "objects/entities/DegreeGuide.h"
 #include "objects/entities/MousePtrCoords.h"
 #include "objects/entities/PerformanceDisplay.h"
+#include "objects/factories/SceneLayerFactory.h"
 #include "templates/MakeUnique.h"
 
 using namespace TIE;
@@ -40,15 +41,8 @@ bool SceneManager::initialize() {
 	this->sceneGraphRoot->setViewId(ViewManager::Instance()->getEngineViewId());
 	this->sceneGraphRoot->setName("SceneGraphRoot");
 
-	this->clientLayer = &dynamic_cast<SceneLayer&>(this->sceneGraphRoot->attachChild(make_unique<SceneLayer>()));
-	this->clientLayer->setLayer(SceneLayer::Layer::CLIENT);
-	this->clientLayer->setViewId(ViewManager::Instance()->getClientViewId());
-	this->clientLayer->setName("ClientLayer");
-
-	this->engineLayer = &dynamic_cast<SceneLayer&>(this->sceneGraphRoot->attachChild(make_unique<SceneLayer>()));
-	this->engineLayer->setLayer(SceneLayer::Layer::ENGINE);
-	this->engineLayer->setViewId(ViewManager::Instance()->getEngineViewId());
-	this->engineLayer->setName("EngineLayer");
+	this->clientLayer = &SceneLayerFactory().setParent(this->getSceneGraphRoot()).setViewId(ViewManager::Instance()->getClientViewId()).setName("ClientLayer").setLayer(SceneLayer::Layer::CLIENT).build();
+	this->engineLayer = &SceneLayerFactory().setParent(this->getSceneGraphRoot()).setViewId(ViewManager::Instance()->getEngineViewId()).setName("EngineLayer").setLayer(SceneLayer::Layer::ENGINE).build();
 
 	std::unique_ptr<DegreeGuide> degreeGuide = make_unique<DegreeGuide>();
 	degreeGuide->initialize();

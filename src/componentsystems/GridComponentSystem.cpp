@@ -31,7 +31,6 @@ void GridComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity&
 		sf::FloatRect textureSize = spriteComponent.getLocalBounds();
 		gridComponent.setTileSize(sf::Vector2f(textureSize.width / width, textureSize.height / height));
 
-		WorldManager::Instance()->setLevelEntity(entity);
 		this->components.push_back(components);
 	}
 }

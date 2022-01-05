@@ -28,9 +28,9 @@ bool StartUpManager::initialize() {
 	ConsoleManager::Instance()->initialize();
 	HashManager::Instance()->initialize();
 	TimeManager::Instance()->initialize();
+	WorldManager::Instance()->initialize();
 	ScriptManager::Instance()->initialize();
 	StringManager::Instance()->initialize();
-	WorldManager::Instance()->initialize();
 
 	return true;
 }

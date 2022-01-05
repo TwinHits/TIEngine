@@ -10,7 +10,8 @@ class SceneLayer : public TIEntity {
 		enum class Layer {
 			ROOT,
 			ENGINE,
-			CLIENT
+			CLIENT,
+			WORLD,
 		};
 
 		SceneLayer() {};

@@ -141,6 +141,7 @@ bool EventsComponentSystem::removeState(TIEntity& tientity, const std::string& s
 	}
 }
 
+
 EventState* EventsComponentSystem::getState(TIEntity& tientity, const std::string& name) {
 	EventsComponent* eventsComponent = tientity.getComponent<EventsComponent>();
 	if (eventsComponent != nullptr) {
