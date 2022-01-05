@@ -16,6 +16,7 @@
 #include "componentsystems/ShapeComponentSystem.h"
 #include "componentsystems/SpriteComponentSystem.h"
 #include "componentsystems/TextComponentSystem.h"
+#include "componentsystems/PositionComponentSystem.h"
 #include "managers/LogManager.h" 
 #include "managers/TimeManager.h"
 #include "managers/ViewManager.h"
@@ -59,6 +60,7 @@ bool SceneManager::initialize() {
 	// Component System registration and order of update
 	this->componentSystems.push_back(EventsComponentSystem::Instance());
 	this->componentSystems.push_back(LifecycleComponentSystem::Instance());
+	this->componentSystems.push_back(PositionComponentSystem::Instance());
 	this->componentSystems.push_back(BehaviorComponentSystem::Instance());
 	this->componentSystems.push_back(MovesComponentSystem::Instance());
 	this->componentSystems.push_back(CollidesComponentSystem::Instance());

@@ -39,6 +39,8 @@ void MovesComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity
 
         movesComponent.acceleration = acceleration;
         movesComponent.maxSpeed = maxSpeed;
+		movesComponent.targetPosition = positionComponent.position;
+		movesComponent.targetAngle = positionComponent.angle;
 
         this->components.push_back(components);
 	}

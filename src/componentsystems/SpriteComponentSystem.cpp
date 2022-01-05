@@ -32,24 +32,6 @@ void SpriteComponentSystem::addComponent(const TIEntityFactory& factory, TIEntit
 		std::string textureName = factory.stringValues.at(SpriteComponentSystem::TEXTURE);
 		sf::Texture& texture = AssetsManager::Instance()->getTexture(textureName);
 
-		sf::Vector2f position = sf::Vector2f(0, 0);
-		float angle = 0;
-		if (factory.floatValues.count(SpriteComponentSystem::POSITION_X)) {
-			position.x = factory.floatValues.at(SpriteComponentSystem::POSITION_X);
-		}
-
-		if (factory.floatValues.count(SpriteComponentSystem::POSITION_Y)) {
-			position.y = factory.floatValues.at(SpriteComponentSystem::POSITION_Y);
-		}
-		
-		if (factory.floatValues.count(SpriteComponentSystem::ROTATION)) {
-			angle = factory.floatValues.at(SpriteComponentSystem::ROTATION);
-		}
-		positionComponent.position = position;
-		positionComponent.angle = angle;
-
-		spriteComponent.setDrawn(true);
-
 		if (factory.boolValues.count(SpriteComponentSystem::REPEATED)) {
 			bool repeated = factory.boolValues.at(SpriteComponentSystem::REPEATED);
 			if (repeated) {
@@ -72,6 +54,8 @@ void SpriteComponentSystem::addComponent(const TIEntityFactory& factory, TIEntit
 		spriteComponent.setTexture(texture, false);
         sf::FloatRect size = spriteComponent.getLocalBounds();
         spriteComponent.setOrigin(size.width / 2, size.height / 2);
+		spriteComponent.setPosition(positionComponent.position);
+		spriteComponent.setDrawn(true);
 	}
 }
 

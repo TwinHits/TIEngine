@@ -23,12 +23,9 @@ class SpriteComponentSystem : public Singleton<SpriteComponentSystem>, public Co
 
 		static const inline std::string DRAWN = "drawn";
 		static const inline std::string TEXTURE = "drawn.texture";
-		static const inline std::string ROTATION = "drawn.rotation";
 		static const inline std::string WIDTH = "drawn.width";
 		static const inline std::string HEIGHT = "drawn.height";
 		static const inline std::string REPEATED = "drawn.repeated";
-		static const inline std::string POSITION_X = "drawn.position.x";
-		static const inline std::string POSITION_Y = "drawn.position.y";
 	private: 
 		struct Components {
 			SpriteComponent& spriteComponent;
