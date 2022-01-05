@@ -24,7 +24,7 @@ class TIEntityInterface {
         GlobalId getId();
 
         // Spawn
-        void spawn(const std::string&);
+        TIEntityInterface spawn(const std::string&);
         void despawn();
 
         // Rendering

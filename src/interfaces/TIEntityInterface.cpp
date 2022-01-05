@@ -57,8 +57,12 @@ GlobalId TIEntityInterface::getId() {
 }
 
 
-void TIEntityInterface::spawn(const std::string& entityName) {
-    WorldManager::Instance()->spawnTIEntity(entityName, this->tientity);
+TIEntityInterface TIEntityInterface::spawn(const std::string& entityName) {
+    if (WorldManager::Instance()->isTIEntityRegistered(entityName)) {
+        return TIEntityInterface(WorldManager::Instance()->spawnTIEntity(entityName, this->tientity));
+    } else {
+        return nullptr;
+    }
 }
 
 
