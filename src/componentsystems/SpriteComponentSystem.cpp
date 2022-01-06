@@ -9,10 +9,10 @@
 #include "objects/entities/TIEntity.h"
 #include "objects/factories/TIEntityFactory.h"
 #include "managers/AssetsManager.h"
+#include "utils/ComponentSystems.h"
 #include "utils/StringHelpers.h"
 
 using namespace TIE;
-
 
 void SpriteComponentSystem::update(const float delta) {
 	for (auto& c : this->components) {
@@ -21,38 +21,32 @@ void SpriteComponentSystem::update(const float delta) {
 }
 
 
-void SpriteComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& entity) {
-
-    SpriteComponent& spriteComponent = entity.addComponent<SpriteComponent>();
-    PositionComponent& positionComponent = entity.addComponent<PositionComponent>();
+void SpriteComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
+    SpriteComponent& spriteComponent = tientity.addComponent<SpriteComponent>();
+    PositionComponent& positionComponent = tientity.addComponent<PositionComponent>();
     Components components = { spriteComponent, positionComponent };
     this->components.push_back(components);
 
-    std::string textureName = factory.stringValues.at(SpriteComponentSystem::TEXTURE);
+	std::string& textureName = ComponentSystems::getFactoryValue<std::string>(factory, SpriteComponentSystem::TEXTURE, "missing_texture.png", tientity);
     sf::Texture& texture = AssetsManager::Instance()->getTexture(textureName);
+    spriteComponent.setTexture(texture, true);
 
-    if (factory.boolValues.count(SpriteComponentSystem::REPEATED)) {
-        bool repeated = factory.boolValues.at(SpriteComponentSystem::REPEATED);
-        if (repeated) {
-            texture.setRepeated(repeated);
-            float width = texture.getSize().x;
-            float height = texture.getSize().y;
+	bool repeated = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::REPEATED, false, tientity);
+	float width = ComponentSystems::getFactoryValue<float>(factory, SpriteComponentSystem::WIDTH, texture.getSize().x, tientity);
+	float height = ComponentSystems::getFactoryValue<float>(factory, SpriteComponentSystem::HEIGHT, texture.getSize().y, tientity);
 
-            if (factory.floatValues.count(SpriteComponentSystem::WIDTH)) {
-                width = factory.floatValues.at(SpriteComponentSystem::WIDTH);
-            }
+	if (repeated) {
+		texture.setRepeated(repeated);
+		spriteComponent.setTextureRect(sf::IntRect(0, 0, width, height));
+	} else {
+		// Only scale texture to the provided size if the texture is not repeated
+		float xScale = width / texture.getSize().x;
+		float yScale = height / texture.getSize().y;
+		spriteComponent.scale(sf::Vector2f(xScale, yScale));
+	}
 
-            if (factory.floatValues.count(SpriteComponentSystem::HEIGHT)) {
-                height = factory.floatValues.at(SpriteComponentSystem::HEIGHT);
-            }
-
-            spriteComponent.setTextureRect(sf::IntRect(0, 0, width, height));
-        }
-    }
-
-    spriteComponent.setTexture(texture, false);
-    sf::FloatRect size = spriteComponent.getLocalBounds();
-    spriteComponent.setOrigin(size.width / 2, size.height / 2);
+    sf::FloatRect spriteSize = spriteComponent.getLocalBounds();
+    spriteComponent.setOrigin(spriteSize.width / 2, spriteSize.height / 2);
     spriteComponent.setPosition(positionComponent.position);
     spriteComponent.setDrawn(true);
 }

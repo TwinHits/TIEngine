@@ -1,7 +1,9 @@
+#include "componentsystems/PositionComponentSystem.h"
+
 #include <string>
 
 #include "objects/components/PositionComponent.h"
-#include "componentsystems/PositionComponentSystem.h"
+#include "objects/factories/TIEntityFactory.h"
 #include "utils/ComponentSystems.h"
 
 using namespace TIE;
