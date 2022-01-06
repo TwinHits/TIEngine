@@ -10,13 +10,6 @@
 
 using namespace TIE;
 
-TIEntityFactory::TIEntityFactory() {
-	for (ComponentSystem* componentSystem : SceneManager::Instance()->getComponentSystems()) {
-		this->validComponentNames.push_back(componentSystem->getName());
-	}
-}
-
-
 TIEntity& TIEntityFactory::build() {
 
 	if (this->parent == nullptr) {
@@ -50,11 +43,6 @@ TIEntityFactory& TIEntityFactory::registerChild() {
 	this->children.push_back(TIEntityFactory());
 	TIEntityFactory& child = this->children.back();
 	return child;
-}
-
-
-bool TIEntityFactory::isValidComponentName(const std::string& componentName) {
-	return std::find(std::begin(this->validComponentNames), std::end(this->validComponentNames), componentName) != this->validComponentNames.end();
 }
 
 

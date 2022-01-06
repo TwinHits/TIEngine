@@ -71,6 +71,11 @@ bool SceneManager::initialize() {
 	this->componentSystems.push_back(TextComponentSystem::Instance());
 	this->componentSystems.push_back(ShapeComponentSystem::Instance());
 
+	// List of valid component names
+	for (ComponentSystem* componentSystem : SceneManager::Instance()->getComponentSystems()) {
+		this->validComponentNames.push_back(componentSystem->getName());
+	}
+
 	return true;
 }
 
@@ -93,6 +98,12 @@ SceneLayer& SceneManager::getClientLayer() {
 const std::vector<ComponentSystem*>& SceneManager::getComponentSystems() {
 	return this->componentSystems;
 }
+
+
+bool SceneManager::isValidComponentName(const std::string& componentName) {
+	return std::find(std::begin(this->validComponentNames), std::end(this->validComponentNames), componentName) != this->validComponentNames.end();
+}
+
 
 /* //Investigate with collides component
 TIEntity* SceneManager::findTIEntity(sf::Vector2f point) {

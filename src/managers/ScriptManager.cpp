@@ -13,6 +13,7 @@
 #include "managers/ConfigManager.h"
 #include "managers/HashManager.h"
 #include "managers/LogManager.h"
+#include "managers/SceneManager.h"
 #include "managers/WindowManager.h"
 #include "managers/WorldManager.h"
 #include "objects/factories/TIEntityFactory.h"
@@ -131,7 +132,7 @@ TIEntityFactory& ScriptManager::loadTIEntityDefinition(const std::string& name, 
 		sol::optional<std::string> key = possibleComponent.first.as<sol::optional<std::string> >();
 		sol::optional<sol::table> defintion = possibleComponent.second.as<sol::optional<sol::table> >();
 		if (key && defintion) {
-			if (factory.isValidComponentName(*key)) {
+			if (SceneManager::Instance()->isValidComponentName(*key)) {
 				this->readComponentValues(factory, *key, *defintion);
 			} else {
 				children.push_back(*key);
