@@ -19,6 +19,10 @@ void LifecycleComponentSystem::update(const float delta) {
 
 
 void LifecycleComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
+    LifecycleComponent& lifecycleComponent = tientity.addComponent<LifecycleComponent>();
+    Components components = { tientity, lifecycleComponent };
+    this->components.push_back(components);
+
 	GlobalId createdFunctionId = 0;
 	if (factory.functionValues.count(LifecycleComponentSystem::CREATED)) {
 		createdFunctionId = factory.functionValues.at(LifecycleComponentSystem::CREATED);
@@ -34,16 +38,9 @@ void LifecycleComponentSystem::addComponent(const TIEntityFactory& factory, TIEn
 		removedFunctionId = factory.functionValues.at(LifecycleComponentSystem::REMOVED);
 	}
 
-	if (createdFunctionId || updatedFunctionId || removedFunctionId) {
-		LifecycleComponent& lifecycleComponent = tientity.addComponent<LifecycleComponent>();
-		Components components = { tientity, lifecycleComponent };
-
-		lifecycleComponent.createdFunctionId = createdFunctionId;
-		lifecycleComponent.updatedFunctionId = updatedFunctionId;
-		lifecycleComponent.removedFunctionId = removedFunctionId;
-
-		this->components.push_back(components);
-	}
+    lifecycleComponent.createdFunctionId = createdFunctionId;
+    lifecycleComponent.updatedFunctionId = updatedFunctionId;
+    lifecycleComponent.removedFunctionId = removedFunctionId;
 }
 
 

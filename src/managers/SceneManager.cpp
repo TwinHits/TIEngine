@@ -73,7 +73,7 @@ bool SceneManager::initialize() {
 
 	// List of valid component names
 	for (ComponentSystem* componentSystem : SceneManager::Instance()->getComponentSystems()) {
-		this->validComponentNames.push_back(componentSystem->getName());
+		this->componentNamesToComponentSystems[componentSystem->getName()] = componentSystem;
 	}
 
 	return true;
@@ -101,7 +101,15 @@ const std::vector<ComponentSystem*>& SceneManager::getComponentSystems() {
 
 
 bool SceneManager::isValidComponentName(const std::string& componentName) {
-	return std::find(std::begin(this->validComponentNames), std::end(this->validComponentNames), componentName) != this->validComponentNames.end();
+	return this->componentNamesToComponentSystems.count(componentName);
+}
+
+ComponentSystem* SceneManager::getComponentSystemByComponentName(const std::string& componentName) {
+	if (this->isValidComponentName(componentName)) {
+		return this->componentNamesToComponentSystems.at(componentName);
+	} else {
+		return nullptr;
+	}
 }
 
 

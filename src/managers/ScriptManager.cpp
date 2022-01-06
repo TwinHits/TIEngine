@@ -133,6 +133,7 @@ TIEntityFactory& ScriptManager::loadTIEntityDefinition(const std::string& name, 
 		sol::optional<sol::table> defintion = possibleComponent.second.as<sol::optional<sol::table> >();
 		if (key && defintion) {
 			if (SceneManager::Instance()->isValidComponentName(*key)) {
+				factory.addComponentSystemByComponentName(*key);
 				this->readComponentValues(factory, *key, *defintion);
 			} else {
 				children.push_back(*key);

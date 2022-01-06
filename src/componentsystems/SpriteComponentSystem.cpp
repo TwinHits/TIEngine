@@ -23,45 +23,43 @@ void SpriteComponentSystem::update(const float delta) {
 
 void SpriteComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& entity) {
 
-	if (factory.stringValues.count(SpriteComponentSystem::TEXTURE)) {
-        SpriteComponent& spriteComponent = entity.addComponent<SpriteComponent>();
-        PositionComponent& positionComponent = entity.addComponent<PositionComponent>();
-        Components components = { spriteComponent, positionComponent };
-		this->components.push_back(components);
+    SpriteComponent& spriteComponent = entity.addComponent<SpriteComponent>();
+    PositionComponent& positionComponent = entity.addComponent<PositionComponent>();
+    Components components = { spriteComponent, positionComponent };
+    this->components.push_back(components);
 
-		std::string textureName = factory.stringValues.at(SpriteComponentSystem::TEXTURE);
-		sf::Texture& texture = AssetsManager::Instance()->getTexture(textureName);
+    std::string textureName = factory.stringValues.at(SpriteComponentSystem::TEXTURE);
+    sf::Texture& texture = AssetsManager::Instance()->getTexture(textureName);
 
-		if (factory.boolValues.count(SpriteComponentSystem::REPEATED)) {
-			bool repeated = factory.boolValues.at(SpriteComponentSystem::REPEATED);
-			if (repeated) {
-				texture.setRepeated(repeated);
-				float width = texture.getSize().x;
-				float height = texture.getSize().y;
+    if (factory.boolValues.count(SpriteComponentSystem::REPEATED)) {
+        bool repeated = factory.boolValues.at(SpriteComponentSystem::REPEATED);
+        if (repeated) {
+            texture.setRepeated(repeated);
+            float width = texture.getSize().x;
+            float height = texture.getSize().y;
 
-				if (factory.floatValues.count(SpriteComponentSystem::WIDTH)) {
-					width = factory.floatValues.at(SpriteComponentSystem::WIDTH);
-				}
+            if (factory.floatValues.count(SpriteComponentSystem::WIDTH)) {
+                width = factory.floatValues.at(SpriteComponentSystem::WIDTH);
+            }
 
-				if (factory.floatValues.count(SpriteComponentSystem::HEIGHT)) {
-					height = factory.floatValues.at(SpriteComponentSystem::HEIGHT);
-				}
+            if (factory.floatValues.count(SpriteComponentSystem::HEIGHT)) {
+                height = factory.floatValues.at(SpriteComponentSystem::HEIGHT);
+            }
 
-				spriteComponent.setTextureRect(sf::IntRect(0, 0, width, height));
-			}
-		}
+            spriteComponent.setTextureRect(sf::IntRect(0, 0, width, height));
+        }
+    }
 
-		spriteComponent.setTexture(texture, false);
-        sf::FloatRect size = spriteComponent.getLocalBounds();
-        spriteComponent.setOrigin(size.width / 2, size.height / 2);
-		spriteComponent.setPosition(positionComponent.position);
-		spriteComponent.setDrawn(true);
-	}
+    spriteComponent.setTexture(texture, false);
+    sf::FloatRect size = spriteComponent.getLocalBounds();
+    spriteComponent.setOrigin(size.width / 2, size.height / 2);
+    spriteComponent.setPosition(positionComponent.position);
+    spriteComponent.setDrawn(true);
 }
 
 
 bool SpriteComponentSystem::removeComponent(TIEntity& tientity) {
-    SpriteComponent* spriteComponent = tientity.getComponent<SpriteComponent>();
+	SpriteComponent* spriteComponent = tientity.getComponent<SpriteComponent>();
 	if (spriteComponent != nullptr) {
 		for (auto i = this->components.begin(); i != this->components.end(); ++i) {
 			if (&i->spriteComponent == spriteComponent) {
@@ -77,7 +75,7 @@ bool SpriteComponentSystem::removeComponent(TIEntity& tientity) {
 
 
 const std::string& SpriteComponentSystem::getName() {
-	return SpriteComponentSystem::DRAWN;
+	return SpriteComponentSystem::SPRITE;
 }
 
 

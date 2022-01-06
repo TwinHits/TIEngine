@@ -23,6 +23,7 @@ namespace TIE {
 
 		const std::vector<ComponentSystem*>& getComponentSystems();
 		bool isValidComponentName(const std::string&);
+		ComponentSystem* getComponentSystemByComponentName(const std::string&);
 
 		//Investigate with collides component
 		//TIEntity* findTIEntity(sf::Vector2f);
@@ -50,7 +51,7 @@ namespace TIE {
 		SceneLayer* clientLayer = nullptr;
 
 		std::vector<ComponentSystem*> componentSystems;
-		std::vector<std::string> validComponentNames;
+		std::map<std::string, ComponentSystem*> componentNamesToComponentSystems;
 
 		bool tientitiesMarkedForRemove = false;
 		void removeTIEntities(TIEntity&);

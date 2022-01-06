@@ -19,9 +19,11 @@ void CacheComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity
 
 CacheComponent& CacheComponentSystem::addComponent(TIEntity& tientity) {
     CacheComponent& cacheComponent = tientity.addComponent<CacheComponent>();
-    cacheComponent.setCache(ScriptManager::Instance()->getNewTable());
     Components components = { cacheComponent };
     this->components.push_back(components);
+
+    cacheComponent.setCache(ScriptManager::Instance()->getNewTable());
+
     return cacheComponent;
 }
 

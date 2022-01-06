@@ -27,23 +27,19 @@ void MovesComponentSystem::update(const float delta) {
 
 
 void MovesComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
+    MovesComponent& movesComponent = tientity.addComponent<MovesComponent>();
+    PositionComponent& positionComponent = tientity.addComponent<PositionComponent>();
+    Components components = { movesComponent, positionComponent };
+    this->components.push_back(components);
 
 	float maxSpeed = ComponentSystems::getFactoryValue<float>(factory, MovesComponentSystem::MAXSPEED, 0.0F, tientity);
 	float acceleration = ComponentSystems::getFactoryValue<float>(factory, MovesComponentSystem::ACCELERATION, 0.0F, tientity);
 	float rotationalSpeed = ComponentSystems::getFactoryValue<float>(factory, MovesComponentSystem::ROTATIONSPEED, 0.0F, tientity);
 
-	if (maxSpeed || acceleration || maxSpeed) {
-		MovesComponent& movesComponent = tientity.addComponent<MovesComponent>();
-		PositionComponent& positionComponent = tientity.addComponent<PositionComponent>();
-		Components components = { movesComponent, positionComponent };
-
-        movesComponent.acceleration = acceleration;
-        movesComponent.maxSpeed = maxSpeed;
-		movesComponent.targetPosition = positionComponent.position;
-		movesComponent.targetAngle = positionComponent.angle;
-
-        this->components.push_back(components);
-	}
+    movesComponent.acceleration = acceleration;
+    movesComponent.maxSpeed = maxSpeed;
+    movesComponent.targetPosition = positionComponent.position;
+    movesComponent.targetAngle = positionComponent.angle;
 }
 
 

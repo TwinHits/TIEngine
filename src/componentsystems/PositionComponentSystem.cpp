@@ -10,20 +10,17 @@ void PositionComponentSystem::update(const float delta) {}
 
 
 void PositionComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
+    PositionComponent& positionComponent = tientity.addComponent<PositionComponent>();
+    Components components = { positionComponent };
+    this->components.push_back(components);
+
 	float x = ComponentSystems::getFactoryValue<float>(factory, PositionComponentSystem::X, 0.0F, tientity);
 	float y = ComponentSystems::getFactoryValue<float>(factory, PositionComponentSystem::Y, 0.0F, tientity);
 	float angle = ComponentSystems::getFactoryValue<float>(factory, PositionComponentSystem::ANGLE, 0.0F, tientity);
 
-	if (x || y || angle) {
-		PositionComponent& positionComponent = tientity.addComponent<PositionComponent>();
-		Components components = { positionComponent };
-
-		positionComponent.position.x = x;
-		positionComponent.position.y = y;
-		positionComponent.angle = angle;
-
-		this->components.push_back(components);
-	}
+    positionComponent.position.x = x;
+    positionComponent.position.y = y;
+    positionComponent.angle = angle;
 }
 
 

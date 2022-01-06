@@ -21,11 +21,11 @@ class SpriteComponentSystem : public Singleton<SpriteComponentSystem>, public Co
 		bool removeComponent(TIEntity&);
 		const std::string& getName();
 
-		static const inline std::string DRAWN = "drawn";
-		static const inline std::string TEXTURE = "drawn.texture";
-		static const inline std::string WIDTH = "drawn.width";
-		static const inline std::string HEIGHT = "drawn.height";
-		static const inline std::string REPEATED = "drawn.repeated";
+		static const inline std::string SPRITE = "sprite";
+		static const inline std::string TEXTURE = "sprite.texture";
+		static const inline std::string WIDTH = "sprite.width";
+		static const inline std::string HEIGHT = "sprite.height";
+		static const inline std::string REPEATED = "sprite.repeated";
 	private: 
 		struct Components {
 			SpriteComponent& spriteComponent;

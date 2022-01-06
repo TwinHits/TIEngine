@@ -20,23 +20,19 @@ void TextComponentSystem::update(const float delta) {
 
 
 void TextComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& entity) {
+    TextComponent& textComponent = entity.addComponent<TextComponent>();
+    PositionComponent& positionComponent = entity.addComponent<PositionComponent>();
+    Components components = { textComponent, positionComponent };
+    this->components.push_back(components);
 
-	std::string text = ComponentSystems::getFactoryValue<std::string>(factory, TextComponentSystem::TEXT, "", entity);
+	std::string text = ComponentSystems::getFactoryValue<std::string>(factory, TextComponentSystem::CONTENT, "", entity);
 	bool drawn = ComponentSystems::getFactoryValue<bool>(factory, TextComponentSystem::DRAWN, false, entity);
 	float offsetX = ComponentSystems::getFactoryValue<float>(factory, TextComponentSystem::OFFSET_X, 0.0f, entity);
 	float offsetY = ComponentSystems::getFactoryValue<float>(factory, TextComponentSystem::OFFSET_Y, 0.0f, entity);
 
-	if (!text.empty()) {
-		TextComponent& textComponent = entity.addComponent<TextComponent>();
-		PositionComponent& positionComponent = entity.addComponent<PositionComponent>();
-		Components components = { textComponent, positionComponent };
-
-		textComponent.setString(text);
-		textComponent.setDrawn(drawn);
-		textComponent.setOffset(sf::Vector2f(offsetX, offsetY));
-
-		this->components.push_back(components);
-	}
+    textComponent.setString(text);
+    textComponent.setDrawn(drawn);
+    textComponent.setOffset(sf::Vector2f(offsetX, offsetY));
 }
 
 
@@ -58,7 +54,7 @@ bool TextComponentSystem::removeComponent(TIEntity& tientity) {
 
 
 const std::string& TextComponentSystem::getName() {
-	return TextComponentSystem::DRAWN;
+	return TextComponentSystem::TEXT;
 }
 
 

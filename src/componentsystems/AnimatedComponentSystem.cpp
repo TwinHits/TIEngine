@@ -44,6 +44,7 @@ void AnimatedComponentSystem::addComponent(const TIEntityFactory& factory, TIEnt
         PositionComponent& positionComponent = tientity.addComponent<PositionComponent>();
         SpriteComponent& spriteComponent = tientity.addComponent<SpriteComponent>();
         Components components = { animatedComponent, positionComponent, spriteComponent };
+        this->components.push_back(components);
 
         std::map<std::string, Animation>& animations = animatedComponent.getAnimations();
         for (auto& key : animatedStringKeys) {
@@ -88,7 +89,6 @@ void AnimatedComponentSystem::addComponent(const TIEntityFactory& factory, TIEnt
             animation.second.currentFrame = animation.second.frames.begin();
         }
         animatedComponent.setCurrentAnimation(animations.begin().operator*().second);
-        this->components.push_back(components);
     }
 
     return;

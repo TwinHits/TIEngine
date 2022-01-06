@@ -20,7 +20,9 @@ TIEntity& TIEntityFactory::build() {
 	tientity.setName(this->name);
 
 	for (ComponentSystem* componentSystem : SceneManager::Instance()->getComponentSystems()) {
-		componentSystem->addComponent(*this, tientity);
+		if (this->componentSystemNames.count(componentSystem->getName())) {
+			componentSystem->addComponent(*this, tientity);
+		}
 	}
 
 	LifecycleComponentSystem::Instance()->runCreated(tientity);
@@ -33,11 +35,19 @@ TIEntity& TIEntityFactory::build() {
 	return tientity;
 }
 
+TIEntityFactory& TIEntityFactory::addComponentSystemByComponentName(const std::string& name) {
+	if (SceneManager::Instance()->isValidComponentName(name)) {
+		this->componentSystemNames[name] = true;
+	}
+	return *this;
+}
+
 
 TIEntityFactory& TIEntityFactory::setParent(TIEntity* parent) {
 	this->parent = parent;
 	return *this;
 }
+
 
 TIEntityFactory& TIEntityFactory::registerChild() {
 	this->children.push_back(TIEntityFactory());

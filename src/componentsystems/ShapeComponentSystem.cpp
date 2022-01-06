@@ -39,7 +39,7 @@ bool ShapeComponentSystem::removeComponent(TIEntity& tientity) {
 
 
 const std::string& ShapeComponentSystem::getName() {
-	return ShapeComponentSystem::DRAWN;
+	return ShapeComponentSystem::SHAPE;
 }
 
 /*

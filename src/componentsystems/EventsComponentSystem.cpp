@@ -59,6 +59,7 @@ void EventsComponentSystem::addComponent(const TIEntityFactory& factory, TIEntit
 		PositionComponent& positionComponent = entity.addComponent<PositionComponent>();
 		SpriteComponent& spriteComponent = entity.addComponent<SpriteComponent>();
 		Components components = { eventsComponent, movesComponent, positionComponent, spriteComponent, entity };
+		this->components.push_back(components);
 
 		for (auto& key : eventKeys) {
 			// Split the key into parts for state, event, and handler
@@ -82,8 +83,6 @@ void EventsComponentSystem::addComponent(const TIEntityFactory& factory, TIEntit
 			// If it's for the selected state than this component is selectable
 			eventsComponent.setSelectable(true);
 		}
-
-		this->components.push_back(components);
 	}
 }
 

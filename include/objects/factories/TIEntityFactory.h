@@ -15,6 +15,7 @@ class TIEntityFactory {
 		TIEntityFactory& setName(std::string);
 		TIEntityFactory& setParent(TIEntity*);
 		TIEntityFactory& registerChild();
+		TIEntityFactory& addComponentSystemByComponentName(const std::string&);
 
 		std::map<std::string, bool> boolValues;
 		std::map<std::string, float> floatValues;
@@ -30,7 +31,7 @@ class TIEntityFactory {
 		std::string name = "";
 		TIEntity* parent = nullptr;
 		std::vector<TIEntityFactory> children;
-
+		std::map<std::string, bool> componentSystemNames;
 };
 
 }

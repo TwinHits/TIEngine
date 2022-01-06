@@ -19,7 +19,7 @@ class ShapeComponentSystem : public Singleton<ShapeComponentSystem>, public Comp
 		bool removeComponent(TIEntity&);
 		const std::string& getName();
 
-		static const inline std::string DRAWN = "drawn";
+		static const inline std::string SHAPE = "shape";
 
 	private: 
 		struct Components {

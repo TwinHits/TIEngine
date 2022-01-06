@@ -16,13 +16,11 @@ void BehaviorComponentSystem::update(const float) {
 
 
 void BehaviorComponentSystem::addComponent(const TIEntityFactory& tientityFactory, TIEntity& tientity) {
-	if (tientityFactory.functionValues.count(BehaviorComponentSystem::BEHAVIOR)) {
-        BehaviorComponent& behaviorComponent = tientity.addComponent<BehaviorComponent>();
-        Components components = { tientity, behaviorComponent };
+    BehaviorComponent& behaviorComponent = tientity.addComponent<BehaviorComponent>();
+    Components components = { tientity, behaviorComponent };
+    this->components.push_back(components);
 
-		behaviorComponent.behaviorFunctionId = tientityFactory.functionValues.at(BehaviorComponentSystem::BEHAVIOR);
-		this->components.push_back(components);
-	}
+    behaviorComponent.behaviorFunctionId = tientityFactory.functionValues.at(BehaviorComponentSystem::BEHAVIOR);
 }
 
 bool BehaviorComponentSystem::removeComponent(TIEntity& tientity) {
