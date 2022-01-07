@@ -14,9 +14,13 @@ namespace TIE {
 			void setDrawn(bool);
 			bool isDrawn() const;
 
+			void setRotates(bool);
+			bool isRotates() const;
+
 			const sf::Sprite& getSprite();
 		private: 
-			bool drawn = false;
+			bool drawn = true;
+			bool rotates = true;
 	};
 }
 

@@ -22,10 +22,12 @@ class SpriteComponentSystem : public Singleton<SpriteComponentSystem>, public Co
 		const std::string& getName();
 
 		static const inline std::string SPRITE = "sprite";
+		static const inline std::string DRAWN = "sprite.drawn";
 		static const inline std::string TEXTURE = "sprite.texture";
 		static const inline std::string WIDTH = "sprite.width";
 		static const inline std::string HEIGHT = "sprite.height";
 		static const inline std::string REPEATED = "sprite.repeated";
+		static const inline std::string ROTATES = "sprite.rotates";
 	private: 
 		struct Components {
 			SpriteComponent& spriteComponent;

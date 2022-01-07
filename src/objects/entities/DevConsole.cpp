@@ -31,6 +31,7 @@ void DevConsole::initialize() {
 	spriteComponent.setTexture(texture, true);
 	sf::FloatRect size = spriteComponent.getLocalBounds();
 	spriteComponent.setOrigin(size.width/2, size.height);
+	spriteComponent.setDrawn(false);
 
 	TextComponent& textComponent = this->addComponent<TextComponent>();
 	textComponent.setFont(font);

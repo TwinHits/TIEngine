@@ -18,7 +18,9 @@ using namespace TIE;
 void SpriteComponentSystem::update(const float delta) {
 	for (auto& c : this->components) {
 		c.spriteComponent.setPosition(PositionComponentSystem::Instance()->getWorldPosition(c.tientity));
-		//c.spriteComponent.setRotation(PositionComponentSystem::Instance()->getWorldRotation(c.tientity));
+		if (c.spriteComponent.isRotates()) {
+			c.spriteComponent.setRotation(PositionComponentSystem::Instance()->getWorldRotation(c.tientity));
+		}
 	}
 }
 
@@ -33,9 +35,11 @@ void SpriteComponentSystem::addComponent(const TIEntityFactory& factory, TIEntit
     sf::Texture& texture = AssetsManager::Instance()->getTexture(textureName);
     spriteComponent.setTexture(texture, true);
 
+	bool drawn = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::DRAWN, true, tientity);
 	bool repeated = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::REPEATED, false, tientity);
 	float width = ComponentSystems::getFactoryValue<float>(factory, SpriteComponentSystem::WIDTH, texture.getSize().x, tientity);
 	float height = ComponentSystems::getFactoryValue<float>(factory, SpriteComponentSystem::HEIGHT, texture.getSize().y, tientity);
+	bool rotates = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::REPEATED, false, tientity);
 
 	if (repeated) {
 		texture.setRepeated(repeated);
@@ -50,7 +54,8 @@ void SpriteComponentSystem::addComponent(const TIEntityFactory& factory, TIEntit
     sf::FloatRect spriteSize = spriteComponent.getLocalBounds();
     spriteComponent.setOrigin(spriteSize.width / 2, spriteSize.height / 2);
     spriteComponent.setPosition(positionComponent.position);
-    spriteComponent.setDrawn(true);
+    spriteComponent.setDrawn(drawn);
+	spriteComponent.setRotates(rotates);
 }
 
 
