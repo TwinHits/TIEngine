@@ -39,7 +39,15 @@ void SpriteComponentSystem::addComponent(const TIEntityFactory& factory, TIEntit
 	bool repeated = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::REPEATED, false, tientity);
 	float width = ComponentSystems::getFactoryValue<float>(factory, SpriteComponentSystem::WIDTH, texture.getSize().x, tientity);
 	float height = ComponentSystems::getFactoryValue<float>(factory, SpriteComponentSystem::HEIGHT, texture.getSize().y, tientity);
-	bool rotates = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::REPEATED, false, tientity);
+	bool rotates = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::REPEATED, true, tientity);
+	
+	if (width != texture.getSize().x && height == texture.getSize().y) {
+		height = texture.getSize().y * (width / texture.getSize().x);
+	}
+
+	if (height != texture.getSize().y && width == texture.getSize().x) {
+		width = texture.getSize().x * (height / texture.getSize().y);
+	}
 
 	if (repeated) {
 		texture.setRepeated(repeated);
