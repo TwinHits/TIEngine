@@ -10,3 +10,8 @@ void ShapeComponent::setDrawn(bool drawn) {
 bool ShapeComponent::isDrawn() const {
 	return this->drawn;
 }
+
+
+const sf::Shape& ShapeComponent::getShape() {
+	return *dynamic_cast<sf::Shape*>(this);
+}

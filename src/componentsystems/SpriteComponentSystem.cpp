@@ -4,6 +4,7 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "componentsystems/PositionComponentSystem.h"
 #include "objects/components/SpriteComponent.h"
 #include "objects/components/PositionComponent.h"
 #include "objects/entities/TIEntity.h"
@@ -16,7 +17,8 @@ using namespace TIE;
 
 void SpriteComponentSystem::update(const float delta) {
 	for (auto& c : this->components) {
-		c.spriteComponent.setPosition(c.positionComponent.position);
+		c.spriteComponent.setPosition(PositionComponentSystem::Instance()->getWorldPosition(c.tientity));
+		//c.spriteComponent.setRotation(PositionComponentSystem::Instance()->getWorldRotation(c.tientity));
 	}
 }
 
@@ -24,7 +26,7 @@ void SpriteComponentSystem::update(const float delta) {
 void SpriteComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
     SpriteComponent& spriteComponent = tientity.addComponent<SpriteComponent>();
     PositionComponent& positionComponent = tientity.addComponent<PositionComponent>();
-    Components components = { spriteComponent, positionComponent };
+    Components components = { spriteComponent, positionComponent, tientity };
     this->components.push_back(components);
 
 	std::string& textureName = ComponentSystems::getFactoryValue<std::string>(factory, SpriteComponentSystem::TEXTURE, "missing_texture.png", tientity);
@@ -71,33 +73,3 @@ bool SpriteComponentSystem::removeComponent(TIEntity& tientity) {
 const std::string& SpriteComponentSystem::getName() {
 	return SpriteComponentSystem::SPRITE;
 }
-
-
-/*
-sf::Transform GraphicsComponentSystem::getWorldTransform() const {
-	sf::Transform transform = sf::Transform::Identity;
-
-	for (const TIEntity* n = this; n != nullptr; n = n->parent) {
-		transform = n->getTransform() * transform;
-	}
-
-	return transform;
-}
-
-
-sf::Vector2f GraphicsComponentSystem::getWorldPosition() const {
-	return this->getWorldTransform() * sf::Vector2f();
-}
-
-float GraphicsComponentSystem::getWorldRotation() const {
-	float rotation = 0;
-
-	for (SceneNode* n = parent; n != nullptr; n = n->parent) {
-		rotation += n->getRotation();
-	}
-
-	rotation += this->getRotation();
-
-	return rotation;
-}
-*/

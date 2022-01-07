@@ -33,6 +33,7 @@ class TextComponentSystem : public Singleton<TextComponentSystem>, public Compon
 		struct Components {
 			TextComponent& textComponent;
 			PositionComponent& positionComponent;
+			TIEntity& tientity;
 		};
 		std::list<Components> components;
 };

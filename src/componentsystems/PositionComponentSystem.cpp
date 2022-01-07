@@ -45,3 +45,41 @@ bool PositionComponentSystem::removeComponent(TIEntity& tientity) {
 const std::string& PositionComponentSystem::getName() {
     return PositionComponentSystem::POSITION;
 }
+
+
+sf::Transform PositionComponentSystem::getWorldTransform(TIEntity& tientity) {
+    sf::Transform transform = sf::Transform::Identity;
+
+    for (TIEntity* t = &tientity; t != nullptr; t = &t->getParent()) {
+        PositionComponent* component = t->getComponent<PositionComponent>();
+        if (component != nullptr) {
+            transform = transform.translate(component->position);
+        }
+    }
+
+    return transform;
+}
+
+
+sf::Vector2f PositionComponentSystem::getWorldPosition(TIEntity& tientity) {
+    return getWorldTransform(tientity) * sf::Vector2f();
+}
+
+
+float PositionComponentSystem::getWorldRotation(TIEntity& tientity) {
+    float rotation = 0;
+
+    for (TIEntity* t = &tientity; t != nullptr; t = &t->getParent()) {
+        PositionComponent* component = t->getComponent<PositionComponent>();
+        if (component != nullptr) {
+            rotation += component->angle;
+        }
+    }
+
+    PositionComponent* component = tientity.getComponent<PositionComponent>();
+    if (component != nullptr) {
+        rotation += component->angle;
+    }
+
+    return rotation;
+}

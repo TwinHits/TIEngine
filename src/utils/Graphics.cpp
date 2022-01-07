@@ -45,4 +45,3 @@ const bool TIE::Graphics::isDrawn(TIEntity& entity) {
 
 	return false;
 }
-

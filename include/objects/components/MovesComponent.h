@@ -17,6 +17,7 @@ class MovesComponent : public Component {
 		float speed = 0.0f;
 		sf::Vector2f rotationalVelocity = sf::Vector2f(0, 0);
 
+		bool hasTargetPosition = false;
 		sf::Vector2f targetPosition = sf::Vector2f(0, 0);
 		float targetAngle = 0.0f;
 

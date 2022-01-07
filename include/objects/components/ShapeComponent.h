@@ -14,6 +14,8 @@ class ShapeComponent : public Component, public sf::RectangleShape {
 
 		void setDrawn(bool);
 		bool isDrawn() const;
+
+		const sf::Shape& getShape();
 	private:
 		bool drawn = false;
 };

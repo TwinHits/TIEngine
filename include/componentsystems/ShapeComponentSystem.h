@@ -25,6 +25,7 @@ class ShapeComponentSystem : public Singleton<ShapeComponentSystem>, public Comp
 		struct Components {
 			ShapeComponent& shapeComponent;
 			PositionComponent& positionComponent;
+			TIEntity& tientity;
 		};
 		std::list<Components> components;
 };

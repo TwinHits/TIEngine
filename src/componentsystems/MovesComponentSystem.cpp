@@ -19,9 +19,11 @@ using namespace TIE;
 
 void MovesComponentSystem::update(const float delta) {
 	for (auto& c : components) {
-		this->accelerate(c.movesComponent, c.positionComponent, delta);
-		this->rotate(c.movesComponent, c.positionComponent, delta);
-		this->move(c.movesComponent, c.positionComponent, delta);
+		if (c.movesComponent.hasTargetPosition) {
+			this->accelerate(c.movesComponent, c.positionComponent, delta);
+			this->rotate(c.movesComponent, c.positionComponent, delta);
+			this->move(c.movesComponent, c.positionComponent, delta);
+		}
 	}
 }
 
@@ -38,8 +40,6 @@ void MovesComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity
 
     movesComponent.acceleration = acceleration;
     movesComponent.maxSpeed = maxSpeed;
-    movesComponent.targetPosition = positionComponent.position;
-    movesComponent.targetAngle = positionComponent.angle;
 }
 
 
@@ -103,6 +103,7 @@ void MovesComponentSystem::setTargetPosition(TIEntity& tientity, sf::Vector2f& t
 			targetPosition = GridComponentSystem::Instance()->normalizePositionToGrid(targetPosition);
 		}
 
+		movesComponent->hasTargetPosition = true;
 		movesComponent->targetPosition = targetPosition;
         movesComponent->targetAngle = Math::angleBetweenTwoPoints(positionComponent->position, movesComponent->targetPosition);
 	}
@@ -121,7 +122,9 @@ bool MovesComponentSystem::atTargetPosition(TIEntity& tientity) {
 
 
 bool MovesComponentSystem::atTargetPosition(MovesComponent& movesComponent, PositionComponent& positionComponent) {
-	return Math::areVectorsEqual(movesComponent.targetPosition, positionComponent.position);
+	bool atTargetPosition = Math::areVectorsEqual(movesComponent.targetPosition, positionComponent.position);
+	movesComponent.hasTargetPosition = !atTargetPosition;
+	return atTargetPosition;
 }
 
 

@@ -223,18 +223,17 @@ void SceneManager::render(TIEntity& entity, sf::RenderWindow& window, sf::Render
 	//Continue traversal if there's no graphics components, or if either component is drawn
 	bool continueTraversal = textComponent == nullptr && spriteComponent == nullptr && shapeComponent == nullptr;
 	if (spriteComponent != nullptr && spriteComponent->isDrawn()) {
-		//states.transform *= spriteComponent->getTransform();
-		window.draw(*dynamic_cast<sf::Sprite*>(spriteComponent), states);
+		window.draw(spriteComponent->getSprite(), states);
 		continueTraversal = true;
 	}
 
 	if (textComponent != nullptr && textComponent->isDrawn()) {
-		window.draw(*dynamic_cast<sf::Text*>(textComponent));
+		window.draw(textComponent->getText(), states);
 		continueTraversal = true;
 	}
 
 	if (shapeComponent != nullptr && shapeComponent->isDrawn()) {
-		window.draw(*dynamic_cast<sf::Shape*>(shapeComponent));
+		window.draw(shapeComponent->getShape(), states);
 		continueTraversal = true;
 	}
 

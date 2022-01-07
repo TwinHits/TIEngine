@@ -9,6 +9,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "objects/components/PositionComponent.h"
+#include "objects/entities/TIEntity.h"
 
 namespace TIE {
 class PositionComponentSystem : public Singleton<PositionComponentSystem>, public ComponentSystem {
@@ -18,6 +19,9 @@ class PositionComponentSystem : public Singleton<PositionComponentSystem>, publi
 		void addComponent(const TIEntityFactory&, TIEntity&);
 		bool removeComponent(TIEntity&);
 		const std::string& getName();
+
+		sf::Vector2f getWorldPosition(TIEntity&);
+		float getWorldRotation(TIEntity&);
 
 		static const inline std::string POSITION = "position";
 		static const inline std::string X = "position.x";
@@ -29,6 +33,8 @@ class PositionComponentSystem : public Singleton<PositionComponentSystem>, publi
 			PositionComponent& positionComponent;
 		};
 		std::list<Components> components;
+
+		sf::Transform getWorldTransform(TIEntity&);
 };
 }
 

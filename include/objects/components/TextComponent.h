@@ -12,13 +12,11 @@ class TextComponent : public Component, public sf::Text {
 		TextComponent();
 		virtual ~TextComponent() {};
 
-		void setOffset(const sf::Vector2f&);
-		sf::Vector2f& getOffset();
-
 		void setDrawn(bool drawn);
 		bool isDrawn() const;
+
+		const sf::Text& getText();
 	private:
-		sf::Vector2f offset = sf::Vector2f(0, 0);
 		bool drawn = false;
 };
 

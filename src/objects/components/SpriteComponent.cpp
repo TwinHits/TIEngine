@@ -19,3 +19,7 @@ void SpriteComponent::setDrawn(bool drawn) {
 bool SpriteComponent::isDrawn() const {
 	return this->drawn;
 }
+
+const sf::Sprite& SpriteComponent::getSprite() {
+	return *dynamic_cast<sf::Sprite*>(this);
+}

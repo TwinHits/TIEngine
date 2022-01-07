@@ -13,6 +13,8 @@ namespace TIE {
 
 			void setDrawn(bool);
 			bool isDrawn() const;
+
+			const sf::Sprite& getSprite();
 		private: 
 			bool drawn = false;
 	};
