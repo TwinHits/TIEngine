@@ -4,8 +4,9 @@
 
 #include "componentsystems/BehaviorComponentSystem.h"
 #include "componentsystems/CacheComponentSystem.h"
-#include "componentsystems/MovesComponentSystem.h"
 #include "componentsystems/EventsComponentSystem.h"
+#include "componentsystems/MovesComponentSystem.h"
+#include "componentsystems/PositionComponentSystem.h"
 #include "interfaces/Vector2Interface.h"
 #include "managers/LogManager.h"
 #include "managers/WorldManager.h"
@@ -67,7 +68,7 @@ TIEntityInterface TIEntityInterface::spawn(const std::string& entityName) {
 
 
 void TIEntityInterface::despawn() {
-    this->setDrawn(false);
+    this->tientity->setRemove(true);
 }
 
 
@@ -77,12 +78,8 @@ void TIEntityInterface::setDrawn(bool drawn) {
 
 
 Vector2fInterface TIEntityInterface::getPosition() {
-    PositionComponent* positionComponent = this->tientity->getComponent<PositionComponent>();
-    if (positionComponent != nullptr) {
-        return Vector2fInterface(positionComponent->position.x, positionComponent->position.y);
-    } else {
-        return Vector2fInterface(0.0F, 0.0F);
-    }
+    sf::Vector2f worldPosition = PositionComponentSystem::Instance()->getWorldPosition(*this->tientity);
+    return Vector2fInterface(worldPosition.x, worldPosition.y);
 }
 
 
