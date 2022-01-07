@@ -37,6 +37,8 @@ void TIEntityInterface::registerUserType(sol::state& luaState) {
     interfaceUserType["setDrawn"] = &TIEntityInterface::setDrawn;
 	interfaceUserType["getPosition"] = &TIEntityInterface::getPosition;
 	interfaceUserType["setPosition"] = &TIEntityInterface::setPosition;
+	interfaceUserType["getRotation"] = &TIEntityInterface::getRotation;
+	interfaceUserType["setRotation"] = &TIEntityInterface::setRotation;
 	interfaceUserType["setDestination"] = &TIEntityInterface::setDestination;
 	interfaceUserType["atDestination"] = &TIEntityInterface::atDestination;
     interfaceUserType["moveRight"] = &TIEntityInterface::moveRight;
@@ -88,6 +90,18 @@ void TIEntityInterface::setPosition(const float x, const float y) {
     if (positionComponent != nullptr) {
         sf::Vector2f newPosition = sf::Vector2f(x, y);
         positionComponent->position = newPosition;
+    }
+}
+
+const float TIEntityInterface::getRotation() {
+    return PositionComponentSystem::Instance()->getWorldRotation(*this->tientity);
+}
+
+
+void TIEntityInterface::setRotation(const float rotation) {
+    PositionComponent* positionComponent = this->tientity->getComponent<PositionComponent>();
+    if (positionComponent != nullptr) {
+        positionComponent->rotation = rotation;
     }
 }
 

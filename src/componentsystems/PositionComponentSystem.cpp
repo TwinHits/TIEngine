@@ -18,11 +18,11 @@ void PositionComponentSystem::addComponent(const TIEntityFactory& factory, TIEnt
 
 	float x = ComponentSystems::getFactoryValue<float>(factory, PositionComponentSystem::X, 0.0F, tientity);
 	float y = ComponentSystems::getFactoryValue<float>(factory, PositionComponentSystem::Y, 0.0F, tientity);
-	float angle = ComponentSystems::getFactoryValue<float>(factory, PositionComponentSystem::ANGLE, 0.0F, tientity);
+	float rotation = ComponentSystems::getFactoryValue<float>(factory, PositionComponentSystem::ROTATION, 0.0F, tientity);
 
     positionComponent.position.x = x;
     positionComponent.position.y = y;
-    positionComponent.angle = angle;
+    positionComponent.rotation = rotation;
 }
 
 
@@ -72,13 +72,13 @@ float PositionComponentSystem::getWorldRotation(TIEntity& tientity) {
     for (TIEntity* t = &tientity; t != nullptr; t = &t->getParent()) {
         PositionComponent* component = t->getComponent<PositionComponent>();
         if (component != nullptr) {
-            rotation += component->angle;
+            rotation += component->rotation;
         }
     }
 
     PositionComponent* component = tientity.getComponent<PositionComponent>();
     if (component != nullptr) {
-        rotation += component->angle;
+        rotation += component->rotation;
     }
 
     return rotation;

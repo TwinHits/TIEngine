@@ -33,8 +33,13 @@ class TIEntityInterface {
         // Movement
         Vector2fInterface getPosition();
         void setPosition(const float, const float);
+
+        const float getRotation();
+        void setRotation(const float);
+
         void setDestination(const float, const float);
         bool atDestination();
+
         void moveUp();
         void moveRight();
         void moveLeft();

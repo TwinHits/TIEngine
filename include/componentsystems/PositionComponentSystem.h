@@ -26,7 +26,7 @@ class PositionComponentSystem : public Singleton<PositionComponentSystem>, publi
 		static const inline std::string POSITION = "position";
 		static const inline std::string X = "position.x";
 		static const inline std::string Y = "position.y";
-		static const inline std::string ANGLE = "position.angle";
+		static const inline std::string ROTATION = "position.rotation";
 
     private:
 		struct Components {

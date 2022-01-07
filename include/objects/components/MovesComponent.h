@@ -19,7 +19,7 @@ class MovesComponent : public Component {
 
 		bool hasTargetPosition = false;
 		sf::Vector2f targetPosition = sf::Vector2f(0, 0);
-		float targetAngle = 0.0f;
+		float targetRotation = 0.0f;
 
 		float lastDistanceToTarget = 0.0f;
 };

@@ -105,7 +105,7 @@ void MovesComponentSystem::setTargetPosition(TIEntity& tientity, sf::Vector2f& t
 
 		movesComponent->hasTargetPosition = true;
 		movesComponent->targetPosition = targetPosition;
-        movesComponent->targetAngle = Math::angleBetweenTwoPoints(positionComponent->position, movesComponent->targetPosition);
+        movesComponent->targetRotation = Math::angleBetweenTwoPoints(positionComponent->position, movesComponent->targetPosition);
 	}
 }
 
@@ -131,7 +131,7 @@ bool MovesComponentSystem::atTargetPosition(MovesComponent& movesComponent, Posi
 void MovesComponentSystem::move(MovesComponent& movesComponent, PositionComponent& positionComponent, const float delta) {
 	if (movesComponent.speed != 0) {
         if (!this->atTargetPosition(movesComponent, positionComponent)) {
-            sf::Vector2f velocity = sf::Vector2f(movesComponent.speed, positionComponent.angle);
+            sf::Vector2f velocity = sf::Vector2f(movesComponent.speed, positionComponent.rotation);
             sf::Vector2f distance = Math::translateVelocityByTime(velocity, delta);
             sf::Vector2f newPosition = sf::Vector2f(positionComponent.position.x + distance.x, positionComponent.position.y + distance.y);
             if (Math::isVectorBetweenVectors(positionComponent.position, newPosition, movesComponent.targetPosition)) {
@@ -177,18 +177,18 @@ void MovesComponentSystem::accelerate(MovesComponent& movesComponent, PositionCo
 
 void MovesComponentSystem::rotate(MovesComponent& movesComponent, PositionComponent& positionComponent, const float delta) {
 	if (movesComponent.rotationalVelocity.x != 0) {
-		movesComponent.targetAngle = Math::angleBetweenTwoPoints(positionComponent.position, movesComponent.targetPosition);
-		if (!Math::areFloatsEqual(positionComponent.angle, movesComponent.targetAngle)) {
-			movesComponent.rotationalVelocity.y = Math::directionFromAngleToAngle(positionComponent.angle, movesComponent.targetAngle);
+		movesComponent.targetRotation = Math::angleBetweenTwoPoints(positionComponent.position, movesComponent.targetPosition);
+		if (!Math::areFloatsEqual(positionComponent.rotation, movesComponent.targetRotation)) {
+			movesComponent.rotationalVelocity.y = Math::directionFromAngleToAngle(positionComponent.rotation, movesComponent.targetRotation);
 			float distance = movesComponent.rotationalVelocity.x * movesComponent.rotationalVelocity.y * delta;
-			float newAngle = positionComponent.angle + distance;
-			if (!Math::isAngleBetweenAngles(movesComponent.targetAngle, positionComponent.angle, newAngle)) {
-				positionComponent.angle = newAngle;
+			float newRotation = positionComponent.rotation + distance;
+			if (!Math::isAngleBetweenAngles(movesComponent.targetRotation, positionComponent.rotation, newRotation)) {
+				positionComponent.rotation = newRotation;
 			} else {
-				positionComponent.angle = movesComponent.targetAngle;
+				positionComponent.rotation = movesComponent.targetRotation;
 			}
 		} else {
-			positionComponent.angle = movesComponent.targetAngle;
+			positionComponent.rotation = movesComponent.targetRotation;
 		}
 	}
 } 
