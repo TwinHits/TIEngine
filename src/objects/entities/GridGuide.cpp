@@ -14,24 +14,26 @@ bool GridGuide::initialize(const sf::FloatRect& bounds, const sf::Vector2i& grid
 	for (int i = 0; i <= gridSize.x; i++) {
 		TIEntity& entity = this->attachChild();
 		entity.setName("GridGuide Y " + std::to_string(i));
-		ShapeComponent& shape = entity.addComponent<ShapeComponent>();
-		shape.setDrawn(true);
-		shape.setPosition(sf::Vector2f(bounds.left + tileSize.x * i, bounds.top));
-		shape.setRotation(0); // Why is this different than the rotation guide?
-		shape.setSize(sf::Vector2f(this->GRID_LINE_WIDTH, bounds.height));
-		shape.setFillColor(sf::Color::Yellow);
+		ShapeComponent& shapeComponent = entity.addComponent<ShapeComponent>();
+		shapeComponent.setDrawn(true);
+		sf::RectangleShape rectangleShape = shapeComponent.addRectangleShape();
+		rectangleShape.setPosition(sf::Vector2f(bounds.left + tileSize.x * i, bounds.top));
+		rectangleShape.setRotation(0); // Why is this different than the rotation guide?
+		rectangleShape.setSize(sf::Vector2f(this->GRID_LINE_WIDTH, bounds.height));
+		rectangleShape.setFillColor(sf::Color::Yellow);
 	}
 
 	// X lines
 	 for (int i = 0; i <= gridSize.y; i++) {
 		TIEntity& entity = this->attachChild();
 		entity.setName("GridGuide X " + std::to_string(i));
-		ShapeComponent& shape = entity.addComponent<ShapeComponent>();
-		shape.setDrawn(true);
-		shape.setPosition(sf::Vector2f(bounds.left, bounds.top + tileSize.y * i));
-		shape.setRotation(270); // Why is this difference than the rotation guide?
-		shape.setSize(sf::Vector2f(this->GRID_LINE_WIDTH, bounds.width));
-		shape.setFillColor(sf::Color::Yellow);
+		ShapeComponent& shapeComponent = entity.addComponent<ShapeComponent>();
+		shapeComponent.setDrawn(true);
+		sf::RectangleShape rectangleShape = shapeComponent.addRectangleShape();
+		rectangleShape.setPosition(sf::Vector2f(bounds.left, bounds.top + tileSize.y * i));
+		rectangleShape.setRotation(270); // Why is this difference than the rotation guide?
+		rectangleShape.setSize(sf::Vector2f(this->GRID_LINE_WIDTH, bounds.width));
+		rectangleShape.setFillColor(sf::Color::Yellow);
 	}
 
 	return true;

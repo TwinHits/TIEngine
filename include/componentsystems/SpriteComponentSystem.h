@@ -28,6 +28,7 @@ class SpriteComponentSystem : public Singleton<SpriteComponentSystem>, public Co
 		static const inline std::string HEIGHT = "sprite.height";
 		static const inline std::string REPEATED = "sprite.repeated";
 		static const inline std::string ROTATES = "sprite.rotates";
+		static const inline std::string SHOW_WIREFRAME = "sprite.showWireframe";
 	private: 
 		struct Components {
 			SpriteComponent& spriteComponent;

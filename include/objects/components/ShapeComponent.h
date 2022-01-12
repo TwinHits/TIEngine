@@ -5,9 +5,11 @@
 
 #include <SFML/Graphics.hpp>
 
+#include <vector>
+
 namespace TIE {
 
-class ShapeComponent : public Component, public sf::RectangleShape {
+class ShapeComponent : public Component {
 	public:
 		ShapeComponent() {};
 		virtual ~ShapeComponent() {};
@@ -15,9 +17,11 @@ class ShapeComponent : public Component, public sf::RectangleShape {
 		void setDrawn(bool);
 		bool isDrawn() const;
 
-		const sf::Shape& getShape();
+		sf::RectangleShape& addRectangleShape();
+		const std::vector<std::unique_ptr<sf::Shape> >& getShapes();
 	private:
-		bool drawn = false;
+		bool drawn = true;
+		std::vector<std::unique_ptr<sf::Shape> > shapes;
 };
 
 };

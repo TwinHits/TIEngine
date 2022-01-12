@@ -5,7 +5,9 @@
 #include <SFML/Graphics.hpp>
 
 #include "componentsystems/PositionComponentSystem.h"
+#include "componentsystems/ShapeComponentSystem.h"
 #include "objects/components/SpriteComponent.h"
+#include "objects/components/ShapeComponent.h"
 #include "objects/components/PositionComponent.h"
 #include "objects/entities/TIEntity.h"
 #include "objects/factories/TIEntityFactory.h"
@@ -39,7 +41,8 @@ void SpriteComponentSystem::addComponent(const TIEntityFactory& factory, TIEntit
 	bool repeated = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::REPEATED, false, tientity);
 	float width = ComponentSystems::getFactoryValue<float>(factory, SpriteComponentSystem::WIDTH, texture.getSize().x, tientity);
 	float height = ComponentSystems::getFactoryValue<float>(factory, SpriteComponentSystem::HEIGHT, texture.getSize().y, tientity);
-	bool rotates = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::REPEATED, true, tientity);
+	bool rotates = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::ROTATES, true, tientity);
+	bool showWireframe = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::SHOW_WIREFRAME, false, tientity);
 	
 	if (width != texture.getSize().x && height == texture.getSize().y) {
 		height = texture.getSize().y * (width / texture.getSize().x);
@@ -64,6 +67,10 @@ void SpriteComponentSystem::addComponent(const TIEntityFactory& factory, TIEntit
     spriteComponent.setPosition(positionComponent.position);
     spriteComponent.setDrawn(drawn);
 	spriteComponent.setRotates(rotates);
+
+	if (showWireframe) {
+		ShapeComponentSystem::Instance()->addWireframe(tientity);
+	}
 }
 
 

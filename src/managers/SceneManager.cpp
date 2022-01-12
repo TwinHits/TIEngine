@@ -233,7 +233,9 @@ void SceneManager::render(TIEntity& entity, sf::RenderWindow& window, sf::Render
 	}
 
 	if (shapeComponent != nullptr && shapeComponent->isDrawn()) {
-		window.draw(shapeComponent->getShape(), states);
+		for (auto& shape : shapeComponent->getShapes()) {
+			window.draw(*shape, states);
+		}
 		continueTraversal = true;
 	}
 

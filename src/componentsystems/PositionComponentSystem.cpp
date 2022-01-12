@@ -76,10 +76,5 @@ float PositionComponentSystem::getWorldRotation(TIEntity& tientity) {
         }
     }
 
-    PositionComponent* component = tientity.getComponent<PositionComponent>();
-    if (component != nullptr) {
-        rotation += component->rotation;
-    }
-
     return rotation;
 }
