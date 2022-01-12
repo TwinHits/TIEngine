@@ -66,9 +66,9 @@ void ShapeComponentSystem::addWireframe(TIEntity& tientity) {
 	ShapeComponent& shapeComponent = this->addComponent(tientity);
 	SpriteComponent& spriteComponent = *tientity.getComponent<SpriteComponent>();
 	sf::RectangleShape& rectangleShape = shapeComponent.addRectangleShape();
-	sf::Vector2f textureSize = sf::Vector2f(spriteComponent.getTexture()->getSize());
-	rectangleShape.setSize(textureSize);
-	rectangleShape.setOrigin(textureSize.x / 2, textureSize.y / 2);
+	sf::FloatRect spriteBounds = spriteComponent.getGlobalBounds();
+	rectangleShape.setSize(sf::Vector2f(spriteBounds.width, spriteBounds.height));
+	rectangleShape.setOrigin(spriteBounds.width / 2, spriteBounds.height / 2);
 	rectangleShape.setFillColor(sf::Color::Transparent);
 	rectangleShape.setOutlineColor(sf::Color::Yellow);
 	rectangleShape.setOutlineThickness(2);

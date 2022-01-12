@@ -33,25 +33,22 @@ void SpriteComponentSystem::addComponent(const TIEntityFactory& factory, TIEntit
     Components components = { spriteComponent, positionComponent, tientity };
     this->components.push_back(components);
 
+    spriteComponent.setPosition(positionComponent.position);
+
 	std::string& textureName = ComponentSystems::getFactoryValue<std::string>(factory, SpriteComponentSystem::TEXTURE, "missing_texture.png", tientity);
     sf::Texture& texture = AssetsManager::Instance()->getTexture(textureName);
     spriteComponent.setTexture(texture, true);
-
-	bool drawn = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::DRAWN, true, tientity);
-	bool repeated = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::REPEATED, false, tientity);
+	
 	float width = ComponentSystems::getFactoryValue<float>(factory, SpriteComponentSystem::WIDTH, texture.getSize().x, tientity);
 	float height = ComponentSystems::getFactoryValue<float>(factory, SpriteComponentSystem::HEIGHT, texture.getSize().y, tientity);
-	bool rotates = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::ROTATES, true, tientity);
-	bool showWireframe = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::SHOW_WIREFRAME, false, tientity);
-	
 	if (width != texture.getSize().x && height == texture.getSize().y) {
 		height = texture.getSize().y * (width / texture.getSize().x);
 	}
-
 	if (height != texture.getSize().y && width == texture.getSize().x) {
 		width = texture.getSize().x * (height / texture.getSize().y);
 	}
 
+	bool repeated = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::REPEATED, false, tientity);
 	if (repeated) {
 		texture.setRepeated(repeated);
 		spriteComponent.setTextureRect(sf::IntRect(0, 0, width, height));
@@ -63,11 +60,17 @@ void SpriteComponentSystem::addComponent(const TIEntityFactory& factory, TIEntit
 	}
 
     sf::FloatRect spriteSize = spriteComponent.getLocalBounds();
-    spriteComponent.setOrigin(spriteSize.width / 2, spriteSize.height / 2);
-    spriteComponent.setPosition(positionComponent.position);
+	float originXOffset = ComponentSystems::getFactoryValue<float>(factory, SpriteComponentSystem::ORIGIN_X_OFFSET, 0, tientity);
+	float originYOffset = ComponentSystems::getFactoryValue<float>(factory, SpriteComponentSystem::ORIGIN_Y_OFFSET, 0, tientity);
+    spriteComponent.setOrigin((spriteSize.width / 2) - (originXOffset / spriteComponent.getScale().x), (spriteSize.height / 2) - (originYOffset / spriteComponent.getScale().y));
+	
+	bool drawn = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::DRAWN, true, tientity);
     spriteComponent.setDrawn(drawn);
+
+	bool rotates = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::ROTATES, true, tientity);
 	spriteComponent.setRotates(rotates);
 
+	bool showWireframe = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::SHOW_WIREFRAME, false, tientity);
 	if (showWireframe) {
 		ShapeComponentSystem::Instance()->addWireframe(tientity);
 	}
