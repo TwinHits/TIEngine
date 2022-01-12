@@ -22,15 +22,20 @@ class TIEntity {
 
 		template<typename T>
 		T& addComponent() {
-			if (!components.count(typeid(T))) {
+			if (!this->hasComponent<T>()) {
 				components[typeid(T)] = make_unique<T>();
 			}
 			return *this->getComponent<T>();
 		}
+
+		template <typename T>
+		bool hasComponent() {
+			return components.count(typeid(T));
+		}
 		
 		template <typename T>
 		T* getComponent() {
-			if (components.count(typeid(T))) {
+			if (this->hasComponent<T>()) {
 				return static_cast<T*>(components.at(typeid(T)).get());
 			}
 			return nullptr;
