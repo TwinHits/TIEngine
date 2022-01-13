@@ -68,6 +68,21 @@ TIEntity* WorldManager::getTIEntityById(GlobalId id) {
 }
 
 
+TIEntityFactory& WorldManager::saveTIEntityFactory(const std::string& name, TIEntityFactory& factory) {
+	this->factories.insert({ name, make_unique<TIEntityFactory>(factory) });
+	return *this->factories.at(name);
+}
+
+
+TIEntityFactory* WorldManager::getTIEntityFactory(const std::string& name) {
+	if (this->factories.count(name)) {
+		return this->factories.at(name).get();
+	} else {
+		return nullptr;
+	}
+}
+
+
 void WorldManager::recalculateGrideGuide(GridComponent* gridComponent) {
 	if (this->gridGuide != nullptr) {
 		this->gridGuide->setRemove(true);

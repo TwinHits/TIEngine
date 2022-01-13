@@ -61,9 +61,8 @@ GlobalId TIEntityInterface::getId() {
 
 
 TIEntityInterface TIEntityInterface::spawn(const sol::table& definition) {
-    TIEntityFactory factory = TIEntityFactory();
+    TIEntityFactory factory = TIEntityFactory(definition);
     factory.setParent(this->tientity);
-    ScriptManager::Instance()->loadTIEntityDefinition(factory, definition);
     return TIEntityInterface(factory.build());
 }
 
@@ -80,6 +79,7 @@ void TIEntityInterface::setDrawn(bool drawn) {
 
 Vector2fInterface TIEntityInterface::getPosition() {
     sf::Vector2f worldPosition = PositionComponentSystem::Instance()->getWorldPosition(*this->tientity);
+    //sf::Vector2f originOffset = SpriteComponentSystem::Instance()->getSpriteOriginOffset();
     return Vector2fInterface(worldPosition.x, worldPosition.y);
 }
 

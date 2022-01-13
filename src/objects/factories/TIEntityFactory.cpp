@@ -1,14 +1,22 @@
 #include "objects/factories/TIEntityFactory.h"
 
+#include <sol/sol.hpp>
+
 #include <algorithm>
 
 #include "componentsystems/ComponentSystem.h"
 #include "componentsystems/LifecycleComponentSystem.h"
 #include "managers/SceneManager.h"
+#include "managers/ScriptManager.h"
 #include "managers/WorldManager.h"
 #include "objects/entities/TIEntity.h"
 
 using namespace TIE;
+
+TIEntityFactory::TIEntityFactory(const sol::table& definition) {
+    ScriptManager::Instance()->loadTIEntityDefinition(*this, definition);
+}
+
 
 TIEntity& TIEntityFactory::build() {
 
@@ -37,6 +45,7 @@ TIEntity& TIEntityFactory::build() {
 	}
 
 	WorldManager::Instance()->registerTIEntity(tientity);
+    WorldManager::Instance()->saveTIEntityFactory(tientity.getName(), *this);
 	return tientity;
 }
 

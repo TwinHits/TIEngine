@@ -5,6 +5,8 @@
 #include <vector>
 #include <string>
 
+#include <sol/sol.hpp>
+
 #include "objects/entities/TIEntity.h" 
 #include "objects/GlobalId.h"
 
@@ -12,6 +14,9 @@ namespace TIE {
 
 class TIEntityFactory {
 	public:
+		TIEntityFactory() {};
+		TIEntityFactory(const sol::table&);
+
 		TIEntityFactory& setName(std::string);
 		const std::string& getName();
 
@@ -29,7 +34,6 @@ class TIEntityFactory {
 
 		static const inline std::string NAME = "tientity.name";
 
-		TIEntityFactory() {};
 		~TIEntityFactory() {};
 
 	private:

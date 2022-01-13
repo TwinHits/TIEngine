@@ -133,7 +133,6 @@ TIEntityFactory& ScriptManager::loadTIEntityDefinition(TIEntityFactory& factory,
 			}
 		}
 	}
-	LogManager::Instance()->info("Registered TIEntity " + factory.getName() + " from Lua script.");
 
 	//Any other property is a child entity
 	for (auto& child : children) {

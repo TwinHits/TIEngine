@@ -77,8 +77,7 @@ bool TIEngineInterface::setLevel(const sol::table& level) {
 }
 
 TIEntityInterface TIEngineInterface::spawn(const sol::table& definition) {
-    TIEntityFactory factory = TIEntityFactory();
-    ScriptManager::Instance()->loadTIEntityDefinition(factory, definition);
+    TIEntityFactory factory = TIEntityFactory(definition);
     return TIEntityInterface(factory.build());
 }
 

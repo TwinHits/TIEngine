@@ -27,6 +27,9 @@ class WorldManager : public Singleton<WorldManager>, Manager {
 
 		TIEntity& registerTIEntity(TIEntity&);
 		TIEntity* getTIEntityById(GlobalId);
+		TIEntityFactory& saveTIEntityFactory(const std::string&, TIEntityFactory&);
+		TIEntityFactory* getTIEntityFactory(const std::string&);
+
 
 		WorldManager() {};
 		~WorldManager() {};
@@ -35,6 +38,7 @@ class WorldManager : public Singleton<WorldManager>, Manager {
 		void recalculateGrideGuide(GridComponent*);
 		void recalculateScrollBounds(const SpriteComponent&);
 
+		std::map<std::string, std::unique_ptr<TIEntityFactory> > factories;
 		std::map<GlobalId, TIEntity*> tientities;
 
 		SceneLayer* worldLayer = nullptr;
