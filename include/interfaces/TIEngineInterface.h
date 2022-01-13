@@ -27,11 +27,9 @@ class TIEngineInterface {
         bool setWindowSize(const int, const int);
         bool setWindowTitle(const std::string&);
 
-        bool registerLevel(const std::string&, const sol::table&);
-        bool setLevel(const std::string&);
+        bool setLevel(const sol::table&);
 
-        bool registerTIEntityDefinition(const std::string&, const sol::table&);
-        TIEntityInterface spawnTIEntity(const std::string&);
+        TIEntityInterface spawn(const sol::table&);
 
         bool hasEvent(std::string& event);
         Vector2iInterface getMouseClickPosition();

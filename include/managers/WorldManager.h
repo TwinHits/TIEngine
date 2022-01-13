@@ -18,18 +18,14 @@ class WorldManager : public Singleton<WorldManager>, Manager {
 		bool initialize();
 
 		TIEntity* getLevelEntity();
-		void setLevelEntity(const std::string&);
+		void setLevelEntity(TIEntityFactory&);
 
 		bool isGridConfigured();
 		GridComponent* getGridComponent();
 
 		void showGridGuide(bool);
 
-		TIEntityFactory& registerTIEntity(const std::string&);
-		bool isTIEntityRegistered(const std::string&);
-		TIEntityFactory& getTIEntityFactory(const std::string&);
-		TIEntity& spawnTIEntity(const std::string&);
-		TIEntity& spawnTIEntity(const std::string&, TIEntity*);
+		TIEntity& registerTIEntity(TIEntity&);
 		TIEntity* getTIEntityById(GlobalId);
 
 		WorldManager() {};
@@ -39,7 +35,6 @@ class WorldManager : public Singleton<WorldManager>, Manager {
 		void recalculateGrideGuide(GridComponent*);
 		void recalculateScrollBounds(const SpriteComponent&);
 
-		std::map<std::string, TIEntityFactory> tientityDefinitions;
 		std::map<GlobalId, TIEntity*> tientities;
 
 		SceneLayer* worldLayer = nullptr;

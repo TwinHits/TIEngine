@@ -60,12 +60,11 @@ GlobalId TIEntityInterface::getId() {
 }
 
 
-TIEntityInterface TIEntityInterface::spawn(const std::string& entityName) {
-    if (WorldManager::Instance()->isTIEntityRegistered(entityName)) {
-        return TIEntityInterface(WorldManager::Instance()->spawnTIEntity(entityName, this->tientity));
-    } else {
-        return nullptr;
-    }
+TIEntityInterface TIEntityInterface::spawn(const sol::table& definition) {
+    TIEntityFactory factory = TIEntityFactory();
+    factory.setParent(this->tientity);
+    ScriptManager::Instance()->loadTIEntityDefinition(factory, definition);
+    return TIEntityInterface(factory.build());
 }
 
 

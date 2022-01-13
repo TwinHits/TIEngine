@@ -72,8 +72,8 @@ void ConsoleManager::runCommand() {
 	} else if (command == ConsoleCommands::SHOW) {
 		this->showGridGuide();
 	} else if (command == ConsoleCommands::SPAWN) {
-		const std::string& name = commandArgs.at(1);
-		WorldManager::Instance()->spawnTIEntity(name);
+		//const std::string& name = commandArgs.at(1);
+		//WorldManager::Instance()->spawnTIEntity(WorldManager::Instance()->getRegisteredTIEntityFactory(name));
 	} else {
 		LogManager::Instance()->command("Unknown command.");
 	}

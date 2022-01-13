@@ -21,7 +21,7 @@ class ScriptManager : public Singleton<ScriptManager>, Manager {
 public:
 	bool initialize();
 	void loadScript(const std::string&);
-	TIEntityFactory& loadTIEntityDefinition(const std::string&, const sol::table&);
+	TIEntityFactory& loadTIEntityDefinition(TIEntityFactory&, const sol::table&);
 
 	template <typename T>
 	T runFunction(const GlobalId functionId, TIEntity& tientity) {
@@ -56,10 +56,9 @@ private:
 	std::map<GlobalId, sol::function> functions;
 	std::map<std::string, GlobalId> functionsByName;
 
-	TIEntityFactory& loadTIEntityDefinition(const std::string&, const sol::table&, TIEntityFactory*);
-	TIEntityFactory& getFactory(const std::string&, TIEntityFactory*);
 	void readComponentValues(TIEntityFactory&, const std::string&, const sol::table&);
 	const sol::function& getFunctionByName(const std::string&);
+	bool isValidDefinitionFieldName(const std::string&);
 
 	ScriptManager(const ScriptManager&);
 	void operator=(const ScriptManager&) {};

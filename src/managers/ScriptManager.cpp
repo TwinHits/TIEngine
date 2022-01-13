@@ -118,21 +118,14 @@ void ScriptManager::setScriptWorkingDirectory(const std::string& scriptWorkingDi
 }
 
 
-TIEntityFactory& ScriptManager::loadTIEntityDefinition(const std::string& name, const sol::table& definition) {
-	return this->loadTIEntityDefinition(name, definition, nullptr);
-}
+TIEntityFactory& ScriptManager::loadTIEntityDefinition(TIEntityFactory& factory, const sol::table& definition) {
 
-
-TIEntityFactory& ScriptManager::loadTIEntityDefinition(const std::string& name, const sol::table& definition, TIEntityFactory* parent) {
-
-	TIEntityFactory& factory = this->getFactory(name, parent);
-	factory.setName(name);
 	std::vector<std::string> children;
 	for (auto& possibleComponent : definition) {
 		sol::optional<std::string> key = possibleComponent.first.as<sol::optional<std::string> >();
 		sol::optional<sol::table> defintion = possibleComponent.second.as<sol::optional<sol::table> >();
 		if (key && defintion) {
-			if (SceneManager::Instance()->isValidComponentName(*key)) {
+			if (this->isValidDefinitionFieldName(*key)) {
 				factory.addComponentSystemByComponentName(*key);
 				this->readComponentValues(factory, *key, *defintion);
 			} else {
@@ -140,23 +133,14 @@ TIEntityFactory& ScriptManager::loadTIEntityDefinition(const std::string& name, 
 			}
 		}
 	}
-	LogManager::Instance()->info("Registered TIEntity " + name + " from Lua script.");
+	LogManager::Instance()->info("Registered TIEntity " + factory.getName() + " from Lua script.");
 
 	//Any other property is a child entity
 	for (auto& child : children) {
-		this->loadTIEntityDefinition(child, definition[child], &factory);
+		this->loadTIEntityDefinition(factory.addChild(), definition[child]);
 	}
 
 	return factory;
-}
-
-
-TIEntityFactory& ScriptManager::getFactory(const std::string& name, TIEntityFactory* parent) {
-	if (parent == nullptr) {
-		return WorldManager::Instance()->registerTIEntity(name);
-	} else {
-		return parent->registerChild();
-	}
 }
 
 
@@ -195,4 +179,8 @@ const sol::function& ScriptManager::getFunctionByName(const std::string& name) {
 		return nullptr;
 	}
 }
+
+bool ScriptManager::isValidDefinitionFieldName(const std::string& field) {
+	return SceneManager::Instance()->isValidComponentName(field) || field == "tientity";
+ }
 

@@ -29,8 +29,9 @@ TIEntity* WorldManager::getLevelEntity() {
 }
 
 
-void WorldManager::setLevelEntity(const std::string& name) {
-	this->levelEntity = &this->getTIEntityFactory(name).setParent(this->worldLayer).build();
+void WorldManager::setLevelEntity(TIEntityFactory& factory) {
+	factory.setParent(this->worldLayer);
+	this->levelEntity = &factory.build();
 	this->gridComponent = this->levelEntity->getComponent<GridComponent>();
 	SpriteComponent* spriteComponent = this->levelEntity->getComponent<SpriteComponent>();
 	this->recalculateScrollBounds(*spriteComponent);
@@ -56,28 +57,7 @@ void WorldManager::showGridGuide(bool visibility) {
 	}
 }
 
-
-TIEntityFactory& WorldManager::registerTIEntity(const std::string& tientityName) {
-	this->tientityDefinitions.insert({ tientityName, TIEntityFactory() });
-	return this->tientityDefinitions.at(tientityName);
-}
-
-
-bool WorldManager::isTIEntityRegistered(const std::string& name) {
-	return this->tientityDefinitions.count(name);
-}
-
-
-TIEntityFactory& WorldManager::getTIEntityFactory(const std::string& name) {
-	return this->tientityDefinitions.at(name);
-}
-
-TIEntity& WorldManager::spawnTIEntity(const std::string& tientityName) {
-	return this->spawnTIEntity(tientityName, &SceneManager::Instance()->getClientLayer());
-}
-
-TIEntity& WorldManager::spawnTIEntity(const std::string& tientityName, TIEntity* parent) {
-    TIEntity& tientity = tientityDefinitions.at(tientityName).setParent(parent).build();
+TIEntity& WorldManager::registerTIEntity(TIEntity& tientity) {
     this->tientities[tientity.getId()] = &tientity;
     return tientity;
 }

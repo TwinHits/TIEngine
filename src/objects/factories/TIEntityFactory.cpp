@@ -5,12 +5,16 @@
 #include "componentsystems/ComponentSystem.h"
 #include "componentsystems/LifecycleComponentSystem.h"
 #include "managers/SceneManager.h"
-#include "managers/ScriptManager.h"
+#include "managers/WorldManager.h"
 #include "objects/entities/TIEntity.h"
 
 using namespace TIE;
 
 TIEntity& TIEntityFactory::build() {
+
+	if (this->stringValues.count(TIEntityFactory::NAME)) {
+		this->name = this->stringValues.at(TIEntityFactory::NAME);
+	}
 
 	if (this->parent == nullptr) {
 		this->parent = &SceneManager::Instance()->getClientLayer();
@@ -32,6 +36,7 @@ TIEntity& TIEntityFactory::build() {
 		child.build();
 	}
 
+	WorldManager::Instance()->registerTIEntity(tientity);
 	return tientity;
 }
 
@@ -49,7 +54,7 @@ TIEntityFactory& TIEntityFactory::setParent(TIEntity* parent) {
 }
 
 
-TIEntityFactory& TIEntityFactory::registerChild() {
+TIEntityFactory& TIEntityFactory::addChild() {
 	this->children.push_back(TIEntityFactory());
 	TIEntityFactory& child = this->children.back();
 	return child;
@@ -59,4 +64,9 @@ TIEntityFactory& TIEntityFactory::registerChild() {
 TIEntityFactory& TIEntityFactory::setName(std::string name) {
 	this->name = name;
 	return *this;
+}
+
+
+const std::string& TIEntityFactory::getName() {
+	return this->name;
 }

@@ -27,10 +27,8 @@ void TIEngineInterface::registerUserType(sol::state& luaState) {
     engineInterfaceUserType["registerAudioDirectory"] = &TIEngineInterface::registerAudioDirectory;
     engineInterfaceUserType["setWindowTitle"] = &TIEngineInterface::setWindowTitle;
     engineInterfaceUserType["setWindowSize"] = &TIEngineInterface::setWindowSize;
-    engineInterfaceUserType["registerLevel"] = &TIEngineInterface::registerLevel;
     engineInterfaceUserType["setLevel"] = &TIEngineInterface::setLevel;
-	engineInterfaceUserType["registerTIEntity"] = &TIEngineInterface::registerTIEntityDefinition;
-	engineInterfaceUserType["spawn"] = &TIEngineInterface::spawnTIEntity;
+	engineInterfaceUserType["spawn"] = &TIEngineInterface::spawn;
 	engineInterfaceUserType["hasEvent"] = &TIEngineInterface::hasEvent;
 	engineInterfaceUserType["getMouseClickPosition"] = &TIEngineInterface::getMouseClickPosition;
     engineInterfaceUserType["getTIEntityById"] = &TIEngineInterface::getTIEntityById;
@@ -71,36 +69,17 @@ bool TIEngineInterface::setWindowTitle(const std::string& title) {
 }
 
 
-bool TIEngineInterface::registerLevel(const std::string& name, const sol::table& definition) {
-    ScriptManager::Instance()->loadTIEntityDefinition(name, definition);
+bool TIEngineInterface::setLevel(const sol::table& level) {
+    TIEntityFactory factory = TIEntityFactory();
+    ScriptManager::Instance()->loadTIEntityDefinition(factory, level);
+    WorldManager::Instance()->setLevelEntity(factory);
     return true;
 }
 
-
-bool TIEngineInterface::setLevel(const std::string& name) {
-    if (WorldManager::Instance()->isTIEntityRegistered(name)) {
-        WorldManager::Instance()->setLevelEntity(name);
-        return true;
-    } else {
-        LogManager::Instance()->warn("Level with name " + name + " is not registered.");
-        return false;
-    }
-}
-
-
-bool TIEngineInterface::registerTIEntityDefinition(const std::string& name, const sol::table& definition) {
-    ScriptManager::Instance()->loadTIEntityDefinition(name, definition);
-    return true;
-}
-
-
-TIEntityInterface TIEngineInterface::spawnTIEntity(const std::string& name) {
-    if (WorldManager::Instance()->isTIEntityRegistered(name)) {
-        TIEntity& tientity = WorldManager::Instance()->spawnTIEntity(name);
-        return TIEntityInterface(tientity);
-    } else {
-        return nullptr;
-    }
+TIEntityInterface TIEngineInterface::spawn(const sol::table& definition) {
+    TIEntityFactory factory = TIEntityFactory();
+    ScriptManager::Instance()->loadTIEntityDefinition(factory, definition);
+    return TIEntityInterface(factory.build());
 }
 
 
@@ -111,12 +90,12 @@ bool TIEngineInterface::hasEvent(std::string& event) {
 
 
 Vector2iInterface TIEngineInterface::getMouseClickPosition() {
-	const sf::Event* clickEvent = EventsManager::Instance()->getEvent(sf::Event::MouseButtonPressed);
-    if (clickEvent != nullptr) {
-        return Vector2iInterface(clickEvent->mouseButton.x, clickEvent->mouseButton.y);
-    } else {
-        return Vector2iInterface();
-    }
+const sf::Event* clickEvent = EventsManager::Instance()->getEvent(sf::Event::MouseButtonPressed);
+if (clickEvent != nullptr) {
+    return Vector2iInterface(clickEvent->mouseButton.x, clickEvent->mouseButton.y);
+} else {
+    return Vector2iInterface();
+}
 }
 
 

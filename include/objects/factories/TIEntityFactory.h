@@ -13,8 +13,11 @@ namespace TIE {
 class TIEntityFactory {
 	public:
 		TIEntityFactory& setName(std::string);
+		const std::string& getName();
+
 		TIEntityFactory& setParent(TIEntity*);
-		TIEntityFactory& registerChild();
+		TIEntityFactory& addChild();
+
 		TIEntityFactory& addComponentSystemByComponentName(const std::string&);
 
 		std::map<std::string, bool> boolValues;
@@ -23,6 +26,8 @@ class TIEntityFactory {
 		std::map<std::string, GlobalId> functionValues;
 
 		TIEntity& build();
+
+		static const inline std::string NAME = "tientity.name";
 
 		TIEntityFactory() {};
 		~TIEntityFactory() {};
