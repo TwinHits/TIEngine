@@ -64,6 +64,36 @@ const std::string& MovesComponentSystem::getName() {
 }
 
 
+void MovesComponentSystem::setTargetPosition(TIEntity& tientity, sf::Vector2f& targetPosition) {
+	MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
+	PositionComponent* positionComponent = tientity.getComponent<PositionComponent>();
+	if (movesComponent != nullptr && positionComponent != nullptr) {
+
+		if (WorldManager::Instance()->isGridConfigured()) {
+			targetPosition = GridComponentSystem::Instance()->normalizePositionToGrid(targetPosition);
+		}
+
+		movesComponent->hasTargetPosition = true;
+		movesComponent->targetPosition = targetPosition;
+        movesComponent->targetRotation = Math::angleBetweenTwoPoints(positionComponent->position, movesComponent->targetPosition);
+	}
+}
+
+
+void MovesComponentSystem::setTargetPosition(TIEntity& tientity, float distance) {
+	MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
+	PositionComponent* positionComponent = tientity.getComponent<PositionComponent>();
+	if (movesComponent != nullptr && positionComponent != nullptr) {
+
+		sf::Vector2f velocity = sf::Vector2f(distance, positionComponent->rotation);
+		sf::Vector2f distance = Math::translateVelocityByTime(velocity,  1);
+		sf::Vector2f destination = sf::Vector2f(positionComponent->position.x + distance.x, positionComponent->position.y + distance.y);
+
+		MovesComponentSystem::Instance()->setTargetPosition(tientity, destination);
+	}
+}
+
+
 void MovesComponentSystem::setTargetPosition(TIEntity& tientity, Direction direction) {
 	MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
 	PositionComponent* positionComponent = tientity.getComponent<PositionComponent>();
@@ -90,22 +120,6 @@ void MovesComponentSystem::setTargetPosition(TIEntity& tientity, Direction direc
 
 			this->setTargetPosition(tientity, targetPosition);
 		}
-	}
-}
-
-
-void MovesComponentSystem::setTargetPosition(TIEntity& tientity, sf::Vector2f& targetPosition) {
-	MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
-	PositionComponent* positionComponent = tientity.getComponent<PositionComponent>();
-	if (movesComponent != nullptr && positionComponent != nullptr) {
-
-		if (WorldManager::Instance()->isGridConfigured()) {
-			targetPosition = GridComponentSystem::Instance()->normalizePositionToGrid(targetPosition);
-		}
-
-		movesComponent->hasTargetPosition = true;
-		movesComponent->targetPosition = targetPosition;
-        movesComponent->targetRotation = Math::angleBetweenTwoPoints(positionComponent->position, movesComponent->targetPosition);
 	}
 }
 

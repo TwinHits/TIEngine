@@ -24,8 +24,9 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, public Comp
 		bool removeComponent(TIEntity&);
 		const std::string& getName();
 		
-		void setTargetPosition(TIEntity&, Direction);
 		void setTargetPosition(TIEntity&, sf::Vector2f&);
+		void setTargetPosition(TIEntity&, float);
+		void setTargetPosition(TIEntity&, Direction);
 		bool atTargetPosition(TIEntity&);
 
 		static const inline std::string MOVES = "moves";

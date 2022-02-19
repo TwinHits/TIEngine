@@ -38,6 +38,7 @@ class TIEntityInterface {
         void setRotation(const float);
 
         void setDestination(const float, const float);
+        void setDestinationByDistance(const float);
         bool atDestination();
 
         void moveUp();

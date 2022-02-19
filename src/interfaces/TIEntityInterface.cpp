@@ -48,6 +48,7 @@ void TIEntityInterface::registerUserType(sol::state& luaState) {
 
     //Movement
 	interfaceUserType["setDestination"] = &TIEntityInterface::setDestination;
+    interfaceUserType["setDestinationByDistance"] = &TIEntityInterface::setDestinationByDistance;
 	interfaceUserType["atDestination"] = &TIEntityInterface::atDestination;
     interfaceUserType["moveRight"] = &TIEntityInterface::moveRight;
     interfaceUserType["moveLeft"] = &TIEntityInterface::moveLeft;
@@ -120,6 +121,11 @@ void TIEntityInterface::setRotation(const float rotation) {
 
 void TIEntityInterface::setDestination(const float x, const float y) {
     MovesComponentSystem::Instance()->setTargetPosition(*this->tientity, sf::Vector2f(x, y));
+}
+
+
+void TIEntityInterface::setDestinationByDistance(const float distance) {
+    MovesComponentSystem::Instance()->setTargetPosition(*this->tientity, distance);
 }
 
 
