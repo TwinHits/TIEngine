@@ -7,6 +7,7 @@
 #include "componentsystems/EventsComponentSystem.h"
 #include "componentsystems/MovesComponentSystem.h"
 #include "componentsystems/PositionComponentSystem.h"
+#include "componentsystems/SpriteComponentSystem.h"
 #include "interfaces/Vector2Interface.h"
 #include "managers/LogManager.h"
 #include "managers/WorldManager.h"
@@ -31,25 +32,38 @@ TIEntityInterface::TIEntityInterface(TIEntity* tientity) {
 
 void TIEntityInterface::registerUserType(sol::state& luaState) {
     sol::usertype<TIEntityInterface> interfaceUserType = luaState.new_usertype<TIEntityInterface>("tientity");
+    //Management
     interfaceUserType["getId"] = &TIEntityInterface::getId;
     interfaceUserType["spawn"] = &TIEntityInterface::spawn;
     interfaceUserType["despawn"] = &TIEntityInterface::despawn;
+
+    //Sprite
     interfaceUserType["setDrawn"] = &TIEntityInterface::setDrawn;
+
+    //Position
 	interfaceUserType["getPosition"] = &TIEntityInterface::getPosition;
 	interfaceUserType["setPosition"] = &TIEntityInterface::setPosition;
 	interfaceUserType["getRotation"] = &TIEntityInterface::getRotation;
 	interfaceUserType["setRotation"] = &TIEntityInterface::setRotation;
+
+    //Movement
 	interfaceUserType["setDestination"] = &TIEntityInterface::setDestination;
 	interfaceUserType["atDestination"] = &TIEntityInterface::atDestination;
     interfaceUserType["moveRight"] = &TIEntityInterface::moveRight;
     interfaceUserType["moveLeft"] = &TIEntityInterface::moveLeft;
     interfaceUserType["moveUp"] = &TIEntityInterface::moveUp;
     interfaceUserType["moveDown"] = &TIEntityInterface::moveDown;
+    
+    //Event
     interfaceUserType["addState"] = &TIEntityInterface::addState;
     interfaceUserType["removeState"] = &TIEntityInterface::removeState;
     interfaceUserType["getState"] = &TIEntityInterface::getState;
+    
+    //Cache
     interfaceUserType["setCache"] = &TIEntityInterface::setCache;
     interfaceUserType["getCache"] = &TIEntityInterface::getCache;
+
+    //Behavior
     interfaceUserType["setBehaviorById"] = &TIEntityInterface::setBehaviorById;
     interfaceUserType["setBehaviorByName"] = &TIEntityInterface::setBehaviorByName;
 }
@@ -79,7 +93,6 @@ void TIEntityInterface::setDrawn(bool drawn) {
 
 Vector2fInterface TIEntityInterface::getPosition() {
     sf::Vector2f worldPosition = PositionComponentSystem::Instance()->getWorldPosition(*this->tientity);
-    //sf::Vector2f originOffset = SpriteComponentSystem::Instance()->getSpriteOriginOffset();
     return Vector2fInterface(worldPosition.x, worldPosition.y);
 }
 

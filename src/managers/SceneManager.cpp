@@ -58,14 +58,19 @@ bool SceneManager::initialize() {
 	this->engineLayer->attachChild(std::move(performanceDisplay));
 
 	// Component System registration and order of update
+	// Update data operations
 	this->componentSystems.push_back(EventsComponentSystem::Instance());
 	this->componentSystems.push_back(LifecycleComponentSystem::Instance());
-	this->componentSystems.push_back(PositionComponentSystem::Instance());
 	this->componentSystems.push_back(BehaviorComponentSystem::Instance());
-	this->componentSystems.push_back(MovesComponentSystem::Instance());
-	this->componentSystems.push_back(CollidesComponentSystem::Instance());
 	this->componentSystems.push_back(CacheComponentSystem::Instance());
+
+	// Update Position Operations
+	this->componentSystems.push_back(CollidesComponentSystem::Instance());
+	this->componentSystems.push_back(MovesComponentSystem::Instance());
 	this->componentSystems.push_back(GridComponentSystem::Instance());
+	this->componentSystems.push_back(PositionComponentSystem::Instance());
+
+	// Drawing operations
 	this->componentSystems.push_back(AnimatedComponentSystem::Instance());
 	this->componentSystems.push_back(SpriteComponentSystem::Instance());
 	this->componentSystems.push_back(TextComponentSystem::Instance());
@@ -104,6 +109,7 @@ bool SceneManager::isValidComponentName(const std::string& componentName) {
 	return this->componentNamesToComponentSystems.count(componentName);
 }
 
+
 ComponentSystem* SceneManager::getComponentSystemByComponentName(const std::string& componentName) {
 	if (this->isValidComponentName(componentName)) {
 		return this->componentNamesToComponentSystems.at(componentName);
@@ -111,13 +117,6 @@ ComponentSystem* SceneManager::getComponentSystemByComponentName(const std::stri
 		return nullptr;
 	}
 }
-
-
-/* //Investigate with collides component
-TIEntity* SceneManager::findTIEntity(sf::Vector2f point) {
-	return this->getClientLayer().findNode(point);	
-}
-*/
 
 
 void SceneManager::updateGameState() {
