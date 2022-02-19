@@ -19,18 +19,16 @@ using namespace TIE;
 
 void SpriteComponentSystem::update(const float delta) {
 	for (auto& c : this->components) {
-		c.spriteComponent.setPosition(PositionComponentSystem::Instance()->getWorldPosition(c.tientity));
-		if (c.spriteComponent.isRotates()) {
-			c.spriteComponent.setRotation(PositionComponentSystem::Instance()->getWorldRotation(c.tientity));
-		}
+		c.spriteComponent.setPosition(c.positionComponent.worldPosition);
+		c.spriteComponent.setRotation(c.positionComponent.worldRotation);
 	}
 }
 
 
 void SpriteComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
     SpriteComponent& spriteComponent = tientity.addComponent<SpriteComponent>();
-    PositionComponent& positionComponent = tientity.addComponent<PositionComponent>();
-    Components components = { spriteComponent, positionComponent, tientity };
+	PositionComponent& positionComponent = tientity.addComponent<PositionComponent>();
+    Components components = { spriteComponent, positionComponent };
     this->components.push_back(components);
 
     spriteComponent.setPosition(positionComponent.position);
@@ -59,11 +57,8 @@ void SpriteComponentSystem::addComponent(const TIEntityFactory& factory, TIEntit
 		spriteComponent.scale(sf::Vector2f(xScale, yScale));
 	}
 
-    sf::FloatRect spriteSize = spriteComponent.getLocalBounds();
-	float originXOffset = ComponentSystems::getFactoryValue<float>(factory, SpriteComponentSystem::ORIGIN_X_OFFSET, 0, tientity);
-	float originYOffset = ComponentSystems::getFactoryValue<float>(factory, SpriteComponentSystem::ORIGIN_Y_OFFSET, 0, tientity);
-    spriteComponent.setOrigin((spriteSize.width / 2) - (originXOffset / spriteComponent.getScale().x), (spriteSize.height / 2) - (originYOffset / spriteComponent.getScale().y));
-	
+	spriteComponent.setOrigin(spriteComponent.getLocalBounds().width / 2, spriteComponent.getLocalBounds().height / 2);
+
 	bool drawn = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::DRAWN, true, tientity);
     spriteComponent.setDrawn(drawn);
 

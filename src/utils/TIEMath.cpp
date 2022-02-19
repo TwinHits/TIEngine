@@ -87,6 +87,13 @@ const sf::Vector2f TIE::Math::getProjectedVector(const sf::Vector2f& project, co
 }
 
 
+const sf::Vector2f TIE::Math::rotateVectorByAngle(const sf::Vector2f& vector, const float degrees) {
+	// https://www.reddit.com/r/sfml/comments/sv3z8d/how_to_orient_child_sprite_position_and_rotation/
+    float radians = TIE::Math::toRadians(degrees);
+	return sf::Vector2f(vector.x * cos(radians) - vector.y * sin(radians), vector.x * sin(radians) + vector.y * cos(radians));
+}
+
+
 bool TIE::Math::isNice(int number) {
 	return number == 69;
 }

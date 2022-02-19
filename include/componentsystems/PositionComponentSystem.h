@@ -22,19 +22,21 @@ class PositionComponentSystem : public Singleton<PositionComponentSystem>, publi
 
 		sf::Vector2f getWorldPosition(TIEntity&);
 		float getWorldRotation(TIEntity&);
+		sf::Transform getWorldTransform(TIEntity&);
 
 		static const inline std::string POSITION = "position";
 		static const inline std::string X = "position.x";
 		static const inline std::string Y = "position.y";
 		static const inline std::string ROTATION = "position.rotation";
+		static const inline std::string ROTATES = "position.rotates";
 
     private:
 		struct Components {
 			PositionComponent& positionComponent;
+			TIEntity& tientity;
 		};
 		std::list<Components> components;
 
-		sf::Transform getWorldTransform(TIEntity&);
 };
 }
 

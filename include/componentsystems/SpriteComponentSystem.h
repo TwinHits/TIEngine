@@ -35,7 +35,6 @@ class SpriteComponentSystem : public Singleton<SpriteComponentSystem>, public Co
 		struct Components {
 			SpriteComponent& spriteComponent;
 			PositionComponent& positionComponent;
-			TIEntity& tientity;
 		};
 		std::list<Components> components;
 };

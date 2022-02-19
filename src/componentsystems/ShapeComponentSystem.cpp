@@ -17,8 +17,8 @@ using namespace TIE;
 void ShapeComponentSystem::update(const float delta) {
 	for (auto& c : this->components) {
 		for (auto& s : c.shapeComponent.getShapes()) {
-			s->setPosition(PositionComponentSystem::Instance()->getWorldPosition(c.tientity));
-			s->setRotation(PositionComponentSystem::Instance()->getWorldRotation(c.tientity));
+			s->setPosition(c.positionComponent.worldPosition);
+			s->setRotation(c.positionComponent.worldRotation);
 		}
 	}
 }

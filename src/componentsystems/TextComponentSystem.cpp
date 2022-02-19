@@ -15,8 +15,8 @@ using namespace TIE;
 
 void TextComponentSystem::update(const float delta) {
 	for (auto& c : this->components) {	
-		c.textComponent.setPosition(PositionComponentSystem::Instance()->getWorldPosition(c.tientity));
-		//c.textComponent.setRotation(PositionComponentSystem::Instance()->getWorldRotation(c.tientity));
+		c.textComponent.setPosition(c.positionComponent.worldPosition);
+		c.textComponent.setRotation(c.positionComponent.worldRotation);
 	}
 }
 
