@@ -15,6 +15,8 @@ class MovesComponent : public Component {
 		float maxSpeed = 0.0f;
 		float acceleration = 0.0f;
 		float speed = 0.0f;
+
+		bool rotates = true;
 		sf::Vector2f rotationalVelocity = sf::Vector2f(0, 0);
 
 		bool hasTargetPosition = false;

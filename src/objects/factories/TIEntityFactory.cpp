@@ -49,6 +49,7 @@ TIEntity& TIEntityFactory::build() {
 	return tientity;
 }
 
+
 TIEntityFactory& TIEntityFactory::addComponentSystemByComponentName(const std::string& name) {
 	if (SceneManager::Instance()->isValidComponentName(name)) {
 		this->componentSystemNames[name] = true;

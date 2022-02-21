@@ -36,10 +36,13 @@ void MovesComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity
 
 	float maxSpeed = ComponentSystems::getFactoryValue<float>(factory, MovesComponentSystem::MAXSPEED, 0.0F, tientity);
 	float acceleration = ComponentSystems::getFactoryValue<float>(factory, MovesComponentSystem::ACCELERATION, 0.0F, tientity);
+	float rotates = ComponentSystems::getFactoryValue<bool>(factory, MovesComponentSystem::ROTATES, true, tientity);
 	float rotationalSpeed = ComponentSystems::getFactoryValue<float>(factory, MovesComponentSystem::ROTATIONSPEED, 0.0F, tientity);
 
     movesComponent.acceleration = acceleration;
     movesComponent.maxSpeed = maxSpeed;
+	movesComponent.rotates = rotates;
+	movesComponent.rotationalVelocity.x = rotationalSpeed;
 }
 
 
@@ -176,11 +179,13 @@ void MovesComponentSystem::accelerate(MovesComponent& movesComponent, PositionCo
 		movesComponent.speed = fmaxf(0.0f, movesComponent.speed);
 		movesComponent.lastDistanceToTarget = distanceToTarget;
 
-		if (movesComponent.speed > 0) {
-			// Coefficent should decrease for smaller objects and increase for larger objects
-			movesComponent.rotationalVelocity.x = movesComponent.maxSpeed - movesComponent.speed * .5;
-		} else {
-			movesComponent.rotationalVelocity.x = 0;
+		if (movesComponent.rotates) {
+			if (movesComponent.speed > 0) {
+				// Coefficent should decrease for smaller objects and increase for larger objects
+				movesComponent.rotationalVelocity.x = movesComponent.maxSpeed - movesComponent.speed * .5;
+			} else {
+				movesComponent.rotationalVelocity.x = 0;
+			}
 		}
 	} else {
 		movesComponent.speed = 0;
@@ -190,7 +195,7 @@ void MovesComponentSystem::accelerate(MovesComponent& movesComponent, PositionCo
 
 
 void MovesComponentSystem::rotate(MovesComponent& movesComponent, PositionComponent& positionComponent, const float delta) {
-	if (movesComponent.rotationalVelocity.x != 0) {
+	if (!Math::areFloatsEqual(movesComponent.rotationalVelocity.x, 0)) {
 		movesComponent.targetRotation = Math::angleBetweenTwoPoints(positionComponent.position, movesComponent.targetPosition);
 		if (!Math::areFloatsEqual(positionComponent.rotation, movesComponent.targetRotation)) {
 			movesComponent.rotationalVelocity.y = Math::directionFromAngleToAngle(positionComponent.rotation, movesComponent.targetRotation);

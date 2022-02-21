@@ -32,6 +32,7 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, public Comp
 		static const inline std::string MOVES = "moves";
 		static const inline std::string MAXSPEED = "moves.maxSpeed";
 		static const inline std::string ACCELERATION = "moves.acceleration";
+		static const inline std::string ROTATES = "moves.rotates";
 		static const inline std::string ROTATIONSPEED = "moves.rotationSpeed";
 	private:
 		struct Components {
