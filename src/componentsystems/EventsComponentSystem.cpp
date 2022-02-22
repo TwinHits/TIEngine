@@ -4,23 +4,28 @@
 #include <vector>
 
 #include "objects/components/EventsComponent.h"
-#include "objects/components/MovesComponent.h"
-#include "objects/components/PositionComponent.h"
-#include "objects/components/SpriteComponent.h"
 #include "objects/components/structs/EventState.h"
 #include "objects/entities/TIEntity.h"
 #include "objects/enumeration/Direction.h"
 #include "objects/GlobalId.h"
 #include "managers/EventsManager.h"
 #include "managers/ScriptManager.h"
+#include "templates/VectorHelpers.h"
 #include "utils/StringHelpers.h"
+#include "utils/Graphics.h"
 
 using namespace TIE;
 
 void EventsComponentSystem::update(const float delta) {
-	this->updateSelectedStates();
+	const sf::Event* clickEvent = EventsManager::Instance()->getEvent(sf::Event::MouseButtonPressed);
+	const sf::Vector2f mousePosition = EventsManager::Instance()->getMouseWorldPosition();
 
 	for (auto& c : this->components) {
+		// Update engine managed states
+		if (clickEvent != nullptr) {
+			this->updateSelectedStates(c.eventsComponent, c.tientity, *clickEvent);
+		}
+		this->updateHoverStates(c.eventsComponent, c.tientity, mousePosition);
 
 		// Add time elapsed to each state
 		for (auto& state : c.eventsComponent.getStates()) {
@@ -45,6 +50,9 @@ void EventsComponentSystem::update(const float delta) {
 
 void EventsComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& entity) {
 
+    EventsComponent& eventsComponent = entity.addComponent<EventsComponent>();
+    this->components.push_back({ eventsComponent, entity });
+
 	// Get all the keys containing events from the functionValues map 
 	std::vector<std::string> eventKeys;
 	for (auto& i : factory.functionValues) {
@@ -53,19 +61,17 @@ void EventsComponentSystem::addComponent(const TIEntityFactory& factory, TIEntit
 		}
 	}
 
-	if (eventKeys.size()) {
-		EventsComponent& eventsComponent = entity.addComponent<EventsComponent>();
-		MovesComponent& movesComponent = entity.addComponent<MovesComponent>();
-		PositionComponent& positionComponent = entity.addComponent<PositionComponent>();
-		SpriteComponent& spriteComponent = entity.addComponent<SpriteComponent>();
-		Components components = { eventsComponent, movesComponent, positionComponent, spriteComponent, entity };
-		this->components.push_back(components);
-
+	if (!eventKeys.empty()) {
 		for (auto& key : eventKeys) {
 			// Split the key into parts for state, event, and handler
 			std::vector<std::string> keyParts = String::slice(key, '.', 1);
-			std::string state = keyParts.at(0);
-			std::string event = keyParts.at(1);
+
+			std::string state = EventsComponentSystem::NEUTRAL;
+			std::string event = keyParts.back();
+			if (keyParts.size() > 1) {
+                state = keyParts.at(0);
+			}
+
 			const GlobalId handler = factory.functionValues.at(key);
 
 			// If it's an event value store it in the events map
@@ -81,7 +87,18 @@ void EventsComponentSystem::addComponent(const TIEntityFactory& factory, TIEntit
 			}
 
 			// If it's for the selected state than this component is selectable
-			eventsComponent.setSelectable(true);
+			if (state == EventsComponentSystem::SELECTED) {
+				eventsComponent.setSelectable(true);
+				eventsComponent.addState(EventsComponentSystem::UNSELECTED);
+			}
+
+			// If it's for the hover state than this component is hoverable
+			if (state == EventsComponentSystem::HOVER) {
+				eventsComponent.setHoverable(true);
+			}
+
+			// All components have neutral
+			eventsComponent.addState(EventsComponentSystem::NEUTRAL);
 		}
 	}
 }
@@ -89,11 +106,7 @@ void EventsComponentSystem::addComponent(const TIEntityFactory& factory, TIEntit
 
 EventsComponent& EventsComponentSystem::addComponent(TIEntity& tientity) {
 	EventsComponent& eventsComponent = tientity.addComponent<EventsComponent>();
-	MovesComponent& movesComponent = tientity.addComponent<MovesComponent>();
-	PositionComponent& positionComponent = tientity.addComponent<PositionComponent>();
-	SpriteComponent& spriteComponent = tientity.addComponent<SpriteComponent>();
-	Components components = { eventsComponent, movesComponent, positionComponent, spriteComponent, tientity };
-	this->components.push_back(components);
+	this->components.push_back({ eventsComponent, tientity });
 
 	return eventsComponent;
 }
@@ -113,7 +126,6 @@ bool EventsComponentSystem::removeComponent(TIEntity& tientity) {
 		return false;
 	}
 }
-
 
 
 const std::string& EventsComponentSystem::getName() {
@@ -151,24 +163,47 @@ EventState* EventsComponentSystem::getState(TIEntity& tientity, const std::strin
 }
 
 
-void EventsComponentSystem::updateSelectedStates() {
-	const sf::Event* clickEvent = EventsManager::Instance()->getEvent(sf::Event::MouseButtonPressed);
-	if (clickEvent != nullptr) {
-		for (auto& c : this->components) {
-			if (!c.eventsComponent.hasState("selected") && c.eventsComponent.isSelectable()) {
-				if (c.spriteComponent.getGlobalBounds().contains(sf::Vector2f(clickEvent->mouseButton.x, clickEvent->mouseButton.y))) {
-					c.eventsComponent.removeState("unselected");
-					c.eventsComponent.addState("selected");
-					for (auto& eventsComponent : c.eventsComponent.getSelectedComponents()) {
-						eventsComponent->removeState("selected");
-						eventsComponent->addState("unselected");
-					}
-					c.eventsComponent.clearSelectedComponents();
-					c.eventsComponent.addSelectedComponent(c.eventsComponent);
-					EventsManager::Instance()->removeEvent(sf::Event::MouseButtonPressed);
-				}
-			}
-		}
-	}
+void EventsComponentSystem::updateSelectedStates(EventsComponent& eventsComponent, TIEntity& tientity, const sf::Event& clickEvent) {
+    if (!eventsComponent.hasState(EventsComponentSystem::SELECTED) && eventsComponent.isSelectable()) {
+        if (Graphics::getGlobalBounds(tientity).contains(sf::Vector2f(clickEvent.mouseButton.x, clickEvent.mouseButton.y))) {
+
+            eventsComponent.addState(EventsComponentSystem::SELECTED);
+            eventsComponent.removeState(EventsComponentSystem::UNSELECTED);
+
+            for (auto& eventsComponent : this->cachedSelectedComponents) {
+                eventsComponent->addState(EventsComponentSystem::UNSELECTED);
+                eventsComponent->removeState(EventsComponentSystem::SELECTED);
+            }
+
+			this->clearSelectedComponents();
+            this->addSelectedComponent(eventsComponent);
+            EventsManager::Instance()->removeEvent(sf::Event::MouseButtonPressed);
+        }
+    }
 }
 
+
+void EventsComponentSystem::updateHoverStates(EventsComponent& eventsComponent, TIEntity& tientity, const sf::Vector2f& mousePosition) {
+    if (eventsComponent.isHoverable()) {
+        if (Graphics::getGlobalBounds(tientity).contains(sf::Vector2f(mousePosition.x, mousePosition.y))) {
+			eventsComponent.addState(EventsComponentSystem::HOVER);
+		} else {
+			eventsComponent.removeState(EventsComponentSystem::HOVER);
+		}
+    }
+}
+
+
+void EventsComponentSystem::addSelectedComponent(EventsComponent& eventsComponent) {
+	this->cachedSelectedComponents.push_back(&eventsComponent);
+}
+
+
+void EventsComponentSystem::removeSelectedComponent(EventsComponent& eventsComponent) {
+	Vector::remove(this->cachedSelectedComponents, &eventsComponent);
+}
+
+
+void EventsComponentSystem::clearSelectedComponents() {
+	this->cachedSelectedComponents.clear();
+}

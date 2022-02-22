@@ -15,9 +15,7 @@ namespace TIE {
 
 class EventsComponent : public Component {
 	public: 
-		EventsComponent() {
-			this->addState("unselected");
-		};
+		EventsComponent() {};
 		~EventsComponent() {};
 
 		bool hasHandlers();
@@ -41,17 +39,18 @@ class EventsComponent : public Component {
 		void setSelectable(bool);
 		bool isSelectable();
 
-		void addSelectedComponent(EventsComponent&);
-		std::vector<EventsComponent*>& getSelectedComponents();
-		void removeSelectedComponent(EventsComponent&);
-		void clearSelectedComponents();
+		void setHoverable(bool);
+		bool isHoverable();
+
 	private:
 		std::vector<EventState> states;
+
 		// Map of state name to event to Lua function id
 		std::map<std::string, std::map<sf::Event::EventType, GlobalId> > eventHandlers;
 		std::map<std::string, std::map<sf::Keyboard::Key, GlobalId> > keyHandlers;
+
 		bool selectable = false;
-		static std::vector<EventsComponent*> cachedSelectedComponents;
+		bool hoverable = false;
 };
 
 }

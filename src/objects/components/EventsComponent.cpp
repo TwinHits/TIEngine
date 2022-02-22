@@ -10,8 +10,6 @@
 
 using namespace TIE;
 
-std::vector<EventsComponent*> EventsComponent::cachedSelectedComponents;
-
 bool EventsComponent::hasHandlers() {
 	return hasEventHandlers() || hasKeyHandlers();
 }
@@ -127,21 +125,12 @@ bool EventsComponent::isSelectable() {
 }
 
 
-void EventsComponent::addSelectedComponent(EventsComponent& eventsComponent) {
-	this->cachedSelectedComponents.push_back(&eventsComponent);
-}
-
-std::vector<EventsComponent*>& EventsComponent::getSelectedComponents() {
-	return this->cachedSelectedComponents;
+void EventsComponent::setHoverable(bool hoverable) {
+	this->hoverable = hoverable;
 }
 
 
-void EventsComponent::removeSelectedComponent(EventsComponent& eventsComponent) {
-	Vector::remove(this->cachedSelectedComponents, &eventsComponent);
-}
-
-
-void EventsComponent::clearSelectedComponents() {
-	this->cachedSelectedComponents.clear();
+bool EventsComponent::isHoverable() {
+	return this->hoverable;
 }
 

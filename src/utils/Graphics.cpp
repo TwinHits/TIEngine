@@ -45,3 +45,26 @@ const bool TIE::Graphics::isDrawn(TIEntity& entity) {
 
 	return false;
 }
+
+
+const sf::FloatRect TIE::Graphics::getGlobalBounds(TIEntity& tientity) {
+
+	TextComponent* textComponent = tientity.getComponent<TextComponent>();
+	if (textComponent != nullptr && textComponent->isDrawn()) {
+		return textComponent->getGlobalBounds();
+	}
+	
+	SpriteComponent* spriteComponent = tientity.getComponent<SpriteComponent>();
+	if (spriteComponent != nullptr && spriteComponent->isDrawn()) {
+		return spriteComponent->getGlobalBounds();
+	}
+
+	ShapeComponent* shapeComponent = tientity.getComponent<ShapeComponent>();
+	if (shapeComponent != nullptr && shapeComponent->isDrawn()) {
+		for (auto& shape : shapeComponent->getShapes()) {
+			return shape->getGlobalBounds();
+		}
+	}
+
+	return sf::FloatRect(0,0,0,0);
+}

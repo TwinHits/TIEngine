@@ -7,9 +7,6 @@
 #include <string>
 
 #include "objects/components/EventsComponent.h"
-#include "objects/components/MovesComponent.h"
-#include "objects/components/PositionComponent.h"
-#include "objects/components/SpriteComponent.h"
 #include "objects/components/structs/EventState.h"
 #include "objects/entities/TIEntity.h"
 #include "objects/factories/TIEntityFactory.h"
@@ -32,18 +29,30 @@ class EventsComponentSystem : public Singleton<EventsComponentSystem>, public Co
 		bool removeState(TIEntity&, const std::string&);
 		EventState* getState(TIEntity&, const std::string&);
 
+		void addSelectedComponent(EventsComponent&);
+		void removeSelectedComponent(EventsComponent&);
+		void clearSelectedComponents();
+
+		// TIEFactory keys / Name
 		const static inline std::string EVENTS = "events";
+
+		// Engine handled events
+		const static inline std::string SELECTED = "selected";
+		const static inline std::string UNSELECTED = "unselected";
+		const static inline std::string HOVER = "hover";
+		const static inline std::string NEUTRAL = "neutral";
+
 	private:
 		struct Components {
 			EventsComponent& eventsComponent;
-			MovesComponent& movesComponent;
-			PositionComponent& positionComponent;
-			SpriteComponent& spriteComponent;
 			TIEntity& tientity;
 		};
 		std::list<Components> components;
 
-		void updateSelectedStates();
+		std::vector<EventsComponent*> cachedSelectedComponents;
+
+		void updateSelectedStates(EventsComponent&, TIEntity&, const sf::Event&);
+		void updateHoverStates(EventsComponent&, TIEntity&, const sf::Vector2f& mousePosition);
 };
 
 }

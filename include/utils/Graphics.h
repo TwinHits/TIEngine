@@ -7,6 +7,8 @@ namespace TIE {
     namespace Graphics {
         void setDrawn(TIEntity&, const bool);
         const bool isDrawn(TIEntity&);
+
+        const sf::FloatRect getGlobalBounds(TIEntity&);
     }
 }
 
