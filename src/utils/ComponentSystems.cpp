@@ -55,5 +55,25 @@ void ComponentSystems::setDrawn(TIEntity& entity, bool drawn) {
     if (shapeComponent != nullptr) {
         shapeComponent->setDrawn(drawn);
     }
+}
 
+bool ComponentSystems::isDrawn(TIEntity& entity) {
+    SpriteComponent* spriteComponent = entity.getComponent<SpriteComponent>();
+    TextComponent* textComponent = entity.getComponent<TextComponent>();
+    ShapeComponent* shapeComponent = entity.getComponent<ShapeComponent>();
+    
+    bool isDrawn = false;
+    if (spriteComponent != nullptr && !isDrawn) {
+        isDrawn = spriteComponent->isDrawn();
+    }
+
+    if (textComponent != nullptr && !isDrawn) {
+        isDrawn = textComponent->isDrawn();
+    }
+
+    if (shapeComponent != nullptr && !isDrawn) {
+        isDrawn = shapeComponent->isDrawn();
+    }
+
+    return isDrawn;
 }

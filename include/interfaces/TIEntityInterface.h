@@ -29,6 +29,7 @@ class TIEntityInterface {
 
         // Rendering
         void setDrawn(bool);
+        bool isDrawn();
 
         // Movement
         Vector2fInterface getPosition();

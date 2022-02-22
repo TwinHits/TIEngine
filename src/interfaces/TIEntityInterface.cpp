@@ -39,6 +39,7 @@ void TIEntityInterface::registerUserType(sol::state& luaState) {
 
     //Sprite
     interfaceUserType["setDrawn"] = &TIEntityInterface::setDrawn;
+    interfaceUserType["isDrawn"] = &TIEntityInterface::isDrawn;
 
     //Position
 	interfaceUserType["getPosition"] = &TIEntityInterface::getPosition;
@@ -89,6 +90,11 @@ void TIEntityInterface::despawn() {
 
 void TIEntityInterface::setDrawn(bool drawn) {
     ComponentSystems::setDrawn(*this->tientity, drawn);
+}
+
+
+bool TIEntityInterface::isDrawn() {
+    return ComponentSystems::isDrawn(*this->tientity);
 }
 
 
