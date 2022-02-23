@@ -20,10 +20,9 @@ class TIEntityInterface {
 
         static void registerUserType(sol::state&);
 
-        // Information
+        //Management
         GlobalId getId();
-
-        // Spawn
+        sol::table& getChildren();
         TIEntityInterface spawn(const sol::table&);
         void despawn();
 
@@ -62,6 +61,7 @@ class TIEntityInterface {
 
     private:
         TIEntity* tientity = nullptr;
+        sol::table children = sol::table();
 };
 
 }

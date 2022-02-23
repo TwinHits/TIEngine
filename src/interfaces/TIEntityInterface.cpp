@@ -32,8 +32,10 @@ TIEntityInterface::TIEntityInterface(TIEntity* tientity) {
 
 void TIEntityInterface::registerUserType(sol::state& luaState) {
     sol::usertype<TIEntityInterface> interfaceUserType = luaState.new_usertype<TIEntityInterface>("tientity");
+
     //Management
     interfaceUserType["getId"] = &TIEntityInterface::getId;
+    interfaceUserType["getChildren"] = &TIEntityInterface::getChildren;
     interfaceUserType["spawn"] = &TIEntityInterface::spawn;
     interfaceUserType["despawn"] = &TIEntityInterface::despawn;
 
@@ -73,6 +75,14 @@ void TIEntityInterface::registerUserType(sol::state& luaState) {
 
 GlobalId TIEntityInterface::getId() {
     return this->tientity->getId();
+}
+
+sol::table& TIEntityInterface::getChildren() {
+    this->children = ScriptManager::Instance()->getNewTable();
+    for (auto& child : this->tientity->getChildren()) {
+        this->children.add<TIEntityInterface>(TIEntityInterface(*child));
+    }
+    return children;
 }
 
 
