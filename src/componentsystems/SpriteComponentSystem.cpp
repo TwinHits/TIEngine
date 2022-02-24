@@ -91,3 +91,18 @@ bool SpriteComponentSystem::removeComponent(TIEntity& tientity) {
 const std::string& SpriteComponentSystem::getName() {
 	return SpriteComponentSystem::SPRITE;
 }
+
+
+bool SpriteComponentSystem::setComponentProperty(const std::string& key, bool value, TIEntity& tientity) {
+    return false;
+}
+
+
+bool SpriteComponentSystem::setComponentProperty(const std::string& key, float value, TIEntity& tientity)  {
+    return false;
+}
+
+
+bool SpriteComponentSystem::setComponentProperty(const std::string& key, const std::string& value, TIEntity& tientity)  {
+    return false;
+}

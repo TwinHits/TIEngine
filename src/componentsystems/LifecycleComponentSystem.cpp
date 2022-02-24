@@ -65,6 +65,21 @@ const std::string& LifecycleComponentSystem::getName() {
 }
 
 
+bool LifecycleComponentSystem::setComponentProperty(const std::string& key, bool value, TIEntity& tientity) {
+    return false;
+}
+
+
+bool LifecycleComponentSystem::setComponentProperty(const std::string& key, float value, TIEntity& tientity)  {
+    return false;
+}
+
+
+bool LifecycleComponentSystem::setComponentProperty(const std::string& key, const std::string& value, TIEntity& tientity)  {
+    return false;
+}
+
+
 void LifecycleComponentSystem::runCreated(TIEntity& tientity) {
 	LifecycleComponent* lifecycleComponent = tientity.getComponent<LifecycleComponent>();
 	if (lifecycleComponent != nullptr) {

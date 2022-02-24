@@ -54,3 +54,18 @@ bool TextComponentSystem::removeComponent(TIEntity& tientity) {
 const std::string& TextComponentSystem::getName() {
 	return TextComponentSystem::TEXT;
 }
+
+
+bool TextComponentSystem::setComponentProperty(const std::string& key, bool value, TIEntity& tientity) {
+    return false;
+}
+
+
+bool TextComponentSystem::setComponentProperty(const std::string& key, float value, TIEntity& tientity)  {
+    return false;
+}
+
+
+bool TextComponentSystem::setComponentProperty(const std::string& key, const std::string& value, TIEntity& tientity)  {
+    return false;
+}

@@ -1,8 +1,10 @@
+#include "utils/ComponentSystems.h"
+
 #include "objects/components/SpriteComponent.h"
 #include "objects/components/TextComponent.h"
 #include "objects/components/ShapeComponent.h"
 #include "objects/components/SpriteComponent.h"
-#include "utils/ComponentSystems.h"
+#include "utils/StringHelpers.h"
 
 using namespace TIE;
 
@@ -76,4 +78,11 @@ bool ComponentSystems::isDrawn(TIEntity& entity) {
     }
 
     return isDrawn;
+}
+
+
+std::string ComponentSystems::getComponentNameFromKey(const std::string& key) {
+    std::vector<std::string> parts;
+    String::split(key, '.', parts);
+    return parts.front();
 }

@@ -26,6 +26,10 @@ class TIEntityInterface {
         TIEntityInterface spawn(const sol::table&);
         void despawn();
 
+        // Property
+        void setProperty(const std::string&, const sol::object&);
+        const std::string& getProperty(const std::string&);
+
         // Rendering
         void setDrawn(bool);
         bool isDrawn();

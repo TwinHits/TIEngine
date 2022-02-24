@@ -62,6 +62,21 @@ const std::string& ShapeComponentSystem::getName() {
 }
 
 
+bool ShapeComponentSystem::setComponentProperty(const std::string& key, bool value, TIEntity& tientity) {
+    return false;
+}
+
+
+bool ShapeComponentSystem::setComponentProperty(const std::string& key, float value, TIEntity& tientity)  {
+    return false;
+}
+
+
+bool ShapeComponentSystem::setComponentProperty(const std::string& key, const std::string& value, TIEntity& tientity)  {
+    return false;
+}
+
+
 void ShapeComponentSystem::addWireframe(TIEntity& tientity) {
 	ShapeComponent& shapeComponent = this->addComponent(tientity);
 	SpriteComponent& spriteComponent = *tientity.getComponent<SpriteComponent>();

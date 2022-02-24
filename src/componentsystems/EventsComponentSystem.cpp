@@ -133,6 +133,21 @@ const std::string& EventsComponentSystem::getName() {
 }
 
 
+bool EventsComponentSystem::setComponentProperty(const std::string& key, bool value, TIEntity& tientity) {
+    return false;
+}
+
+
+bool EventsComponentSystem::setComponentProperty(const std::string& key, float value, TIEntity& tientity)  {
+    return false;
+}
+
+
+bool EventsComponentSystem::setComponentProperty(const std::string& key, const std::string& value, TIEntity& tientity)  {
+    return false;
+}
+
+
 void EventsComponentSystem::addState(TIEntity& tientity, const std::string& state) {
 	EventsComponent* eventsComponent = tientity.getComponent<EventsComponent>();
 	if (eventsComponent == nullptr) {

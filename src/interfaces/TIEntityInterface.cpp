@@ -10,6 +10,7 @@
 #include "componentsystems/SpriteComponentSystem.h"
 #include "interfaces/Vector2Interface.h"
 #include "managers/LogManager.h"
+#include "managers/SceneManager.h"
 #include "managers/WorldManager.h"
 #include "objects/GlobalId.h"
 #include "objects/components/MovesComponent.h"
@@ -38,6 +39,10 @@ void TIEntityInterface::registerUserType(sol::state& luaState) {
     interfaceUserType["getChildren"] = &TIEntityInterface::getChildren;
     interfaceUserType["spawn"] = &TIEntityInterface::spawn;
     interfaceUserType["despawn"] = &TIEntityInterface::despawn;
+
+    //Property
+    interfaceUserType["setProperty"] = &TIEntityInterface::setProperty;
+    interfaceUserType["getProperty"] = &TIEntityInterface::getProperty;
 
     //Sprite
     interfaceUserType["setDrawn"] = &TIEntityInterface::setDrawn;
@@ -95,6 +100,26 @@ TIEntityInterface TIEntityInterface::spawn(const sol::table& definition) {
 
 void TIEntityInterface::despawn() {
     this->tientity->setRemove(true);
+}
+
+
+void TIEntityInterface::setProperty(const std::string& key, const sol::object& value) {
+    const std::string componentSystemName = ComponentSystems::getComponentNameFromKey(key);
+    ComponentSystem* componentSystem = SceneManager::Instance()->getComponentSystemByComponentName(componentSystemName);
+    if (componentSystem != nullptr) {
+        if (value.is<float>()) {
+            componentSystem->setComponentProperty(key, ScriptManager::Instance()->getValueFromObject<float>(value), *this->tientity);
+        } else if (value.is<bool>()) {
+            componentSystem->setComponentProperty(key, ScriptManager::Instance()->getValueFromObject<bool>(value), *this->tientity);
+        } else if (value.is<std::string>()) {
+            componentSystem->setComponentProperty(key, ScriptManager::Instance()->getValueFromObject<std::string>(value), *this->tientity);
+        }
+    }
+}
+
+
+const std::string& TIEntityInterface::getProperty(const std::string& key) {
+    return "test";
 }
 
 

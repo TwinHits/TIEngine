@@ -47,6 +47,12 @@ public:
 
 	sol::table getNewTable();
 
+
+    template <typename T>
+	T getValueFromObject(const sol::object& object) {
+		return object.as<T>();
+	}
+
 	ScriptManager() {};
 	~ScriptManager() {};
 

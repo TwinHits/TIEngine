@@ -49,6 +49,21 @@ const std::string& CacheComponentSystem::getName() {
 }
 
 
+bool CacheComponentSystem::setComponentProperty(const std::string& key, bool value, TIEntity& tientity) {
+    return false;
+}
+
+
+bool CacheComponentSystem::setComponentProperty(const std::string& key, float value, TIEntity& tientity)  {
+    return false;
+}
+
+
+bool CacheComponentSystem::setComponentProperty(const std::string& key, const std::string& value, TIEntity& tientity)  {
+    return false;
+}
+
+
 void CacheComponentSystem::updateCache(TIEntity& tientity, sol::table& cache) {
     CacheComponent* cacheComponent = tientity.getComponent<CacheComponent>();
     if (cacheComponent != nullptr) {

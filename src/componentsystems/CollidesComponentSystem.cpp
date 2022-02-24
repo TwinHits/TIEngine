@@ -36,6 +36,22 @@ const std::string& CollidesComponentSystem::getName() {
 	return CollidesComponentSystem::COLLIDES;
 }
 
+
+bool CollidesComponentSystem::setComponentProperty(const std::string& key, bool value, TIEntity& tientity) {
+    return false;
+}
+
+
+bool CollidesComponentSystem::setComponentProperty(const std::string& key, float value, TIEntity& tientity)  {
+    return false;
+}
+
+
+bool CollidesComponentSystem::setComponentProperty(const std::string& key, const std::string& value, TIEntity& tientity)  {
+    return false;
+}
+
+
 	/*
 void CollidesComponentSystem::checkForCollisions() {
 	this->collisions.clear();

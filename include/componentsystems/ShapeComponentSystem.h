@@ -20,6 +20,10 @@ class ShapeComponentSystem : public Singleton<ShapeComponentSystem>, public Comp
 		bool removeComponent(TIEntity&);
 		const std::string& getName();
 
+		bool setComponentProperty(const std::string&, bool, TIEntity&);
+		bool setComponentProperty(const std::string&, float, TIEntity&);
+		bool setComponentProperty(const std::string&, const std::string&, TIEntity&);
+
 		void addWireframe(TIEntity&);
 
 		static const inline std::string SHAPE = "shape";

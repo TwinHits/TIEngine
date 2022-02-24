@@ -21,6 +21,10 @@ class SpriteComponentSystem : public Singleton<SpriteComponentSystem>, public Co
 		bool removeComponent(TIEntity&);
 		const std::string& getName();
 
+		bool setComponentProperty(const std::string&, bool, TIEntity&);
+		bool setComponentProperty(const std::string&, float, TIEntity&);
+		bool setComponentProperty(const std::string&, const std::string&, TIEntity&);
+
 		static const inline std::string SPRITE = "sprite";
 		static const inline std::string DRAWN = "sprite.drawn";
 		static const inline std::string TEXTURE = "sprite.texture";

@@ -22,6 +22,10 @@ class GridComponentSystem : public Singleton<GridComponentSystem>, public Compon
 		void addComponent(const TIEntityFactory&, TIEntity&);
 		bool removeComponent(TIEntity&);
 
+		bool setComponentProperty(const std::string&, bool, TIEntity&);
+		bool setComponentProperty(const std::string&, float, TIEntity&);
+		bool setComponentProperty(const std::string&, const std::string&, TIEntity&);
+
 		sf::Vector2f normalizePositionToGrid(const sf::Vector2f&);
 
 		static const inline std::string GRID = "grid";

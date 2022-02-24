@@ -21,6 +21,21 @@ void PositionComponentSystem::update(const float delta) {
 }
 
 
+bool PositionComponentSystem::setComponentProperty(const std::string& key, bool value, TIEntity& tientity) {
+    return false;
+}
+
+
+bool PositionComponentSystem::setComponentProperty(const std::string& key, float value, TIEntity& tientity)  {
+    return false;
+}
+
+
+bool PositionComponentSystem::setComponentProperty(const std::string& key, const std::string& value, TIEntity& tientity)  {
+    return false;
+}
+
+
 void PositionComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
     PositionComponent& positionComponent = tientity.addComponent<PositionComponent>();
     Components components = { positionComponent, tientity };

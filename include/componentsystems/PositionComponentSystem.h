@@ -20,6 +20,10 @@ class PositionComponentSystem : public Singleton<PositionComponentSystem>, publi
 		bool removeComponent(TIEntity&);
 		const std::string& getName();
 
+		bool setComponentProperty(const std::string&, bool, TIEntity&);
+		bool setComponentProperty(const std::string&, float, TIEntity&);
+		bool setComponentProperty(const std::string&, const std::string&, TIEntity&);
+
 		sf::Vector2f getWorldPosition(TIEntity&);
 		float getWorldRotation(TIEntity&);
 		sf::Transform getWorldTransform(TIEntity&);

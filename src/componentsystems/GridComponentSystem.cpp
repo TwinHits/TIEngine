@@ -49,9 +49,23 @@ bool GridComponentSystem::removeComponent(TIEntity& tientity) {
 }
 
 
-
 const std::string& GridComponentSystem::getName() {
 	return GridComponentSystem::GRID;
+}
+
+
+bool GridComponentSystem::setComponentProperty(const std::string& key, bool value, TIEntity& tientity) {
+    return false;
+}
+
+
+bool GridComponentSystem::setComponentProperty(const std::string& key, float value, TIEntity& tientity)  {
+    return false;
+}
+
+
+bool GridComponentSystem::setComponentProperty(const std::string& key, const std::string& value, TIEntity& tientity)  {
+    return false;
 }
 
 

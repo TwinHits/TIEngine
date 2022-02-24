@@ -21,6 +21,10 @@ class AnimatedComponentSystem : public Singleton<AnimatedComponentSystem>, publi
         void addComponent(const TIEntityFactory&, TIEntity&);
         bool removeComponent(TIEntity&);
         const std::string& getName();
+        
+		bool setComponentProperty(const std::string&, bool, TIEntity&);
+		bool setComponentProperty(const std::string&, float, TIEntity&);
+		bool setComponentProperty(const std::string&, const std::string&, TIEntity&);
 
         static const inline std::string ANIMATED = "animated";
 		static const inline std::string FRAMES = "frames";

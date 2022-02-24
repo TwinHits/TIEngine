@@ -26,6 +26,8 @@ namespace TIE {
 
         void setDrawn(TIEntity&, bool);
         bool isDrawn(TIEntity&);
+
+        std::string getComponentNameFromKey(const std::string&);
     }
 }
 

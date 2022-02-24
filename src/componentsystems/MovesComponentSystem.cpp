@@ -67,6 +67,37 @@ const std::string& MovesComponentSystem::getName() {
 }
 
 
+bool MovesComponentSystem::setComponentProperty(const std::string& key, bool value, TIEntity& tientity) {
+    MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
+	if (movesComponent != nullptr) {
+		if (key == MovesComponentSystem::ROTATES) {
+			movesComponent->rotates = value;
+		}
+	}
+    return false;
+}
+
+
+bool MovesComponentSystem::setComponentProperty(const std::string& key, float value, TIEntity& tientity)  {
+    MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
+    if (movesComponent != nullptr) {
+        if (key == MovesComponentSystem::MAXSPEED) {
+			movesComponent->maxSpeed = value;
+		} else if (key == MovesComponentSystem::ACCELERATION) {
+			movesComponent->acceleration = value;
+		} else if (key == MovesComponentSystem::ROTATIONSPEED) {
+			movesComponent->rotationalVelocity.x = value;
+		}
+    }
+    return false;
+}
+
+
+bool MovesComponentSystem::setComponentProperty(const std::string& key, const std::string& value, TIEntity& tientity)  {
+    return false;
+}
+
+
 void MovesComponentSystem::setTargetPosition(TIEntity& tientity, sf::Vector2f& targetPosition) {
 	MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
 	PositionComponent* positionComponent = tientity.getComponent<PositionComponent>();
