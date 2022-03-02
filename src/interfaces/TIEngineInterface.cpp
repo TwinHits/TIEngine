@@ -113,11 +113,17 @@ GlobalId TIEngineInterface::registerBehavior(const std::string& name, const sol:
 }
 
 
-TIEntityInterface TIEngineInterface::registerSceneLayer(const std::string& name) {
+TIEntityInterface TIEngineInterface::registerSceneLayer(const std::string& name, bool scrollable) {
     SceneLayerFactory sceneLayerFactory = SceneLayerFactory();
     sceneLayerFactory.setName(name);
     sceneLayerFactory.setParent(SceneManager::Instance()->getClientLayer());
-    sceneLayerFactory.setViewId(ViewManager::Instance()->getClientViewId());
+
+    if (scrollable) {
+        sceneLayerFactory.setViewId(ViewManager::Instance()->getClientViewId());
+    } else {
+        sceneLayerFactory.setViewId(ViewManager::Instance()->addView());
+    }
+
     SceneLayer& sceneLayer = sceneLayerFactory.build();
     return TIEntityInterface(sceneLayer);
 }

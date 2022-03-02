@@ -17,11 +17,9 @@
 #include "componentsystems/SpriteComponentSystem.h"
 #include "componentsystems/TextComponentSystem.h"
 #include "componentsystems/PositionComponentSystem.h"
-#include "managers/LogManager.h" 
 #include "managers/TimeManager.h"
 #include "managers/ViewManager.h"
 #include "managers/WindowManager.h"
-#include "managers/WorldManager.h"
 #include "objects/SceneLayer.h"
 #include "objects/components/ShapeComponent.h"
 #include "objects/components/SpriteComponent.h"
@@ -176,11 +174,7 @@ void SceneManager::render() {
 
 	sf::RenderStates states;
 
-	ViewManager::Instance()->setActiveView(this->clientLayer->getViewId());
-	this->render(*(this->clientLayer), this->window, states);
-
-	ViewManager::Instance()->setActiveView(this->engineLayer->getViewId());
-	this->render(*(this->engineLayer), this->window, states);
+	this->render(*(this->sceneGraphRoot), this->window, states);
 
 	window.display();
 }
@@ -197,8 +191,8 @@ void SceneManager::setTIEntitiesMarkedForRemove(bool flag) {
 
 
 float SceneManager::calculateRollingAverageFPS(const float delta) {
-	static int index=0;
-	static float sum=0;
+	static int index = 0;
+	static float sum = 0;
 	static float ticks[100] = { 0 };
 
 	float tick = 1 / delta;
@@ -218,6 +212,11 @@ void SceneManager::render(TIEntity& entity, sf::RenderWindow& window, sf::Render
 	SpriteComponent* spriteComponent = entity.getComponent<SpriteComponent>();
 	TextComponent* textComponent = entity.getComponent<TextComponent>();
 	ShapeComponent* shapeComponent = entity.getComponent<ShapeComponent>();
+	SceneLayer* sceneLayer = dynamic_cast<SceneLayer*>(&entity);
+
+	if (sceneLayer != nullptr) {
+		ViewManager::Instance()->setActiveView(sceneLayer->getViewId());
+	}
 	
 	//Continue traversal if there's no graphics components, or if either component is drawn
 	bool continueTraversal = textComponent == nullptr && spriteComponent == nullptr && shapeComponent == nullptr;
