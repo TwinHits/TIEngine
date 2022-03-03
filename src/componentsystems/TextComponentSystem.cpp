@@ -27,8 +27,8 @@ void TextComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity&
     Components components = { textComponent, positionComponent, tientity };
     this->components.push_back(components);
 
-	std::string text = ComponentSystems::getFactoryValue<std::string>(factory, TextComponentSystem::CONTENT, "", tientity);
-	bool drawn = ComponentSystems::getFactoryValue<bool>(factory, TextComponentSystem::DRAWN, false, tientity);
+	std::string text = ComponentSystems::getFactoryValue<std::string>(factory, TextComponentSystem::CONTENT, textComponent.getText().getString(), tientity);
+	bool drawn = ComponentSystems::getFactoryValue<bool>(factory, TextComponentSystem::DRAWN, textComponent.isDrawn(), tientity);
 
     textComponent.setString(text);
     textComponent.setDrawn(drawn);

@@ -33,7 +33,7 @@ void SpriteComponentSystem::addComponent(const TIEntityFactory& factory, TIEntit
 
     spriteComponent.setPosition(positionComponent.position);
 
-	std::string& textureName = ComponentSystems::getFactoryValue<std::string>(factory, SpriteComponentSystem::TEXTURE, "missing_texture.png", tientity);
+	std::string& textureName = ComponentSystems::getFactoryValue<std::string>(factory, SpriteComponentSystem::TEXTURE, SpriteComponentSystem::MISSING_TEXTURE_NAME tientity);
     sf::Texture& texture = AssetsManager::Instance()->getTexture(textureName);
     spriteComponent.setTexture(texture, true);
 	
@@ -46,7 +46,7 @@ void SpriteComponentSystem::addComponent(const TIEntityFactory& factory, TIEntit
 		width = texture.getSize().x * (height / texture.getSize().y);
 	}
 
-	bool repeated = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::REPEATED, false, tientity);
+	bool repeated = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::REPEATED, texture.isRepeated(), tientity);
 	if (repeated) {
 		texture.setRepeated(repeated);
 		spriteComponent.setTextureRect(sf::IntRect(0, 0, width, height));
@@ -59,13 +59,13 @@ void SpriteComponentSystem::addComponent(const TIEntityFactory& factory, TIEntit
 
 	spriteComponent.setOrigin(spriteComponent.getLocalBounds().width / 2, spriteComponent.getLocalBounds().height / 2);
 
-	bool drawn = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::DRAWN, true, tientity);
+	bool drawn = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::DRAWN, spriteComponent.isDrawn(), tientity);
     spriteComponent.setDrawn(drawn);
 
-	bool rotates = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::ROTATES, true, tientity);
+	bool rotates = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::ROTATES, spriteComponent.isRotates(), tientity);
 	spriteComponent.setRotates(rotates);
 
-	bool showWireframe = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::SHOW_WIREFRAME, false, tientity);
+	bool showWireframe = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::SHOW_WIREFRAME, SpriteComponentSystem::SHOW_WIREFRAME_DEFAULT, tientity);
 	if (showWireframe) {
 		ShapeComponentSystem::Instance()->addWireframe(tientity);
 	}

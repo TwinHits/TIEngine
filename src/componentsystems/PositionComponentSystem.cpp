@@ -41,10 +41,10 @@ void PositionComponentSystem::addComponent(const TIEntityFactory& factory, TIEnt
     Components components = { positionComponent, tientity };
     this->components.push_back(components);
 
-	float x = ComponentSystems::getFactoryValue<float>(factory, PositionComponentSystem::X, 0.0F, tientity);
-	float y = ComponentSystems::getFactoryValue<float>(factory, PositionComponentSystem::Y, 0.0F, tientity);
-	float rotation = ComponentSystems::getFactoryValue<float>(factory, PositionComponentSystem::ROTATION, 0.0F, tientity);
-	bool rotates = ComponentSystems::getFactoryValue<bool>(factory, PositionComponentSystem::ROTATES, true, tientity);
+	float x = ComponentSystems::getFactoryValue<float>(factory, PositionComponentSystem::X, positionComponent.position.x, tientity);
+	float y = ComponentSystems::getFactoryValue<float>(factory, PositionComponentSystem::Y, positionComponent.position.y, tientity);
+	float rotation = ComponentSystems::getFactoryValue<float>(factory, PositionComponentSystem::ROTATION, positionComponent.rotation, tientity);
+	bool rotates = ComponentSystems::getFactoryValue<bool>(factory, PositionComponentSystem::ROTATES, positionComponent.rotates, tientity);
 
     positionComponent.position.x = x;
     positionComponent.position.y = y;

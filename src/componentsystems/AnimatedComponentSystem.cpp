@@ -33,7 +33,7 @@ void AnimatedComponentSystem::addComponent(const TIEntityFactory& factory, TIEnt
 	}
     
 	std::vector<std::string> animatedFloatKeys;
-	for (auto i : factory.floatValues) {
+	for (auto& i : factory.floatValues) {
 		if (i.first.find("animated.") != std::string::npos) {
 			animatedFloatKeys.push_back(i.first);
 		}
