@@ -140,11 +140,7 @@ Vector2fInterface TIEntityInterface::getPosition() {
 
 
 void TIEntityInterface::setPosition(const float x, const float y) {
-    PositionComponent* positionComponent = this->tientity->getComponent<PositionComponent>();
-    if (positionComponent != nullptr) {
-        sf::Vector2f newPosition = sf::Vector2f(x, y);
-        positionComponent->position = newPosition;
-    }
+    PositionComponentSystem::Instance()->setPosition(*this->tientity, x, y);
 }
 
 const float TIEntityInterface::getRotation() {
@@ -153,10 +149,7 @@ const float TIEntityInterface::getRotation() {
 
 
 void TIEntityInterface::setRotation(const float rotation) {
-    PositionComponent* positionComponent = this->tientity->getComponent<PositionComponent>();
-    if (positionComponent != nullptr) {
-        positionComponent->rotation = rotation;
-    }
+    PositionComponentSystem::Instance()->setRotation(*this->tientity, rotation);
 }
 
 

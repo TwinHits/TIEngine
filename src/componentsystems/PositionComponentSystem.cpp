@@ -74,6 +74,23 @@ const std::string& PositionComponentSystem::getName() {
 }
 
 
+void PositionComponentSystem::setPosition(TIEntity& tientity, float x, float y) {
+    PositionComponent* positionComponent = tientity.getComponent<PositionComponent>();
+    if (positionComponent != nullptr) {
+        positionComponent->position.x = x;
+        positionComponent->position.y = y;
+    }
+}
+
+
+void PositionComponentSystem::setRotation(TIEntity& tientity, float rotation) {
+    PositionComponent* positionComponent = tientity.getComponent<PositionComponent>();
+    if (positionComponent != nullptr) {
+        positionComponent->rotation = rotation;
+    }
+}
+
+
 sf::Vector2f PositionComponentSystem::getWorldPosition(TIEntity& tientity) {
     sf::Vector2f worldPosition = sf::Vector2f();
 

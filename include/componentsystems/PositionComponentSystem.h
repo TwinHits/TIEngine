@@ -24,6 +24,9 @@ class PositionComponentSystem : public Singleton<PositionComponentSystem>, publi
 		bool setComponentProperty(const std::string&, float, TIEntity&);
 		bool setComponentProperty(const std::string&, const std::string&, TIEntity&);
 
+		void setPosition(TIEntity&, float, float);
+		void setRotation(TIEntity&, float);
+
 		sf::Vector2f getWorldPosition(TIEntity&);
 		float getWorldRotation(TIEntity&);
 		sf::Transform getWorldTransform(TIEntity&);
