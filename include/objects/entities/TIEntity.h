@@ -67,15 +67,13 @@ class TIEntity {
 		TIEntity& attachChild(std::unique_ptr<TIEntity>);
 		TIEntity& attachChild();
 
-		//TIEntity* findNode(sf::Vector0f);
-
 		bool operator==(const TIEntity&) const;
 		bool operator!=(const TIEntity&) const;
 	private:
 		std::unordered_map<std::type_index, std::unique_ptr<Component> > components;
 		GlobalId id = -1;
 		bool remove = false;
-		std::string name = "entity";
+		std::string name = "";
 		TIEntity* parent = nullptr;
 		std::vector<std::unique_ptr<TIEntity> > children;
 

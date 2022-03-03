@@ -10,8 +10,6 @@
 #include "objects/components/structs/EventState.h"
 #include "objects/entities/TIEntity.h"
 #include "objects/factories/TIEntityFactory.h"
-#include "managers/EventsManager.h"
-#include "managers/WorldManager.h"
 
 namespace TIE {
 
@@ -55,6 +53,7 @@ class EventsComponentSystem : public Singleton<EventsComponentSystem>, public Co
 
 		std::vector<EventsComponent*> cachedSelectedComponents;
 
+		bool isEntityInAScrollableView(TIEntity&);
 		void updateSelectedStates(EventsComponent&, TIEntity&, const sf::Event&);
 		void updateHoverStates(EventsComponent&, TIEntity&, const sf::Vector2f& mousePosition);
 };

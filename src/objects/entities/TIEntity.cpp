@@ -44,12 +44,12 @@ bool TIEntity::getRemove() const {
 }
 
 
-void TIE::TIEntity::setName(std::string name) {
+void TIEntity::setName(std::string name) {
 	this->name = name;
 }
 
 
-const std::string& TIE::TIEntity::getName() const {
+const std::string& TIEntity::getName() const {
 	return this->name;
 }
 
@@ -100,20 +100,3 @@ bool TIEntity::operator!=(const TIEntity& rhs) const {
 void TIEntity::operator=(const TIEntity&) {
 
 }
-
-
-/*
-TIEntity* TIEntity::findNode(sf::Vector2f point) {
-	if (this->getHitBox().contains(point)) {
-		return this;
-	} else {
-		for (auto& child : this->children) {
-			TIEntity* ptr = child->findNode(point);
-			if (ptr != nullptr) {
-				return ptr;
-			}
-		}
-		return nullptr;
-	}
-}
-*/

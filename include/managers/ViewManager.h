@@ -42,6 +42,8 @@ class ViewManager : public Singleton<ViewManager>, Manager {
 		void setScrollBounds(const sf::FloatRect&);
 		const sf::FloatRect& getScrollBounds();
 
+		bool isViewIdScrollable(const GlobalId);
+
 		ViewManager() {};
 		~ViewManager() {};
 

@@ -188,3 +188,8 @@ const sf::FloatRect& ViewManager::getScrollBounds() {
 sf::View& ViewManager::getEngineView() {
 	return this->getView(this->engineViewId);
 }
+
+
+bool ViewManager::isViewIdScrollable(const GlobalId id) {
+	return this->clientViewId == id;
+}

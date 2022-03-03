@@ -17,12 +17,12 @@ bool EventsManager::initialize() {
 }
 
 
-const sf::Vector2f EventsManager::getMouseWindowPosition() {
+const sf::Vector2f& EventsManager::getMouseWindowPosition() {
 	return this->mouseWindowPosition;
 }
 
 
-const sf::Vector2f EventsManager::getMouseWorldPosition() {
+const sf::Vector2f& EventsManager::getMouseWorldPosition() {
 	return this->mouseWorldPosition;
 }
 

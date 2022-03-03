@@ -21,8 +21,8 @@ class EventsManager : public Singleton<EventsManager>, Manager {
 
 		void processEvents();
 		
-		const sf::Vector2f getMouseWindowPosition();
-		const sf::Vector2f getMouseWorldPosition();
+		const sf::Vector2f& getMouseWindowPosition();
+		const sf::Vector2f& getMouseWorldPosition();
 
 		bool hasEvents();
 		const std::map<sf::Event::EventType, sf::Event>& getEvents();

@@ -6,10 +6,12 @@
 #include "objects/components/EventsComponent.h"
 #include "objects/components/structs/EventState.h"
 #include "objects/entities/TIEntity.h"
-#include "objects/enumeration/Direction.h"
 #include "objects/GlobalId.h"
+#include "objects/SceneLayer.h"
 #include "managers/EventsManager.h"
 #include "managers/ScriptManager.h"
+#include "managers/WindowManager.h"
+#include "managers/ViewManager.h"
 #include "templates/VectorHelpers.h"
 #include "utils/ComponentSystems.h"
 #include "utils/StringHelpers.h"
@@ -18,14 +20,21 @@ using namespace TIE;
 
 void EventsComponentSystem::update(const float delta) {
 	const sf::Event* clickEvent = EventsManager::Instance()->getEvent(sf::Event::MouseButtonPressed);
-	const sf::Vector2f mousePosition = EventsManager::Instance()->getMouseWorldPosition();
+	const sf::Vector2f& worldMousePosition = EventsManager::Instance()->getMouseWorldPosition();
+	const sf::Vector2f& windowMousePosition = EventsManager::Instance()->getMouseWindowPosition();
 
 	for (auto& c : this->components) {
 		// Update engine managed states
 		if (clickEvent != nullptr) {
 			this->updateSelectedStates(c.eventsComponent, c.tientity, *clickEvent);
+
 		}
-		this->updateHoverStates(c.eventsComponent, c.tientity, mousePosition);
+
+        if (this->isEntityInAScrollableView(c.tientity)) {
+            this->updateHoverStates(c.eventsComponent, c.tientity, worldMousePosition);
+        } else {
+            this->updateHoverStates(c.eventsComponent, c.tientity, windowMousePosition);
+        }
 
 		// Add time elapsed to each state
 		for (auto& state : c.eventsComponent.getStates()) {
@@ -178,6 +187,18 @@ EventState* EventsComponentSystem::getState(TIEntity& tientity, const std::strin
 }
 
 
+bool EventsComponentSystem::isEntityInAScrollableView(TIEntity& tientity) {
+	SceneLayer* sceneLayer = nullptr;
+	TIEntity* current = &tientity;
+	while (current != nullptr && sceneLayer == nullptr) {
+		sceneLayer = dynamic_cast<SceneLayer*>(current);
+		current = &current->getParent();
+	}
+
+	return ViewManager::Instance()->isViewIdScrollable(sceneLayer->getViewId());
+}
+
+
 void EventsComponentSystem::updateSelectedStates(EventsComponent& eventsComponent, TIEntity& tientity, const sf::Event& clickEvent) {
     if (!eventsComponent.hasState(EventsComponentSystem::SELECTED) && eventsComponent.isSelectable()) {
         if (ComponentSystems::getGlobalBounds(tientity).contains(sf::Vector2f(clickEvent.mouseButton.x, clickEvent.mouseButton.y))) {
@@ -200,7 +221,7 @@ void EventsComponentSystem::updateSelectedStates(EventsComponent& eventsComponen
 
 void EventsComponentSystem::updateHoverStates(EventsComponent& eventsComponent, TIEntity& tientity, const sf::Vector2f& mousePosition) {
     if (eventsComponent.isHoverable()) {
-        if (ComponentSystems::getGlobalBounds(tientity).contains(sf::Vector2f(mousePosition.x, mousePosition.y))) {
+        if (ComponentSystems::getGlobalBounds(tientity).contains(mousePosition)) {
 			eventsComponent.addState(EventsComponentSystem::HOVER);
 		} else {
 			eventsComponent.removeState(EventsComponentSystem::HOVER);
