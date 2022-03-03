@@ -169,13 +169,9 @@ void SceneManager::updateEngineEntities(TIEntity& tientity, const float delta) {
 
 
 void SceneManager::render() {		
-
 	window.clear();
-
 	sf::RenderStates states;
-
 	this->render(*(this->sceneGraphRoot), this->window, states);
-
 	window.display();
 }
 

@@ -11,8 +11,8 @@
 #include "managers/EventsManager.h"
 #include "managers/ScriptManager.h"
 #include "templates/VectorHelpers.h"
+#include "utils/ComponentSystems.h"
 #include "utils/StringHelpers.h"
-#include "utils/Graphics.h"
 
 using namespace TIE;
 
@@ -180,7 +180,7 @@ EventState* EventsComponentSystem::getState(TIEntity& tientity, const std::strin
 
 void EventsComponentSystem::updateSelectedStates(EventsComponent& eventsComponent, TIEntity& tientity, const sf::Event& clickEvent) {
     if (!eventsComponent.hasState(EventsComponentSystem::SELECTED) && eventsComponent.isSelectable()) {
-        if (Graphics::getGlobalBounds(tientity).contains(sf::Vector2f(clickEvent.mouseButton.x, clickEvent.mouseButton.y))) {
+        if (ComponentSystems::getGlobalBounds(tientity).contains(sf::Vector2f(clickEvent.mouseButton.x, clickEvent.mouseButton.y))) {
 
             eventsComponent.addState(EventsComponentSystem::SELECTED);
             eventsComponent.removeState(EventsComponentSystem::UNSELECTED);
@@ -200,7 +200,7 @@ void EventsComponentSystem::updateSelectedStates(EventsComponent& eventsComponen
 
 void EventsComponentSystem::updateHoverStates(EventsComponent& eventsComponent, TIEntity& tientity, const sf::Vector2f& mousePosition) {
     if (eventsComponent.isHoverable()) {
-        if (Graphics::getGlobalBounds(tientity).contains(sf::Vector2f(mousePosition.x, mousePosition.y))) {
+        if (ComponentSystems::getGlobalBounds(tientity).contains(sf::Vector2f(mousePosition.x, mousePosition.y))) {
 			eventsComponent.addState(EventsComponentSystem::HOVER);
 		} else {
 			eventsComponent.removeState(EventsComponentSystem::HOVER);

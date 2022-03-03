@@ -7,7 +7,7 @@
 #include "componentsystems/TextComponentSystem.h"
 #include "managers/AssetsManager.h"
 #include "managers/ConfigManager.h"
-#include "utils/Graphics.h"
+#include "utils/ComponentSystems.h"
 
 using namespace TIE;
 
@@ -31,7 +31,7 @@ void MousePtrCoords::initialize() {
 
 
 void MousePtrCoords::update(const float delta) {
-	if (Graphics::isDrawn(*this)) {
+	if (ComponentSystems::isDrawn(*this)) {
 		if (this->cachedMouseWorldPostion != this->eventsManager->getMouseWorldPosition() || this->cachedMouseWindowPostion == this->eventsManager->getMouseWindowPosition()) {
 			this->cachedMouseWorldPostion = this->eventsManager->getMouseWorldPosition();
 			this->cachedMouseWindowPostion = this->eventsManager->getMouseWindowPosition();

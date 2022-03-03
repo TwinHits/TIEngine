@@ -16,8 +16,8 @@
 #include "objects/components/TextComponent.h"
 #include "objects/constants/ConsoleCommands.h"
 #include "templates/MakeUnique.h"
+#include "utils/ComponentSystems.h"
 #include "utils/StringHelpers.h"
-#include "utils/Graphics.h"
 
 using namespace TIE;
 
@@ -29,17 +29,17 @@ bool ConsoleManager::initialize() {
 
 
 void ConsoleManager::showConsole() {
-	Graphics::setDrawn(*this->devConsole, true);
+	ComponentSystems::setDrawn(*this->devConsole, true);
 }
 
 
 void ConsoleManager::hideConsole() {
-	Graphics::setDrawn(*this->devConsole, false);
+	ComponentSystems::setDrawn(*this->devConsole, false);
 }
 
 
 bool ConsoleManager::checkConsole() {
-	return Graphics::isDrawn(*this->devConsole);
+	return ComponentSystems::isDrawn(*this->devConsole);
 }
 
 

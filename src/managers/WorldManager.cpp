@@ -9,7 +9,7 @@
 #include "managers/SceneManager.h"
 #include "managers/ViewManager.h"
 #include "templates/MakeUnique.h"
-#include "utils/Graphics.h"
+#include "utils/ComponentSystems.h"
 
 using namespace TIE;
 
@@ -50,7 +50,7 @@ void WorldManager::showGridGuide(bool visibility) {
 		}
 
 		if (this->gridGuide != nullptr) {
-			Graphics::setDrawn(*(this->gridGuide), visibility);
+			ComponentSystems::setDrawn(*(this->gridGuide), visibility);
 		}
 	} else {
 		LogManager::Instance()->warn("No grid is currently configured.");

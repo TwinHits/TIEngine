@@ -19,6 +19,7 @@ bool ComponentSystems::getFactoryValue<bool>(const TIEntityFactory& factory, con
     }
 }
 
+
 template <>
 float ComponentSystems::getFactoryValue<float>(const TIEntityFactory& factory, const std::string& key, float defaultReturn, TIEntity& tientity) {
     if (factory.floatValues.count(key)) {
@@ -29,6 +30,7 @@ float ComponentSystems::getFactoryValue<float>(const TIEntityFactory& factory, c
         return defaultReturn;
     }
 }
+
 
 template <>
 std::string ComponentSystems::getFactoryValue<std::string>(const TIEntityFactory& factory, const std::string& key, std::string defaultReturn, TIEntity& tientity) {
@@ -41,48 +43,97 @@ std::string ComponentSystems::getFactoryValue<std::string>(const TIEntityFactory
     }
 }
 
-void ComponentSystems::setDrawn(TIEntity& entity, bool drawn) {
-    SpriteComponent* spriteComponent = entity.getComponent<SpriteComponent>();
-    TextComponent* textComponent = entity.getComponent<TextComponent>();
-    ShapeComponent* shapeComponent = entity.getComponent<ShapeComponent>();
-    
-    if (spriteComponent != nullptr) {
-        spriteComponent->setDrawn(drawn);
-    }
-
-    if (textComponent != nullptr) {
-        textComponent->setDrawn(drawn);
-    }
-
-    if (shapeComponent != nullptr) {
-        shapeComponent->setDrawn(drawn);
-    }
-}
-
-bool ComponentSystems::isDrawn(TIEntity& entity) {
-    SpriteComponent* spriteComponent = entity.getComponent<SpriteComponent>();
-    TextComponent* textComponent = entity.getComponent<TextComponent>();
-    ShapeComponent* shapeComponent = entity.getComponent<ShapeComponent>();
-    
-    bool isDrawn = false;
-    if (spriteComponent != nullptr && !isDrawn) {
-        isDrawn = spriteComponent->isDrawn();
-    }
-
-    if (textComponent != nullptr && !isDrawn) {
-        isDrawn = textComponent->isDrawn();
-    }
-
-    if (shapeComponent != nullptr && !isDrawn) {
-        isDrawn = shapeComponent->isDrawn();
-    }
-
-    return isDrawn;
-}
-
 
 std::string ComponentSystems::getComponentNameFromKey(const std::string& key) {
     std::vector<std::string> parts;
     String::split(key, '.', parts);
     return parts.front();
+}
+
+
+void ComponentSystems::setDrawn(TIEntity& entity, const bool drawn) {
+
+	TextComponent* textComponent = entity.getComponent<TextComponent>();
+	SpriteComponent* spriteComponent = entity.getComponent<SpriteComponent>();
+	ShapeComponent* shapeComponent = entity.getComponent<ShapeComponent>();
+
+	if (textComponent != nullptr) {
+		textComponent->setDrawn(drawn);
+	}
+
+	if (spriteComponent != nullptr) {
+		spriteComponent->setDrawn(drawn);
+	}
+
+	if (shapeComponent != nullptr) {
+		shapeComponent->setDrawn(drawn);
+	}
+}
+
+
+bool ComponentSystems::isDrawn(TIEntity& entity) {
+
+	TextComponent* textComponent = entity.getComponent<TextComponent>();
+	SpriteComponent* spriteComponent = entity.getComponent<SpriteComponent>();
+	ShapeComponent* shapeComponent = entity.getComponent<ShapeComponent>();
+
+	if (textComponent != nullptr && textComponent->isDrawn()) {
+		return textComponent->isDrawn();
+	}
+
+	if (spriteComponent != nullptr && spriteComponent->isDrawn()) {
+		return spriteComponent->isDrawn();
+	}
+
+	if (shapeComponent != nullptr && shapeComponent->isDrawn()) {
+		return shapeComponent->isDrawn();
+	}
+
+	return false;
+}
+
+
+const sf::FloatRect ComponentSystems::getGlobalBounds(TIEntity& tientity) {
+
+	TextComponent* textComponent = tientity.getComponent<TextComponent>();
+	if (textComponent != nullptr && textComponent->isDrawn()) {
+		return textComponent->getGlobalBounds();
+	}
+
+	SpriteComponent* spriteComponent = tientity.getComponent<SpriteComponent>();
+	if (spriteComponent != nullptr && spriteComponent->isDrawn()) {
+		return spriteComponent->getGlobalBounds();
+	}
+
+	ShapeComponent* shapeComponent = tientity.getComponent<ShapeComponent>();
+	if (shapeComponent != nullptr && shapeComponent->isDrawn()) {
+		for (auto& shape : shapeComponent->getShapes()) {
+			return shape->getGlobalBounds();
+		}
+	}
+
+	return sf::FloatRect(-1, 0, 0, 0);
+}
+
+
+const sf::FloatRect ComponentSystems::getLocalBounds(TIEntity& tientity) {
+
+	TextComponent* textComponent = tientity.getComponent<TextComponent>();
+	if (textComponent != nullptr && textComponent->isDrawn()) {
+		return textComponent->getLocalBounds();
+	}
+
+	SpriteComponent* spriteComponent = tientity.getComponent<SpriteComponent>();
+	if (spriteComponent != nullptr && spriteComponent->isDrawn()) {
+		return spriteComponent->getLocalBounds();
+	}
+
+	ShapeComponent* shapeComponent = tientity.getComponent<ShapeComponent>();
+	if (shapeComponent != nullptr && shapeComponent->isDrawn()) {
+		for (auto& shape : shapeComponent->getShapes()) {
+			return shape->getLocalBounds();
+		}
+	}
+
+	return sf::FloatRect(-1, 0, 0, 0);
 }

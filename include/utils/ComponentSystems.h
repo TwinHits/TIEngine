@@ -24,10 +24,12 @@ namespace TIE {
         template<>
         std::string getFactoryValue<std::string>(const TIEntityFactory&, const std::string&, std::string, TIEntity&);
 
+        std::string getComponentNameFromKey(const std::string&);
         void setDrawn(TIEntity&, bool);
         bool isDrawn(TIEntity&);
+        const sf::FloatRect getGlobalBounds(TIEntity&);
+        const sf::FloatRect getLocalBounds(TIEntity&);
 
-        std::string getComponentNameFromKey(const std::string&);
     }
 }
 
