@@ -33,7 +33,7 @@ void SpriteComponentSystem::addComponent(const TIEntityFactory& factory, TIEntit
 
     spriteComponent.setPosition(positionComponent.position);
 
-	std::string& textureName = ComponentSystems::getFactoryValue<std::string>(factory, SpriteComponentSystem::TEXTURE, SpriteComponentSystem::MISSING_TEXTURE_NAME tientity);
+	std::string& textureName = ComponentSystems::getFactoryValue<std::string>(factory, SpriteComponentSystem::TEXTURE, SpriteComponentSystem::MISSING_TEXTURE_NAME, tientity);
     sf::Texture& texture = AssetsManager::Instance()->getTexture(textureName);
     spriteComponent.setTexture(texture, true);
 	
