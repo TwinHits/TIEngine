@@ -12,7 +12,6 @@ class MovesComponent : public Component {
 		MovesComponent() {};
 		virtual ~MovesComponent() {};
 
-		float maxSpeed = 0.0f;
 		float acceleration = 0.0f;
 		float speed = 0.0f;
 
@@ -21,7 +20,10 @@ class MovesComponent : public Component {
 
 		bool hasTargetPosition = false;
 		sf::Vector2f targetPosition = sf::Vector2f(0, 0);
+
 		float targetRotation = 0.0f;
+
+		float targetSpeed = 0.0f;
 
 		float lastDistanceToTarget = 0.0f;
 };

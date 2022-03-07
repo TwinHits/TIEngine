@@ -31,10 +31,11 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, public Comp
 		void setTargetPosition(TIEntity&, sf::Vector2f&);
 		void setTargetPosition(TIEntity&, float);
 		void setTargetPosition(TIEntity&, Direction);
+
 		bool atTargetPosition(TIEntity&);
 
 		static const inline std::string MOVES = "moves";
-		static const inline std::string MAXSPEED = "moves.maxSpeed";
+		static const inline std::string SPEED = "moves.speed";
 		static const inline std::string ACCELERATION = "moves.acceleration";
 		static const inline std::string ROTATES = "moves.rotates";
 		static const inline std::string ROTATIONSPEED = "moves.rotationSpeed";
@@ -46,6 +47,7 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, public Comp
 		std::list<Components> components;
 
 		bool atTargetPosition(MovesComponent&, PositionComponent&);
+		bool atTargetSpeed(MovesComponent&);
 
 		virtual void move(MovesComponent&, PositionComponent&, const float);
 		virtual void rotate(MovesComponent&, PositionComponent&, const float);
