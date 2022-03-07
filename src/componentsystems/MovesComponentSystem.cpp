@@ -36,11 +36,13 @@ void MovesComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity
 	float acceleration = ComponentSystems::getFactoryValue<float>(factory, MovesComponentSystem::ACCELERATION, movesComponent.acceleration, tientity);
 	float rotates = ComponentSystems::getFactoryValue<bool>(factory, MovesComponentSystem::ROTATES, movesComponent.rotates, tientity);
 	float rotationalSpeed = ComponentSystems::getFactoryValue<float>(factory, MovesComponentSystem::ROTATIONSPEED, movesComponent.rotationalVelocity.x, tientity);
+	float targetRotation = ComponentSystems::getFactoryValue<float>(factory, MovesComponentSystem::ROTATION, movesComponent.targetRotation, tientity);
 
     movesComponent.acceleration = acceleration;
     movesComponent.targetSpeed = targetSpeed;
 	movesComponent.rotates = rotates;
 	movesComponent.rotationalVelocity.x = rotationalSpeed;
+	movesComponent.targetRotation = targetRotation;
 }
 
 
@@ -85,6 +87,8 @@ bool MovesComponentSystem::setComponentProperty(const std::string& key, float va
 			movesComponent->acceleration = value;
 		} else if (key == MovesComponentSystem::ROTATIONSPEED) {
 			movesComponent->rotationalVelocity.x = value;
+		} else if (key == MovesComponentSystem::ROTATION) {
+			movesComponent->targetRotation = value;
 		}
     }
     return false;
