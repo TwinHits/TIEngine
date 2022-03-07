@@ -32,6 +32,8 @@ void TextComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity&
 
     textComponent.setString(text);
     textComponent.setDrawn(drawn);
+
+	textComponent.setOrigin(textComponent.getLocalBounds().width / 2, textComponent.getLocalBounds().height / 2);
 }
 
 
