@@ -95,9 +95,11 @@ bool ComponentSystems::isDrawn(TIEntity& entity) {
 
 const sf::FloatRect ComponentSystems::getGlobalBounds(TIEntity& tientity) {
 
-	TextComponent* textComponent = tientity.getComponent<TextComponent>();
-	if (textComponent != nullptr && textComponent->isDrawn()) {
-		return textComponent->getGlobalBounds();
+	ShapeComponent* shapeComponent = tientity.getComponent<ShapeComponent>();
+	if (shapeComponent != nullptr && shapeComponent->isDrawn()) {
+		for (auto& shape : shapeComponent->getShapes()) {
+			return shape->getGlobalBounds();
+		}
 	}
 
 	SpriteComponent* spriteComponent = tientity.getComponent<SpriteComponent>();
@@ -105,11 +107,9 @@ const sf::FloatRect ComponentSystems::getGlobalBounds(TIEntity& tientity) {
 		return spriteComponent->getGlobalBounds();
 	}
 
-	ShapeComponent* shapeComponent = tientity.getComponent<ShapeComponent>();
-	if (shapeComponent != nullptr && shapeComponent->isDrawn()) {
-		for (auto& shape : shapeComponent->getShapes()) {
-			return shape->getGlobalBounds();
-		}
+	TextComponent* textComponent = tientity.getComponent<TextComponent>();
+	if (textComponent != nullptr && textComponent->isDrawn()) {
+		return textComponent->getGlobalBounds();
 	}
 
 	return sf::FloatRect(-1, 0, 0, 0);
@@ -118,9 +118,11 @@ const sf::FloatRect ComponentSystems::getGlobalBounds(TIEntity& tientity) {
 
 const sf::FloatRect ComponentSystems::getLocalBounds(TIEntity& tientity) {
 
-	TextComponent* textComponent = tientity.getComponent<TextComponent>();
-	if (textComponent != nullptr && textComponent->isDrawn()) {
-		return textComponent->getLocalBounds();
+	ShapeComponent* shapeComponent = tientity.getComponent<ShapeComponent>();
+	if (shapeComponent != nullptr && shapeComponent->isDrawn()) {
+		for (auto& shape : shapeComponent->getShapes()) {
+			return shape->getLocalBounds();
+		}
 	}
 
 	SpriteComponent* spriteComponent = tientity.getComponent<SpriteComponent>();
@@ -128,11 +130,9 @@ const sf::FloatRect ComponentSystems::getLocalBounds(TIEntity& tientity) {
 		return spriteComponent->getLocalBounds();
 	}
 
-	ShapeComponent* shapeComponent = tientity.getComponent<ShapeComponent>();
-	if (shapeComponent != nullptr && shapeComponent->isDrawn()) {
-		for (auto& shape : shapeComponent->getShapes()) {
-			return shape->getLocalBounds();
-		}
+	TextComponent* textComponent = tientity.getComponent<TextComponent>();
+	if (textComponent != nullptr && textComponent->isDrawn()) {
+		return textComponent->getLocalBounds();
 	}
 
 	return sf::FloatRect(-1, 0, 0, 0);
