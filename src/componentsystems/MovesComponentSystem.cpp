@@ -211,8 +211,8 @@ void MovesComponentSystem::accelerate(MovesComponent& movesComponent, PositionCo
     }
     movesComponent.lastDistanceToTarget = distanceToTarget;
 
-	if (movesComponent.speed < movesComponent.targetSpeed) {
-		movesComponent.speed = movesComponent.speed + movesComponent.acceleration * delta;
+	if (!Math::areFloatsEqual(movesComponent.speed, movesComponent.targetSpeed)) {
+		movesComponent.speed = movesComponent.speed + acceleration * delta;
 		movesComponent.speed = fmaxf(0.0f, movesComponent.speed);
 
 		if (movesComponent.rotates) {
