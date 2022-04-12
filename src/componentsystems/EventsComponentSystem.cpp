@@ -157,6 +157,11 @@ bool EventsComponentSystem::setComponentProperty(const std::string& key, const s
 }
 
 
+std::string EventsComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
+	return "";
+}
+
+
 void EventsComponentSystem::addState(TIEntity& tientity, const std::string& state) {
 	EventsComponent* eventsComponent = tientity.getComponent<EventsComponent>();
 	if (eventsComponent == nullptr) {

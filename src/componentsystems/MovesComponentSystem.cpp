@@ -100,6 +100,11 @@ bool MovesComponentSystem::setComponentProperty(const std::string& key, const st
 }
 
 
+std::string MovesComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
+	return "";
+}
+
+
 void MovesComponentSystem::setTargetPosition(TIEntity& tientity, sf::Vector2f& targetPosition) {
 	MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
 	PositionComponent* positionComponent = tientity.getComponent<PositionComponent>();

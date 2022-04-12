@@ -27,6 +27,7 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, public Comp
 		bool setComponentProperty(const std::string&, bool, TIEntity&);
 		bool setComponentProperty(const std::string&, float, TIEntity&);
 		bool setComponentProperty(const std::string&, const std::string&, TIEntity&);
+		std::string getComponentProperty(const std::string&, TIEntity&);
 
 		void setTargetPosition(TIEntity&, sf::Vector2f&);
 		void setTargetPosition(TIEntity&, float);

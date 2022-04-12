@@ -36,6 +36,17 @@ bool PositionComponentSystem::setComponentProperty(const std::string& key, const
 }
 
 
+std::string PositionComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
+    PositionComponent* positionComponent = tientity.getComponent<PositionComponent>();
+    if (positionComponent != nullptr) {
+        if (key == PositionComponentSystem::ROTATION) {
+            return std::to_string(positionComponent->rotation);
+        }
+    }
+    return "";
+}
+
+
 void PositionComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
     PositionComponent& positionComponent = tientity.addComponent<PositionComponent>();
     Components components = { positionComponent, tientity };
@@ -79,14 +90,6 @@ void PositionComponentSystem::setPosition(TIEntity& tientity, float x, float y) 
     if (positionComponent != nullptr) {
         positionComponent->position.x = x;
         positionComponent->position.y = y;
-    }
-}
-
-
-void PositionComponentSystem::setRotation(TIEntity& tientity, float rotation) {
-    PositionComponent* positionComponent = tientity.getComponent<PositionComponent>();
-    if (positionComponent != nullptr) {
-        positionComponent->rotation = rotation;
     }
 }
 

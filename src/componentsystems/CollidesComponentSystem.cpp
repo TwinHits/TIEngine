@@ -52,6 +52,11 @@ bool CollidesComponentSystem::setComponentProperty(const std::string& key, const
 }
 
 
+std::string CollidesComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
+	return "";
+}
+
+
 	/*
 void CollidesComponentSystem::checkForCollisions() {
 	this->collisions.clear();

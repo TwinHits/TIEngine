@@ -63,6 +63,10 @@ bool CacheComponentSystem::setComponentProperty(const std::string& key, const st
     return false;
 }
 
+std::string CacheComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
+    return "";
+}
+
 
 void CacheComponentSystem::updateCache(TIEntity& tientity, sol::table& cache) {
     CacheComponent* cacheComponent = tientity.getComponent<CacheComponent>();

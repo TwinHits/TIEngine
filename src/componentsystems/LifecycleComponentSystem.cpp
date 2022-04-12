@@ -80,6 +80,11 @@ bool LifecycleComponentSystem::setComponentProperty(const std::string& key, cons
 }
 
 
+std::string LifecycleComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
+	return "";
+}
+
+
 void LifecycleComponentSystem::runCreated(TIEntity& tientity) {
 	LifecycleComponent* lifecycleComponent = tientity.getComponent<LifecycleComponent>();
 	if (lifecycleComponent != nullptr) {

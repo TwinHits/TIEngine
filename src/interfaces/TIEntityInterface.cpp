@@ -53,8 +53,6 @@ void TIEntityInterface::registerUserType(sol::state& luaState) {
     //Position
 	interfaceUserType["getPosition"] = &TIEntityInterface::getPosition;
 	interfaceUserType["setPosition"] = &TIEntityInterface::setPosition;
-	interfaceUserType["getRotation"] = &TIEntityInterface::getRotation;
-	interfaceUserType["setRotation"] = &TIEntityInterface::setRotation;
 
     //Movement
 	interfaceUserType["setDestination"] = &TIEntityInterface::setDestination;
@@ -131,8 +129,13 @@ void TIEntityInterface::setProperty(const std::string& key, const sol::object& v
 }
 
 
-const std::string& TIEntityInterface::getProperty(const std::string& key) {
-    return "test";
+std::string TIEntityInterface::getProperty(const std::string& key) {
+    const std::string componentSystemName = ComponentSystems::getComponentNameFromKey(key);
+    ComponentSystem* componentSystem = SceneManager::Instance()->getComponentSystemByComponentName(componentSystemName);
+    if (componentSystem != nullptr) {
+        return componentSystem->getComponentProperty(key, *this->tientity);
+    }
+    return "";
 }
 
 
@@ -154,15 +157,6 @@ Vector2fInterface TIEntityInterface::getPosition() {
 
 void TIEntityInterface::setPosition(const float x, const float y) {
     PositionComponentSystem::Instance()->setPosition(*this->tientity, x, y);
-}
-
-const float TIEntityInterface::getRotation() {
-    return PositionComponentSystem::Instance()->getWorldRotation(*this->tientity);
-}
-
-
-void TIEntityInterface::setRotation(const float rotation) {
-    PositionComponentSystem::Instance()->setRotation(*this->tientity, rotation);
 }
 
 

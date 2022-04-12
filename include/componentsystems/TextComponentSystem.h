@@ -26,6 +26,7 @@ class TextComponentSystem : public Singleton<TextComponentSystem>, public Compon
 		bool setComponentProperty(const std::string&, bool, TIEntity&);
 		bool setComponentProperty(const std::string&, float, TIEntity&);
 		bool setComponentProperty(const std::string&, const std::string&, TIEntity&);
+		std::string getComponentProperty(const std::string&, TIEntity&);
 
 		static const inline std::string TEXT = "text";
 		static const inline std::string DRAWN = "text.drawn";

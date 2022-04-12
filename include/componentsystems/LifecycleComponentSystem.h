@@ -19,6 +19,7 @@ public:
     bool setComponentProperty(const std::string&, bool, TIEntity&);
     bool setComponentProperty(const std::string&, float, TIEntity&);
     bool setComponentProperty(const std::string&, const std::string&, TIEntity&);
+	std::string getComponentProperty(const std::string&, TIEntity&);
 
 	void runCreated(TIEntity& tientity);
 	void runRemoved(TIEntity& tientity);

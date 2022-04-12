@@ -106,3 +106,8 @@ bool SpriteComponentSystem::setComponentProperty(const std::string& key, float v
 bool SpriteComponentSystem::setComponentProperty(const std::string& key, const std::string& value, TIEntity& tientity)  {
     return false;
 }
+
+
+std::string SpriteComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
+	return "";
+}

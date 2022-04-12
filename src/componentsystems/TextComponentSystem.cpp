@@ -71,3 +71,8 @@ bool TextComponentSystem::setComponentProperty(const std::string& key, float val
 bool TextComponentSystem::setComponentProperty(const std::string& key, const std::string& value, TIEntity& tientity)  {
     return false;
 }
+
+
+std::string TextComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
+	return key;
+}

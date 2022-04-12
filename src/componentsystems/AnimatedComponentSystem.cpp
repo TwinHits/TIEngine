@@ -131,6 +131,11 @@ bool AnimatedComponentSystem::setComponentProperty(const std::string& key, const
 }
 
 
+std::string AnimatedComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
+    return "";
+}
+
+
 void AnimatedComponentSystem::updateCurrentAnimation(AnimatedComponent& animatedComponent, PositionComponent& positionComponent, SpriteComponent& spriteComponent) {
     float rotation = positionComponent.rotation;
 
@@ -167,7 +172,7 @@ bool AnimatedComponentSystem::progressAnimation(Animation* animation, const floa
 void AnimatedComponentSystem::setTextureRect(const Animation& animation, SpriteComponent& spriteComponent) {
     sf::IntRect rect = animation.currentFrame.operator*().rect;
     spriteComponent.setTextureRect(rect);
-    spriteComponent.setOrigin(rect.width / 2, rect.height / 2);
+    spriteComponent.setOrigin(rect.width / 2.0f, rect.height / 2.0f);
     spriteComponent.setScale(animation.direction, 1);
 }
 

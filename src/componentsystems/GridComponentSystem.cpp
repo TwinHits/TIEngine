@@ -69,6 +69,11 @@ bool GridComponentSystem::setComponentProperty(const std::string& key, const std
 }
 
 
+std::string GridComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
+	return "";
+}
+
+
 sf::Vector2f GridComponentSystem::normalizePositionToGrid(const sf::Vector2f& position) {
 	if (WorldManager::Instance()->isGridConfigured()) {
 		TIEntity* levelEntity = WorldManager::Instance()->getLevelEntity();

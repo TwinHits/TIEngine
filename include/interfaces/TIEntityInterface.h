@@ -30,7 +30,7 @@ class TIEntityInterface {
 
         // Property
         void setProperty(const std::string&, const sol::object&);
-        const std::string& getProperty(const std::string&);
+        std::string getProperty(const std::string&);
 
         // Rendering
         void setDrawn(bool);
@@ -39,9 +39,6 @@ class TIEntityInterface {
         // Movement
         Vector2fInterface getPosition();
         void setPosition(const float, const float);
-
-        const float getRotation();
-        void setRotation(const float);
 
         void setDestination(const float, const float);
         void setDestinationByDistance(const float);

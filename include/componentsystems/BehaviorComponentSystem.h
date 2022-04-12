@@ -24,6 +24,7 @@ public:
     bool setComponentProperty(const std::string&, bool, TIEntity&);
     bool setComponentProperty(const std::string&, float, TIEntity&);
     bool setComponentProperty(const std::string&, const std::string&, TIEntity&);
+    std::string getComponentProperty(const std::string&, TIEntity&);
 
     void setBehavior(TIEntity&, GlobalId);
     void setBehavior(TIEntity&, const std::string&);

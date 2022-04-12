@@ -59,6 +59,11 @@ bool BehaviorComponentSystem::setComponentProperty(const std::string& key, const
 }
 
 
+std::string BehaviorComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
+    return "";
+}
+
+
 void BehaviorComponentSystem::setBehavior(TIEntity& tientity, GlobalId functionId) {
     BehaviorComponent* behaviorComponent = tientity.getComponent<BehaviorComponent>();
     if (behaviorComponent != nullptr) {
