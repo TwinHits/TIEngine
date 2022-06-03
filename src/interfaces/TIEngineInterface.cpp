@@ -31,7 +31,6 @@ void TIEngineInterface::registerUserType(sol::state& luaState) {
 	engineInterfaceUserType["hasEvent"] = &TIEngineInterface::hasEvent;
 	engineInterfaceUserType["getMouseClickPosition"] = &TIEngineInterface::getMouseClickPosition;
     engineInterfaceUserType["getTIEntityById"] = &TIEngineInterface::getTIEntityById;
-    engineInterfaceUserType["registerBehavior"] = &TIEngineInterface::registerBehavior;
     engineInterfaceUserType["registerSceneLayer"] = &TIEngineInterface::registerSceneLayer;
 }
 
@@ -104,11 +103,6 @@ TIEntityInterface TIEngineInterface::getTIEntityById(GlobalId id) {
     } else {
         return nullptr;
     }
-}
-
-
-GlobalId TIEngineInterface::registerBehavior(const std::string& name, const sol::function& behavior) {
-    return ScriptManager::Instance()->registerFunctionByName(name, behavior);
 }
 
 

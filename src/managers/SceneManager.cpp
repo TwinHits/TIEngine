@@ -5,7 +5,6 @@
 #include <vector>
 
 #include "componentsystems/AnimatedComponentSystem.h"
-#include "componentsystems/BehaviorComponentSystem.h"
 #include "componentsystems/CollidesComponentSystem.h"
 #include "componentsystems/ComponentSystem.h"
 #include "componentsystems/CacheComponentSystem.h"
@@ -59,7 +58,6 @@ bool SceneManager::initialize() {
 	// Update data operations
 	this->componentSystems.push_back(EventsComponentSystem::Instance());
 	this->componentSystems.push_back(LifecycleComponentSystem::Instance());
-	this->componentSystems.push_back(BehaviorComponentSystem::Instance());
 	this->componentSystems.push_back(CacheComponentSystem::Instance());
 
 	// Update Position Operations

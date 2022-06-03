@@ -44,10 +44,6 @@ class TIEntityInterface {
         void setCache(sol::table&);
         sol::table& getCache();
 
-        // Behavior
-        void setBehaviorById(GlobalId);
-        void setBehaviorByName(const std::string&);
-
     private:
         TIEntity* tientity = nullptr;
         sol::table children = sol::table();
