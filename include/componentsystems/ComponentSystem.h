@@ -19,6 +19,7 @@ class ComponentSystem {
 		virtual bool setComponentProperty(const std::string&, float, TIEntity&);
 		virtual bool setComponentProperty(const std::string&, const std::string&, TIEntity&);
 		virtual bool setComponentProperty(const std::string&, const sf::Vector2f&, TIEntity&);
+		virtual bool setComponentProperty(const std::string&, const sf::Vector2i&, TIEntity&);
 		virtual sol::object getComponentProperty(const std::string&, TIEntity&) = 0;
 };
 

@@ -102,6 +102,8 @@ void TIEntityInterface::setProperty(const std::string& key, const sol::object& v
             componentSystem->setComponentProperty(key, ScriptManager::Instance()->getValueFromObject<std::string>(value), *this->tientity);
         } else if (value.is<sf::Vector2f>()) {
             componentSystem->setComponentProperty(key, ScriptManager::Instance()->getValueFromObject<sf::Vector2f>(value), *this->tientity);
+        } else if (value.is<sf::Vector2i>()) {
+            componentSystem->setComponentProperty(key, ScriptManager::Instance()->getValueFromObject<sf::Vector2i>(value), *this->tientity);
         }
     }
 }

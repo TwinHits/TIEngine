@@ -110,6 +110,18 @@ bool MovesComponentSystem::setComponentProperty(const std::string& key, const sf
 }
 
 
+bool MovesComponentSystem::setComponentProperty(const std::string& key, const sf::Vector2i& value, TIEntity& tientity) {
+	MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
+	if (movesComponent != nullptr) {
+		if (key == MovesComponentSystem::DESTINATION) {
+			movesComponent->targetPosition = sf::Vector2f(value.x, value.y);
+			movesComponent->hasTargetPosition = true;
+		}
+	}
+	return false;
+}
+
+
 sol::object MovesComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
 	MovesComponent* component = tientity.getComponent<MovesComponent>();
 	if (component != nullptr) {
