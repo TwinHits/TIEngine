@@ -27,7 +27,7 @@ class CollidesComponentSystem : public Singleton<CollidesComponentSystem>, publi
 		bool setComponentProperty(const std::string&, bool, TIEntity&);
 		bool setComponentProperty(const std::string&, float, TIEntity&);
 		bool setComponentProperty(const std::string&, const std::string&, TIEntity&);
-		std::string getComponentProperty(const std::string&, TIEntity&);
+		sol::object getComponentProperty(const std::string&, TIEntity&);
 
 		const static inline std::string COLLIDES = "collides";
 

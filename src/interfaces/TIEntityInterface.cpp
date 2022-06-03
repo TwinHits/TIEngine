@@ -5,18 +5,11 @@
 #include "componentsystems/BehaviorComponentSystem.h"
 #include "componentsystems/CacheComponentSystem.h"
 #include "componentsystems/EventsComponentSystem.h"
-#include "componentsystems/MovesComponentSystem.h"
-#include "componentsystems/PositionComponentSystem.h"
 #include "componentsystems/SpriteComponentSystem.h"
-#include "interfaces/Vector2Interface.h"
 #include "managers/LogManager.h"
 #include "managers/SceneManager.h"
-#include "managers/WorldManager.h"
 #include "objects/GlobalId.h"
-#include "objects/components/MovesComponent.h"
-#include "objects/components/PositionComponent.h"
 #include "objects/components/structs/EventState.h"
-#include "objects/enumeration/Direction.h"
 #include "utils/ComponentSystems.h"
 
 using namespace TIE;
@@ -50,19 +43,6 @@ void TIEntityInterface::registerUserType(sol::state& luaState) {
     interfaceUserType["setDrawn"] = &TIEntityInterface::setDrawn;
     interfaceUserType["isDrawn"] = &TIEntityInterface::isDrawn;
 
-    //Position
-	interfaceUserType["getPosition"] = &TIEntityInterface::getPosition;
-	interfaceUserType["setPosition"] = &TIEntityInterface::setPosition;
-
-    //Movement
-	interfaceUserType["setDestination"] = &TIEntityInterface::setDestination;
-    interfaceUserType["setDestinationByDistance"] = &TIEntityInterface::setDestinationByDistance;
-	interfaceUserType["atDestination"] = &TIEntityInterface::atDestination;
-    interfaceUserType["moveRight"] = &TIEntityInterface::moveRight;
-    interfaceUserType["moveLeft"] = &TIEntityInterface::moveLeft;
-    interfaceUserType["moveUp"] = &TIEntityInterface::moveUp;
-    interfaceUserType["moveDown"] = &TIEntityInterface::moveDown;
-    
     //Event
     interfaceUserType["addState"] = &TIEntityInterface::addState;
     interfaceUserType["removeState"] = &TIEntityInterface::removeState;
@@ -115,8 +95,8 @@ void TIEntityInterface::despawn() {
 
 
 void TIEntityInterface::setProperty(const std::string& key, const sol::object& value) {
-    const std::string componentSystemName = ComponentSystems::getComponentNameFromKey(key);
-    ComponentSystem* componentSystem = SceneManager::Instance()->getComponentSystemByComponentName(componentSystemName);
+    ComponentSystem* componentSystem = SceneManager::Instance()->getComponentSystemByComponentName(ComponentSystems::getComponentNameFromKey(key));
+    auto type = value.get_type();
     if (componentSystem != nullptr) {
         if (value.is<float>()) {
             componentSystem->setComponentProperty(key, ScriptManager::Instance()->getValueFromObject<float>(value), *this->tientity);
@@ -124,18 +104,19 @@ void TIEntityInterface::setProperty(const std::string& key, const sol::object& v
             componentSystem->setComponentProperty(key, ScriptManager::Instance()->getValueFromObject<bool>(value), *this->tientity);
         } else if (value.is<std::string>()) {
             componentSystem->setComponentProperty(key, ScriptManager::Instance()->getValueFromObject<std::string>(value), *this->tientity);
+        } else if (value.is<sf::Vector2f>()) {
+            componentSystem->setComponentProperty(key, ScriptManager::Instance()->getValueFromObject<sf::Vector2f>(value), *this->tientity);
         }
     }
 }
 
 
-std::string TIEntityInterface::getProperty(const std::string& key) {
-    const std::string componentSystemName = ComponentSystems::getComponentNameFromKey(key);
-    ComponentSystem* componentSystem = SceneManager::Instance()->getComponentSystemByComponentName(componentSystemName);
+sol::object TIEntityInterface::getProperty(const std::string& key) {
+    ComponentSystem* componentSystem = SceneManager::Instance()->getComponentSystemByComponentName(ComponentSystems::getComponentNameFromKey(key));
     if (componentSystem != nullptr) {
         return componentSystem->getComponentProperty(key, *this->tientity);
     }
-    return "";
+    return ScriptManager::Instance()->getObjectFromValue(nullptr);
 }
 
 
@@ -146,52 +127,6 @@ void TIEntityInterface::setDrawn(bool drawn) {
 
 bool TIEntityInterface::isDrawn() {
     return ComponentSystems::isDrawn(*this->tientity);
-}
-
-
-Vector2fInterface TIEntityInterface::getPosition() {
-    sf::Vector2f worldPosition = PositionComponentSystem::Instance()->getWorldPosition(*this->tientity);
-    return Vector2fInterface(worldPosition.x, worldPosition.y);
-}
-
-
-void TIEntityInterface::setPosition(const float x, const float y) {
-    PositionComponentSystem::Instance()->setPosition(*this->tientity, x, y);
-}
-
-
-void TIEntityInterface::setDestination(const float x, const float y) {
-    MovesComponentSystem::Instance()->setTargetPosition(*this->tientity, sf::Vector2f(x, y));
-}
-
-
-void TIEntityInterface::setDestinationByDistance(const float distance) {
-    MovesComponentSystem::Instance()->setTargetPosition(*this->tientity, distance);
-}
-
-
-bool TIEntityInterface::atDestination() {
-    return MovesComponentSystem::Instance()->atTargetPosition(*this->tientity);
-}
-
-
-void TIEntityInterface::moveUp() {
-    MovesComponentSystem::Instance()->setTargetPosition(*this->tientity, Direction::TOP);
-}
-
-
-void TIEntityInterface::moveRight() {
-    MovesComponentSystem::Instance()->setTargetPosition(*this->tientity, Direction::RIGHT);
-}
-
-
-void TIEntityInterface::moveLeft() {
-    MovesComponentSystem::Instance()->setTargetPosition(*this->tientity, Direction::LEFT);
-}
-
-
-void TIEntityInterface::moveDown() {
-    MovesComponentSystem::Instance()->setTargetPosition(*this->tientity, Direction::BOTTOM);
 }
 
 

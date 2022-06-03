@@ -9,6 +9,7 @@
 #include "interfaces/EventStateInterface.h"
 #include "interfaces/TIEngineInterface.h"
 #include "interfaces/TIEntityInterface.h"
+#include "interfaces/Vector2Interface.h"
 #include "managers/AssetsManager.h"
 #include "managers/ConfigManager.h"
 #include "managers/HashManager.h"
@@ -35,8 +36,9 @@ bool ScriptManager::initialize() {
     EventStateInterface::registerUserType(this->luaState);
     TIEngineInterface::registerUserType(this->luaState);
     TIEntityInterface::registerUserType(this->luaState);
+	Vector2Interface::registerUserType(this->luaState);
 
-	const std::string& startUpScript = ConfigManager::Instance()->getStartUpScript();
+  	const std::string& startUpScript = ConfigManager::Instance()->getStartUpScript();
 	if (!startUpScript.empty()) {
 		this->setScriptWorkingDirectory(String::getDirectoryFromPath(startUpScript));
 		this->loadScript(startUpScript);
@@ -93,6 +95,7 @@ GlobalId ScriptManager::registerFunctionByName(const std::string& name, const so
 		return this->functionsByName.at(name);
 	}
 }
+
 
 GlobalId ScriptManager::getFunctionIdByName(const std::string& name) {
 	if (this->functionsByName.count(name)) {
@@ -170,6 +173,7 @@ void ScriptManager::readComponentValues(TIEntityFactory& factory, const std::str
 	}
 }
 
+
 const sol::function& ScriptManager::getFunctionByName(const std::string& name) {
 	if (this->functionsByName.count(name)) {
 		GlobalId id = this->functionsByName.at(name);
@@ -178,6 +182,7 @@ const sol::function& ScriptManager::getFunctionByName(const std::string& name) {
 		return nullptr;
 	}
 }
+
 
 bool ScriptManager::isValidDefinitionFieldName(const std::string& field) {
 	return SceneManager::Instance()->isValidComponentName(field) || field == "tientity";

@@ -63,8 +63,9 @@ bool CacheComponentSystem::setComponentProperty(const std::string& key, const st
     return false;
 }
 
-std::string CacheComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
-    return "";
+
+sol::object CacheComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
+    return ScriptManager::Instance()->getObjectFromValue(nullptr);
 }
 
 

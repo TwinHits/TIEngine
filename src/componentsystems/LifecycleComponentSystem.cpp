@@ -80,8 +80,8 @@ bool LifecycleComponentSystem::setComponentProperty(const std::string& key, cons
 }
 
 
-std::string LifecycleComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
-	return "";
+sol::object LifecycleComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
+	return ScriptManager::Instance()->getObjectFromValue(nullptr);
 }
 
 

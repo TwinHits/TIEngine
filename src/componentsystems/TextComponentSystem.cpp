@@ -73,6 +73,6 @@ bool TextComponentSystem::setComponentProperty(const std::string& key, const std
 }
 
 
-std::string TextComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
-	return key;
+sol::object TextComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
+	return ScriptManager::Instance()->getObjectFromValue(nullptr);
 }

@@ -5,9 +5,9 @@
 
 #include <sol/sol.hpp>
 
-#include "interfaces/TIEntityInterface.h"
-#include "interfaces/Vector2Interface.h"
 #include "objects/GlobalId.h"
+
+#include "interfaces/TIEntityInterface.h"
 
 namespace TIE {
 
@@ -32,7 +32,7 @@ class TIEngineInterface {
         TIEntityInterface spawn(const sol::table&);
 
         bool hasEvent(std::string& event);
-        Vector2iInterface getMouseClickPosition();
+        const sf::Vector2i getMouseClickPosition();
 
         TIEntityInterface getTIEntityById(GlobalId);
 

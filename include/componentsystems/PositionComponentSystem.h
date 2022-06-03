@@ -22,8 +22,8 @@ class PositionComponentSystem : public Singleton<PositionComponentSystem>, publi
 
 		bool setComponentProperty(const std::string&, bool, TIEntity&);
 		bool setComponentProperty(const std::string&, float, TIEntity&);
-		bool setComponentProperty(const std::string&, const std::string&, TIEntity&);
-		std::string getComponentProperty(const std::string&, TIEntity&);
+		bool setComponentProperty(const std::string&, const sf::Vector2f&, TIEntity&);
+		sol::object getComponentProperty(const std::string&, TIEntity&);
 
 		void setPosition(TIEntity&, float, float);
 
@@ -36,6 +36,8 @@ class PositionComponentSystem : public Singleton<PositionComponentSystem>, publi
 		static const inline std::string Y = "position.y";
 		static const inline std::string ROTATION = "position.rotation";
 		static const inline std::string ROTATES = "position.rotates";
+		static const inline std::string POSITION_POSITION = "position.position";
+		static const inline std::string WORLD_POSITION = "position.worldPosition";
 
     private:
 		struct Components {

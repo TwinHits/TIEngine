@@ -108,6 +108,6 @@ bool SpriteComponentSystem::setComponentProperty(const std::string& key, const s
 }
 
 
-std::string SpriteComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
-	return "";
+sol::object SpriteComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
+	return ScriptManager::Instance()->getObjectFromValue(nullptr);
 }

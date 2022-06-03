@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "managers/ScriptManager.h"
 #include "objects/components/CollidesComponent.h"
 #include "objects/entities/TIEntity.h"
 
@@ -52,8 +53,8 @@ bool CollidesComponentSystem::setComponentProperty(const std::string& key, const
 }
 
 
-std::string CollidesComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
-	return "";
+sol::object CollidesComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
+	return ScriptManager::Instance()->getObjectFromValue(nullptr);
 }
 
 

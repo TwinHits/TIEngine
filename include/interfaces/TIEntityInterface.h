@@ -5,7 +5,6 @@
 
 #include <sol/sol.hpp>
 
-#include "interfaces/Vector2Interface.h"
 #include "objects/GlobalId.h"
 #include "objects/components/structs/EventState.h"
 #include "objects/entities/TIEntity.h"
@@ -30,24 +29,11 @@ class TIEntityInterface {
 
         // Property
         void setProperty(const std::string&, const sol::object&);
-        std::string getProperty(const std::string&);
+        sol::object getProperty(const std::string&);
 
         // Rendering
         void setDrawn(bool);
         bool isDrawn();
-
-        // Movement
-        Vector2fInterface getPosition();
-        void setPosition(const float, const float);
-
-        void setDestination(const float, const float);
-        void setDestinationByDistance(const float);
-        bool atDestination();
-
-        void moveUp();
-        void moveRight();
-        void moveLeft();
-        void moveDown();
 
         // Events
         void addState(const std::string&);

@@ -6,6 +6,7 @@
 #include "objects/components/PositionComponent.h"
 #include "objects/components/SpriteComponent.h"
 #include "objects/factories/TIEntityFactory.h"
+#include "managers/ScriptManager.h"
 #include "utils/ComponentSystems.h"
 #include "utils/TIEMath.h"
 
@@ -31,19 +32,27 @@ bool PositionComponentSystem::setComponentProperty(const std::string& key, float
 }
 
 
-bool PositionComponentSystem::setComponentProperty(const std::string& key, const std::string& value, TIEntity& tientity)  {
+bool PositionComponentSystem::setComponentProperty(const std::string& key, const sf::Vector2f& value, TIEntity& tientity) {
+    PositionComponent* component = tientity.getComponent<PositionComponent>();
+    if (component != nullptr) {
+        if (key == PositionComponentSystem::POSITION) {
+            component->position = value;
+        }
+    }
     return false;
 }
 
 
-std::string PositionComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
+sol::object PositionComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
     PositionComponent* positionComponent = tientity.getComponent<PositionComponent>();
     if (positionComponent != nullptr) {
         if (key == PositionComponentSystem::ROTATION) {
-            return std::to_string(positionComponent->rotation);
+            return ScriptManager::Instance()->getObjectFromValue(positionComponent->rotation);
+        } else if (key == PositionComponentSystem::POSITION) {
+            return ScriptManager::Instance()->getObjectFromValue<sf::Vector2f>(positionComponent->worldPosition);
         }
     }
-    return "";
+    return ScriptManager::Instance()->getObjectFromValue(nullptr);
 }
 
 

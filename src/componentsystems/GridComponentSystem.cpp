@@ -8,6 +8,7 @@
 #include "objects/factories/TIEntityFactory.h"
 #include "managers/WorldManager.h"
 #include "managers/LogManager.h"
+#include "managers/ScriptManager.h"
 #include "utils/TIEMath.h"
 
 using namespace TIE;
@@ -69,8 +70,8 @@ bool GridComponentSystem::setComponentProperty(const std::string& key, const std
 }
 
 
-std::string GridComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
-	return "";
+sol::object GridComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
+	return ScriptManager::Instance()->getObjectFromValue(nullptr);
 }
 
 

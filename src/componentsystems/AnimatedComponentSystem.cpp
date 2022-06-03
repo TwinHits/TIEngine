@@ -2,6 +2,7 @@
 
 #include <map>
 
+#include "managers/ScriptManager.h"
 #include "objects/components/AnimatedComponent.h"
 #include "objects/components/PositionComponent.h"
 #include "objects/components/SpriteComponent.h"
@@ -131,8 +132,8 @@ bool AnimatedComponentSystem::setComponentProperty(const std::string& key, const
 }
 
 
-std::string AnimatedComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
-    return "";
+sol::object AnimatedComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
+    return ScriptManager::Instance()->getObjectFromValue(nullptr);
 }
 
 

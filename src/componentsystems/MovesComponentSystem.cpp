@@ -89,19 +89,35 @@ bool MovesComponentSystem::setComponentProperty(const std::string& key, float va
 			movesComponent->rotationalVelocity.x = value;
 		} else if (key == MovesComponentSystem::ROTATION) {
 			movesComponent->targetRotation = value;
+		} else if (key == MovesComponentSystem::DESTINATION) {
+			this->setTargetPosition(tientity, value);
+			movesComponent->hasTargetPosition = true;
 		}
     }
     return false;
 }
 
 
-bool MovesComponentSystem::setComponentProperty(const std::string& key, const std::string& value, TIEntity& tientity)  {
-    return false;
+bool MovesComponentSystem::setComponentProperty(const std::string& key, const sf::Vector2f& value, TIEntity& tientity)  {
+	MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
+	if (movesComponent != nullptr) {
+		if (key == MovesComponentSystem::DESTINATION) {
+			movesComponent->targetPosition = value;
+			movesComponent->hasTargetPosition = true;
+		}
+	}
+	return false;
 }
 
 
-std::string MovesComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
-	return "";
+sol::object MovesComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
+	MovesComponent* component = tientity.getComponent<MovesComponent>();
+	if (component != nullptr) {
+		if (key == MovesComponentSystem::AT_DESTINATION) {
+			return ScriptManager::Instance()->getObjectFromValue(this->atTargetPosition(tientity));
+		}
+	}
+	return ScriptManager::Instance()->getObjectFromValue(nullptr);
 }
 
 
@@ -130,36 +146,6 @@ void MovesComponentSystem::setTargetPosition(TIEntity& tientity, float distance)
 		sf::Vector2f destination = sf::Vector2f(positionComponent->position.x + distance.x, positionComponent->position.y + distance.y);
 
 		MovesComponentSystem::Instance()->setTargetPosition(tientity, destination);
-	}
-}
-
-
-void MovesComponentSystem::setTargetPosition(TIEntity& tientity, Direction direction) {
-	MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
-	PositionComponent* positionComponent = tientity.getComponent<PositionComponent>();
-
-	if (movesComponent != nullptr && positionComponent != nullptr) {
-		if (this->atTargetPosition(*movesComponent, *positionComponent)) {
-
-			float distance = movesComponent->targetSpeed;
-			if (WorldManager::Instance()->isGridConfigured()) {
-				const sf::Vector2f& tileSize = WorldManager::Instance()->getGridComponent()->getTileSize();
-				distance = tileSize.x;
-			}
-
-			sf::Vector2f targetPosition = positionComponent->position;
-			if (direction == Direction::TOP) {
-				targetPosition += sf::Vector2f(0, -distance);
-			} else if (direction == Direction::LEFT) {
-				targetPosition += sf::Vector2f(-distance, 0);
-			} else if (direction == Direction::RIGHT) {
-				targetPosition += sf::Vector2f(distance, 0);
-			} else if (direction == Direction::BOTTOM) {
-				targetPosition += sf::Vector2f(0, distance);
-			}
-
-			this->setTargetPosition(tientity, targetPosition);
-		}
 	}
 }
 

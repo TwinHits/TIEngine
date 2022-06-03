@@ -23,7 +23,7 @@ class ShapeComponentSystem : public Singleton<ShapeComponentSystem>, public Comp
 		bool setComponentProperty(const std::string&, bool, TIEntity&);
 		bool setComponentProperty(const std::string&, float, TIEntity&);
 		bool setComponentProperty(const std::string&, const std::string&, TIEntity&);
-		std::string getComponentProperty(const std::string&, TIEntity&);
+		sol::object getComponentProperty(const std::string&, TIEntity&);
 
 		void addWireframe(TIEntity&);
 

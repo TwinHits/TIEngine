@@ -10,6 +10,7 @@
 #include "objects/entities/TIEntity.h"
 #include "objects/factories/TIEntityFactory.h"
 #include "managers/AssetsManager.h"
+#include "managers/ScriptManager.h"
 #include "utils/StringHelpers.h"
 
 using namespace TIE;
@@ -77,8 +78,8 @@ bool ShapeComponentSystem::setComponentProperty(const std::string& key, const st
 }
 
 
-std::string ShapeComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
-	return "";
+sol::object ShapeComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
+	return ScriptManager::Instance()->getObjectFromValue(nullptr);
 }
 
 

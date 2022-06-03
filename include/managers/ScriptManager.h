@@ -20,6 +20,7 @@ namespace TIE {
 class ScriptManager : public Singleton<ScriptManager>, Manager {
 public:
 	bool initialize();
+
 	void loadScript(const std::string&);
 	TIEntityFactory& loadTIEntityDefinition(TIEntityFactory&, const sol::table&);
 
@@ -50,6 +51,11 @@ public:
     template <typename T>
 	T getValueFromObject(const sol::object& object) {
 		return object.as<T>();
+	}
+
+	template <typename T>
+	sol::object getObjectFromValue(T value) {
+		return sol::make_object<T>(this->luaState, value);
 	}
 
 	ScriptManager() {};

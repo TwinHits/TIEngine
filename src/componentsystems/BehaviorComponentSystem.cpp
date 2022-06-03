@@ -59,8 +59,8 @@ bool BehaviorComponentSystem::setComponentProperty(const std::string& key, const
 }
 
 
-std::string BehaviorComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
-    return "";
+sol::object BehaviorComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
+    return ScriptManager::Instance()->getObjectFromValue(nullptr);
 }
 
 
