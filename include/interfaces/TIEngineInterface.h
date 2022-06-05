@@ -5,9 +5,9 @@
 
 #include <sol/sol.hpp>
 
-#include "objects/GlobalId.h"
-
 #include "interfaces/TIEntityInterface.h"
+#include "objects/GlobalId.h"
+#include "utils/types/ComponentSystemsTypes.h"
 
 namespace TIE {
 
@@ -37,6 +37,8 @@ class TIEngineInterface {
         TIEntityInterface getTIEntityById(GlobalId);
 
         TIEntityInterface registerSceneLayer(const std::string&, bool);
+
+        const ComponentSystems::ComponentSystemPropertiesMap& getProperties();
 };
 
 }

@@ -84,6 +84,13 @@ sol::object LifecycleComponentSystem::getComponentProperty(const std::string& ke
 	return ScriptManager::Instance()->getObjectFromValue(nullptr);
 }
 
+ComponentSystems::ComponentSystemPropertiesMap& LifecycleComponentSystem::populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap& map) {
+	ComponentSystems::insertComponentPropertyIntoMap(LifecycleComponentSystem::CREATED, map);
+	ComponentSystems::insertComponentPropertyIntoMap(LifecycleComponentSystem::REMOVED, map);
+	ComponentSystems::insertComponentPropertyIntoMap(LifecycleComponentSystem::UPDATED, map);
+	return map;
+}
+
 
 void LifecycleComponentSystem::runCreated(TIEntity& tientity) {
 	LifecycleComponent* lifecycleComponent = tientity.getComponent<LifecycleComponent>();

@@ -9,6 +9,7 @@
 #include "managers/ScriptManager.h"
 #include "utils/ComponentSystems.h"
 #include "utils/TIEMath.h"
+#include "utils/types/ComponentSystemsTypes.h"
 
 using namespace TIE;
 
@@ -53,6 +54,17 @@ sol::object PositionComponentSystem::getComponentProperty(const std::string& key
         }
     }
     return ScriptManager::Instance()->getObjectFromValue(nullptr);
+}
+
+
+ComponentSystems::ComponentSystemPropertiesMap& PositionComponentSystem::populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap& map) {
+    ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::X, map);
+    ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::Y, map);
+    ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::ROTATION, map);
+    ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::ROTATES, map);
+    ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::POSITION_POSITION, map);
+    ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::WORLD_POSITION, map);
+    return map;
 }
 
 

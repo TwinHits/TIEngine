@@ -25,6 +25,7 @@ class SpriteComponentSystem : public Singleton<SpriteComponentSystem>, public Co
 		bool setComponentProperty(const std::string&, float, TIEntity&);
 		bool setComponentProperty(const std::string&, const std::string&, TIEntity&);
 		sol::object getComponentProperty(const std::string&, TIEntity&);
+		ComponentSystems::ComponentSystemPropertiesMap& populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap&);
 
 		static const inline std::string SPRITE = "sprite";
 		static const inline std::string DRAWN = "sprite.drawn";

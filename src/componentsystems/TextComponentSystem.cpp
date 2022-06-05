@@ -76,3 +76,12 @@ bool TextComponentSystem::setComponentProperty(const std::string& key, const std
 sol::object TextComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
 	return ScriptManager::Instance()->getObjectFromValue(nullptr);
 }
+
+
+ComponentSystems::ComponentSystemPropertiesMap& TextComponentSystem::populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap& map) {
+	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::DRAWN, map);
+	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::CONTENT, map);
+	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::OFFSET_X, map);
+	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::OFFSET_Y, map);
+	return map;
+}

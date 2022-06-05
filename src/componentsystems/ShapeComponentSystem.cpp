@@ -83,6 +83,11 @@ sol::object ShapeComponentSystem::getComponentProperty(const std::string& key, T
 }
 
 
+ComponentSystems::ComponentSystemPropertiesMap& ShapeComponentSystem::populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap& map) {
+	return map;
+}
+
+
 void ShapeComponentSystem::addWireframe(TIEntity& tientity) {
 	ShapeComponent& shapeComponent = this->addComponent(tientity);
 	SpriteComponent& spriteComponent = *tientity.getComponent<SpriteComponent>();

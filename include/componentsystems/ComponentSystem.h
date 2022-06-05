@@ -5,6 +5,7 @@
 
 #include "objects/entities/TIEntity.h"
 #include "objects/factories/TIEntityFactory.h"
+#include "utils/types/ComponentSystemsTypes.h"
 
 namespace TIE {
 
@@ -21,6 +22,7 @@ class ComponentSystem {
 		virtual bool setComponentProperty(const std::string&, const sf::Vector2f&, TIEntity&);
 		virtual bool setComponentProperty(const std::string&, const sf::Vector2i&, TIEntity&);
 		virtual sol::object getComponentProperty(const std::string&, TIEntity&) = 0;
+		virtual ComponentSystems::ComponentSystemPropertiesMap& populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap&);
 };
 
 }

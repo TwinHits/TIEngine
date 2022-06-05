@@ -13,6 +13,7 @@
 #include "objects/factories/TIEntityFactory.h"
 #include "objects/entities/TIEntity.h"
 #include "objects/enumeration/Direction.h"
+#include "utils/types/ComponentSystemsTypes.h"
 
 namespace TIE {
 
@@ -29,6 +30,7 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, public Comp
 		bool setComponentProperty(const std::string&, const sf::Vector2f&, TIEntity&);
 		bool setComponentProperty(const std::string&, const sf::Vector2i&, TIEntity&);
 		sol::object getComponentProperty(const std::string&, TIEntity&);
+		ComponentSystems::ComponentSystemPropertiesMap& populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap&);
 
 		void setTargetPosition(TIEntity&, sf::Vector2f&);
 		void setTargetPosition(TIEntity&, float);

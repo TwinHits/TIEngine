@@ -14,6 +14,7 @@
 #include "objects/entities/TIEntity.h"
 #include "utils/ComponentSystems.h"
 #include "utils/TIEMath.h"
+#include "utils/types/ComponentSystemsTypes.h"
 
 using namespace TIE;
 
@@ -130,6 +131,17 @@ sol::object MovesComponentSystem::getComponentProperty(const std::string& key, T
 		}
 	}
 	return ScriptManager::Instance()->getObjectFromValue(nullptr);
+}
+
+
+ComponentSystems::ComponentSystemPropertiesMap& MovesComponentSystem::populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap& map) {
+	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::ACCELERATION, map);
+	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::ROTATES, map);
+	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::ROTATIONSPEED, map);
+	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::ROTATION, map);
+	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::DESTINATION, map);
+	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::AT_DESTINATION, map);
+	return map;
 }
 
 

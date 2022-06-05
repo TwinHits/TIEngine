@@ -9,6 +9,7 @@
 #include "managers/WorldManager.h"
 #include "managers/LogManager.h"
 #include "managers/ScriptManager.h"
+#include "utils/ComponentSystems.h"
 #include "utils/TIEMath.h"
 
 using namespace TIE;
@@ -72,6 +73,13 @@ bool GridComponentSystem::setComponentProperty(const std::string& key, const std
 
 sol::object GridComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
 	return ScriptManager::Instance()->getObjectFromValue(nullptr);
+}
+
+
+ComponentSystems::ComponentSystemPropertiesMap& GridComponentSystem::populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap& map) {
+	ComponentSystems::insertComponentPropertyIntoMap(GridComponentSystem::WIDTH, map);
+	ComponentSystems::insertComponentPropertyIntoMap(GridComponentSystem::HEIGHT, map);
+	return map;
 }
 
 

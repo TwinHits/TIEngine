@@ -10,6 +10,7 @@
 #include "objects/factories/TIEntityFactory.h"
 #include "utils/StringHelpers.h"
 #include "utils/TIEMath.h"
+#include "utils/ComponentSystems.h"
 
 using namespace TIE;
 
@@ -134,6 +135,14 @@ bool AnimatedComponentSystem::setComponentProperty(const std::string& key, const
 
 sol::object AnimatedComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
     return ScriptManager::Instance()->getObjectFromValue(nullptr);
+}
+
+ComponentSystems::ComponentSystemPropertiesMap& AnimatedComponentSystem::populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap& map) {
+    ComponentSystems::insertComponentPropertyIntoMap(AnimatedComponentSystem::ANIMATED + "." + AnimatedComponentSystem::FRAMES, map);
+    ComponentSystems::insertComponentPropertyIntoMap(AnimatedComponentSystem::ANIMATED + "." + AnimatedComponentSystem::RANGE, map);
+    ComponentSystems::insertComponentPropertyIntoMap(AnimatedComponentSystem::ANIMATED + "." + AnimatedComponentSystem::SPEED, map);
+    ComponentSystems::insertComponentPropertyIntoMap(AnimatedComponentSystem::ANIMATED + "." + AnimatedComponentSystem::DIRECTION, map);
+    return map;
 }
 
 

@@ -7,7 +7,6 @@
 #include "interfaces/TIEntityInterface.h"
 #include "managers/AssetsManager.h"
 #include "managers/EventsManager.h"
-#include "managers/LogManager.h"
 #include "managers/SceneManager.h"
 #include "managers/ScriptManager.h"
 #include "managers/ViewManager.h"
@@ -19,6 +18,7 @@
 using namespace TIE;
 
 void TIEngineInterface::registerUserType(sol::state& luaState) {
+
 	sol::usertype<TIEngineInterface> engineInterfaceUserType = luaState.new_usertype<TIEngineInterface>("tiengine");
     engineInterfaceUserType["isValid"] = &TIEngineInterface::isValid;
     engineInterfaceUserType["registerTexturesDirectory"] = &TIEngineInterface::registerTexturesDirectory;
@@ -32,6 +32,7 @@ void TIEngineInterface::registerUserType(sol::state& luaState) {
 	engineInterfaceUserType["getMouseClickPosition"] = &TIEngineInterface::getMouseClickPosition;
     engineInterfaceUserType["getTIEntityById"] = &TIEngineInterface::getTIEntityById;
     engineInterfaceUserType["registerSceneLayer"] = &TIEngineInterface::registerSceneLayer;
+    engineInterfaceUserType["getProperties"] = &TIEngineInterface::getProperties;
 }
 
 
@@ -87,12 +88,12 @@ bool TIEngineInterface::hasEvent(std::string& event) {
 
 
 const sf::Vector2i TIEngineInterface::getMouseClickPosition() {
-const sf::Event* clickEvent = EventsManager::Instance()->getEvent(sf::Event::MouseButtonPressed);
-if (clickEvent != nullptr) {
-    return sf::Vector2i(clickEvent->mouseButton.x, clickEvent->mouseButton.y);
-} else {
-    return sf::Vector2i(0,0);
-}
+    const sf::Event* clickEvent = EventsManager::Instance()->getEvent(sf::Event::MouseButtonPressed);
+    if (clickEvent != nullptr) {
+        return sf::Vector2i(clickEvent->mouseButton.x, clickEvent->mouseButton.y);
+    } else {
+        return sf::Vector2i(0,0);
+    }
 }
 
 
@@ -119,4 +120,9 @@ TIEntityInterface TIEngineInterface::registerSceneLayer(const std::string& name,
 
     SceneLayer& sceneLayer = sceneLayerFactory.build();
     return TIEntityInterface(sceneLayer);
+}
+
+
+const ComponentSystems::ComponentSystemPropertiesMap& TIEngineInterface::getProperties() {
+    return SceneManager::Instance()->getComponentSystemPropertiesMap();
 }

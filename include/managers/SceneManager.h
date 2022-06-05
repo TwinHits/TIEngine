@@ -8,8 +8,8 @@
 #include <memory>
 #include <vector>
 
-#include "objects/SceneLayer.h"
 #include "managers/WindowManager.h"
+#include "objects/SceneLayer.h"
 
 namespace TIE {
 
@@ -24,9 +24,7 @@ namespace TIE {
 		const std::vector<ComponentSystem*>& getComponentSystems();
 		bool isValidComponentName(const std::string&);
 		ComponentSystem* getComponentSystemByComponentName(const std::string&);
-
-		//Investigate with collides component
-		//TIEntity* findTIEntity(sf::Vector2f);
+		const ComponentSystems::ComponentSystemPropertiesMap& getComponentSystemPropertiesMap();
 
 		void updateGameState();
 		void render();
@@ -34,7 +32,6 @@ namespace TIE {
 		float getFPS();
 
 		void setTIEntitiesMarkedForRemove(bool);
-
 
 		SceneManager();
 		~SceneManager() {};
@@ -52,6 +49,7 @@ namespace TIE {
 
 		std::vector<ComponentSystem*> componentSystems;
 		std::map<std::string, ComponentSystem*> componentNamesToComponentSystems;
+		ComponentSystems::ComponentSystemPropertiesMap componentSystemPropertiesMap;
 
 		bool tientitiesMarkedForRemove = false;
 		void removeTIEntities(TIEntity&);

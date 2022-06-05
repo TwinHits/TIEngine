@@ -126,11 +126,11 @@ TIEntityFactory& ScriptManager::loadTIEntityDefinition(TIEntityFactory& factory,
 	std::vector<std::string> children;
 	for (auto& possibleComponent : definition) {
 		sol::optional<std::string> key = possibleComponent.first.as<sol::optional<std::string> >();
-		sol::optional<sol::table> defintion = possibleComponent.second.as<sol::optional<sol::table> >();
-		if (key && defintion) {
+		sol::optional<sol::table> definition = possibleComponent.second.as<sol::optional<sol::table> >();
+		if (key && definition) {
 			if (this->isValidDefinitionFieldName(*key)) {
 				factory.addComponentSystemByComponentName(*key);
-				this->readComponentValues(factory, *key, *defintion);
+				this->readComponentValues(factory, *key, *definition);
 			} else {
 				children.push_back(*key);
 			}

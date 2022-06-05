@@ -111,3 +111,16 @@ bool SpriteComponentSystem::setComponentProperty(const std::string& key, const s
 sol::object SpriteComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
 	return ScriptManager::Instance()->getObjectFromValue(nullptr);
 }
+
+ComponentSystems::ComponentSystemPropertiesMap& SpriteComponentSystem::populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap& map) {
+	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::DRAWN, map);
+	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::TEXTURE, map);
+	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::WIDTH, map);
+	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::HEIGHT, map);
+	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::ORIGIN_X_OFFSET, map);
+	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::ORIGIN_Y_OFFSET, map);
+	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::REPEATED, map);
+	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::ROTATES, map);
+	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::SHOW_WIREFRAME, map);
+	return map;
+}

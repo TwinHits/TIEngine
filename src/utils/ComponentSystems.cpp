@@ -5,6 +5,7 @@
 #include "objects/components/ShapeComponent.h"
 #include "objects/components/SpriteComponent.h"
 #include "utils/StringHelpers.h"
+#include "utils/types/ComponentSystemsTypes.h"
 
 using namespace TIE;
 
@@ -48,6 +49,19 @@ std::string ComponentSystems::getComponentNameFromKey(const std::string& key) {
     std::vector<std::string> parts;
     String::split(key, '.', parts);
     return parts.front();
+}
+
+
+ComponentSystems::ComponentSystemPropertiesMap& ComponentSystems::insertComponentPropertyIntoMap(const std::string& property, ComponentSystemPropertiesMap& map) {
+    std::vector<std::string> parts;
+    String::split(property, '.', parts);
+
+	if (!map.count(parts.front())) {
+		map[parts.front()];
+	}
+	map[parts.front()][parts.back()] = property;
+
+	return map;
 }
 
 

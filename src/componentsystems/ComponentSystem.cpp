@@ -21,6 +21,12 @@ bool ComponentSystem::setComponentProperty(const std::string& key, const sf::Vec
     return false;
 }
 
-bool TIE::ComponentSystem::setComponentProperty(const std::string& key, const sf::Vector2i& value, TIEntity& tientity) {
+
+bool ComponentSystem::setComponentProperty(const std::string& key, const sf::Vector2i& value, TIEntity& tientity) {
     return false;
+}
+
+
+ComponentSystems::ComponentSystemPropertiesMap& ComponentSystem::populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap& map) {
+    return map;
 }

@@ -6,6 +6,7 @@
 #include "objects/entities/TIEntity.h"
 #include "objects/factories/TIEntityFactory.h"
 #include "managers/ScriptManager.h"
+#include "utils/types/ComponentSystemsTypes.h"
 
 namespace TIE {
     namespace ComponentSystems {
@@ -25,6 +26,8 @@ namespace TIE {
         std::string getFactoryValue<std::string>(const TIEntityFactory&, const std::string&, std::string, TIEntity&);
 
         std::string getComponentNameFromKey(const std::string&);
+        ComponentSystemPropertiesMap& insertComponentPropertyIntoMap(const std::string&, ComponentSystemPropertiesMap&);
+
         void setDrawn(TIEntity&, bool);
         bool isDrawn(TIEntity&);
         const sf::FloatRect getGlobalBounds(TIEntity&);

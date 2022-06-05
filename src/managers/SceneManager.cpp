@@ -16,6 +16,7 @@
 #include "componentsystems/SpriteComponentSystem.h"
 #include "componentsystems/TextComponentSystem.h"
 #include "componentsystems/PositionComponentSystem.h"
+#include "managers/ScriptManager.h"
 #include "managers/TimeManager.h"
 #include "managers/ViewManager.h"
 #include "managers/WindowManager.h"
@@ -72,9 +73,12 @@ bool SceneManager::initialize() {
 	this->componentSystems.push_back(TextComponentSystem::Instance());
 	this->componentSystems.push_back(ShapeComponentSystem::Instance());
 
-	// List of valid component names
+	//this->componentSystemPropertiesMap = ScriptManager::Instance()->getNewTable();
 	for (ComponentSystem* componentSystem : SceneManager::Instance()->getComponentSystems()) {
+		// List of valid component names
 		this->componentNamesToComponentSystems[componentSystem->getName()] = componentSystem;
+		// Assemble component system properties map
+		this->componentSystemPropertiesMap = componentSystem->populateComponentSystemsPropertiesMap(this->componentSystemPropertiesMap);
 	}
 
 	return true;
@@ -112,6 +116,11 @@ ComponentSystem* SceneManager::getComponentSystemByComponentName(const std::stri
 	} else {
 		return nullptr;
 	}
+}
+
+
+const ComponentSystems::ComponentSystemPropertiesMap& SceneManager::getComponentSystemPropertiesMap() {
+	return this->componentSystemPropertiesMap;
 }
 
 

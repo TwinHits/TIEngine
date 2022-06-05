@@ -10,6 +10,7 @@
 
 #include "objects/components/PositionComponent.h"
 #include "objects/entities/TIEntity.h"
+#include "utils/types/ComponentSystemsTypes.h"
 
 namespace TIE {
 class PositionComponentSystem : public Singleton<PositionComponentSystem>, public ComponentSystem {
@@ -24,6 +25,7 @@ class PositionComponentSystem : public Singleton<PositionComponentSystem>, publi
 		bool setComponentProperty(const std::string&, float, TIEntity&);
 		bool setComponentProperty(const std::string&, const sf::Vector2f&, TIEntity&);
 		sol::object getComponentProperty(const std::string&, TIEntity&);
+		ComponentSystems::ComponentSystemPropertiesMap& populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap&);
 
 		void setPosition(TIEntity&, float, float);
 
