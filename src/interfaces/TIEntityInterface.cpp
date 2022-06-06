@@ -92,7 +92,6 @@ void TIEntityInterface::despawn() {
 
 void TIEntityInterface::setProperty(const std::string& key, const sol::object& value) {
     ComponentSystem* componentSystem = SceneManager::Instance()->getComponentSystemByComponentName(ComponentSystems::getComponentNameFromKey(key));
-    auto type = value.get_type();
     if (componentSystem != nullptr) {
         if (value.is<float>()) {
             componentSystem->setComponentProperty(key, ScriptManager::Instance()->getValueFromObject<float>(value), *this->tientity);

@@ -27,7 +27,7 @@ void TextComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity&
     Components components = { textComponent, positionComponent, tientity };
     this->components.push_back(components);
 
-	std::string text = ComponentSystems::getFactoryValue<std::string>(factory, TextComponentSystem::CONTENT, textComponent.getText().getString(), tientity);
+	std::string text = ComponentSystems::getFactoryValue<std::string>(factory, TextComponentSystem::STRING, textComponent.getText().getString(), tientity);
 	bool drawn = ComponentSystems::getFactoryValue<bool>(factory, TextComponentSystem::DRAWN, textComponent.isDrawn(), tientity);
 
     textComponent.setString(text);
@@ -59,28 +59,52 @@ const std::string& TextComponentSystem::getName() {
 
 
 bool TextComponentSystem::setComponentProperty(const std::string& key, bool value, TIEntity& tientity) {
-    return false;
+	TextComponent* component = tientity.getComponent<TextComponent>();
+	if (component != nullptr) {
+		if (key == TextComponentSystem::STRING) {
+			component->setString(std::to_string(value));
+		}
+	}
+	return false;
 }
 
 
 bool TextComponentSystem::setComponentProperty(const std::string& key, float value, TIEntity& tientity)  {
-    return false;
+	TextComponent* component = tientity.getComponent<TextComponent>();
+	if (component != nullptr) {
+		if (key == TextComponentSystem::STRING) {
+			component->setString(std::to_string(value));
+		}
+	}
+	return false;
 }
 
 
-bool TextComponentSystem::setComponentProperty(const std::string& key, const std::string& value, TIEntity& tientity)  {
+bool TextComponentSystem::setComponentProperty(const std::string& key, const std::string& value, TIEntity& tientity) {
+	TextComponent* component = tientity.getComponent<TextComponent>();
+	if (component != nullptr) {
+		if (key == TextComponentSystem::STRING) {
+			component->setString(value);
+		}
+	}
     return false;
 }
 
 
 sol::object TextComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
+	TextComponent* component = tientity.getComponent<TextComponent>();
+	if (component != nullptr) {
+		if (key == TextComponentSystem::STRING) {
+			return ScriptManager::Instance()->getObjectFromValue(std::string(component->getString()));
+		}
+	}
 	return ScriptManager::Instance()->getObjectFromValue(nullptr);
 }
 
 
 ComponentSystems::ComponentSystemPropertiesMap& TextComponentSystem::populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap& map) {
 	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::DRAWN, map);
-	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::CONTENT, map);
+	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::STRING, map);
 	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::OFFSET_X, map);
 	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::OFFSET_Y, map);
 	return map;
