@@ -32,7 +32,7 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, public Comp
 		sol::object getComponentProperty(const std::string&, TIEntity&);
 		ComponentSystems::ComponentSystemPropertiesMap& populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap&);
 
-		void setTargetPosition(TIEntity&, sf::Vector2f&);
+		void setTargetPosition(TIEntity&, const sf::Vector2f&);
 		void setTargetPosition(TIEntity&, float);
 
 		bool atTargetPosition(TIEntity&);

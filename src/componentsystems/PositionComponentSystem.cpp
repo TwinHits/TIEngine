@@ -36,7 +36,7 @@ bool PositionComponentSystem::setComponentProperty(const std::string& key, float
 bool PositionComponentSystem::setComponentProperty(const std::string& key, const sf::Vector2f& value, TIEntity& tientity) {
     PositionComponent* component = tientity.getComponent<PositionComponent>();
     if (component != nullptr) {
-        if (key == PositionComponentSystem::POSITION) {
+        if (key == PositionComponentSystem::POSITION_POSITION) {
             component->position = value;
         }
     }
@@ -49,7 +49,9 @@ sol::object PositionComponentSystem::getComponentProperty(const std::string& key
     if (positionComponent != nullptr) {
         if (key == PositionComponentSystem::ROTATION) {
             return ScriptManager::Instance()->getObjectFromValue(positionComponent->rotation);
-        } else if (key == PositionComponentSystem::POSITION) {
+        } else if (key == PositionComponentSystem::POSITION_POSITION) {
+            return ScriptManager::Instance()->getObjectFromValue<sf::Vector2f>(positionComponent->worldPosition);
+        } else if (key == PositionComponentSystem::WORLD_POSITION) {
             return ScriptManager::Instance()->getObjectFromValue<sf::Vector2f>(positionComponent->worldPosition);
         }
     }

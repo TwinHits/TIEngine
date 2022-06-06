@@ -92,7 +92,6 @@ bool MovesComponentSystem::setComponentProperty(const std::string& key, float va
 			movesComponent->targetRotation = value;
 		} else if (key == MovesComponentSystem::DESTINATION) {
 			this->setTargetPosition(tientity, value);
-			movesComponent->hasTargetPosition = true;
 		}
     }
     return false;
@@ -103,8 +102,7 @@ bool MovesComponentSystem::setComponentProperty(const std::string& key, const sf
 	MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
 	if (movesComponent != nullptr) {
 		if (key == MovesComponentSystem::DESTINATION) {
-			movesComponent->targetPosition = value;
-			movesComponent->hasTargetPosition = true;
+			this->setTargetPosition(tientity, value);
 		}
 	}
 	return false;
@@ -115,8 +113,7 @@ bool MovesComponentSystem::setComponentProperty(const std::string& key, const sf
 	MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
 	if (movesComponent != nullptr) {
 		if (key == MovesComponentSystem::DESTINATION) {
-			movesComponent->targetPosition = sf::Vector2f(value.x, value.y);
-			movesComponent->hasTargetPosition = true;
+			this->setTargetPosition(tientity, sf::Vector2f(value.x, value.y));
 		}
 	}
 	return false;
@@ -135,6 +132,7 @@ sol::object MovesComponentSystem::getComponentProperty(const std::string& key, T
 
 
 ComponentSystems::ComponentSystemPropertiesMap& MovesComponentSystem::populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap& map) {
+	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::SPEED, map);
 	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::ACCELERATION, map);
 	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::ROTATES, map);
 	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::ROTATIONSPEED, map);
@@ -145,17 +143,18 @@ ComponentSystems::ComponentSystemPropertiesMap& MovesComponentSystem::populateCo
 }
 
 
-void MovesComponentSystem::setTargetPosition(TIEntity& tientity, sf::Vector2f& targetPosition) {
+void MovesComponentSystem::setTargetPosition(TIEntity& tientity, const sf::Vector2f& targetPosition) {
 	MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
 	PositionComponent* positionComponent = tientity.getComponent<PositionComponent>();
 	if (movesComponent != nullptr && positionComponent != nullptr) {
 
+		sf::Vector2f normalizedPosition = targetPosition;
 		if (WorldManager::Instance()->isGridConfigured()) {
-			targetPosition = GridComponentSystem::Instance()->normalizePositionToGrid(targetPosition);
+			normalizedPosition = GridComponentSystem::Instance()->normalizePositionToGrid(targetPosition);
 		}
 
 		movesComponent->hasTargetPosition = true;
-		movesComponent->targetPosition = targetPosition;
+		movesComponent->targetPosition = normalizedPosition;
 	}
 }
 
