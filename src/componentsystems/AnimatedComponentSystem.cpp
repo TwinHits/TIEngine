@@ -138,10 +138,10 @@ sol::object AnimatedComponentSystem::getComponentProperty(const std::string& key
 }
 
 ComponentSystems::ComponentSystemPropertiesMap& AnimatedComponentSystem::populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap& map) {
-    ComponentSystems::insertComponentPropertyIntoMap(AnimatedComponentSystem::ANIMATED + "." + AnimatedComponentSystem::FRAMES, map);
-    ComponentSystems::insertComponentPropertyIntoMap(AnimatedComponentSystem::ANIMATED + "." + AnimatedComponentSystem::RANGE, map);
-    ComponentSystems::insertComponentPropertyIntoMap(AnimatedComponentSystem::ANIMATED + "." + AnimatedComponentSystem::SPEED, map);
-    ComponentSystems::insertComponentPropertyIntoMap(AnimatedComponentSystem::ANIMATED + "." + AnimatedComponentSystem::DIRECTION, map);
+    ComponentSystems::insertComponentPropertyIntoMap(AnimatedComponentSystem::ANIMATED, AnimatedComponentSystem::FRAMES, map);
+    ComponentSystems::insertComponentPropertyIntoMap(AnimatedComponentSystem::ANIMATED, AnimatedComponentSystem::RANGE, map);
+    ComponentSystems::insertComponentPropertyIntoMap(AnimatedComponentSystem::ANIMATED, AnimatedComponentSystem::SPEED, map);
+    ComponentSystems::insertComponentPropertyIntoMap(AnimatedComponentSystem::ANIMATED, AnimatedComponentSystem::DIRECTION, map);
     return map;
 }
 

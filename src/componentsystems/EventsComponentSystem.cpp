@@ -162,10 +162,10 @@ sol::object EventsComponentSystem::getComponentProperty(const std::string& key, 
 }
 
 ComponentSystems::ComponentSystemPropertiesMap& EventsComponentSystem::populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap& map) {
-	ComponentSystems::insertComponentPropertyIntoMap(EventsComponentSystem::EVENTS + "." + EventsComponentSystem::SELECTED, map);
-	ComponentSystems::insertComponentPropertyIntoMap(EventsComponentSystem::EVENTS + "." + EventsComponentSystem::UNSELECTED, map);
-	ComponentSystems::insertComponentPropertyIntoMap(EventsComponentSystem::EVENTS + "." + EventsComponentSystem::NEUTRAL, map);
-	ComponentSystems::insertComponentPropertyIntoMap(EventsComponentSystem::EVENTS + "." + EventsComponentSystem::HOVER, map);
+	ComponentSystems::insertComponentPropertyIntoMap(EventsComponentSystem::EVENTS, EventsComponentSystem::SELECTED, map);
+	ComponentSystems::insertComponentPropertyIntoMap(EventsComponentSystem::EVENTS, EventsComponentSystem::UNSELECTED, map);
+	ComponentSystems::insertComponentPropertyIntoMap(EventsComponentSystem::EVENTS, EventsComponentSystem::NEUTRAL, map);
+	ComponentSystems::insertComponentPropertyIntoMap(EventsComponentSystem::EVENTS, EventsComponentSystem::HOVER, map);
 	return map;
 }
 

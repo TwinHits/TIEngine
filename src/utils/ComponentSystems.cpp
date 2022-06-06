@@ -65,6 +65,17 @@ ComponentSystems::ComponentSystemPropertiesMap& ComponentSystems::insertComponen
 }
 
 
+ComponentSystems::ComponentSystemPropertiesMap& ComponentSystems::insertComponentPropertyIntoMap(const std::string& key, const std::string& property, ComponentSystemPropertiesMap& map) {
+
+	if (!map.count(key)) {
+		map[key];
+	}
+	map[key][property] = property;
+
+	return map;
+}
+
+
 void ComponentSystems::setDrawn(TIEntity& entity, const bool drawn) {
 
 	TextComponent* textComponent = entity.getComponent<TextComponent>();
