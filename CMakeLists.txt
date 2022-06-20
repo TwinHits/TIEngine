@@ -1,5 +1,5 @@
 #Settings
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.23)
 project(TIEngine)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_BUILD_TYPE Debug)
@@ -36,6 +36,9 @@ set(CMAKE_BUILD_TYPE Debug)
 		include_directories("lib/lua-5.3.5-win/include")
 		link_directories("lib/lua-5.3.5-win")
 	endif()
+
+	#Pybind11
+	#find_package(pybind11 REQUIRED)
 
 #SLN Fine tuning
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)

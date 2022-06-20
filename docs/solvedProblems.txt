@@ -1,4 +1,4 @@
-udo apt-get install libvorbisfile3/1/2018 I think that SFML 2.4.2 is compiled with g++-4.8, so I had to explicitly use g++ because the default is now 5. I think since I compiled gtest and gmock with 4.8, it also needs 4.8.
+sudo apt-get install libvorbisfile3/1/2018 I think that SFML 2.4.2 is compiled with g++-4.8, so I had to explicitly use g++ because the default is now 5. I think since I compiled gtest and gmock with 4.8, it also needs 4.8.
 But I need at least 4.8 because I need make_unique. I made my own.
 Now, Gtest isn't working again probably because my default is 5.0.
 Recompiled gtest on 4.8. Had to delete the existing ones in my lib in order for the changes to take effect.
@@ -47,10 +47,17 @@ Set the CMAKE variable to the correct folder.
 
 Need Xming running on windows or there will be an X error.
 
-For I think the third time, I forgot about that you're supposed to do ./boostrap and then ./b2 to build boost once you've downloaded it. It could not find filesystem until I did.
+For I think the third time, I forgot about that you're supposed to do ./bootstrap and then ./b2 to build boost once you've downloaded it. It could not find filesystem until I did.
 
 10/18/2020
 I had a ton of problems installing boost, first abut not being able to find cl and then some header problems.
 1. Make sure you download the right version of boost
 2. make sure when installing visual studio that you check mark the desktop build tools or no compiler will actually be installed, and the 'universal' tools box as well. Not sure if both these are necessary.
 
+
+6/20/2022
+Trying to install pybind11 and had to upgrade to visual studio 2022 because I was getting end of life warnings. This
+messed up cmake. I got an error about unable to find cl, which I fixed by adding the new visual studio to the
+environment variables.
+Then I got an error about mt.exe, which is some windows SDK thing. I found it in windows Kits/bin and picked the highest
+version and x64 and added it to the PATH, that fixed it but I don't reall understand why.
