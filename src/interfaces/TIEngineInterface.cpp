@@ -26,6 +26,7 @@ void TIEngineInterface::registerUserType(sol::state& luaState) {
     engineInterfaceUserType["registerAudioDirectory"] = &TIEngineInterface::registerAudioDirectory;
     engineInterfaceUserType["setWindowTitle"] = &TIEngineInterface::setWindowTitle;
     engineInterfaceUserType["setWindowSize"] = &TIEngineInterface::setWindowSize;
+    engineInterfaceUserType["setZoomSettings"] = &TIEngineInterface::setZoomSettings;
     engineInterfaceUserType["setLevel"] = &TIEngineInterface::setLevel;
 	engineInterfaceUserType["spawn"] = &TIEngineInterface::spawn;
 	engineInterfaceUserType["hasEvent"] = &TIEngineInterface::hasEvent;
@@ -74,6 +75,13 @@ bool TIEngineInterface::setLevel(const sol::table& level) {
     WorldManager::Instance()->setLevelEntity(factory);
     return true;
 }
+
+
+bool TIEngineInterface::setZoomSettings(const float speed, const float minimum, const float maximum) {
+    ViewManager::Instance()->setZoomSettings(speed, minimum, maximum);
+    return true;
+}
+
 
 TIEntityInterface TIEngineInterface::spawn(const sol::table& definition) {
     TIEntityFactory factory = TIEntityFactory(definition);

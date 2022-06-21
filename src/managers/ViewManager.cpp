@@ -97,15 +97,24 @@ void ViewManager::updateCamera(const float delta) {
 	const sf::Vector2f& mouseWindowPosition = this->eventsManager->getMouseWindowPosition();
 	if (!this->consoleManager->checkConsole()) {
 		this->clientView->move(this->calculateClientScroll(mouseWindowPosition, delta));
-		this->zoom(delta);
+		this->zoomCamera(delta);
 	} else if (this->consoleManager->checkConsole()) {
 	
 	}
 }	
 
 
-void ViewManager::zoom(const float delta) {
+void ViewManager::zoomCamera(const float delta) {
+	const sf::Event* zoomEvent = this->eventsManager->getEvent(sf::Event::MouseWheelMoved);
+	if (zoomEvent != nullptr) {
 
+		float change = this->zoomSpeed * delta * zoomEvent->mouseWheel.delta; //mousewheel.delta is -1 or 1 depending on scroll direction
+		if (this->currentZoom - change > this->zoomMinimum && this->currentZoom - change < this->zoomMaximum) { // But it's inverse of what I'd expect, so - to swap direction
+			this->currentZoom -= change;
+			const sf::Vector2i windowSize = WindowManager::Instance()->getWindowSize();
+			this->clientView->setSize(sf::Vector2f(windowSize.x * currentZoom, windowSize.y * currentZoom));
+		}
+	}
 }
 
 
@@ -193,3 +202,11 @@ sf::View& ViewManager::getEngineView() {
 bool ViewManager::isViewIdScrollable(const GlobalId id) {
 	return this->clientViewId == id;
 }
+
+
+void ViewManager::setZoomSettings(const float speed, const float minimum, const float maximum) {
+	this->zoomSpeed = speed;
+	this->zoomMinimum = minimum;
+	this->zoomMaximum = maximum;
+}
+

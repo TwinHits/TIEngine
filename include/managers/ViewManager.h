@@ -44,13 +44,15 @@ class ViewManager : public Singleton<ViewManager>, Manager {
 
 		bool isViewIdScrollable(const GlobalId);
 
+		void setZoomSettings(const float, const float, const float);
+
 		ViewManager() {};
 		~ViewManager() {};
 
 	private:
 		const sf::Vector2f calculateClientScroll(const sf::Vector2f, const float);
 		const sf::Vector2f calculateEngineScroll(const sf::Vector2f&, const float);
-		void zoom(const float);
+		void zoomCamera(const float);
 
 		EventsManager* eventsManager = EventsManager::Instance();
 		ConsoleManager* consoleManager = ConsoleManager::Instance();
@@ -71,6 +73,11 @@ class ViewManager : public Singleton<ViewManager>, Manager {
 		sf::FloatRect scrollDownZone;
 		sf::FloatRect scrollRightZone;
 		sf::FloatRect scrollBounds;
+
+		float currentZoom = 1.0f;
+		float zoomSpeed = 0.0f;
+		float zoomMinimum = 0.0f;
+		float zoomMaximum = 1.0f;
 
 		void operator=(const ViewManager&) {};
 		ViewManager(const ViewManager&);

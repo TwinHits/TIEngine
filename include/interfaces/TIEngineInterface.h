@@ -29,6 +29,8 @@ class TIEngineInterface {
 
         bool setLevel(const sol::table&);
 
+        bool setZoomSettings(const float, const float, const float);
+
         TIEntityInterface spawn(const sol::table&);
 
         bool hasEvent(std::string& event);
