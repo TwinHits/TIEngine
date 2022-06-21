@@ -26,20 +26,19 @@ namespace TIE {
 		ComponentSystem* getComponentSystemByComponentName(const std::string&);
 		const ComponentSystems::ComponentSystemPropertiesMap& getComponentSystemPropertiesMap();
 
-		void updateGameState();
+		void updateGameState(const float);
 		void render();
 
 		float getFPS();
 
 		void setTIEntitiesMarkedForRemove(bool);
 
-		SceneManager();
+		SceneManager() {};
 		~SceneManager() {};
 	private:
 		WindowManager* windowManager = WindowManager::Instance();
 		sf::RenderWindow& window = windowManager->getWindow();
 
-		sf::Clock& clock;
 		float calculateRollingAverageFPS(const float delta);
 		float fps = 0;
 

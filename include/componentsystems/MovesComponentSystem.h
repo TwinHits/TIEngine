@@ -46,10 +46,10 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, public Comp
 		static const inline std::string ROTATION = "moves.rotation";
 		static const inline std::string ROTATIONAL_SPEED = "moves.rotationalSpeed";
 		static const inline std::string ROTATIONAL_ACCELERATION = "moves.rotationalAcceleration";
-		static const inline std::string ROTATIONAL_DECELERATION = "moves.rotationalDeceleration";
 
 		static const inline std::string DESTINATION = "moves.destination";
 		static const inline std::string AT_DESTINATION = "moves.atDestination";
+		static const inline std::string TARGET_ROTATION = "moves.targetRotation";
 	private:
 		struct Components {
 			MovesComponent& movesComponent;
