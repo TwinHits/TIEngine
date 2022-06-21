@@ -32,8 +32,6 @@
 
 using namespace TIE;
 
-SceneManager::SceneManager() : clock(TimeManager::Instance()->addClock()) {}
-
 bool SceneManager::initialize() {
 	this->sceneGraphRoot = make_unique<SceneLayer>();
 	this->sceneGraphRoot->setLayer(SceneLayer::Layer::ROOT);
@@ -124,21 +122,19 @@ const ComponentSystems::ComponentSystemPropertiesMap& SceneManager::getComponent
 }
 
 
-void SceneManager::updateGameState() {
+void SceneManager::updateGameState(const float delta) {
+    for (ComponentSystem* componentSystem : this->componentSystems) {
+        componentSystem->update(delta);
+    }
+    this->updateEngineEntities(*(this->engineLayer), delta);
 
-	const float delta = this->clock.restart().asSeconds();
-	for (ComponentSystem* componentSystem : this->componentSystems) {
-		componentSystem->update(delta);
-	}
-	this->updateEngineEntities(*(this->engineLayer), delta);
+    if (this->tientitiesMarkedForRemove) {
+        this->removeTIEntities(*this->sceneGraphRoot);
+    }
 
-	if (this->tientitiesMarkedForRemove) {
-		this->removeTIEntities(*this->sceneGraphRoot);
-	}
-
-	//Update Camera and FPS
-	ViewManager::Instance()->updateCamera(delta);
-	this->fps = this->calculateRollingAverageFPS(delta);
+    //Update Camera and FPS
+    ViewManager::Instance()->updateCamera(delta);
+    this->fps = this->calculateRollingAverageFPS(delta);
 }
 
 
