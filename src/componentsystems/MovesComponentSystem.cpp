@@ -21,14 +21,16 @@ using namespace TIE;
 void MovesComponentSystem::update(const float delta) {
 	for (auto& c : components) {
 
-            this->accelerate(c.movesComponent, c.positionComponent, delta);
-            this->move(c.movesComponent, c.positionComponent, delta);
+		if (c.movesComponent.hasTargetPosition) {
+			this->accelerate(c.movesComponent, c.positionComponent, delta);
+			this->move(c.movesComponent, c.positionComponent, delta);
 
-            if (c.movesComponent.rotates) {
+			if (c.movesComponent.rotates) {
 				this->setTargetRotation(c.movesComponent, c.positionComponent);
-                this->accelerateRotation(c.movesComponent, c.positionComponent, delta);
-                this->rotate(c.movesComponent, c.positionComponent, delta);
-            }
+				this->accelerateRotation(c.movesComponent, c.positionComponent, delta);
+				this->rotate(c.movesComponent, c.positionComponent, delta);
+			}
+		}
 	}
 }
 
@@ -183,6 +185,7 @@ void MovesComponentSystem::setTargetPosition(TIEntity& tientity, const sf::Vecto
 		}
 
 		movesComponent->targetPosition = normalizedPosition;
+		movesComponent->hasTargetPosition = true;
 
 	}
 }
@@ -223,7 +226,11 @@ bool MovesComponentSystem::atTargetPosition(TIEntity& tientity) {
 
 
 bool MovesComponentSystem::atTargetPosition(MovesComponent& movesComponent, PositionComponent& positionComponent) {
-	return Math::areVectorsEqual(movesComponent.targetPosition, positionComponent.position);
+	bool result = Math::areVectorsEqual(movesComponent.targetPosition, positionComponent.position);
+	if (result) {
+		movesComponent.hasTargetPosition = false;
+	}
+	return result;
 }
 
 
