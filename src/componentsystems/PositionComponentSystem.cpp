@@ -28,7 +28,13 @@ bool PositionComponentSystem::setComponentProperty(const std::string& key, bool 
 }
 
 
-bool PositionComponentSystem::setComponentProperty(const std::string& key, float value, TIEntity& tientity)  {
+bool PositionComponentSystem::setComponentProperty(const std::string& key, float value, TIEntity& tientity) {
+    PositionComponent* component = tientity.getComponent<PositionComponent>();
+    if (component != nullptr) {
+        if (key == PositionComponentSystem::ROTATION) {
+            component->rotation = value;
+        }
+    }
     return false;
 }
 
@@ -50,9 +56,11 @@ sol::object PositionComponentSystem::getComponentProperty(const std::string& key
         if (key == PositionComponentSystem::ROTATION) {
             return ScriptManager::Instance()->getObjectFromValue(positionComponent->rotation);
         } else if (key == PositionComponentSystem::POSITION_POSITION) {
-            return ScriptManager::Instance()->getObjectFromValue<sf::Vector2f>(positionComponent->worldPosition);
+            return ScriptManager::Instance()->getObjectFromValue<sf::Vector2f>(positionComponent->position);
         } else if (key == PositionComponentSystem::WORLD_POSITION) {
             return ScriptManager::Instance()->getObjectFromValue<sf::Vector2f>(positionComponent->worldPosition);
+        } else if (key == PositionComponentSystem::WORLD_ROTATION) {
+            return ScriptManager::Instance()->getObjectFromValue(positionComponent->worldRotation);
         }
     }
     return ScriptManager::Instance()->getObjectFromValue(nullptr);
@@ -66,6 +74,7 @@ ComponentSystems::ComponentSystemPropertiesMap& PositionComponentSystem::populat
     ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::ROTATES, map);
     ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::POSITION_POSITION, map);
     ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::WORLD_POSITION, map);
+    ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::WORLD_ROTATION, map);
     return map;
 }
 
