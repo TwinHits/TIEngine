@@ -66,19 +66,26 @@ const sf::Font& AssetsManager::getFont(const std::string& name) {
 
 
 bool AssetsManager::loadTexturesFromPath(const std::string& folder) {
+	return this->loadTexturesFromPath(boost::filesystem::path(folder));
+}
+
+
+bool AssetsManager::loadTexturesFromPath(const boost::filesystem::path& path) {
 	try {
-		boost::filesystem::path path = boost::filesystem::path(folder);
 		if (boost::filesystem::exists(path) && boost::filesystem::is_directory(path)) {
-			this->texturesPathCache.insert(path);
-			for (boost::filesystem::directory_entry& i : boost::filesystem::directory_iterator(path)) {
-				sf::Texture t;
-				if (t.loadFromFile(i.path().string())) {
-					t.setSmooth(true);
-					GlobalId id = HashManager::Instance()->getHash(i.path().filename().string());
-					this->textures[id] = t;
-					LogManager::Instance()->info("Loading texture '" + i.path().string() + ". Id: " + std::to_string(id));
+			for (boost::filesystem::directory_entry& file : boost::filesystem::directory_iterator(path)) {
+				if (!boost::filesystem::is_directory(file)) {
+					sf::Texture texture;
+					if (texture.loadFromFile(file.path().string())) {
+						GlobalId id = HashManager::Instance()->getHash(file.path().filename().string());
+						this->textures[id] = texture;
+						texture.setSmooth(true);
+						LogManager::Instance()->info("Loading texture '" + file.path().string() + ". Id: " + std::to_string(id));
+					} else {
+						LogManager::Instance()->error("SFML Texture load error: Cannot load " + file.path().string());
+					}
 				} else {
-					LogManager::Instance()->error("SFML Texture load error: Cannot load " + i.path().string());
+					this->loadTexturesFromPath(file.path());
 				}
 			}
 			return true;
@@ -98,18 +105,25 @@ bool AssetsManager::loadTexturesFromPath(const std::string& folder) {
 
 
 bool AssetsManager::loadAudioFromPath(const std::string& folder) {
+	return this->loadAudioFromPath(boost::filesystem::path(folder));
+}
+
+
+bool AssetsManager::loadAudioFromPath(const boost::filesystem::path& path) {
 	try {
-		boost::filesystem::path path = boost::filesystem::path(folder);
 		if (boost::filesystem::exists(path) && boost::filesystem::is_directory(path)) {
-			this->audioPathCache.insert(path);
-			for (boost::filesystem::directory_entry& i : boost::filesystem::directory_iterator(path)) {
-				sf::SoundBuffer s;
-				if (s.loadFromFile(i.path().string())) {
-					GlobalId id = HashManager::Instance()->getHash(i.path().filename().string());
-					this->audio[id] = s;
-					LogManager::Instance()->info("Loaded audio '" + i.path().string() + "'. Id: " + std::to_string(id));
+			for (boost::filesystem::directory_entry& file : boost::filesystem::directory_iterator(path)) {
+				if (!boost::filesystem::is_directory(file)) {
+					sf::SoundBuffer soundBuffer;
+                    if (soundBuffer.loadFromFile(file.path().string())) {
+                        GlobalId id = HashManager::Instance()->getHash(file.path().filename().string());
+                        this->audio[id] = soundBuffer;
+                        LogManager::Instance()->info("Loaded audio '" + file.path().string() + "'. Id: " + std::to_string(id));
+                    } else {
+                        LogManager::Instance()->error("SFML audio load error: Cannot load " + file.path().string());
+					}
 				} else {
-					LogManager::Instance()->error("SFML audio load error: Cannot load " + i.path().string());
+					this->loadAudioFromPath(file.path());
 				}
 			}
 			return true;
@@ -129,19 +143,26 @@ bool AssetsManager::loadAudioFromPath(const std::string& folder) {
 
 
 bool AssetsManager::loadFontsFromPath(const std::string& folder) {
+	return this->loadFontsFromPath(boost::filesystem::path(folder));
+}
+
+
+bool AssetsManager::loadFontsFromPath(const boost::filesystem::path& path) {
 	try {
-		boost::filesystem::path path = boost::filesystem::path(folder);
 		if (boost::filesystem::exists(path) && boost::filesystem::is_directory(path)) {
-			this->fontsPathCache.insert(path);
-			for (boost::filesystem::directory_entry& i : boost::filesystem::directory_iterator(path)) {
-				sf::Font f;
-				if (f.loadFromFile(i.path().string())) {
-					GlobalId id = HashManager::Instance()->getHash(i.path().filename().string());
-					this->fonts[id] = f;
-					LogManager::Instance()->info("Loaded font '" + i.path().string() + "'. Id: " + std::to_string(id));
-				}
-				else {
-					LogManager::Instance()->error("SFML Font load error: Cannot load " + i.path().string());
+			for (boost::filesystem::directory_entry& file : boost::filesystem::directory_iterator(path)) {
+				if (!boost::filesystem::is_directory(file)) {
+                    sf::Font font;
+                    if (font.loadFromFile(file.path().string())) {
+                        GlobalId id = HashManager::Instance()->getHash(file.path().filename().string());
+                        this->fonts[id] = font;
+                        LogManager::Instance()->info("Loaded font '" + file.path().string() + "'. Id: " + std::to_string(id));
+                    }
+                    else {
+						LogManager::Instance()->error("SFML Font load error: Cannot load " + file.path().string());
+					}
+				} else {
+					this->loadAudioFromPath(file.path());
 				}
 			}
 			return true;

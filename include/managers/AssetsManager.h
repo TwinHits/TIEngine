@@ -34,13 +34,13 @@ class AssetsManager: public Singleton<AssetsManager>, Manager {
 		~AssetsManager() {};
 
 	private:
+		bool loadTexturesFromPath(const boost::filesystem::path&);
+		bool loadFontsFromPath(const boost::filesystem::path&);
+		bool loadAudioFromPath(const boost::filesystem::path&);
+
 		std::map<GlobalId, sf::Texture> textures;
 		std::map<GlobalId, sf::SoundBuffer> audio; 
 		std::map<GlobalId, sf::Font> fonts;
-
-		std::set<boost::filesystem::path> texturesPathCache;
-		std::set<boost::filesystem::path> audioPathCache;
-		std::set<boost::filesystem::path> fontsPathCache;
 
 		AssetsManager(const AssetsManager&);
 		void operator=(const AssetsManager&) {};
