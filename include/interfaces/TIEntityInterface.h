@@ -22,6 +22,7 @@ class TIEntityInterface {
         //Management
         GlobalId getId();
         std::string getName();
+        void setName(const std::string&);
         sol::table& getChildren();
         TIEntityInterface getParent();
         TIEntityInterface spawn(const sol::table&);

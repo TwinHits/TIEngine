@@ -29,6 +29,7 @@ void TIEntityInterface::registerUserType(sol::state& luaState) {
     //Management
     interfaceUserType["getId"] = &TIEntityInterface::getId;
     interfaceUserType["getName"] = &TIEntityInterface::getName;
+    interfaceUserType["setName"] = &TIEntityInterface::setName;
     interfaceUserType["getParent"] = &TIEntityInterface::getParent;
     interfaceUserType["getChildren"] = &TIEntityInterface::getChildren;
     interfaceUserType["spawn"] = &TIEntityInterface::spawn;
@@ -61,6 +62,10 @@ GlobalId TIEntityInterface::getId() {
 
 std::string TIEntityInterface::getName() {
     return this->tientity->getName();
+}
+
+void TIEntityInterface::setName(const std::string& name) {
+    return this->tientity->setName(name);
 }
 
 

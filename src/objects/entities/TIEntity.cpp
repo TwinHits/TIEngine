@@ -44,7 +44,7 @@ bool TIEntity::getRemove() const {
 }
 
 
-void TIEntity::setName(std::string name) {
+void TIEntity::setName(const std::string& name) {
 	this->name = name;
 }
 
