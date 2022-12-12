@@ -34,6 +34,7 @@ class TextComponentSystem : public Singleton<TextComponentSystem>, public Compon
 		static const inline std::string STRING = "text.string";
 		static const inline std::string OFFSET_X = "text.offset.x";
 		static const inline std::string OFFSET_Y = "text.offset.y";
+		static const inline std::string SIZE = "text.size";
 
 	private:		
 		struct Components {

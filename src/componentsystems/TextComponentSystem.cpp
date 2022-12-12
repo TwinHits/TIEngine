@@ -29,9 +29,11 @@ void TextComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity&
 
 	std::string text = ComponentSystems::getFactoryValue<std::string>(factory, TextComponentSystem::STRING, textComponent.getText().getString(), tientity);
 	bool drawn = ComponentSystems::getFactoryValue<bool>(factory, TextComponentSystem::DRAWN, textComponent.isDrawn(), tientity);
+	float size = ComponentSystems::getFactoryValue<float>(factory, TextComponentSystem::SIZE, textComponent.getCharacterSize(), tientity);
 
     textComponent.setString(text);
     textComponent.setDrawn(drawn);
+    textComponent.setCharacterSize(size);
 
 	textComponent.setOrigin(textComponent.getLocalBounds().width / 2, textComponent.getLocalBounds().height / 2);
 }
@@ -74,6 +76,8 @@ bool TextComponentSystem::setComponentProperty(const std::string& key, float val
 	if (component != nullptr) {
 		if (key == TextComponentSystem::STRING) {
 			component->setString(std::to_string(value));
+		} else if (key == TextComponentSystem::SIZE) {
+			component->setCharacterSize(value);
 		}
 	}
 	return false;
@@ -96,6 +100,8 @@ sol::object TextComponentSystem::getComponentProperty(const std::string& key, TI
 	if (component != nullptr) {
 		if (key == TextComponentSystem::STRING) {
 			return ScriptManager::Instance()->getObjectFromValue(std::string(component->getString()));
+		} else if (key == TextComponentSystem::SIZE) {
+			return ScriptManager::Instance()->getObjectFromValue(component->getCharacterSize());
 		}
 	}
 	return ScriptManager::Instance()->getObjectFromValue(nullptr);
@@ -107,5 +113,6 @@ ComponentSystems::ComponentSystemPropertiesMap& TextComponentSystem::populateCom
 	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::STRING, map);
 	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::OFFSET_X, map);
 	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::OFFSET_Y, map);
+	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::SIZE, map);
 	return map;
 }
