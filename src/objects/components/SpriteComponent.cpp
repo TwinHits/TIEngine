@@ -6,7 +6,6 @@ using namespace TIE;
 
 SpriteComponent::SpriteComponent() {
 	sf::Texture& texture = AssetsManager::Instance()->getTexture("missing_texture.png");
-	sf::Vector2u size = texture.getSize();
 	bool rotates = true;
 	this->setTexture(texture);
 }
@@ -34,4 +33,9 @@ bool SpriteComponent::isRotates() const {
 
 const sf::Sprite& SpriteComponent::getSprite() {
 	return *dynamic_cast<sf::Sprite*>(this);
+}
+
+
+const sf::Vector2f SpriteComponent::getScaledSize() {
+	return sf::Vector2f(this->getTexture()->getSize().x * this->getScale().x, this->getTexture()->getSize().y * this->getScale().y);
 }

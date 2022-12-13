@@ -18,6 +18,8 @@ namespace TIE {
 			bool isRotates() const;
 
 			const sf::Sprite& getSprite();
+
+			const sf::Vector2f getScaledSize();
 		private: 
 			bool drawn = true;
 			bool rotates = true;

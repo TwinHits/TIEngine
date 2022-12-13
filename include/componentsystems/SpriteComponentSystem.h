@@ -46,6 +46,8 @@ class SpriteComponentSystem : public Singleton<SpriteComponentSystem>, public Co
 			PositionComponent& positionComponent;
 		};
 		std::list<Components> components;
+
+        void calcluateTextureFields(SpriteComponent&, float, float);
 };
 
 }

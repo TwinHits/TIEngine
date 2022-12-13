@@ -14,6 +14,7 @@
 #include "managers/AssetsManager.h"
 #include "utils/ComponentSystems.h"
 #include "utils/StringHelpers.h"
+#include "utils/TIEMath.h"
 
 using namespace TIE;
 
@@ -36,28 +37,13 @@ void SpriteComponentSystem::addComponent(const TIEntityFactory& factory, TIEntit
 	std::string& textureName = ComponentSystems::getFactoryValue<std::string>(factory, SpriteComponentSystem::TEXTURE, SpriteComponentSystem::MISSING_TEXTURE_NAME, tientity);
     sf::Texture& texture = AssetsManager::Instance()->getTexture(textureName);
     spriteComponent.setTexture(texture, true);
+
+	bool repeated = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::REPEATED, texture.isRepeated(), tientity);
+    texture.setRepeated(repeated);
 	
 	float width = ComponentSystems::getFactoryValue<float>(factory, SpriteComponentSystem::WIDTH, texture.getSize().x, tientity);
 	float height = ComponentSystems::getFactoryValue<float>(factory, SpriteComponentSystem::HEIGHT, texture.getSize().y, tientity);
-	if (width != texture.getSize().x && height == texture.getSize().y) {
-		height = texture.getSize().y * (width / texture.getSize().x);
-	}
-	if (height != texture.getSize().y && width == texture.getSize().x) {
-		width = texture.getSize().x * (height / texture.getSize().y);
-	}
-
-	bool repeated = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::REPEATED, texture.isRepeated(), tientity);
-	if (repeated) {
-		texture.setRepeated(repeated);
-		spriteComponent.setTextureRect(sf::IntRect(0, 0, width, height));
-	} else {
-		// Only scale texture to the provided size if the texture is not repeated
-		float xScale = width / texture.getSize().x;
-		float yScale = height / texture.getSize().y;
-		spriteComponent.scale(sf::Vector2f(xScale, yScale));
-	}
-
-	spriteComponent.setOrigin(spriteComponent.getLocalBounds().width / 2, spriteComponent.getLocalBounds().height / 2);
+	this->calcluateTextureFields(spriteComponent, width, height);
 
 	bool drawn = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::DRAWN, spriteComponent.isDrawn(), tientity);
     spriteComponent.setDrawn(drawn);
@@ -99,18 +85,34 @@ bool SpriteComponentSystem::setComponentProperty(const std::string& key, bool va
 
 
 bool SpriteComponentSystem::setComponentProperty(const std::string& key, float value, TIEntity& tientity)  {
-    return false;
+	SpriteComponent* component = tientity.getComponent<SpriteComponent>();
+	if (component != nullptr) {
+		if (key == SpriteComponentSystem::WIDTH) {
+			this->calcluateTextureFields(*component, value, component->getScaledSize().y);
+		} else if (key == SpriteComponentSystem::HEIGHT) {
+			this->calcluateTextureFields(*component, component->getScaledSize().x, value);
+		}
+	}
+	return false;
 }
 
 
 bool SpriteComponentSystem::setComponentProperty(const std::string& key, const std::string& value, TIEntity& tientity)  {
-    return false;
+	SpriteComponent* component = tientity.getComponent<SpriteComponent>();
+	if (component != nullptr) {
+		if (key == SpriteComponentSystem::TEXTURE) {
+			sf::Texture& texture = AssetsManager::Instance()->getTexture(value);
+			component->setTexture(texture, true);
+		}
+	}
+	return false;
 }
 
 
 sol::object SpriteComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
 	return ScriptManager::Instance()->getObjectFromValue(nullptr);
 }
+
 
 ComponentSystems::ComponentSystemPropertiesMap& SpriteComponentSystem::populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap& map) {
 	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::DRAWN, map);
@@ -123,4 +125,33 @@ ComponentSystems::ComponentSystemPropertiesMap& SpriteComponentSystem::populateC
 	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::ROTATES, map);
 	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::SHOW_WIREFRAME, map);
 	return map;
+}
+
+
+void SpriteComponentSystem::calcluateTextureFields(SpriteComponent& spriteComponent, float width, float height) {
+
+	const sf::Texture* texture = spriteComponent.getTexture();
+	if (texture != nullptr) {
+		const sf::Vector2f& scaledSize = spriteComponent.getScaledSize();
+
+		if (!Math::areFloatsEqual(width, scaledSize.x) && Math::areFloatsEqual(height, scaledSize.y)) {
+			height = scaledSize.y * (width / scaledSize.x);
+		}
+
+		if (!Math::areFloatsEqual(height, scaledSize.y) && Math::areFloatsEqual(width, scaledSize.x)) {
+			width = scaledSize.x * (height / scaledSize.y);
+		}
+
+		if (texture->isRepeated()) {
+			spriteComponent.setTextureRect(sf::IntRect(0, 0, width, height));
+		} else {
+			// Only scale texture to the provided size if the texture is not repeated
+			float xScale = width / scaledSize.x;
+			float yScale = height / scaledSize.y;
+			spriteComponent.scale(sf::Vector2f(xScale, yScale));
+		}
+
+		spriteComponent.setOrigin(spriteComponent.getLocalBounds().width / 2, spriteComponent.getLocalBounds().height / 2);
+	}
+
 }
