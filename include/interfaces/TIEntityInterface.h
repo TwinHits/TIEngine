@@ -24,6 +24,7 @@ class TIEntityInterface {
         std::string getName();
         void setName(const std::string&);
         sol::table& getChildren();
+        TIEntityInterface getChild(const std::string&);
         TIEntityInterface getParent();
         TIEntityInterface spawn(const sol::table&);
         void despawn();

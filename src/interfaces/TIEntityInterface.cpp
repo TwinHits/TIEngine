@@ -32,6 +32,7 @@ void TIEntityInterface::registerUserType(sol::state& luaState) {
     interfaceUserType["setName"] = &TIEntityInterface::setName;
     interfaceUserType["getParent"] = &TIEntityInterface::getParent;
     interfaceUserType["getChildren"] = &TIEntityInterface::getChildren;
+    interfaceUserType["getChild"] = &TIEntityInterface::getChild;
     interfaceUserType["spawn"] = &TIEntityInterface::spawn;
     interfaceUserType["despawn"] = &TIEntityInterface::despawn;
 
@@ -75,6 +76,16 @@ sol::table& TIEntityInterface::getChildren() {
         this->children.add<TIEntityInterface>(TIEntityInterface(*child));
     }
     return children;
+}
+
+
+TIEntityInterface TIEntityInterface::getChild(const std::string& name) {
+    for (auto& child : this->tientity->getChildren()) {
+        if (child->getName() == name) {
+            return TIEntityInterface(*child);
+        }
+    }
+    return nullptr;
 }
 
 
