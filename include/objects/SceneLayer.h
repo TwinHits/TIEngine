@@ -22,6 +22,8 @@ class SceneLayer : public TIEntity {
 
 		void setViewId(GlobalId);
 		GlobalId getViewId();
+
+		virtual bool isSceneLayer();
 		
 	private:
 		Layer layer = Layer::ROOT;

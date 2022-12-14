@@ -67,6 +67,8 @@ class TIEntity {
 		TIEntity& attachChild(std::unique_ptr<TIEntity>);
 		TIEntity& attachChild();
 
+		virtual bool isSceneLayer();
+
 		bool operator==(const TIEntity&) const;
 		bool operator!=(const TIEntity&) const;
 	private:

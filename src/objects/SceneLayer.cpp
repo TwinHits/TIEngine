@@ -22,3 +22,7 @@ void SceneLayer::setViewId(GlobalId id) {
 GlobalId SceneLayer::getViewId() {
 	return this->viewId;
 }
+
+bool SceneLayer::isSceneLayer() {
+	return true;
+}
