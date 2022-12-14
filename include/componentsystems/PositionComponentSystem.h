@@ -45,6 +45,8 @@ class PositionComponentSystem : public Singleton<PositionComponentSystem>, publi
 		static const inline std::string WORLD_ROTATION = "position.worldRotation";
 		static const inline std::string ROTATES = "position.rotates";
 		static const inline std::string POSITION_POSITION = "position.position";
+		static const inline std::string POSITION_X = "position.x";
+		static const inline std::string POSITION_Y = "position.y";
 		static const inline std::string WORLD_POSITION = "position.worldPosition";
 
     private:

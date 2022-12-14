@@ -33,6 +33,10 @@ bool PositionComponentSystem::setComponentProperty(const std::string& key, float
     if (component != nullptr) {
         if (key == PositionComponentSystem::ROTATION) {
             component->rotation = value;
+        } else if (key == PositionComponentSystem::POSITION_X) {
+            component->position.x = value;
+        } else if (key == PositionComponentSystem::POSITION_Y) {
+            component->position.y = value;
         }
     }
     return false;
@@ -73,6 +77,8 @@ ComponentSystems::ComponentSystemPropertiesMap& PositionComponentSystem::populat
     ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::ROTATION, map);
     ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::ROTATES, map);
     ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::POSITION_POSITION, map);
+    ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::POSITION_X, map);
+    ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::POSITION_Y, map);
     ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::WORLD_POSITION, map);
     ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::WORLD_ROTATION, map);
     return map;

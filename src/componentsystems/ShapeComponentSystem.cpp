@@ -88,14 +88,25 @@ ComponentSystems::ComponentSystemPropertiesMap& ShapeComponentSystem::populateCo
 }
 
 
-void ShapeComponentSystem::addWireframe(TIEntity& tientity) {
+void ShapeComponentSystem::addWireframe(TIEntity& tientity, SpriteComponent& component) {
+	sf::FloatRect spriteBounds = component.getGlobalBounds();
+	this->createWireframe(tientity, spriteBounds);
+}
+
+
+void ShapeComponentSystem::addWireframe(TIEntity& tientity, TextComponent& component) {
+	sf::FloatRect spriteBounds = component.getGlobalBounds();
+	this->createWireframe(tientity, spriteBounds);
+}
+
+ShapeComponent& ShapeComponentSystem::createWireframe(TIEntity& tientity, sf::FloatRect& bounds) {
 	ShapeComponent& shapeComponent = this->addComponent(tientity);
-	SpriteComponent& spriteComponent = *tientity.getComponent<SpriteComponent>();
 	sf::RectangleShape& rectangleShape = shapeComponent.addRectangleShape();
-	sf::FloatRect spriteBounds = spriteComponent.getGlobalBounds();
-	rectangleShape.setSize(sf::Vector2f(spriteBounds.width, spriteBounds.height));
-	rectangleShape.setOrigin(spriteBounds.width / 2, spriteBounds.height / 2);
+	rectangleShape.setSize(sf::Vector2f(bounds.width, bounds.height));
+	rectangleShape.setOrigin(bounds.width / 2, bounds.height / 2);
 	rectangleShape.setFillColor(sf::Color::Transparent);
 	rectangleShape.setOutlineColor(sf::Color::Yellow);
 	rectangleShape.setOutlineThickness(2);
+	rectangleShape.setPosition(sf::Vector2f(0, 0));
+	return shapeComponent;
 }

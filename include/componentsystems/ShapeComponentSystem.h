@@ -6,6 +6,8 @@
 
 #include "objects/components/PositionComponent.h"
 #include "objects/components/ShapeComponent.h"
+#include "objects/components/SpriteComponent.h"
+#include "objects/components/TextComponent.h"
 #include "objects/factories/TIEntityFactory.h"
 #include "objects/entities/TIEntity.h"
 
@@ -26,7 +28,8 @@ class ShapeComponentSystem : public Singleton<ShapeComponentSystem>, public Comp
 		sol::object getComponentProperty(const std::string&, TIEntity&);
 		ComponentSystems::ComponentSystemPropertiesMap& populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap&);
 
-		void addWireframe(TIEntity&);
+		void addWireframe(TIEntity&, SpriteComponent&);
+		void addWireframe(TIEntity&, TextComponent&);
 
 		static const inline std::string SHAPE = "shape";
 
@@ -37,6 +40,8 @@ class ShapeComponentSystem : public Singleton<ShapeComponentSystem>, public Comp
 			TIEntity& tientity;
 		};
 		std::list<Components> components;
+
+		ShapeComponent& createWireframe(TIEntity&, sf::FloatRect&);
 };
 
 }

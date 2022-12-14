@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "componentsystems/PositionComponentSystem.h"
+#include "componentsystems/ShapeComponentSystem.h"
 #include "objects/components/TextComponent.h"
 #include "objects/components/PositionComponent.h"
 #include "objects/entities/TIEntity.h"
@@ -29,13 +30,18 @@ void TextComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity&
 
 	std::string text = ComponentSystems::getFactoryValue<std::string>(factory, TextComponentSystem::STRING, textComponent.getText().getString(), tientity);
 	bool drawn = ComponentSystems::getFactoryValue<bool>(factory, TextComponentSystem::DRAWN, textComponent.isDrawn(), tientity);
-	float size = ComponentSystems::getFactoryValue<float>(factory, TextComponentSystem::SIZE, textComponent.getCharacterSize(), tientity);
+	float characterSize = ComponentSystems::getFactoryValue<float>(factory, TextComponentSystem::CHARACTER_SIZE, textComponent.getCharacterSize(), tientity);
 
     textComponent.setString(text);
     textComponent.setDrawn(drawn);
-    textComponent.setCharacterSize(size);
+    textComponent.setCharacterSize(characterSize);
 
 	textComponent.setOrigin(textComponent.getLocalBounds().width / 2, textComponent.getLocalBounds().height / 2);
+
+	bool showWireframe = ComponentSystems::getFactoryValue<bool>(factory, TextComponentSystem::SHOW_WIREFRAME, TextComponentSystem::SHOW_WIREFRAME_DEFAULT, tientity);
+	if (showWireframe) {
+		ShapeComponentSystem::Instance()->addWireframe(tientity, textComponent);
+	}
 }
 
 
@@ -76,7 +82,7 @@ bool TextComponentSystem::setComponentProperty(const std::string& key, float val
 	if (component != nullptr) {
 		if (key == TextComponentSystem::STRING) {
 			component->setString(std::to_string(value));
-		} else if (key == TextComponentSystem::SIZE) {
+		} else if (key == TextComponentSystem::CHARACTER_SIZE) {
 			component->setCharacterSize(value);
 		}
 	}
@@ -100,7 +106,7 @@ sol::object TextComponentSystem::getComponentProperty(const std::string& key, TI
 	if (component != nullptr) {
 		if (key == TextComponentSystem::STRING) {
 			return ScriptManager::Instance()->getObjectFromValue(std::string(component->getString()));
-		} else if (key == TextComponentSystem::SIZE) {
+		} else if (key == TextComponentSystem::CHARACTER_SIZE) {
 			return ScriptManager::Instance()->getObjectFromValue(component->getCharacterSize());
 		}
 	}
@@ -113,6 +119,6 @@ ComponentSystems::ComponentSystemPropertiesMap& TextComponentSystem::populateCom
 	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::STRING, map);
 	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::OFFSET_X, map);
 	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::OFFSET_Y, map);
-	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::SIZE, map);
+	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::CHARACTER_SIZE, map);
 	return map;
 }

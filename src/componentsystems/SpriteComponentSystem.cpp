@@ -53,7 +53,7 @@ void SpriteComponentSystem::addComponent(const TIEntityFactory& factory, TIEntit
 
 	bool showWireframe = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::SHOW_WIREFRAME, SpriteComponentSystem::SHOW_WIREFRAME_DEFAULT, tientity);
 	if (showWireframe) {
-		ShapeComponentSystem::Instance()->addWireframe(tientity);
+		ShapeComponentSystem::Instance()->addWireframe(tientity, spriteComponent);
 	}
 }
 

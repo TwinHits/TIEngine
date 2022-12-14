@@ -34,8 +34,10 @@ class TextComponentSystem : public Singleton<TextComponentSystem>, public Compon
 		static const inline std::string STRING = "text.string";
 		static const inline std::string OFFSET_X = "text.offset.x";
 		static const inline std::string OFFSET_Y = "text.offset.y";
-		static const inline std::string SIZE = "text.size";
+		static const inline std::string CHARACTER_SIZE = "text.characterSize";
+		static const inline std::string SHOW_WIREFRAME = "text.showWireframe";
 
+		static const inline bool SHOW_WIREFRAME_DEFAULT = false;
 	private:		
 		struct Components {
 			TextComponent& textComponent;
