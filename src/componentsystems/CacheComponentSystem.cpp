@@ -73,8 +73,9 @@ void CacheComponentSystem::updateCache(TIEntity& tientity, sol::table& cache) {
     CacheComponent* cacheComponent = tientity.getComponent<CacheComponent>();
     if (cacheComponent != nullptr) {
         cacheComponent->setCache(cache);
+    } else {
+        this->addComponent(tientity).setCache(cache);
     }
-
 }
 
 
@@ -83,6 +84,6 @@ sol::table& CacheComponentSystem::getCache(TIEntity& tientity) {
     if (cacheComponent != nullptr) {
         return cacheComponent->getCache();
     } else {
+        return this->addComponent(tientity).getCache();
     }
-    return this->addComponent(tientity).getCache();
 }
