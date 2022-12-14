@@ -5,6 +5,7 @@
 #include "objects/entities/TIEntity.h"
 #include "objects/components/CacheComponent.h"
 #include "managers/ScriptManager.h"
+#include "utils/StringHelpers.h"
 
 using namespace TIE;
 
@@ -13,7 +14,8 @@ void CacheComponentSystem::update(const float delta) {
 
 
 void CacheComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
-    this->addComponent(tientity);
+    CacheComponent& cacheComponent = this->addComponent(tientity);
+    cacheComponent.setCache(factory.tableValues.at("cache"));
 }
 
 

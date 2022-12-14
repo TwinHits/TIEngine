@@ -9,6 +9,7 @@ namespace TIE {
 
 class CacheComponent : public Component {
     public:
+        void setCache(const sol::table&);
         void setCache(sol::table&);
         sol::table& getCache();
 

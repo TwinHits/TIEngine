@@ -29,6 +29,7 @@ class TIEntityFactory {
 		std::map<std::string, float> floatValues;
 		std::map<std::string, std::string> stringValues;
 		std::map<std::string, GlobalId> functionValues;
+		std::map<std::string, sol::table> tableValues;
 
 		TIEntity& build();
 

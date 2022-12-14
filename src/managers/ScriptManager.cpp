@@ -6,6 +6,7 @@
 #include <sol/sol.hpp>
 #define SOL_ALL_SAFETIES_ON 1
 
+#include "componentsystems/CacheComponentSystem.h"
 #include "interfaces/EventStateInterface.h"
 #include "interfaces/TIEngineInterface.h"
 #include "interfaces/TIEntityInterface.h"
@@ -29,6 +30,7 @@ bool ScriptManager::initialize() {
 		sol::lib::math,
 		sol::lib::os,
         sol::lib::package,
+		sol::lib::string,
 		sol::lib::table
 	);
 
@@ -150,24 +152,28 @@ TIEntityFactory& ScriptManager::loadTIEntityDefinition(TIEntityFactory& factory,
 // Store those types in the revelant TIEfactory map for use by any given component
 // Call recursively if it finds another table
 void ScriptManager::readComponentValues(TIEntityFactory& factory, const std::string& componentName, const sol::table& component) {
-	for (auto& pair : component) {
-		const std::string& key = componentName + "." + pair.first.as<std::string>();
-		const sol::object& value = pair.second;
-		if (value.valid()) {
-			if (value.is<bool>()) {
-				factory.boolValues.insert({ key, value.as<bool>() });
-			} else if (value.is<float>()) {
-				factory.floatValues.insert({ key, value.as<float>() });
-			} else if (value.is<std::string>()) {
-				factory.stringValues.insert({ key, value.as<std::string>() });
-			} else if (value.is<sol::function>()) {
-				GlobalId functionId = HashManager::Instance()->getNewGlobalId();
-				factory.functionValues.insert({key, functionId });
-				this->functions.insert({ functionId, value.as<sol::function>() });
-			} else if (value.is<sol::table>()) {
-				this->readComponentValues(factory, key, value);
-			} else {
-				LogManager::Instance()->error("Error casting value from script: " + key + ".");
+	if (componentName == CacheComponentSystem::CACHE) {
+		factory.tableValues.insert({ componentName, component });
+	} else {
+		for (auto& pair : component) {
+			const std::string& key = componentName + "." + pair.first.as<std::string>();
+			const sol::object& value = pair.second;
+			if (value.valid()) {
+				if (value.is<bool>()) {
+					factory.boolValues.insert({ key, value.as<bool>() });
+				} else if (value.is<float>()) {
+					factory.floatValues.insert({ key, value.as<float>() });
+				} else if (value.is<std::string>()) {
+					factory.stringValues.insert({ key, value.as<std::string>() });
+				} else if (value.is<sol::function>()) {
+					GlobalId functionId = HashManager::Instance()->getNewGlobalId();
+					factory.functionValues.insert({ key, functionId });
+					this->functions.insert({ functionId, value.as<sol::function>() });
+				} else if (value.is<sol::table>()) {
+					this->readComponentValues(factory, key, value);
+				} else {
+					LogManager::Instance()->error("Error casting value from script: " + key + ".");
+				}
 			}
 		}
 	}
