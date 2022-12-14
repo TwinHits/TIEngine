@@ -5,6 +5,7 @@
 #include "templates/Singleton.h"
 
 #include <string>
+#include <vector>
 
 #include <SFML/Graphics.hpp>
 
@@ -33,6 +34,10 @@ class PositionComponentSystem : public Singleton<PositionComponentSystem>, publi
 		float getWorldRotation(TIEntity&);
 		sf::Transform getWorldTransform(TIEntity&);
 
+		static bool arePositionsInRange(PositionComponent&, PositionComponent&, const float);
+
+		static std::vector<TIEntity*> findTIEntitiesWithinRange(TIEntity&, const float, TIEntity&);
+
 		static const inline std::string POSITION = "position";
 		static const inline std::string X = "position.x";
 		static const inline std::string Y = "position.y";
@@ -49,6 +54,7 @@ class PositionComponentSystem : public Singleton<PositionComponentSystem>, publi
 		};
 		std::list<Components> components;
 
+		static std::vector<TIEntity*> findTIEntitiesWithinRange(TIEntity&, const float, TIEntity&, std::vector<TIEntity*>&);
 };
 }
 

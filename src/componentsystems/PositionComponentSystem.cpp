@@ -1,7 +1,7 @@
 #include "componentsystems/PositionComponentSystem.h"
 
 #include <string>
-#include <math.h>
+#include <vector>
 
 #include "objects/components/PositionComponent.h"
 #include "objects/components/SpriteComponent.h"
@@ -159,6 +159,7 @@ float PositionComponentSystem::getWorldRotation(TIEntity& tientity) {
     return rotation;
 }
 
+
 sf::Transform PositionComponentSystem::getWorldTransform(TIEntity& tientity) {
         sf::Transform transform = sf::Transform::Identity;
 
@@ -171,3 +172,35 @@ sf::Transform PositionComponentSystem::getWorldTransform(TIEntity& tientity) {
 
         return transform;
 }
+
+
+bool PositionComponentSystem::arePositionsInRange(PositionComponent& position1, PositionComponent& position2, const float range) {
+    return Math::distanceBetweenTwoPoints(position1.position, position2.position) <= range;
+}
+
+
+std::vector<TIEntity*> PositionComponentSystem::findTIEntitiesWithinRange(TIEntity& source, const float distance, TIEntity& searchRoot) {
+    std::vector<TIEntity*> tientitiesWithinDistance;
+    return PositionComponentSystem::findTIEntitiesWithinRange(source, distance, searchRoot, tientitiesWithinDistance);
+}
+
+
+std::vector<TIEntity*> PositionComponentSystem::findTIEntitiesWithinRange(TIEntity& source, const float distance, TIEntity& searchRoot, std::vector<TIEntity*>& tientitiesWithinDistance) {
+    PositionComponent* sourceComponent = source.getComponent<PositionComponent>();
+    if (sourceComponent != nullptr) {
+        for (auto& child : searchRoot.getChildren()) {
+            if (child->isSceneLayer()) {
+                PositionComponentSystem::findTIEntitiesWithinRange(source, distance, *child.get(), tientitiesWithinDistance);
+            } else if (child->getId() != source.getId()) {
+                PositionComponent* childComponent = child->getComponent<PositionComponent>();
+                if (childComponent != nullptr) {
+                    if (PositionComponentSystem::arePositionsInRange(*sourceComponent, *childComponent, distance)) {
+                        tientitiesWithinDistance.push_back(child.get());
+                    };
+                }
+            }
+        };
+    }
+    return tientitiesWithinDistance;
+}
+

@@ -46,9 +46,13 @@ class TIEntityInterface {
         void setCache(sol::table&);
         sol::table& getCache();
 
+        // Search
+        sol::table& findTIEntitiesWithinRange(const float, TIEntityInterface&);
+
     private:
         TIEntity* tientity = nullptr;
         sol::table children = sol::table();
+        sol::table tientitiesWithinRange = sol::table();
 };
 
 }

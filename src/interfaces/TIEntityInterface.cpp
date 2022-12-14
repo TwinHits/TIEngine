@@ -4,8 +4,8 @@
 
 #include "componentsystems/CacheComponentSystem.h"
 #include "componentsystems/EventsComponentSystem.h"
+#include "componentsystems/PositionComponentSystem.h"
 #include "componentsystems/SpriteComponentSystem.h"
-#include "managers/LogManager.h"
 #include "managers/SceneManager.h"
 #include "objects/GlobalId.h"
 #include "objects/components/structs/EventState.h"
@@ -53,6 +53,8 @@ void TIEntityInterface::registerUserType(sol::state& luaState) {
     interfaceUserType["setCache"] = &TIEntityInterface::setCache;
     interfaceUserType["getCache"] = &TIEntityInterface::getCache;
 
+    //Search
+    interfaceUserType["findTIEntitiesWithinRange"] = &TIEntityInterface::findTIEntitiesWithinRange;
 }
 
 
@@ -166,4 +168,14 @@ void TIEntityInterface::setCache(sol::table& cache) {
 
 sol::table& TIEntityInterface::getCache() {
     return CacheComponentSystem::Instance()->getCache(*this->tientity);
+}
+
+sol::table& TIEntityInterface::findTIEntitiesWithinRange(const float range, TIEntityInterface& searchRoot) {
+    this->tientitiesWithinRange = ScriptManager::Instance()->getNewTable();
+    
+    for (auto& tientity : PositionComponentSystem::findTIEntitiesWithinRange(*this->tientity, range, *searchRoot.tientity)) {
+       this->tientitiesWithinRange.add<TIEntityInterface>(TIEntityInterface(*tientity));
+    }
+
+    return this->tientitiesWithinRange;
 }
