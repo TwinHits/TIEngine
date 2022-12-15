@@ -24,6 +24,12 @@ sf::RectangleShape& ShapeComponent::addRectangleShape() {
 }
 
 
+sf::CircleShape& ShapeComponent::addCircleShape() {
+	this->shapes.push_back(TIE::make_unique<sf::CircleShape>());
+	return dynamic_cast<sf::CircleShape&>(*this->shapes.back());
+}
+
+
 const std::vector<std::unique_ptr<sf::Shape> >& ShapeComponent::getShapes() {
 	return this->shapes;
 }

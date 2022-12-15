@@ -28,8 +28,8 @@ class ShapeComponentSystem : public Singleton<ShapeComponentSystem>, public Comp
 		sol::object getComponentProperty(const std::string&, TIEntity&);
 		ComponentSystems::ComponentSystemPropertiesMap& populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap&);
 
-		void addWireframe(TIEntity&, SpriteComponent&);
-		void addWireframe(TIEntity&, TextComponent&);
+		void addWireframe(TIEntity&, const SpriteComponent&);
+		void addWireframe(TIEntity&, const TextComponent&);
 
 		static const inline std::string SHAPE = "shape";
 
@@ -41,7 +41,7 @@ class ShapeComponentSystem : public Singleton<ShapeComponentSystem>, public Comp
 		};
 		std::list<Components> components;
 
-		ShapeComponent& createWireframe(TIEntity&, sf::FloatRect&);
+		ShapeComponent& createWireframe(TIEntity&, const sf::FloatRect&, const sf::Vector2f&);
 };
 
 }

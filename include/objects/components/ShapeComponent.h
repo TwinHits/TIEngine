@@ -18,6 +18,8 @@ class ShapeComponent : public Component {
 		bool isDrawn() const;
 
 		sf::RectangleShape& addRectangleShape();
+		sf::CircleShape& addCircleShape();
+
 		const std::vector<std::unique_ptr<sf::Shape> >& getShapes();
 	private:
 		bool drawn = true;
