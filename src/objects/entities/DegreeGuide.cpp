@@ -23,7 +23,6 @@ void DegreeGuide::initialize() {
 		TextComponent& textComponent = degree.addComponent<TextComponent>();
 		textComponent.setFont(font);
 		textComponent.setCharacterSize(this->FONTSIZE);
-		textComponent.setOrigin(0, this->FONTSIZE / 2);
 		textComponent.setString(std::to_string(this->CARDINAL_DEGREES[i]));
 		float x = std::cos(Math::toRadians(this->CARDINAL_DEGREES[i])) * (windowSize.x / 2 * this->PADDING);
 		float y = std::sin(Math::toRadians(this->CARDINAL_DEGREES[i])) * (windowSize.y / 2 * this->PADDING);

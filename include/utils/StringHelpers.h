@@ -8,6 +8,7 @@
 
 #include "objects/enumeration/Language.h"
 #include "objects/enumeration/LogLevel.h"
+#include "objects/enumeration/TextAlignment.h"
 
 namespace TIE {
 	namespace String {
@@ -18,6 +19,8 @@ namespace TIE {
 		int stringToInt(std::string&);
 		Language parseLanguageString(const std::string&);
 		LogLevel strToLogLevel(std::string&);
+		TextAlignment strToTextAlignment(std::string);
+		std::string textAlignmentToStr(TextAlignment);
 		sf::Event::EventType stringToEvent(std::string&);
 		sf::Keyboard::Key stringToKey(std::string&);
 		sf::IntRect stringToIntRect(const std::string&);

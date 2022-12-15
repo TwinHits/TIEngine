@@ -10,6 +10,8 @@
 
 #include "managers/LogManager.h"
 #include "objects/enumeration/Language.h"
+#include "objects/enumeration/LogLevel.h"
+#include "objects/enumeration/TextAlignment.h"
 
 
 std::vector<std::string> TIE::String::slice(const std::string& string, const char delimiter, const int start) {
@@ -87,6 +89,23 @@ TIE::LogLevel TIE::String::strToLogLevel(std::string& loglevel) {
     else if (loglevel == "INFO") { return TIE::LogLevel::INFO; }
     else if (loglevel == "DEBUG") { return TIE::LogLevel::DEBUG; } 
     else { return TIE::LogLevel::ERROR; }
+}
+
+
+TIE::TextAlignment TIE::String::strToTextAlignment(std::string textAlignment) {
+    TIE::String::toUpper(textAlignment);
+    if (textAlignment == "RIGHT") { return TIE::TextAlignment::RIGHT; }
+    else if (textAlignment == "CENTER") { return TIE::TextAlignment::CENTER; }
+    else if (textAlignment == "LEFT") { return TIE::TextAlignment::LEFT; }
+    return TIE::TextAlignment::LEFT;
+}
+
+
+std::string TIE::String::textAlignmentToStr(TIE::TextAlignment textAlignment) {
+    if (textAlignment == TIE::TextAlignment::RIGHT) { return "RIGHT"; }
+    else if (textAlignment == TIE::TextAlignment::CENTER) { return "CENTER"; }
+    else if (textAlignment == TIE::TextAlignment::LEFT) { return "LEFT"; }
+    return "";
 }
 
 

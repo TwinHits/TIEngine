@@ -9,8 +9,10 @@
 #include "objects/components/TextComponent.h"
 #include "objects/components/PositionComponent.h"
 #include "objects/entities/TIEntity.h"
+#include "objects/enumeration/TextAlignment.h"
 #include "objects/factories/TIEntityFactory.h"
 #include "utils/ComponentSystems.h"
+#include "utils/StringHelpers.h"
 
 using namespace TIE;
 
@@ -28,15 +30,15 @@ void TextComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity&
     Components components = { textComponent, positionComponent, tientity };
     this->components.push_back(components);
 
-	std::string text = ComponentSystems::getFactoryValue<std::string>(factory, TextComponentSystem::STRING, textComponent.getText().getString(), tientity);
 	bool drawn = ComponentSystems::getFactoryValue<bool>(factory, TextComponentSystem::DRAWN, textComponent.isDrawn(), tientity);
 	float characterSize = ComponentSystems::getFactoryValue<float>(factory, TextComponentSystem::CHARACTER_SIZE, textComponent.getCharacterSize(), tientity);
+	std::string text = ComponentSystems::getFactoryValue<std::string>(factory, TextComponentSystem::STRING, textComponent.getText().getString(), tientity);
+	TextAlignment textAlignment = TIE::String::strToTextAlignment(ComponentSystems::getFactoryValue<std::string>(factory, TextComponentSystem::TEXT_ALIGNMENT, TIE::String::textAlignmentToStr(textComponent.getTextAlignment()), tientity));
 
-    textComponent.setString(text);
     textComponent.setDrawn(drawn);
     textComponent.setCharacterSize(characterSize);
-
-	textComponent.setOrigin(textComponent.getLocalBounds().width / 2, textComponent.getLocalBounds().height / 2);
+    textComponent.setString(text);
+	textComponent.setTextAlignment(textAlignment);
 
 	bool showWireframe = ComponentSystems::getFactoryValue<bool>(factory, TextComponentSystem::SHOW_WIREFRAME, TextComponentSystem::SHOW_WIREFRAME_DEFAULT, tientity);
 	if (showWireframe) {
@@ -95,6 +97,8 @@ bool TextComponentSystem::setComponentProperty(const std::string& key, const std
 	if (component != nullptr) {
 		if (key == TextComponentSystem::STRING) {
 			component->setString(value);
+		} else if (key == TextComponentSystem::TEXT_ALIGNMENT) {
+			component->setTextAlignment(TIE::String::strToTextAlignment(value));
 		}
 	}
     return false;
@@ -108,6 +112,8 @@ sol::object TextComponentSystem::getComponentProperty(const std::string& key, TI
 			return ScriptManager::Instance()->getObjectFromValue(std::string(component->getString()));
 		} else if (key == TextComponentSystem::CHARACTER_SIZE) {
 			return ScriptManager::Instance()->getObjectFromValue(component->getCharacterSize());
+		} else if (key == TextComponentSystem::TEXT_ALIGNMENT) {
+			return ScriptManager::Instance()->getObjectFromValue(TIE::String::textAlignmentToStr(component->getTextAlignment()));
 		}
 	}
 	return ScriptManager::Instance()->getObjectFromValue(nullptr);
@@ -119,6 +125,20 @@ ComponentSystems::ComponentSystemPropertiesMap& TextComponentSystem::populateCom
 	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::STRING, map);
 	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::OFFSET_X, map);
 	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::OFFSET_Y, map);
+	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::TEXT_ALIGNMENT, map);
 	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::CHARACTER_SIZE, map);
 	return map;
+}
+
+
+void TextComponentSystem::setOriginForTextAlignment(TextComponent& textComponent) {
+	TextAlignment textAlignment = textComponent.getTextAlignment();
+	sf::FloatRect bounds = textComponent.getLocalBounds();
+	if (textAlignment == TextAlignment::LEFT) {
+		textComponent.setOrigin(0,0);
+	} else if (textAlignment == TextAlignment::CENTER) {
+		textComponent.setOrigin(bounds.left + bounds.width / 2, bounds.top + bounds.height / 2);
+	} else if (textAlignment == TextAlignment::RIGHT) {
+		textComponent.setOrigin(bounds.left + bounds.width, 0);
+	}
 }
