@@ -18,6 +18,7 @@ TextComponent::TextComponent() {
 
 void TextComponent::setString(const std::string& string) {
 	this->sf::Text::setString(string);
+	TextComponentSystem::setOriginForTextAlignment(*this);
 }
 
 
