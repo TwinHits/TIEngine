@@ -12,7 +12,7 @@ TextComponent::TextComponent() {
 	this->setCharacterSize(14);
 	this->setString("NO_TEXT");
 	this->setPosition(sf::Vector2f(0, 0));
-	this->setTextAlignment(TextAlignment::LEFT);
+	this->setTextAlignment(TextAlignment::TOP_LEFT);
 }
 
 

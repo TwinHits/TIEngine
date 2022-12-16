@@ -94,17 +94,29 @@ TIE::LogLevel TIE::String::strToLogLevel(std::string& loglevel) {
 
 TIE::TextAlignment TIE::String::strToTextAlignment(std::string textAlignment) {
     TIE::String::toUpper(textAlignment);
-    if (textAlignment == "RIGHT") { return TIE::TextAlignment::RIGHT; }
+    if (textAlignment == "TOP_LEFT") { return TIE::TextAlignment::TOP_LEFT; }
+    else if (textAlignment == "TOP_CENTER") { return TIE::TextAlignment::TOP_CENTER; }
+    else if (textAlignment == "TOP_RIGHT") { return TIE::TextAlignment::TOP_RIGHT; }
+    else if (textAlignment == "CENTER_LEFT") { return TIE::TextAlignment::CENTER_LEFT; }
     else if (textAlignment == "CENTER") { return TIE::TextAlignment::CENTER; }
-    else if (textAlignment == "LEFT") { return TIE::TextAlignment::LEFT; }
-    return TIE::TextAlignment::LEFT;
+    else if (textAlignment == "CENTER_RIGHT") { return TIE::TextAlignment::CENTER_RIGHT; }
+    else if (textAlignment == "BOTTOM_LEFT") { return TIE::TextAlignment::BOTTOM_LEFT; }
+    else if (textAlignment == "BOTTOM_CENTER") { return TIE::TextAlignment::BOTTOM_CENTER; }
+    else if (textAlignment == "BOTTOM_RIGHT") { return TIE::TextAlignment::BOTTOM_RIGHT; }
+    return TIE::TextAlignment::TOP_LEFT;
 }
 
 
 std::string TIE::String::textAlignmentToStr(TIE::TextAlignment textAlignment) {
-    if (textAlignment == TIE::TextAlignment::RIGHT) { return "RIGHT"; }
+    if (textAlignment == TIE::TextAlignment::TOP_LEFT) { return "TOP_LEFT"; }
+    else if (textAlignment == TIE::TextAlignment::TOP_CENTER) { return "TOP_CENTER"; }
+    else if (textAlignment == TIE::TextAlignment::TOP_RIGHT) { return "TOP_RIGHT"; }
+    else if (textAlignment == TIE::TextAlignment::CENTER_LEFT) { return "CENTER_LEFT"; }
     else if (textAlignment == TIE::TextAlignment::CENTER) { return "CENTER"; }
-    else if (textAlignment == TIE::TextAlignment::LEFT) { return "LEFT"; }
+    else if (textAlignment == TIE::TextAlignment::CENTER_RIGHT) { return "CENTER_RIGHT"; }
+    else if (textAlignment == TIE::TextAlignment::BOTTOM_LEFT) { return "BOTTOM_LEFT"; }
+    else if (textAlignment == TIE::TextAlignment::BOTTOM_CENTER) { return "BOTTOM_CENTER"; }
+    else if (textAlignment == TIE::TextAlignment::BOTTOM_RIGHT) { return "BOTTOM_RIGHT"; }
     return "";
 }
 

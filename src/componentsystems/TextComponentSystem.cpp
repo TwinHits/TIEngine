@@ -134,11 +134,24 @@ ComponentSystems::ComponentSystemPropertiesMap& TextComponentSystem::populateCom
 void TextComponentSystem::setOriginForTextAlignment(TextComponent& textComponent) {
 	TextAlignment textAlignment = textComponent.getTextAlignment();
 	sf::FloatRect bounds = textComponent.getLocalBounds();
-	if (textAlignment == TextAlignment::LEFT) {
+
+	if (textAlignment == TextAlignment::TOP_LEFT) {
 		textComponent.setOrigin(0,0);
+	} else if (textAlignment == TextAlignment::TOP_CENTER) {
+		textComponent.setOrigin(bounds.left + bounds.width / 2, 0);
+	} else if (textAlignment == TextAlignment::TOP_RIGHT) {
+		textComponent.setOrigin(bounds.left + bounds.width, 0);
+	} else if (textAlignment == TextAlignment::CENTER_LEFT) {
+		textComponent.setOrigin(0, bounds.top + bounds.height / 2);
 	} else if (textAlignment == TextAlignment::CENTER) {
 		textComponent.setOrigin(bounds.left + bounds.width / 2, bounds.top + bounds.height / 2);
-	} else if (textAlignment == TextAlignment::RIGHT) {
-		textComponent.setOrigin(bounds.left + bounds.width, 0);
+	} else if (textAlignment == TextAlignment::CENTER_RIGHT) {
+		textComponent.setOrigin(bounds.left + bounds.width, bounds.top + bounds.height / 2);
+	} else if (textAlignment == TextAlignment::BOTTOM_LEFT) {
+		textComponent.setOrigin(0, bounds.top + bounds.height);
+	} else if (textAlignment == TextAlignment::BOTTOM_CENTER) {
+		textComponent.setOrigin(bounds.left + bounds.width / 2, bounds.top + bounds.height);
+	} else if (textAlignment == TextAlignment::BOTTOM_RIGHT) {
+		textComponent.setOrigin(bounds.left + bounds.width, bounds.top + bounds.height);
 	}
 }

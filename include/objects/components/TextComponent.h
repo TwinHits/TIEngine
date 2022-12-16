@@ -24,7 +24,7 @@ class TextComponent : public Component, public sf::Text {
 		const sf::Text& getText();
 	private:
 		bool drawn = false;
-		TextAlignment textAlignment = TextAlignment::LEFT;
+		TextAlignment textAlignment = TextAlignment::TOP_LEFT;
 };
 
 }

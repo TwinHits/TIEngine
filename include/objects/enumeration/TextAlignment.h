@@ -4,7 +4,9 @@
 namespace TIE {
 
 	enum class TextAlignment {
-		LEFT, CENTER, RIGHT
+		TOP_RIGHT, TOP_CENTER, TOP_LEFT, 
+		CENTER_LEFT, CENTER, CENTER_RIGHT,
+		BOTTOM_RIGHT, BOTTOM_CENTER, BOTTOM_LEFT
 	};
 
 }
