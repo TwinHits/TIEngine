@@ -211,9 +211,9 @@ void SceneManager::render(TIEntity& entity, sf::RenderWindow& window, sf::Render
 	SpriteComponent* spriteComponent = entity.getComponent<SpriteComponent>();
 	TextComponent* textComponent = entity.getComponent<TextComponent>();
 	ShapeComponent* shapeComponent = entity.getComponent<ShapeComponent>();
-	SceneLayer* sceneLayer = dynamic_cast<SceneLayer*>(&entity);
 
-	if (sceneLayer != nullptr) {
+	if (entity.isSceneLayer()) {
+		SceneLayer* sceneLayer = dynamic_cast<SceneLayer*>(&entity);
 		ViewManager::Instance()->setActiveView(sceneLayer->getViewId());
 	}
 	
