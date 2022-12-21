@@ -38,6 +38,7 @@ class ConsoleManager : public Singleton<ConsoleManager>, Manager {
 		void showGridGuide();
 
 		DevConsole* devConsole = nullptr;
+		TIEntity* currentCommand = nullptr;
 		std::string input;
 		std::vector<std::string> commandHistory;
 		std::vector<std::string>::iterator historyIndex = commandHistory.begin();
