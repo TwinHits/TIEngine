@@ -18,7 +18,8 @@ class AnimatedComponentSystem : public Singleton<AnimatedComponentSystem>, publi
     public:
         AnimatedComponentSystem() {};
         void update(const float);
-        void addComponent(const TIEntityFactory&, TIEntity&);
+        AnimatedComponent& addComponent(TIEntity&);
+        AnimatedComponent& addComponent(const TIEntityFactory&, TIEntity&);
         bool removeComponent(TIEntity&);
         const std::string& getName();
         

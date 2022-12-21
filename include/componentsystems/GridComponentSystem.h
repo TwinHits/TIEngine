@@ -19,7 +19,8 @@ class GridComponentSystem : public Singleton<GridComponentSystem>, public Compon
 		void update(const float);
 		const std::string& getName();
 
-		void addComponent(const TIEntityFactory&, TIEntity&);
+		GridComponent& addComponent(TIEntity&);
+		GridComponent& addComponent(const TIEntityFactory&, TIEntity&);
 		bool removeComponent(TIEntity&);
 
 		bool setComponentProperty(const std::string&, bool, TIEntity&);

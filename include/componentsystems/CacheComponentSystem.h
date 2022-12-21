@@ -12,7 +12,8 @@ namespace TIE {
 class CacheComponentSystem : public ComponentSystem, public Singleton<CacheComponentSystem> {
 public:
     void update(const float);
-    void addComponent(const TIEntityFactory&, TIEntity&);
+    CacheComponent& addComponent(TIEntity&);
+    CacheComponent& addComponent(const TIEntityFactory&, TIEntity&);
     bool removeComponent(TIEntity&);
     const std::string& getName();
 
@@ -30,8 +31,6 @@ private:
         CacheComponent& cacheComponent;
     };
     std::list<Components> components;
-
-    CacheComponent& addComponent(TIEntity&);
 };
 
 }

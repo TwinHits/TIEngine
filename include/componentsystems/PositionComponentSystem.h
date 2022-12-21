@@ -18,7 +18,8 @@ class PositionComponentSystem : public Singleton<PositionComponentSystem>, publi
     public:
 		PositionComponentSystem() {};
 		void update(const float);
-		void addComponent(const TIEntityFactory&, TIEntity&);
+		PositionComponent& addComponent(TIEntity&);
+		PositionComponent& addComponent(const TIEntityFactory&, TIEntity&);
 		bool removeComponent(TIEntity&);
 		const std::string& getName();
 

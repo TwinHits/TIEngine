@@ -57,10 +57,19 @@ void EventsComponentSystem::update(const float delta) {
 }
 
 
-void EventsComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& entity) {
+EventsComponent& EventsComponentSystem::addComponent(TIEntity& tientity) {
+	if (!tientity.hasComponent<EventsComponent>()) {
+        EventsComponent& eventsComponent = tientity.addComponent<EventsComponent>();
+        this->components.push_back({ eventsComponent, tientity });
+        return eventsComponent;
+	} else {
+		return *tientity.getComponent<EventsComponent>();
+	}
+}
 
-    EventsComponent& eventsComponent = entity.addComponent<EventsComponent>();
-    this->components.push_back({ eventsComponent, entity });
+
+EventsComponent& EventsComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& entity) {
+	EventsComponent& eventsComponent = this->addComponent(entity);
 
 	// Get all the keys containing events from the functionValues map 
 	std::vector<std::string> eventKeys;
@@ -110,15 +119,10 @@ void EventsComponentSystem::addComponent(const TIEntityFactory& factory, TIEntit
 			eventsComponent.addState(EventsComponentSystem::NEUTRAL);
 		}
 	}
-}
-
-
-EventsComponent& EventsComponentSystem::addComponent(TIEntity& tientity) {
-	EventsComponent& eventsComponent = tientity.addComponent<EventsComponent>();
-	this->components.push_back({ eventsComponent, tientity });
 
 	return eventsComponent;
 }
+
 
 
 bool EventsComponentSystem::removeComponent(TIEntity& tientity) {

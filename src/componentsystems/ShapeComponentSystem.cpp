@@ -25,15 +25,16 @@ void ShapeComponentSystem::update(const float delta) {
 }
 
 
-void ShapeComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
+ShapeComponent& ShapeComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
+	return this->addComponent(tientity);
 }
+
 
 ShapeComponent& ShapeComponentSystem::addComponent(TIEntity& tientity) {
 	if (!tientity.hasComponent<ShapeComponent>()) {
 		ShapeComponent& shapeComponent = tientity.addComponent<ShapeComponent>();
-		PositionComponent& positionComponent = tientity.addComponent<PositionComponent>();
-		Components components = { shapeComponent, positionComponent, tientity };
-		this->components.push_back(components);
+		PositionComponent& positionComponent = PositionComponentSystem::Instance()->addComponent(tientity);
+		this->components.push_back({ shapeComponent, positionComponent, tientity });
 		return shapeComponent;
 	} else {
 		return *tientity.getComponent<ShapeComponent>();

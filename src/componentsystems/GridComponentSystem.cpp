@@ -1,14 +1,15 @@
 #include "componentsystems/GridComponentSystem.h"
 
 #include <SFML/Graphics.hpp>
-
+ 
+#include "componentsystems/SpriteComponentSystem.h"
+#include "managers/WorldManager.h"
+#include "managers/LogManager.h"
+#include "managers/ScriptManager.h"
 #include "objects/components/GridComponent.h"
 #include "objects/components/SpriteComponent.h"
 #include "objects/entities/TIEntity.h"
 #include "objects/factories/TIEntityFactory.h"
-#include "managers/WorldManager.h"
-#include "managers/LogManager.h"
-#include "managers/ScriptManager.h"
 #include "utils/ComponentSystems.h"
 #include "utils/TIEMath.h"
 
@@ -18,13 +19,21 @@ void GridComponentSystem::update(const float) {
 
 }
 
+GridComponent& GridComponentSystem::addComponent(TIEntity& tientity) {
+	if (!tientity.hasComponent<GridComponent>()) {
+		GridComponent& gridComponent = tientity.addComponent<GridComponent>();
+		SpriteComponent& spriteComponent = SpriteComponentSystem::Instance()->addComponent(tientity);
+		this->components.push_back({ gridComponent, spriteComponent });
+		return gridComponent;
+	} else {
+		return *tientity.getComponent<GridComponent>();
+	}
+}
 
-void GridComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& entity) {
 
-    GridComponent& gridComponent = entity.addComponent<GridComponent>();
-    SpriteComponent& spriteComponent = entity.addComponent<SpriteComponent>();
-    Components components = { gridComponent, spriteComponent };
-    this->components.push_back(components);
+GridComponent& GridComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& entity) {
+	GridComponent& gridComponent = this->addComponent(entity);
+	SpriteComponent& spriteComponent = entity.addComponent<SpriteComponent>();
 
     float width = factory.floatValues.at(GridComponentSystem::WIDTH);
     float height = factory.floatValues.at(GridComponentSystem::HEIGHT);
@@ -32,6 +41,8 @@ void GridComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity&
 
     sf::FloatRect textureSize = spriteComponent.getLocalBounds();
     gridComponent.setTileSize(sf::Vector2f(textureSize.width / width, textureSize.height / height));
+
+	return gridComponent;
 }
 
 

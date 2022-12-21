@@ -17,7 +17,7 @@ class ShapeComponentSystem : public Singleton<ShapeComponentSystem>, public Comp
 	public:
 		ShapeComponentSystem() {};
 		void update(const float);
-		void addComponent(const TIEntityFactory&, TIEntity&);
+		ShapeComponent& addComponent(const TIEntityFactory&, TIEntity&);
 		ShapeComponent& addComponent(TIEntity&);
 		bool removeComponent(TIEntity&);
 		const std::string& getName();

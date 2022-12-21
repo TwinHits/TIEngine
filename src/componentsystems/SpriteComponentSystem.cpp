@@ -26,11 +26,21 @@ void SpriteComponentSystem::update(const float delta) {
 }
 
 
-void SpriteComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
-    SpriteComponent& spriteComponent = tientity.addComponent<SpriteComponent>();
-	PositionComponent& positionComponent = tientity.addComponent<PositionComponent>();
-    Components components = { spriteComponent, positionComponent };
-    this->components.push_back(components);
+SpriteComponent& SpriteComponentSystem::addComponent(TIEntity& tientity) {
+	if (!tientity.hasComponent<SpriteComponent>()) {
+		SpriteComponent& spriteComponent = tientity.addComponent<SpriteComponent>();
+		PositionComponent& positionComponent = PositionComponentSystem::Instance()->addComponent(tientity);
+		this->components.push_back({ spriteComponent, positionComponent });
+		return spriteComponent;
+	} else {
+		return *tientity.getComponent<SpriteComponent>();
+	}
+}
+
+
+SpriteComponent& SpriteComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
+	SpriteComponent& spriteComponent = this->addComponent(tientity);
+	PositionComponent& positionComponent = PositionComponentSystem::Instance()->addComponent(tientity);
 
     spriteComponent.setPosition(positionComponent.position);
 
@@ -55,6 +65,8 @@ void SpriteComponentSystem::addComponent(const TIEntityFactory& factory, TIEntit
 	if (showWireframe) {
 		ShapeComponentSystem::Instance()->addWireframe(tientity, spriteComponent);
 	}
+
+	return spriteComponent;
 }
 
 

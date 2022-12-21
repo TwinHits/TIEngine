@@ -5,6 +5,7 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "componentsystems/PositionComponentSystem.h"
 #include "componentsystems/GridComponentSystem.h"
 #include "managers/LogManager.h" 
 #include "managers/WorldManager.h"
@@ -35,11 +36,21 @@ void MovesComponentSystem::update(const float delta) {
 }
 
 
-void MovesComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
-    MovesComponent& movesComponent = tientity.addComponent<MovesComponent>();
+MovesComponent& MovesComponentSystem::addComponent(TIEntity& tientity) {
+	if (!tientity.hasComponent<MovesComponent>()) {
+        MovesComponent& movesComponent = tientity.addComponent<MovesComponent>();
+        PositionComponent& positionComponent = PositionComponentSystem::Instance()->addComponent(tientity);
+        this->components.push_back({ movesComponent, positionComponent });
+        return movesComponent;
+	} else {
+		return *tientity.getComponent<MovesComponent>();
+	}
+}
+
+
+MovesComponent& MovesComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
+    MovesComponent& movesComponent = this->addComponent(tientity);
     PositionComponent& positionComponent = tientity.addComponent<PositionComponent>();
-    Components components = { movesComponent, positionComponent };
-    this->components.push_back(components);
 
 	float targetSpeed = ComponentSystems::getFactoryValue<float>(factory, MovesComponentSystem::SPEED, movesComponent.targetSpeed, tientity);
 	float acceleration = ComponentSystems::getFactoryValue<float>(factory, MovesComponentSystem::ACCELERATION, movesComponent.acceleration, tientity);
@@ -58,6 +69,8 @@ void MovesComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity
 	movesComponent.targetRotation = targetRotation;
 	movesComponent.targetRotationalSpeed = targetRotationalSpeed;
 	movesComponent.rotationalAcceleration = rotationalAcceleraton;
+	
+	return movesComponent;
 }
 
 

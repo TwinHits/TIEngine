@@ -17,7 +17,8 @@ class SpriteComponentSystem : public Singleton<SpriteComponentSystem>, public Co
 	public:
 		SpriteComponentSystem() {};
 		void update(const float);
-		void addComponent(const TIEntityFactory&, TIEntity&);
+		SpriteComponent& addComponent(TIEntity&);
+		SpriteComponent& addComponent(const TIEntityFactory&, TIEntity&);
 		bool removeComponent(TIEntity&);
 		const std::string& getName();
 

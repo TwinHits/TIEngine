@@ -17,7 +17,7 @@ class EventsComponentSystem : public Singleton<EventsComponentSystem>, public Co
 	public:
 		EventsComponentSystem() {};
 		void update(const float);
-		void addComponent(const TIEntityFactory&, TIEntity&);
+		EventsComponent& addComponent(const TIEntityFactory&, TIEntity&);
 		EventsComponent& addComponent(TIEntity&);
 		bool removeComponent(TIEntity&);
 		const std::string& getName();

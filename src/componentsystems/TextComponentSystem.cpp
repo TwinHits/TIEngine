@@ -24,11 +24,20 @@ void TextComponentSystem::update(const float delta) {
 }
 
 
-void TextComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
-    TextComponent& textComponent = tientity.addComponent<TextComponent>();
-    PositionComponent& positionComponent = tientity.addComponent<PositionComponent>();
-    Components components = { textComponent, positionComponent, tientity };
-    this->components.push_back(components);
+TextComponent& TextComponentSystem::addComponent(TIEntity& tientity) {
+	if (!tientity.hasComponent<TextComponent>()) {
+		TextComponent& textComponent = tientity.addComponent<TextComponent>();
+		PositionComponent& positionComponent = PositionComponentSystem::Instance()->addComponent(tientity);
+		this->components.push_back({ textComponent, positionComponent, tientity });
+		return textComponent;
+	} else {
+		return *tientity.getComponent<TextComponent>();
+	}
+}
+
+
+TextComponent& TextComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
+    TextComponent& textComponent = this->addComponent(tientity);
 
 	bool drawn = ComponentSystems::getFactoryValue<bool>(factory, TextComponentSystem::DRAWN, textComponent.isDrawn(), tientity);
 	float characterSize = ComponentSystems::getFactoryValue<float>(factory, TextComponentSystem::CHARACTER_SIZE, textComponent.getCharacterSize(), tientity);
@@ -44,6 +53,8 @@ void TextComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity&
 	if (showWireframe) {
 		ShapeComponentSystem::Instance()->addWireframe(tientity, textComponent);
 	}
+
+	return textComponent;
 }
 
 

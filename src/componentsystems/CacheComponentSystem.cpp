@@ -13,19 +13,21 @@ void CacheComponentSystem::update(const float delta) {
 }
 
 
-void CacheComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
-    CacheComponent& cacheComponent = this->addComponent(tientity);
-    cacheComponent.setCache(factory.tableValues.at("cache"));
+CacheComponent& CacheComponentSystem::addComponent(TIEntity& tientity) {
+    if (!tientity.hasComponent<CacheComponent>()) {
+        CacheComponent& cacheComponent = tientity.addComponent<CacheComponent>();
+        cacheComponent.setCache(ScriptManager::Instance()->getNewTable());
+        this->components.push_back({ cacheComponent });
+        return cacheComponent;
+    } else {
+        return *tientity.getComponent<CacheComponent>();
+    }
 }
 
 
-CacheComponent& CacheComponentSystem::addComponent(TIEntity& tientity) {
-    CacheComponent& cacheComponent = tientity.addComponent<CacheComponent>();
-    Components components = { cacheComponent };
-    this->components.push_back(components);
-
-    cacheComponent.setCache(ScriptManager::Instance()->getNewTable());
-
+CacheComponent& CacheComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
+    CacheComponent& cacheComponent = this->addComponent(tientity);
+    cacheComponent.setCache(factory.tableValues.at("cache"));
     return cacheComponent;
 }
 

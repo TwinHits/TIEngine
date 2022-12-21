@@ -2,6 +2,8 @@
 
 #include <map>
 
+#include "componentsystems/PositionComponentSystem.h"
+#include "componentsystems/SpriteComponentSystem.h"
 #include "managers/ScriptManager.h"
 #include "objects/components/AnimatedComponent.h"
 #include "objects/components/PositionComponent.h"
@@ -24,7 +26,22 @@ void AnimatedComponentSystem::update(const float delta) {
 }
 
 
-void AnimatedComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
+AnimatedComponent& AnimatedComponentSystem::addComponent(TIEntity& tientity) {
+    if (!tientity.hasComponent<AnimatedComponent>()) {
+        AnimatedComponent& animatedComponent = tientity.addComponent<AnimatedComponent>();
+        PositionComponent& positionComponent = PositionComponentSystem::Instance()->addComponent(tientity);
+        SpriteComponent& spriteComponent = SpriteComponentSystem::Instance()->addComponent(tientity);
+        this->components.push_back({ animatedComponent, positionComponent, spriteComponent });
+        return animatedComponent;
+    } else {
+        return *tientity.getComponent<AnimatedComponent>();
+    }
+
+}
+
+
+AnimatedComponent& AnimatedComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
+    AnimatedComponent& animatedComponent = this->addComponent(tientity);
 
 	// Get all the keys containing animations from the stringValues map 
 	std::vector<std::string> animatedStringKeys;
@@ -42,11 +59,6 @@ void AnimatedComponentSystem::addComponent(const TIEntityFactory& factory, TIEnt
 	}
 
     if (animatedStringKeys.size()) {
-        AnimatedComponent& animatedComponent = tientity.addComponent<AnimatedComponent>();
-        PositionComponent& positionComponent = tientity.addComponent<PositionComponent>();
-        SpriteComponent& spriteComponent = tientity.addComponent<SpriteComponent>();
-        Components components = { animatedComponent, positionComponent, spriteComponent };
-        this->components.push_back(components);
 
         std::map<std::string, Animation>& animations = animatedComponent.getAnimations();
         for (auto& key : animatedStringKeys) {
@@ -93,7 +105,7 @@ void AnimatedComponentSystem::addComponent(const TIEntityFactory& factory, TIEnt
         animatedComponent.setCurrentAnimation(animations.begin().operator*().second);
     }
 
-    return;
+    return animatedComponent;
 }
 
 

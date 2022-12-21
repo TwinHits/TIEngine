@@ -19,7 +19,8 @@ class TextComponentSystem : public Singleton<TextComponentSystem>, public Compon
 	public:
 		TextComponentSystem() {};
 		void update(const float);
-		void addComponent(const TIEntityFactory&, TIEntity&);
+		TextComponent& addComponent(TIEntity&);
+		TextComponent& addComponent(const TIEntityFactory&, TIEntity&);
 		bool removeComponent(TIEntity&);
 		const std::string& getName();
 

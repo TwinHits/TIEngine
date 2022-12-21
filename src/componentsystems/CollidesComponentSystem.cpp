@@ -12,9 +12,16 @@ void CollidesComponentSystem::update(const float delta) {
 
 }
 
-void CollidesComponentSystem::addComponent(const TIEntityFactory& tientityFactory, TIEntity& tientity) {
-	
+
+CollidesComponent& CollidesComponentSystem::addComponent(TIEntity& tientity) {
+	return tientity.addComponent<CollidesComponent>();
 }
+
+
+CollidesComponent& CollidesComponentSystem::addComponent(const TIEntityFactory& tientityFactory, TIEntity& tientity) {
+	return this->addComponent(tientity);
+}
+
 
 bool CollidesComponentSystem::removeComponent(TIEntity& tientity) {
 	CollidesComponent* collidesComponent = tientity.getComponent<CollidesComponent>();
@@ -30,7 +37,6 @@ bool CollidesComponentSystem::removeComponent(TIEntity& tientity) {
 		return false;
 	}
 }
-
 
 
 const std::string& CollidesComponentSystem::getName() {

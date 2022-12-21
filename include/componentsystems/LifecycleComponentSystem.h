@@ -12,7 +12,8 @@ class LifecycleComponentSystem : public Singleton<LifecycleComponentSystem>, pub
 public:
 	LifecycleComponentSystem() {};
 	void update(const float);
-	void addComponent(const TIEntityFactory&, TIEntity&);
+	LifecycleComponent& addComponent(TIEntity&);
+	LifecycleComponent& addComponent(const TIEntityFactory&, TIEntity&);
 	bool removeComponent(TIEntity&);
 	const std::string& getName();
 

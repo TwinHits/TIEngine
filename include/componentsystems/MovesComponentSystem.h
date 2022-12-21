@@ -21,7 +21,8 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, public Comp
 	public:
 		MovesComponentSystem() {};
 		void update(const float);
-		void addComponent(const TIEntityFactory&, TIEntity&);
+		MovesComponent& addComponent(TIEntity&);
+		MovesComponent& addComponent(const TIEntityFactory&, TIEntity&);
 		bool removeComponent(TIEntity&);
 		const std::string& getName();
 		

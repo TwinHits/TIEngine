@@ -23,6 +23,34 @@ void PositionComponentSystem::update(const float delta) {
 }
 
 
+PositionComponent& PositionComponentSystem::addComponent(TIEntity& tientity) {
+    if (!tientity.hasComponent<PositionComponent>()) {
+        PositionComponent& positionComponent = tientity.addComponent<PositionComponent>();
+        this->components.push_back({ positionComponent, tientity });
+        return positionComponent;
+    } else {
+        return *tientity.getComponent<PositionComponent>();
+    }
+}
+
+
+PositionComponent& PositionComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
+    PositionComponent& positionComponent = this->addComponent(tientity);
+
+	float x = ComponentSystems::getFactoryValue<float>(factory, PositionComponentSystem::X, positionComponent.position.x, tientity);
+	float y = ComponentSystems::getFactoryValue<float>(factory, PositionComponentSystem::Y, positionComponent.position.y, tientity);
+	float rotation = ComponentSystems::getFactoryValue<float>(factory, PositionComponentSystem::ROTATION, positionComponent.rotation, tientity);
+	bool rotates = ComponentSystems::getFactoryValue<bool>(factory, PositionComponentSystem::ROTATES, positionComponent.rotates, tientity);
+
+    positionComponent.position.x = x;
+    positionComponent.position.y = y;
+    positionComponent.rotation = rotation;
+    positionComponent.rotates = rotates;
+
+    return positionComponent;
+}
+
+
 bool PositionComponentSystem::setComponentProperty(const std::string& key, bool value, TIEntity& tientity) {
     return false;
 }
@@ -83,24 +111,6 @@ ComponentSystems::ComponentSystemPropertiesMap& PositionComponentSystem::populat
     ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::WORLD_ROTATION, map);
     return map;
 }
-
-
-void PositionComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
-    PositionComponent& positionComponent = tientity.addComponent<PositionComponent>();
-    Components components = { positionComponent, tientity };
-    this->components.push_back(components);
-
-	float x = ComponentSystems::getFactoryValue<float>(factory, PositionComponentSystem::X, positionComponent.position.x, tientity);
-	float y = ComponentSystems::getFactoryValue<float>(factory, PositionComponentSystem::Y, positionComponent.position.y, tientity);
-	float rotation = ComponentSystems::getFactoryValue<float>(factory, PositionComponentSystem::ROTATION, positionComponent.rotation, tientity);
-	bool rotates = ComponentSystems::getFactoryValue<bool>(factory, PositionComponentSystem::ROTATES, positionComponent.rotates, tientity);
-
-    positionComponent.position.x = x;
-    positionComponent.position.y = y;
-    positionComponent.rotation = rotation;
-    positionComponent.rotates = rotates;
-}
-
 
 bool PositionComponentSystem::removeComponent(TIEntity& tientity) {
 	PositionComponent* positionComponent = tientity.getComponent<PositionComponent>();

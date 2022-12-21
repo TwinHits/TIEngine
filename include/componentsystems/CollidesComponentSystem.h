@@ -20,7 +20,8 @@ class CollidesComponentSystem : public Singleton<CollidesComponentSystem>, publi
 	public:
 		CollidesComponentSystem() {};
 		void update(const float);
-		void addComponent(const TIEntityFactory&, TIEntity&);
+		CollidesComponent& addComponent(TIEntity&);
+		CollidesComponent& addComponent(const TIEntityFactory&, TIEntity&);
 		bool removeComponent(TIEntity&);
 		const std::string& getName();
 
