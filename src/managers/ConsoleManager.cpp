@@ -24,6 +24,7 @@ using namespace TIE;
 bool ConsoleManager::initialize() {
 	this->devConsole = &dynamic_cast<DevConsole&>(SceneManager::Instance()->getEngineLayer().attachChild(make_unique<DevConsole>()));
 	this->devConsole->initialize();
+	this->currentCommand = &this->devConsole->getCurrentCommand();
 	return true;
 }
 
@@ -152,7 +153,7 @@ void ConsoleManager::addToInput(unsigned int unicodeCharacter) {
 	} else if (unicodeCharacter == 8) { //backspace
 		this->input = this->input.substr(0, this->input.length() - 1);
 	}
-	this->devConsole->getComponent<TextComponent>()->setString(this->input);
+	this->currentCommand->getComponent<TextComponent>()->setString(this->input);
 }
 
 
@@ -164,7 +165,7 @@ void ConsoleManager::printSceneGraph(TIEntity& tientity) {
 }
 
 
-void TIE::ConsoleManager::clearConsoleHistory() {
+void ConsoleManager::clearConsoleHistory() {
 	for (auto& child : this->devConsole->getChildren()) {
 		child->setRemove(true);
 	}
@@ -173,13 +174,13 @@ void TIE::ConsoleManager::clearConsoleHistory() {
 }
 
 
-void TIE::ConsoleManager::clearDebugLog() {
+void ConsoleManager::clearDebugLog() {
 	this->clearConsoleHistory();
 	LogManager::Instance()->clearLog();
 	LogManager::Instance()->info("Logs cleared by console command.");
 }
 
 
-void TIE::ConsoleManager::showGridGuide() {
+void ConsoleManager::showGridGuide() {
 	WorldManager::Instance()->showGridGuide(true);
 }

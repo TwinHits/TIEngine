@@ -22,7 +22,7 @@ void TIEngineInterface::registerUserType(sol::state& luaState) {
 	sol::usertype<TIEngineInterface> engineInterfaceUserType = luaState.new_usertype<TIEngineInterface>("tiengine");
     engineInterfaceUserType["isValid"] = &TIEngineInterface::isValid;
     engineInterfaceUserType["registerTexturesDirectory"] = &TIEngineInterface::registerTexturesDirectory;
-    engineInterfaceUserType["registerFontDirectory"] = &TIEngineInterface::registerFontsDirectory;
+    engineInterfaceUserType["registerFontsDirectory"] = &TIEngineInterface::registerFontsDirectory;
     engineInterfaceUserType["registerAudioDirectory"] = &TIEngineInterface::registerAudioDirectory;
     engineInterfaceUserType["setWindowTitle"] = &TIEngineInterface::setWindowTitle;
     engineInterfaceUserType["setWindowSize"] = &TIEngineInterface::setWindowSize;

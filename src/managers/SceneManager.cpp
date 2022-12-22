@@ -217,7 +217,7 @@ void SceneManager::render(TIEntity& entity, sf::RenderWindow& window, sf::Render
 		ViewManager::Instance()->setActiveView(sceneLayer->getViewId());
 	}
 	
-	//Continue traversal if there's no graphics components, or if either component is drawn
+	//Continue traversal if there's no graphics components, or if any graphics component is drawn
 	bool continueTraversal = textComponent == nullptr && spriteComponent == nullptr && shapeComponent == nullptr;
 	if (spriteComponent != nullptr && spriteComponent->isDrawn()) {
 		window.draw(spriteComponent->getSprite(), states);
