@@ -17,6 +17,7 @@ namespace TIE {
 		std::vector<std::string>& split(const std::string&, const char, std::vector<std::string>&);
 		std::string& toUpper(std::string&);
 		int stringToInt(std::string&);
+		bool stringToBool(std::string&);
 		Language parseLanguageString(const std::string&);
 		LogLevel strToLogLevel(std::string&);
 		TextAlignment strToTextAlignment(std::string);
