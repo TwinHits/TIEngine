@@ -42,7 +42,6 @@ void DevConsole::initialize() {
 	SpriteComponent& spriteComponent = SpriteComponentSystem::Instance()->addComponent(*this);
 	const sf::Texture& texture = AssetsManager::Instance()->getTexture("dev_console.png");
 	const sf::Vector2u& textureSize = texture.getSize();
-	spriteComponent.setTexture(texture, true);
 	float scalex = float(windowSize.x) / float(textureSize.x);
 	float scaley = float(windowSize.y/2.0f) / float(textureSize.y);
 	const sf::Vector2f scale = sf::Vector2f(scalex, scaley);
@@ -79,6 +78,7 @@ void DevConsole::initialize() {
 	currentCommandTextComponent.setCharacterSize(this->fontSize);
 	currentCommandTextComponent.setTextAlignment(TextAlignment::BOTTOM_LEFT);
 	currentCommandTextComponent.setDrawn(true);
+	spriteComponent.setDrawn(true);
 
 	ComponentSystems::setDrawn(*this, false);
 }
@@ -101,9 +101,11 @@ const sf::Vector2i& DevConsole::getWritePosition() {
 	return this->textWritePosition;
 }
 
+
 void DevConsole::setWritePosition(const sf::Vector2i& position) {
 	this->textWritePosition = position;
 }
+
 
 void DevConsole::resetWritePosition() {
 	sf::Vector2i windowSize = TIE::WindowManager::Instance()->getWindowSize();
