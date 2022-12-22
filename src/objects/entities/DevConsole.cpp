@@ -7,8 +7,9 @@
 #include "componentsystems/PositionComponentSystem.h"
 #include "componentsystems/ShapeComponentSystem.h"
 #include "componentsystems/SpriteComponentSystem.h"
-#include "managers/LogManager.h"
 #include "managers/AssetsManager.h"
+#include "managers/ConfigManager.h"
+#include "managers/LogManager.h"
 #include "managers/ViewManager.h"
 #include "managers/WindowManager.h"
 #include "objects/SceneLayer.h"
@@ -29,7 +30,7 @@ DevConsole::DevConsole() :
 
 void DevConsole::initialize() {
 	sf::Vector2i windowSize = TIE::WindowManager::Instance()->getWindowSize();
-	const FontAsset& font = AssetsManager::Instance()->getFont("DevConsole.tff");
+	const FontAsset& font = AssetsManager::Instance()->getFont(ConfigManager::Instance()->getEngineFontName());
 
 	// DevConsole Entity
 	this->setName("DevConsole");

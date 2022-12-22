@@ -30,6 +30,7 @@ LogLevel ConfigManager::getDebugLogLevel() {
 	return this->debugLogLevel;
 }
 
+
 void ConfigManager::setDebugLogLevel(LogLevel debugLogLevel) {
 	this->debugLogLevel = debugLogLevel;
 }
@@ -44,12 +45,19 @@ const bool ConfigManager::getShowMousePtrCoords() {
 	return this->showMousePtrCoords;
 }
 
+
 const bool ConfigManager::getShowDegreeGuide() {
 	return this->showDegreeGuide;
 }
 
-const std::string& TIE::ConfigManager::getStartUpScript() {
+
+const std::string& ConfigManager::getStartUpScript() {
 	return this->startUpScript;
+}
+
+
+const std::string& ConfigManager::getEngineFontName() {
+	return this->engineFontName;
 }
 
 
@@ -58,7 +66,7 @@ void ConfigManager::setDefaultDisplayLanguage(const Language& defaultDisplayLang
 }
 
 
-bool TIE::ConfigManager::loadConfigFile(const std::string& path) {
+bool ConfigManager::loadConfigFile(const std::string& path) {
 	return loadConfig(path);
 }
 
@@ -93,20 +101,22 @@ void ConfigManager::parseConfig(std::ifstream& config) {
 		if (std::getline(fileline, key, '=')) {
 			std::getline(fileline, value);	
 
-			if (key == "DebugLogPath") { debugLogPath = value; }
-			else if (key == "AssetsPath") { assetsPath = value; }
-			else if (key == "DebugLogLevel") { debugLogLevel = String::strToLogLevel(value); }
-			else if (key == "DefaultDisplayLanguage") { defaultDisplayLanguage = String::parseLanguageString(value); }
-			else if (key == "ShowMousePtrCoords") {
-				if (value == "true") {
-					this->showMousePtrCoords = true;
-				}
+			if (key == "DebugLogPath") {
+				debugLogPath = value;
+			} else if (key == "AssetsPath") { 
+				assetsPath = value; 
+			} else if (key == "DebugLogLevel") { 
+				debugLogLevel = String::strToLogLevel(value); 
+			} else if (key == "DefaultDisplayLanguage") { 
+				defaultDisplayLanguage = String::parseLanguageString(value); 
+			} else if (key == "ShowMousePtrCoords") {
+				this->showDegreeGuide = TIE::String::stringToBool(value);
 			} else if (key == "ShowDegreeGuide") {
-				if (value == "true") {
-					this->showDegreeGuide = true; 
-				}
+				this->showDegreeGuide = TIE::String::stringToBool(value);
 			} else if (key == "StartUpScript") {
 				this->startUpScript = value;
+			} else if (key == "EngineFontName") {
+				this->engineFontName = value;
 			}
 		}	 
 	}
@@ -121,4 +131,5 @@ void ConfigManager::restoreDefaultConfiguration() {
 	this->showDegreeGuide = this->defaultShowDegreeGuide;
 	this->showMousePtrCoords = this->showMousePtrCoords;
 	this->startUpScript = this->defaultStartUpScript;
+	this->engineFontName = this->defaultEngineFontName;
 }

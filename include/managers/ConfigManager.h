@@ -28,6 +28,7 @@ class ConfigManager: public Singleton<ConfigManager>, Manager {
 		const bool getShowMousePtrCoords();
 		const bool getShowDegreeGuide();
 		const std::string& getStartUpScript();
+		const std::string& getEngineFontName();
 
 		void setDefaultDisplayLanguage(const Language& defaultDisplayLanguage);
 		void setDebugLogLevel(LogLevel debugLogLevel);
@@ -50,6 +51,7 @@ class ConfigManager: public Singleton<ConfigManager>, Manager {
 		bool defaultShowMousePtrCoords = false;
 		bool defaultShowDegreeGuide = false;
 		std::string defaultStartUpScript = "";
+		std::string defaultEngineFontName = "DevConsole.ttf";
 
 		std::string debugLogPath = defaultDebugLogPath;
 		std::string assetsPath = defaultAssetsPath;
@@ -58,6 +60,7 @@ class ConfigManager: public Singleton<ConfigManager>, Manager {
 		bool showMousePtrCoords = defaultShowMousePtrCoords;
 		bool showDegreeGuide = defaultShowDegreeGuide;
 		std::string startUpScript = defaultStartUpScript;
+		std::string engineFontName = defaultEngineFontName;
 
 		ConfigManager(const ConfigManager&);
 		void operator=(const ConfigManager&) {};

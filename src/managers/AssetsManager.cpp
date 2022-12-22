@@ -56,8 +56,8 @@ const FontAsset& AssetsManager::getFont(GlobalId id) {
 	if (this->fonts.find(id) != this->fonts.end()) {
 		return *this->fonts[id];
 	} else {
-		LogManager::Instance()->error("Cannot open font '" + std::to_string(id) + "'.");
-		return *this->fonts[HashManager::Instance()->getHash("DevConsole.ttf")];
+		LogManager::Instance()->error("Cannot open font " + std::to_string(id));
+		return *this->fonts[HashManager::Instance()->getHash(ConfigManager::Instance()->getEngineFontName())];
 	}
 }
 
@@ -83,7 +83,7 @@ bool AssetsManager::loadTexturesFromPath(const boost::filesystem::path& path) {
 						GlobalId id = HashManager::Instance()->getHash(file.path().filename().string());
 						this->textures[id] = texture;
 						texture.setSmooth(true);
-						LogManager::Instance()->info("Loading texture '" + file.path().string() + ". Id: " + std::to_string(id));
+						LogManager::Instance()->info("Loaded texture '" + file.path().string() + ". Id: " + std::to_string(id));
 					} else {
 						LogManager::Instance()->error("SFML Texture load error: Cannot load " + file.path().string());
 					}

@@ -14,7 +14,7 @@ using namespace TIE;
 
 void DegreeGuide::initialize() {
 	this->setName("DegreeGuide");
-	const FontAsset& font = AssetsManager::Instance()->getFont("DevConsole.ttf");
+	const FontAsset& font = AssetsManager::Instance()->getFont(ConfigManager::Instance()->getEngineFontName());
 	const sf::Vector2i windowSize = WindowManager::Instance()->getWindowSize();
 	const bool drawn = ConfigManager::Instance()->getShowDegreeGuide();
 

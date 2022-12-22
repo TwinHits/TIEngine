@@ -7,6 +7,7 @@
 
 #include "objects/components/TextComponent.h"
 #include "managers/AssetsManager.h"
+#include "managers/ConfigManager.h"
 #include "managers/SceneManager.h"
 #include "managers/TimeManager.h"
 #include "managers/WindowManager.h"
@@ -21,7 +22,7 @@ void PerformanceDisplay::initialize() {
 
 	const sf::Vector2i windowSize = WindowManager::Instance()->getWindowSize();
 	this->textComponent.setDrawn(true);
-	this->textComponent.setFont(AssetsManager::Instance()->getFont("DevConsole.tff"));
+	this->textComponent.setFont(AssetsManager::Instance()->getFont(ConfigManager::Instance()->getEngineFontName()));
 	this->textComponent.setCharacterSize(16);
 	this->textComponent.setPosition(0 - windowSize.x / 2 + 5, 0 - windowSize.y / 2);
 }

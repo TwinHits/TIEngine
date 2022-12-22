@@ -8,6 +8,7 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "managers/ConfigManager.h"
 #include "objects/components/TextComponent.h"
 #include "objects/components/PositionComponent.h"
 #include "objects/factories/TIEntityFactory.h"
@@ -43,7 +44,7 @@ class TextComponentSystem : public Singleton<TextComponentSystem>, public Compon
 		static const inline std::string SHOW_WIREFRAME = "text.showWireframe";
 
 		static const inline bool SHOW_WIREFRAME_DEFAULT = false;
-		static const inline std::string FONT_DEFAULT = "DevConsole.ttf";
+		static const inline std::string FONT_DEFAULT = ConfigManager::Instance()->getEngineFontName();
 
 	private:		
 		struct Components {
