@@ -11,19 +11,18 @@
 #include "managers/TimeManager.h"
 #include "managers/WindowManager.h"
 
-int main() {
-	TIE::StartUpManager::Instance()->initialize();
-	
-	sf::RenderWindow& window = TIE::WindowManager::Instance()->getWindow();
+using namespace TIE;
 
-	sf::Clock& gameClock = TIE::TimeManager::Instance()->addClock();
+int main() {
+	StartUpManager::Instance()->initialize();
+	
+	sf::RenderWindow& window = WindowManager::Instance()->getWindow();
+	sf::Clock& gameClock = TimeManager::Instance()->addClock();
 	while (window.isOpen()) {
 		if (gameClock.getElapsedTime().asSeconds() >= 0.01666666666f) { // 60 FPS frame rate
-			TIE::EventsManager::Instance()->processEvents();
-			TIE::SceneManager::Instance()->updateGameState(gameClock.restart().asSeconds());
+			EventsManager::Instance()->processEvents();
+			SceneManager::Instance()->updateGameState(gameClock.restart().asSeconds());
+			SceneManager::Instance()->render();		
 		}
-            
-		TIE::SceneManager::Instance()->render();		
-
 	}
 }
