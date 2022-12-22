@@ -12,6 +12,7 @@
 #include "managers/ViewManager.h"
 #include "managers/WindowManager.h"
 #include "objects/SceneLayer.h"
+#include "objects/assets/FontAsset.h"
 #include "objects/components/SpriteComponent.h" 
 #include "objects/components/TextComponent.h" 
 #include "templates/MakeUnique.h"
@@ -20,7 +21,6 @@
 using namespace TIE;
 
 DevConsole::DevConsole() :
-	font(AssetsManager::Instance()->getFont("DevConsole.ttf")),
 	currentCommand(this->attachChild(make_unique<TIEntity>())),
 	consoleHistorySceneLayer(dynamic_cast<SceneLayer&>(this->attachChild(make_unique<SceneLayer>()))),
 	consoleHistory(this->consoleHistorySceneLayer.attachChild(make_unique<TIEntity>())) {
@@ -29,6 +29,7 @@ DevConsole::DevConsole() :
 
 void DevConsole::initialize() {
 	sf::Vector2i windowSize = TIE::WindowManager::Instance()->getWindowSize();
+	const FontAsset& font = AssetsManager::Instance()->getFont("DevConsole.tff");
 
 	// DevConsole Entity
 	this->setName("DevConsole");
@@ -59,7 +60,7 @@ void DevConsole::initialize() {
 	// Command History Entity
 	this->consoleHistory.setName("Console History");
 	TextComponent& historyTextComponent = TextComponentSystem::Instance()->addComponent(this->consoleHistory);
-	historyTextComponent.setFont(this->font);
+	historyTextComponent.setFont(font);
 	historyTextComponent.setCharacterSize(this->fontSize);
 	historyTextComponent.setTextAlignment(TextAlignment::TOP_LEFT);
 	historyTextComponent.setString("Initialized Developer console.");
@@ -73,7 +74,7 @@ void DevConsole::initialize() {
 	currentCommandPositionComponent.position.y = devConsoleBounds.height;
 
 	TextComponent& currentCommandTextComponent = TextComponentSystem::Instance()->addComponent(this->currentCommand);
-	currentCommandTextComponent.setFont(this->font);
+	currentCommandTextComponent.setFont(font);
 	currentCommandTextComponent.setCharacterSize(this->fontSize);
 	currentCommandTextComponent.setTextAlignment(TextAlignment::BOTTOM_LEFT);
 	currentCommandTextComponent.setDrawn(true);

@@ -6,6 +6,7 @@
 #include "managers/ConfigManager.h"
 #include "managers/WindowManager.h"
 #include "objects/components/TextComponent.h"
+#include "objects/assets/FontAsset.h"
 #include "templates/MakeUnique.h"
 #include "utils/TIEMath.h"
 
@@ -13,7 +14,7 @@ using namespace TIE;
 
 void DegreeGuide::initialize() {
 	this->setName("DegreeGuide");
-	const sf::Font& font = AssetsManager::Instance()->getFont("DevConsole.ttf");
+	const FontAsset& font = AssetsManager::Instance()->getFont("DevConsole.ttf");
 	const sf::Vector2i windowSize = WindowManager::Instance()->getWindowSize();
 	const bool drawn = ConfigManager::Instance()->getShowDegreeGuide();
 

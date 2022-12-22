@@ -3,6 +3,9 @@
 #include "managers/ConfigManager.h"
 #include "managers/LogManager.h"
 #include "managers/HashManager.h"
+#include "objects/GlobalId.h"
+#include "objects/assets/FontAsset.h"
+#include "templates/MakeUnique.h"
 
 using namespace TIE;
 
@@ -49,17 +52,17 @@ const sf::SoundBuffer& AssetsManager::getAudio(const std::string& name) {
 }
 
 
-const sf::Font& AssetsManager::getFont(GlobalId id) {
+const FontAsset& AssetsManager::getFont(GlobalId id) {
 	if (this->fonts.find(id) != this->fonts.end()) {
-		return this->fonts[id];
+		return *this->fonts[id];
 	} else {
 		LogManager::Instance()->error("Cannot open font '" + std::to_string(id) + "'.");
-		return this->fonts[HashManager::Instance()->getHash("missing_font.png")];
+		return *this->fonts[HashManager::Instance()->getHash("DevConsole.ttf")];
 	}
 }
 
 
-const sf::Font& AssetsManager::getFont(const std::string& name) { 
+const FontAsset& AssetsManager::getFont(const std::string& name) { 
 	GlobalId id = HashManager::Instance()->getHash(name);
 	return this->getFont(id);
 }
@@ -152,13 +155,12 @@ bool AssetsManager::loadFontsFromPath(const boost::filesystem::path& path) {
 		if (boost::filesystem::exists(path) && boost::filesystem::is_directory(path)) {
 			for (boost::filesystem::directory_entry& file : boost::filesystem::directory_iterator(path)) {
 				if (!boost::filesystem::is_directory(file)) {
-                    sf::Font font;
-                    if (font.loadFromFile(file.path().string())) {
-                        GlobalId id = HashManager::Instance()->getHash(file.path().filename().string());
-                        this->fonts[id] = font;
+					const std::string filename = file.path().filename().string();
+					GlobalId id = HashManager::Instance()->getHash(filename);
+					this->fonts[id] = TIE::make_unique<FontAsset>(filename, id);
+                    if (this->fonts[id]->loadFromFile(file.path().string())) {
                         LogManager::Instance()->info("Loaded font '" + file.path().string() + "'. Id: " + std::to_string(id));
-                    }
-                    else {
+                    } else {
 						LogManager::Instance()->error("SFML Font load error: Cannot load " + file.path().string());
 					}
 				} else {

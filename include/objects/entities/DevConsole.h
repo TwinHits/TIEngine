@@ -28,7 +28,6 @@ class DevConsole : public TIEntity {
 		void resetWritePosition();
 
 	private:
-		const sf::Font& font;
 		TIEntity& currentCommand;
 		SceneLayer& consoleHistorySceneLayer;
 		TIEntity& consoleHistory;

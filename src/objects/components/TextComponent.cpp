@@ -2,12 +2,13 @@
 
 #include "componentsystems/TextComponentSystem.h"
 #include "managers/AssetsManager.h"
+#include "objects/assets/FontAsset.h"
 #include "objects/enumeration/TextAlignment.h"
 
 using namespace TIE;
 
 TextComponent::TextComponent() {
-	const sf::Font& font = TIE::AssetsManager::Instance()->getFont("font.tff");
+	const FontAsset& font = AssetsManager::Instance()->getFont(TextComponentSystem::FONT_DEFAULT);
 	this->setFont(font);
 	this->setCharacterSize(14);
 	this->setString("NO_TEXT");
@@ -40,6 +41,22 @@ void TextComponent::setTextAlignment(TextAlignment textAlignment) {
 
 TextAlignment TextComponent::getTextAlignment() const {
 	return this->textAlignment;
+}
+
+
+void TextComponent::setFont(const FontAsset& fontAsset) {
+	this->fontAsset = &fontAsset;
+	this->sf::Text::setFont(fontAsset);
+}
+
+
+const FontAsset& TextComponent::getFont() {
+	return *this->fontAsset;
+}
+
+
+const FontAsset& TextComponent::getFont() const {
+	return *this->fontAsset;
 }
 
 

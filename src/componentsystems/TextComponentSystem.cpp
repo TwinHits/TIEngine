@@ -6,6 +6,8 @@
 
 #include "componentsystems/PositionComponentSystem.h"
 #include "componentsystems/ShapeComponentSystem.h"
+#include "managers/AssetsManager.h"
+#include "objects/assets/FontAsset.h"
 #include "objects/components/TextComponent.h"
 #include "objects/components/PositionComponent.h"
 #include "objects/entities/TIEntity.h"
@@ -40,13 +42,19 @@ TextComponent& TextComponentSystem::addComponent(const TIEntityFactory& factory,
     TextComponent& textComponent = this->addComponent(tientity);
 
 	bool drawn = ComponentSystems::getFactoryValue<bool>(factory, TextComponentSystem::DRAWN, textComponent.isDrawn(), tientity);
-	float characterSize = ComponentSystems::getFactoryValue<float>(factory, TextComponentSystem::CHARACTER_SIZE, textComponent.getCharacterSize(), tientity);
-	std::string text = ComponentSystems::getFactoryValue<std::string>(factory, TextComponentSystem::STRING, textComponent.getText().getString(), tientity);
-	TextAlignment textAlignment = TIE::String::strToTextAlignment(ComponentSystems::getFactoryValue<std::string>(factory, TextComponentSystem::TEXT_ALIGNMENT, TIE::String::textAlignmentToStr(textComponent.getTextAlignment()), tientity));
-
     textComponent.setDrawn(drawn);
-    textComponent.setCharacterSize(characterSize);
+
+	const std::string& text = ComponentSystems::getFactoryValue<std::string>(factory, TextComponentSystem::STRING, textComponent.getText().getString(), tientity);
     textComponent.setString(text);
+
+	const std::string& fontName = ComponentSystems::getFactoryValue<std::string>(factory, TextComponentSystem::FONT, TextComponentSystem::FONT_DEFAULT, tientity);
+	const FontAsset& font = AssetsManager::Instance()->getFont(fontName);
+	textComponent.setFont(font);
+
+	float characterSize = ComponentSystems::getFactoryValue<float>(factory, TextComponentSystem::CHARACTER_SIZE, textComponent.getCharacterSize(), tientity);
+    textComponent.setCharacterSize(characterSize);
+
+	TextAlignment textAlignment = TIE::String::strToTextAlignment(ComponentSystems::getFactoryValue<std::string>(factory, TextComponentSystem::TEXT_ALIGNMENT, TIE::String::textAlignmentToStr(textComponent.getTextAlignment()), tientity));
 	textComponent.setTextAlignment(textAlignment);
 
 	bool showWireframe = ComponentSystems::getFactoryValue<bool>(factory, TextComponentSystem::SHOW_WIREFRAME, TextComponentSystem::SHOW_WIREFRAME_DEFAULT, tientity);
@@ -110,6 +118,8 @@ bool TextComponentSystem::setComponentProperty(const std::string& key, const std
 			component->setString(value);
 		} else if (key == TextComponentSystem::TEXT_ALIGNMENT) {
 			component->setTextAlignment(TIE::String::strToTextAlignment(value));
+		} else if (key == TextComponentSystem::FONT) {
+			component->setFont(AssetsManager::Instance()->getFont(value));
 		}
 	}
     return false;
@@ -125,6 +135,8 @@ sol::object TextComponentSystem::getComponentProperty(const std::string& key, TI
 			return ScriptManager::Instance()->getObjectFromValue(component->getCharacterSize());
 		} else if (key == TextComponentSystem::TEXT_ALIGNMENT) {
 			return ScriptManager::Instance()->getObjectFromValue(TIE::String::textAlignmentToStr(component->getTextAlignment()));
+		} else if (key == TextComponentSystem::FONT) {
+			return ScriptManager::Instance()->getObjectFromValue(component->getFont().getName());
 		}
 	}
 	return ScriptManager::Instance()->getObjectFromValue(nullptr);
@@ -134,6 +146,7 @@ sol::object TextComponentSystem::getComponentProperty(const std::string& key, TI
 ComponentSystems::ComponentSystemPropertiesMap& TextComponentSystem::populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap& map) {
 	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::DRAWN, map);
 	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::STRING, map);
+	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::FONT, map);
 	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::OFFSET_X, map);
 	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::OFFSET_Y, map);
 	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::TEXT_ALIGNMENT, map);

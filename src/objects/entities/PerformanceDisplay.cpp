@@ -15,16 +15,17 @@ using namespace TIE;
 
 PerformanceDisplay::PerformanceDisplay() : clock(TimeManager::Instance()->addClock()) {}
 
+
 void PerformanceDisplay::initialize() {
 	this->setName("PerformanceDisplay");
 
-	const sf::Font& font = AssetsManager::Instance()->getFont("DevConsole.ttf");
 	const sf::Vector2i windowSize = WindowManager::Instance()->getWindowSize();
 	this->textComponent.setDrawn(true);
-	this->textComponent.setFont(font);
+	this->textComponent.setFont(AssetsManager::Instance()->getFont("DevConsole.tff"));
 	this->textComponent.setCharacterSize(16);
 	this->textComponent.setPosition(0 - windowSize.x / 2 + 5, 0 - windowSize.y / 2);
 }
+
 
 void PerformanceDisplay::update(const float delta) {
     std::stringstream ss;

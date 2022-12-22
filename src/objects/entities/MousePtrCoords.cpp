@@ -11,9 +11,7 @@
 
 using namespace TIE;
 
-MousePtrCoords::MousePtrCoords() :
-	font(AssetsManager::Instance()->getFont("DevConsole.ttf")) {
-}
+MousePtrCoords::MousePtrCoords() {}
 
 
 void MousePtrCoords::initialize() {
@@ -23,7 +21,7 @@ void MousePtrCoords::initialize() {
 
 	TextComponent& textComponent = this->addComponent<TextComponent>();
 	textComponent.setString("0, 0");
-	textComponent.setFont(font);
+	textComponent.setFont(AssetsManager::Instance()->getFont("DevConsole.tff"));
 	textComponent.setCharacterSize(14);
 	textComponent.setPosition(mouseWindowPosition.x + 20, mouseWindowPosition.y);
 	textComponent.setDrawn(ConfigManager::Instance()->getShowMousePtrCoords());
