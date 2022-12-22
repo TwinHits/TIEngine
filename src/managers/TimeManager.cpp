@@ -31,7 +31,7 @@ sf::Clock& TIE::TimeManager::addClock(GlobalId id) {
 		clocks[id] = clock; 
 		return clocks[id];
 	} else {
-		LogManager::Instance()->warn("Hash collision! Player '" + std::to_string(id) + "' already exists, recursively rehashing.");
+		LogManager::Instance()->warn("Hash collision! Clock '" + std::to_string(id) + "' already exists, recursively rehashing.");
 		return addClock();
 	}
 }
