@@ -22,16 +22,16 @@ using namespace TIE;
 void MovesComponentSystem::update(const float delta) {
 	for (auto& c : components) {
 
-		if (c.movesComponent.hasTargetPosition) {
-			this->accelerate(c.movesComponent, c.positionComponent, delta);
-			this->move(c.movesComponent, c.positionComponent, delta);
+        this->accelerate(c.movesComponent, c.positionComponent, delta);
+        this->move(c.movesComponent, c.positionComponent, delta);
 
-			if (c.movesComponent.rotates) {
+        if (c.movesComponent.rotates) {
+			if (!this->atTargetPosition(c.movesComponent, c.positionComponent)) {
 				this->setTargetRotation(c.movesComponent, c.positionComponent);
-				this->accelerateRotation(c.movesComponent, c.positionComponent, delta);
-				this->rotate(c.movesComponent, c.positionComponent, delta);
 			}
-		}
+            this->accelerateRotation(c.movesComponent, c.positionComponent, delta);
+            this->rotate(c.movesComponent, c.positionComponent, delta);
+        }
 	}
 }
 
@@ -59,7 +59,7 @@ MovesComponent& MovesComponentSystem::addComponent(const TIEntityFactory& factor
 	float rotates = ComponentSystems::getFactoryValue<bool>(factory, MovesComponentSystem::ROTATES, movesComponent.rotates, tientity);
 	float targetRotationalSpeed = ComponentSystems::getFactoryValue<float>(factory, MovesComponentSystem::ROTATIONAL_SPEED, movesComponent.targetRotationalSpeed, tientity);
 	float rotationalAcceleraton = ComponentSystems::getFactoryValue<float>(factory, MovesComponentSystem::ROTATIONAL_ACCELERATION, movesComponent.rotationalAcceleration, tientity);
-	float targetRotation = ComponentSystems::getFactoryValue<float>(factory, MovesComponentSystem::ROTATION, movesComponent.targetRotation, tientity);
+	float targetRotation = ComponentSystems::getFactoryValue<float>(factory, MovesComponentSystem::TARGET_ROTATION, movesComponent.targetRotation, tientity);
 
     movesComponent.targetSpeed = targetSpeed;
     movesComponent.acceleration = acceleration;
@@ -69,6 +69,7 @@ MovesComponent& MovesComponentSystem::addComponent(const TIEntityFactory& factor
 	movesComponent.targetRotation = targetRotation;
 	movesComponent.targetRotationalSpeed = targetRotationalSpeed;
 	movesComponent.rotationalAcceleration = rotationalAcceleraton;
+	this->setTargetRotationDirection(movesComponent, positionComponent);
 	
 	return movesComponent;
 }
@@ -115,8 +116,9 @@ bool MovesComponentSystem::setComponentProperty(const std::string& key, float va
 			movesComponent->acceleration = value;
 		} else if (key == MovesComponentSystem::ROTATIONAL_SPEED) {
 			movesComponent->rotationalVelocity.x = value;
-		} else if (key == MovesComponentSystem::ROTATION) {
+		} else if (key == MovesComponentSystem::TARGET_ROTATION) {
 			movesComponent->targetRotation = value;
+			this->setTargetRotationDirection(*movesComponent, *tientity.getComponent<PositionComponent>());
 		} else if (key == MovesComponentSystem::DESTINATION) {
 			this->setTargetPosition(tientity, value);
 		} else if (key == MovesComponentSystem::ROTATIONAL_ACCELERATION) {
@@ -154,6 +156,8 @@ sol::object MovesComponentSystem::getComponentProperty(const std::string& key, T
 	if (component != nullptr) {
 		if (key == MovesComponentSystem::AT_DESTINATION) {
 			return ScriptManager::Instance()->getObjectFromValue(this->atTargetPosition(tientity));
+		} else if (key == MovesComponentSystem::AT_ROTATION) {
+			return ScriptManager::Instance()->getObjectFromValue(this->atTargetRotation(tientity));
 		} else if (key == MovesComponentSystem::SPEED) {
 			return ScriptManager::Instance()->getObjectFromValue(component->speed);
 		} else if (key == MovesComponentSystem::ROTATIONAL_SPEED) {
@@ -178,11 +182,11 @@ ComponentSystems::ComponentSystemPropertiesMap& MovesComponentSystem::populateCo
 	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::DECELERATION, map);
 	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::ROTATES, map);
 	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::ROTATIONAL_SPEED, map);
-	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::ROTATION, map);
+	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::ROTATIONAL_ACCELERATION, map);
 	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::DESTINATION, map);
 	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::AT_DESTINATION, map);
 	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::TARGET_ROTATION, map);
-	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::ROTATIONAL_ACCELERATION, map);
+	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::AT_ROTATION, map);
 	return map;
 }
 
@@ -198,8 +202,7 @@ void MovesComponentSystem::setTargetPosition(TIEntity& tientity, const sf::Vecto
 		}
 
 		movesComponent->targetPosition = normalizedPosition;
-		movesComponent->hasTargetPosition = true;
-
+		this->setTargetRotation(*movesComponent, *positionComponent);
 	}
 }
 
@@ -219,11 +222,14 @@ void MovesComponentSystem::setTargetPosition(TIEntity& tientity, float distance)
 
 
 void MovesComponentSystem::setTargetRotation(MovesComponent& movesComponent, PositionComponent& positionComponent) {
-	if (!this->atTargetPosition(movesComponent, positionComponent)) {
-		movesComponent.targetRotation = Math::angleBetweenTwoPoints(positionComponent.position, movesComponent.targetPosition);
-        movesComponent.rotationalVelocity.y = Math::directionFromAngleToAngle(positionComponent.rotation, movesComponent.targetRotation);
-		movesComponent.hasTargetRotation = true;
-	}
+    movesComponent.targetRotation = Math::angleBetweenTwoPoints(positionComponent.position, movesComponent.targetPosition);
+	this->setTargetRotationDirection(movesComponent, positionComponent);
+    movesComponent.hasTargetRotation = true;
+}
+
+
+void MovesComponentSystem::setTargetRotationDirection(MovesComponent& movesComponent, PositionComponent& positionComponent) {
+    movesComponent.rotationalVelocity.y = Math::directionFromAngleToAngle(positionComponent.rotation, movesComponent.targetRotation);
 }
 
 
@@ -239,16 +245,23 @@ bool MovesComponentSystem::atTargetPosition(TIEntity& tientity) {
 
 
 bool MovesComponentSystem::atTargetPosition(MovesComponent& movesComponent, PositionComponent& positionComponent) {
-	bool result = Math::areVectorsEqual(movesComponent.targetPosition, positionComponent.position);
-	if (result) {
-		movesComponent.hasTargetPosition = false;
-	}
-	return result;
+	return Math::areVectorsEqual(movesComponent.targetPosition, positionComponent.position);
 }
 
 
 bool MovesComponentSystem::atTargetSpeed(MovesComponent& movesComponent) {
 	return Math::areFloatsEqual(movesComponent.speed, movesComponent.targetSpeed);
+}
+
+
+bool MovesComponentSystem::atTargetRotation(TIEntity& tientity) {
+    MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
+    PositionComponent* positionComponent = tientity.getComponent<PositionComponent>();
+    if (movesComponent != nullptr && positionComponent != nullptr) {
+		return this->atTargetRotation(*movesComponent, *positionComponent);
+	} else {
+		return false;
+	}
 }
 
 
@@ -285,7 +298,7 @@ void MovesComponentSystem::accelerate(MovesComponent& movesComponent, PositionCo
 
 
 void MovesComponentSystem::accelerateRotation(MovesComponent& movesComponent, PositionComponent& positionComponent, const float delta) {
-	if (!this->atTargetRotation(movesComponent, positionComponent) && !this->atTargetPosition(movesComponent, positionComponent)) {
+	if (!this->atTargetRotation(movesComponent, positionComponent)) {
         if (Math::areFloatsEqual(movesComponent.rotationalAcceleration, 0.0f)) {
             movesComponent.rotationalVelocity.x = movesComponent.targetRotationalSpeed * movesComponent.rotationalVelocity.y;
         } else {
@@ -312,10 +325,12 @@ void MovesComponentSystem::rotate(MovesComponent& movesComponent, PositionCompon
 	if (!this->atTargetRotation(movesComponent, positionComponent)) {
         float distance = movesComponent.rotationalVelocity.x * delta;
         float newRotation = positionComponent.rotation + distance;
-        if (!Math::isAngleBetweenAngles(movesComponent.targetRotation, positionComponent.rotation, newRotation)) {
-            positionComponent.rotation = newRotation;
-        } else {
+        if (Math::areFloatsEqual(newRotation, movesComponent.targetRotation) ||
+			Math::isAngleBetweenAngles(movesComponent.targetRotation, positionComponent.rotation, newRotation)
+		) {
             positionComponent.rotation = movesComponent.targetRotation;
+        } else {
+            positionComponent.rotation = newRotation;
         }
 	}
 } 

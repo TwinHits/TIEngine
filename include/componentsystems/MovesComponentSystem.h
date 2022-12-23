@@ -37,6 +37,7 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, public Comp
 		void setTargetPosition(TIEntity&, float);
 
 		bool atTargetPosition(TIEntity&);
+		bool atTargetRotation(TIEntity&);
 
 		static const inline std::string MOVES = "moves";
 		static const inline std::string SPEED = "moves.speed";
@@ -44,13 +45,13 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, public Comp
 		static const inline std::string DECELERATION = "moves.deceleration";
 
 		static const inline std::string ROTATES = "moves.rotates";
-		static const inline std::string ROTATION = "moves.rotation";
 		static const inline std::string ROTATIONAL_SPEED = "moves.rotationalSpeed";
 		static const inline std::string ROTATIONAL_ACCELERATION = "moves.rotationalAcceleration";
 
 		static const inline std::string DESTINATION = "moves.destination";
 		static const inline std::string AT_DESTINATION = "moves.atDestination";
 		static const inline std::string TARGET_ROTATION = "moves.targetRotation";
+		static const inline std::string AT_ROTATION = "moves.atRotation";
 	private:
 		struct Components {
 			MovesComponent& movesComponent;
@@ -59,6 +60,7 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, public Comp
 		std::list<Components> components;
 
 		void setTargetRotation(MovesComponent&, PositionComponent&);
+		void setTargetRotationDirection(MovesComponent&, PositionComponent&);
 
 		bool atTargetPosition(MovesComponent&, PositionComponent&);
 		bool atTargetSpeed(MovesComponent&);

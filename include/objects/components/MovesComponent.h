@@ -20,10 +20,8 @@ class MovesComponent : public Component {
 		sf::Vector2f rotationalVelocity = sf::Vector2f(0, 0);
 		float rotationalAcceleration = 0.0f;
 
-		bool hasTargetPosition = false;
 		sf::Vector2f targetPosition = sf::Vector2f(0, 0);
 
-		bool hasTargetRotation = false;
 		float targetRotation = 0.0f;
 
 		float targetSpeed = 0.0f;
