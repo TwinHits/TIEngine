@@ -33,8 +33,8 @@ class SpriteComponentSystem : public Singleton<SpriteComponentSystem>, public Co
 		static const inline std::string TEXTURE = "sprite.texture";
 		static const inline std::string WIDTH = "sprite.width";
 		static const inline std::string HEIGHT = "sprite.height";
-		static const inline std::string ORIGIN_X_OFFSET = "sprite.originOffset.x";
-		static const inline std::string ORIGIN_Y_OFFSET = "sprite.originOffset.y";
+		static const inline std::string ORIGIN_X = "sprite.origin.x";
+		static const inline std::string ORIGIN_Y = "sprite.origin.y";
 		static const inline std::string REPEATED = "sprite.repeated";
 		static const inline std::string ROTATES = "sprite.rotates";
 		static const inline std::string SHOW_WIREFRAME = "sprite.showWireframe";

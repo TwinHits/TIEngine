@@ -55,6 +55,10 @@ SpriteComponent& SpriteComponentSystem::addComponent(const TIEntityFactory& fact
 	float height = ComponentSystems::getFactoryValue<float>(factory, SpriteComponentSystem::HEIGHT, texture.getSize().y, tientity);
 	this->calcluateTextureFields(spriteComponent, width, height);
 
+	float originX = ComponentSystems::getFactoryValue<float>(factory, SpriteComponentSystem::ORIGIN_X, spriteComponent.getOrigin().x, tientity);
+	float originY = ComponentSystems::getFactoryValue<float>(factory, SpriteComponentSystem::ORIGIN_Y, spriteComponent.getOrigin().y, tientity);
+	spriteComponent.setOrigin(originX, originY);
+
 	bool drawn = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::DRAWN, spriteComponent.isDrawn(), tientity);
     spriteComponent.setDrawn(drawn);
 
@@ -131,8 +135,8 @@ ComponentSystems::ComponentSystemPropertiesMap& SpriteComponentSystem::populateC
 	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::TEXTURE, map);
 	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::WIDTH, map);
 	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::HEIGHT, map);
-	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::ORIGIN_X_OFFSET, map);
-	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::ORIGIN_Y_OFFSET, map);
+	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::ORIGIN_X, map);
+	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::ORIGIN_Y, map);
 	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::REPEATED, map);
 	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::ROTATES, map);
 	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::SHOW_WIREFRAME, map);
