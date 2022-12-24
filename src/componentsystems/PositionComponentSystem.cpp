@@ -37,8 +37,8 @@ PositionComponent& PositionComponentSystem::addComponent(TIEntity& tientity) {
 PositionComponent& PositionComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
     PositionComponent& positionComponent = this->addComponent(tientity);
 
-	float x = ComponentSystems::getFactoryValue<float>(factory, PositionComponentSystem::X, positionComponent.position.x, tientity);
-	float y = ComponentSystems::getFactoryValue<float>(factory, PositionComponentSystem::Y, positionComponent.position.y, tientity);
+	float x = ComponentSystems::getFactoryValue<float>(factory, PositionComponentSystem::POSITION_X, positionComponent.position.x, tientity);
+	float y = ComponentSystems::getFactoryValue<float>(factory, PositionComponentSystem::POSITION_Y, positionComponent.position.y, tientity);
 	float rotation = ComponentSystems::getFactoryValue<float>(factory, PositionComponentSystem::ROTATION, positionComponent.rotation, tientity);
 	bool rotates = ComponentSystems::getFactoryValue<bool>(factory, PositionComponentSystem::ROTATES, positionComponent.rotates, tientity);
 
@@ -100,8 +100,6 @@ sol::object PositionComponentSystem::getComponentProperty(const std::string& key
 
 
 ComponentSystems::ComponentSystemPropertiesMap& PositionComponentSystem::populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap& map) {
-    ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::X, map);
-    ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::Y, map);
     ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::ROTATION, map);
     ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::ROTATES, map);
     ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::POSITION_POSITION, map);
