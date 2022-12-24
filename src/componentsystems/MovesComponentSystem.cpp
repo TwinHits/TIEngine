@@ -224,7 +224,6 @@ void MovesComponentSystem::setTargetPosition(TIEntity& tientity, float distance)
 void MovesComponentSystem::setTargetRotation(MovesComponent& movesComponent, PositionComponent& positionComponent) {
     movesComponent.targetRotation = Math::angleBetweenTwoPoints(positionComponent.position, movesComponent.targetPosition);
 	this->setTargetRotationDirection(movesComponent, positionComponent);
-    movesComponent.hasTargetRotation = true;
 }
 
 
