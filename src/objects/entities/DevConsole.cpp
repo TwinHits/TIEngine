@@ -41,9 +41,10 @@ void DevConsole::initialize() {
 
 	SpriteComponent& spriteComponent = SpriteComponentSystem::Instance()->addComponent(*this);
 	const sf::Texture& texture = AssetsManager::Instance()->getTexture("dev_console.png");
-	const sf::Vector2u& textureSize = texture.getSize();
-	float scalex = float(windowSize.x) / float(textureSize.x);
-	float scaley = float(windowSize.y/2.0f) / float(textureSize.y);
+	spriteComponent.setTexture(texture);
+	const sf::FloatRect& bounds = spriteComponent.getLocalBounds();
+	float scalex = float(windowSize.x) / float(bounds.width);
+	float scaley = float(windowSize.y/2.0f) / float(bounds.height);
 	const sf::Vector2f scale = sf::Vector2f(scalex, scaley);
 	spriteComponent.scale(scale);
 	spriteComponent.setOrigin(0,0);
