@@ -51,13 +51,13 @@ SpriteComponent& SpriteComponentSystem::addComponent(const TIEntityFactory& fact
 	bool repeated = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::REPEATED, texture.isRepeated(), tientity);
     texture.setRepeated(repeated);
 	
+	float originX = ComponentSystems::getFactoryValue<float>(factory, SpriteComponentSystem::ORIGIN_X, spriteComponent.getLocalBounds().width/2, tientity);
+	float originY = ComponentSystems::getFactoryValue<float>(factory, SpriteComponentSystem::ORIGIN_Y, spriteComponent.getLocalBounds().height/2, tientity);
+	spriteComponent.setOrigin(originX, originY);
+
 	float width = ComponentSystems::getFactoryValue<float>(factory, SpriteComponentSystem::WIDTH, texture.getSize().x, tientity);
 	float height = ComponentSystems::getFactoryValue<float>(factory, SpriteComponentSystem::HEIGHT, texture.getSize().y, tientity);
 	this->calcluateTextureFields(spriteComponent, width, height);
-
-	float originX = ComponentSystems::getFactoryValue<float>(factory, SpriteComponentSystem::ORIGIN_X, spriteComponent.getOrigin().x, tientity);
-	float originY = ComponentSystems::getFactoryValue<float>(factory, SpriteComponentSystem::ORIGIN_Y, spriteComponent.getOrigin().y, tientity);
-	spriteComponent.setOrigin(originX, originY);
 
 	bool drawn = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::DRAWN, spriteComponent.isDrawn(), tientity);
     spriteComponent.setDrawn(drawn);
@@ -149,6 +149,7 @@ void SpriteComponentSystem::calcluateTextureFields(SpriteComponent& spriteCompon
 	const sf::Texture* texture = spriteComponent.getTexture();
 	if (texture != nullptr) {
 		const sf::Vector2f& scaledSize = spriteComponent.getScaledSize();
+		bool isCenterOrigin = spriteComponent.isCenterOrigin();
 
 		if (!Math::areFloatsEqual(width, scaledSize.x) && Math::areFloatsEqual(height, scaledSize.y)) {
 			height = scaledSize.y * (width / scaledSize.x);
@@ -167,7 +168,9 @@ void SpriteComponentSystem::calcluateTextureFields(SpriteComponent& spriteCompon
 			spriteComponent.scale(sf::Vector2f(xScale, yScale));
 		}
 
-		spriteComponent.setOrigin(spriteComponent.getLocalBounds().width / 2, spriteComponent.getLocalBounds().height / 2);
+		if (isCenterOrigin) {
+			spriteComponent.setOrigin(spriteComponent.getLocalBounds().width / 2, spriteComponent.getLocalBounds().height / 2);
+		}
 	}
 
 }

@@ -20,6 +20,8 @@ namespace TIE {
 			const sf::Sprite& getSprite();
 
 			const sf::Vector2f getScaledSize();
+
+			bool isCenterOrigin();
 		private: 
 			bool drawn = true;
 			bool rotates = true;
