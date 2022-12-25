@@ -102,15 +102,15 @@ void ConfigManager::parseConfig(std::ifstream& config) {
 			std::getline(fileline, value);	
 
 			if (key == "DebugLogPath") {
-				debugLogPath = value;
+				this->debugLogPath = value;
 			} else if (key == "AssetsPath") { 
-				assetsPath = value; 
+				this->assetsPath = value; 
 			} else if (key == "DebugLogLevel") { 
-				debugLogLevel = String::strToLogLevel(value); 
+				this->debugLogLevel = String::strToLogLevel(value); 
 			} else if (key == "DefaultDisplayLanguage") { 
-				defaultDisplayLanguage = String::parseLanguageString(value); 
+				this->defaultDisplayLanguage = String::parseLanguageString(value); 
 			} else if (key == "ShowMousePtrCoords") {
-				this->showDegreeGuide = TIE::String::stringToBool(value);
+				this->showMousePtrCoords = TIE::String::stringToBool(value);
 			} else if (key == "ShowDegreeGuide") {
 				this->showDegreeGuide = TIE::String::stringToBool(value);
 			} else if (key == "StartUpScript") {

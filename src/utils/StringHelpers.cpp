@@ -64,7 +64,7 @@ int TIE::String::stringToInt(std::string& s) {
 
 
 bool TIE::String::stringToBool(std::string& s) {
-    return s == "True";
+    return s == "true";
 }
 
 
