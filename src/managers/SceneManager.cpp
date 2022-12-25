@@ -53,23 +53,25 @@ bool SceneManager::initialize() {
 	performanceDisplay->initialize();
 	this->engineLayer->attachChild(std::move(performanceDisplay));
 
-	// Component System registration and order of update
+	// Component System registration, order of initialization, and order of update
 	// Update data operations
 	this->componentSystems.push_back(EventsComponentSystem::Instance());
 	this->componentSystems.push_back(LifecycleComponentSystem::Instance());
 	this->componentSystems.push_back(CacheComponentSystem::Instance());
 
 	// Update Position Operations
-	this->componentSystems.push_back(CollidesComponentSystem::Instance());
-	this->componentSystems.push_back(MovesComponentSystem::Instance());
-	this->componentSystems.push_back(GridComponentSystem::Instance());
 	this->componentSystems.push_back(PositionComponentSystem::Instance());
+	this->componentSystems.push_back(MovesComponentSystem::Instance());
 
 	// Drawing operations
-	this->componentSystems.push_back(AnimatedComponentSystem::Instance());
 	this->componentSystems.push_back(SpriteComponentSystem::Instance());
+	this->componentSystems.push_back(AnimatedComponentSystem::Instance());
 	this->componentSystems.push_back(TextComponentSystem::Instance());
 	this->componentSystems.push_back(ShapeComponentSystem::Instance());
+
+	// Other Operations
+	this->componentSystems.push_back(GridComponentSystem::Instance());
+	this->componentSystems.push_back(CollidesComponentSystem::Instance());
 
 	//this->componentSystemPropertiesMap = ScriptManager::Instance()->getNewTable();
 	for (ComponentSystem* componentSystem : SceneManager::Instance()->getComponentSystems()) {

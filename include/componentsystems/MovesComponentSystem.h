@@ -33,8 +33,9 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, public Comp
 		sol::object getComponentProperty(const std::string&, TIEntity&);
 		ComponentSystems::ComponentSystemPropertiesMap& populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap&);
 
-		void setTargetPosition(TIEntity&, const sf::Vector2f&);
 		void setTargetPosition(TIEntity&, float);
+		void setTargetPosition(TIEntity&, const sf::Vector2f&);
+		void setTargetPosition(MovesComponent&, PositionComponent&, const sf::Vector2f&);
 
 		bool atTargetPosition(TIEntity&);
 		bool atTargetRotation(TIEntity&);
@@ -49,6 +50,8 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, public Comp
 		static const inline std::string ROTATIONAL_ACCELERATION = "moves.rotationalAcceleration";
 
 		static const inline std::string DESTINATION = "moves.destination";
+		static const inline std::string DESTINATION_X = "moves.destination.x";
+		static const inline std::string DESTINATION_Y = "moves.destination.y";
 		static const inline std::string AT_DESTINATION = "moves.atDestination";
 		static const inline std::string TARGET_ROTATION = "moves.targetRotation";
 		static const inline std::string AT_ROTATION = "moves.atRotation";
