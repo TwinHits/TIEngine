@@ -38,6 +38,7 @@ class SpriteComponentSystem : public Singleton<SpriteComponentSystem>, public Co
 		static const inline std::string REPEATED = "sprite.repeated";
 		static const inline std::string ROTATES = "sprite.rotates";
 		static const inline std::string SHOW_WIREFRAME = "sprite.showWireframe";
+		static const inline std::string CONSTRAIN_PROPORTIONS = "sprite.constrainProportions";
 
 		static const inline std::string MISSING_TEXTURE_NAME = "missing_texture.png";
 		static const inline bool SHOW_WIREFRAME_DEFAULT = false;
@@ -48,7 +49,9 @@ class SpriteComponentSystem : public Singleton<SpriteComponentSystem>, public Co
 		};
 		std::list<Components> components;
 
-        void calcluateTextureFields(SpriteComponent&, float, float);
+        void setTextureFields(SpriteComponent&, const sf::Texture&);
+        void setTextureFields(SpriteComponent&, float, float);
+        void setTextureFields(SpriteComponent&, const sf::Texture&, float, float);
 };
 
 }

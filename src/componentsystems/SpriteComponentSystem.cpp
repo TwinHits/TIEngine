@@ -46,18 +46,20 @@ SpriteComponent& SpriteComponentSystem::addComponent(const TIEntityFactory& fact
 
 	std::string& textureName = ComponentSystems::getFactoryValue<std::string>(factory, SpriteComponentSystem::TEXTURE, SpriteComponentSystem::MISSING_TEXTURE_NAME, tientity);
     sf::Texture& texture = AssetsManager::Instance()->getTexture(textureName);
-    spriteComponent.setTexture(texture, true);
 
 	bool repeated = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::REPEATED, texture.isRepeated(), tientity);
     texture.setRepeated(repeated);
-	
-	float originX = ComponentSystems::getFactoryValue<float>(factory, SpriteComponentSystem::ORIGIN_X, spriteComponent.getLocalBounds().width/2, tientity);
-	float originY = ComponentSystems::getFactoryValue<float>(factory, SpriteComponentSystem::ORIGIN_Y, spriteComponent.getLocalBounds().height/2, tientity);
-	spriteComponent.setOrigin(originX, originY);
+
+	bool constrainProportions = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::CONSTRAIN_PROPORTIONS, spriteComponent.isConstrainProportions(), tientity);
+	spriteComponent.setConstrainProportions(constrainProportions);
 
 	float width = ComponentSystems::getFactoryValue<float>(factory, SpriteComponentSystem::WIDTH, texture.getSize().x, tientity);
 	float height = ComponentSystems::getFactoryValue<float>(factory, SpriteComponentSystem::HEIGHT, texture.getSize().y, tientity);
-	this->calcluateTextureFields(spriteComponent, width, height);
+	this->setTextureFields(spriteComponent, texture, width, height);
+
+	float originX = ComponentSystems::getFactoryValue<float>(factory, SpriteComponentSystem::ORIGIN_X, spriteComponent.getLocalBounds().width / 2, tientity);
+	float originY = ComponentSystems::getFactoryValue<float>(factory, SpriteComponentSystem::ORIGIN_Y, spriteComponent.getLocalBounds().height / 2, tientity);
+	spriteComponent.setOrigin(originX, originY);
 
 	bool drawn = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::DRAWN, spriteComponent.isDrawn(), tientity);
     spriteComponent.setDrawn(drawn);
@@ -96,7 +98,13 @@ const std::string& SpriteComponentSystem::getName() {
 
 
 bool SpriteComponentSystem::setComponentProperty(const std::string& key, bool value, TIEntity& tientity) {
-    return false;
+	SpriteComponent* component = tientity.getComponent<SpriteComponent>();
+	if (component != nullptr) {
+		if (key == SpriteComponentSystem::CONSTRAIN_PROPORTIONS) {
+			component->setConstrainProportions(value);
+		}
+	}
+	return false;
 }
 
 
@@ -104,9 +112,9 @@ bool SpriteComponentSystem::setComponentProperty(const std::string& key, float v
 	SpriteComponent* component = tientity.getComponent<SpriteComponent>();
 	if (component != nullptr) {
 		if (key == SpriteComponentSystem::WIDTH) {
-			this->calcluateTextureFields(*component, value, component->getScaledSize().y);
+			this->setTextureFields(*component, component->getLocalBounds().width, value);
 		} else if (key == SpriteComponentSystem::HEIGHT) {
-			this->calcluateTextureFields(*component, component->getScaledSize().x, value);
+			this->setTextureFields(*component, value, component->getLocalBounds().height);
 		}
 	}
 	return false;
@@ -117,8 +125,8 @@ bool SpriteComponentSystem::setComponentProperty(const std::string& key, const s
 	SpriteComponent* component = tientity.getComponent<SpriteComponent>();
 	if (component != nullptr) {
 		if (key == SpriteComponentSystem::TEXTURE) {
-			sf::Texture& texture = AssetsManager::Instance()->getTexture(value);
-			component->setTexture(texture, true);
+			const sf::Texture& texture = AssetsManager::Instance()->getTexture(value);
+			this->setTextureFields(*component, texture);
 		}
 	}
 	return false;
@@ -126,6 +134,12 @@ bool SpriteComponentSystem::setComponentProperty(const std::string& key, const s
 
 
 sol::object SpriteComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
+	SpriteComponent* component = tientity.getComponent<SpriteComponent>();
+	if (component != nullptr) {
+		if (key == SpriteComponentSystem::CONSTRAIN_PROPORTIONS) {
+			return ScriptManager::Instance()->getObjectFromValue(component->isConstrainProportions());
+		}
+	}
 	return ScriptManager::Instance()->getObjectFromValue(nullptr);
 }
 
@@ -140,37 +154,48 @@ ComponentSystems::ComponentSystemPropertiesMap& SpriteComponentSystem::populateC
 	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::REPEATED, map);
 	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::ROTATES, map);
 	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::SHOW_WIREFRAME, map);
+	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::CONSTRAIN_PROPORTIONS, map);
 	return map;
 }
 
 
-void SpriteComponentSystem::calcluateTextureFields(SpriteComponent& spriteComponent, float width, float height) {
+void SpriteComponentSystem::setTextureFields(SpriteComponent& spriteComponent, const sf::Texture& texture) {
+	return this->setTextureFields(spriteComponent, texture, spriteComponent.getLocalBounds().width, spriteComponent.getLocalBounds().height);
+}
 
-	const sf::Texture* texture = spriteComponent.getTexture();
-	if (texture != nullptr) {
-		const sf::Vector2f& scaledSize = spriteComponent.getScaledSize();
-		bool isCenterOrigin = spriteComponent.isCenterOrigin();
 
-		if (!Math::areFloatsEqual(width, scaledSize.x) && Math::areFloatsEqual(height, scaledSize.y)) {
-			height = scaledSize.y * (width / scaledSize.x);
+void SpriteComponentSystem::setTextureFields(SpriteComponent& spriteComponent, float width, float height) {
+	return this->setTextureFields(spriteComponent, *spriteComponent.getTexture(), width, height);
+}
+
+
+void SpriteComponentSystem::setTextureFields(SpriteComponent& spriteComponent, const sf::Texture& texture, float width, float height) {
+
+    bool isCenterOrigin = spriteComponent.isCenterOrigin();
+	spriteComponent.setTexture(texture, true);
+
+	if (spriteComponent.isConstrainProportions()) {
+		const sf::FloatRect& localBounds = spriteComponent.getLocalBounds();
+		if (!Math::areFloatsEqual(width, localBounds.width) && Math::areFloatsEqual(height, localBounds.height)) {
+			height = localBounds.height * (width / localBounds.width);
 		}
 
-		if (!Math::areFloatsEqual(height, scaledSize.y) && Math::areFloatsEqual(width, scaledSize.x)) {
-			width = scaledSize.x * (height / scaledSize.y);
+		if (!Math::areFloatsEqual(height, localBounds.height) && Math::areFloatsEqual(width, localBounds.width)) {
+			width = localBounds.width * (height / localBounds.height);
 		}
+	}
+	
+    if (texture.isRepeated()) {
+        spriteComponent.setTextureRect(sf::IntRect(0, 0, width, height));
+    } else {
+        // Only scale texture to the provided size if the texture is not repeated
+        float xScale = width / spriteComponent.getLocalBounds().width;
+        float yScale = height / spriteComponent.getLocalBounds().height;
+        spriteComponent.setScale(sf::Vector2f(xScale, yScale));
+    }
 
-		if (texture->isRepeated()) {
-			spriteComponent.setTextureRect(sf::IntRect(0, 0, width, height));
-		} else {
-			// Only scale texture to the provided size if the texture is not repeated
-			float xScale = width / scaledSize.x;
-			float yScale = height / scaledSize.y;
-			spriteComponent.scale(sf::Vector2f(xScale, yScale));
-		}
-
-		if (isCenterOrigin) {
-			spriteComponent.setOrigin(spriteComponent.getLocalBounds().width / 2, spriteComponent.getLocalBounds().height / 2);
-		}
+	if (isCenterOrigin) {
+		spriteComponent.setOrigin(spriteComponent.getLocalBounds().width / 2, spriteComponent.getLocalBounds().height / 2);
 	}
 
 }

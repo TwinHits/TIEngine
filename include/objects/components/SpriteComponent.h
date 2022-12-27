@@ -17,6 +17,9 @@ namespace TIE {
 			void setRotates(bool);
 			bool isRotates() const;
 
+			void setConstrainProportions(bool);
+			bool isConstrainProportions() const;
+
 			const sf::Sprite& getSprite();
 
 			const sf::Vector2f getScaledSize();
@@ -25,6 +28,7 @@ namespace TIE {
 		private: 
 			bool drawn = true;
 			bool rotates = true;
+			bool constrainProportions = true;
 	};
 }
 

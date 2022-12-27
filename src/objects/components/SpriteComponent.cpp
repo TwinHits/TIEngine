@@ -33,6 +33,17 @@ bool SpriteComponent::isRotates() const {
 }
 
 
+
+void SpriteComponent::setConstrainProportions(bool constrainProportions) {
+	this->constrainProportions = constrainProportions;
+}
+
+
+bool SpriteComponent::isConstrainProportions() const {
+	return this->constrainProportions;
+}
+
+
 const sf::Sprite& SpriteComponent::getSprite() {
 	return *dynamic_cast<sf::Sprite*>(this);
 }
