@@ -18,11 +18,30 @@
 
 using namespace TIE;
 
+SpriteComponentSystem::SpriteComponentSystem() {
+	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::DRAWN, this->componentPropertyMap);
+	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::TEXTURE, this->componentPropertyMap);
+	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::WIDTH, this->componentPropertyMap);
+	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::HEIGHT, this->componentPropertyMap);
+	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::ORIGIN_X, this->componentPropertyMap);
+	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::ORIGIN_Y, this->componentPropertyMap);
+	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::REPEATED, this->componentPropertyMap);
+	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::ROTATES, this->componentPropertyMap);
+	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::SHOW_WIREFRAME, this->componentPropertyMap);
+	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::CONSTRAIN_PROPORTIONS, this->componentPropertyMap);
+}
+
+
 void SpriteComponentSystem::update(const float delta) {
 	for (auto& c : this->components) {
 		c.spriteComponent.setPosition(c.positionComponent.worldPosition);
 		c.spriteComponent.setRotation(c.positionComponent.worldRotation);
 	}
+}
+
+
+bool SpriteComponentSystem::hasComponent(const TIEntity& tientity) {
+	return tientity.hasComponent<SpriteComponent>();
 }
 
 
@@ -102,6 +121,8 @@ bool SpriteComponentSystem::setComponentProperty(const std::string& key, bool va
 	if (component != nullptr) {
 		if (key == SpriteComponentSystem::CONSTRAIN_PROPORTIONS) {
 			component->setConstrainProportions(value);
+		} else if (key == SpriteComponentSystem::DRAWN) {
+			component->setDrawn(value);
 		}
 	}
 	return false;
@@ -141,21 +162,6 @@ sol::object SpriteComponentSystem::getComponentProperty(const std::string& key, 
 		}
 	}
 	return ScriptManager::Instance()->getObjectFromValue(nullptr);
-}
-
-
-ComponentSystems::ComponentSystemPropertiesMap& SpriteComponentSystem::populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap& map) {
-	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::DRAWN, map);
-	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::TEXTURE, map);
-	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::WIDTH, map);
-	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::HEIGHT, map);
-	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::ORIGIN_X, map);
-	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::ORIGIN_Y, map);
-	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::REPEATED, map);
-	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::ROTATES, map);
-	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::SHOW_WIREFRAME, map);
-	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::CONSTRAIN_PROPORTIONS, map);
-	return map;
 }
 
 

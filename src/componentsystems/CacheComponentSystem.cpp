@@ -6,12 +6,20 @@
 #include "objects/components/CacheComponent.h"
 #include "managers/ScriptManager.h"
 #include "utils/StringHelpers.h"
+#include "utils/ComponentSystems.h"
 
 using namespace TIE;
 
-void CacheComponentSystem::update(const float delta) {
+CacheComponentSystem::CacheComponentSystem() {
+    ComponentSystems::insertComponentPropertyIntoMap(CacheComponentSystem::CACHE, this->componentPropertyMap);
 }
 
+void CacheComponentSystem::update(const float delta) {}
+
+
+bool CacheComponentSystem::hasComponent(const TIEntity& tientity) {
+    return tientity.hasComponent<CacheComponent>();
+}
 
 CacheComponent& CacheComponentSystem::addComponent(TIEntity& tientity) {
     if (!tientity.hasComponent<CacheComponent>()) {

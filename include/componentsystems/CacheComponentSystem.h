@@ -11,7 +11,9 @@ namespace TIE {
 
 class CacheComponentSystem : public ComponentSystem, public Singleton<CacheComponentSystem> {
 public:
+    CacheComponentSystem();
     void update(const float);
+    bool hasComponent(const TIEntity&);
     CacheComponent& addComponent(TIEntity&);
     CacheComponent& addComponent(const TIEntityFactory&, TIEntity&);
     bool removeComponent(TIEntity&);

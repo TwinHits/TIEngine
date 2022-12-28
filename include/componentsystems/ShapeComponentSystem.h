@@ -15,8 +15,9 @@ namespace TIE {
 
 class ShapeComponentSystem : public Singleton<ShapeComponentSystem>, public ComponentSystem {
 	public:
-		ShapeComponentSystem() {};
+		ShapeComponentSystem();
 		void update(const float);
+		bool hasComponent(const TIEntity&);
 		ShapeComponent& addComponent(const TIEntityFactory&, TIEntity&);
 		ShapeComponent& addComponent(TIEntity&);
 		bool removeComponent(TIEntity&);
@@ -26,7 +27,6 @@ class ShapeComponentSystem : public Singleton<ShapeComponentSystem>, public Comp
 		bool setComponentProperty(const std::string&, float, TIEntity&);
 		bool setComponentProperty(const std::string&, const std::string&, TIEntity&);
 		sol::object getComponentProperty(const std::string&, TIEntity&);
-		ComponentSystems::ComponentSystemPropertiesMap& populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap&);
 
 		void addWireframe(TIEntity&, const SpriteComponent&);
 		void addWireframe(TIEntity&, const TextComponent&);

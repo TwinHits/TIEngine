@@ -194,3 +194,21 @@ bool ScriptManager::isValidDefinitionFieldName(const std::string& field) {
 	return SceneManager::Instance()->isValidComponentName(field) || field == "tientity";
  }
 
+
+std::string ScriptManager::getStringFromObject(const sol::object& object) {
+	if (object.is<std::string>()) {
+		return object.as<std::string>();
+	} else if (object.is<bool>()) {
+		return std::to_string(object.as<bool>());
+	} else if (object.is<float>()) {
+		return std::to_string(object.as<float>());
+	} else if (object.is<sf::Vector2i>()) {
+		sf::Vector2i& result = object.as<sf::Vector2i>();
+		return std::to_string(result.x) + ", " + std::to_string(result.y);
+	} else if (object.is<sf::Vector2f>()) {
+		sf::Vector2f& result = object.as<sf::Vector2f>();
+		return std::to_string(result.x) + ", " + std::to_string(result.y);
+	} else {
+		return "";
+	}
+}

@@ -28,6 +28,8 @@ namespace TIE {
         std::string getComponentNameFromKey(const std::string&);
         ComponentSystemPropertiesMap& insertComponentPropertyIntoMap(const std::string&, ComponentSystemPropertiesMap&);
         ComponentSystemPropertiesMap& insertComponentPropertyIntoMap(const std::string&, const std::string&, ComponentSystemPropertiesMap&);
+        ComponentSystemPropertyMap& insertComponentPropertyIntoMap(const std::string&, ComponentSystemPropertyMap&);
+        ComponentSystemPropertyMap& insertComponentPropertyIntoMap(const std::string&, const std::string&, ComponentSystemPropertyMap&);
 
         void setDrawn(TIEntity&, bool);
         bool isDrawn(TIEntity&);

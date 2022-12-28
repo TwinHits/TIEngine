@@ -8,8 +8,16 @@
 
 using namespace TIE;
 
-void CollidesComponentSystem::update(const float delta) {
+CollidesComponentSystem::CollidesComponentSystem() {
+		
+}
 
+
+void CollidesComponentSystem::update(const float delta) {}
+
+
+bool CollidesComponentSystem::hasComponent(const TIEntity& tientity) {
+	return tientity.hasComponent<CollidesComponent>();
 }
 
 

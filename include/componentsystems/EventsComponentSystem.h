@@ -15,8 +15,9 @@ namespace TIE {
 
 class EventsComponentSystem : public Singleton<EventsComponentSystem>, public ComponentSystem {
 	public:
-		EventsComponentSystem() {};
+		EventsComponentSystem();
 		void update(const float);
+		bool hasComponent(const TIEntity&);
 		EventsComponent& addComponent(const TIEntityFactory&, TIEntity&);
 		EventsComponent& addComponent(TIEntity&);
 		bool removeComponent(TIEntity&);
@@ -26,7 +27,6 @@ class EventsComponentSystem : public Singleton<EventsComponentSystem>, public Co
 		bool setComponentProperty(const std::string&, float, TIEntity&);
 		bool setComponentProperty(const std::string&, const std::string&, TIEntity&);
 		sol::object getComponentProperty(const std::string&, TIEntity&);
-		ComponentSystems::ComponentSystemPropertiesMap& populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap&);
 
 		// Helpers
 		void addState(TIEntity&, const std::string&);

@@ -16,6 +16,14 @@
 
 using namespace TIE;
 
+AnimatedComponentSystem::AnimatedComponentSystem() {
+    ComponentSystems::insertComponentPropertyIntoMap(AnimatedComponentSystem::ANIMATED, AnimatedComponentSystem::FRAMES, this->componentPropertyMap);
+    ComponentSystems::insertComponentPropertyIntoMap(AnimatedComponentSystem::ANIMATED, AnimatedComponentSystem::RANGE, this->componentPropertyMap);
+    ComponentSystems::insertComponentPropertyIntoMap(AnimatedComponentSystem::ANIMATED, AnimatedComponentSystem::SPEED, this->componentPropertyMap);
+    ComponentSystems::insertComponentPropertyIntoMap(AnimatedComponentSystem::ANIMATED, AnimatedComponentSystem::DIRECTION, this->componentPropertyMap);
+}
+
+
 void AnimatedComponentSystem::update(const float delta) {
     for (auto& c : this->components) {
         this->updateCurrentAnimation(c.animatedComponent, c.positionComponent, c.spriteComponent);
@@ -23,6 +31,11 @@ void AnimatedComponentSystem::update(const float delta) {
             this->setTextureRect(*c.animatedComponent.getCurrentAnimation(), c.spriteComponent);
         }
     }
+}
+
+
+bool AnimatedComponentSystem::hasComponent(const TIEntity& tientity) {
+    return tientity.hasComponent<AnimatedComponent>();
 }
 
 
@@ -147,14 +160,6 @@ bool AnimatedComponentSystem::setComponentProperty(const std::string& key, const
 
 sol::object AnimatedComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
     return ScriptManager::Instance()->getObjectFromValue(nullptr);
-}
-
-ComponentSystems::ComponentSystemPropertiesMap& AnimatedComponentSystem::populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap& map) {
-    ComponentSystems::insertComponentPropertyIntoMap(AnimatedComponentSystem::ANIMATED, AnimatedComponentSystem::FRAMES, map);
-    ComponentSystems::insertComponentPropertyIntoMap(AnimatedComponentSystem::ANIMATED, AnimatedComponentSystem::RANGE, map);
-    ComponentSystems::insertComponentPropertyIntoMap(AnimatedComponentSystem::ANIMATED, AnimatedComponentSystem::SPEED, map);
-    ComponentSystems::insertComponentPropertyIntoMap(AnimatedComponentSystem::ANIMATED, AnimatedComponentSystem::DIRECTION, map);
-    return map;
 }
 
 

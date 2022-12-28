@@ -13,6 +13,7 @@ class ComponentSystem {
 	public:
 		virtual ~ComponentSystem() {};
 		virtual void update(const float) = 0;
+		virtual bool hasComponent(const TIEntity&) = 0;
 		virtual Component& addComponent(TIEntity&) = 0;
 		virtual Component& addComponent(const TIEntityFactory&, TIEntity&) = 0;
 		virtual bool removeComponent(TIEntity&) = 0;
@@ -24,6 +25,9 @@ class ComponentSystem {
 		virtual bool setComponentProperty(const std::string&, const sf::Vector2i&, TIEntity&);
 		virtual sol::object getComponentProperty(const std::string&, TIEntity&) = 0;
 		virtual ComponentSystems::ComponentSystemPropertiesMap& populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap&);
+		virtual std::string getComponentPropertiesString(TIEntity&);
+	protected:
+		ComponentSystems::ComponentSystemPropertyMap componentPropertyMap;
 };
 
 }

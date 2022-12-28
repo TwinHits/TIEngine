@@ -24,6 +24,7 @@
 #include "objects/components/ShapeComponent.h"
 #include "objects/components/SpriteComponent.h"
 #include "objects/components/TextComponent.h"
+#include "objects/entities/ComponentPropertiesDisplay.h"
 #include "objects/entities/DegreeGuide.h"
 #include "objects/entities/MousePtrCoords.h"
 #include "objects/entities/PerformanceDisplay.h"
@@ -52,6 +53,9 @@ bool SceneManager::initialize() {
 	std::unique_ptr<PerformanceDisplay> performanceDisplay = make_unique<PerformanceDisplay>();
 	performanceDisplay->initialize();
 	this->engineLayer->attachChild(std::move(performanceDisplay));
+
+	std::unique_ptr<ComponentPropertiesDisplay> componentPropertiesDisplay = make_unique<ComponentPropertiesDisplay>();
+	this->engineLayer->attachChild(std::move(componentPropertiesDisplay));
 
 	// Component System registration, order of initialization, and order of update
 	// Update data operations

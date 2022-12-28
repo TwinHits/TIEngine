@@ -58,6 +58,8 @@ public:
 		return sol::make_object<T>(this->luaState, value);
 	}
 
+	std::string getStringFromObject(const sol::object&);
+
 	ScriptManager() {};
 	~ScriptManager() {};
 

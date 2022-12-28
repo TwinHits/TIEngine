@@ -24,6 +24,8 @@ class EventsManager : public Singleton<EventsManager>, Manager {
 		const sf::Vector2f& getMouseWindowPosition();
 		const sf::Vector2f& getMouseWorldPosition();
 
+		const std::vector<TIEntity*>& getTIEntitiesUnderMousePosition();
+
 		bool hasEvents();
 		const std::map<sf::Event::EventType, sf::Event>& getEvents();
 		const sf::Event* const getEvent(sf::Event::EventType);
@@ -33,6 +35,8 @@ class EventsManager : public Singleton<EventsManager>, Manager {
 		~EventsManager() {};
 
 	private:
+		void setTIEntitiesUnderMousePosition(TIEntity&, const sf::Vector2f&);
+		
 		sf::RenderWindow& window = WindowManager::Instance()->getWindow();
 		ConsoleManager* consoleManager = ConsoleManager::Instance();
 
@@ -40,6 +44,7 @@ class EventsManager : public Singleton<EventsManager>, Manager {
 		sf::Vector2f mouseWorldPosition = sf::Vector2f(0, 0);
 
 		std::map<sf::Event::EventType, sf::Event> events;
+		std::vector<TIEntity*> tientitiesUnderMousePosition;
 
 		EventsManager(const EventsManager&);
 		void operator=(const EventsManager&) {};

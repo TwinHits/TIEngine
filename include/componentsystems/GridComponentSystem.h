@@ -15,10 +15,11 @@ namespace TIE {
 
 class GridComponentSystem : public Singleton<GridComponentSystem>, public ComponentSystem {
 	public:
-		GridComponentSystem() {};
+		GridComponentSystem();
 		void update(const float);
 		const std::string& getName();
 
+		bool hasComponent(const TIEntity&);
 		GridComponent& addComponent(TIEntity&);
 		GridComponent& addComponent(const TIEntityFactory&, TIEntity&);
 		bool removeComponent(TIEntity&);
@@ -27,7 +28,6 @@ class GridComponentSystem : public Singleton<GridComponentSystem>, public Compon
 		bool setComponentProperty(const std::string&, float, TIEntity&);
 		bool setComponentProperty(const std::string&, const std::string&, TIEntity&);
 		sol::object getComponentProperty(const std::string&, TIEntity&);
-		ComponentSystems::ComponentSystemPropertiesMap& populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap&);
 
 		sf::Vector2f normalizePositionToGrid(const sf::Vector2f&);
 

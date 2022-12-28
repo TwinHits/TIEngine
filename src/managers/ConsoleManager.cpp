@@ -3,7 +3,6 @@
 #include <algorithm>
 #include <memory>
 #include <queue>
-#include <sstream>
 
 #include "componentsystems/SpriteComponentSystem.h"
 #include "managers/ConfigManager.h"

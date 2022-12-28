@@ -18,6 +18,14 @@
 
 using namespace TIE;
 
+EventsComponentSystem::EventsComponentSystem() {
+	ComponentSystems::insertComponentPropertyIntoMap(EventsComponentSystem::EVENTS, EventsComponentSystem::SELECTED, this->componentPropertyMap);
+	ComponentSystems::insertComponentPropertyIntoMap(EventsComponentSystem::EVENTS, EventsComponentSystem::UNSELECTED, this->componentPropertyMap);
+	ComponentSystems::insertComponentPropertyIntoMap(EventsComponentSystem::EVENTS, EventsComponentSystem::NEUTRAL, this->componentPropertyMap);
+	ComponentSystems::insertComponentPropertyIntoMap(EventsComponentSystem::EVENTS, EventsComponentSystem::HOVER, this->componentPropertyMap);
+}
+
+
 void EventsComponentSystem::update(const float delta) {
 	const sf::Event* clickEvent = EventsManager::Instance()->getEvent(sf::Event::MouseButtonPressed);
 	const sf::Vector2f& worldMousePosition = EventsManager::Instance()->getMouseWorldPosition();
@@ -54,6 +62,11 @@ void EventsComponentSystem::update(const float delta) {
 			}
 		}
 	}
+}
+
+
+bool EventsComponentSystem::hasComponent(const TIEntity& tientity) {
+	return tientity.hasComponent<EventsComponent>();
 }
 
 
@@ -163,14 +176,6 @@ bool EventsComponentSystem::setComponentProperty(const std::string& key, const s
 
 sol::object EventsComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
 	return ScriptManager::Instance()->getObjectFromValue(nullptr);
-}
-
-ComponentSystems::ComponentSystemPropertiesMap& EventsComponentSystem::populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap& map) {
-	ComponentSystems::insertComponentPropertyIntoMap(EventsComponentSystem::EVENTS, EventsComponentSystem::SELECTED, map);
-	ComponentSystems::insertComponentPropertyIntoMap(EventsComponentSystem::EVENTS, EventsComponentSystem::UNSELECTED, map);
-	ComponentSystems::insertComponentPropertyIntoMap(EventsComponentSystem::EVENTS, EventsComponentSystem::NEUTRAL, map);
-	ComponentSystems::insertComponentPropertyIntoMap(EventsComponentSystem::EVENTS, EventsComponentSystem::HOVER, map);
-	return map;
 }
 
 

@@ -16,8 +16,9 @@
 namespace TIE {
 class PositionComponentSystem : public Singleton<PositionComponentSystem>, public ComponentSystem {
     public:
-		PositionComponentSystem() {};
+		PositionComponentSystem();
 		void update(const float);
+		bool hasComponent(const TIEntity& tientity);
 		PositionComponent& addComponent(TIEntity&);
 		PositionComponent& addComponent(const TIEntityFactory&, TIEntity&);
 		bool removeComponent(TIEntity&);
@@ -27,7 +28,6 @@ class PositionComponentSystem : public Singleton<PositionComponentSystem>, publi
 		bool setComponentProperty(const std::string&, float, TIEntity&);
 		bool setComponentProperty(const std::string&, const sf::Vector2f&, TIEntity&);
 		sol::object getComponentProperty(const std::string&, TIEntity&);
-		ComponentSystems::ComponentSystemPropertiesMap& populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap&);
 
 		void setPosition(TIEntity&, float, float);
 

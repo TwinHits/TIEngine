@@ -10,8 +10,9 @@ namespace TIE {
 
 class LifecycleComponentSystem : public Singleton<LifecycleComponentSystem>, public ComponentSystem {
 public:
-	LifecycleComponentSystem() {};
+	LifecycleComponentSystem();
 	void update(const float);
+	bool hasComponent(const TIEntity&);
 	LifecycleComponent& addComponent(TIEntity&);
 	LifecycleComponent& addComponent(const TIEntityFactory&, TIEntity&);
 	bool removeComponent(TIEntity&);
@@ -21,7 +22,6 @@ public:
     bool setComponentProperty(const std::string&, float, TIEntity&);
     bool setComponentProperty(const std::string&, const std::string&, TIEntity&);
 	sol::object getComponentProperty(const std::string&, TIEntity&);
-	ComponentSystems::ComponentSystemPropertiesMap& populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap&);
 
 	void runCreated(TIEntity& tientity);
 	void runRemoved(TIEntity& tientity);

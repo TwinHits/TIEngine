@@ -76,6 +76,31 @@ ComponentSystems::ComponentSystemPropertiesMap& ComponentSystems::insertComponen
 }
 
 
+ComponentSystems::ComponentSystemPropertyMap& ComponentSystems::insertComponentPropertyIntoMap(const std::string& property, ComponentSystemPropertyMap& map) {
+
+    std::vector<std::string> parts;
+    String::split(property, '.', parts);
+
+	if (!map.count(parts.front())) {
+		map[parts.front()];
+	}
+	map[parts.back()] = property;
+
+	return map;
+}
+
+
+ComponentSystems::ComponentSystemPropertyMap& ComponentSystems::insertComponentPropertyIntoMap(const std::string& key, const std::string& property, ComponentSystemPropertyMap& map) {
+
+	if (!map.count(key)) {
+		map[key];
+	}
+	map[property] = key + '.' + property;
+
+	return map;
+}
+
+
 void ComponentSystems::setDrawn(TIEntity& entity, const bool drawn) {
 
 	TextComponent* textComponent = entity.getComponent<TextComponent>();
@@ -120,13 +145,6 @@ bool ComponentSystems::isDrawn(TIEntity& entity) {
 
 const sf::FloatRect ComponentSystems::getGlobalBounds(TIEntity& tientity) {
 
-	ShapeComponent* shapeComponent = tientity.getComponent<ShapeComponent>();
-	if (shapeComponent != nullptr && shapeComponent->isDrawn()) {
-		for (auto& shape : shapeComponent->getShapes()) {
-			return shape->getGlobalBounds();
-		}
-	}
-
 	SpriteComponent* spriteComponent = tientity.getComponent<SpriteComponent>();
 	if (spriteComponent != nullptr && spriteComponent->isDrawn()) {
 		return spriteComponent->getGlobalBounds();
@@ -135,6 +153,13 @@ const sf::FloatRect ComponentSystems::getGlobalBounds(TIEntity& tientity) {
 	TextComponent* textComponent = tientity.getComponent<TextComponent>();
 	if (textComponent != nullptr && textComponent->isDrawn()) {
 		return textComponent->getGlobalBounds();
+	}
+
+	ShapeComponent* shapeComponent = tientity.getComponent<ShapeComponent>();
+	if (shapeComponent != nullptr && shapeComponent->isDrawn()) {
+		for (auto& shape : shapeComponent->getShapes()) {
+			return shape->getGlobalBounds();
+		}
 	}
 
 	return sf::FloatRect(-1, 0, 0, 0);

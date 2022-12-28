@@ -6,9 +6,11 @@
 
 #include "managers/ConsoleManager.h"
 #include "managers/LogManager.h"
+#include "managers/SceneManager.h"
 #include "managers/ViewManager.h"
 #include "managers/WindowManager.h"
 #include "templates/MakeUnique.h"
+#include "utils/ComponentSystems.h"
 
 using namespace TIE;
 
@@ -99,7 +101,6 @@ void EventsManager::processEvents() {
 			continue;
 		}
 
-
 		//Console Input Commands
 		if (consoleManager->checkConsole()) {
 			switch (event.type) {
@@ -137,5 +138,25 @@ void EventsManager::processEvents() {
 			continue;
 		}
 	}
+
+    // Get hovered entities
+    this->tientitiesUnderMousePosition.clear();
+    this->setTIEntitiesUnderMousePosition(SceneManager::Instance()->getClientLayer(), this->mouseWorldPosition);
 }
 
+
+const std::vector<TIEntity*>& EventsManager::getTIEntitiesUnderMousePosition() {
+	return this->tientitiesUnderMousePosition;
+}
+
+
+void EventsManager::setTIEntitiesUnderMousePosition(TIEntity& tientity, const sf::Vector2f& mousePosition) {
+	if (!tientity.isSceneLayer()) {
+        if (ComponentSystems::getGlobalBounds(tientity).contains(mousePosition)) {
+			this->tientitiesUnderMousePosition.push_back(&tientity);
+        }
+	}
+	for (auto& child : tientity.getChildren()) {
+		this->setTIEntitiesUnderMousePosition(*child, mousePosition);
+	}
+}

@@ -15,9 +15,19 @@
 
 using namespace TIE;
 
-void GridComponentSystem::update(const float) {
-
+GridComponentSystem::GridComponentSystem() {
+	ComponentSystems::insertComponentPropertyIntoMap(GridComponentSystem::WIDTH, this->componentPropertyMap);
+	ComponentSystems::insertComponentPropertyIntoMap(GridComponentSystem::HEIGHT, this->componentPropertyMap);
 }
+
+
+void GridComponentSystem::update(const float) {}
+
+
+bool GridComponentSystem::hasComponent(const TIEntity& tientity) {
+	return tientity.hasComponent<GridComponent>();
+}
+
 
 GridComponent& GridComponentSystem::addComponent(TIEntity& tientity) {
 	if (!tientity.hasComponent<GridComponent>()) {
@@ -84,13 +94,6 @@ bool GridComponentSystem::setComponentProperty(const std::string& key, const std
 
 sol::object GridComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
 	return ScriptManager::Instance()->getObjectFromValue(nullptr);
-}
-
-
-ComponentSystems::ComponentSystemPropertiesMap& GridComponentSystem::populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap& map) {
-	ComponentSystems::insertComponentPropertyIntoMap(GridComponentSystem::WIDTH, map);
-	ComponentSystems::insertComponentPropertyIntoMap(GridComponentSystem::HEIGHT, map);
-	return map;
 }
 
 

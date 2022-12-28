@@ -19,6 +19,22 @@
 
 using namespace TIE;
 
+MovesComponentSystem::MovesComponentSystem() {
+	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::SPEED, this->componentPropertyMap);
+	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::ACCELERATION, this->componentPropertyMap);
+	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::DECELERATION, this->componentPropertyMap);
+	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::ROTATES, this->componentPropertyMap);
+	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::ROTATIONAL_SPEED, this->componentPropertyMap);
+	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::ROTATIONAL_ACCELERATION, this->componentPropertyMap);
+	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::DESTINATION, this->componentPropertyMap);
+	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::DESTINATION_X, this->componentPropertyMap);
+	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::DESTINATION_Y, this->componentPropertyMap);
+	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::AT_DESTINATION, this->componentPropertyMap);
+	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::TARGET_ROTATION, this->componentPropertyMap);
+	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::AT_ROTATION, this->componentPropertyMap);
+}
+
+
 void MovesComponentSystem::update(const float delta) {
 	for (auto& c : components) {
 
@@ -33,6 +49,11 @@ void MovesComponentSystem::update(const float delta) {
             this->rotate(c.movesComponent, c.positionComponent, delta);
         }
 	}
+}
+
+
+bool MovesComponentSystem::hasComponent(const TIEntity& tientity) {
+	return tientity.hasComponent<MovesComponent>();
 }
 
 
@@ -182,23 +203,6 @@ sol::object MovesComponentSystem::getComponentProperty(const std::string& key, T
 		}
 	}
 	return ScriptManager::Instance()->getObjectFromValue(nullptr);
-}
-
-
-ComponentSystems::ComponentSystemPropertiesMap& MovesComponentSystem::populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap& map) {
-	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::SPEED, map);
-	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::ACCELERATION, map);
-	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::DECELERATION, map);
-	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::ROTATES, map);
-	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::ROTATIONAL_SPEED, map);
-	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::ROTATIONAL_ACCELERATION, map);
-	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::DESTINATION, map);
-	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::DESTINATION_X, map);
-	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::DESTINATION_Y, map);
-	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::AT_DESTINATION, map);
-	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::TARGET_ROTATION, map);
-	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::AT_ROTATION, map);
-	return map;
 }
 
 

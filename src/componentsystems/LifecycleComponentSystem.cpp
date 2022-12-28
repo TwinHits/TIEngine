@@ -9,12 +9,24 @@
 
 using namespace TIE;
 
+LifecycleComponentSystem::LifecycleComponentSystem() {
+	ComponentSystems::insertComponentPropertyIntoMap(LifecycleComponentSystem::CREATED, this->componentPropertyMap);
+	ComponentSystems::insertComponentPropertyIntoMap(LifecycleComponentSystem::REMOVED, this->componentPropertyMap);
+	ComponentSystems::insertComponentPropertyIntoMap(LifecycleComponentSystem::UPDATED, this->componentPropertyMap);
+}
+
+
 void LifecycleComponentSystem::update(const float delta) {
 	for (auto& c : this->components) {
 		if (c.lifecycleComponent.updatedFunctionId) {
 			this->runFunction(c.lifecycleComponent.updatedFunctionId, c.tientity);
 		}
 	}
+}
+
+
+bool LifecycleComponentSystem::hasComponent(const TIEntity& tientity) {
+	return tientity.hasComponent<LifecycleComponent>();
 }
 
 
@@ -93,13 +105,6 @@ bool LifecycleComponentSystem::setComponentProperty(const std::string& key, cons
 
 sol::object LifecycleComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
 	return ScriptManager::Instance()->getObjectFromValue(nullptr);
-}
-
-ComponentSystems::ComponentSystemPropertiesMap& LifecycleComponentSystem::populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap& map) {
-	ComponentSystems::insertComponentPropertyIntoMap(LifecycleComponentSystem::CREATED, map);
-	ComponentSystems::insertComponentPropertyIntoMap(LifecycleComponentSystem::REMOVED, map);
-	ComponentSystems::insertComponentPropertyIntoMap(LifecycleComponentSystem::UPDATED, map);
-	return map;
 }
 
 

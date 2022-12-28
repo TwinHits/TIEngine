@@ -18,11 +18,27 @@
 
 using namespace TIE;
 
+TextComponentSystem::TextComponentSystem() {
+	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::DRAWN, this->componentPropertyMap);
+	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::STRING, this->componentPropertyMap);
+	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::FONT, this->componentPropertyMap);
+	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::OFFSET_X, this->componentPropertyMap);
+	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::OFFSET_Y, this->componentPropertyMap);
+	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::TEXT_ALIGNMENT, this->componentPropertyMap);
+	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::CHARACTER_SIZE, this->componentPropertyMap);
+}
+
+
 void TextComponentSystem::update(const float delta) {
 	for (auto& c : this->components) {	
 		c.textComponent.setPosition(c.positionComponent.worldPosition);
 		c.textComponent.setRotation(c.positionComponent.worldRotation);
 	}
+}
+
+
+bool TextComponentSystem::hasComponent(const TIEntity& tientity) {
+	return tientity.hasComponent<TextComponent>();
 }
 
 
@@ -92,6 +108,8 @@ bool TextComponentSystem::setComponentProperty(const std::string& key, bool valu
 	if (component != nullptr) {
 		if (key == TextComponentSystem::STRING) {
 			component->setString(std::to_string(value));
+		} else if (key == TextComponentSystem::DRAWN) {
+			component->setDrawn(value);
 		}
 	}
 	return false;
@@ -140,18 +158,6 @@ sol::object TextComponentSystem::getComponentProperty(const std::string& key, TI
 		}
 	}
 	return ScriptManager::Instance()->getObjectFromValue(nullptr);
-}
-
-
-ComponentSystems::ComponentSystemPropertiesMap& TextComponentSystem::populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap& map) {
-	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::DRAWN, map);
-	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::STRING, map);
-	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::FONT, map);
-	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::OFFSET_X, map);
-	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::OFFSET_Y, map);
-	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::TEXT_ALIGNMENT, map);
-	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::CHARACTER_SIZE, map);
-	return map;
 }
 
 

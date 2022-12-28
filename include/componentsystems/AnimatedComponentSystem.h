@@ -16,8 +16,9 @@ namespace TIE {
 
 class AnimatedComponentSystem : public Singleton<AnimatedComponentSystem>, public ComponentSystem {
     public:
-        AnimatedComponentSystem() {};
+        AnimatedComponentSystem();
         void update(const float);
+        bool hasComponent(const TIEntity&);
         AnimatedComponent& addComponent(TIEntity&);
         AnimatedComponent& addComponent(const TIEntityFactory&, TIEntity&);
         bool removeComponent(TIEntity&);
@@ -27,7 +28,6 @@ class AnimatedComponentSystem : public Singleton<AnimatedComponentSystem>, publi
 		bool setComponentProperty(const std::string&, float, TIEntity&);
 		bool setComponentProperty(const std::string&, const std::string&, TIEntity&);
         sol::object getComponentProperty(const std::string&, TIEntity&);
-        ComponentSystems::ComponentSystemPropertiesMap& populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap&);
 
         static const inline std::string ANIMATED = "animated";
 		static const inline std::string FRAMES = "frames";

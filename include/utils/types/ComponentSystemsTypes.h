@@ -6,7 +6,8 @@
 
 namespace TIE {
     namespace ComponentSystems {
-        typedef std::map<std::string, std::map<std::string, std::string> > ComponentSystemPropertiesMap;
+        typedef std::map<std::string, std::string> ComponentSystemPropertyMap;
+        typedef std::map<std::string, ComponentSystemPropertyMap> ComponentSystemPropertiesMap;
     }
 }
 

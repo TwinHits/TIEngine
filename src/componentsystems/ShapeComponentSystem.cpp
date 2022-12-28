@@ -15,6 +15,9 @@
 
 using namespace TIE;
 
+ShapeComponentSystem::ShapeComponentSystem() {}
+
+
 void ShapeComponentSystem::update(const float delta) {
 	for (auto& c : this->components) {
 		for (auto& s : c.shapeComponent.getShapes()) {
@@ -22,6 +25,11 @@ void ShapeComponentSystem::update(const float delta) {
 			s->setRotation(c.positionComponent.worldRotation);
 		}
 	}
+}
+
+
+bool ShapeComponentSystem::hasComponent(const TIEntity& tientity) {
+	return tientity.hasComponent<ShapeComponent>();
 }
 
 
@@ -81,11 +89,6 @@ bool ShapeComponentSystem::setComponentProperty(const std::string& key, const st
 
 sol::object ShapeComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
 	return ScriptManager::Instance()->getObjectFromValue(nullptr);
-}
-
-
-ComponentSystems::ComponentSystemPropertiesMap& ShapeComponentSystem::populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap& map) {
-	return map;
 }
 
 

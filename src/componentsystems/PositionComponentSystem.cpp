@@ -1,5 +1,6 @@
 #include "componentsystems/PositionComponentSystem.h"
 
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -9,9 +10,19 @@
 #include "managers/ScriptManager.h"
 #include "utils/ComponentSystems.h"
 #include "utils/TIEMath.h"
-#include "utils/types/ComponentSystemsTypes.h"
 
 using namespace TIE;
+
+PositionComponentSystem::PositionComponentSystem() {
+    ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::ROTATION, this->componentPropertyMap);
+    ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::ROTATES, this->componentPropertyMap);
+    ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::POSITION_POSITION, this->componentPropertyMap);
+    ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::POSITION_X, this->componentPropertyMap);
+    ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::POSITION_Y, this->componentPropertyMap);
+    ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::WORLD_POSITION, this->componentPropertyMap);
+    ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::WORLD_ROTATION, this->componentPropertyMap);
+}
+
 
 void PositionComponentSystem::update(const float delta) {
     for (auto& c : this->components) {
@@ -20,6 +31,11 @@ void PositionComponentSystem::update(const float delta) {
             c.positionComponent.worldRotation = this->getWorldRotation(c.tientity);
         }
     }
+}
+
+
+bool PositionComponentSystem::hasComponent(const TIEntity& tientity) {
+    return tientity.hasComponent<PositionComponent>();
 }
 
 
@@ -85,12 +101,14 @@ bool PositionComponentSystem::setComponentProperty(const std::string& key, const
 sol::object PositionComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
     PositionComponent* positionComponent = tientity.getComponent<PositionComponent>();
     if (positionComponent != nullptr) {
-        if (key == PositionComponentSystem::ROTATION) {
-            return ScriptManager::Instance()->getObjectFromValue(positionComponent->rotation);
-        } else if (key == PositionComponentSystem::POSITION_POSITION) {
+        if (key == PositionComponentSystem::POSITION_POSITION) {
             return ScriptManager::Instance()->getObjectFromValue<sf::Vector2f>(positionComponent->position);
         } else if (key == PositionComponentSystem::WORLD_POSITION) {
             return ScriptManager::Instance()->getObjectFromValue<sf::Vector2f>(positionComponent->worldPosition);
+        } else if (key == PositionComponentSystem::ROTATES) {
+            return ScriptManager::Instance()->getObjectFromValue(positionComponent->rotates);
+        } else if (key == PositionComponentSystem::ROTATION) {
+            return ScriptManager::Instance()->getObjectFromValue(positionComponent->rotation);
         } else if (key == PositionComponentSystem::WORLD_ROTATION) {
             return ScriptManager::Instance()->getObjectFromValue(positionComponent->worldRotation);
         }
@@ -98,17 +116,6 @@ sol::object PositionComponentSystem::getComponentProperty(const std::string& key
     return ScriptManager::Instance()->getObjectFromValue(nullptr);
 }
 
-
-ComponentSystems::ComponentSystemPropertiesMap& PositionComponentSystem::populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap& map) {
-    ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::ROTATION, map);
-    ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::ROTATES, map);
-    ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::POSITION_POSITION, map);
-    ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::POSITION_X, map);
-    ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::POSITION_Y, map);
-    ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::WORLD_POSITION, map);
-    ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::WORLD_ROTATION, map);
-    return map;
-}
 
 bool PositionComponentSystem::removeComponent(TIEntity& tientity) {
 	PositionComponent* positionComponent = tientity.getComponent<PositionComponent>();

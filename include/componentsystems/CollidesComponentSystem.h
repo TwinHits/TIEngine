@@ -18,8 +18,9 @@ namespace TIE {
 
 class CollidesComponentSystem : public Singleton<CollidesComponentSystem>, public ComponentSystem {
 	public:
-		CollidesComponentSystem() {};
+		CollidesComponentSystem();
 		void update(const float);
+		bool hasComponent(const TIEntity&);
 		CollidesComponent& addComponent(TIEntity&);
 		CollidesComponent& addComponent(const TIEntityFactory&, TIEntity&);
 		bool removeComponent(TIEntity&);

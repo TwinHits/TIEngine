@@ -29,7 +29,7 @@ class TIEntity {
 		}
 
 		template <typename T>
-		bool hasComponent() {
+		bool hasComponent() const {
 			return components.count(typeid(T));
 		}
 		
