@@ -133,9 +133,9 @@ bool SpriteComponentSystem::setComponentProperty(const std::string& key, float v
 	SpriteComponent* component = tientity.getComponent<SpriteComponent>();
 	if (component != nullptr) {
 		if (key == SpriteComponentSystem::WIDTH) {
-			this->setTextureFields(*component, component->getLocalBounds().width, value);
-		} else if (key == SpriteComponentSystem::HEIGHT) {
 			this->setTextureFields(*component, value, component->getLocalBounds().height);
+		} else if (key == SpriteComponentSystem::HEIGHT) {
+			this->setTextureFields(*component, component->getLocalBounds().width, value);
 		}
 	}
 	return false;

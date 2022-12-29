@@ -39,7 +39,8 @@ ComponentSystems::ComponentSystemPropertiesMap& ComponentSystem::populateCompone
 std::string ComponentSystem::getComponentPropertiesString(TIEntity& tientity) {
     if (this->hasComponent(tientity)) {
         std::stringstream ss;
-        ss << this->getName() << std::endl;
+        ss << this->getName() << ":" << std::endl;
+        ss << "-------" << std::endl;
         for (auto& componentPropertyPair : this->componentPropertyMap) {
             sol::object property = this->getComponentProperty(componentPropertyPair.second, tientity);
             ss << componentPropertyPair.first << ": " << ScriptManager::Instance()->getStringFromObject(property) << std::endl;
