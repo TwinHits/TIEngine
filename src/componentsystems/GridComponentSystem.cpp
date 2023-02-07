@@ -8,7 +8,7 @@
 #include "managers/ScriptManager.h"
 #include "objects/components/GridComponent.h"
 #include "objects/components/SpriteComponent.h"
-#include "objects/entities/TIEntity.h"
+#include "objects/tientities/TIEntity.h"
 #include "objects/factories/TIEntityFactory.h"
 #include "utils/ComponentSystems.h"
 #include "utils/TIEMath.h"

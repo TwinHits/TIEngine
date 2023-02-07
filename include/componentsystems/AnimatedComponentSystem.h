@@ -9,7 +9,7 @@
 #include "objects/components/AnimatedComponent.h"
 #include "objects/components/PositionComponent.h"
 #include "objects/components/SpriteComponent.h"
-#include "objects/entities/TIEntity.h"
+#include "objects/tientities/TIEntity.h"
 #include "objects/factories/TIEntityFactory.h"
 
 namespace TIE {

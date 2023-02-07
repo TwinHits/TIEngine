@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include "objects/SceneLayer.h"
+#include "objects/tientities/SceneLayer.h"
 
 namespace TIE {
 

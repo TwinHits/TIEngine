@@ -1,7 +1,7 @@
 #ifndef PERFORMANCEDISPLAY_H
 #define PERFORMANCEDISPLAY_H
 
-#include "objects/entities/TIEntity.h"
+#include "objects/tientities/TIEntity.h"
 
 #include <SFML/Graphics.hpp>
 

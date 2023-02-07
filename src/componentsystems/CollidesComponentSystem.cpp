@@ -4,7 +4,7 @@
 
 #include "managers/ScriptManager.h"
 #include "objects/components/CollidesComponent.h"
-#include "objects/entities/TIEntity.h"
+#include "objects/tientities/TIEntity.h"
 
 using namespace TIE;
 

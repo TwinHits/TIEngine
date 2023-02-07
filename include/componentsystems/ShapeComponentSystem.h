@@ -9,7 +9,7 @@
 #include "objects/components/SpriteComponent.h"
 #include "objects/components/TextComponent.h"
 #include "objects/factories/TIEntityFactory.h"
-#include "objects/entities/TIEntity.h"
+#include "objects/tientities/TIEntity.h"
 
 namespace TIE {
 

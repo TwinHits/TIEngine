@@ -5,9 +5,9 @@
 
 #include "objects/components/EventsComponent.h"
 #include "objects/components/structs/EventState.h"
-#include "objects/entities/TIEntity.h"
+#include "objects/tientities/TIEntity.h"
 #include "objects/GlobalId.h"
-#include "objects/SceneLayer.h"
+#include "objects/tientities/SceneLayer.h"
 #include "managers/EventsManager.h"
 #include "managers/ScriptManager.h"
 #include "managers/WindowManager.h"

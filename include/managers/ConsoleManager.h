@@ -8,7 +8,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "objects/entities/DevConsole.h"
+#include "objects/tientities/DevConsole.h"
 #include "objects/enumeration/Direction.h"
 
 namespace TIE {

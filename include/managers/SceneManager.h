@@ -9,7 +9,7 @@
 #include <vector>
 
 #include "managers/WindowManager.h"
-#include "objects/SceneLayer.h"
+#include "objects/tientities/SceneLayer.h"
 
 namespace TIE {
 

@@ -1,4 +1,4 @@
-#include "objects/entities/ComponentPropertiesDisplay.h"
+#include "objects/tientities/ComponentPropertiesDisplay.h"
 
 #include <sstream>
 

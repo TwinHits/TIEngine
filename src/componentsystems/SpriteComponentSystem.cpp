@@ -9,7 +9,7 @@
 #include "objects/components/SpriteComponent.h"
 #include "objects/components/ShapeComponent.h"
 #include "objects/components/PositionComponent.h"
-#include "objects/entities/TIEntity.h"
+#include "objects/tientities/TIEntity.h"
 #include "objects/factories/TIEntityFactory.h"
 #include "managers/AssetsManager.h"
 #include "utils/ComponentSystems.h"

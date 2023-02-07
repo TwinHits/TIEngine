@@ -7,7 +7,7 @@
 
 #include "objects/GlobalId.h"
 #include "objects/components/structs/EventState.h"
-#include "objects/entities/TIEntity.h"
+#include "objects/tientities/TIEntity.h"
 
 namespace TIE {
 

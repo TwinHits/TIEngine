@@ -9,7 +9,7 @@
 #include "managers/SceneManager.h"
 #include "managers/ScriptManager.h"
 #include "managers/WorldManager.h"
-#include "objects/entities/TIEntity.h"
+#include "objects/tientities/TIEntity.h"
 
 using namespace TIE;
 

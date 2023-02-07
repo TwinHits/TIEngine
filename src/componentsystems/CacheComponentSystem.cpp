@@ -2,7 +2,7 @@
 
 #include <sol/sol.hpp>
 
-#include "objects/entities/TIEntity.h"
+#include "objects/tientities/TIEntity.h"
 #include "objects/components/CacheComponent.h"
 #include "managers/ScriptManager.h"
 #include "utils/StringHelpers.h"

@@ -10,7 +10,7 @@
 #include "objects/assets/FontAsset.h"
 #include "objects/components/TextComponent.h"
 #include "objects/components/PositionComponent.h"
-#include "objects/entities/TIEntity.h"
+#include "objects/tientities/TIEntity.h"
 #include "objects/enumeration/TextAlignment.h"
 #include "objects/factories/TIEntityFactory.h"
 #include "utils/ComponentSystems.h"

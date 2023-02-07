@@ -5,7 +5,7 @@
 #include "templates/Singleton.h"
 
 #include "objects/components/CacheComponent.h"
-#include "objects/entities/TIEntity.h"
+#include "objects/tientities/TIEntity.h"
 
 namespace TIE {
 

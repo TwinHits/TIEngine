@@ -12,7 +12,7 @@
 #include "interfaces/TIEngineInterface.h"
 #include "interfaces/TIEntityInterface.h"
 #include "objects/GlobalId.h"
-#include "objects/entities/TIEntity.h"
+#include "objects/tientities/TIEntity.h"
 #include "objects/factories/TIEntityFactory.h"
 
 namespace TIE {

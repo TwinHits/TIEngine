@@ -2,7 +2,7 @@
 #define COMPONENTPROPERTIESDISPLAY_H
 
 #include "componentsystems/ComponentSystem.h"
-#include "objects/entities/TIEntity.h"
+#include "objects/tientities/TIEntity.h"
 
 namespace TIE {
 

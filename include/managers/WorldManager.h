@@ -4,11 +4,11 @@
 #include "managers/Manager.h"
 #include "templates/Singleton.h"
 
-#include "objects/SceneLayer.h"
+#include "objects/tientities/SceneLayer.h"
 #include "objects/components/GridComponent.h"
 #include "objects/components/SpriteComponent.h"
-#include "objects/entities/GridGuide.h"
-#include "objects/entities/TIEntity.h"
+#include "objects/tientities/GridGuide.h"
+#include "objects/tientities/TIEntity.h"
 #include "objects/factories/TIEntityFactory.h"
 
 namespace TIE {

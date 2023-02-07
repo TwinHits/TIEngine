@@ -1,4 +1,4 @@
-#include "objects/entities/PerformanceDisplay.h"
+#include "objects/tientities/PerformanceDisplay.h"
 
 #include <iomanip>
 #include <sstream>

@@ -2,8 +2,8 @@
 
 #include "objects/components/GridComponent.h"
 #include "objects/components/SpriteComponent.h"
-#include "objects/entities/TIEntity.h"
-#include "objects/entities/GridGuide.h"
+#include "objects/tientities/TIEntity.h"
+#include "objects/tientities/GridGuide.h"
 #include "objects/factories/SceneLayerFactory.h"
 #include "managers/LogManager.h"
 #include "managers/SceneManager.h"

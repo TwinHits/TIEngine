@@ -10,7 +10,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "objects/components/PositionComponent.h"
-#include "objects/entities/TIEntity.h"
+#include "objects/tientities/TIEntity.h"
 #include "utils/types/ComponentSystemsTypes.h"
 
 namespace TIE {

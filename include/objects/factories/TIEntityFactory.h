@@ -7,7 +7,7 @@
 
 #include <sol/sol.hpp>
 
-#include "objects/entities/TIEntity.h" 
+#include "objects/tientities/TIEntity.h" 
 #include "objects/GlobalId.h"
 
 namespace TIE {
