@@ -12,7 +12,7 @@
 #include "managers/LogManager.h"
 #include "managers/ViewManager.h"
 #include "managers/WindowManager.h"
-#include "objects/SceneLayer.h"
+#include "objects/tientities/SceneLayer.h"
 #include "objects/assets/FontAsset.h"
 #include "objects/components/SpriteComponent.h" 
 #include "objects/components/TextComponent.h" 

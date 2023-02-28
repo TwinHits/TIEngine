@@ -10,7 +10,7 @@
 
 #include "managers/LogManager.h"
 #include "objects/tientities/TIEntity.h"
-#include "objects/SceneLayer.h"
+#include "objects/tientities/SceneLayer.h"
 
 namespace TIE {
 
