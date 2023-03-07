@@ -24,6 +24,8 @@ class FiniteStateMachine {
         void setOnExitFunctionId(GlobalId);
 
         void update(float);
+        void onEnter();
+        void onExit();
 
         void setState(std::unique_ptr<FiniteStateMachine>);
 
@@ -32,8 +34,6 @@ class FiniteStateMachine {
 		static const inline std::string ON_EXIT = "onExit";
 
     private:
-        void onEnter();
-        void onExit();
 
         void runFunction(GlobalId);
 

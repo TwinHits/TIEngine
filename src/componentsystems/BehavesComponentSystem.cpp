@@ -79,7 +79,11 @@ bool BehavesComponentSystem::setComponentProperty(const std::string& key, float 
     if (key == BehavesComponentSystem::ROOT_STATE) {
         FiniteStateMachineFactory* factory = WorldManager::Instance()->getFiniteStateMachineFactory(value);
         if (factory) {
+			if (component.rootState) {
+				component.rootState->onExit();
+			}
             component.rootState = std::move(factory->build(tientity));
+			component.rootState->onEnter();
         }
     }
 	return true;
