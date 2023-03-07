@@ -41,7 +41,12 @@ BehavesComponent& BehavesComponentSystem::addComponent(TIEntity& tientity) {
 
 
 BehavesComponent& BehavesComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
-    return this->addComponent(tientity);
+    BehavesComponent& component = this->addComponent(tientity);
+
+	float rootStateId = ComponentSystems::getFactoryValue<float>(factory, BehavesComponentSystem::ROOT_STATE, 0, tientity);
+	this->setComponentProperty(BehavesComponentSystem::ROOT_STATE, rootStateId, tientity);
+
+	return component;
 }
 
 
