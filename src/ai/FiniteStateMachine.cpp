@@ -8,7 +8,7 @@
 
 using namespace TIE;
 
-FiniteStateMachine::FiniteStateMachine(TIEntity&) : tientity(tientity) {};
+FiniteStateMachine::FiniteStateMachine(TIEntity& tientity) : tientity(tientity) {};
 
 
 TIEntity& FiniteStateMachine::getTIEntity() {
