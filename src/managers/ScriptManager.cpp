@@ -11,6 +11,7 @@
 #include "interfaces/TIEngineInterface.h"
 #include "interfaces/TIEntityInterface.h"
 #include "interfaces/Vector2Interface.h"
+#include "interfaces/ai/FiniteStateMachineInterface.h"
 #include "managers/AssetsManager.h"
 #include "managers/ConfigManager.h"
 #include "managers/HashManager.h"
@@ -19,6 +20,7 @@
 #include "managers/WindowManager.h"
 #include "managers/WorldManager.h"
 #include "objects/factories/TIEntityFactory.h"
+#include "objects/factories/ai/FiniteStateMachineFactory.h"
 #include "utils/StringHelpers.h"
 
 using namespace TIE;
@@ -36,6 +38,7 @@ bool ScriptManager::initialize() {
 
 	//Register user types with lua state
     EventStateInterface::registerUserType(this->luaState);
+    FiniteStateMachineInterface::registerUserType(this->luaState);
     TIEngineInterface::registerUserType(this->luaState);
     TIEntityInterface::registerUserType(this->luaState);
 	Vector2Interface::registerUserType(this->luaState);
@@ -84,6 +87,14 @@ void ScriptManager::runFunction<void>(const std::string& name, TIEntity& tientit
 	TIEntityInterface tientityInterface(tientity);
 	TIEngineInterface engineInterface = TIEngineInterface();
 	this->getFunctionByName(name)(std::tuple<TIEntityInterface, TIEngineInterface>(tientityInterface, engineInterface));
+}
+
+
+template <>
+ void ScriptManager::runFunction(const GlobalId functionId, FiniteStateMachine& finiteStateMachine) {
+    TIEntityInterface tientityInterface(finiteStateMachine.getTIEntity());
+    FiniteStateMachineInterface finiteStateMachineInterface(finiteStateMachine);
+    this->functions.at(functionId)(std::tuple<TIEntityInterface, FiniteStateMachineInterface>(tientityInterface, finiteStateMachineInterface));
 }
 
 
@@ -211,4 +222,20 @@ std::string ScriptManager::getStringFromObject(const sol::object& object) {
 	} else {
 		return "";
 	}
+}
+
+
+FiniteStateMachineFactory& ScriptManager::loadFiniteStateMachineDefinition(FiniteStateMachineFactory& factory, const sol::table& definition) {
+	for (auto& pair : definition) {
+		const std::string& key = pair.first.as<std::string>();
+		const sol::object& value = pair.second;
+		if (value.valid()) {
+			if (value.is<sol::function>()) {
+				GlobalId functionId = HashManager::Instance()->getNewGlobalId();
+				this->functions.insert({ functionId, value.as<sol::function>() });
+				factory.functionValues.insert({ key, functionId });
+			}
+		}
+	}
+	return factory;
 }

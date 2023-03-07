@@ -13,6 +13,7 @@
 #include "managers/WindowManager.h"
 #include "managers/WorldManager.h"
 #include "objects/factories/SceneLayerFactory.h"
+#include "objects/factories/ai/FiniteStateMachineFactory.h"
 #include "utils/StringHelpers.h"
 
 using namespace TIE;
@@ -33,6 +34,7 @@ void TIEngineInterface::registerUserType(sol::state& luaState) {
 	engineInterfaceUserType["getMouseClickPosition"] = &TIEngineInterface::getMouseClickPosition;
     engineInterfaceUserType["getTIEntityById"] = &TIEngineInterface::getTIEntityById;
     engineInterfaceUserType["registerSceneLayer"] = &TIEngineInterface::registerSceneLayer;
+    engineInterfaceUserType["registerFiniteStateMachine"] = &TIEngineInterface::registerFiniteStateMachine;
     engineInterfaceUserType["getProperties"] = &TIEngineInterface::getProperties;
 }
 
@@ -128,6 +130,12 @@ TIEntityInterface TIEngineInterface::registerSceneLayer(const std::string& name,
 
     SceneLayer& sceneLayer = sceneLayerFactory.build();
     return TIEntityInterface(sceneLayer);
+}
+
+
+GlobalId TIEngineInterface::registerFiniteStateMachine(const sol::table& definition) {
+    FiniteStateMachineFactory finiteStateMachineFactory = FiniteStateMachineFactory(definition);
+    return finiteStateMachineFactory.getId();
 }
 
 

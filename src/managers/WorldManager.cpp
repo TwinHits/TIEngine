@@ -5,6 +5,7 @@
 #include "objects/tientities/TIEntity.h"
 #include "objects/tientities/GridGuide.h"
 #include "objects/factories/SceneLayerFactory.h"
+#include "objects/factories/ai/FiniteStateMachineFactory.h"
 #include "managers/LogManager.h"
 #include "managers/SceneManager.h"
 #include "managers/ViewManager.h"
@@ -69,14 +70,29 @@ TIEntity* WorldManager::getTIEntityById(GlobalId id) {
 
 
 TIEntityFactory& WorldManager::saveTIEntityFactory(const std::string& name, TIEntityFactory& factory) {
-	this->factories.insert({ name, make_unique<TIEntityFactory>(factory) });
-	return *this->factories.at(name);
+	this->tiEntityFactories.insert({ name, make_unique<TIEntityFactory>(factory) });
+	return *this->tiEntityFactories.at(name);
 }
 
 
 TIEntityFactory* WorldManager::getTIEntityFactory(const std::string& name) {
-	if (this->factories.count(name)) {
-		return this->factories.at(name).get();
+	if (this->tiEntityFactories.count(name)) {
+		return this->tiEntityFactories.at(name).get();
+	} else {
+		return nullptr;
+	}
+}
+
+
+FiniteStateMachineFactory& WorldManager::saveFiniteStateMachineFactory(GlobalId id, FiniteStateMachineFactory& factory) {
+	this->finiteStateMachineFactories.insert({ id, make_unique<FiniteStateMachineFactory>(factory) });
+	return *this->finiteStateMachineFactories.at(id);
+}
+
+
+FiniteStateMachineFactory* WorldManager::getFiniteStateMachineFactory(GlobalId id) {
+	if (this->finiteStateMachineFactories.count(id)) {
+		return this->finiteStateMachineFactories.at(id).get();
 	} else {
 		return nullptr;
 	}

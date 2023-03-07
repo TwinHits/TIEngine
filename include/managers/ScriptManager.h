@@ -11,9 +11,11 @@
 
 #include "interfaces/TIEngineInterface.h"
 #include "interfaces/TIEntityInterface.h"
+#include "interfaces/ai/FiniteStateMachineInterface.h"
 #include "objects/GlobalId.h"
 #include "objects/tientities/TIEntity.h"
 #include "objects/factories/TIEntityFactory.h"
+#include "objects/factories/ai/FiniteStateMachineFactory.h"
 
 namespace TIE {
 
@@ -23,6 +25,7 @@ public:
 
 	void loadScript(const std::string&);
 	TIEntityFactory& loadTIEntityDefinition(TIEntityFactory&, const sol::table&);
+	FiniteStateMachineFactory& loadFiniteStateMachineDefinition(FiniteStateMachineFactory&, const sol::table&);
 
 	template <typename T>
 	T runFunction(const GlobalId functionId, TIEntity& tientity) {
@@ -39,6 +42,14 @@ public:
 		return this->getFunctionByName(name)(std::tuple<TIEntityInterface, TIEngineInterface>(tientityInterface, engineInterface));
 	}
 	template <> void runFunction<void>(const std::string&, TIEntity&);
+
+	template <typename T>
+	T runFunction(const GlobalId functionId, FiniteStateMachine& finiteStateMachine) {
+        TIEntityInterface tientityInterface(finiteStateMachine.getTIEntity());
+		FiniteStateMachineInterface finiteStateMachineInterface(finiteStateMachine);
+		return this->functions.at(functionId)(std::tuple<TIEntityInterface, FiniteStateMachineInterface>(tientityInterface, finiteStateMachineInterface));
+	}
+	template <> void runFunction<void>(const GlobalId, FiniteStateMachine&);
 
 	GlobalId registerFunctionByName(const std::string&, const sol::function&);
 	GlobalId getFunctionIdByName(const std::string&);
