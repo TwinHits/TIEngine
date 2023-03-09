@@ -19,6 +19,7 @@ namespace TIE {
         static void registerUserType(sol::state&);
 
         void setState(GlobalId);
+        GlobalId getState();
 
     private:
         FiniteStateMachine* finiteStateMachine = nullptr;

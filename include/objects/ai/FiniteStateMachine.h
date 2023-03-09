@@ -10,20 +10,21 @@ namespace TIE {
 
 class FiniteStateMachine {
     public:
-        FiniteStateMachine(TIEntity&);
+        FiniteStateMachine(TIEntity&, const GlobalId);
 
         TIEntity& getTIEntity();
+        const GlobalId getFactoryId();
 
-        GlobalId getOnEnterFunctionId();
-        void setOnEnterFunctionId(GlobalId);
+        const GlobalId getOnEnterFunctionId();
+        void setOnEnterFunctionId(const GlobalId);
 
-        GlobalId getOnUpdateFunctionId();
-        void setOnUpdateFunctionId(GlobalId);
+        const GlobalId getOnUpdateFunctionId();
+        void setOnUpdateFunctionId(const GlobalId);
 
-        GlobalId getOnExitFunctionId();
-        void setOnExitFunctionId(GlobalId);
+        const GlobalId getOnExitFunctionId();
+        void setOnExitFunctionId(const GlobalId);
 
-        void update(float);
+        FiniteStateMachine* update(float);
         void onEnter();
         void onExit();
 
@@ -35,9 +36,10 @@ class FiniteStateMachine {
 
     private:
 
-        void runFunction(GlobalId);
+        void runFunction(const GlobalId);
 
         TIEntity& tientity;
+        GlobalId factoryId;
         std::unique_ptr<FiniteStateMachine> childState;
         GlobalId onEnterFunctionId = 0;
         GlobalId onUpdateFunctionId = 0;

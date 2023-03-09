@@ -18,7 +18,7 @@ FiniteStateMachineFactory::FiniteStateMachineFactory(const sol::table& definitio
 
 
 std::unique_ptr<FiniteStateMachine> FiniteStateMachineFactory::build(TIEntity& tientity) {
-    std::unique_ptr<FiniteStateMachine> finiteStateMachine = make_unique<FiniteStateMachine>(tientity);
+    std::unique_ptr<FiniteStateMachine> finiteStateMachine = make_unique<FiniteStateMachine>(tientity, this->id);
 
     if (this->functionValues.count(FiniteStateMachine::ON_ENTER)) {
         finiteStateMachine->setOnEnterFunctionId(this->functionValues.at(FiniteStateMachine::ON_ENTER));

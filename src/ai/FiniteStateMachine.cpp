@@ -8,7 +8,9 @@
 
 using namespace TIE;
 
-FiniteStateMachine::FiniteStateMachine(TIEntity& tientity) : tientity(tientity) {};
+FiniteStateMachine::FiniteStateMachine(TIEntity& tientity, const GlobalId factoryId) : tientity(tientity) {
+    this->factoryId = factoryId;
+};
 
 
 TIEntity& FiniteStateMachine::getTIEntity() {
@@ -16,33 +18,42 @@ TIEntity& FiniteStateMachine::getTIEntity() {
 }
 
 
-GlobalId FiniteStateMachine::getOnEnterFunctionId() {
+const GlobalId FiniteStateMachine::getFactoryId() {
+    if (this->childState) {
+        return this->childState->factoryId;
+    } else {
+        return 0;
+    }
+}
+
+
+const GlobalId FiniteStateMachine::getOnEnterFunctionId() {
     return this->onEnterFunctionId;
 }
 
 
-void FiniteStateMachine::setOnEnterFunctionId(GlobalId onEnterFunctionId) {
+void FiniteStateMachine::setOnEnterFunctionId(const GlobalId onEnterFunctionId) {
     this->onEnterFunctionId = onEnterFunctionId;
 }
 
 
-GlobalId FiniteStateMachine::getOnUpdateFunctionId() {
+const GlobalId FiniteStateMachine::getOnUpdateFunctionId() {
     return this->onUpdateFunctionId;
 }
 
 
-void FiniteStateMachine::setOnUpdateFunctionId(GlobalId onUpdateFunctionId) {
+void FiniteStateMachine::setOnUpdateFunctionId(const GlobalId onUpdateFunctionId) {
     this->onUpdateFunctionId = onUpdateFunctionId;
 }
 
 
-GlobalId FiniteStateMachine::getOnExitFunctionId() {
+const GlobalId FiniteStateMachine::getOnExitFunctionId() {
     return this->onExitFunctionId;
 
 }
 
 
-void FiniteStateMachine::setOnExitFunctionId(GlobalId onExitFunctionId) {
+void FiniteStateMachine::setOnExitFunctionId(const GlobalId onExitFunctionId) {
     this->onExitFunctionId = onExitFunctionId;
 }
 
@@ -52,11 +63,12 @@ void FiniteStateMachine::onEnter() {
 };
 
 
-void FiniteStateMachine::update(float delta) {
+FiniteStateMachine* FiniteStateMachine::update(float delta) {
     this->runFunction(this->onUpdateFunctionId);
     if (this->childState) {
         this->childState->update(delta);
     }
+    return nullptr;
 };
 
 
@@ -74,8 +86,8 @@ void FiniteStateMachine::setState(std::unique_ptr<FiniteStateMachine> newChildSt
 }
 
 
-void FiniteStateMachine::runFunction(GlobalId functionId) {
+void FiniteStateMachine::runFunction(const GlobalId functionId) {
     if (functionId) {
-        ScriptManager::Instance()->runFunction<bool>(functionId, *this);
+        ScriptManager::Instance()->runFunction<sol::optional<float> >(functionId, *this);
     }
 }

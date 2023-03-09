@@ -23,7 +23,7 @@ void FiniteStateMachineInterface::registerUserType(sol::state& luaState) {
     sol::usertype<FiniteStateMachineInterface> interfaceUserType = luaState.new_usertype<FiniteStateMachineInterface>("FiniteStateMachineInterface");
 
     interfaceUserType["setState"] = &FiniteStateMachineInterface::setState;
-
+    interfaceUserType["getState"] = &FiniteStateMachineInterface::getState;
 } 
 
 
@@ -32,4 +32,9 @@ void FiniteStateMachineInterface::setState(GlobalId id) {
     if (factory) {
         this->finiteStateMachine->setState(std::move(factory->build(this->finiteStateMachine->getTIEntity())));
     }
+}
+
+
+GlobalId FiniteStateMachineInterface::getState() {
+    return this->finiteStateMachine->getFactoryId();
 }
