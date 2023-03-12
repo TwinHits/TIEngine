@@ -24,17 +24,31 @@ void FiniteStateMachineInterface::registerUserType(sol::state& luaState) {
 
     interfaceUserType["setState"] = &FiniteStateMachineInterface::setState;
     interfaceUserType["getState"] = &FiniteStateMachineInterface::getState;
+    interfaceUserType["removeState"] = &FiniteStateMachineInterface::removeState;
+    interfaceUserType["hasState"] = &FiniteStateMachineInterface::hasState;
 } 
 
 
 void FiniteStateMachineInterface::setState(GlobalId id) {
-    FiniteStateMachineFactory* factory = WorldManager::Instance()->getFiniteStateMachineFactory(id);
-    if (factory) {
-        this->finiteStateMachine->setState(std::move(factory->build(this->finiteStateMachine->getTIEntity())));
+    if (id) {
+        FiniteStateMachineFactory* factory = WorldManager::Instance()->getFiniteStateMachineFactory(id);
+        if (factory) {
+            this->finiteStateMachine->setState(std::move(factory->build(this->finiteStateMachine->getTIEntity())));
+        }
     }
 }
 
 
 GlobalId FiniteStateMachineInterface::getState() {
     return this->finiteStateMachine->getFactoryId();
+}
+
+
+void FiniteStateMachineInterface::removeState() {
+    this->finiteStateMachine->setState(nullptr);
+}
+
+
+bool FiniteStateMachineInterface::hasState() {
+    return this->finiteStateMachine->getFactoryId() != 0;
 }

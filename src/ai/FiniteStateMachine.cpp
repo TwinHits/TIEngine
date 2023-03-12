@@ -82,7 +82,9 @@ void FiniteStateMachine::setState(std::unique_ptr<FiniteStateMachine> newChildSt
         this->childState->onExit();
     }
     this->childState = std::move(newChildState);
-    this->childState->onEnter();
+    if (this->childState) {
+        this->childState->onEnter();
+    }
 }
 
 
