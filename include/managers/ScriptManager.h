@@ -70,6 +70,7 @@ public:
 	}
 
 	std::string getStringFromObject(const sol::object&);
+	sol::table copyTable(const sol::table&);
 
 	ScriptManager() {};
 	~ScriptManager() {};

@@ -239,3 +239,18 @@ FiniteStateMachineFactory& ScriptManager::loadFiniteStateMachineDefinition(Finit
 	}
 	return factory;
 }
+
+
+sol::table ScriptManager::copyTable(const sol::table& original) {
+	sol::table copy = this->getNewTable();
+	for (auto& pair : original) {
+		sol::object key = pair.first;
+		sol::object value = pair.second;
+        if (value.is<sol::table>()) {
+            copy[key] = this->copyTable(value);
+		} else {
+			copy[key] = value;
+		}
+	}
+	return copy;
+}

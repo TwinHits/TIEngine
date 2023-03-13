@@ -14,12 +14,14 @@ CacheComponentSystem::CacheComponentSystem() {
     ComponentSystems::insertComponentPropertyIntoMap(CacheComponentSystem::CACHE, this->componentPropertyMap);
 }
 
+
 void CacheComponentSystem::update(const float delta) {}
 
 
 bool CacheComponentSystem::hasComponent(const TIEntity& tientity) {
     return tientity.hasComponent<CacheComponent>();
 }
+
 
 CacheComponent& CacheComponentSystem::addComponent(TIEntity& tientity) {
     if (!tientity.hasComponent<CacheComponent>()) {
@@ -35,7 +37,8 @@ CacheComponent& CacheComponentSystem::addComponent(TIEntity& tientity) {
 
 CacheComponent& CacheComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
     CacheComponent& cacheComponent = this->addComponent(tientity);
-    cacheComponent.setCache(factory.tableValues.at("cache"));
+    sol::table copy = ScriptManager::Instance()->copyTable(factory.tableValues.at("cache"));
+    cacheComponent.setCache(copy);
     return cacheComponent;
 }
 
