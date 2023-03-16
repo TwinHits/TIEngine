@@ -19,6 +19,7 @@
 using namespace TIE;
 
 SpriteComponentSystem::SpriteComponentSystem() {
+	this->setName(SpriteComponentSystem::SPRITE);
 	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::DRAWN, this->componentPropertyMap);
 	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::TEXTURE, this->componentPropertyMap);
 	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::WIDTH, this->componentPropertyMap);
@@ -37,11 +38,6 @@ void SpriteComponentSystem::update(const float delta) {
 		c.spriteComponent.setPosition(c.positionComponent.worldPosition);
 		c.spriteComponent.setRotation(c.positionComponent.worldRotation);
 	}
-}
-
-
-bool SpriteComponentSystem::hasComponent(const TIEntity& tientity) {
-	return tientity.hasComponent<SpriteComponent>();
 }
 
 
@@ -108,11 +104,6 @@ bool SpriteComponentSystem::removeComponent(TIEntity& tientity) {
 	} else {
 		return false;
 	}
-}
-
-
-const std::string& SpriteComponentSystem::getName() {
-	return SpriteComponentSystem::SPRITE;
 }
 
 

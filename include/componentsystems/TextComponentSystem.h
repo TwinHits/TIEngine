@@ -1,7 +1,7 @@
 #ifndef TEXTCOMPONENTSYSTEM_H
 #define TEXTCOMPONENTSYSTEM_H
 
-#include "componentSystems/ComponentSystem.h"
+#include "componentsystems/OwnsComponent.h"
 #include "templates/Singleton.h"
 
 #include <string>
@@ -16,15 +16,13 @@
 
 namespace TIE {
 
-class TextComponentSystem : public Singleton<TextComponentSystem>, public ComponentSystem {
+class TextComponentSystem : public Singleton<TextComponentSystem>, public OwnsComponent<TextComponent> {
 	public:
 		TextComponentSystem();
 		void update(const float);
-		bool hasComponent(const TIEntity&);
 		TextComponent& addComponent(TIEntity&);
 		TextComponent& addComponent(const TIEntityFactory&, TIEntity&);
 		bool removeComponent(TIEntity&);
-		const std::string& getName();
 
 		bool setComponentProperty(const std::string&, bool, TIEntity&);
 		bool setComponentProperty(const std::string&, float, TIEntity&);

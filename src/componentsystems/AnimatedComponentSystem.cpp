@@ -17,6 +17,7 @@
 using namespace TIE;
 
 AnimatedComponentSystem::AnimatedComponentSystem() {
+    this->setName(AnimatedComponentSystem::ANIMATED);
     ComponentSystems::insertComponentPropertyIntoMap(AnimatedComponentSystem::ANIMATED, AnimatedComponentSystem::FRAMES, this->componentPropertyMap);
     ComponentSystems::insertComponentPropertyIntoMap(AnimatedComponentSystem::ANIMATED, AnimatedComponentSystem::RANGE, this->componentPropertyMap);
     ComponentSystems::insertComponentPropertyIntoMap(AnimatedComponentSystem::ANIMATED, AnimatedComponentSystem::SPEED, this->componentPropertyMap);
@@ -31,11 +32,6 @@ void AnimatedComponentSystem::update(const float delta) {
             this->setTextureRect(*c.animatedComponent.getCurrentAnimation(), c.spriteComponent);
         }
     }
-}
-
-
-bool AnimatedComponentSystem::hasComponent(const TIEntity& tientity) {
-    return tientity.hasComponent<AnimatedComponent>();
 }
 
 
@@ -135,11 +131,6 @@ bool AnimatedComponentSystem::removeComponent(TIEntity& tientity) {
     } else {
         return false;
     }
-}
-
-
-const std::string& AnimatedComponentSystem::getName() {
-    return AnimatedComponentSystem::ANIMATED;
 }
 
 

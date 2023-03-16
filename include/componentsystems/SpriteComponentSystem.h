@@ -1,7 +1,7 @@
 #ifndef SPRITECOMPONENTSYSTEM_H
 #define SPRITECOMPONENTSYSTEM_H
 
-#include "componentSystems/ComponentSystem.h"
+#include "componentsystems/OwnsComponent.h"
 #include "templates/Singleton.h"
 
 #include <string>
@@ -13,15 +13,13 @@
 
 namespace TIE {
 
-class SpriteComponentSystem : public Singleton<SpriteComponentSystem>, public ComponentSystem {
+class SpriteComponentSystem : public Singleton<SpriteComponentSystem>, public OwnsComponent<SpriteComponent> {
 	public:
 		SpriteComponentSystem();
 		void update(const float);
-		bool hasComponent(const TIEntity&);
 		SpriteComponent& addComponent(TIEntity&);
 		SpriteComponent& addComponent(const TIEntityFactory&, TIEntity&);
 		bool removeComponent(TIEntity&);
-		const std::string& getName();
 
 		bool setComponentProperty(const std::string&, bool, TIEntity&);
 		bool setComponentProperty(const std::string&, float, TIEntity&);

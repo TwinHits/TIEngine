@@ -1,13 +1,13 @@
 #ifndef SCENEMANAGER_H
 #define SCENEMANAGER_H
 
-#include "componentsystems/ComponentSystem.h"
 #include "managers/Manager.h"
 #include "templates/Singleton.h"
 
 #include <memory>
 #include <vector>
 
+#include "componentsystems/ComponentSystem.h"
 #include "managers/WindowManager.h"
 #include "objects/tientities/SceneLayer.h"
 

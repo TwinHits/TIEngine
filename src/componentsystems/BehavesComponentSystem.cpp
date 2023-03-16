@@ -11,6 +11,7 @@
 using namespace TIE;
 
 BehavesComponentSystem::BehavesComponentSystem() {
+	this->setName(BehavesComponentSystem::BEHAVES);
 	ComponentSystems::insertComponentPropertyIntoMap(BehavesComponentSystem::ROOT_STATE, this->componentPropertyMap);
 }
 
@@ -21,11 +22,6 @@ void BehavesComponentSystem::update(const float delta) {
 			c.behavesComponent.rootState->update(delta);
 		}
 	}
-}
-
-
-bool BehavesComponentSystem::hasComponent(const TIEntity& tientity) {
-	return tientity.hasComponent<BehavesComponent>();
 }
 
 
@@ -63,11 +59,6 @@ bool BehavesComponentSystem::removeComponent(TIEntity& tientity) {
 	} else {
 		return false;
 	}
-}
-
-
-const std::string& BehavesComponentSystem::getName() {
-	return BehavesComponentSystem::BEHAVES;
 }
 
 

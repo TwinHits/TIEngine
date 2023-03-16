@@ -9,16 +9,11 @@
 using namespace TIE;
 
 CollidesComponentSystem::CollidesComponentSystem() {
-		
+	this->setName(CollidesComponentSystem::COLLIDES);
 }
 
 
 void CollidesComponentSystem::update(const float delta) {}
-
-
-bool CollidesComponentSystem::hasComponent(const TIEntity& tientity) {
-	return tientity.hasComponent<CollidesComponent>();
-}
 
 
 CollidesComponent& CollidesComponentSystem::addComponent(TIEntity& tientity) {
@@ -44,11 +39,6 @@ bool CollidesComponentSystem::removeComponent(TIEntity& tientity) {
 	} else {
 		return false;
 	}
-}
-
-
-const std::string& CollidesComponentSystem::getName() {
-	return CollidesComponentSystem::COLLIDES;
 }
 
 

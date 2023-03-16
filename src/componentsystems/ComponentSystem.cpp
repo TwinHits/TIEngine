@@ -1,8 +1,19 @@
 #include "componentsystems/ComponentSystem.h"
 
-#include "managers/ScriptManager.h"
+#include <string>
+
+#include "objects/tientities/TIEntity.h"
+#include "utils/ComponentSystems.h"
 
 using namespace TIE;
+
+const std::string& ComponentSystem::getName() {
+    return this->name;
+}
+
+void ComponentSystem::setName(const std::string& name) {
+    this->name = name;
+}
 
 bool ComponentSystem::setComponentProperty(const std::string& key, bool value, TIEntity& tientity) {
     return false;
@@ -35,7 +46,6 @@ ComponentSystems::ComponentSystemPropertiesMap& ComponentSystem::populateCompone
 }
 
 
-
 std::string ComponentSystem::getComponentPropertiesString(TIEntity& tientity) {
     if (this->hasComponent(tientity)) {
         std::stringstream ss;
@@ -50,4 +60,3 @@ std::string ComponentSystem::getComponentPropertiesString(TIEntity& tientity) {
     }
     return "";
 }
-

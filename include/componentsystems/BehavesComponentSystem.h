@@ -1,7 +1,7 @@
 #ifndef BEHAVESCOMPONENTSYSTEM_H
 #define BEHAVESCOMPONENTSYSTEM_H
 
-#include "componentSystems/ComponentSystem.h"
+#include "componentsystems/OwnsComponent.h"
 #include "templates/Singleton.h"
 
 #include <string>
@@ -12,15 +12,13 @@
 
 namespace TIE {
 
-class BehavesComponentSystem : public Singleton<BehavesComponentSystem>, public ComponentSystem {
+class BehavesComponentSystem : public Singleton<BehavesComponentSystem>, public OwnsComponent<BehavesComponent> {
 	public:
 		BehavesComponentSystem();
 		void update(const float);
-		bool hasComponent(const TIEntity& tientity);
 		BehavesComponent& addComponent(TIEntity&);
 		BehavesComponent& addComponent(const TIEntityFactory&, TIEntity&);
 		bool removeComponent(TIEntity&);
-		const std::string& getName();
 		
 		bool setComponentProperty(const std::string&, bool, TIEntity&);
 		bool setComponentProperty(const std::string&, float, TIEntity&);

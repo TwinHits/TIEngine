@@ -1,22 +1,20 @@
 #ifndef LIFECYCLECOMPONENTSYSTEM_H
 #define LIFECYCLECOMPONENTSYSTEM_H
 
-#include "componentSystems/ComponentSystem.h"
+#include "componentsystems/OwnsComponent.h"
 #include "templates/Singleton.h"
 
 #include "objects/components/LifecycleComponent.h"
 
 namespace TIE {
 
-class LifecycleComponentSystem : public Singleton<LifecycleComponentSystem>, public ComponentSystem {
+class LifecycleComponentSystem : public Singleton<LifecycleComponentSystem>, public OwnsComponent<LifecycleComponent> {
 public:
 	LifecycleComponentSystem();
 	void update(const float);
-	bool hasComponent(const TIEntity&);
 	LifecycleComponent& addComponent(TIEntity&);
 	LifecycleComponent& addComponent(const TIEntityFactory&, TIEntity&);
 	bool removeComponent(TIEntity&);
-	const std::string& getName();
 
     bool setComponentProperty(const std::string&, bool, TIEntity&);
     bool setComponentProperty(const std::string&, float, TIEntity&);

@@ -1,7 +1,7 @@
 #ifndef GRIDCOMPONENTSYSTEM_H
 #define GRIDCOMPONENTSYSTEM_H
 
-#include "componentsystems/ComponentSystem.h"
+#include "componentsystems/OwnsComponent.h"
 #include "templates/Singleton.h"
 
 #include <SFML/Graphics.hpp>
@@ -13,13 +13,11 @@
 
 namespace TIE {
 
-class GridComponentSystem : public Singleton<GridComponentSystem>, public ComponentSystem {
+class GridComponentSystem : public Singleton<GridComponentSystem>, public OwnsComponent<GridComponent> {
 	public:
 		GridComponentSystem();
 		void update(const float);
-		const std::string& getName();
 
-		bool hasComponent(const TIEntity&);
 		GridComponent& addComponent(TIEntity&);
 		GridComponent& addComponent(const TIEntityFactory&, TIEntity&);
 		bool removeComponent(TIEntity&);

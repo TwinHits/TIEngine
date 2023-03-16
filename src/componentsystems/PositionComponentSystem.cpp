@@ -14,6 +14,7 @@
 using namespace TIE;
 
 PositionComponentSystem::PositionComponentSystem() {
+    this->setName(PositionComponentSystem::POSITION);
     ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::ROTATION, this->componentPropertyMap);
     ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::ROTATES, this->componentPropertyMap);
     ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::POSITION_POSITION, this->componentPropertyMap);
@@ -31,11 +32,6 @@ void PositionComponentSystem::update(const float delta) {
             c.positionComponent.worldRotation = this->getWorldRotation(c.tientity);
         }
     }
-}
-
-
-bool PositionComponentSystem::hasComponent(const TIEntity& tientity) {
-    return tientity.hasComponent<PositionComponent>();
 }
 
 
@@ -130,11 +126,6 @@ bool PositionComponentSystem::removeComponent(TIEntity& tientity) {
 	} else {
 		return false;
 	}
-}
-
-
-const std::string& PositionComponentSystem::getName() {
-    return PositionComponentSystem::POSITION;
 }
 
 

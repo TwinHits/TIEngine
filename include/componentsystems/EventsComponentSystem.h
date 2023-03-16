@@ -1,7 +1,7 @@
 #ifndef EVENTSCOMPONENTSYSTEM_H
 #define EVENTSCOMPONENTSYSTEM_H
 
-#include "componentSystems/ComponentSystem.h"
+#include "componentsystems/OwnsComponent.h"
 #include "templates/Singleton.h"
 
 #include <string>
@@ -13,15 +13,13 @@
 
 namespace TIE {
 
-class EventsComponentSystem : public Singleton<EventsComponentSystem>, public ComponentSystem {
+class EventsComponentSystem : public Singleton<EventsComponentSystem>, public OwnsComponent<EventsComponent> {
 	public:
 		EventsComponentSystem();
 		void update(const float);
-		bool hasComponent(const TIEntity&);
 		EventsComponent& addComponent(const TIEntityFactory&, TIEntity&);
 		EventsComponent& addComponent(TIEntity&);
 		bool removeComponent(TIEntity&);
-		const std::string& getName();
 
 		bool setComponentProperty(const std::string&, bool, TIEntity&);
 		bool setComponentProperty(const std::string&, float, TIEntity&);

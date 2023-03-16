@@ -1,7 +1,7 @@
 #ifndef CACHECOMPONENTSYSTEM_H
 #define CACHECOMPONENTSYSTEM_H
 
-#include "componentsystems/ComponentSystem.h"
+#include "componentsystems/OwnsComponent.h"
 #include "templates/Singleton.h"
 
 #include "objects/components/CacheComponent.h"
@@ -9,15 +9,13 @@
 
 namespace TIE {
 
-class CacheComponentSystem : public ComponentSystem, public Singleton<CacheComponentSystem> {
+class CacheComponentSystem : public Singleton<CacheComponentSystem>, public OwnsComponent<CacheComponent> {
 public:
     CacheComponentSystem();
     void update(const float);
-    bool hasComponent(const TIEntity&);
     CacheComponent& addComponent(TIEntity&);
     CacheComponent& addComponent(const TIEntityFactory&, TIEntity&);
     bool removeComponent(TIEntity&);
-    const std::string& getName();
 
     bool setComponentProperty(const std::string&, bool, TIEntity&);
     bool setComponentProperty(const std::string&, float, TIEntity&);

@@ -19,6 +19,7 @@
 using namespace TIE;
 
 EventsComponentSystem::EventsComponentSystem() {
+	this->setName(EventsComponentSystem::EVENTS);
 	ComponentSystems::insertComponentPropertyIntoMap(EventsComponentSystem::EVENTS, EventsComponentSystem::SELECTED, this->componentPropertyMap);
 	ComponentSystems::insertComponentPropertyIntoMap(EventsComponentSystem::EVENTS, EventsComponentSystem::UNSELECTED, this->componentPropertyMap);
 	ComponentSystems::insertComponentPropertyIntoMap(EventsComponentSystem::EVENTS, EventsComponentSystem::NEUTRAL, this->componentPropertyMap);
@@ -62,11 +63,6 @@ void EventsComponentSystem::update(const float delta) {
 			}
 		}
 	}
-}
-
-
-bool EventsComponentSystem::hasComponent(const TIEntity& tientity) {
-	return tientity.hasComponent<EventsComponent>();
 }
 
 
@@ -151,11 +147,6 @@ bool EventsComponentSystem::removeComponent(TIEntity& tientity) {
 	} else {
 		return false;
 	}
-}
-
-
-const std::string& EventsComponentSystem::getName() {
-	return EventsComponentSystem::EVENTS;
 }
 
 

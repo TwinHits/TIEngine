@@ -10,6 +10,7 @@
 using namespace TIE;
 
 LifecycleComponentSystem::LifecycleComponentSystem() {
+	this->setName(LifecycleComponentSystem::LIFECYCLE);
 	ComponentSystems::insertComponentPropertyIntoMap(LifecycleComponentSystem::CREATED, this->componentPropertyMap);
 	ComponentSystems::insertComponentPropertyIntoMap(LifecycleComponentSystem::REMOVED, this->componentPropertyMap);
 	ComponentSystems::insertComponentPropertyIntoMap(LifecycleComponentSystem::UPDATED, this->componentPropertyMap);
@@ -22,11 +23,6 @@ void LifecycleComponentSystem::update(const float delta) {
 			this->runFunction(c.lifecycleComponent.updatedFunctionId, c.tientity);
 		}
 	}
-}
-
-
-bool LifecycleComponentSystem::hasComponent(const TIEntity& tientity) {
-	return tientity.hasComponent<LifecycleComponent>();
 }
 
 
@@ -80,11 +76,6 @@ bool LifecycleComponentSystem::removeComponent(TIEntity& tientity) {
 	} else {
 		return false;
 	}
-}
-
-
-const std::string& LifecycleComponentSystem::getName() {
-	return LifecycleComponentSystem::LIFECYCLE;
 }
 
 

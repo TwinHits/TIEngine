@@ -20,6 +20,7 @@
 using namespace TIE;
 
 MovesComponentSystem::MovesComponentSystem() {
+	this->name = MovesComponentSystem::MOVES;
 	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::SPEED, this->componentPropertyMap);
 	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::ACCELERATION, this->componentPropertyMap);
 	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::DECELERATION, this->componentPropertyMap);
@@ -49,11 +50,6 @@ void MovesComponentSystem::update(const float delta) {
             this->rotate(c.movesComponent, c.positionComponent, delta);
         }
 	}
-}
-
-
-bool MovesComponentSystem::hasComponent(const TIEntity& tientity) {
-	return tientity.hasComponent<MovesComponent>();
 }
 
 
@@ -114,11 +110,6 @@ bool MovesComponentSystem::removeComponent(TIEntity& tientity) {
 	} else {
 		return false;
 	}
-}
-
-
-const std::string& MovesComponentSystem::getName() {
-	return MovesComponentSystem::MOVES;
 }
 
 

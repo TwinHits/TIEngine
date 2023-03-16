@@ -1,7 +1,7 @@
 #ifndef SHAPECOMPONENTSYSTEM_H
 #define SHAPECOMPONENTSYSTEM_H
 
-#include "componentSystems/ComponentSystem.h"
+#include "componentsystems/OwnsComponent.h"
 #include "templates/Singleton.h"
 
 #include "objects/components/PositionComponent.h"
@@ -13,15 +13,13 @@
 
 namespace TIE {
 
-class ShapeComponentSystem : public Singleton<ShapeComponentSystem>, public ComponentSystem {
+class ShapeComponentSystem : public Singleton<ShapeComponentSystem>, public OwnsComponent<ShapeComponent> {
 	public:
 		ShapeComponentSystem();
 		void update(const float);
-		bool hasComponent(const TIEntity&);
 		ShapeComponent& addComponent(const TIEntityFactory&, TIEntity&);
 		ShapeComponent& addComponent(TIEntity&);
 		bool removeComponent(TIEntity&);
-		const std::string& getName();
 
 		bool setComponentProperty(const std::string&, bool, TIEntity&);
 		bool setComponentProperty(const std::string&, float, TIEntity&);

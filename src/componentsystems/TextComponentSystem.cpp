@@ -19,6 +19,7 @@
 using namespace TIE;
 
 TextComponentSystem::TextComponentSystem() {
+	this->setName(TextComponentSystem::TEXT);
 	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::DRAWN, this->componentPropertyMap);
 	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::STRING, this->componentPropertyMap);
 	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::FONT, this->componentPropertyMap);
@@ -34,11 +35,6 @@ void TextComponentSystem::update(const float delta) {
 		c.textComponent.setPosition(c.positionComponent.worldPosition);
 		c.textComponent.setRotation(c.positionComponent.worldRotation);
 	}
-}
-
-
-bool TextComponentSystem::hasComponent(const TIEntity& tientity) {
-	return tientity.hasComponent<TextComponent>();
 }
 
 
@@ -95,11 +91,6 @@ bool TextComponentSystem::removeComponent(TIEntity& tientity) {
 	} else {
 		return false;
 	}
-}
-
-
-const std::string& TextComponentSystem::getName() {
-	return TextComponentSystem::TEXT;
 }
 
 

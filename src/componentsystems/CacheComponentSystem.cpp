@@ -11,16 +11,12 @@
 using namespace TIE;
 
 CacheComponentSystem::CacheComponentSystem() {
+    this->setName(CacheComponentSystem::CACHE);
     ComponentSystems::insertComponentPropertyIntoMap(CacheComponentSystem::CACHE, this->componentPropertyMap);
 }
 
 
 void CacheComponentSystem::update(const float delta) {}
-
-
-bool CacheComponentSystem::hasComponent(const TIEntity& tientity) {
-    return tientity.hasComponent<CacheComponent>();
-}
 
 
 CacheComponent& CacheComponentSystem::addComponent(TIEntity& tientity) {
@@ -56,11 +52,6 @@ bool CacheComponentSystem::removeComponent(TIEntity& tientity) {
     } else {
         return false;
     }
-}
-
-
-const std::string& CacheComponentSystem::getName() {
-    return this->CACHE;
 }
 
 

@@ -1,7 +1,7 @@
 #ifndef ANIMATEDCOMPONENTSYSTEM_H
 #define ANIMATEDCOMPONENTSYSTEM_H
 
-#include "componentsystems/ComponentSystem.h"
+#include "componentsystems/OwnsComponent.h"
 #include "templates/Singleton.h"
 
 #include <vector>
@@ -14,15 +14,13 @@
 
 namespace TIE {
 
-class AnimatedComponentSystem : public Singleton<AnimatedComponentSystem>, public ComponentSystem {
+class AnimatedComponentSystem : public Singleton<AnimatedComponentSystem>, public OwnsComponent<AnimatedComponent> {
     public:
         AnimatedComponentSystem();
         void update(const float);
-        bool hasComponent(const TIEntity&);
         AnimatedComponent& addComponent(TIEntity&);
         AnimatedComponent& addComponent(const TIEntityFactory&, TIEntity&);
         bool removeComponent(TIEntity&);
-        const std::string& getName();
         
 		bool setComponentProperty(const std::string&, bool, TIEntity&);
 		bool setComponentProperty(const std::string&, float, TIEntity&);

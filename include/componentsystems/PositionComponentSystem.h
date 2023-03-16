@@ -1,7 +1,7 @@
 #ifndef POSITIONCOMPONENTSYSTEM_H
 #define POSITIONCOMPONENTSYSTEM_H
 
-#include "componentSystems/ComponentSystem.h"
+#include "componentsystems/OwnsComponent.h"
 #include "templates/Singleton.h"
 
 #include <string>
@@ -14,15 +14,13 @@
 #include "utils/types/ComponentSystemsTypes.h"
 
 namespace TIE {
-class PositionComponentSystem : public Singleton<PositionComponentSystem>, public ComponentSystem {
+class PositionComponentSystem : public Singleton<PositionComponentSystem>, public OwnsComponent<PositionComponent> {
     public:
 		PositionComponentSystem();
 		void update(const float);
-		bool hasComponent(const TIEntity& tientity);
 		PositionComponent& addComponent(TIEntity&);
 		PositionComponent& addComponent(const TIEntityFactory&, TIEntity&);
 		bool removeComponent(TIEntity&);
-		const std::string& getName();
 
 		bool setComponentProperty(const std::string&, bool, TIEntity&);
 		bool setComponentProperty(const std::string&, float, TIEntity&);

@@ -1,7 +1,7 @@
 #ifndef MOVESCOMPONENTSYSTEM_H
 #define MOVESCOMPONENTSYSTEM_H
 
-#include "componentSystems/ComponentSystem.h"
+#include "componentsystems/OwnsComponent.h"
 #include "templates/Singleton.h"
 
 #include <string>
@@ -17,15 +17,13 @@
 
 namespace TIE {
 
-class MovesComponentSystem : public Singleton<MovesComponentSystem>, public ComponentSystem {
+class MovesComponentSystem : public Singleton<MovesComponentSystem>, public OwnsComponent<MovesComponent> {
 	public:
 		MovesComponentSystem();
 		void update(const float);
-		bool hasComponent(const TIEntity& tientity);
 		MovesComponent& addComponent(TIEntity&);
 		MovesComponent& addComponent(const TIEntityFactory&, TIEntity&);
 		bool removeComponent(TIEntity&);
-		const std::string& getName();
 		
 		bool setComponentProperty(const std::string&, bool, TIEntity&);
 		bool setComponentProperty(const std::string&, float, TIEntity&);
