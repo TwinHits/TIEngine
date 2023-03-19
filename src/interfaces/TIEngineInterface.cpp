@@ -1,9 +1,12 @@
 #include "interfaces/TIEngineInterface.h"
 
 #include <string>
+#include <vector>
 
 #include <sol/sol.hpp>
 
+#include "componentsystems/MessagesComponentSystem.h"
+#include "interfaces/MessageInterface.h"
 #include "interfaces/TIEntityInterface.h"
 #include "managers/AssetsManager.h"
 #include "managers/EventsManager.h"
@@ -35,7 +38,9 @@ void TIEngineInterface::registerUserType(sol::state& luaState) {
     engineInterfaceUserType["getTIEntityById"] = &TIEngineInterface::getTIEntityById;
     engineInterfaceUserType["registerSceneLayer"] = &TIEngineInterface::registerSceneLayer;
     engineInterfaceUserType["registerFiniteStateMachine"] = &TIEngineInterface::registerFiniteStateMachine;
+    engineInterfaceUserType["registerMessageSubscription"] = &TIEngineInterface::registerMessageSubscription;
     engineInterfaceUserType["getProperties"] = &TIEngineInterface::getProperties;
+    engineInterfaceUserType["sendMessage"] = &TIEngineInterface::sendMessage;
 }
 
 
@@ -139,6 +144,25 @@ GlobalId TIEngineInterface::registerFiniteStateMachine(const sol::table& definit
 }
 
 
+GlobalId TIEngineInterface::registerMessageSubscription() {
+    return MessagesComponentSystem::Instance()->registerMessageSubscription();
+}
+
+
 const ComponentSystems::ComponentSystemPropertiesMap& TIEngineInterface::getProperties() {
     return SceneManager::Instance()->getComponentSystemPropertiesMap();
+}
+
+
+void TIEngineInterface::sendMessage(const GlobalId subscription, sol::object recievers, sol::object payload) {
+    if (recievers.is<GlobalId>()) {
+        MessagesComponentSystem::Instance()->sendMessage(subscription, 0, recievers.as<GlobalId>(), payload);
+    } else if (recievers.is<sol::table>()) {
+        for (auto& pair : recievers.as<sol::table>()) {
+            const sol::object& reciever = pair.second;
+            if (reciever.is<GlobalId>()) {
+                MessagesComponentSystem::Instance()->sendMessage(subscription, 0, reciever.as<GlobalId>(), payload);
+            }
+        }
+    }
 }

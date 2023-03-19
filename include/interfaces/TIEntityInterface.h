@@ -2,9 +2,11 @@
 #define TIENTITYINTERFACE_H
 
 #include <string>
+#include <vector>
 
 #include <sol/sol.hpp>
 
+#include "interfaces/MessageInterface.h"
 #include "objects/GlobalId.h"
 #include "objects/components/structs/EventState.h"
 #include "objects/tientities/TIEntity.h"
@@ -48,6 +50,12 @@ class TIEntityInterface {
 
         // Search
         sol::table& findTIEntitiesWithinRange(const float, TIEntityInterface&);
+
+        // Message
+        void sendMessage(const GlobalId, sol::object, sol::object);
+        bool hasMessage(const GlobalId);
+        bool hasMessages();
+        std::vector<MessageInterface> getMessages(const GlobalId);
 
     private:
         TIEntity* tientity = nullptr;

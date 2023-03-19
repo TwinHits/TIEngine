@@ -40,6 +40,9 @@ class TIEngineInterface {
 
         TIEntityInterface registerSceneLayer(const std::string&, bool);
         GlobalId registerFiniteStateMachine(const sol::table&);
+        GlobalId registerMessageSubscription();
+
+        void sendMessage(const GlobalId, sol::object, sol::object);
 
         const ComponentSystems::ComponentSystemPropertiesMap& getProperties();
 };

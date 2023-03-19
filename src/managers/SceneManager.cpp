@@ -12,6 +12,7 @@
 #include "componentsystems/EventsComponentSystem.h"
 #include "componentsystems/GridComponentSystem.h"
 #include "componentsystems/LifecycleComponentSystem.h"
+#include "componentsystems/MessagesComponentSystem.h"
 #include "componentsystems/MovesComponentSystem.h"
 #include "componentsystems/ShapeComponentSystem.h"
 #include "componentsystems/SpriteComponentSystem.h"
@@ -78,6 +79,7 @@ bool SceneManager::initialize() {
 	// Other Operations
 	this->componentSystems.push_back(GridComponentSystem::Instance());
 	this->componentSystems.push_back(CollidesComponentSystem::Instance());
+	this->componentSystems.push_back(MessagesComponentSystem::Instance());
 
 	//this->componentSystemPropertiesMap = ScriptManager::Instance()->getNewTable();
 	for (ComponentSystem* componentSystem : SceneManager::Instance()->getComponentSystems()) {

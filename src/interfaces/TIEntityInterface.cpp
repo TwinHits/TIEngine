@@ -2,10 +2,14 @@
 
 #include "sol/sol.hpp"
 
+#include <vector>
+
 #include "componentsystems/CacheComponentSystem.h"
 #include "componentsystems/EventsComponentSystem.h"
+#include "componentsystems/MessagesComponentSystem.h"
 #include "componentsystems/PositionComponentSystem.h"
 #include "componentsystems/SpriteComponentSystem.h"
+#include "interfaces/MessageInterface.h"
 #include "managers/SceneManager.h"
 #include "objects/GlobalId.h"
 #include "objects/components/structs/EventState.h"
@@ -55,6 +59,12 @@ void TIEntityInterface::registerUserType(sol::state& luaState) {
 
     //Search
     interfaceUserType["findTIEntitiesWithinRange"] = &TIEntityInterface::findTIEntitiesWithinRange;
+
+    //Messages
+    interfaceUserType["sendMessage"] = &TIEntityInterface::sendMessage;
+    interfaceUserType["hasMessage"] = &TIEntityInterface::hasMessage;
+    interfaceUserType["hasMessages"] = &TIEntityInterface::hasMessages;
+    interfaceUserType["getMessages"] = &TIEntityInterface::getMessages;
 }
 
 
@@ -170,6 +180,7 @@ sol::table& TIEntityInterface::getCache() {
     return CacheComponentSystem::Instance()->getCache(*this->tientity);
 }
 
+
 sol::table& TIEntityInterface::findTIEntitiesWithinRange(const float range, TIEntityInterface& searchRoot) {
     this->tientitiesWithinRange = ScriptManager::Instance()->getNewTable();
     
@@ -178,4 +189,39 @@ sol::table& TIEntityInterface::findTIEntitiesWithinRange(const float range, TIEn
     }
 
     return this->tientitiesWithinRange;
+}
+
+
+void TIEntityInterface::sendMessage(const GlobalId subscription, sol::object recievers, sol::object payload) {
+    if (recievers.is<GlobalId>()) {
+        MessagesComponentSystem::Instance()->sendMessage(subscription, this->tientity->getId(), recievers.as<GlobalId>(), payload);
+    } else if (recievers.is<sol::table>()) {
+        const GlobalId senderId = this->tientity->getId();
+        for (auto& pair : recievers.as<sol::table>()) {
+            const sol::object& reciever = pair.second;
+            if (reciever.is<GlobalId>()) {
+                MessagesComponentSystem::Instance()->sendMessage(subscription, senderId, reciever.as<GlobalId>(), payload);
+            }
+        }
+    }
+}
+
+
+bool TIEntityInterface::hasMessage(const GlobalId subscription) {
+    return MessagesComponentSystem::Instance()->hasMessages(*this->tientity, subscription);
+}
+
+
+bool TIEntityInterface::hasMessages() {
+    return MessagesComponentSystem::Instance()->hasMessages(*this->tientity);
+}
+
+
+std::vector<MessageInterface> TIEntityInterface::getMessages(const GlobalId subscription) {
+    const std::vector<Message>& messages = MessagesComponentSystem::Instance()->getMessages(*this->tientity, subscription);
+    std::vector<MessageInterface> messageInterfaces;
+    for (auto& message : messages) {
+        messageInterfaces.push_back(MessageInterface(message));
+    }
+    return messageInterfaces;
 }

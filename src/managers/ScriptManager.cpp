@@ -8,6 +8,7 @@
 
 #include "componentsystems/CacheComponentSystem.h"
 #include "interfaces/EventStateInterface.h"
+#include "interfaces/MessageInterface.h"
 #include "interfaces/TIEngineInterface.h"
 #include "interfaces/TIEntityInterface.h"
 #include "interfaces/Vector2Interface.h"
@@ -39,6 +40,7 @@ bool ScriptManager::initialize() {
 	//Register user types with lua state
     EventStateInterface::registerUserType(this->luaState);
     FiniteStateMachineInterface::registerUserType(this->luaState);
+	MessageInterface::registerUserType(this->luaState);
     TIEngineInterface::registerUserType(this->luaState);
     TIEntityInterface::registerUserType(this->luaState);
 	Vector2Interface::registerUserType(this->luaState);
