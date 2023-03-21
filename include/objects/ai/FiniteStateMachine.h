@@ -12,6 +12,9 @@ class FiniteStateMachine {
     public:
         FiniteStateMachine(TIEntity&, const GlobalId);
 
+        void setParent(FiniteStateMachine*);
+        FiniteStateMachine* getParent();
+
         TIEntity& getTIEntity();
         const GlobalId getFactoryId();
 
@@ -24,7 +27,10 @@ class FiniteStateMachine {
         const GlobalId getOnExitFunctionId();
         void setOnExitFunctionId(const GlobalId);
 
-        FiniteStateMachine* update(float);
+        void setExit(bool);
+        bool getExit();
+
+        void update(float);
         void onEnter();
         void onExit();
 
@@ -35,15 +41,19 @@ class FiniteStateMachine {
 		static const inline std::string ON_EXIT = "onExit";
 
     private:
-
+        void runFunction(const GlobalId, const float);
         void runFunction(const GlobalId);
 
         TIEntity& tientity;
         GlobalId factoryId;
+        FiniteStateMachine* parent = nullptr;
         std::unique_ptr<FiniteStateMachine> childState;
+
         GlobalId onEnterFunctionId = 0;
         GlobalId onUpdateFunctionId = 0;
         GlobalId onExitFunctionId = 0;
+
+        bool exit = false;
 };
 
 }

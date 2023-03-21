@@ -22,6 +22,7 @@ namespace TIE {
         GlobalId getState();
         void removeState();
         bool hasState();
+        void exit();
 
     private:
         FiniteStateMachine* finiteStateMachine = nullptr;

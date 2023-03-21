@@ -93,10 +93,10 @@ void ScriptManager::runFunction<void>(const std::string& name, TIEntity& tientit
 
 
 template <>
- void ScriptManager::runFunction(const GlobalId functionId, FiniteStateMachine& finiteStateMachine) {
+ void ScriptManager::runFunction(const GlobalId functionId, FiniteStateMachine& finiteStateMachine, const float delta) {
     TIEntityInterface tientityInterface(finiteStateMachine.getTIEntity());
     FiniteStateMachineInterface finiteStateMachineInterface(finiteStateMachine);
-    this->functions.at(functionId)(std::tuple<TIEntityInterface, FiniteStateMachineInterface>(tientityInterface, finiteStateMachineInterface));
+    this->functions.at(functionId)(std::tuple<TIEntityInterface, FiniteStateMachineInterface, const float>(tientityInterface, finiteStateMachineInterface, delta));
 }
 
 

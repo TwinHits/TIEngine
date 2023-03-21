@@ -13,6 +13,16 @@ FiniteStateMachine::FiniteStateMachine(TIEntity& tientity, const GlobalId factor
 };
 
 
+void FiniteStateMachine::setParent(FiniteStateMachine* parent) {
+    this->parent = parent;
+}
+
+
+FiniteStateMachine* FiniteStateMachine::getParent() {
+    return this->parent;
+}
+
+
 TIEntity& FiniteStateMachine::getTIEntity() {
     return this->tientity;
 }
@@ -58,17 +68,29 @@ void FiniteStateMachine::setOnExitFunctionId(const GlobalId onExitFunctionId) {
 }
 
 
+void FiniteStateMachine::setExit(bool exit) {
+    this->exit = exit;
+}
+
+
+bool FiniteStateMachine::getExit() {
+    return this->exit;
+}
+
+
 void FiniteStateMachine::onEnter() {
     this->runFunction(this->onEnterFunctionId);
 };
 
 
-FiniteStateMachine* FiniteStateMachine::update(float delta) {
-    this->runFunction(this->onUpdateFunctionId);
+void FiniteStateMachine::update(float delta) {
+    this->runFunction(this->onUpdateFunctionId, delta);
     if (this->childState) {
         this->childState->update(delta);
+        if (this->childState->exit) {
+            this->setState(nullptr);
+        }
     }
-    return nullptr;
 };
 
 
@@ -81,15 +103,27 @@ void FiniteStateMachine::setState(std::unique_ptr<FiniteStateMachine> newChildSt
     if (this->childState) {
         this->childState->onExit();
     }
-    this->childState = std::move(newChildState);
-    if (this->childState) {
+
+    if (newChildState) {
+        this->childState = std::move(newChildState);
+        this->childState->setParent(this);
         this->childState->onEnter();
+    } else {
+        this->childState = nullptr;
+    }
+}
+
+
+void FiniteStateMachine::runFunction(const GlobalId functionId, const float delta) {
+    if (functionId) {
+        ScriptManager::Instance()->runFunction<sol::optional<float> >(functionId, *this, delta);
     }
 }
 
 
 void FiniteStateMachine::runFunction(const GlobalId functionId) {
     if (functionId) {
-        ScriptManager::Instance()->runFunction<sol::optional<float> >(functionId, *this);
+        ScriptManager::Instance()->runFunction<sol::optional<float> >(functionId, *this, 0);
     }
 }
+

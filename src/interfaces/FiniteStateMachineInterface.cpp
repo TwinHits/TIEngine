@@ -26,6 +26,7 @@ void FiniteStateMachineInterface::registerUserType(sol::state& luaState) {
     interfaceUserType["getState"] = &FiniteStateMachineInterface::getState;
     interfaceUserType["removeState"] = &FiniteStateMachineInterface::removeState;
     interfaceUserType["hasState"] = &FiniteStateMachineInterface::hasState;
+    interfaceUserType["exit"] = &FiniteStateMachineInterface::exit;
 } 
 
 
@@ -51,4 +52,9 @@ void FiniteStateMachineInterface::removeState() {
 
 bool FiniteStateMachineInterface::hasState() {
     return this->finiteStateMachine->getFactoryId() != 0;
+}
+
+
+void FiniteStateMachineInterface::exit() {
+    this->finiteStateMachine->setExit(true);
 }

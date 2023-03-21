@@ -44,12 +44,12 @@ public:
 	template <> void runFunction<void>(const std::string&, TIEntity&);
 
 	template <typename T>
-	T runFunction(const GlobalId functionId, FiniteStateMachine& finiteStateMachine) {
+	T runFunction(const GlobalId functionId, FiniteStateMachine& finiteStateMachine, const float delta) {
         TIEntityInterface tientityInterface(finiteStateMachine.getTIEntity());
 		FiniteStateMachineInterface finiteStateMachineInterface(finiteStateMachine);
-		return this->functions.at(functionId)(std::tuple<TIEntityInterface, FiniteStateMachineInterface>(tientityInterface, finiteStateMachineInterface));
+		return this->functions.at(functionId)(std::tuple<TIEntityInterface, FiniteStateMachineInterface, const float>(tientityInterface, finiteStateMachineInterface, delta));
 	}
-	template <> void runFunction<void>(const GlobalId, FiniteStateMachine&);
+	template <> void runFunction<void>(const GlobalId, FiniteStateMachine&, const float);
 
 	GlobalId registerFunctionByName(const std::string&, const sol::function&);
 	GlobalId getFunctionIdByName(const std::string&);
