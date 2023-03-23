@@ -113,62 +113,50 @@ bool MovesComponentSystem::removeComponent(TIEntity& tientity) {
 }
 
 
-bool MovesComponentSystem::setComponentProperty(const std::string& key, bool value, TIEntity& tientity) {
-    MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
-	if (movesComponent != nullptr) {
-		if (key == MovesComponentSystem::ROTATES) {
-			movesComponent->rotates = value;
-		}
-	}
-    return false;
-}
-
-
-bool MovesComponentSystem::setComponentProperty(const std::string& key, float value, TIEntity& tientity)  {
-    MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
-    if (movesComponent != nullptr) {
-        if (key == MovesComponentSystem::SPEED) {
-			movesComponent->targetSpeed = value;
-		} else if (key == MovesComponentSystem::ACCELERATION) {
-			movesComponent->acceleration = value;
-		} else if (key == MovesComponentSystem::ROTATIONAL_SPEED) {
-			movesComponent->rotationalVelocity.x = value;
-		} else if (key == MovesComponentSystem::TARGET_ROTATION) {
-			movesComponent->targetRotation = value;
-			this->setTargetRotationDirection(*movesComponent, *tientity.getComponent<PositionComponent>());
-		} else if (key == MovesComponentSystem::DESTINATION) {
-			this->setTargetPosition(tientity, value);
-		} else if (key == MovesComponentSystem::DESTINATION_X) {
-			this->setTargetPosition(tientity, sf::Vector2f(value, movesComponent->targetPosition.y));
-		} else if (key == MovesComponentSystem::DESTINATION_Y) {
-			this->setTargetPosition(tientity, sf::Vector2f(movesComponent->targetPosition.x, value));
-		} else if (key == MovesComponentSystem::ROTATIONAL_ACCELERATION) {
-			movesComponent->rotationalAcceleration = value;
-		}
+void MovesComponentSystem::setComponentProperty(const std::string& key, bool value, TIEntity& tientity) {
+	MovesComponent& movesComponent = this->addComponent(tientity);
+    if (key == MovesComponentSystem::ROTATES) {
+        movesComponent.rotates = value;
     }
-    return false;
 }
 
 
-bool MovesComponentSystem::setComponentProperty(const std::string& key, const sf::Vector2f& value, TIEntity& tientity)  {
-	MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
-	if (movesComponent != nullptr) {
-		if (key == MovesComponentSystem::DESTINATION) {
-			this->setTargetPosition(tientity, value);
-		}
-	}
-	return false;
+void MovesComponentSystem::setComponentProperty(const std::string& key, float value, TIEntity& tientity)  {
+    MovesComponent& movesComponent = this->addComponent(tientity);
+    if (key == MovesComponentSystem::SPEED) {
+        movesComponent.targetSpeed = value;
+    } else if (key == MovesComponentSystem::ACCELERATION) {
+        movesComponent.acceleration = value;
+    } else if (key == MovesComponentSystem::ROTATIONAL_SPEED) {
+        movesComponent.rotationalVelocity.x = value;
+    } else if (key == MovesComponentSystem::TARGET_ROTATION) {
+        movesComponent.targetRotation = value;
+        this->setTargetRotationDirection(movesComponent, *tientity.getComponent<PositionComponent>());
+    } else if (key == MovesComponentSystem::DESTINATION) {
+        this->setTargetPosition(tientity, value);
+    } else if (key == MovesComponentSystem::DESTINATION_X) {
+        this->setTargetPosition(tientity, sf::Vector2f(value, movesComponent.targetPosition.y));
+    } else if (key == MovesComponentSystem::DESTINATION_Y) {
+        this->setTargetPosition(tientity, sf::Vector2f(movesComponent.targetPosition.x, value));
+    } else if (key == MovesComponentSystem::ROTATIONAL_ACCELERATION) {
+        movesComponent.rotationalAcceleration = value;
+    }
 }
 
 
-bool MovesComponentSystem::setComponentProperty(const std::string& key, const sf::Vector2i& value, TIEntity& tientity) {
-	MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
-	if (movesComponent != nullptr) {
-		if (key == MovesComponentSystem::DESTINATION) {
-			this->setTargetPosition(tientity, sf::Vector2f(value.x, value.y));
-		}
-	}
-	return false;
+void MovesComponentSystem::setComponentProperty(const std::string& key, const sf::Vector2f& value, TIEntity& tientity)  {
+	MovesComponent& movesComponent = this->addComponent(tientity);
+    if (key == MovesComponentSystem::DESTINATION) {
+        this->setTargetPosition(tientity, value);
+    }
+}
+
+
+void MovesComponentSystem::setComponentProperty(const std::string& key, const sf::Vector2i& value, TIEntity& tientity) {
+	MovesComponent& movesComponent = this->addComponent(tientity);
+    if (key == MovesComponentSystem::DESTINATION) {
+        this->setTargetPosition(tientity, sf::Vector2f(value.x, value.y));
+    }
 }
 
 

@@ -11,32 +11,29 @@ const std::string& ComponentSystem::getName() {
     return this->name;
 }
 
+
 void ComponentSystem::setName(const std::string& name) {
     this->name = name;
 }
 
-bool ComponentSystem::setComponentProperty(const std::string& key, bool value, TIEntity& tientity) {
-    return false;
-}
+
+void ComponentSystem::setComponentProperty(const std::string& key, bool value, TIEntity& tientity) {}
 
 
-bool ComponentSystem::setComponentProperty(const std::string& key, float value, TIEntity& tientity) {
-    return false;
-}
+void ComponentSystem::setComponentProperty(const std::string& key, float value, TIEntity& tientity) {}
 
 
-bool ComponentSystem::setComponentProperty(const std::string& key, const std::string& value, TIEntity& tientity) {
-    return false;
-}
+void ComponentSystem::setComponentProperty(const std::string& key, const std::string& value, TIEntity& tientity) {}
 
 
-bool ComponentSystem::setComponentProperty(const std::string& key, const sf::Vector2f& value, TIEntity& tientity) {
-    return false;
-}
+void ComponentSystem::setComponentProperty(const std::string& key, const sf::Vector2f& value, TIEntity& tientity) {}
 
 
-bool ComponentSystem::setComponentProperty(const std::string& key, const sf::Vector2i& value, TIEntity& tientity) {
-    return false;
+void ComponentSystem::setComponentProperty(const std::string& key, const sf::Vector2i& value, TIEntity& tientity) {}
+
+
+sol::object ComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
+    return ScriptManager::Instance()->getObjectFromValue(nullptr);
 }
 
 

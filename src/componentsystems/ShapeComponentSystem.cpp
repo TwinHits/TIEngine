@@ -64,26 +64,6 @@ bool ShapeComponentSystem::removeComponent(TIEntity& tientity) {
 }
 
 
-bool ShapeComponentSystem::setComponentProperty(const std::string& key, bool value, TIEntity& tientity) {
-    return false;
-}
-
-
-bool ShapeComponentSystem::setComponentProperty(const std::string& key, float value, TIEntity& tientity)  {
-    return false;
-}
-
-
-bool ShapeComponentSystem::setComponentProperty(const std::string& key, const std::string& value, TIEntity& tientity)  {
-    return false;
-}
-
-
-sol::object ShapeComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
-	return ScriptManager::Instance()->getObjectFromValue(nullptr);
-}
-
-
 void ShapeComponentSystem::addWireframe(TIEntity& tientity, const SpriteComponent& component) {
 	this->createWireframe(tientity, component.getLocalBounds(), component.getOrigin());
 }

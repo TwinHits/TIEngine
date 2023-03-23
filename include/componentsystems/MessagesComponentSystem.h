@@ -22,12 +22,6 @@ class MessagesComponentSystem : public Singleton<MessagesComponentSystem>, publi
 		MessagesComponent& addComponent(const TIEntityFactory&, TIEntity&);
 		bool removeComponent(TIEntity&);
 		
-		bool setComponentProperty(const std::string&, bool, TIEntity&);
-		bool setComponentProperty(const std::string&, float, TIEntity&);
-		bool setComponentProperty(const std::string&, const sf::Vector2f&, TIEntity&);
-		bool setComponentProperty(const std::string&, const sf::Vector2i&, TIEntity&);
-		sol::object getComponentProperty(const std::string&, TIEntity&);
-
 		const GlobalId registerMessageSubscription();
 
 		void sendMessage(const GlobalId, const GlobalId, const GlobalId, sol::object);

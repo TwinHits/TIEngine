@@ -107,41 +107,32 @@ bool SpriteComponentSystem::removeComponent(TIEntity& tientity) {
 }
 
 
-bool SpriteComponentSystem::setComponentProperty(const std::string& key, bool value, TIEntity& tientity) {
-	SpriteComponent* component = tientity.getComponent<SpriteComponent>();
-	if (component != nullptr) {
-		if (key == SpriteComponentSystem::CONSTRAIN_PROPORTIONS) {
-			component->setConstrainProportions(value);
-		} else if (key == SpriteComponentSystem::DRAWN) {
-			component->setDrawn(value);
-		}
-	}
-	return false;
+void SpriteComponentSystem::setComponentProperty(const std::string& key, bool value, TIEntity& tientity) {
+	SpriteComponent& component = this->addComponent(tientity);
+    if (key == SpriteComponentSystem::CONSTRAIN_PROPORTIONS) {
+        component.setConstrainProportions(value);
+    } else if (key == SpriteComponentSystem::DRAWN) {
+        component.setDrawn(value);
+    }
 }
 
 
-bool SpriteComponentSystem::setComponentProperty(const std::string& key, float value, TIEntity& tientity)  {
-	SpriteComponent* component = tientity.getComponent<SpriteComponent>();
-	if (component != nullptr) {
-		if (key == SpriteComponentSystem::WIDTH) {
-			this->setTextureFields(*component, value, component->getLocalBounds().height);
-		} else if (key == SpriteComponentSystem::HEIGHT) {
-			this->setTextureFields(*component, component->getLocalBounds().width, value);
-		}
-	}
-	return false;
+void SpriteComponentSystem::setComponentProperty(const std::string& key, float value, TIEntity& tientity)  {
+	SpriteComponent& component = this->addComponent(tientity);
+    if (key == SpriteComponentSystem::WIDTH) {
+        this->setTextureFields(component, value, component.getLocalBounds().height);
+    } else if (key == SpriteComponentSystem::HEIGHT) {
+        this->setTextureFields(component, component.getLocalBounds().width, value);
+    }
 }
 
 
-bool SpriteComponentSystem::setComponentProperty(const std::string& key, const std::string& value, TIEntity& tientity)  {
-	SpriteComponent* component = tientity.getComponent<SpriteComponent>();
-	if (component != nullptr) {
-		if (key == SpriteComponentSystem::TEXTURE) {
-			const sf::Texture& texture = AssetsManager::Instance()->getTexture(value);
-			this->setTextureFields(*component, texture);
-		}
-	}
-	return false;
+void SpriteComponentSystem::setComponentProperty(const std::string& key, const std::string& value, TIEntity& tientity)  {
+	SpriteComponent& component = this->addComponent(tientity);
+    if (key == SpriteComponentSystem::TEXTURE) {
+        const sf::Texture& texture = AssetsManager::Instance()->getTexture(value);
+        this->setTextureFields(component, texture);
+    }
 }
 
 

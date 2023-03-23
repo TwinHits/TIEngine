@@ -42,26 +42,6 @@ bool CollidesComponentSystem::removeComponent(TIEntity& tientity) {
 }
 
 
-bool CollidesComponentSystem::setComponentProperty(const std::string& key, bool value, TIEntity& tientity) {
-    return false;
-}
-
-
-bool CollidesComponentSystem::setComponentProperty(const std::string& key, float value, TIEntity& tientity)  {
-    return false;
-}
-
-
-bool CollidesComponentSystem::setComponentProperty(const std::string& key, const std::string& value, TIEntity& tientity)  {
-    return false;
-}
-
-
-sol::object CollidesComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
-	return ScriptManager::Instance()->getObjectFromValue(nullptr);
-}
-
-
 	/*
 void CollidesComponentSystem::checkForCollisions() {
 	this->collisions.clear();

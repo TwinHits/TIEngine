@@ -17,11 +17,6 @@ public:
     CacheComponent& addComponent(const TIEntityFactory&, TIEntity&);
     bool removeComponent(TIEntity&);
 
-    bool setComponentProperty(const std::string&, bool, TIEntity&);
-    bool setComponentProperty(const std::string&, float, TIEntity&);
-    bool setComponentProperty(const std::string&, const std::string&, TIEntity&);
-    sol::object getComponentProperty(const std::string&, TIEntity&);
-
     void updateCache(TIEntity&, sol::table&);
     sol::table& getCache(TIEntity&);
 

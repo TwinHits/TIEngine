@@ -62,15 +62,7 @@ bool BehavesComponentSystem::removeComponent(TIEntity& tientity) {
 }
 
 
-bool BehavesComponentSystem::setComponentProperty(const std::string& key, bool value, TIEntity& tientity) {
-    BehavesComponent* component = tientity.getComponent<BehavesComponent>();
-	if (component != nullptr) {
-	}
-    return false;
-}
-
-
-bool BehavesComponentSystem::setComponentProperty(const std::string& key, float value, TIEntity& tientity)  {
+void BehavesComponentSystem::setComponentProperty(const std::string& key, float value, TIEntity& tientity)  {
     BehavesComponent& component = this->addComponent(tientity);
     if (key == BehavesComponentSystem::ROOT_STATE) {
         FiniteStateMachineFactory* factory = WorldManager::Instance()->getFiniteStateMachineFactory(value);
@@ -82,23 +74,6 @@ bool BehavesComponentSystem::setComponentProperty(const std::string& key, float 
 			component.rootState->onEnter();
         }
     }
-	return true;
-}
-
-
-bool BehavesComponentSystem::setComponentProperty(const std::string& key, const sf::Vector2f& value, TIEntity& tientity)  {
-	BehavesComponent* component = tientity.getComponent<BehavesComponent>();
-	if (component != nullptr) {
-	}
-	return false;
-}
-
-
-bool BehavesComponentSystem::setComponentProperty(const std::string& key, const sf::Vector2i& value, TIEntity& tientity) {
-	BehavesComponent* component = tientity.getComponent<BehavesComponent>();
-	if (component != nullptr) {
-	}
-	return false;
 }
 
 

@@ -23,12 +23,12 @@ class ComponentSystem {
 		virtual Component& addComponent(const TIEntityFactory&, TIEntity&) = 0;
 		virtual bool removeComponent(TIEntity&) = 0;
 		
-		virtual sol::object getComponentProperty(const std::string&, TIEntity&) = 0;
-		virtual bool setComponentProperty(const std::string&, bool, TIEntity&);
-		virtual bool setComponentProperty(const std::string&, float, TIEntity&);
-		virtual bool setComponentProperty(const std::string&, const std::string&, TIEntity&);
-		virtual bool setComponentProperty(const std::string&, const sf::Vector2f&, TIEntity&);
-		virtual bool setComponentProperty(const std::string&, const sf::Vector2i&, TIEntity&);
+		virtual void setComponentProperty(const std::string&, bool, TIEntity&);
+		virtual void setComponentProperty(const std::string&, float, TIEntity&);
+		virtual void setComponentProperty(const std::string&, const std::string&, TIEntity&);
+		virtual void setComponentProperty(const std::string&, const sf::Vector2f&, TIEntity&);
+		virtual void setComponentProperty(const std::string&, const sf::Vector2i&, TIEntity&);
+		virtual sol::object getComponentProperty(const std::string&, TIEntity&);
 
 		virtual ComponentSystems::ComponentSystemPropertiesMap& populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap&);
 		virtual std::string getComponentPropertiesString(TIEntity& tientity);

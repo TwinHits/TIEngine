@@ -57,46 +57,6 @@ bool MessagesComponentSystem::removeComponent(TIEntity& tientity) {
 }
 
 
-bool MessagesComponentSystem::setComponentProperty(const std::string& key, bool value, TIEntity& tientity) {
-    MessagesComponent* component = tientity.getComponent<MessagesComponent>();
-	if (component != nullptr) {
-	}
-    return false;
-}
-
-
-bool MessagesComponentSystem::setComponentProperty(const std::string& key, float value, TIEntity& tientity)  {
-    MessagesComponent* component = tientity.getComponent<MessagesComponent>();
-	if (component != nullptr) {
-	}
-	return true;
-}
-
-
-bool MessagesComponentSystem::setComponentProperty(const std::string& key, const sf::Vector2f& value, TIEntity& tientity)  {
-	MessagesComponent* component = tientity.getComponent<MessagesComponent>();
-	if (component != nullptr) {
-	}
-	return false;
-}
-
-
-bool MessagesComponentSystem::setComponentProperty(const std::string& key, const sf::Vector2i& value, TIEntity& tientity) {
-	MessagesComponent* component = tientity.getComponent<MessagesComponent>();
-	if (component != nullptr) {
-	}
-	return false;
-}
-
-
-sol::object MessagesComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
-	MessagesComponent* component = tientity.getComponent<MessagesComponent>();
-	if (component != nullptr) {
-	}
-	return ScriptManager::Instance()->getObjectFromValue(nullptr);
-}
-
-
 const GlobalId MessagesComponentSystem::registerMessageSubscription() {
 	const GlobalId subscription = HashManager::Instance()->getNewGlobalId();
 	this->currentFrameMessages[subscription];

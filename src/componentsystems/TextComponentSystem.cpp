@@ -94,44 +94,35 @@ bool TextComponentSystem::removeComponent(TIEntity& tientity) {
 }
 
 
-bool TextComponentSystem::setComponentProperty(const std::string& key, bool value, TIEntity& tientity) {
-	TextComponent* component = tientity.getComponent<TextComponent>();
-	if (component != nullptr) {
-		if (key == TextComponentSystem::STRING) {
-			component->setString(std::to_string(value));
-		} else if (key == TextComponentSystem::DRAWN) {
-			component->setDrawn(value);
-		}
-	}
-	return false;
+void TextComponentSystem::setComponentProperty(const std::string& key, bool value, TIEntity& tientity) {
+	TextComponent& component = this->addComponent(tientity);
+    if (key == TextComponentSystem::STRING) {
+        component.setString(std::to_string(value));
+    } else if (key == TextComponentSystem::DRAWN) {
+        component.setDrawn(value);
+    }
 }
 
 
-bool TextComponentSystem::setComponentProperty(const std::string& key, float value, TIEntity& tientity)  {
-	TextComponent* component = tientity.getComponent<TextComponent>();
-	if (component != nullptr) {
-		if (key == TextComponentSystem::STRING) {
-			component->setString(std::to_string(value));
-		} else if (key == TextComponentSystem::CHARACTER_SIZE) {
-			component->setCharacterSize(value);
-		}
-	}
-	return false;
+void TextComponentSystem::setComponentProperty(const std::string& key, float value, TIEntity& tientity)  {
+	TextComponent& component = this->addComponent(tientity);
+    if (key == TextComponentSystem::STRING) {
+        component.setString(std::to_string(value));
+    } else if (key == TextComponentSystem::CHARACTER_SIZE) {
+        component.setCharacterSize(value);
+    }
 }
 
 
-bool TextComponentSystem::setComponentProperty(const std::string& key, const std::string& value, TIEntity& tientity) {
-	TextComponent* component = tientity.getComponent<TextComponent>();
-	if (component != nullptr) {
-		if (key == TextComponentSystem::STRING) {
-			component->setString(value);
-		} else if (key == TextComponentSystem::TEXT_ALIGNMENT) {
-			component->setTextAlignment(TIE::String::strToTextAlignment(value));
-		} else if (key == TextComponentSystem::FONT) {
-			component->setFont(AssetsManager::Instance()->getFont(value));
-		}
-	}
-    return false;
+void TextComponentSystem::setComponentProperty(const std::string& key, const std::string& value, TIEntity& tientity) {
+	TextComponent& component = this->addComponent(tientity);
+    if (key == TextComponentSystem::STRING) {
+        component.setString(value);
+    } else if (key == TextComponentSystem::TEXT_ALIGNMENT) {
+        component.setTextAlignment(TIE::String::strToTextAlignment(value));
+    } else if (key == TextComponentSystem::FONT) {
+        component.setFont(AssetsManager::Instance()->getFont(value));
+    }
 }
 
 

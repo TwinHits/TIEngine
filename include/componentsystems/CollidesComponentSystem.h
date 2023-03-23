@@ -24,15 +24,10 @@ class CollidesComponentSystem : public Singleton<CollidesComponentSystem>, publi
 		CollidesComponent& addComponent(const TIEntityFactory&, TIEntity&);
 		bool removeComponent(TIEntity&);
 
-		bool setComponentProperty(const std::string&, bool, TIEntity&);
-		bool setComponentProperty(const std::string&, float, TIEntity&);
-		bool setComponentProperty(const std::string&, const std::string&, TIEntity&);
-		sol::object getComponentProperty(const std::string&, TIEntity&);
-
-		const static inline std::string COLLIDES = "collides";
-
 	//	virtual sf::FloatRect getHitBox() const;
 		void checkForCollisions();
+		
+		const static inline std::string COLLIDES = "collides";
 
 	private:        
 		struct Components {

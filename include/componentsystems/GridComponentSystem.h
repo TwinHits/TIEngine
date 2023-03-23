@@ -22,9 +22,6 @@ class GridComponentSystem : public Singleton<GridComponentSystem>, public OwnsCo
 		GridComponent& addComponent(const TIEntityFactory&, TIEntity&);
 		bool removeComponent(TIEntity&);
 
-		bool setComponentProperty(const std::string&, bool, TIEntity&);
-		bool setComponentProperty(const std::string&, float, TIEntity&);
-		bool setComponentProperty(const std::string&, const std::string&, TIEntity&);
 		sol::object getComponentProperty(const std::string&, TIEntity&);
 
 		sf::Vector2f normalizePositionToGrid(const sf::Vector2f&);

@@ -79,26 +79,6 @@ bool LifecycleComponentSystem::removeComponent(TIEntity& tientity) {
 }
 
 
-bool LifecycleComponentSystem::setComponentProperty(const std::string& key, bool value, TIEntity& tientity) {
-    return false;
-}
-
-
-bool LifecycleComponentSystem::setComponentProperty(const std::string& key, float value, TIEntity& tientity)  {
-    return false;
-}
-
-
-bool LifecycleComponentSystem::setComponentProperty(const std::string& key, const std::string& value, TIEntity& tientity)  {
-    return false;
-}
-
-
-sol::object LifecycleComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
-	return ScriptManager::Instance()->getObjectFromValue(nullptr);
-}
-
-
 void LifecycleComponentSystem::runCreated(TIEntity& tientity) {
 	LifecycleComponent* lifecycleComponent = tientity.getComponent<LifecycleComponent>();
 	if (lifecycleComponent != nullptr) {

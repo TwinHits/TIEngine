@@ -150,26 +150,6 @@ bool EventsComponentSystem::removeComponent(TIEntity& tientity) {
 }
 
 
-bool EventsComponentSystem::setComponentProperty(const std::string& key, bool value, TIEntity& tientity) {
-    return false;
-}
-
-
-bool EventsComponentSystem::setComponentProperty(const std::string& key, float value, TIEntity& tientity)  {
-    return false;
-}
-
-
-bool EventsComponentSystem::setComponentProperty(const std::string& key, const std::string& value, TIEntity& tientity)  {
-    return false;
-}
-
-
-sol::object EventsComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
-	return ScriptManager::Instance()->getObjectFromValue(nullptr);
-}
-
-
 void EventsComponentSystem::addState(TIEntity& tientity, const std::string& state) {
 	EventsComponent* eventsComponent = tientity.getComponent<EventsComponent>();
 	if (eventsComponent == nullptr) {

@@ -63,34 +63,23 @@ PositionComponent& PositionComponentSystem::addComponent(const TIEntityFactory& 
 }
 
 
-bool PositionComponentSystem::setComponentProperty(const std::string& key, bool value, TIEntity& tientity) {
-    return false;
+void PositionComponentSystem::setComponentProperty(const std::string& key, float value, TIEntity& tientity) {
+    PositionComponent& component = PositionComponentSystem::addComponent(tientity);
+    if (key == PositionComponentSystem::ROTATION) {
+        component.rotation = value;
+    } else if (key == PositionComponentSystem::POSITION_X) {
+        component.position.x = value;
+    } else if (key == PositionComponentSystem::POSITION_Y) {
+        component.position.y = value;
+    }
 }
 
 
-bool PositionComponentSystem::setComponentProperty(const std::string& key, float value, TIEntity& tientity) {
-    PositionComponent* component = tientity.getComponent<PositionComponent>();
-    if (component != nullptr) {
-        if (key == PositionComponentSystem::ROTATION) {
-            component->rotation = value;
-        } else if (key == PositionComponentSystem::POSITION_X) {
-            component->position.x = value;
-        } else if (key == PositionComponentSystem::POSITION_Y) {
-            component->position.y = value;
-        }
+void PositionComponentSystem::setComponentProperty(const std::string& key, const sf::Vector2f& value, TIEntity& tientity) {
+    PositionComponent& component = PositionComponentSystem::addComponent(tientity);
+    if (key == PositionComponentSystem::POSITION_POSITION) {
+        component.position = value;
     }
-    return false;
-}
-
-
-bool PositionComponentSystem::setComponentProperty(const std::string& key, const sf::Vector2f& value, TIEntity& tientity) {
-    PositionComponent* component = tientity.getComponent<PositionComponent>();
-    if (component != nullptr) {
-        if (key == PositionComponentSystem::POSITION_POSITION) {
-            component->position = value;
-        }
-    }
-    return false;
 }
 
 

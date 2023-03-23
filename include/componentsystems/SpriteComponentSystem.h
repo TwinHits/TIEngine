@@ -21,9 +21,9 @@ class SpriteComponentSystem : public Singleton<SpriteComponentSystem>, public Ow
 		SpriteComponent& addComponent(const TIEntityFactory&, TIEntity&);
 		bool removeComponent(TIEntity&);
 
-		bool setComponentProperty(const std::string&, bool, TIEntity&);
-		bool setComponentProperty(const std::string&, float, TIEntity&);
-		bool setComponentProperty(const std::string&, const std::string&, TIEntity&);
+		void setComponentProperty(const std::string&, bool, TIEntity&);
+		void setComponentProperty(const std::string&, float, TIEntity&);
+		void setComponentProperty(const std::string&, const std::string&, TIEntity&);
 		sol::object getComponentProperty(const std::string&, TIEntity&);
 
 		static const inline std::string SPRITE = "sprite";

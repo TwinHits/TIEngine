@@ -20,10 +20,7 @@ class BehavesComponentSystem : public Singleton<BehavesComponentSystem>, public 
 		BehavesComponent& addComponent(const TIEntityFactory&, TIEntity&);
 		bool removeComponent(TIEntity&);
 		
-		bool setComponentProperty(const std::string&, bool, TIEntity&);
-		bool setComponentProperty(const std::string&, float, TIEntity&);
-		bool setComponentProperty(const std::string&, const sf::Vector2f&, TIEntity&);
-		bool setComponentProperty(const std::string&, const sf::Vector2i&, TIEntity&);
+		void setComponentProperty(const std::string&, float, TIEntity&);
 		sol::object getComponentProperty(const std::string&, TIEntity&);
 
 		static const inline std::string BEHAVES = "behaves";
