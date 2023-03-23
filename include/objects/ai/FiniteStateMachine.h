@@ -1,6 +1,7 @@
 #ifndef FINITESTATEMACHINE_H
 #define FINITESTATEMACHINE_H
 
+#include <map>
 #include <memory>
 
 #include "objects/GlobalId.h"
@@ -16,7 +17,6 @@ class FiniteStateMachine {
         FiniteStateMachine* getParent();
 
         TIEntity& getTIEntity();
-        const GlobalId getFactoryId();
 
         const GlobalId getOnEnterFunctionId();
         void setOnEnterFunctionId(const GlobalId);
@@ -34,7 +34,8 @@ class FiniteStateMachine {
         void onEnter();
         void onExit();
 
-        void setState(std::unique_ptr<FiniteStateMachine>);
+        const bool hasChildState(const GlobalId);
+        void setChildState(const GlobalId, std::unique_ptr<FiniteStateMachine>);
 
 		static const inline std::string ON_ENTER = "onEnter";
 		static const inline std::string ON_UPDATE = "onUpdate";
@@ -47,7 +48,7 @@ class FiniteStateMachine {
         TIEntity& tientity;
         GlobalId factoryId;
         FiniteStateMachine* parent = nullptr;
-        std::unique_ptr<FiniteStateMachine> childState;
+        std::map<GlobalId, std::unique_ptr<FiniteStateMachine> > childStates;
 
         GlobalId onEnterFunctionId = 0;
         GlobalId onUpdateFunctionId = 0;

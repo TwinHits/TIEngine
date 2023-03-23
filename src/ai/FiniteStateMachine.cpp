@@ -28,15 +28,6 @@ TIEntity& FiniteStateMachine::getTIEntity() {
 }
 
 
-const GlobalId FiniteStateMachine::getFactoryId() {
-    if (this->childState) {
-        return this->childState->factoryId;
-    } else {
-        return 0;
-    }
-}
-
-
 const GlobalId FiniteStateMachine::getOnEnterFunctionId() {
     return this->onEnterFunctionId;
 }
@@ -85,10 +76,14 @@ void FiniteStateMachine::onEnter() {
 
 void FiniteStateMachine::update(float delta) {
     this->runFunction(this->onUpdateFunctionId, delta);
-    if (this->childState) {
-        this->childState->update(delta);
-        if (this->childState->exit) {
-            this->setState(nullptr);
+    if (!this->childStates.empty()) {
+        // Allow for removal of elements while iterating
+        for (auto index = this->childStates.cbegin(), next = index; index != this->childStates.cend(); index = next) {
+            ++next;
+            index->second->update(delta);
+            if (index->second->exit) {
+                this->setChildState(index->first, nullptr);
+            }
         }
     }
 };
@@ -99,17 +94,25 @@ void FiniteStateMachine::onExit() {
 };
 
 
-void FiniteStateMachine::setState(std::unique_ptr<FiniteStateMachine> newChildState) {
-    if (this->childState) {
-        this->childState->onExit();
-    }
+const bool FiniteStateMachine::hasChildState(const GlobalId id) {
+    return this->childStates.count(id);
+}
 
-    if (newChildState) {
-        this->childState = std::move(newChildState);
-        this->childState->setParent(this);
-        this->childState->onEnter();
-    } else {
-        this->childState = nullptr;
+
+void FiniteStateMachine::setChildState(const GlobalId id, std::unique_ptr<FiniteStateMachine> newChildState) {
+    if (!this->childStates.count(id) || newChildState == nullptr) {
+        if (this->childStates.count(id) && this->childStates.at(id) != nullptr) {
+            this->childStates[id]->onExit();
+        }
+
+        if (newChildState != nullptr) {
+            this->childStates[id] = std::move(newChildState);
+            this->childStates[id]->setParent(this);
+            this->childStates[id]->onEnter();
+        }
+        else {
+            this->childStates.erase(id);
+        }
     }
 }
 

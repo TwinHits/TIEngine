@@ -18,10 +18,9 @@ namespace TIE {
 
         static void registerUserType(sol::state&);
 
-        void setState(GlobalId);
-        GlobalId getState();
-        void removeState();
-        bool hasState();
+        void addChildState(GlobalId);
+        bool hasChildState(GlobalId);
+        void removeChildState(GlobalId);
         void exit();
 
     private:

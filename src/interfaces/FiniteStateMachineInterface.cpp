@@ -22,36 +22,30 @@ FiniteStateMachineInterface::FiniteStateMachineInterface(FiniteStateMachine* fin
 void FiniteStateMachineInterface::registerUserType(sol::state& luaState) {
     sol::usertype<FiniteStateMachineInterface> interfaceUserType = luaState.new_usertype<FiniteStateMachineInterface>("FiniteStateMachineInterface");
 
-    interfaceUserType["setState"] = &FiniteStateMachineInterface::setState;
-    interfaceUserType["getState"] = &FiniteStateMachineInterface::getState;
-    interfaceUserType["removeState"] = &FiniteStateMachineInterface::removeState;
-    interfaceUserType["hasState"] = &FiniteStateMachineInterface::hasState;
+    interfaceUserType["addChildState"] = &FiniteStateMachineInterface::addChildState;
+    interfaceUserType["hasChildState"] = &FiniteStateMachineInterface::hasChildState;
+    interfaceUserType["removeChildState"] = &FiniteStateMachineInterface::removeChildState;
     interfaceUserType["exit"] = &FiniteStateMachineInterface::exit;
 } 
 
 
-void FiniteStateMachineInterface::setState(GlobalId id) {
+void FiniteStateMachineInterface::addChildState(GlobalId id) {
     if (id) {
         FiniteStateMachineFactory* factory = WorldManager::Instance()->getFiniteStateMachineFactory(id);
         if (factory) {
-            this->finiteStateMachine->setState(std::move(factory->build(this->finiteStateMachine->getTIEntity())));
+            this->finiteStateMachine->setChildState(id, std::move(factory->build(this->finiteStateMachine->getTIEntity())));
         }
     }
 }
 
 
-GlobalId FiniteStateMachineInterface::getState() {
-    return this->finiteStateMachine->getFactoryId();
+bool FiniteStateMachineInterface::hasChildState(GlobalId id) {
+    return this->finiteStateMachine->hasChildState(id);
 }
 
 
-void FiniteStateMachineInterface::removeState() {
-    this->finiteStateMachine->setState(nullptr);
-}
-
-
-bool FiniteStateMachineInterface::hasState() {
-    return this->finiteStateMachine->getFactoryId() != 0;
+void FiniteStateMachineInterface::removeChildState(GlobalId id) {
+    this->finiteStateMachine->setChildState(id, nullptr);
 }
 
 
