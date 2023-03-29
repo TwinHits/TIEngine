@@ -54,6 +54,7 @@ void ComponentPropertiesDisplay::update(const float delta) {
 
     std::stringstream ss;
     ss << tientity->getName() << std::endl << std::endl;
+    ss << tientity->getId() << std::endl << std::endl;
     for (auto componentSystem : this->componentSystemsToDisplay) {
         ss << componentSystem->getComponentPropertiesString(*tientity);
     }
