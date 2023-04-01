@@ -112,19 +112,16 @@ void FiniteStateMachine::setChildState(const GlobalId id, std::unique_ptr<Finite
 
 
 void FiniteStateMachine::setChildState(const GlobalId id, std::unique_ptr<FiniteStateMachine> newChildState, const sol::object payload) {
-    if (!this->childStates.count(id) || newChildState == nullptr) {
-        if (this->childStates.count(id) && this->childStates.at(id) != nullptr) {
-            this->childStates[id]->onExit();
-        }
+    if (this->childStates.count(id) && this->childStates.at(id) != nullptr) {
+        this->childStates[id]->onExit();
+    }
 
-        if (newChildState != nullptr) {
-            this->childStates[id] = std::move(newChildState);
-            this->childStates[id]->setParent(this);
-            this->childStates[id]->onEnter(payload);
-        }
-        else {
-            this->childStates.erase(id);
-        }
+    if (newChildState != nullptr) {
+        this->childStates[id] = std::move(newChildState);
+        this->childStates[id]->setParent(this);
+        this->childStates[id]->onEnter(payload);
+    } else {
+        this->childStates.erase(id);
     }
 }
 
