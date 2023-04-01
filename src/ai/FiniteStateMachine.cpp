@@ -120,14 +120,9 @@ void FiniteStateMachine::setChildState(const GlobalId id, std::unique_ptr<Finite
         if (newChildState != nullptr) {
             this->childStates[id] = std::move(newChildState);
             this->childStates[id]->setParent(this);
-<<<<<<< HEAD
             this->childStates[id]->onEnter(payload);
         }
         else {
-=======
-            this->childStates[id]->onEnter();
-        } else {
->>>>>>> 82dc3b7 (Added getMessage() with bad null handling.)
             this->childStates.erase(id);
         }
     }
