@@ -1,5 +1,7 @@
 #include "objects/ai/FiniteStateMachine.h"
 
+#include "sol/sol.hpp"
+
 #include <memory>
 
 #include "managers/ScriptManager.h"
@@ -70,7 +72,12 @@ bool FiniteStateMachine::getExit() {
 
 
 void FiniteStateMachine::onEnter() {
-    this->runFunction(this->onEnterFunctionId);
+    this->runFunction(this->onEnterFunctionId, sol::nil);
+};
+
+
+void FiniteStateMachine::onEnter(const sol::object payload) {
+    this->runFunction(this->onEnterFunctionId, payload);
 };
 
 
@@ -100,6 +107,11 @@ const bool FiniteStateMachine::hasChildState(const GlobalId id) {
 
 
 void FiniteStateMachine::setChildState(const GlobalId id, std::unique_ptr<FiniteStateMachine> newChildState) {
+    this->setChildState(id, std::move(newChildState), sol::nil);
+}
+
+
+void FiniteStateMachine::setChildState(const GlobalId id, std::unique_ptr<FiniteStateMachine> newChildState, const sol::object payload) {
     if (!this->childStates.count(id) || newChildState == nullptr) {
         if (this->childStates.count(id) && this->childStates.at(id) != nullptr) {
             this->childStates[id]->onExit();
@@ -108,11 +120,23 @@ void FiniteStateMachine::setChildState(const GlobalId id, std::unique_ptr<Finite
         if (newChildState != nullptr) {
             this->childStates[id] = std::move(newChildState);
             this->childStates[id]->setParent(this);
-            this->childStates[id]->onEnter();
+<<<<<<< HEAD
+            this->childStates[id]->onEnter(payload);
         }
         else {
+=======
+            this->childStates[id]->onEnter();
+        } else {
+>>>>>>> 82dc3b7 (Added getMessage() with bad null handling.)
             this->childStates.erase(id);
         }
+    }
+}
+
+
+void FiniteStateMachine::runFunction(const GlobalId functionId) {
+    if (functionId) {
+        ScriptManager::Instance()->runFunction<sol::optional<float> >(functionId, *this, 0);
     }
 }
 
@@ -124,9 +148,8 @@ void FiniteStateMachine::runFunction(const GlobalId functionId, const float delt
 }
 
 
-void FiniteStateMachine::runFunction(const GlobalId functionId) {
+void FiniteStateMachine::runFunction(const GlobalId functionId, const sol::object payload) {
     if (functionId) {
-        ScriptManager::Instance()->runFunction<sol::optional<float> >(functionId, *this, 0);
+        ScriptManager::Instance()->runFunction<sol::optional<float> >(functionId, *this, payload);
     }
 }
-

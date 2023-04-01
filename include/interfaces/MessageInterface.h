@@ -13,12 +13,13 @@ namespace TIE {
 class MessageInterface {
     public:
         MessageInterface(const Message&);
+        MessageInterface(const Message*);
         ~MessageInterface() {};
 
         static void registerUserType(sol::state&);
-        GlobalId subscription;
-        GlobalId senderId;
-        sol::object payload;
+        GlobalId subscription = 0;
+        GlobalId senderId = 0;
+        sol::object payload = sol::nil;
 };
 
 }

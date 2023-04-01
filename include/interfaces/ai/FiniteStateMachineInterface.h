@@ -18,7 +18,7 @@ namespace TIE {
 
         static void registerUserType(sol::state&);
 
-        void addChildState(GlobalId);
+        void addChildState(GlobalId, sol::object payload);
         bool hasChildState(GlobalId);
         void removeChildState(GlobalId);
         void exit();

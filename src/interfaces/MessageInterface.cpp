@@ -11,6 +11,15 @@ MessageInterface::MessageInterface(const Message& message) {
 }
 
 
+MessageInterface::MessageInterface(const Message* message) {
+    if (message) {
+        this->subscription = message->subscription;
+        this->senderId = message->senderId;
+        this->payload = message->payload;
+    }
+}
+
+
 void MessageInterface::registerUserType(sol::state& luaState) {
     sol::usertype<MessageInterface> interfaceUserType = luaState.new_usertype<MessageInterface>("message");
 

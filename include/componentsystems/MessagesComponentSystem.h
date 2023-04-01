@@ -28,6 +28,7 @@ class MessagesComponentSystem : public Singleton<MessagesComponentSystem>, publi
 
 		bool hasMessages(TIEntity&);
 		bool hasMessages(TIEntity&, GlobalId);
+		const Message* getMessage(TIEntity&, GlobalId);
 		const std::vector<Message>& getMessages(TIEntity&, GlobalId);
 
 		static const inline std::string MESSAGES = "messages";

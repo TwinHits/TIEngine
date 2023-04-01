@@ -1,6 +1,8 @@
 #ifndef FINITESTATEMACHINE_H
 #define FINITESTATEMACHINE_H
 
+#include <sol/sol.hpp>
+
 #include <map>
 #include <memory>
 
@@ -32,18 +34,21 @@ class FiniteStateMachine {
 
         void update(float);
         void onEnter();
+        void onEnter(const sol::object);
         void onExit();
 
         const bool hasChildState(const GlobalId);
         void setChildState(const GlobalId, std::unique_ptr<FiniteStateMachine>);
+        void setChildState(const GlobalId, std::unique_ptr<FiniteStateMachine>, const sol::object);
 
 		static const inline std::string ON_ENTER = "onEnter";
 		static const inline std::string ON_UPDATE = "onUpdate";
 		static const inline std::string ON_EXIT = "onExit";
 
     private:
-        void runFunction(const GlobalId, const float);
         void runFunction(const GlobalId);
+        void runFunction(const GlobalId, const float);
+        void runFunction(const GlobalId, const sol::object);
 
         TIEntity& tientity;
         GlobalId factoryId;

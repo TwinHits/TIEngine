@@ -29,11 +29,11 @@ void FiniteStateMachineInterface::registerUserType(sol::state& luaState) {
 } 
 
 
-void FiniteStateMachineInterface::addChildState(GlobalId id) {
+void FiniteStateMachineInterface::addChildState(GlobalId id, const sol::object payload) {
     if (id) {
         FiniteStateMachineFactory* factory = WorldManager::Instance()->getFiniteStateMachineFactory(id);
         if (factory) {
-            this->finiteStateMachine->setChildState(id, std::move(factory->build(this->finiteStateMachine->getTIEntity())));
+            this->finiteStateMachine->setChildState(id, std::move(factory->build(this->finiteStateMachine->getTIEntity())), payload);
         }
     }
 }

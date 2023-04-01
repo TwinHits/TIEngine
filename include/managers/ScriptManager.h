@@ -33,7 +33,6 @@ public:
         TIEngineInterface engineInterface = TIEngineInterface();
 		return this->functions.at(functionId)(std::tuple<TIEntityInterface, TIEngineInterface>(tientityInterface, engineInterface));
 	}
-	template <> void runFunction<void>(const GlobalId, TIEntity&);
 
 	template <typename T>
 	T runFunction(const std::string& name, TIEntity& tientity) {
@@ -41,7 +40,6 @@ public:
         TIEngineInterface engineInterface = TIEngineInterface();
 		return this->getFunctionByName(name)(std::tuple<TIEntityInterface, TIEngineInterface>(tientityInterface, engineInterface));
 	}
-	template <> void runFunction<void>(const std::string&, TIEntity&);
 
 	template <typename T>
 	T runFunction(const GlobalId functionId, FiniteStateMachine& finiteStateMachine, const float delta) {
@@ -49,7 +47,13 @@ public:
 		FiniteStateMachineInterface finiteStateMachineInterface(finiteStateMachine);
 		return this->functions.at(functionId)(std::tuple<TIEntityInterface, FiniteStateMachineInterface, const float>(tientityInterface, finiteStateMachineInterface, delta));
 	}
-	template <> void runFunction<void>(const GlobalId, FiniteStateMachine&, const float);
+
+	template <typename T>
+	T runFunction(const GlobalId functionId, FiniteStateMachine& finiteStateMachine, const sol::object payload) {
+		TIEntityInterface tientityInterface(finiteStateMachine.getTIEntity());
+		FiniteStateMachineInterface finiteStateMachineInterface(finiteStateMachine);
+		return this->functions.at(functionId)(std::tuple<TIEntityInterface, FiniteStateMachineInterface, const sol::object>(tientityInterface, finiteStateMachineInterface, payload));
+	}
 
 	GlobalId registerFunctionByName(const std::string&, const sol::function&);
 	GlobalId getFunctionIdByName(const std::string&);

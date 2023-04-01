@@ -64,6 +64,7 @@ void TIEntityInterface::registerUserType(sol::state& luaState) {
     interfaceUserType["sendMessage"] = &TIEntityInterface::sendMessage;
     interfaceUserType["hasMessage"] = &TIEntityInterface::hasMessage;
     interfaceUserType["hasMessages"] = &TIEntityInterface::hasMessages;
+    interfaceUserType["getMessage"] = &TIEntityInterface::getMessage;
     interfaceUserType["getMessages"] = &TIEntityInterface::getMessages;
 }
 
@@ -214,6 +215,12 @@ bool TIEntityInterface::hasMessage(const GlobalId subscription) {
 
 bool TIEntityInterface::hasMessages() {
     return MessagesComponentSystem::Instance()->hasMessages(*this->tientity);
+}
+
+
+MessageInterface TIEntityInterface::getMessage(const GlobalId subscription) {
+    const Message* message = MessagesComponentSystem::Instance()->getMessage(*this->tientity, subscription);
+    return MessageInterface(*message);
 }
 
 

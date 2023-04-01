@@ -76,30 +76,6 @@ void ScriptManager::loadScript(const std::string& scriptPath) {
 }
 
 
-template <>
-void ScriptManager::runFunction<void>(const GlobalId functionId, TIEntity& tientity) {
-	TIEntityInterface tientityInterface(tientity);
-    TIEngineInterface engineInterface = TIEngineInterface();
-	this->functions.at(functionId)(std::tuple<TIEntityInterface, TIEngineInterface>(tientityInterface, engineInterface));
-}
-
-
-template <>
-void ScriptManager::runFunction<void>(const std::string& name, TIEntity& tientity) {
-	TIEntityInterface tientityInterface(tientity);
-	TIEngineInterface engineInterface = TIEngineInterface();
-	this->getFunctionByName(name)(std::tuple<TIEntityInterface, TIEngineInterface>(tientityInterface, engineInterface));
-}
-
-
-template <>
- void ScriptManager::runFunction(const GlobalId functionId, FiniteStateMachine& finiteStateMachine, const float delta) {
-    TIEntityInterface tientityInterface(finiteStateMachine.getTIEntity());
-    FiniteStateMachineInterface finiteStateMachineInterface(finiteStateMachine);
-    this->functions.at(functionId)(std::tuple<TIEntityInterface, FiniteStateMachineInterface, const float>(tientityInterface, finiteStateMachineInterface, delta));
-}
-
-
 GlobalId ScriptManager::registerFunctionByName(const std::string& name, const sol::function& function) {
 	if (!this->functionsByName.count(name)) {
 		GlobalId functionId = HashManager::Instance()->getNewGlobalId();

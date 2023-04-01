@@ -55,6 +55,7 @@ class TIEntityInterface {
         void sendMessage(const GlobalId, sol::object, sol::object);
         bool hasMessage(const GlobalId);
         bool hasMessages();
+        MessageInterface getMessage(const GlobalId);
         std::vector<MessageInterface> getMessages(const GlobalId);
 
     private:
