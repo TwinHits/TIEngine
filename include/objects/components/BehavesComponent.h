@@ -15,6 +15,7 @@ class BehavesComponent : public Component {
 		virtual ~BehavesComponent() {};
 
 		std::unique_ptr<FiniteStateMachine> rootState;
+		GlobalId rootPayload = 0;
 };
 
 }

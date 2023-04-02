@@ -13,6 +13,7 @@ using namespace TIE;
 BehavesComponentSystem::BehavesComponentSystem() {
 	this->setName(BehavesComponentSystem::BEHAVES);
 	ComponentSystems::insertComponentPropertyIntoMap(BehavesComponentSystem::ROOT_STATE, this->componentPropertyMap);
+	ComponentSystems::insertComponentPropertyIntoMap(BehavesComponentSystem::ROOT_PAYLOAD, this->componentPropertyMap);
 }
 
 
@@ -39,7 +40,10 @@ BehavesComponent& BehavesComponentSystem::addComponent(TIEntity& tientity) {
 BehavesComponent& BehavesComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
     BehavesComponent& component = this->addComponent(tientity);
 
-	float rootStateId = ComponentSystems::getFactoryValue<float>(factory, BehavesComponentSystem::ROOT_STATE, 0, tientity);
+	GlobalId rootPayload = ComponentSystems::getFactoryValue<float>(factory, BehavesComponentSystem::ROOT_PAYLOAD, component.rootPayload, tientity);
+	this->setComponentProperty(BehavesComponentSystem::ROOT_PAYLOAD, rootPayload, tientity);
+
+	GlobalId rootStateId = ComponentSystems::getFactoryValue<float>(factory, BehavesComponentSystem::ROOT_STATE, 0, tientity);
 	this->setComponentProperty(BehavesComponentSystem::ROOT_STATE, rootStateId, tientity);
 
 	return component;
@@ -64,15 +68,17 @@ bool BehavesComponentSystem::removeComponent(TIEntity& tientity) {
 
 void BehavesComponentSystem::setComponentProperty(const std::string& key, float value, TIEntity& tientity)  {
     BehavesComponent& component = this->addComponent(tientity);
-    if (key == BehavesComponentSystem::ROOT_STATE) {
-        FiniteStateMachineFactory* factory = WorldManager::Instance()->getFiniteStateMachineFactory(value);
-        if (factory) {
+	if (key == BehavesComponentSystem::ROOT_PAYLOAD) {
+		component.rootPayload = value;
+	} else if (key == BehavesComponentSystem::ROOT_STATE) {
+		FiniteStateMachineFactory* factory = WorldManager::Instance()->getFiniteStateMachineFactory(value);
+		if (factory) {
 			if (component.rootState) {
 				component.rootState->onExit();
 			}
-            component.rootState = std::move(factory->build(tientity));
-			component.rootState->onEnter();
-        }
+			component.rootState = std::move(factory->build(tientity));
+			component.rootState->onEnter(ScriptManager::Instance()->getObjectFromValue(component.rootPayload));
+		}
     }
 }
 

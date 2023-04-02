@@ -25,6 +25,7 @@ class BehavesComponentSystem : public Singleton<BehavesComponentSystem>, public 
 
 		static const inline std::string BEHAVES = "behaves";
 		static const inline std::string ROOT_STATE = "behaves.rootState";
+		static const inline std::string ROOT_PAYLOAD = "behaves.rootPayload";
 	private:
 		struct Components {
 			BehavesComponent& behavesComponent;
