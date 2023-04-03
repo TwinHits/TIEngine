@@ -61,10 +61,10 @@ bool SceneManager::initialize() {
 
 	// Component System registration, order of initialization, and order of update
 	// Update data operations
+	this->componentSystems.push_back(CacheComponentSystem::Instance());
 	this->componentSystems.push_back(EventsComponentSystem::Instance());
 	this->componentSystems.push_back(BehavesComponentSystem::Instance());
 	this->componentSystems.push_back(LifecycleComponentSystem::Instance());
-	this->componentSystems.push_back(CacheComponentSystem::Instance());
 
 	// Update Position Operations
 	this->componentSystems.push_back(PositionComponentSystem::Instance());
