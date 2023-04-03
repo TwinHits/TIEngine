@@ -36,7 +36,9 @@ SpriteComponentSystem::SpriteComponentSystem() {
 void SpriteComponentSystem::update(const float delta) {
 	for (auto& c : this->components) {
 		c.spriteComponent.setPosition(c.positionComponent.worldPosition);
-		c.spriteComponent.setRotation(c.positionComponent.worldRotation);
+		if (c.spriteComponent.isRotates()) {
+			c.spriteComponent.setRotation(c.positionComponent.worldRotation);
+		}
 	}
 }
 
