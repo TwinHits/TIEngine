@@ -80,8 +80,8 @@ MovesComponent& MovesComponentSystem::addComponent(const TIEntityFactory& factor
 	if (!destinationX) {
 		destinationX = positionComponent.position.x;
 	}
-	if (destinationY) {
-		destinationX = positionComponent.position.y;
+	if (!destinationY) {
+		destinationY = positionComponent.position.y;
 	}
 	this->setTargetPosition(movesComponent, positionComponent, sf::Vector2f(destinationX, destinationY));
 

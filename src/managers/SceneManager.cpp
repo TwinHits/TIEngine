@@ -62,9 +62,10 @@ bool SceneManager::initialize() {
 	// Component System registration, order of initialization, and order of update
 	// Update data operations
 	this->componentSystems.push_back(CacheComponentSystem::Instance());
+	this->componentSystems.push_back(MessagesComponentSystem::Instance());
 	this->componentSystems.push_back(EventsComponentSystem::Instance());
-	this->componentSystems.push_back(BehavesComponentSystem::Instance());
 	this->componentSystems.push_back(LifecycleComponentSystem::Instance());
+	this->componentSystems.push_back(BehavesComponentSystem::Instance());
 
 	// Update Position Operations
 	this->componentSystems.push_back(PositionComponentSystem::Instance());
@@ -79,9 +80,7 @@ bool SceneManager::initialize() {
 	// Other Operations
 	this->componentSystems.push_back(GridComponentSystem::Instance());
 	this->componentSystems.push_back(CollidesComponentSystem::Instance());
-	this->componentSystems.push_back(MessagesComponentSystem::Instance());
 
-	//this->componentSystemPropertiesMap = ScriptManager::Instance()->getNewTable();
 	for (ComponentSystem* componentSystem : SceneManager::Instance()->getComponentSystems()) {
 		// List of valid component names
 		this->componentNamesToComponentSystems[componentSystem->getName()] = componentSystem;
