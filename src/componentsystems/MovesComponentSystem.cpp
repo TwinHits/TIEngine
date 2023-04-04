@@ -73,9 +73,14 @@ MovesComponent& MovesComponentSystem::addComponent(const TIEntityFactory& factor
 	float acceleration = ComponentSystems::getFactoryValue<float>(factory, MovesComponentSystem::ACCELERATION, movesComponent.acceleration, tientity);
 	float deceleration = ComponentSystems::getFactoryValue<float>(factory, MovesComponentSystem::ACCELERATION, movesComponent.deceleration, tientity);
 
-	this->setTargetPosition(movesComponent, positionComponent, positionComponent.position);
 	float destinationX = ComponentSystems::getFactoryValue<float>(factory, MovesComponentSystem::DESTINATION_X, movesComponent.targetPosition.x, tientity);
 	float destinationY = ComponentSystems::getFactoryValue<float>(factory, MovesComponentSystem::DESTINATION_Y, movesComponent.targetPosition.y, tientity);
+	if (!destinationX) {
+		destinationX = positionComponent.position.x;
+	}
+	if (destinationY) {
+		destinationX = positionComponent.position.y;
+	}
 	this->setTargetPosition(movesComponent, positionComponent, sf::Vector2f(destinationX, destinationY));
 
 	float rotates = ComponentSystems::getFactoryValue<bool>(factory, MovesComponentSystem::ROTATES, movesComponent.rotates, tientity);
