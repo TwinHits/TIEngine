@@ -22,7 +22,8 @@ class MessagesComponentSystem : public Singleton<MessagesComponentSystem>, publi
 		MessagesComponent& addComponent(const TIEntityFactory&, TIEntity&);
 		bool removeComponent(TIEntity&);
 		
-		const GlobalId registerMessageSubscription();
+		const GlobalId registerMessageSubscription(const std::string&);
+		const std::map<std::string, GlobalId>& getMessageSubscriptions();
 
 		void sendMessage(const GlobalId, const GlobalId, const GlobalId, sol::object);
 
@@ -39,6 +40,7 @@ class MessagesComponentSystem : public Singleton<MessagesComponentSystem>, publi
 		};
 		std::list<Components> components;
 
+		std::map<std::string, GlobalId> messageSubscriptions;
 		std::map<GlobalId, std::map<GlobalId, std::vector<Message>>> currentFrameMessages;
 		std::map<GlobalId, std::map<GlobalId, std::vector<Message>>> nextFrameMessages;
 		const std::vector<Message> emptyMessages; // For passing a reference to an empty vector

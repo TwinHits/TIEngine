@@ -39,6 +39,7 @@ void TIEngineInterface::registerUserType(sol::state& luaState) {
     engineInterfaceUserType["registerSceneLayer"] = &TIEngineInterface::registerSceneLayer;
     engineInterfaceUserType["registerFiniteStateMachine"] = &TIEngineInterface::registerFiniteStateMachine;
     engineInterfaceUserType["registerMessageSubscription"] = &TIEngineInterface::registerMessageSubscription;
+    engineInterfaceUserType["getMessageSubscriptions"] = &TIEngineInterface::getMessageSubscriptions;
     engineInterfaceUserType["getProperties"] = &TIEngineInterface::getProperties;
     engineInterfaceUserType["sendMessage"] = &TIEngineInterface::sendMessage;
 }
@@ -144,8 +145,13 @@ GlobalId TIEngineInterface::registerFiniteStateMachine(const sol::table& definit
 }
 
 
-GlobalId TIEngineInterface::registerMessageSubscription() {
-    return MessagesComponentSystem::Instance()->registerMessageSubscription();
+GlobalId TIEngineInterface::registerMessageSubscription(const std::string& name) {
+    return MessagesComponentSystem::Instance()->registerMessageSubscription(name);
+}
+
+
+const std::map<std::string, GlobalId>& TIEngineInterface::getMessageSubscriptions() {
+    return MessagesComponentSystem::Instance()->getMessageSubscriptions();
 }
 
 

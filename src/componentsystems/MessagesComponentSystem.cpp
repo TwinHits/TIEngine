@@ -1,6 +1,7 @@
 #include "componentsystems/MessagesComponentSystem.h" 
 
 #include "managers/HashManager.h"
+#include "managers/LogManager.h"
 #include "objects/Message.h"
 #include "objects/components/MessagesComponent.h"
 #include "objects/factories/TIEntityFactory.h"
@@ -57,11 +58,21 @@ bool MessagesComponentSystem::removeComponent(TIEntity& tientity) {
 }
 
 
-const GlobalId MessagesComponentSystem::registerMessageSubscription() {
+const GlobalId MessagesComponentSystem::registerMessageSubscription(const std::string& name) {
 	const GlobalId subscription = HashManager::Instance()->getNewGlobalId();
-	this->currentFrameMessages[subscription];
-	this->nextFrameMessages[subscription];
-	return subscription;
+	if (!this->messageSubscriptions[name]) {
+		this->messageSubscriptions[name] = subscription;
+		this->currentFrameMessages[subscription];
+		this->nextFrameMessages[subscription];
+		return subscription;
+	} else {
+		LogManager::Instance()->error("Message subscription with name " + name + " already exists.");
+		return 0;
+	}
+}
+
+const std::map<std::string, GlobalId>& MessagesComponentSystem::getMessageSubscriptions() {
+	return this->messageSubscriptions;
 }
 
 
