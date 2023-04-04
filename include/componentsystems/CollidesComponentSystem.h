@@ -13,9 +13,6 @@
 
 namespace TIE {
 
-// Collides
-// Sprite
-
 class CollidesComponentSystem : public Singleton<CollidesComponentSystem>, public OwnsComponent<CollidesComponent> {
 	public:
 		CollidesComponentSystem();
@@ -25,17 +22,19 @@ class CollidesComponentSystem : public Singleton<CollidesComponentSystem>, publi
 		bool removeComponent(TIEntity&);
 
 	//	virtual sf::FloatRect getHitBox() const;
-		void checkForCollisions();
+	//	void checkForCollisions();
 		
 		const static inline std::string COLLIDES = "collides";
+		const static inline std::string IS_COLLIDABLE = "collides.collidable";
 
 	private:        
 		struct Components {
 			CollidesComponent& collidesComponent;
-			SpriteComponent& spriteComponent;
+			TIEntity& tientity;
 		};
 		std::list<Components> components;
 
+		GlobalId collidedMessageSubscription = 0;
 		std::set<std::pair<TIEntity*, TIEntity*> > collisions;
 };
 

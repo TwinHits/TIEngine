@@ -1,6 +1,8 @@
 #ifndef COLLIDESCOMPONENT_H
 #define COLLIDESCOMPONENT_H
 
+#include <SFML/Graphics.hpp>
+
 #include "objects/components/Component.h"
 
 namespace TIE {
@@ -12,6 +14,7 @@ class CollidesComponent : public Component {
 
 		void setCollidable(bool drawn);
 		bool isCollidable() const;
+
 	private:
 		bool collidable = false;
 };
