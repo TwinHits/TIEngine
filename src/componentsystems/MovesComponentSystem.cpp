@@ -7,6 +7,7 @@
 
 #include "componentsystems/PositionComponentSystem.h"
 #include "componentsystems/GridComponentSystem.h"
+#include "componentsystems/MessagesComponentSystem.h"
 #include "managers/LogManager.h" 
 #include "managers/WorldManager.h"
 #include "objects/components/MovesComponent.h"
@@ -33,6 +34,7 @@ MovesComponentSystem::MovesComponentSystem() {
 	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::AT_DESTINATION, this->componentPropertyMap);
 	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::TARGET_ROTATION, this->componentPropertyMap);
 	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::AT_ROTATION, this->componentPropertyMap);
+	this->atDestinationMessageSubscription = MessagesComponentSystem::Instance()->registerMessageSubscription("AtDestination");
 }
 
 

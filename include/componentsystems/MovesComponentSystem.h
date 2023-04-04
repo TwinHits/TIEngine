@@ -60,6 +60,8 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, public Owns
 		};
 		std::list<Components> components;
 
+		GlobalId atDestinationMessageSubscription = 0;
+
 		void setTargetRotation(MovesComponent&, PositionComponent&);
 		void setTargetRotationDirection(MovesComponent&, PositionComponent&);
 
