@@ -143,6 +143,10 @@ sol::object SpriteComponentSystem::getComponentProperty(const std::string& key, 
 	if (component != nullptr) {
 		if (key == SpriteComponentSystem::CONSTRAIN_PROPORTIONS) {
 			return ScriptManager::Instance()->getObjectFromValue(component->isConstrainProportions());
+		} else if (key == SpriteComponentSystem::WIDTH) {
+			return ScriptManager::Instance()->getObjectFromValue(component->getGlobalBounds().width);
+		} else if (key == SpriteComponentSystem::HEIGHT) {
+			return ScriptManager::Instance()->getObjectFromValue(component->getGlobalBounds().width);
 		}
 	}
 	return ScriptManager::Instance()->getObjectFromValue(nullptr);
