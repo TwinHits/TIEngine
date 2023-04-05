@@ -5,6 +5,7 @@
 #include "templates/Singleton.h"
 
 #include <string>
+#include <vector>
 
 #include "objects/components/BehavesComponent.h"
 #include "objects/factories/TIEntityFactory.h"
@@ -22,6 +23,8 @@ class BehavesComponentSystem : public Singleton<BehavesComponentSystem>, public 
 		
 		void setComponentProperty(const std::string&, float, TIEntity&);
 		sol::object getComponentProperty(const std::string&, TIEntity&);
+
+		void onMessage(TIEntity&, const std::vector<Message>&);
 
 		static const inline std::string BEHAVES = "behaves";
 		static const inline std::string ROOT_STATE = "behaves.rootState";

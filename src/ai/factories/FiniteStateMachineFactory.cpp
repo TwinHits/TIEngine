@@ -28,6 +28,10 @@ std::unique_ptr<FiniteStateMachine> FiniteStateMachineFactory::build(TIEntity& t
         finiteStateMachine->setOnUpdateFunctionId(this->functionValues.at(FiniteStateMachine::ON_UPDATE));
     }
 
+    if (this->functionValues.count(FiniteStateMachine::ON_MESSAGE)) {
+        finiteStateMachine->setOnMessageFunctionId(this->functionValues.at(FiniteStateMachine::ON_MESSAGE));
+    }
+
     if (this->functionValues.count(FiniteStateMachine::ON_EXIT)) {
         finiteStateMachine->setOnExitFunctionId(this->functionValues.at(FiniteStateMachine::ON_EXIT));
     }

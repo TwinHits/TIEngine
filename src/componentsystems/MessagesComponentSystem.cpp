@@ -1,7 +1,9 @@
 #include "componentsystems/MessagesComponentSystem.h" 
 
+#include "componentsystems/BehavesComponentSystem.h"
 #include "managers/HashManager.h"
 #include "managers/LogManager.h"
+#include "managers/WorldManager.h"
 #include "objects/Message.h"
 #include "objects/components/MessagesComponent.h"
 #include "objects/factories/TIEntityFactory.h"
@@ -18,10 +20,14 @@ MessagesComponentSystem::MessagesComponentSystem() {
 
 
 void MessagesComponentSystem::update(const float delta) {
-	for (auto& [subscriptionId, messageQueue] : this->currentFrameMessages) {
-		messageQueue.clear();
-	}
 	std::swap(this->currentFrameMessages, this->nextFrameMessages);
+	for (auto& [reciepentId, subscriptions] : this->currentFrameMessages) {
+		TIEntity* receipent = WorldManager::Instance()->getTIEntityById(reciepentId);
+		for (auto& [subscriptionId, messages] : subscriptions) {
+			BehavesComponentSystem::Instance()->onMessage(*receipent, messages);
+		}
+	}
+	this->currentFrameMessages.clear();
 }
 
 
@@ -62,8 +68,6 @@ const GlobalId MessagesComponentSystem::registerMessageSubscription(const std::s
 	const GlobalId subscription = HashManager::Instance()->getNewGlobalId();
 	if (!this->messageSubscriptions[name]) {
 		this->messageSubscriptions[name] = subscription;
-		this->currentFrameMessages[subscription];
-		this->nextFrameMessages[subscription];
 		return subscription;
 	} else {
 		LogManager::Instance()->error("Message subscription with name " + name + " already exists.");
@@ -76,54 +80,12 @@ const std::map<std::string, GlobalId>& MessagesComponentSystem::getMessageSubscr
 }
 
 
-void MessagesComponentSystem::sendMessage(const GlobalId subscription, const GlobalId sender, const GlobalId reciever, sol::object payload) {
-	if (this->nextFrameMessages.count(subscription)) {
-		if (!this->nextFrameMessages[subscription].count(reciever)) {
-			this->nextFrameMessages[subscription][reciever];
-		}
-		this->nextFrameMessages[subscription][reciever].push_back({ subscription, sender, payload });
+void MessagesComponentSystem::sendMessage(const GlobalId subscription, const GlobalId sender, const GlobalId reciepent, sol::object payload) {
+	if (!this->nextFrameMessages.count(reciepent)) {
+        this->nextFrameMessages[reciepent];
 	}
-}
-
-
-bool MessagesComponentSystem::hasMessages(TIEntity& tientity) {
-	MessagesComponent* messagesComponent = tientity.getComponent<MessagesComponent>();
-	if (messagesComponent) {
-		for (auto subscription : messagesComponent->subscriptions) {
-			if (this->hasMessages(tientity, subscription)) {
-				return true;
-			}
-		}
-	}
-	return false;
-}
-
-
-bool MessagesComponentSystem::hasMessages(TIEntity& tientity, GlobalId subscription) {
-	if (this->currentFrameMessages.count(subscription)) {
-		return this->currentFrameMessages.at(subscription).count(tientity.getId());
-	}
-	return false;
-}
-
-
-const std::vector<Message>& MessagesComponentSystem::getMessages(TIEntity& tientity, GlobalId subscription) {
-	if (this->currentFrameMessages.count(subscription)) {
-		if (this->currentFrameMessages.at(subscription).count(tientity.getId())) {
-			return this->currentFrameMessages.at(subscription).at(tientity.getId());
-		}
-	}
-	return this->emptyMessages;
-}
-
-
-const Message* MessagesComponentSystem::getMessage(TIEntity& tientity, GlobalId subscription) {
-	if (this->currentFrameMessages.count(subscription)) {
-		if (this->currentFrameMessages.at(subscription).count(tientity.getId())) {
-			if (this->currentFrameMessages.at(subscription).at(tientity.getId()).size() > 0) {
-				return &this->currentFrameMessages.at(subscription).at(tientity.getId()).back();
-			}
-		}
-	}
-	return nullptr;
+    if (!this->nextFrameMessages[reciepent].count(subscription)) {
+        this->nextFrameMessages[reciepent][subscription];
+    }
+    this->nextFrameMessages[reciepent][subscription].push_back({ subscription, sender, payload });
 }

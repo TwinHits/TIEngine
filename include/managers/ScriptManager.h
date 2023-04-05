@@ -11,6 +11,7 @@
 
 #include "interfaces/TIEngineInterface.h"
 #include "interfaces/TIEntityInterface.h"
+#include "interfaces/MessageInterface.h"
 #include "interfaces/ai/FiniteStateMachineInterface.h"
 #include "objects/GlobalId.h"
 #include "objects/tientities/TIEntity.h"
@@ -53,6 +54,14 @@ public:
 		TIEntityInterface tientityInterface(finiteStateMachine.getTIEntity());
 		FiniteStateMachineInterface finiteStateMachineInterface(finiteStateMachine);
 		return this->functions.at(functionId)(std::tuple<TIEntityInterface, FiniteStateMachineInterface, const sol::object>(tientityInterface, finiteStateMachineInterface, payload));
+	}
+
+	template <typename T>
+	T runFunction(const GlobalId functionId, FiniteStateMachine& finiteStateMachine, const Message& message) {
+		TIEntityInterface tientityInterface(finiteStateMachine.getTIEntity());
+		FiniteStateMachineInterface finiteStateMachineInterface(finiteStateMachine);
+		MessageInterface messageInterface(message);
+		return this->functions.at(functionId)(std::tuple<TIEntityInterface, FiniteStateMachineInterface, MessageInterface>(tientityInterface, finiteStateMachineInterface, messageInterface));
 	}
 
 	GlobalId registerFunctionByName(const std::string&, const sol::function&);

@@ -50,6 +50,17 @@ void FiniteStateMachine::setOnUpdateFunctionId(const GlobalId onUpdateFunctionId
 }
 
 
+const GlobalId FiniteStateMachine::getOnMessageFunctionId() {
+    return this->onMessageFunctionId;
+}
+
+
+void FiniteStateMachine::setOnMessageFunctionId(const GlobalId onMessageFunctionId) {
+    this->onMessageFunctionId = onMessageFunctionId;
+}
+
+
+
 const GlobalId FiniteStateMachine::getOnExitFunctionId() {
     return this->onExitFunctionId;
 
@@ -91,6 +102,16 @@ void FiniteStateMachine::update(float delta) {
             if (index->second->exit) {
                 this->setChildState(index->first, nullptr);
             }
+        }
+    }
+};
+
+
+void FiniteStateMachine::onMessage(const Message& message) {
+    this->runFunction(this->onMessageFunctionId, message);
+    if (!this->childStates.empty()) {
+        for (auto& childState : this->childStates) {
+            childState.second->onMessage(message);
         }
     }
 };
@@ -143,5 +164,12 @@ void FiniteStateMachine::runFunction(const GlobalId functionId, const float delt
 void FiniteStateMachine::runFunction(const GlobalId functionId, const sol::object payload) {
     if (functionId) {
         ScriptManager::Instance()->runFunction<sol::optional<float> >(functionId, *this, payload);
+    }
+}
+
+
+void FiniteStateMachine::runFunction(const GlobalId functionId, const Message& message) {
+    if (functionId) {
+        ScriptManager::Instance()->runFunction<sol::optional<float> >(functionId, *this, message);
     }
 }

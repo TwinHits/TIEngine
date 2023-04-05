@@ -96,3 +96,12 @@ sol::object BehavesComponentSystem::getComponentProperty(const std::string& key,
 	return ScriptManager::Instance()->getObjectFromValue(nullptr);
 }
 
+
+void BehavesComponentSystem::onMessage(TIEntity& tientity, const std::vector<Message>& messages) {
+	BehavesComponent* component = tientity.getComponent<BehavesComponent>();
+	if (component) {
+        for (auto& message : messages) {
+			component->rootState->onMessage(message);
+        }
+	}
+}

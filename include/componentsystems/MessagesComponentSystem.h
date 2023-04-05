@@ -27,11 +27,6 @@ class MessagesComponentSystem : public Singleton<MessagesComponentSystem>, publi
 
 		void sendMessage(const GlobalId, const GlobalId, const GlobalId, sol::object);
 
-		bool hasMessages(TIEntity&);
-		bool hasMessages(TIEntity&, GlobalId);
-		const Message* getMessage(TIEntity&, GlobalId);
-		const std::vector<Message>& getMessages(TIEntity&, GlobalId);
-
 		static const inline std::string MESSAGES = "messages";
 		static const inline std::string SUBSCRIPTIONS = "messages.subscriptions";
 	private:
@@ -43,7 +38,6 @@ class MessagesComponentSystem : public Singleton<MessagesComponentSystem>, publi
 		std::map<std::string, GlobalId> messageSubscriptions;
 		std::map<GlobalId, std::map<GlobalId, std::vector<Message>>> currentFrameMessages;
 		std::map<GlobalId, std::map<GlobalId, std::vector<Message>>> nextFrameMessages;
-		const std::vector<Message> emptyMessages; // For passing a reference to an empty vector
 };
 
 }

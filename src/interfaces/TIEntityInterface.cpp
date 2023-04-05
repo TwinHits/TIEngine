@@ -62,10 +62,6 @@ void TIEntityInterface::registerUserType(sol::state& luaState) {
 
     //Messages
     interfaceUserType["sendMessage"] = &TIEntityInterface::sendMessage;
-    interfaceUserType["hasMessage"] = &TIEntityInterface::hasMessage;
-    interfaceUserType["hasMessages"] = &TIEntityInterface::hasMessages;
-    interfaceUserType["getMessage"] = &TIEntityInterface::getMessage;
-    interfaceUserType["getMessages"] = &TIEntityInterface::getMessages;
 }
 
 
@@ -205,30 +201,4 @@ void TIEntityInterface::sendMessage(const GlobalId subscription, sol::object rec
             }
         }
     }
-}
-
-
-bool TIEntityInterface::hasMessage(const GlobalId subscription) {
-    return MessagesComponentSystem::Instance()->hasMessages(*this->tientity, subscription);
-}
-
-
-bool TIEntityInterface::hasMessages() {
-    return MessagesComponentSystem::Instance()->hasMessages(*this->tientity);
-}
-
-
-MessageInterface TIEntityInterface::getMessage(const GlobalId subscription) {
-    const Message* message = MessagesComponentSystem::Instance()->getMessage(*this->tientity, subscription);
-    return MessageInterface(*message);
-}
-
-
-std::vector<MessageInterface> TIEntityInterface::getMessages(const GlobalId subscription) {
-    const std::vector<Message>& messages = MessagesComponentSystem::Instance()->getMessages(*this->tientity, subscription);
-    std::vector<MessageInterface> messageInterfaces;
-    for (auto& message : messages) {
-        messageInterfaces.push_back(MessageInterface(message));
-    }
-    return messageInterfaces;
 }

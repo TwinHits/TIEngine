@@ -7,6 +7,7 @@
 #include <memory>
 
 #include "objects/GlobalId.h"
+#include "objects/Message.h"
 #include "objects/tientities/TIEntity.h"
 
 namespace TIE {
@@ -26,6 +27,9 @@ class FiniteStateMachine {
         const GlobalId getOnUpdateFunctionId();
         void setOnUpdateFunctionId(const GlobalId);
 
+        const GlobalId getOnMessageFunctionId();
+        void setOnMessageFunctionId(const GlobalId);
+
         const GlobalId getOnExitFunctionId();
         void setOnExitFunctionId(const GlobalId);
 
@@ -35,6 +39,7 @@ class FiniteStateMachine {
         void update(float);
         void onEnter();
         void onEnter(const sol::object);
+        void onMessage(const Message&);
         void onExit();
 
         const bool hasChildState(const GlobalId);
@@ -43,12 +48,14 @@ class FiniteStateMachine {
 
 		static const inline std::string ON_ENTER = "onEnter";
 		static const inline std::string ON_UPDATE = "onUpdate";
+		static const inline std::string ON_MESSAGE = "onMessage";
 		static const inline std::string ON_EXIT = "onExit";
 
     private:
         void runFunction(const GlobalId);
         void runFunction(const GlobalId, const float);
         void runFunction(const GlobalId, const sol::object);
+        void runFunction(const GlobalId, const Message&);
 
         TIEntity& tientity;
         GlobalId factoryId;
@@ -57,6 +64,7 @@ class FiniteStateMachine {
 
         GlobalId onEnterFunctionId = 0;
         GlobalId onUpdateFunctionId = 0;
+        GlobalId onMessageFunctionId = 0;
         GlobalId onExitFunctionId = 0;
 
         bool exit = false;
