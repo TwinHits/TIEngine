@@ -75,6 +75,9 @@ void EventsManager::processEvents() {
 					this->window.close();
 					LogManager::Instance()->debug("Window closed by escape.");
 					break;
+				case sf::Keyboard::Home:
+					SceneManager::Instance()->setSimulationPaused(!SceneManager::Instance()->getSimulationPaused());
+					break;
 				case sf::Keyboard::Tilde:
 					consoleManager->showConsole();
 					break;

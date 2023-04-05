@@ -132,9 +132,11 @@ const ComponentSystems::ComponentSystemPropertiesMap& SceneManager::getComponent
 
 
 void SceneManager::updateGameState(const float delta) {
-    for (ComponentSystem* componentSystem : this->componentSystems) {
-        componentSystem->update(delta);
-    }
+	if (!this->simulationPaused) {
+		for (ComponentSystem* componentSystem : this->componentSystems) {
+			componentSystem->update(delta);
+		}
+	}
     this->updateEngineEntities(*(this->engineLayer), delta);
 
     if (this->tientitiesMarkedForRemove) {
@@ -195,6 +197,16 @@ float SceneManager::getFPS() {
 
 void SceneManager::setTIEntitiesMarkedForRemove(bool flag) {
 	this->tientitiesMarkedForRemove = flag;
+}
+
+
+void SceneManager::setSimulationPaused(const bool simulationPaused) {
+	this->simulationPaused = simulationPaused;
+}
+
+
+const bool SceneManager::getSimulationPaused() {
+	return this->simulationPaused;
 }
 
 

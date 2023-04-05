@@ -33,6 +33,9 @@ namespace TIE {
 
 		void setTIEntitiesMarkedForRemove(bool);
 
+		void setSimulationPaused(const bool);
+		const bool getSimulationPaused();
+
 		SceneManager() {};
 		~SceneManager() {};
 	private:
@@ -51,6 +54,8 @@ namespace TIE {
 		ComponentSystems::ComponentSystemPropertiesMap componentSystemPropertiesMap;
 
 		bool tientitiesMarkedForRemove = false;
+		bool simulationPaused = false;
+		
 		void removeTIEntities(TIEntity&);
 		void removeComponents(TIEntity&);
 		void updateEngineEntities(TIEntity&, const float);
