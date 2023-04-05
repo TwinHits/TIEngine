@@ -120,7 +120,9 @@ const std::vector<Message>& MessagesComponentSystem::getMessages(TIEntity& tient
 const Message* MessagesComponentSystem::getMessage(TIEntity& tientity, GlobalId subscription) {
 	if (this->currentFrameMessages.count(subscription)) {
 		if (this->currentFrameMessages.at(subscription).count(tientity.getId())) {
-			return &this->currentFrameMessages.at(subscription).at(tientity.getId()).back();
+			if (this->currentFrameMessages.at(subscription).at(tientity.getId()).size() > 0) {
+				return &this->currentFrameMessages.at(subscription).at(tientity.getId()).back();
+			}
 		}
 	}
 	return nullptr;
