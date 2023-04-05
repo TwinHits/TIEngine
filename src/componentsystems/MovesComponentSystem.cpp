@@ -312,7 +312,7 @@ void MovesComponentSystem::accelerateRotation(MovesComponent& movesComponent, Po
             float distanceToStop = fabsf((movesComponent.rotationalVelocity.x / movesComponent.rotationalAcceleration) * movesComponent.rotationalVelocity.x);
             float rotationDistanceToTarget = Math::distanceBetweenTwoAngles(positionComponent.rotation, movesComponent.targetRotation);
             if (rotationDistanceToTarget <= distanceToStop) {
-                rotationalAcceleration = -movesComponent.rotationalAcceleration * movesComponent.rotationalVelocity.y;
+                rotationalAcceleration = movesComponent.rotationalAcceleration * movesComponent.rotationalVelocity.y;
             }
 
             movesComponent.rotationalVelocity.x += rotationalAcceleration * delta;
@@ -330,7 +330,8 @@ void MovesComponentSystem::rotate(MovesComponent& movesComponent, PositionCompon
         float distance = movesComponent.rotationalVelocity.x * delta;
         float newRotation = positionComponent.rotation + distance;
         if (Math::areFloatsEqual(newRotation, movesComponent.targetRotation) ||
-			Math::isAngleBetweenAngles(movesComponent.targetRotation, positionComponent.rotation, newRotation)
+			Math::isAngleBetweenAngles(movesComponent.targetRotation, positionComponent.rotation, newRotation) ||
+			Math::distanceBetweenTwoAngles(newRotation, movesComponent.targetRotation) < 1.0f
 		) {
             positionComponent.rotation = movesComponent.targetRotation;
         } else {
