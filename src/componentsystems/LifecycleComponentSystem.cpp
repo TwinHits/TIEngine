@@ -1,5 +1,7 @@
 #include "componentsystems/LifecycleComponentSystem.h" 
 
+#include <sol/sol.hpp>
+
 #include <string>
 
 #include "managers/LogManager.h" 
@@ -97,6 +99,6 @@ void LifecycleComponentSystem::runRemoved(TIEntity& tientity) {
 
 void LifecycleComponentSystem::runFunction(GlobalId functionId, TIEntity& tientity) {
 	if (functionId) {
-		ScriptManager::Instance()->runFunction<bool>(functionId, tientity);
+		ScriptManager::Instance()->runFunction<sol::optional<bool> >(functionId, tientity);
 	}
 }
