@@ -18,10 +18,7 @@
 #include "componentsystems/SpriteComponentSystem.h"
 #include "componentsystems/TextComponentSystem.h"
 #include "componentsystems/PositionComponentSystem.h"
-#include "managers/ScriptManager.h"
-#include "managers/TimeManager.h"
 #include "managers/ViewManager.h"
-#include "managers/WindowManager.h"
 #include "objects/tientities/SceneLayer.h"
 #include "objects/components/ShapeComponent.h"
 #include "objects/components/SpriteComponent.h"
@@ -31,7 +28,6 @@
 #include "objects/tientities/MousePtrCoords.h"
 #include "objects/tientities/PerformanceDisplay.h"
 #include "objects/factories/SceneLayerFactory.h"
-#include "templates/MakeUnique.h"
 
 using namespace TIE;
 
@@ -71,15 +67,15 @@ bool SceneManager::initialize() {
 	this->componentSystems.push_back(PositionComponentSystem::Instance());
 	this->componentSystems.push_back(MovesComponentSystem::Instance());
 
+	// Other Operations
+	this->componentSystems.push_back(GridComponentSystem::Instance());
+	this->componentSystems.push_back(CollidesComponentSystem::Instance());
+
 	// Drawing operations
 	this->componentSystems.push_back(SpriteComponentSystem::Instance());
 	this->componentSystems.push_back(AnimatedComponentSystem::Instance());
 	this->componentSystems.push_back(TextComponentSystem::Instance());
 	this->componentSystems.push_back(ShapeComponentSystem::Instance());
-
-	// Other Operations
-	this->componentSystems.push_back(GridComponentSystem::Instance());
-	this->componentSystems.push_back(CollidesComponentSystem::Instance());
 
 	for (ComponentSystem* componentSystem : SceneManager::Instance()->getComponentSystems()) {
 		// List of valid component names
@@ -183,10 +179,10 @@ void SceneManager::updateEngineEntities(TIEntity& tientity, const float delta) {
 
 
 void SceneManager::render() {		
-	window.clear();
+	this->window.clear();
 	sf::RenderStates states;
 	this->render(*(this->sceneGraphRoot), this->window, states);
-	window.display();
+	this->window.display();
 }
 
 
