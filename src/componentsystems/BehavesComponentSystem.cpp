@@ -99,7 +99,7 @@ sol::object BehavesComponentSystem::getComponentProperty(const std::string& key,
 
 void BehavesComponentSystem::onMessage(TIEntity& tientity, const std::vector<Message>& messages) {
 	BehavesComponent* component = tientity.getComponent<BehavesComponent>();
-	if (component) {
+	if (component && component->rootState) {
         for (auto& message : messages) {
 			component->rootState->onMessage(message);
         }
