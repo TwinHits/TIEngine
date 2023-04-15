@@ -10,6 +10,7 @@ namespace TIE {
 	namespace Math {
 		float toRadians(const float);
 		float toDegrees(const double);
+		float normalizeAngleDegrees(const float);
 		float distanceBetweenTwoPoints(const sf::Vector2f&, const sf::Vector2f&);
 		float distanceBetweenTwoAngles(const float, const float);
 		float angleBetweenTwoPoints(const sf::Vector2f&, const sf::Vector2f&);
@@ -23,6 +24,8 @@ namespace TIE {
 		const float getDotProduct(const sf::Vector2f&, const sf::Vector2f&);
 		const sf::Vector2f getProjectedVector(const sf::Vector2f&, const sf::Vector2f&);
 		const sf::Vector2f rotateVectorByAngle(const sf::Vector2f&, const float);
+		bool doLinesIntersect(sf::VertexArray, sf::VertexArray);
+		bool doesLineIntersectRect(sf::VertexArray, sf::FloatRect);
 		bool isNice(int);
 	}
 }

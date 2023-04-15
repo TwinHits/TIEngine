@@ -33,7 +33,7 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, public Owns
 
 		void setTargetPosition(TIEntity&, float);
 		void setTargetPosition(TIEntity&, const sf::Vector2f&);
-		void setTargetPosition(MovesComponent&, PositionComponent&, const sf::Vector2f&);
+		void setTargetPosition(MovesComponent&, PositionComponent&, const sf::Vector2f&, TIEntity&);
 
 		bool atTargetPosition(TIEntity&);
 		bool atTargetRotation(TIEntity&);
@@ -57,12 +57,13 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, public Owns
 		struct Components {
 			MovesComponent& movesComponent;
 			PositionComponent& positionComponent;
+			TIEntity& tientity;
 		};
 		std::list<Components> components;
 
 		GlobalId atDestinationMessageSubscription = 0;
 
-		void setTargetRotation(MovesComponent&, PositionComponent&);
+		void setTargetRotation(MovesComponent&, PositionComponent&, TIEntity&);
 		void setTargetRotationDirection(MovesComponent&, PositionComponent&);
 
 		bool atTargetPosition(MovesComponent&, PositionComponent&);

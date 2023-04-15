@@ -56,7 +56,7 @@ PositionComponent& PositionComponentSystem::addComponent(const TIEntityFactory& 
 
     positionComponent.position.x = x;
     positionComponent.position.y = y;
-    positionComponent.rotation = rotation;
+    positionComponent.rotation = Math::normalizeAngleDegrees(rotation);
     positionComponent.rotates = rotates;
 
     return positionComponent;

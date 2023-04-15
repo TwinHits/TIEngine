@@ -13,6 +13,15 @@ float TIE::Math::toDegrees(double radians) {
 	return fmod((radians * 180) / M_PI + 360.0f, 360.0f);
 }
 
+float TIE::Math::normalizeAngleDegrees(float angle) {
+	// take any number and convert it to 0-359 degrees
+	angle = fmod(angle, 360);
+	if (angle < 0) {
+		angle += 360;
+	}
+	return angle;
+}
+
 
 float TIE::Math::distanceBetweenTwoPoints(const sf::Vector2f& p1, const sf::Vector2f& p2) {
 	return fabsf(std::sqrt(std::pow(p1.x - p2.x, 2) + std::pow(p1.y - p2.y, 2)));
@@ -93,6 +102,66 @@ const sf::Vector2f TIE::Math::rotateVectorByAngle(const sf::Vector2f& vector, co
 	return sf::Vector2f(vector.x * cos(radians) - vector.y * sin(radians), vector.x * sin(radians) + vector.y * cos(radians));
 }
 
+
+bool TIE::Math::doLinesIntersect(sf::VertexArray line1, sf::VertexArray line2) {
+	// https://stackoverflow.com/questions/563198/how-do-you-detect-where-two-line-segments-intersect
+	// Returns 1 if the lines intersect, otherwise 0. In addition, if the lines 
+	// intersect the intersection point may be stored in the floats i_x and i_y.
+	float p0_x = line1[0].position.x;
+	float p0_y = line1[0].position.y;
+
+	float p1_x = line1[1].position.x;
+	float p1_y = line1[1].position.y;
+
+	float p2_x = line2[0].position.x;
+	float p2_y = line2[0].position.y;
+
+	float p3_x = line2[1].position.x;
+	float p3_y = line2[1].position.y;
+
+    float s1_x = p1_x - p0_x;     
+    float s1_y = p1_y - p0_y;
+    float s2_x = p3_x - p2_x;     
+    float s2_y = p3_y - p2_y;
+
+    float s = (-s1_y * (p0_x - p2_x) + s1_x * (p0_y - p2_y)) / (-s2_x * s1_y + s1_x * s2_y);
+    float t = (s2_x * (p0_y - p2_y) - s2_y * (p0_x - p2_x)) / (-s2_x * s1_y + s1_x * s2_y);
+
+    return s >= 0 && s <= 1 && t >= 0 && t <= 1;
+}
+
+
+bool TIE::Math::doesLineIntersectRect(sf::VertexArray line, sf::FloatRect rect) {
+	sf::VertexArray top_edge = sf::VertexArray();
+	top_edge.append(sf::Vertex(sf::Vector2f(rect.top, rect.left)));
+	top_edge.append(sf::Vertex(sf::Vector2f(rect.top, rect.left + rect.width)));
+	if (TIE::Math::doLinesIntersect(line, top_edge)) {
+		return true;
+	}
+
+	sf::VertexArray left_edge = sf::VertexArray();
+	left_edge.append(sf::Vertex(sf::Vector2f(rect.top, rect.left)));
+	left_edge.append(sf::Vertex(sf::Vector2f(rect.top + rect.height, rect.left)));
+	if (TIE::Math::doLinesIntersect(line, left_edge)) {
+		return true;
+	}
+
+	sf::VertexArray bottom_edge = sf::VertexArray();
+	bottom_edge.append(sf::Vertex(sf::Vector2f(rect.top + rect.height, rect.left)));
+	bottom_edge.append(sf::Vertex(sf::Vector2f(rect.top + rect.height, rect.left + rect.width)));
+	if (TIE::Math::doLinesIntersect(line, bottom_edge)) {
+		return true;
+	}
+
+	sf::VertexArray right_edge = sf::VertexArray();
+	right_edge.append(sf::Vertex(sf::Vector2f(rect.top, rect.left + rect.width)));
+	right_edge.append(sf::Vertex(sf::Vector2f(rect.top + rect.height, rect.left + rect.width)));
+	if (TIE::Math::doLinesIntersect(line, right_edge)) {
+		return true;
+	}
+
+	return false;
+}
 
 bool TIE::Math::isNice(int number) {
 	return number == 69;
