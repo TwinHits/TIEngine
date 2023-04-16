@@ -69,11 +69,6 @@ TextComponent& TextComponentSystem::addComponent(const TIEntityFactory& factory,
 	TextAlignment textAlignment = TIE::String::strToTextAlignment(ComponentSystems::getFactoryValue<std::string>(factory, TextComponentSystem::TEXT_ALIGNMENT, TIE::String::textAlignmentToStr(textComponent.getTextAlignment()), tientity));
 	textComponent.setTextAlignment(textAlignment);
 
-	bool showWireframe = ComponentSystems::getFactoryValue<bool>(factory, TextComponentSystem::SHOW_WIREFRAME, TextComponentSystem::SHOW_WIREFRAME_DEFAULT, tientity);
-	if (showWireframe) {
-		ShapeComponentSystem::Instance()->addWireframe(tientity, textComponent);
-	}
-
 	return textComponent;
 }
 

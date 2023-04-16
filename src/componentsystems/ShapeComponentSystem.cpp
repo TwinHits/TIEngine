@@ -64,16 +64,27 @@ bool ShapeComponentSystem::removeComponent(TIEntity& tientity) {
 }
 
 
+void ShapeComponentSystem::addWireframe(TIEntity& tientity) {
+	if (tientity.hasComponent<SpriteComponent>()) {
+		this->addWireframe(tientity, *tientity.getComponent<SpriteComponent>());
+	}
+	if (tientity.hasComponent<TextComponent>()) {
+		this->addWireframe(tientity, *tientity.getComponent<TextComponent>());
+	}
+}
+
+
 void ShapeComponentSystem::addWireframe(TIEntity& tientity, const SpriteComponent& component) {
-	this->createWireframe(tientity, component.getLocalBounds(), component.getOrigin());
+	this->createWireframe(tientity, component.getLocalBounds(), component.getOrigin(), 0);
 }
 
 
 void ShapeComponentSystem::addWireframe(TIEntity& tientity, const TextComponent& component) {
-	this->createWireframe(tientity, component.getLocalBounds(), component.getOrigin());
+	this->createWireframe(tientity, component.getLocalBounds(), component.getOrigin(), 0);
 }
 
-ShapeComponent& ShapeComponentSystem::createWireframe(TIEntity& tientity, const sf::FloatRect& bounds, const sf::Vector2f& origin) {
+
+ShapeComponent& ShapeComponentSystem::createWireframe(TIEntity& tientity, const sf::FloatRect& bounds, const sf::Vector2f& origin, float rotation) {
 	ShapeComponent& shapeComponent = this->addComponent(tientity);
 
 	// Bounding box
@@ -89,6 +100,6 @@ ShapeComponent& ShapeComponentSystem::createWireframe(TIEntity& tientity, const 
 	circleShape.setRadius(2.0f);
 	circleShape.setOrigin(circleShape.getRadius(), circleShape.getRadius());
 	circleShape.setFillColor(sf::Color::Blue);
-	
+
 	return shapeComponent;
 }

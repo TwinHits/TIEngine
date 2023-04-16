@@ -35,11 +35,9 @@ class SpriteComponentSystem : public Singleton<SpriteComponentSystem>, public Ow
 		static const inline std::string ORIGIN_Y = "sprite.origin.y";
 		static const inline std::string REPEATED = "sprite.repeated";
 		static const inline std::string ROTATES = "sprite.rotates";
-		static const inline std::string SHOW_WIREFRAME = "sprite.showWireframe";
 		static const inline std::string CONSTRAIN_PROPORTIONS = "sprite.constrainProportions";
 
 		static const inline std::string MISSING_TEXTURE_NAME = "missing_texture.png";
-		static const inline bool SHOW_WIREFRAME_DEFAULT = false;
 	private: 
 		struct Components {
 			SpriteComponent& spriteComponent;

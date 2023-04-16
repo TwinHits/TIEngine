@@ -6,6 +6,7 @@
 
 #include "componentsystems/ComponentSystem.h"
 #include "componentsystems/LifecycleComponentSystem.h"
+#include "componentsystems/ShapeComponentSystem.h"
 #include "managers/SceneManager.h"
 #include "managers/ScriptManager.h"
 #include "managers/WorldManager.h"
@@ -21,11 +22,15 @@ TIEntityFactory::TIEntityFactory(const sol::table& definition) {
 TIEntity& TIEntityFactory::build() {
 
 	if (this->stringValues.count(TIEntityFactory::NAME)) {
-		this->name = this->stringValues.at(TIEntityFactory::NAME);
+		this->setName(this->stringValues.at(TIEntityFactory::NAME));
+	}
+
+	if (this->boolValues.count(TIEntityFactory::SHOW_WIREFRAME)) {
+		this->setShowWireFrame(this->boolValues.at(TIEntityFactory::SHOW_WIREFRAME));
 	}
 
 	if (this->parent == nullptr) {
-		this->parent = &SceneManager::Instance()->getClientLayer();
+		this->setParent(&SceneManager::Instance()->getClientLayer());
 	}
 
 	TIEntity& tientity = this->parent->attachChild();
@@ -37,10 +42,15 @@ TIEntity& TIEntityFactory::build() {
 		}
 	}
 
+	if (this->showWireframe) {
+		ShapeComponentSystem::Instance()->addWireframe(tientity);
+	}
+
 	LifecycleComponentSystem::Instance()->runCreated(tientity);
 
 	for (auto & child : this->children) {
 		child.setParent(&tientity);
+		child.setShowWireFrame(this->getShowWireframe());
 		child.build();
 	}
 
@@ -79,4 +89,14 @@ TIEntityFactory& TIEntityFactory::setName(std::string name) {
 
 const std::string& TIEntityFactory::getName() {
 	return this->name;
+}
+
+
+const bool TIEntityFactory::getShowWireframe() {
+	return this->showWireframe;
+}
+
+
+void TIEntityFactory::setShowWireFrame(const bool showWireframe) {
+	this->showWireframe = showWireframe;
 }

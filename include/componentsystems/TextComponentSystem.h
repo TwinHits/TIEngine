@@ -39,9 +39,7 @@ class TextComponentSystem : public Singleton<TextComponentSystem>, public OwnsCo
 		static const inline std::string OFFSET_Y = "text.offset.y";
 		static const inline std::string CHARACTER_SIZE = "text.characterSize";
 		static const inline std::string TEXT_ALIGNMENT = "text.align";
-		static const inline std::string SHOW_WIREFRAME = "text.showWireframe";
 
-		static const inline bool SHOW_WIREFRAME_DEFAULT = false;
 		static const inline std::string FONT_DEFAULT = ConfigManager::Instance()->getEngineFontName();
 
 	private:		

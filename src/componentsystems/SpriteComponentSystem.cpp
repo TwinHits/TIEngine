@@ -28,7 +28,6 @@ SpriteComponentSystem::SpriteComponentSystem() {
 	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::ORIGIN_Y, this->componentPropertyMap);
 	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::REPEATED, this->componentPropertyMap);
 	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::ROTATES, this->componentPropertyMap);
-	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::SHOW_WIREFRAME, this->componentPropertyMap);
 	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::CONSTRAIN_PROPORTIONS, this->componentPropertyMap);
 }
 
@@ -83,11 +82,6 @@ SpriteComponent& SpriteComponentSystem::addComponent(const TIEntityFactory& fact
 
 	bool rotates = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::ROTATES, spriteComponent.isRotates(), tientity);
 	spriteComponent.setRotates(rotates);
-
-	bool showWireframe = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::SHOW_WIREFRAME, SpriteComponentSystem::SHOW_WIREFRAME_DEFAULT, tientity);
-	if (showWireframe) {
-		ShapeComponentSystem::Instance()->addWireframe(tientity, spriteComponent);
-	}
 
 	return spriteComponent;
 }

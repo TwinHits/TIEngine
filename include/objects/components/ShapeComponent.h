@@ -21,6 +21,7 @@ class ShapeComponent : public Component {
 		sf::CircleShape& addCircleShape();
 
 		const std::vector<std::unique_ptr<sf::Shape> >& getShapes();
+		const std::vector<std::unique_ptr<sf::Shape> >& getShapes() const;
 	private:
 		bool drawn = true;
 		std::vector<std::unique_ptr<sf::Shape> > shapes;

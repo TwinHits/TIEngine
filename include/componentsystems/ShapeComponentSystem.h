@@ -21,6 +21,7 @@ class ShapeComponentSystem : public Singleton<ShapeComponentSystem>, public Owns
 		ShapeComponent& addComponent(TIEntity&);
 		bool removeComponent(TIEntity&);
 
+		void addWireframe(TIEntity&);
 		void addWireframe(TIEntity&, const SpriteComponent&);
 		void addWireframe(TIEntity&, const TextComponent&);
 
@@ -34,7 +35,7 @@ class ShapeComponentSystem : public Singleton<ShapeComponentSystem>, public Owns
 		};
 		std::list<Components> components;
 
-		ShapeComponent& createWireframe(TIEntity&, const sf::FloatRect&, const sf::Vector2f&);
+		ShapeComponent& createWireframe(TIEntity&, const sf::FloatRect&, const sf::Vector2f&, const float);
 };
 
 }

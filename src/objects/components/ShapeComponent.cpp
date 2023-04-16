@@ -33,3 +33,7 @@ sf::CircleShape& ShapeComponent::addCircleShape() {
 const std::vector<std::unique_ptr<sf::Shape> >& ShapeComponent::getShapes() {
 	return this->shapes;
 }
+
+const std::vector<std::unique_ptr<sf::Shape> >& ShapeComponent::getShapes() const {
+	return this->shapes;
+}

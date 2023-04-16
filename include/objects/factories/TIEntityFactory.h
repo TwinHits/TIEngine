@@ -20,6 +20,9 @@ class TIEntityFactory {
 		TIEntityFactory& setName(std::string);
 		const std::string& getName();
 
+		void setShowWireFrame(const bool);
+		const bool getShowWireframe();
+
 		TIEntityFactory& setParent(TIEntity*);
 		TIEntityFactory& addChild();
 
@@ -34,11 +37,13 @@ class TIEntityFactory {
 		TIEntity& build();
 
 		static const inline std::string NAME = "tientity.name";
+		static const inline std::string SHOW_WIREFRAME = "tientity.showWireframe";
 
 		~TIEntityFactory() {};
 
 	private:
 		std::string name = "";
+		bool showWireframe = false;
 		TIEntity* parent = nullptr;
 		std::vector<TIEntityFactory> children;
 		std::map<std::string, bool> componentSystemNames;
