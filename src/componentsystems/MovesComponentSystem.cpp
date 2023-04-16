@@ -69,7 +69,7 @@ MovesComponent& MovesComponentSystem::addComponent(TIEntity& tientity) {
 
 MovesComponent& MovesComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
     MovesComponent& movesComponent = this->addComponent(tientity);
-    PositionComponent& positionComponent = tientity.addComponent<PositionComponent>();
+	PositionComponent& positionComponent = PositionComponentSystem::Instance()->addComponent(tientity);
 
 	float targetSpeed = ComponentSystems::getFactoryValue<float>(factory, MovesComponentSystem::SPEED, movesComponent.targetSpeed, tientity);
 	float acceleration = ComponentSystems::getFactoryValue<float>(factory, MovesComponentSystem::ACCELERATION, movesComponent.acceleration, tientity);
