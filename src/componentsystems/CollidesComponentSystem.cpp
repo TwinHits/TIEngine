@@ -1,45 +1,37 @@
 #include "componentsystems/CollidesComponentSystem.h" 
 
+#include <sol/sol.hpp>
+#include "SFML/Graphics.hpp"
+
+#include <string>
+
 #include "componentsystems/MessagesComponentSystem.h" 
 #include "managers/ScriptManager.h"
 #include "objects/components/CollidesComponent.h"
+#include "objects/components/PositionComponent.h"
 #include "objects/tientities/TIEntity.h"
 #include "utils/ComponentSystems.h"
+#include "utils/TIEMath.h"
 
 using namespace TIE;
 
 CollidesComponentSystem::CollidesComponentSystem() {
 	this->setName(CollidesComponentSystem::COLLIDES);
-	this->collidedMessageSubscription = MessagesComponentSystem::Instance()->registerMessageSubscription("Collided");
+
+	ComponentSystems::insertComponentPropertyIntoMap(CollidesComponentSystem::IS_COLLIDABLE, this->componentPropertyMap);
+	ComponentSystems::insertComponentPropertyIntoMap(CollidesComponentSystem::IS_COLLIDES, this->componentPropertyMap);
+
+	this->hitboxCollisionMessageSubscription = MessagesComponentSystem::Instance()->registerMessageSubscription("HitboxCollision");
+	this->traceCollisionMessageSubscription = MessagesComponentSystem::Instance()->registerMessageSubscription("TraceCollision");
 }
 
 
 void CollidesComponentSystem::update(const float delta) {
-	for (auto c = components.begin(); c != components.end(); ++c) {
-		auto c2 = c;
-		++c2;
-		if (c2 == components.end()) {
-			break;
-		}
-		if (c->collidesComponent.isCollidable()) {
-			sf::FloatRect hitbox = ComponentSystems::getGlobalBounds(c->tientity);
-			for (c2; c2 != components.end(); c2++) {
-				if (c2->collidesComponent.isCollidable()) {
-					sf::FloatRect hitbox2 = ComponentSystems::getGlobalBounds(c2->tientity);
-					if (hitbox.intersects(hitbox2)) {
-						MessagesComponentSystem::Instance()->sendMessage(
-							this->collidedMessageSubscription,
-							c->tientity.getId(),
-							c2->tientity.getId(),
-							ScriptManager::Instance()->getObjectFromValue(c->tientity.getId()));
-						MessagesComponentSystem::Instance()->sendMessage(
-							this->collidedMessageSubscription,
-							c2->tientity.getId(),
-							c->tientity.getId(),
-							ScriptManager::Instance()->getObjectFromValue(c2->tientity.getId()));
-					}
-				}
-			}
+	// Two Pointer Technique
+	for (std::list<Components>::iterator c1 = components.begin(), c2 = std::next(c1, 1); c2 != components.end(); ++c1, c2 = std::next(c1, 1)) {
+		for (c2; c2 != components.end(); c2++) {
+			this->checkHitboxCollisions(*c1, *c2);
+			// this->checkTraceCollisions(*c1, *c2);
 		}
 	}
 }
@@ -48,7 +40,8 @@ void CollidesComponentSystem::update(const float delta) {
 CollidesComponent& CollidesComponentSystem::addComponent(TIEntity& tientity) {
 	if (!tientity.hasComponent<CollidesComponent>()) {
         CollidesComponent& collidesComponent = tientity.addComponent<CollidesComponent>();
-        this->components.push_back({ collidesComponent, tientity });
+        PositionComponent& positionComponent = tientity.addComponent<PositionComponent>();
+        this->components.push_back({ collidesComponent, positionComponent, tientity });
         return collidesComponent;
 	} else {
 		return *tientity.getComponent<CollidesComponent>();
@@ -58,24 +51,12 @@ CollidesComponent& CollidesComponentSystem::addComponent(TIEntity& tientity) {
 
 CollidesComponent& CollidesComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
 	CollidesComponent& collidesComponent = this->addComponent(tientity);
-	bool collides  = ComponentSystems::getFactoryValue<bool>(factory, CollidesComponentSystem::IS_COLLIDABLE, collidesComponent.isCollidable(), tientity);
-	collidesComponent.setCollidable(collides);
-	/**
-	collides could be a setting on the shape or the sprite whcih creates a collidescomponent
-	or collides could be its own block like normal that references the shape or sprite
-	what would that look like?
-	Sprite and Shape could add the component if they ahve a collides setting as a reqquired component. That makes sense. 
 
-	1. Add Collides as required component for Sprite and shape.
-	How can collides access sprite vs shape to get the right reference?  I think it's just a a transformable. I think for now we can proritize sprite over shape.
-	2. Get the sprite or shape and save the reference in Collides
-	3. For each collides component, check if it collides with any other collides component.
-	4. Save collides in a map by TIEntity id.
-		std::Map<GlobalId, std::Map<GlobalId, TIEntity*> >
-	5. If getProperty(collisions) return vector of TIEntityInterfaces that collide.
-	7. Or figure out a way to send system messages
-		1. Collides Consturctor adds a subscription for colliding
-	**/
+	bool collidable  = ComponentSystems::getFactoryValue<bool>(factory, CollidesComponentSystem::IS_COLLIDABLE, collidesComponent.isCollidable(), tientity);
+	collidesComponent.setCollidable(collidable);
+
+	bool collides  = ComponentSystems::getFactoryValue<bool>(factory, CollidesComponentSystem::IS_COLLIDES, collidesComponent.isCollides(), tientity);
+	collidesComponent.setCollides(collides);
 
 	return collidesComponent;
 }
@@ -93,5 +74,53 @@ bool CollidesComponentSystem::removeComponent(TIEntity& tientity) {
 		return tientity.removeComponent<CollidesComponent>();
 	} else {
 		return false;
+	}
+}
+
+
+void CollidesComponentSystem::setComponentProperty(const std::string& key, bool value, TIEntity& tientity)  {
+	CollidesComponent& component = this->addComponent(tientity);
+	if (key == CollidesComponentSystem::IS_COLLIDABLE) {
+		component.setCollidable(value);
+	} else if (key == CollidesComponentSystem::IS_COLLIDES) {
+		component.setCollides(value);
+	}
+}
+
+
+sol::object CollidesComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
+	CollidesComponent* component = tientity.getComponent<CollidesComponent>();
+	if (component) {
+		if (key == CollidesComponentSystem::IS_COLLIDABLE) {
+			return ScriptManager::Instance()->getObjectFromValue(component->isCollidable());
+		} else if (key == CollidesComponentSystem::IS_COLLIDES) {
+			return ScriptManager::Instance()->getObjectFromValue(component->isCollides());
+		}
+	}
+	return ScriptManager::Instance()->getObjectFromValue(nullptr);
+}
+
+
+void CollidesComponentSystem::checkHitboxCollisions(Components& c1, Components& c2) {
+	if (ComponentSystems::isDrawn(c1.tientity) && ComponentSystems::isDrawn(c2.tientity)) {
+		sf::FloatRect c1Hitbox = ComponentSystems::getGlobalBounds(c1.tientity);
+		sf::FloatRect c2Hitbox = ComponentSystems::getGlobalBounds(c2.tientity);
+		if (c1Hitbox.intersects(c2Hitbox)) {
+			// if (I want to know when I hit things && they want to say they got hit)
+			if (c1.collidesComponent.isCollides() && c2.collidesComponent.isCollidable()) {
+				MessagesComponentSystem::Instance()->sendMessage(
+					this->hitboxCollisionMessageSubscription,
+					c2.tientity.getId(), // sender
+					c1.tientity.getId(), // reciepent
+					ScriptManager::Instance()->getObjectFromValue(c2.tientity.getId()));
+			}
+			if (c2.collidesComponent.isCollides() && c2.collidesComponent.isCollidable()) {
+				MessagesComponentSystem::Instance()->sendMessage(
+					this->hitboxCollisionMessageSubscription,
+					c1.tientity.getId(), // sender
+					c2.tientity.getId(), // reciepent
+					ScriptManager::Instance()->getObjectFromValue(c1.tientity.getId()));
+			}
+		}
 	}
 }

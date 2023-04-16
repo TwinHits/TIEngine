@@ -4,10 +4,10 @@
 #include "componentsystems/OwnsComponent.h"
 #include "templates/Singleton.h"
 
-#include <set>
+#include <sol/sol.hpp>
 
 #include "objects/components/CollidesComponent.h"
-#include "objects/components/SpriteComponent.h"
+#include "objects/components/PositionComponent.h"
 #include "objects/tientities/TIEntity.h"
 #include "objects/factories/TIEntityFactory.h"
 
@@ -20,22 +20,26 @@ class CollidesComponentSystem : public Singleton<CollidesComponentSystem>, publi
 		CollidesComponent& addComponent(TIEntity&);
 		CollidesComponent& addComponent(const TIEntityFactory&, TIEntity&);
 		bool removeComponent(TIEntity&);
-
-	//	virtual sf::FloatRect getHitBox() const;
-	//	void checkForCollisions();
 		
+		void setComponentProperty(const std::string&, bool, TIEntity&);
+		sol::object getComponentProperty(const std::string&, TIEntity&);
+			
 		const static inline std::string COLLIDES = "collides";
 		const static inline std::string IS_COLLIDABLE = "collides.collidable";
+		const static inline std::string IS_COLLIDES = "collides.collides";
 
 	private:        
 		struct Components {
 			CollidesComponent& collidesComponent;
+			PositionComponent& positionComponent;
 			TIEntity& tientity;
 		};
 		std::list<Components> components;
 
-		GlobalId collidedMessageSubscription = 0;
-		std::set<std::pair<TIEntity*, TIEntity*> > collisions;
+		void checkHitboxCollisions(Components&, Components&);
+
+		GlobalId hitboxCollisionMessageSubscription = 0;
+		GlobalId traceCollisionMessageSubscription = 0;
 };
 
 }

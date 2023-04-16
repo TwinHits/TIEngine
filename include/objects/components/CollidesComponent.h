@@ -15,8 +15,12 @@ class CollidesComponent : public Component {
 		void setCollidable(bool drawn);
 		bool isCollidable() const;
 
+		void setCollides(bool drawn);
+		bool isCollides() const;
+
 	private:
-		bool collidable = false;
+		bool collidable = false; // I want to know when I hit things
+		bool collides = false; // I want to say when I get hit
 };
 
 }

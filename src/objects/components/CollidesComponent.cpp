@@ -10,3 +10,13 @@ void CollidesComponent::setCollidable(bool collidable) {
 bool CollidesComponent::isCollidable() const {
 	return this->collidable;
 }
+
+
+void CollidesComponent::setCollides(bool collides) {
+	this->collides = collides;
+}
+
+
+bool CollidesComponent::isCollides() const {
+	return this->collides;
+}
