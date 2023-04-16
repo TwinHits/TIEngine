@@ -12,6 +12,7 @@
 #include "componentsystems/EventsComponentSystem.h"
 #include "componentsystems/GridComponentSystem.h"
 #include "componentsystems/LifecycleComponentSystem.h"
+#include "componentsystems/LineComponentSystem.h"
 #include "componentsystems/MessagesComponentSystem.h"
 #include "componentsystems/MovesComponentSystem.h"
 #include "componentsystems/ShapeComponentSystem.h"
@@ -76,6 +77,7 @@ bool SceneManager::initialize() {
 	this->componentSystems.push_back(AnimatedComponentSystem::Instance());
 	this->componentSystems.push_back(TextComponentSystem::Instance());
 	this->componentSystems.push_back(ShapeComponentSystem::Instance());
+	this->componentSystems.push_back(LineComponentSystem::Instance());
 
 	for (ComponentSystem* componentSystem : SceneManager::Instance()->getComponentSystems()) {
 		// List of valid component names
