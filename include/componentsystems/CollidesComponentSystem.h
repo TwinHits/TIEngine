@@ -7,7 +7,6 @@
 #include <sol/sol.hpp>
 
 #include "objects/components/CollidesComponent.h"
-#include "objects/components/PositionComponent.h"
 #include "objects/tientities/TIEntity.h"
 #include "objects/factories/TIEntityFactory.h"
 
@@ -31,7 +30,6 @@ class CollidesComponentSystem : public Singleton<CollidesComponentSystem>, publi
 	private:        
 		struct Components {
 			CollidesComponent& collidesComponent;
-			PositionComponent& positionComponent;
 			TIEntity& tientity;
 		};
 		std::list<Components> components;

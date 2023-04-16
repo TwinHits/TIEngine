@@ -8,7 +8,6 @@
 #include "componentsystems/MessagesComponentSystem.h" 
 #include "managers/ScriptManager.h"
 #include "objects/components/CollidesComponent.h"
-#include "objects/components/PositionComponent.h"
 #include "objects/tientities/TIEntity.h"
 #include "utils/ComponentSystems.h"
 #include "utils/TIEMath.h"
@@ -40,8 +39,7 @@ void CollidesComponentSystem::update(const float delta) {
 CollidesComponent& CollidesComponentSystem::addComponent(TIEntity& tientity) {
 	if (!tientity.hasComponent<CollidesComponent>()) {
         CollidesComponent& collidesComponent = tientity.addComponent<CollidesComponent>();
-        PositionComponent& positionComponent = tientity.addComponent<PositionComponent>();
-        this->components.push_back({ collidesComponent, positionComponent, tientity });
+        this->components.push_back({ collidesComponent, tientity });
         return collidesComponent;
 	} else {
 		return *tientity.getComponent<CollidesComponent>();
