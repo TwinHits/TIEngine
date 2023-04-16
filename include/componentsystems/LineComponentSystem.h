@@ -24,6 +24,8 @@ class LineComponentSystem : public Singleton<LineComponentSystem>, public OwnsCo
 		void setComponentProperty(const std::string&, float, TIEntity&);
 		sol::object getComponentProperty(const std::string&, TIEntity&);
 			
+		void addWireframe(TIEntity& tientity);
+
 		const static inline std::string LINE = "line";
 		const static inline std::string MAGNITUDE = "line.magnitude";
 

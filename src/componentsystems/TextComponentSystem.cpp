@@ -138,6 +138,14 @@ sol::object TextComponentSystem::getComponentProperty(const std::string& key, TI
 }
 
 
+void TextComponentSystem::addWireframe(TIEntity& tientity) {
+	TextComponent* textComponent = tientity.getComponent<TextComponent>();
+	if (textComponent) {
+		ShapeComponentSystem::Instance()->createWireframe(tientity, textComponent->getLocalBounds(), textComponent->getOrigin());
+	}
+}
+
+
 void TextComponentSystem::setOriginForTextAlignment(TextComponent& textComponent) {
 	TextAlignment textAlignment = textComponent.getTextAlignment();
 	sf::FloatRect bounds = textComponent.getLocalBounds();

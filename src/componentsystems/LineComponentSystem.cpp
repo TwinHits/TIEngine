@@ -6,6 +6,7 @@
 #include <string>
 
 #include "componentsystems/PositionComponentSystem.h" 
+#include "componentsystems/ShapeComponentSystem.h" 
 #include "managers/ScriptManager.h"
 #include "objects/components/LineComponent.h"
 #include "objects/components/PositionComponent.h"
@@ -86,4 +87,13 @@ sol::object LineComponentSystem::getComponentProperty(const std::string& key, TI
 		}
     }
 	return ScriptManager::Instance()->getObjectFromValue(nullptr);
+}
+
+
+void LineComponentSystem::addWireframe(TIEntity& tientity) {
+	LineComponent* component = tientity.getComponent<LineComponent>();
+	if (component) {
+		PositionComponent* positionComponent = tientity.getComponent<PositionComponent>();
+		ShapeComponentSystem::Instance()->createWireframe(tientity, sf::FloatRect(0,0,component->getMagnitude(), 1), positionComponent->position, positionComponent->rotation);
+	}
 }

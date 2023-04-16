@@ -4,6 +4,7 @@
 #include "componentsystems/OwnsComponent.h"
 #include "templates/Singleton.h"
 
+#include "objects/components/LineComponent.h"
 #include "objects/components/PositionComponent.h"
 #include "objects/components/ShapeComponent.h"
 #include "objects/components/SpriteComponent.h"
@@ -21,9 +22,8 @@ class ShapeComponentSystem : public Singleton<ShapeComponentSystem>, public Owns
 		ShapeComponent& addComponent(TIEntity&);
 		bool removeComponent(TIEntity&);
 
-		void addWireframe(TIEntity&);
-		void addWireframe(TIEntity&, const SpriteComponent&);
-		void addWireframe(TIEntity&, const TextComponent&);
+		void createWireframe(TIEntity&, const sf::FloatRect&, const sf::Vector2f&);
+		void createWireframe(TIEntity&, const sf::FloatRect&, const sf::Vector2f&, const float);
 
 		static const inline std::string SHAPE = "shape";
 
@@ -34,8 +34,6 @@ class ShapeComponentSystem : public Singleton<ShapeComponentSystem>, public Owns
 			TIEntity& tientity;
 		};
 		std::list<Components> components;
-
-		ShapeComponent& createWireframe(TIEntity&, const sf::FloatRect&, const sf::Vector2f&, const float);
 };
 
 }

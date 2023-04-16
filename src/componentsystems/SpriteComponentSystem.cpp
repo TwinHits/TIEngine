@@ -147,6 +147,14 @@ sol::object SpriteComponentSystem::getComponentProperty(const std::string& key, 
 }
 
 
+void SpriteComponentSystem::addWireframe(TIEntity& tientity) {
+	SpriteComponent* spriteComponent = tientity.getComponent<SpriteComponent>();
+	if (spriteComponent) {
+		ShapeComponentSystem::Instance()->createWireframe(tientity, spriteComponent->getLocalBounds(), spriteComponent->getOrigin());
+	}
+}
+
+
 void SpriteComponentSystem::setTextureFields(SpriteComponent& spriteComponent, const sf::Texture& texture) {
 	return this->setTextureFields(spriteComponent, texture, spriteComponent.getLocalBounds().width, spriteComponent.getLocalBounds().height);
 }

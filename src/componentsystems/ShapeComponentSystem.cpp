@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "componentsystems/PositionComponentSystem.h"
+#include "objects/components/LineComponent.h"
 #include "objects/components/ShapeComponent.h"
 #include "objects/components/SpriteComponent.h"
 #include "objects/tientities/TIEntity.h"
@@ -64,27 +65,12 @@ bool ShapeComponentSystem::removeComponent(TIEntity& tientity) {
 }
 
 
-void ShapeComponentSystem::addWireframe(TIEntity& tientity) {
-	if (tientity.hasComponent<SpriteComponent>()) {
-		this->addWireframe(tientity, *tientity.getComponent<SpriteComponent>());
-	}
-	if (tientity.hasComponent<TextComponent>()) {
-		this->addWireframe(tientity, *tientity.getComponent<TextComponent>());
-	}
+void ShapeComponentSystem::createWireframe(TIEntity& tientity, const sf::FloatRect& bounds, const sf::Vector2f& origin) {
+	this->createWireframe(tientity, bounds, origin, 0);
 }
 
 
-void ShapeComponentSystem::addWireframe(TIEntity& tientity, const SpriteComponent& component) {
-	this->createWireframe(tientity, component.getLocalBounds(), component.getOrigin(), 0);
-}
-
-
-void ShapeComponentSystem::addWireframe(TIEntity& tientity, const TextComponent& component) {
-	this->createWireframe(tientity, component.getLocalBounds(), component.getOrigin(), 0);
-}
-
-
-ShapeComponent& ShapeComponentSystem::createWireframe(TIEntity& tientity, const sf::FloatRect& bounds, const sf::Vector2f& origin, float rotation) {
+void ShapeComponentSystem::createWireframe(TIEntity& tientity, const sf::FloatRect& bounds, const sf::Vector2f& origin, float rotation) {
 	ShapeComponent& shapeComponent = this->addComponent(tientity);
 
 	// Bounding box
@@ -94,12 +80,11 @@ ShapeComponent& ShapeComponentSystem::createWireframe(TIEntity& tientity, const 
 	rectangleShape.setFillColor(sf::Color::Transparent);
 	rectangleShape.setOutlineColor(sf::Color::Yellow);
 	rectangleShape.setOutlineThickness(2);
+	rectangleShape.setRotation(rotation);
 
 	// Origin dot
 	sf::CircleShape& circleShape = shapeComponent.addCircleShape();
 	circleShape.setRadius(2.0f);
 	circleShape.setOrigin(circleShape.getRadius(), circleShape.getRadius());
 	circleShape.setFillColor(sf::Color::Blue);
-
-	return shapeComponent;
 }
