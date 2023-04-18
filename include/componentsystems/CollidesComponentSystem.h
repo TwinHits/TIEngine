@@ -35,9 +35,9 @@ class CollidesComponentSystem : public Singleton<CollidesComponentSystem>, publi
 		std::list<Components> components;
 
 		void checkHitboxCollisions(Components&, Components&);
+		void checkLineCollisions(Components&, Components&);
 
-		GlobalId hitboxCollisionMessageSubscription = 0;
-		GlobalId traceCollisionMessageSubscription = 0;
+		GlobalId collisionMessageSubscription = 0;
 };
 
 }

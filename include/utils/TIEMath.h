@@ -24,8 +24,8 @@ namespace TIE {
 		const float getDotProduct(const sf::Vector2f&, const sf::Vector2f&);
 		const sf::Vector2f getProjectedVector(const sf::Vector2f&, const sf::Vector2f&);
 		const sf::Vector2f rotateVectorByAngle(const sf::Vector2f&, const float);
-		bool doLinesIntersect(sf::VertexArray, sf::VertexArray);
-		bool doesLineIntersectRect(sf::VertexArray, sf::FloatRect);
+		bool doLinesIntersect(const sf::VertexArray&, const sf::VertexArray&);
+		bool doesLineIntersectRect(const sf::VertexArray&, const sf::FloatRect&);
 		bool isNice(int);
 	}
 }

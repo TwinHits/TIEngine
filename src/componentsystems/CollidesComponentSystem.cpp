@@ -8,6 +8,7 @@
 #include "componentsystems/MessagesComponentSystem.h" 
 #include "managers/ScriptManager.h"
 #include "objects/components/CollidesComponent.h"
+#include "objects/components/LineComponent.h"
 #include "objects/tientities/TIEntity.h"
 #include "utils/ComponentSystems.h"
 #include "utils/TIEMath.h"
@@ -20,8 +21,7 @@ CollidesComponentSystem::CollidesComponentSystem() {
 	ComponentSystems::insertComponentPropertyIntoMap(CollidesComponentSystem::IS_COLLIDABLE, this->componentPropertyMap);
 	ComponentSystems::insertComponentPropertyIntoMap(CollidesComponentSystem::IS_COLLIDES, this->componentPropertyMap);
 
-	this->hitboxCollisionMessageSubscription = MessagesComponentSystem::Instance()->registerMessageSubscription("HitboxCollision");
-	this->traceCollisionMessageSubscription = MessagesComponentSystem::Instance()->registerMessageSubscription("TraceCollision");
+	this->collisionMessageSubscription = MessagesComponentSystem::Instance()->registerMessageSubscription("Collision");
 }
 
 
@@ -30,7 +30,8 @@ void CollidesComponentSystem::update(const float delta) {
 	for (std::list<Components>::iterator c1 = components.begin(), c2 = std::next(c1, 1); c2 != components.end(); ++c1, c2 = std::next(c1, 1)) {
 		for (c2; c2 != components.end(); c2++) {
 			this->checkHitboxCollisions(*c1, *c2);
-			// this->checkTraceCollisions(*c1, *c2);
+			this->checkLineCollisions(*c1, *c2);
+			this->checkLineCollisions(*c2, *c1);
 		}
 	}
 }
@@ -101,24 +102,44 @@ sol::object CollidesComponentSystem::getComponentProperty(const std::string& key
 
 void CollidesComponentSystem::checkHitboxCollisions(Components& c1, Components& c2) {
 	if (ComponentSystems::isDrawn(c1.tientity) && ComponentSystems::isDrawn(c2.tientity)) {
-		sf::FloatRect c1Hitbox = ComponentSystems::getGlobalBounds(c1.tientity);
-		sf::FloatRect c2Hitbox = ComponentSystems::getGlobalBounds(c2.tientity);
+		const sf::FloatRect& c1Hitbox = ComponentSystems::getGlobalBounds(c1.tientity);
+		const sf::FloatRect& c2Hitbox = ComponentSystems::getGlobalBounds(c2.tientity);
 		if (c1Hitbox.intersects(c2Hitbox)) {
 			// if (I want to know when I hit things && they want to say they got hit)
 			if (c1.collidesComponent.isCollides() && c2.collidesComponent.isCollidable()) {
 				MessagesComponentSystem::Instance()->sendMessage(
-					this->hitboxCollisionMessageSubscription,
+					this->collisionMessageSubscription,
 					c2.tientity.getId(), // sender
-					c1.tientity.getId(), // reciepent
+					c1.tientity.getId(), // recipient
 					ScriptManager::Instance()->getObjectFromValue(c2.tientity.getId()));
 			}
 			if (c2.collidesComponent.isCollides() && c2.collidesComponent.isCollidable()) {
 				MessagesComponentSystem::Instance()->sendMessage(
-					this->hitboxCollisionMessageSubscription,
+					this->collisionMessageSubscription,
 					c1.tientity.getId(), // sender
-					c2.tientity.getId(), // reciepent
+					c2.tientity.getId(), // recipient
 					ScriptManager::Instance()->getObjectFromValue(c1.tientity.getId()));
 			}
+		}
+	}
+}
+
+
+void CollidesComponentSystem::checkLineCollisions(Components& lineComponents, Components& hitboxComponents) {
+	if (lineComponents.tientity.hasComponent<LineComponent>() && ComponentSystems::isDrawn(hitboxComponents.tientity)) {
+        // if (I want to know when I hit things && they want to say they got hit)
+        if (lineComponents.collidesComponent.isCollides() && hitboxComponents.collidesComponent.isCollidable()) {
+            const sf::VertexArray& line = lineComponents.tientity.getComponent<LineComponent>()->getLine();
+			auto startpoint = line[0].position;
+			auto endpoint = line[1].position;
+            const sf::FloatRect& c2Hitbox = ComponentSystems::getGlobalBounds(hitboxComponents.tientity);
+			if (Math::doesLineIntersectRect(line, c2Hitbox)) {
+                MessagesComponentSystem::Instance()->sendMessage(
+                    this->collisionMessageSubscription,
+					hitboxComponents.tientity.getId(), // sender
+					lineComponents.tientity.getId(), // reciepent
+                    ScriptManager::Instance()->getObjectFromValue(hitboxComponents.tientity.getId()));
+            }
 		}
 	}
 }

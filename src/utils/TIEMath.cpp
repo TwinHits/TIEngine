@@ -103,65 +103,68 @@ const sf::Vector2f TIE::Math::rotateVectorByAngle(const sf::Vector2f& vector, co
 }
 
 
-bool TIE::Math::doLinesIntersect(sf::VertexArray line1, sf::VertexArray line2) {
-	// https://stackoverflow.com/questions/563198/how-do-you-detect-where-two-line-segments-intersect
-	// Returns 1 if the lines intersect, otherwise 0. In addition, if the lines 
-	// intersect the intersection point may be stored in the floats i_x and i_y.
-	float p0_x = line1[0].position.x;
-	float p0_y = line1[0].position.y;
+bool TIE::Math::doLinesIntersect(const sf::VertexArray& line1, const sf::VertexArray& line2) {
+	// https://stackoverflow.com/questions/5514366/how-to-know-if-a-line-intersects-a-rectangle
 
-	float p1_x = line1[1].position.x;
-	float p1_y = line1[1].position.y;
+	sf::Vector2f l1p1 = line1[0].position;
+	sf::Vector2f l1p2 = line1[1].position;
 
-	float p2_x = line2[0].position.x;
-	float p2_y = line2[0].position.y;
+	sf::Vector2f l2p1 = line2[0].position;
+	sf::Vector2f l2p2 = line2[1].position;
 
-	float p3_x = line2[1].position.x;
-	float p3_y = line2[1].position.y;
+	float q = (l1p1.y - l2p1.y) * (l2p2.x - l2p1.x) - (l1p1.x - l2p1.x) * (l2p2.y - l2p1.y);
+	float d = (l1p2.x - l1p1.x) * (l2p2.y - l2p1.y) - (l1p2.y - l1p1.y) * (l2p2.x - l2p1.x);
 
-    float s1_x = p1_x - p0_x;     
-    float s1_y = p1_y - p0_y;
-    float s2_x = p3_x - p2_x;     
-    float s2_y = p3_y - p2_y;
+	if (d == 0) {
+		return false;
+	}
 
-    float s = (-s1_y * (p0_x - p2_x) + s1_x * (p0_y - p2_y)) / (-s2_x * s1_y + s1_x * s2_y);
-    float t = (s2_x * (p0_y - p2_y) - s2_y * (p0_x - p2_x)) / (-s2_x * s1_y + s1_x * s2_y);
+	float r = q / d;
 
-    return s >= 0 && s <= 1 && t >= 0 && t <= 1;
+	q = (l1p1.y - l2p1.y) * (l1p2.x - l1p1.x) - (l1p1.x - l2p1.x) * (l1p2.y - l1p1.y);
+	float s = q / d;
+
+	if (r < 0 || r > 1 || s < 0 || s > 1) {
+		return false;
+	}
+
+	return true;
 }
 
 
-bool TIE::Math::doesLineIntersectRect(sf::VertexArray line, sf::FloatRect rect) {
+bool TIE::Math::doesLineIntersectRect(const sf::VertexArray& line, const sf::FloatRect& rect) {
+
 	sf::VertexArray top_edge = sf::VertexArray();
-	top_edge.append(sf::Vertex(sf::Vector2f(rect.top, rect.left)));
-	top_edge.append(sf::Vertex(sf::Vector2f(rect.top, rect.left + rect.width)));
+	top_edge.append(sf::Vertex(sf::Vector2f(rect.left, rect.top)));
+	top_edge.append(sf::Vertex(sf::Vector2f(rect.left + rect.width, rect.top)));
 	if (TIE::Math::doLinesIntersect(line, top_edge)) {
 		return true;
 	}
 
 	sf::VertexArray left_edge = sf::VertexArray();
-	left_edge.append(sf::Vertex(sf::Vector2f(rect.top, rect.left)));
-	left_edge.append(sf::Vertex(sf::Vector2f(rect.top + rect.height, rect.left)));
+	left_edge.append(sf::Vertex(sf::Vector2f(rect.left, rect.top)));
+	left_edge.append(sf::Vertex(sf::Vector2f(rect.left, rect.top + rect.height)));
 	if (TIE::Math::doLinesIntersect(line, left_edge)) {
 		return true;
 	}
 
 	sf::VertexArray bottom_edge = sf::VertexArray();
-	bottom_edge.append(sf::Vertex(sf::Vector2f(rect.top + rect.height, rect.left)));
-	bottom_edge.append(sf::Vertex(sf::Vector2f(rect.top + rect.height, rect.left + rect.width)));
+	bottom_edge.append(sf::Vertex(sf::Vector2f(rect.left, rect.top + rect.height)));
+	bottom_edge.append(sf::Vertex(sf::Vector2f(rect.left + rect.width, rect.top + rect.height)));
 	if (TIE::Math::doLinesIntersect(line, bottom_edge)) {
 		return true;
 	}
 
 	sf::VertexArray right_edge = sf::VertexArray();
-	right_edge.append(sf::Vertex(sf::Vector2f(rect.top, rect.left + rect.width)));
-	right_edge.append(sf::Vertex(sf::Vector2f(rect.top + rect.height, rect.left + rect.width)));
+	right_edge.append(sf::Vertex(sf::Vector2f(rect.left + rect.width, rect.top)));
+	right_edge.append(sf::Vertex(sf::Vector2f(rect.left + rect.width, rect.top + rect.height)));
 	if (TIE::Math::doLinesIntersect(line, right_edge)) {
 		return true;
 	}
 
 	return false;
 }
+
 
 bool TIE::Math::isNice(int number) {
 	return number == 69;
