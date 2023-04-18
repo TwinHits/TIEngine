@@ -28,6 +28,8 @@ class PositionComponentSystem : public Singleton<PositionComponentSystem>, publi
 
 		void setPosition(TIEntity&, float, float);
 
+		void updateWorldCoordinates(TIEntity&);
+		void updateWorldCoordinates(PositionComponent&, TIEntity&);
 		sf::Vector2f getWorldPosition(TIEntity&);
 		float getWorldRotation(TIEntity&);
 		sf::Transform getWorldTransform(TIEntity&);

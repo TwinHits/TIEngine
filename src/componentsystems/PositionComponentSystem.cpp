@@ -27,10 +27,7 @@ PositionComponentSystem::PositionComponentSystem() {
 
 void PositionComponentSystem::update(const float delta) {
     for (auto& c : this->components) {
-        c.positionComponent.worldPosition = this->getWorldPosition(c.tientity);
-        if (c.positionComponent.rotates) {
-            c.positionComponent.worldRotation = this->getWorldRotation(c.tientity);
-        }
+        this->updateWorldCoordinates(c.positionComponent, c.tientity);
     }
 }
 
@@ -59,6 +56,8 @@ PositionComponent& PositionComponentSystem::addComponent(const TIEntityFactory& 
     positionComponent.rotation = Math::normalizeAngleDegrees(rotation);
     positionComponent.rotates = rotates;
 
+    this->updateWorldCoordinates(positionComponent, tientity);
+
     return positionComponent;
 }
 
@@ -67,10 +66,13 @@ void PositionComponentSystem::setComponentProperty(const std::string& key, float
     PositionComponent& component = PositionComponentSystem::addComponent(tientity);
     if (key == PositionComponentSystem::ROTATION) {
         component.rotation = value;
+        this->updateWorldCoordinates(component, tientity);
     } else if (key == PositionComponentSystem::POSITION_X) {
         component.position.x = value;
+        this->updateWorldCoordinates(component, tientity);
     } else if (key == PositionComponentSystem::POSITION_Y) {
         component.position.y = value;
+        this->updateWorldCoordinates(component, tientity);
     }
 }
 
@@ -79,6 +81,7 @@ void PositionComponentSystem::setComponentProperty(const std::string& key, const
     PositionComponent& component = PositionComponentSystem::addComponent(tientity);
     if (key == PositionComponentSystem::POSITION_POSITION) {
         component.position = value;
+        this->updateWorldCoordinates(component, tientity);
     }
 }
 
@@ -123,6 +126,22 @@ void PositionComponentSystem::setPosition(TIEntity& tientity, float x, float y) 
     if (positionComponent != nullptr) {
         positionComponent->position.x = x;
         positionComponent->position.y = y;
+        this->updateWorldCoordinates(*positionComponent, tientity);
+    }
+}
+
+
+void PositionComponentSystem::updateWorldCoordinates(TIEntity& tientity) {
+    if (tientity.hasComponent<PositionComponent>()) {
+        this->updateWorldCoordinates(*tientity.getComponent<PositionComponent>(), tientity);
+    }
+}
+
+
+void PositionComponentSystem::updateWorldCoordinates(PositionComponent& positionComponent, TIEntity& tientity) {
+    positionComponent.worldPosition = this->getWorldPosition(tientity);
+    if (positionComponent.rotates) {
+        positionComponent.worldRotation = this->getWorldRotation(tientity);
     }
 }
 
@@ -176,7 +195,7 @@ sf::Transform PositionComponentSystem::getWorldTransform(TIEntity& tientity) {
 
 
 bool PositionComponentSystem::arePositionsInRange(PositionComponent& position1, PositionComponent& position2, const float range) {
-    return Math::distanceBetweenTwoPoints(position1.position, position2.position) <= range;
+    return Math::distanceBetweenTwoPoints(position1.worldPosition, position2.worldPosition) <= range;
 }
 
 
