@@ -5,9 +5,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "componentsystems/PositionComponentSystem.h"
-#include "objects/components/LineComponent.h"
 #include "objects/components/ShapeComponent.h"
-#include "objects/components/SpriteComponent.h"
 #include "objects/tientities/TIEntity.h"
 #include "objects/factories/TIEntityFactory.h"
 #include "managers/AssetsManager.h"
@@ -45,7 +43,6 @@ ShapeComponent& ShapeComponentSystem::addComponent(TIEntity& tientity) {
 	} else {
 		return *tientity.getComponent<ShapeComponent>();
 	}
-
 }
 
 
@@ -75,11 +72,11 @@ void ShapeComponentSystem::createWireframe(TIEntity& tientity, const sf::FloatRe
 
 	// Bounding box
 	sf::RectangleShape& rectangleShape = shapeComponent.addRectangleShape();
-	rectangleShape.setSize(sf::Vector2f(bounds.left + bounds.width, bounds.top + bounds.height));
+	rectangleShape.setSize(sf::Vector2f(bounds.width, bounds.height));
 	rectangleShape.setOrigin(origin);
 	rectangleShape.setFillColor(sf::Color::Transparent);
 	rectangleShape.setOutlineColor(sf::Color::Yellow);
-	rectangleShape.setOutlineThickness(2);
+	rectangleShape.setOutlineThickness(1);
 	rectangleShape.setRotation(rotation);
 
 	// Origin dot
