@@ -24,10 +24,7 @@ LineComponentSystem::LineComponentSystem() {
 
 void LineComponentSystem::update(const float delta) {
 	for (auto& c : this->components) {
-		sf::VertexArray line = sf::VertexArray(sf::Lines, 2);
-		line[0] = c.positionComponent.worldPosition;
-		line[1] = line[0].position + Math::translateVelocityByTime(sf::Vector2f(c.lineComponent.getMagnitude(), c.positionComponent.worldRotation), 1);
-		c.lineComponent.setLine(line);
+		this->setLine(c.lineComponent, c.positionComponent);
 	}
 }
 
@@ -50,6 +47,8 @@ LineComponent& LineComponentSystem::addComponent(const TIEntityFactory& factory,
 
 	float magnitude = ComponentSystems::getFactoryValue<float>(factory, LineComponentSystem::MAGNITUDE, lineComponent.getMagnitude(), tientity);
 	lineComponent.setMagnitude(magnitude);
+
+	this->setLine(lineComponent, positionComponent);
 
 	return lineComponent;
 }
@@ -75,6 +74,7 @@ void LineComponentSystem::setComponentProperty(const std::string& key, float val
 	LineComponent& component = this->addComponent(tientity);
 	if (key == LineComponentSystem::MAGNITUDE) {
 		component.setMagnitude(value);
+		this->setLine(component, tientity);
 	}
 }
 
@@ -90,10 +90,32 @@ sol::object LineComponentSystem::getComponentProperty(const std::string& key, TI
 }
 
 
+void LineComponentSystem::setLine(TIEntity& tientity) {
+	if (tientity.hasComponent<LineComponent>() && tientity.hasComponent<PositionComponent>()) {
+		this->setLine(*tientity.getComponent<LineComponent>(), *tientity.getComponent<PositionComponent>());
+	}
+}
+
+
+void LineComponentSystem::setLine(LineComponent& lineComponent, TIEntity& tientity) {
+	if (tientity.hasComponent<PositionComponent>()) {
+		this->setLine(lineComponent, *tientity.getComponent<PositionComponent>());
+	}
+}
+
+
+void LineComponentSystem::setLine(LineComponent& lineComponent, PositionComponent& positionComponent) {
+    sf::VertexArray line = sf::VertexArray(sf::Points, 2);
+    line[0] = positionComponent.worldPosition;
+    line[1] = line[0].position + Math::translateVelocityByTime(sf::Vector2f(lineComponent.getMagnitude(), positionComponent.worldRotation), 1);
+    lineComponent.setLine(line);
+}
+
+
 void LineComponentSystem::addWireframe(TIEntity& tientity) {
 	LineComponent* component = tientity.getComponent<LineComponent>();
 	if (component) {
 		PositionComponent* positionComponent = tientity.getComponent<PositionComponent>();
-		ShapeComponentSystem::Instance()->createWireframe(tientity, sf::FloatRect(0,0,component->getMagnitude(), 1), positionComponent->position, positionComponent->rotation);
+		ShapeComponentSystem::Instance()->createWireframe(tientity, sf::FloatRect(0,0,component->getMagnitude(), 0), positionComponent->position, positionComponent->rotation);
 	}
 }
