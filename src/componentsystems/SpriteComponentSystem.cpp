@@ -156,7 +156,7 @@ void SpriteComponentSystem::addWireframe(TIEntity& tientity) {
 
 
 void SpriteComponentSystem::setTextureFields(SpriteComponent& spriteComponent, const sf::Texture& texture) {
-	return this->setTextureFields(spriteComponent, texture, spriteComponent.getLocalBounds().width, spriteComponent.getLocalBounds().height);
+	return this->setTextureFields(spriteComponent, texture, texture.getSize().x, texture.getSize().y);
 }
 
 
