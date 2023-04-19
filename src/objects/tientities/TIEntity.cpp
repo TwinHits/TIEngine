@@ -98,7 +98,6 @@ bool TIEntity::operator!=(const TIEntity& rhs) const {
 		return false;
 	}
 	return true;
-
 }
 
 
