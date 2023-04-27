@@ -6,10 +6,7 @@
 
 #include "componentsystems/ComponentSystem.h"
 #include "componentsystems/LifecycleComponentSystem.h"
-#include "componentsystems/LineComponentSystem.h"
-#include "componentsystems/ShapeComponentSystem.h"
-#include "componentsystems/SpriteComponentSystem.h"
-#include "componentsystems/TextComponentSystem.h"
+#include "componentsystems/WireframeComponentSystem.h"
 #include "managers/SceneManager.h"
 #include "managers/ScriptManager.h"
 #include "managers/WorldManager.h"
@@ -31,6 +28,9 @@ TIEntity& TIEntityFactory::build() {
 	if (this->boolValues.count(TIEntityFactory::SHOW_WIREFRAME)) {
 		this->setShowWireFrame(this->boolValues.at(TIEntityFactory::SHOW_WIREFRAME));
 	}
+	if (this->getShowWireframe()) {
+		this->addComponentSystemByComponentName(WireframeComponentSystem::Instance()->getName());
+	}
 
 	if (this->parent == nullptr) {
 		this->setParent(&SceneManager::Instance()->getClientLayer());
@@ -43,14 +43,6 @@ TIEntity& TIEntityFactory::build() {
 		if (this->componentSystemNames.count(componentSystem->getName())) {
 			componentSystem->addComponent(*this, tientity);
 		}
-	}
-
-	if (this->showWireframe) {
-		// This should be handled better. 
-		// Probably move showWireframe back to the component systems
-		SpriteComponentSystem::Instance()->addWireframe(tientity);
-		TextComponentSystem::Instance()->addWireframe(tientity);
-		LineComponentSystem::Instance()->addWireframe(tientity);
 	}
 
 	LifecycleComponentSystem::Instance()->runCreated(tientity);
@@ -100,6 +92,11 @@ const std::string& TIEntityFactory::getName() {
 
 
 const bool TIEntityFactory::getShowWireframe() {
+	return this->showWireframe;
+}
+
+
+const bool TIEntityFactory::getShowWireframe() const {
 	return this->showWireframe;
 }
 

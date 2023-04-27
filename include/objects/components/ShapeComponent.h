@@ -5,7 +5,9 @@
 
 #include <SFML/Graphics.hpp>
 
-#include <vector>
+#include <map>
+
+#include "objects/GlobalId.h"
 
 namespace TIE {
 
@@ -17,14 +19,20 @@ class ShapeComponent : public Component {
 		void setDrawn(bool);
 		bool isDrawn() const;
 
-		sf::RectangleShape& addRectangleShape();
-		sf::CircleShape& addCircleShape();
+        void setRotates(const bool);
+        const bool isRotates() const;
 
-		const std::vector<std::unique_ptr<sf::Shape> >& getShapes();
-		const std::vector<std::unique_ptr<sf::Shape> >& getShapes() const;
+		sf::RectangleShape& addRectangleShape(const GlobalId);
+		sf::CircleShape& addCircleShape(const GlobalId);
+
+		const std::map<GlobalId, std::unique_ptr<sf::Shape> >& getShapes();
+		const std::map<GlobalId, std::unique_ptr<sf::Shape> >& getShapes() const;
+
+		sf::Shape* getShape(const GlobalId);
 	private:
 		bool drawn = true;
-		std::vector<std::unique_ptr<sf::Shape> > shapes;
+		bool rotates = true;
+		std::map<GlobalId, std::unique_ptr<sf::Shape> > shapes;
 };
 
 };

@@ -6,7 +6,7 @@
 #include <string>
 
 #include "componentsystems/PositionComponentSystem.h" 
-#include "componentsystems/ShapeComponentSystem.h" 
+#include "componentsystems/WireframeComponentSystem.h" 
 #include "managers/ScriptManager.h"
 #include "objects/components/LineComponent.h"
 #include "objects/components/PositionComponent.h"
@@ -112,10 +112,11 @@ void LineComponentSystem::setLine(LineComponent& lineComponent, PositionComponen
 }
 
 
-void LineComponentSystem::addWireframe(TIEntity& tientity) {
+std::pair<GlobalId, GlobalId> LineComponentSystem::addWireframe(TIEntity& tientity) {
 	LineComponent* component = tientity.getComponent<LineComponent>();
 	if (component) {
 		PositionComponent* positionComponent = tientity.getComponent<PositionComponent>();
-		ShapeComponentSystem::Instance()->createWireframe(tientity, sf::FloatRect(0,0,component->getMagnitude(), 0), positionComponent->position, positionComponent->rotation);
+		WireframeComponentSystem::Instance()->createWireframe(tientity, sf::FloatRect(0,0,component->getMagnitude(), 0), positionComponent->position, positionComponent->rotation);
 	}
+	return std::pair(0,0);
 }

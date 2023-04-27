@@ -29,7 +29,7 @@ class TextComponentSystem : public Singleton<TextComponentSystem>, public OwnsCo
 		void setComponentProperty(const std::string&, const std::string&, TIEntity&);
 		sol::object getComponentProperty(const std::string&, TIEntity&);
 
-		void addWireframe(TIEntity& tientity);
+		std::pair<GlobalId, GlobalId> addWireframe(TIEntity& tientity);
 		static void setOriginForTextAlignment(TextComponent&);
 
 		static const inline std::string TEXT = "text";

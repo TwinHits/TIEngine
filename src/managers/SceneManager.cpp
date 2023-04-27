@@ -19,6 +19,7 @@
 #include "componentsystems/SpriteComponentSystem.h"
 #include "componentsystems/TextComponentSystem.h"
 #include "componentsystems/PositionComponentSystem.h"
+#include "componentsystems/WireframeComponentSystem.h"
 #include "managers/ViewManager.h"
 #include "objects/tientities/SceneLayer.h"
 #include "objects/components/ShapeComponent.h"
@@ -78,6 +79,7 @@ bool SceneManager::initialize() {
 	this->componentSystems.push_back(TextComponentSystem::Instance());
 	this->componentSystems.push_back(ShapeComponentSystem::Instance());
 	this->componentSystems.push_back(LineComponentSystem::Instance());
+	this->componentSystems.push_back(WireframeComponentSystem::Instance());
 
 	for (ComponentSystem* componentSystem : SceneManager::Instance()->getComponentSystems()) {
 		// List of valid component names
@@ -249,7 +251,7 @@ void SceneManager::render(TIEntity& entity, sf::RenderWindow& window, sf::Render
 	}
 
 	if (shapeComponent != nullptr && shapeComponent->isDrawn()) {
-		for (auto& shape : shapeComponent->getShapes()) {
+		for (auto& [id, shape] : shapeComponent->getShapes()) {
 			window.draw(*shape, states);
 		}
 		continueTraversal = true;

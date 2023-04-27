@@ -28,7 +28,7 @@ class LineComponentSystem : public Singleton<LineComponentSystem>, public OwnsCo
 		void setLine(LineComponent&, TIEntity&);
 		void setLine(LineComponent&, PositionComponent&);
 
-		void addWireframe(TIEntity& tientity);
+		std::pair<GlobalId, GlobalId> addWireframe(TIEntity& tientity);
 
 		const static inline std::string LINE = "line";
 		const static inline std::string MAGNITUDE = "line.magnitude";

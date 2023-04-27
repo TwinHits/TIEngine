@@ -9,6 +9,7 @@
 #include "objects/tientities/TIEntity.h"
 #include "objects/factories/TIEntityFactory.h"
 #include "managers/AssetsManager.h"
+#include "managers/HashManager.h"
 #include "managers/ScriptManager.h"
 #include "utils/StringHelpers.h"
 
@@ -21,9 +22,11 @@ ShapeComponentSystem::ShapeComponentSystem() {
 
 void ShapeComponentSystem::update(const float delta) {
 	for (auto& c : this->components) {
-		for (auto& s : c.shapeComponent.getShapes()) {
-			s->setPosition(c.positionComponent.worldPosition);
-			s->setRotation(c.positionComponent.worldRotation);
+		for (auto& [id, shape] : c.shapeComponent.getShapes()) {
+			shape->setPosition(c.positionComponent.worldPosition);
+			if (c.shapeComponent.isRotates()) {
+				shape->setRotation(c.positionComponent.worldRotation);
+			}
 		}
 	}
 }
@@ -62,26 +65,3 @@ bool ShapeComponentSystem::removeComponent(TIEntity& tientity) {
 }
 
 
-void ShapeComponentSystem::createWireframe(TIEntity& tientity, const sf::FloatRect& bounds, const sf::Vector2f& origin) {
-	this->createWireframe(tientity, bounds, origin, 0);
-}
-
-
-void ShapeComponentSystem::createWireframe(TIEntity& tientity, const sf::FloatRect& bounds, const sf::Vector2f& origin, float rotation) {
-	ShapeComponent& shapeComponent = this->addComponent(tientity);
-
-	// Bounding box
-	sf::RectangleShape& rectangleShape = shapeComponent.addRectangleShape();
-	rectangleShape.setSize(sf::Vector2f(bounds.width, bounds.height));
-	rectangleShape.setOrigin(origin);
-	rectangleShape.setFillColor(sf::Color::Transparent);
-	rectangleShape.setOutlineColor(sf::Color::Yellow);
-	rectangleShape.setOutlineThickness(1);
-	rectangleShape.setRotation(rotation);
-
-	// Origin dot
-	sf::CircleShape& circleShape = shapeComponent.addCircleShape();
-	circleShape.setRadius(2.0f);
-	circleShape.setOrigin(circleShape.getRadius(), circleShape.getRadius());
-	circleShape.setFillColor(sf::Color::Blue);
-}

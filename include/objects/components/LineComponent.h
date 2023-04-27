@@ -1,9 +1,9 @@
 #ifndef LINECOMPONENT_H
 #define LINECOMPONENT_H
 
-#include <SFML/Graphics.hpp>
-
 #include "objects/components/Component.h"
+
+#include <SFML/Graphics.hpp>
 
 namespace TIE {
 

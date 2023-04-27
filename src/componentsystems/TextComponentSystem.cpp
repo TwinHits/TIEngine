@@ -5,7 +5,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "componentsystems/PositionComponentSystem.h"
-#include "componentsystems/ShapeComponentSystem.h"
+#include "componentsystems/WireframeComponentSystem.h"
 #include "managers/AssetsManager.h"
 #include "objects/assets/FontAsset.h"
 #include "objects/components/TextComponent.h"
@@ -138,11 +138,12 @@ sol::object TextComponentSystem::getComponentProperty(const std::string& key, TI
 }
 
 
-void TextComponentSystem::addWireframe(TIEntity& tientity) {
+std::pair<GlobalId, GlobalId> TextComponentSystem::addWireframe(TIEntity& tientity) {
 	TextComponent* textComponent = tientity.getComponent<TextComponent>();
 	if (textComponent) {
-		ShapeComponentSystem::Instance()->createWireframe(tientity, textComponent->getLocalBounds(), textComponent->getOrigin());
-	}
+		return WireframeComponentSystem::Instance()->createWireframe(tientity, textComponent->getGlobalBounds(), textComponent->getOrigin());
+	} 
+	return std::pair(0,0);
 }
 
 

@@ -22,9 +22,6 @@ class ShapeComponentSystem : public Singleton<ShapeComponentSystem>, public Owns
 		ShapeComponent& addComponent(TIEntity&);
 		bool removeComponent(TIEntity&);
 
-		void createWireframe(TIEntity&, const sf::FloatRect&, const sf::Vector2f&);
-		void createWireframe(TIEntity&, const sf::FloatRect&, const sf::Vector2f&, const float);
-
 		static const inline std::string SHAPE = "shape";
 
 	private: 

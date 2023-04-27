@@ -4,7 +4,8 @@
 
 #include <SFML/Graphics.hpp>
 
-#include <templates/MakeUnique.h>
+#include "objects/GlobalId.h"
+#include "templates/MakeUnique.h"
 
 using namespace TIE;
 
@@ -18,22 +19,42 @@ bool ShapeComponent::isDrawn() const {
 }
 
 
-sf::RectangleShape& ShapeComponent::addRectangleShape() {
-	this->shapes.push_back(TIE::make_unique<sf::RectangleShape>());
-	return dynamic_cast<sf::RectangleShape&>(*this->shapes.back());
+void ShapeComponent::setRotates(const bool rotates) {
+	this->rotates = rotates;
 }
 
 
-sf::CircleShape& ShapeComponent::addCircleShape() {
-	this->shapes.push_back(TIE::make_unique<sf::CircleShape>());
-	return dynamic_cast<sf::CircleShape&>(*this->shapes.back());
+const bool ShapeComponent::isRotates() const {
+	return this->rotates;
 }
 
 
-const std::vector<std::unique_ptr<sf::Shape> >& ShapeComponent::getShapes() {
+sf::RectangleShape& ShapeComponent::addRectangleShape(const GlobalId id) {
+	this->shapes[id] = TIE::make_unique<sf::RectangleShape>();
+	return dynamic_cast<sf::RectangleShape&>(*this->shapes.at(id));
+}
+
+
+sf::CircleShape& ShapeComponent::addCircleShape(const GlobalId id) {
+	this->shapes[id] = TIE::make_unique<sf::CircleShape>();
+	return dynamic_cast<sf::CircleShape&>(*this->shapes.at(id));
+}
+
+
+const std::map<GlobalId, std::unique_ptr<sf::Shape> >& ShapeComponent::getShapes() {
 	return this->shapes;
 }
 
-const std::vector<std::unique_ptr<sf::Shape> >& ShapeComponent::getShapes() const {
+
+const std::map<GlobalId, std::unique_ptr<sf::Shape> >& ShapeComponent::getShapes() const {
 	return this->shapes;
+}
+
+
+sf::Shape* ShapeComponent::getShape(const GlobalId id) {
+	if (this->shapes.count(id)) {
+		return this->shapes[id].get();
+	} else {
+		return nullptr;
+	}
 }

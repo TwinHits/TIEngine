@@ -157,7 +157,7 @@ const sf::FloatRect ComponentSystems::getGlobalBounds(TIEntity& tientity) {
 
 	ShapeComponent* shapeComponent = tientity.getComponent<ShapeComponent>();
 	if (shapeComponent != nullptr && shapeComponent->isDrawn()) {
-		for (auto& shape : shapeComponent->getShapes()) {
+		for (auto& [id, shape] : shapeComponent->getShapes()) {
 			return shape->getGlobalBounds();
 		}
 	}
@@ -170,7 +170,7 @@ const sf::FloatRect ComponentSystems::getLocalBounds(TIEntity& tientity) {
 
 	ShapeComponent* shapeComponent = tientity.getComponent<ShapeComponent>();
 	if (shapeComponent != nullptr && shapeComponent->isDrawn()) {
-		for (auto& shape : shapeComponent->getShapes()) {
+		for (auto& [id, shape] : shapeComponent->getShapes()) {
 			return shape->getLocalBounds();
 		}
 	}

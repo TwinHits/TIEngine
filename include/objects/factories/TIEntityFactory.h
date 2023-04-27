@@ -22,6 +22,7 @@ class TIEntityFactory {
 
 		void setShowWireFrame(const bool);
 		const bool getShowWireframe();
+		const bool getShowWireframe() const;
 
 		TIEntityFactory& setParent(TIEntity*);
 		TIEntityFactory& addChild();

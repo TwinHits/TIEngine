@@ -5,9 +5,8 @@
 #include <SFML/Graphics.hpp>
 
 #include "componentsystems/PositionComponentSystem.h"
-#include "componentsystems/ShapeComponentSystem.h"
+#include "componentsystems/WireframeComponentSystem.h"
 #include "objects/components/SpriteComponent.h"
-#include "objects/components/ShapeComponent.h"
 #include "objects/components/PositionComponent.h"
 #include "objects/tientities/TIEntity.h"
 #include "objects/factories/TIEntityFactory.h"
@@ -147,11 +146,12 @@ sol::object SpriteComponentSystem::getComponentProperty(const std::string& key, 
 }
 
 
-void SpriteComponentSystem::addWireframe(TIEntity& tientity) {
+std::pair<GlobalId, GlobalId> SpriteComponentSystem::addWireframe(TIEntity& tientity) {
 	SpriteComponent* spriteComponent = tientity.getComponent<SpriteComponent>();
 	if (spriteComponent) {
-		ShapeComponentSystem::Instance()->createWireframe(tientity, spriteComponent->getLocalBounds(), spriteComponent->getOrigin());
+		return WireframeComponentSystem::Instance()->createWireframe(tientity, spriteComponent->getLocalBounds(), spriteComponent->getOrigin());
 	}
+	return std::pair(0,0);
 }
 
 
