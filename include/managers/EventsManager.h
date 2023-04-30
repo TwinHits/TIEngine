@@ -37,7 +37,6 @@ class EventsManager : public Singleton<EventsManager>, Manager {
 	private:
 		void setTIEntitiesUnderMousePosition(TIEntity&, const sf::Vector2f&);
 		
-		sf::RenderWindow& window = WindowManager::Instance()->getWindow();
 		ConsoleManager* consoleManager = ConsoleManager::Instance();
 
 		sf::Vector2f mouseWindowPosition = sf::Vector2f(0, 0);

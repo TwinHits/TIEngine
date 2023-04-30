@@ -20,7 +20,7 @@ PerformanceDisplay::PerformanceDisplay() : clock(TimeManager::Instance()->addClo
 void PerformanceDisplay::initialize() {
 	this->setName("PerformanceDisplay");
 
-	const sf::Vector2i windowSize = WindowManager::Instance()->getWindowSize();
+	const sf::Vector2i& windowSize = WindowManager::Instance()->getWindowSize();
 	this->textComponent.setDrawn(true);
 	this->textComponent.setFont(AssetsManager::Instance()->getFont(ConfigManager::Instance()->getEngineFontName()));
 	this->textComponent.setCharacterSize(16);

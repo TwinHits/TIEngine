@@ -13,7 +13,7 @@
 using namespace TIE; 
 
 bool ViewManager::initialize() {
-	sf::Vector2i windowSize = WindowManager::Instance()->getWindowSize();
+	const sf::Vector2i& windowSize = WindowManager::Instance()->getWindowSize();
 	this->engineViewId = this->addView(sf::FloatRect(0, 0, windowSize.x, windowSize.y));
 	this->engineView = &this->getEngineView();
 	this->clientViewId = this->addView(sf::FloatRect(0, 0, windowSize.x, windowSize.y));
@@ -24,7 +24,7 @@ bool ViewManager::initialize() {
 
 
 GlobalId ViewManager::addView() {
-	sf::Vector2i windowSize = WindowManager::Instance()->getWindowSize();
+	const sf::Vector2i& windowSize = WindowManager::Instance()->getWindowSize();
 	return this->addView(sf::FloatRect(0, 0, windowSize.x, windowSize.y));
 }
 
@@ -111,7 +111,7 @@ void ViewManager::zoomCamera(const float delta) {
 		float change = this->zoomSpeed * delta * zoomEvent->mouseWheel.delta; //mousewheel.delta is -1 or 1 depending on scroll direction
 		if (this->currentZoom - change > this->zoomMinimum && this->currentZoom - change < this->zoomMaximum) { // But it's inverse of what I'd expect, so - to swap direction
 			this->currentZoom -= change;
-			const sf::Vector2i windowSize = WindowManager::Instance()->getWindowSize();
+			const sf::Vector2i& windowSize = WindowManager::Instance()->getWindowSize();
 			this->clientView->setSize(sf::Vector2f(windowSize.x * currentZoom, windowSize.y * currentZoom));
 		}
 	}

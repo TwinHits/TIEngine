@@ -18,21 +18,36 @@ WindowManager::~WindowManager() {
 }
 
 
-sf::RenderWindow& WindowManager::addWindow(sf::VideoMode mode, const std::string& title, int style, const sf::ContextSettings& settings) {
-	this->title = title;
+sf::RenderWindow& WindowManager::addWindow(const int style) {
+	this->style = style;
+	return this->addWindow();
+}
 
-	if (this->window != nullptr) {
+
+sf::RenderWindow& WindowManager::addWindow(const std::string& title) {
+	this->title = title;
+	return this->addWindow();
+}
+
+
+sf::RenderWindow& WindowManager::addWindow(const sf::Vector2i& size, const std::string& title, const int style) {
+	this->windowSize = size;
+	this->title = title;
+	this->setStyle(style);
+	return this->addWindow();
+}
+
+
+sf::RenderWindow& WindowManager::addWindow() {
+	if (this->window) {
 		LogManager::Instance()->warn("A window has already been created, resetting and creating a new window.");
 		this->removeWindow();
 	}
 
-	this->window = TIE::make_unique<sf::RenderWindow>(mode, this->title, style, settings);
+	this->window = TIE::make_unique<sf::RenderWindow>(sf::VideoMode(this->getWindowSize().x, this->getWindowSize().y), this->getTitle(), this->getStyle());
 	LogManager::Instance()->debug("Created window.");
 
 	this->window->setMouseCursorGrabbed(true);
-
-	this->windowSize.x = this->window->getSize().x;
-	this->windowSize.y = this->window->getSize().y;
 
 	return this->getWindow();
 }
@@ -51,20 +66,21 @@ sf::RenderWindow& WindowManager::getWindow() {
 	return *this->window;
 }
 
-sf::RenderWindow& TIE::WindowManager::updateWindowSize(const int width, const int height) {
-	sf::RenderWindow& window = this->getWindow();
-	window.setSize(sf::Vector2u(width, height));
 
+sf::RenderWindow& WindowManager::updateFullScreen(const bool fullscreen) {
+	this->setFullScreen(fullscreen);
+	sf::RenderWindow& window = this->addWindow(this->style);
 	return window;
 }
 
 
-void WindowManager::showFPS(const std::string& fps) {
-	this->getWindow().setTitle(title + " " + fps);
+sf::RenderWindow& WindowManager::updateWindowSize(const int width, const int height) {
+	this->windowSize = sf::Vector2i(width, height);
+	return this->addWindow();
 }
 
 
-sf::Vector2i WindowManager::getWindowSize() {
+const sf::Vector2i& WindowManager::getWindowSize() {
 	return this->windowSize;
 }
 
@@ -73,7 +89,32 @@ const std::string& WindowManager::getTitle() {
 	return this->title;
 }
 
+
 void WindowManager::setTitle(const std::string& title) {
 	this->title = title;
 	this->getWindow().setTitle(this->title);
+}
+
+
+void WindowManager::setStyle(const int style) {
+	this->style = style;
+}
+
+
+const int WindowManager::getStyle() {
+	return this->style;
+}
+
+
+void WindowManager::setFullScreen(const bool fullscreen) {
+	if (fullscreen) {
+		this->style = sf::Style::Fullscreen;
+	} else {
+		this->style = sf::Style::Default;
+	}
+}
+
+
+const bool WindowManager::getFullScreen() {
+	return this->style == sf::Style::Fullscreen;
 }

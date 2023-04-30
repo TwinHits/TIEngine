@@ -39,9 +39,6 @@ namespace TIE {
 		SceneManager() {};
 		~SceneManager() {};
 	private:
-		WindowManager* windowManager = WindowManager::Instance();
-		sf::RenderWindow& window = windowManager->getWindow();
-
 		float calculateRollingAverageFPS(const float delta);
 		float fps = 0;
 

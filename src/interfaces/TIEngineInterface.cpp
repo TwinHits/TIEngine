@@ -30,6 +30,7 @@ void TIEngineInterface::registerUserType(sol::state& luaState) {
     engineInterfaceUserType["registerAudioDirectory"] = &TIEngineInterface::registerAudioDirectory;
     engineInterfaceUserType["setWindowTitle"] = &TIEngineInterface::setWindowTitle;
     engineInterfaceUserType["setWindowSize"] = &TIEngineInterface::setWindowSize;
+    engineInterfaceUserType["setWindowFullScreen"] = &TIEngineInterface::setWindowFullScreen;
     engineInterfaceUserType["setZoomSettings"] = &TIEngineInterface::setZoomSettings;
     engineInterfaceUserType["setLevel"] = &TIEngineInterface::setLevel;
 	engineInterfaceUserType["spawn"] = &TIEngineInterface::spawn;
@@ -74,6 +75,11 @@ bool TIEngineInterface::setWindowSize(const int width, const int height) {
 bool TIEngineInterface::setWindowTitle(const std::string& title) {
 	WindowManager::Instance()->setTitle(title);
     return true;
+}
+
+
+void TIEngineInterface::setWindowFullScreen(const bool isFullscreen) {
+	WindowManager::Instance()->updateFullScreen(isFullscreen);
 }
 
 

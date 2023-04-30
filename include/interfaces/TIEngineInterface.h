@@ -26,6 +26,7 @@ class TIEngineInterface {
 
         bool setWindowSize(const int, const int);
         bool setWindowTitle(const std::string&);
+        void setWindowFullScreen(const bool);
 
         bool setLevel(const sol::table&);
 

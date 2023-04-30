@@ -53,6 +53,7 @@ void EventsManager::removeEvent(sf::Event::EventType eventType) {
 
 
 void EventsManager::processEvents() {
+	sf::RenderWindow& window = WindowManager::Instance()->getWindow();
 	sf::Vector2i position = sf::Mouse::getPosition(window);
 	sf::View& clientView = ViewManager::Instance()->getClientView();
 	this->mouseWindowPosition = window.mapPixelToCoords(position);
@@ -60,19 +61,19 @@ void EventsManager::processEvents() {
 	this->events.clear();
 
 	sf::Event event;
-	while (this->window.pollEvent(event)) {
+	while (window.pollEvent(event)) {
 
 		//Window Input Commands
 		if (!consoleManager->checkConsole()) {
 			switch (event.type) {
 			case sf::Event::Closed:
-				this->window.close();
+				window.close();
 				LogManager::Instance()->debug("Window closed by X.");
 				break;
 			case sf::Event::KeyPressed:
 				switch (event.key.code) {
 				case sf::Keyboard::Escape:
-					this->window.close();
+					window.close();
 					LogManager::Instance()->debug("Window closed by escape.");
 					break;
 				case sf::Keyboard::Home:
@@ -108,7 +109,7 @@ void EventsManager::processEvents() {
 		if (consoleManager->checkConsole()) {
 			switch (event.type) {
 			case sf::Event::Closed:
-				this->window.close();
+				window.close();
 				LogManager::Instance()->info("Window closed.");
 				break;
 			case sf::Event::KeyPressed:

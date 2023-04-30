@@ -29,7 +29,7 @@ DevConsole::DevConsole() :
 
 
 void DevConsole::initialize() {
-	sf::Vector2i windowSize = TIE::WindowManager::Instance()->getWindowSize();
+	const sf::Vector2i& windowSize = WindowManager::Instance()->getWindowSize();
 	const FontAsset& font = AssetsManager::Instance()->getFont(ConfigManager::Instance()->getEngineFontName());
 
 	// DevConsole Entity
@@ -109,7 +109,7 @@ void DevConsole::setWritePosition(const sf::Vector2i& position) {
 
 
 void DevConsole::resetWritePosition() {
-	sf::Vector2i windowSize = TIE::WindowManager::Instance()->getWindowSize();
+	const sf::Vector2i& windowSize = WindowManager::Instance()->getWindowSize();
 	this->textWritePosition.x = -windowSize.x/2;	
 	this->textWritePosition.y = -windowSize.y/2;
 }
