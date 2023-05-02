@@ -10,7 +10,7 @@
 #include "templates/MakeUnique.h"
 #include "utils/TIEMath.h"
 
-using namespace TIE; 
+using namespace TIE;
 
 bool ViewManager::initialize() {
 	const sf::Vector2i& windowSize = WindowManager::Instance()->getWindowSize();
@@ -33,11 +33,12 @@ GlobalId ViewManager::addView(const sf::FloatRect& rect) {
 	GlobalId id = HashManager::Instance()->getNewGlobalId();
 	if (this->views.find(id) == this->views.end()) {
 		std::unique_ptr<sf::View> view = TIE::make_unique<sf::View>(rect);
-		view->setCenter(0,0);
+		view->setCenter(0, 0);
 		this->views[id] = std::move(view);
 		return id;
-	} else {
-		LogManager::Instance()->warn("Hash Collision, recursively rehashing.");		
+	}
+	else {
+		LogManager::Instance()->warn("Hash Collision, recursively rehashing.");
 		return this->addView();
 	}
 }
@@ -46,10 +47,17 @@ GlobalId ViewManager::addView(const sf::FloatRect& rect) {
 sf::View& ViewManager::getView(GlobalId id) {
 	if (this->views.find(id) != this->views.end()) {
 		return *this->views[id];
-	} else {
-		LogManager::Instance()->error("No view found by id '" + std::to_string(id) + "'. Returning nullptr.");	
+	}
+	else {
+		LogManager::Instance()->error("No view found by id '" + std::to_string(id) + "'. Returning nullptr.");
 		return *this->views[id];
 	}
+}
+
+
+sf::View& ViewManager::updateView(GlobalId id, const sf::Vector2i& size) {
+	sf::View& view = this->getView(id);
+	return this->updateView(view, sf::FloatRect(0, 0, size.x, size.y));
 }
 
 
@@ -59,10 +67,22 @@ sf::View& ViewManager::updateView(GlobalId id, const sf::FloatRect& size) {
 }
 
 
+sf::View& ViewManager::updateView(sf::View& view, const sf::Vector2i& size) {
+	return this->updateView(view, sf::FloatRect(0, 0, size.x, size.y));
+}
+
+
 sf::View& ViewManager::updateView(sf::View& view, const sf::FloatRect& size) {
 	view.setCenter(sf::Vector2f(size.left, size.top));
 	view.setSize(sf::Vector2f(size.width, size.height));
 	return view;
+}
+
+
+void ViewManager::updateViews(const sf::Vector2i& size) {
+	for (auto& [id, view] : this->views) {
+		this->updateView(*view, size);
+	}
 }
 
 

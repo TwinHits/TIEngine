@@ -1,7 +1,7 @@
 #include "managers/WindowManager.h"
 
 #include "managers/LogManager.h"
-#include "managers/StringManager.h"
+#include "managers/ViewManager.h"
 #include "templates/MakeUnique.h"
 
 using namespace TIE;
@@ -48,6 +48,7 @@ sf::RenderWindow& WindowManager::addWindow() {
 	LogManager::Instance()->debug("Created window.");
 
 	this->window->setMouseCursorGrabbed(true);
+	ViewManager::Instance()->updateViews(this->getWindowSize());
 
 	return this->getWindow();
 }

@@ -23,8 +23,11 @@ class ViewManager : public Singleton<ViewManager>, Manager {
 		GlobalId addView();
 		GlobalId addView(const sf::FloatRect&);
 		sf::View& getView(GlobalId);
+		sf::View& updateView(GlobalId, const sf::Vector2i&);
+		sf::View& updateView(sf::View&, const sf::Vector2i&);
 		sf::View& updateView(GlobalId, const sf::FloatRect&);
 		sf::View& updateView(sf::View&, const sf::FloatRect&);
+		void updateViews(const sf::Vector2i&);
 		void removeView(GlobalId);
 
 		void updateCamera(const float);

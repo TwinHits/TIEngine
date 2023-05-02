@@ -25,6 +25,8 @@ class TIEngineInterface {
         bool registerAudioDirectory(const std::string&);
 
         bool setWindowSize(const int, const int);
+        const sf::Vector2i& getWindowSize();
+
         bool setWindowTitle(const std::string&);
         void setWindowFullScreen(const bool);
 

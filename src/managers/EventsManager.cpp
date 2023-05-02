@@ -54,10 +54,10 @@ void EventsManager::removeEvent(sf::Event::EventType eventType) {
 
 void EventsManager::processEvents() {
 	sf::RenderWindow& window = WindowManager::Instance()->getWindow();
-	sf::Vector2i position = sf::Mouse::getPosition(window);
+	sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
 	sf::View& clientView = ViewManager::Instance()->getClientView();
-	this->mouseWindowPosition = window.mapPixelToCoords(position);
-	this->mouseWorldPosition = window.mapPixelToCoords(position, clientView); 
+	this->mouseWindowPosition = window.mapPixelToCoords(mousePosition);
+	this->mouseWorldPosition = window.mapPixelToCoords(mousePosition, clientView); 
 	this->events.clear();
 
 	sf::Event event;
