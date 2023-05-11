@@ -9,7 +9,7 @@
 
 using namespace TIE;
 
-bool GridGuide::initialize(const sf::FloatRect& bounds, const sf::Vector2i& gridSize, const sf::Vector2f& tileSize) {
+void GridGuide::initialize(const sf::FloatRect& bounds, const sf::Vector2i& gridSize, const sf::Vector2f& tileSize) {
 	this->setName("GridGuide");
 	
 	// Y lines
@@ -37,8 +37,6 @@ bool GridGuide::initialize(const sf::FloatRect& bounds, const sf::Vector2i& grid
 		rectangleShape.setSize(sf::Vector2f(this->GRID_LINE_WIDTH, bounds.width));
 		rectangleShape.setFillColor(sf::Color::Yellow);
 	}
-
-	return true;
 }
 
 
