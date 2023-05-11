@@ -13,7 +13,6 @@ class MousePtrCoords : public TIEntity {
 		MousePtrCoords();
 		~MousePtrCoords() {};
 
-		void initialize();
 		void update(const float);
 
 	private:

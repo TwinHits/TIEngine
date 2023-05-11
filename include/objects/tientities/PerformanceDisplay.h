@@ -14,13 +14,16 @@ class PerformanceDisplay : public TIEntity {
         PerformanceDisplay();
         ~PerformanceDisplay() {};
 
-        void initialize();
         void update(const float);
+
+        void onWindowSizeChange();
     private:
         TextComponent& textComponent = this->addComponent<TextComponent>();
         float fps = 0.0f;
         int framesCounter = 0;
         sf::Clock& clock;
+
+        void setPosition();
 };
 
 }

@@ -1,21 +1,21 @@
 #include "objects/tientities/DevConsole.h" 
 
 #include <memory>
-#include <string>
 
-#include "componentsystems/TextComponentSystem.h"
 #include "componentsystems/PositionComponentSystem.h"
-#include "componentsystems/ShapeComponentSystem.h"
 #include "componentsystems/SpriteComponentSystem.h"
+#include "componentsystems/TextComponentSystem.h"
 #include "managers/AssetsManager.h"
 #include "managers/ConfigManager.h"
-#include "managers/LogManager.h"
+#include "managers/MessageManager.h"
 #include "managers/ViewManager.h"
 #include "managers/WindowManager.h"
 #include "objects/tientities/SceneLayer.h"
 #include "objects/assets/FontAsset.h"
+#include "objects/components/PositionComponent.h" 
 #include "objects/components/SpriteComponent.h" 
 #include "objects/components/TextComponent.h" 
+#include "objects/constants/MessageSubscriptions.h" 
 #include "templates/MakeUnique.h"
 #include "utils/ComponentSystems.h"
 
@@ -29,27 +29,10 @@ DevConsole::DevConsole() :
 
 
 void DevConsole::initialize() {
-	const sf::Vector2i& windowSize = WindowManager::Instance()->getWindowSize();
 	const FontAsset& font = AssetsManager::Instance()->getFont(ConfigManager::Instance()->getEngineFontName());
 
 	// DevConsole Entity
 	this->setName("DevConsole");
-
-	PositionComponent& positionComponent = PositionComponentSystem::Instance()->addComponent(*this);
-	sf::Vector2f position = sf::Vector2f(-(windowSize.x / 2), -(windowSize.y / 2));
-	positionComponent.position = sf::Vector2f(position);
-
-	SpriteComponent& spriteComponent = SpriteComponentSystem::Instance()->addComponent(*this);
-	const sf::Texture& texture = AssetsManager::Instance()->getTexture("dev_console.png");
-	spriteComponent.setTexture(texture);
-	const sf::FloatRect& bounds = spriteComponent.getLocalBounds();
-	float scalex = float(windowSize.x) / float(bounds.width);
-	float scaley = float(windowSize.y/2.0f) / float(bounds.height);
-	const sf::Vector2f scale = sf::Vector2f(scalex, scaley);
-	spriteComponent.scale(scale);
-	spriteComponent.setOrigin(0,0);
-
-	sf::FloatRect devConsoleBounds = spriteComponent.getGlobalBounds();
 
 	// Command History SceneLayer
 	//GlobalId consoleHistoryViewId = ViewManager::Instance()->addView(devConsoleBounds);
@@ -70,18 +53,17 @@ void DevConsole::initialize() {
 	// Command Input Entity
 	this->currentCommand.setName("Current Command");
 
-	PositionComponent& currentCommandPositionComponent = PositionComponentSystem::Instance()->addComponent(this->currentCommand);
-	currentCommandPositionComponent.position.x = devConsoleBounds.top;
-	currentCommandPositionComponent.position.y = devConsoleBounds.height;
-
 	TextComponent& currentCommandTextComponent = TextComponentSystem::Instance()->addComponent(this->currentCommand);
 	currentCommandTextComponent.setFont(font);
 	currentCommandTextComponent.setCharacterSize(this->fontSize);
 	currentCommandTextComponent.setTextAlignment(TextAlignment::BOTTOM_LEFT);
 	currentCommandTextComponent.setDrawn(true);
-	spriteComponent.setDrawn(true);
+
+	this->setPosition();
 
 	ComponentSystems::setDrawn(*this, false);
+
+	MessageManager::Instance()->subscribe(MessageSubscriptions::WINDOW_SIZE_CHANGE, std::bind(&DevConsole::onWindowSizeChange, this));
 }
 
 
@@ -119,3 +101,31 @@ TIEntity& DevConsole::getCurrentCommand() {
 	return this->currentCommand;
 }
 
+
+void DevConsole::setPosition() {
+	const sf::Vector2i& windowSize = WindowManager::Instance()->getWindowSize();
+
+	PositionComponent& positionComponent = PositionComponentSystem::Instance()->addComponent(*this);
+	sf::Vector2f position = sf::Vector2f(-(windowSize.x / 2), -(windowSize.y / 2));
+	positionComponent.position = sf::Vector2f(position);
+
+	SpriteComponent& spriteComponent = SpriteComponentSystem::Instance()->addComponent(*this);
+	const sf::Texture& texture = AssetsManager::Instance()->getTexture("dev_console.png");
+	spriteComponent.setTexture(texture);
+	const sf::FloatRect& bounds = spriteComponent.getLocalBounds();
+	float scalex = float(windowSize.x) / float(bounds.width);
+	float scaley = float(windowSize.y/2.0f) / float(bounds.height);
+	const sf::Vector2f scale = sf::Vector2f(scalex, scaley);
+	spriteComponent.scale(scale);
+	spriteComponent.setOrigin(0,0);
+
+	sf::FloatRect devConsoleBounds = spriteComponent.getGlobalBounds();
+	PositionComponent& currentCommandPositionComponent = PositionComponentSystem::Instance()->addComponent(this->currentCommand);
+	currentCommandPositionComponent.position.x = devConsoleBounds.top;
+	currentCommandPositionComponent.position.y = devConsoleBounds.height;
+}
+
+
+void DevConsole::onWindowSizeChange() {
+	this->setPosition();
+}

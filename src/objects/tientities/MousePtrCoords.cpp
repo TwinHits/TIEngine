@@ -11,10 +11,7 @@
 
 using namespace TIE;
 
-MousePtrCoords::MousePtrCoords() {}
-
-
-void MousePtrCoords::initialize() {
+MousePtrCoords::MousePtrCoords() {
 	this->setName("MousePtrCoords");
 
 	sf::Vector2f mouseWindowPosition = this->eventsManager->getMouseWindowPosition();

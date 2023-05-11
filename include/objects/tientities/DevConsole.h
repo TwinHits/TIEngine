@@ -1,7 +1,7 @@
 #ifndef DEVCONSOLE_H
 #define DEVCONSOLE_H
 
-#include "TIEntity.h"
+#include "objects/tientities/TIEntity.h"
 
 #include <string>
 #include <queue>
@@ -9,7 +9,6 @@
 #include <SFML/Graphics.hpp>
 
 #include "managers/LogManager.h"
-#include "objects/tientities/TIEntity.h"
 #include "objects/tientities/SceneLayer.h"
 
 namespace TIE {
@@ -27,6 +26,7 @@ class DevConsole : public TIEntity {
 		void setWritePosition(const sf::Vector2i&);
 		void resetWritePosition();
 
+		void onWindowSizeChange();
 	private:
 		TIEntity& currentCommand;
 		SceneLayer& consoleHistorySceneLayer;
@@ -34,6 +34,8 @@ class DevConsole : public TIEntity {
 		int fontSize = 16;
 		sf::Vector2i textWritePosition;
 		std::queue<std::string>& queueToDraw = LogManager::Instance()->getQueueToDraw();
+
+		void setPosition();
 };
 
 } 
