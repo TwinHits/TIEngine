@@ -5,7 +5,6 @@
 #include <queue>
 
 #include "componentsystems/SpriteComponentSystem.h"
-#include "managers/ConfigManager.h"
 #include "managers/WorldManager.h"
 #include "managers/LogManager.h"
 #include "managers/SceneManager.h"

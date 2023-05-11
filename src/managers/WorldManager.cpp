@@ -15,7 +15,12 @@
 using namespace TIE;
 
 void WorldManager::initialize() {
-	this->worldLayer = &SceneLayerFactory().setLayer(SceneLayer::Layer::WORLD).setParent(SceneManager::Instance()->getClientLayer()).setViewId(ViewManager::Instance()->getClientViewId()).setName("WorldLayer").build();
+	this->worldLayer = &SceneLayerFactory()
+		.setLayer(SceneLayer::Layer::WORLD)
+		.setParent(SceneManager::Instance()->getClientLayer())
+		.setViewId(ViewManager::Instance()->getClientViewId())
+		.setName("WorldLayer")
+	.build();
 }
 
 

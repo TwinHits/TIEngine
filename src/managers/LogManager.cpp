@@ -5,7 +5,6 @@
 #include <boost/filesystem.hpp>
 
 #include "managers/ConfigManager.h"
-#include "managers/ConsoleManager.h"
 #include "objects/enumeration/LogLevel.h"
 #include "utils/LocalTime.h"
 #include "utils/StringHelpers.h"
