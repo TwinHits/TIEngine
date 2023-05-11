@@ -8,6 +8,7 @@ namespace TIE {
 class MessageSubscriptions {
 	public:
 		const static inline std::string WINDOW_SIZE_CHANGE = "window.size.change";
+		const static inline std::string ACTIVE_VIEW_CHANGE = "view.active.change";
 };
 
 }

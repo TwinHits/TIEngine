@@ -1,8 +1,6 @@
 #include "managers/ViewManager.h"
 
 #include "objects/components/SpriteComponent.h"
-#include "managers/EventsManager.h"
-#include "managers/WorldManager.h"
 #include "managers/HashManager.h"
 #include "managers/LogManager.h"
 #include "managers/MessageManager.h"
@@ -35,17 +33,11 @@ GlobalId ViewManager::addView() {
 
 
 GlobalId ViewManager::addView(const sf::FloatRect& rect) {
-	GlobalId id = HashManager::Instance()->getNewGlobalId();
-	if (this->views.find(id) == this->views.end()) {
-		std::unique_ptr<sf::View> view = TIE::make_unique<sf::View>(rect);
-		view->setCenter(0, 0);
-		this->views[id] = std::move(view);
-		return id;
-	}
-	else {
-		LogManager::Instance()->warn("Hash Collision, recursively rehashing.");
-		return this->addView();
-	}
+    GlobalId id = HashManager::Instance()->getNewGlobalId();
+    std::unique_ptr<sf::View> view = TIE::make_unique<sf::View>(rect);
+    view->setCenter(0, 0);
+    this->views[id] = std::move(view);
+    return id;
 }
 
 
@@ -113,8 +105,8 @@ void ViewManager::removeView(GlobalId id) {
 
 void ViewManager::setActiveView(GlobalId id) {
 	sf::View& view = this->getView(id);
-	WindowManager::Instance()->getWindow().setView(view);
 	this->activeViewId = id;
+	MessageManager::Instance()->publish(MessageSubscriptions::ACTIVE_VIEW_CHANGE);
 }
 
 

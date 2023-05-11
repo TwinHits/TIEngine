@@ -36,6 +36,8 @@ class WindowManager : public Singleton<WindowManager>, Manager {
 		void setFullScreen(const bool);
 		const bool getFullScreen();
 
+		void onActiveViewChange();
+
 		WindowManager() {};
 		~WindowManager();
 

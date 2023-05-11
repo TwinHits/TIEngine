@@ -2,6 +2,7 @@
 
 #include "managers/LogManager.h"
 #include "managers/MessageManager.h"
+#include "managers/ViewManager.h"
 #include "templates/MakeUnique.h"
 #include "objects/constants/MessageSubscriptions.h"
 
@@ -10,6 +11,8 @@ using namespace TIE;
 bool WindowManager::initialize() {
 	//Creating default window that can be replaced by client defined window
 	this->addWindow();
+
+	MessageManager::Instance()->subscribe(MessageSubscriptions::ACTIVE_VIEW_CHANGE, std::bind(&WindowManager::onActiveViewChange, this));
 	return true;
 }
 
@@ -49,7 +52,7 @@ sf::RenderWindow& WindowManager::addWindow() {
 	LogManager::Instance()->debug("Created window.");
 
 	this->window->setMouseCursorGrabbed(true);
-	MessageManager::Instance()->sendMessage(MessageSubscriptions::WINDOW_SIZE_CHANGE);
+	MessageManager::Instance()->publish(MessageSubscriptions::WINDOW_SIZE_CHANGE);
 
 	return this->getWindow();
 }
@@ -119,4 +122,9 @@ void WindowManager::setFullScreen(const bool fullscreen) {
 
 const bool WindowManager::getFullScreen() {
 	return this->style == sf::Style::Fullscreen;
+}
+
+
+void WindowManager::onActiveViewChange() {
+	this->getWindow().setView(ViewManager::Instance()->getActiveView());
 }
