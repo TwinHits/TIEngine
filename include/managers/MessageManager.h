@@ -17,7 +17,7 @@ namespace TIE {
 		bool initialize();
 
 		void subscribe(const std::string&, std::function<void()>);
-		void sendMessage(const std::string&);
+		void publish(const std::string&);
 
 		MessageManager() {};
 		~MessageManager() {};

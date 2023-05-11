@@ -18,7 +18,7 @@ void MessageManager::subscribe(const std::string& subscription, std::function<vo
 }
 
 
-void MessageManager::sendMessage(const std::string& subscription) {
+void MessageManager::publish(const std::string& subscription) {
 	if (this->subscriptions.count(subscription)) {
 		for (auto& onMessage : this->subscriptions[subscription]) {
 			onMessage();
