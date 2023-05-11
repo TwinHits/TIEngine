@@ -21,14 +21,11 @@
 #include "componentsystems/PositionComponentSystem.h"
 #include "componentsystems/WireframeComponentSystem.h"
 #include "managers/ViewManager.h"
+#include "managers/UIManager.h"
 #include "objects/tientities/SceneLayer.h"
 #include "objects/components/ShapeComponent.h"
 #include "objects/components/SpriteComponent.h"
 #include "objects/components/TextComponent.h"
-#include "objects/tientities/ComponentPropertiesDisplay.h"
-#include "objects/tientities/DegreeGuide.h"
-#include "objects/tientities/MousePtrCoords.h"
-#include "objects/tientities/PerformanceDisplay.h"
 #include "objects/factories/SceneLayerFactory.h"
 
 using namespace TIE;
@@ -41,21 +38,6 @@ bool SceneManager::initialize() {
 
 	this->clientLayer = &SceneLayerFactory().setParent(this->getSceneGraphRoot()).setViewId(ViewManager::Instance()->getClientViewId()).setName("ClientLayer").setLayer(SceneLayer::Layer::CLIENT).build();
 	this->engineLayer = &SceneLayerFactory().setParent(this->getSceneGraphRoot()).setViewId(ViewManager::Instance()->getEngineViewId()).setName("EngineLayer").setLayer(SceneLayer::Layer::ENGINE).build();
-
-	std::unique_ptr<DegreeGuide> degreeGuide = make_unique<DegreeGuide>();
-	degreeGuide->initialize();
-	this->engineLayer->attachChild(std::move(degreeGuide));
-
-	std::unique_ptr<MousePtrCoords> mousePtrCoords = make_unique<MousePtrCoords>();
-	mousePtrCoords->initialize();
-	this->engineLayer->attachChild(std::move(mousePtrCoords));
-	
-	std::unique_ptr<PerformanceDisplay> performanceDisplay = make_unique<PerformanceDisplay>();
-	performanceDisplay->initialize();
-	this->engineLayer->attachChild(std::move(performanceDisplay));
-
-	std::unique_ptr<ComponentPropertiesDisplay> componentPropertiesDisplay = make_unique<ComponentPropertiesDisplay>();
-	this->engineLayer->attachChild(std::move(componentPropertiesDisplay));
 
 	// Component System registration, order of initialization, and order of update
 	// Update data operations
@@ -137,7 +119,7 @@ void SceneManager::updateGameState(const float delta) {
 			componentSystem->update(delta);
 		}
 	}
-    this->updateEngineEntities(*(this->engineLayer), delta);
+    UIManager::Instance()->updateEngineEntities(delta);
 
     if (this->tientitiesMarkedForRemove) {
         this->removeTIEntities(*this->sceneGraphRoot);
@@ -167,17 +149,6 @@ void SceneManager::removeComponents(TIEntity& tientity) {
 	LifecycleComponentSystem::Instance()->runRemoved(tientity);
 	for (ComponentSystem* componentSystem : this->componentSystems) {
 		componentSystem->removeComponent(tientity);
-	}
-}
-
-
-void SceneManager::updateEngineEntities(TIEntity& tientity, const float delta) {
-
-	tientity.update(delta);
-	if (tientity.getChildren().size() > 0) {
-		for (auto& child : tientity.getChildren()) {
-			this->updateEngineEntities(*child, delta);
-		}
 	}
 }
 
