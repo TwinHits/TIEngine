@@ -1,8 +1,9 @@
 #include "managers/WindowManager.h"
 
 #include "managers/LogManager.h"
-#include "managers/ViewManager.h"
+#include "managers/MessageManager.h"
 #include "templates/MakeUnique.h"
+#include "objects/constants/MessageSubscriptions.h"
 
 using namespace TIE;
 
@@ -48,7 +49,7 @@ sf::RenderWindow& WindowManager::addWindow() {
 	LogManager::Instance()->debug("Created window.");
 
 	this->window->setMouseCursorGrabbed(true);
-	ViewManager::Instance()->updateViews(this->getWindowSize());
+	MessageManager::Instance()->sendMessage(MessageSubscriptions::WINDOW_SIZE_CHANGE);
 
 	return this->getWindow();
 }

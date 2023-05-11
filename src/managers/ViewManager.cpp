@@ -5,7 +5,9 @@
 #include "managers/WorldManager.h"
 #include "managers/HashManager.h"
 #include "managers/LogManager.h"
+#include "managers/MessageManager.h"
 #include "managers/WindowManager.h"
+#include "objects/constants/MessageSubscriptions.h"
 #include "objects/enumeration/Direction.h"
 #include "templates/MakeUnique.h"
 #include "utils/TIEMath.h"
@@ -18,7 +20,10 @@ bool ViewManager::initialize() {
 	this->engineView = &this->getEngineView();
 	this->clientViewId = this->addView(sf::FloatRect(0, 0, windowSize.x, windowSize.y));
 	this->clientView = &this->getClientView();
-	this->recalculateScrollZones();
+	this->recalculateScrollZones(windowSize);
+
+	MessageManager::Instance()->subscribe(MessageSubscriptions::WINDOW_SIZE_CHANGE, std::bind(&ViewManager::onWindowSizeChange, this));
+
 	return true;
 }
 
@@ -180,8 +185,7 @@ const sf::Vector2f ViewManager::calculateEngineScroll(const sf::Vector2f& mouseP
 }
 
 
-void ViewManager::recalculateScrollZones() {
-	const sf::Vector2i& windowSize = WindowManager::Instance()->getWindowSize();
+void ViewManager::recalculateScrollZones(const sf::Vector2i& windowSize) {
 	this->scrollUpZone = sf::FloatRect(-windowSize.x / 2, -windowSize.y / 2, windowSize.x, this->scrollZone);
 	this->scrollDownZone = sf::FloatRect(-windowSize.x / 2, windowSize.y / 2 - this->scrollZone, windowSize.x, this->scrollZone);
 	this->scrollLeftZone = sf::FloatRect(-windowSize.x / 2, -windowSize.y / 2, this->scrollZone, windowSize.y);
@@ -230,3 +234,9 @@ void ViewManager::setZoomSettings(const float speed, const float minimum, const 
 	this->zoomMaximum = maximum;
 }
 
+
+void ViewManager::onWindowSizeChange() {
+	const sf::Vector2i windowSize = WindowManager::Instance()->getWindowSize();
+	this->updateViews(windowSize);
+	this->recalculateScrollZones(windowSize);
+}

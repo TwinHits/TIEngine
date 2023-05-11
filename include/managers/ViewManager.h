@@ -31,7 +31,7 @@ class ViewManager : public Singleton<ViewManager>, Manager {
 		void removeView(GlobalId);
 
 		void updateCamera(const float);
-		void recalculateScrollZones();
+		void recalculateScrollZones(const sf::Vector2i&);
 
 		void setActiveView(GlobalId);
 		sf::View& getActiveView();
@@ -48,6 +48,8 @@ class ViewManager : public Singleton<ViewManager>, Manager {
 		bool isViewIdScrollable(const GlobalId);
 
 		void setZoomSettings(const float, const float, const float);
+
+		void onWindowSizeChange();
 
 		ViewManager() {};
 		~ViewManager() {};
