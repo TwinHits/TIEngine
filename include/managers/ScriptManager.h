@@ -36,13 +36,6 @@ public:
 	}
 
 	template <typename T>
-	T runFunction(const std::string& name, TIEntity& tientity) {
-        TIEntityInterface tientityInterface(tientity);
-        TIEngineInterface engineInterface = TIEngineInterface();
-		return this->getFunctionByName(name)(std::tuple<TIEntityInterface, TIEngineInterface>(tientityInterface, engineInterface));
-	}
-
-	template <typename T>
 	T runFunction(const GlobalId functionId, FiniteStateMachine& finiteStateMachine, const float delta) {
         TIEntityInterface tientityInterface(finiteStateMachine.getTIEntity());
 		FiniteStateMachineInterface finiteStateMachineInterface(finiteStateMachine);
@@ -63,9 +56,6 @@ public:
 		MessageInterface messageInterface(message);
 		return this->functions.at(functionId)(std::tuple<TIEntityInterface, FiniteStateMachineInterface, MessageInterface>(tientityInterface, finiteStateMachineInterface, messageInterface));
 	}
-
-	GlobalId registerFunctionByName(const std::string&, const sol::function&);
-	GlobalId getFunctionIdByName(const std::string&);
 
     void setScriptWorkingDirectory(const std::string&);
     const std::string& getScriptWorkingDirectory();
@@ -92,10 +82,8 @@ private:
 	sol::state luaState;
 	std::string scriptWorkingDirectory = "";
 	std::map<GlobalId, sol::function> functions;
-	std::map<std::string, GlobalId> functionsByName;
 
 	void readComponentValues(TIEntityFactory&, const std::string&, const sol::table&);
-	const sol::function& getFunctionByName(const std::string&);
 	bool isValidDefinitionFieldName(const std::string&);
 
 	ScriptManager(const ScriptManager&);
