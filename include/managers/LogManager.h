@@ -13,9 +13,9 @@
 
 namespace TIE {
 
-class LogManager: public Singleton<LogManager>, Manager {
+class LogManager: public Singleton<LogManager>, public Manager {
 	public:
-		bool initialize();
+		void initialize();
 
 		std::queue<std::string>& getQueueToDraw();
 		void clearQueueToDraw();

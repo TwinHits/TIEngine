@@ -30,7 +30,7 @@
 
 using namespace TIE;
 
-bool SceneManager::initialize() {
+void SceneManager::initialize() {
 	this->sceneGraphRoot = make_unique<SceneLayer>();
 	this->sceneGraphRoot->setLayer(SceneLayer::Layer::ROOT);
 	this->sceneGraphRoot->setViewId(ViewManager::Instance()->getEngineViewId());
@@ -69,8 +69,6 @@ bool SceneManager::initialize() {
 		// Assemble component system properties map
 		this->componentSystemPropertiesMap = componentSystem->populateComponentSystemsPropertiesMap(this->componentSystemPropertiesMap);
 	}
-
-	return true;
 }
 
 

@@ -13,11 +13,11 @@
 
 namespace TIE {
 
-class ConfigManager: public Singleton<ConfigManager>, Manager {
+class ConfigManager: public Singleton<ConfigManager>, public Manager {
 	//Singleton manager of engine side configurable values defined in
 	//config.ini. Stores default values in case of no file found.
 	public:
-		bool initialize();
+		void initialize();
 		
 		bool loadConfigFile(const std::string& path);
 

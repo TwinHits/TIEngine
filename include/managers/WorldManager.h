@@ -14,9 +14,9 @@
 
 namespace TIE {
 
-class WorldManager : public Singleton<WorldManager>, Manager {
+class WorldManager : public Singleton<WorldManager>, public Manager {
 	public:
-		bool initialize();
+		void initialize();
 
 		TIEntity* getLevelEntity();
 		void setLevelEntity(TIEntityFactory&);

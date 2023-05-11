@@ -10,9 +10,8 @@
 
 using namespace TIE;
 
-bool ConfigManager::initialize() {
+void ConfigManager::initialize() {
 	this->loadConfig(this->defaultConfigPath);
-	return true;
 }
 
 

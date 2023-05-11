@@ -8,9 +8,9 @@
 
 namespace TIE {
 
-	class UIManager : public Singleton<UIManager>, Manager {
+	class UIManager : public Singleton<UIManager>, public Manager {
 	public:
-		bool initialize();
+		void initialize();
 
 		void updateEngineEntities(const float);
 		void updateEngineEntities(TIEntity&, const float);

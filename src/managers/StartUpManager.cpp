@@ -18,7 +18,7 @@
 
 using namespace TIE;
 
-bool StartUpManager::initialize() {
+void StartUpManager::initialize() {
 
 	WindowManager::Instance()->initialize();
 	ConfigManager::Instance()->initialize();
@@ -35,6 +35,4 @@ bool StartUpManager::initialize() {
 	UIManager::Instance()->initialize();
 	ScriptManager::Instance()->initialize();
 	StringManager::Instance()->initialize();
-
-	return true;
 }

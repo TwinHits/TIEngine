@@ -5,11 +5,6 @@
 
 using namespace TIE;
 
-bool MessageManager::initialize() {
-	return true;
-}
-
-
 void MessageManager::subscribe(const std::string& subscription, std::function<void()> onMessage) {
 	if (!this->subscriptions.count(subscription)) {
 		this->subscriptions[subscription];

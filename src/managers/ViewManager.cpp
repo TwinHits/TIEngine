@@ -12,7 +12,7 @@
 
 using namespace TIE;
 
-bool ViewManager::initialize() {
+void ViewManager::initialize() {
 	const sf::Vector2i& windowSize = WindowManager::Instance()->getWindowSize();
 	this->engineViewId = this->addView(sf::FloatRect(0, 0, windowSize.x, windowSize.y));
 	this->engineView = &this->getEngineView();
@@ -21,8 +21,6 @@ bool ViewManager::initialize() {
 	this->recalculateScrollZones(windowSize);
 
 	MessageManager::Instance()->subscribe(MessageSubscriptions::WINDOW_SIZE_CHANGE, std::bind(&ViewManager::onWindowSizeChange, this));
-
-	return true;
 }
 
 

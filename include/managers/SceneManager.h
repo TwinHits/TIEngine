@@ -13,9 +13,9 @@
 
 namespace TIE {
 
-	class SceneManager : public Singleton<SceneManager>, Manager {
+	class SceneManager : public Singleton<SceneManager>, public Manager {
 	public:
-		bool initialize();
+		void initialize();
 
 		SceneLayer& getSceneGraphRoot();
 		SceneLayer& getEngineLayer();

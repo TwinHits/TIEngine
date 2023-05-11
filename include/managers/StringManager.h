@@ -12,9 +12,9 @@
 
 namespace TIE {
 
-class StringManager : public Singleton<StringManager>, Manager {
+class StringManager : public Singleton<StringManager>, public Manager {
 	public:
-		bool initialize();
+		void initialize();
 		
 		std::string getString(const GlobalId id);
 		std::string getString(const GlobalId id, const Language language);

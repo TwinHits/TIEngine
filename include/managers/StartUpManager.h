@@ -6,12 +6,12 @@
 
 namespace TIE {
 
-class StartUpManager : public Singleton<StartUpManager>, Manager {
+class StartUpManager : public Singleton<StartUpManager>, public Manager {
 	public:
 		StartUpManager() {};
 		~StartUpManager() {};
 
-		bool initialize();
+		void initialize();
 
 	private:
 		bool initialized = false;

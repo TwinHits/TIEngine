@@ -8,12 +8,11 @@
 
 using namespace TIE;
 
-bool WindowManager::initialize() {
+void WindowManager::initialize() {
 	//Creating default window that can be replaced by client defined window
 	this->addWindow();
 
 	MessageManager::Instance()->subscribe(MessageSubscriptions::ACTIVE_VIEW_CHANGE, std::bind(&WindowManager::onActiveViewChange, this));
-	return true;
 }
 
 

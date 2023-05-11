@@ -13,9 +13,9 @@
 
 namespace TIE {
 
-class ConsoleManager : public Singleton<ConsoleManager>, Manager {
+class ConsoleManager : public Singleton<ConsoleManager>, public Manager {
 	public:
-		bool initialize();
+		void initialize();
 
 		void showConsole();
 		void hideConsole();

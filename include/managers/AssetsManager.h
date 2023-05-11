@@ -17,9 +17,9 @@
 
 namespace TIE {
 
-class AssetsManager: public Singleton<AssetsManager>, Manager {
+class AssetsManager: public Singleton<AssetsManager>, public Manager {
 	public:
-		bool initialize();
+		void initialize();
 
 		bool loadTexturesFromPath(const std::string&);
 		bool loadFontsFromPath(const std::string&);

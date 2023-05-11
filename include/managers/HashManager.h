@@ -10,10 +10,8 @@
 
 namespace TIE {
 
-class HashManager : public Singleton<HashManager>, Manager {
+class HashManager : public Singleton<HashManager>, public Manager {
 	public:
-		bool initialize();
-
 		GlobalId getNewGlobalId();
 		GlobalId getHash(const std::string& s);
 

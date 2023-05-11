@@ -9,14 +9,13 @@
 
 using namespace TIE;
 
-bool AssetsManager::initialize() {
+void AssetsManager::initialize() {
 	std::string assetsPath = ConfigManager::Instance()->getAssetsPath();
 
 	this->loadTexturesFromPath(assetsPath + "textures");
 	this->loadAudioFromPath(assetsPath + "audio");
 	this->loadFontsFromPath(assetsPath + "fonts");
 
-	return true;
 }
 
 

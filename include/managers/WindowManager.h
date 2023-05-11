@@ -11,9 +11,9 @@
 
 namespace TIE {
 
-class WindowManager : public Singleton<WindowManager>, Manager {
+class WindowManager : public Singleton<WindowManager>, public Manager {
 	public:
-		bool initialize();
+		void initialize();
 
 		sf::RenderWindow& addWindow(const sf::Vector2i& size, const std::string&, const int);
 		sf::RenderWindow& addWindow(const std::string&);

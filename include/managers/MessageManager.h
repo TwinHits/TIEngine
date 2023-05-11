@@ -12,10 +12,8 @@
 
 namespace TIE {
 
-	class MessageManager : public Singleton<MessageManager>, Manager {
+class MessageManager : public Singleton<MessageManager>, public Manager {
 	public:
-		bool initialize();
-
 		void subscribe(const std::string&, std::function<void()>);
 		void publish(const std::string&);
 

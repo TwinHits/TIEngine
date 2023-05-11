@@ -6,10 +6,6 @@
 
 using namespace TIE;
 
-bool HashManager::initialize() {
-	return true;
-}
-
 GlobalId HashManager::getNewGlobalId() {
 	++seed;
 	return seed;

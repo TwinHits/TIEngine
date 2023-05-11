@@ -20,9 +20,9 @@
 
 namespace TIE {
 
-class ScriptManager : public Singleton<ScriptManager>, Manager {
+class ScriptManager : public Singleton<ScriptManager>, public Manager {
 public:
-	bool initialize();
+	void initialize();
 
 	void loadScript(const std::string&);
 	TIEntityFactory& loadTIEntityDefinition(TIEntityFactory&, const sol::table&);

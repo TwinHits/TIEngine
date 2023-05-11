@@ -16,9 +16,9 @@
 
 namespace TIE {
 
-class ViewManager : public Singleton<ViewManager>, Manager {
+class ViewManager : public Singleton<ViewManager>, public Manager {
 	public:
-		bool initialize();
+		void initialize();
 		
 		GlobalId addView();
 		GlobalId addView(const sf::FloatRect&);

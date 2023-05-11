@@ -14,9 +14,8 @@
 
 using namespace TIE;
 
-bool WorldManager::initialize() {
+void WorldManager::initialize() {
 	this->worldLayer = &SceneLayerFactory().setLayer(SceneLayer::Layer::WORLD).setParent(SceneManager::Instance()->getClientLayer()).setViewId(ViewManager::Instance()->getClientViewId()).setName("WorldLayer").build();
-	return true;
 }
 
 

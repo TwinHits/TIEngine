@@ -10,10 +10,8 @@
 
 namespace TIE {
 
-class TimeManager : public Singleton<TimeManager>, Manager {
+class TimeManager : public Singleton<TimeManager>, public Manager {
 	public:
-		bool initialize();
-
 		sf::Clock& addClock();	
 		sf::Clock& getClock(GlobalId id);
 

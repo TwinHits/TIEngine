@@ -14,11 +14,6 @@
 
 using namespace TIE;
 
-bool EventsManager::initialize() { 
-	return true;
-}
-
-
 const sf::Vector2f& EventsManager::getMouseWindowPosition() {
 	return this->mouseWindowPosition;
 }

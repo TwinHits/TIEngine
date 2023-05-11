@@ -5,10 +5,6 @@
 
 using namespace TIE;
 
-bool TimeManager::initialize() {
-	return true;
-}
-
 sf::Clock& TimeManager::addClock() {
 	GlobalId id = HashManager::Instance()->getNewGlobalId();
 	return this->addClock(id);

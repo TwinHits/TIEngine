@@ -5,7 +5,7 @@ namespace TIE {
 
 class Manager {
 	public:
-		virtual bool initialize() = 0;
+		virtual void initialize() {};
 };
 
 }

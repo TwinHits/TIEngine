@@ -9,7 +9,7 @@
 
 using namespace TIE;
 
-bool UIManager::initialize() {
+void UIManager::initialize() {
 	SceneLayer& engineLayer = SceneManager::Instance()->getEngineLayer();
 	std::unique_ptr<DegreeGuide> degreeGuide = make_unique<DegreeGuide>();
 	engineLayer.attachChild(std::move(degreeGuide));
@@ -22,8 +22,6 @@ bool UIManager::initialize() {
 
 	std::unique_ptr<ComponentPropertiesDisplay> componentPropertiesDisplay = make_unique<ComponentPropertiesDisplay>();
 	engineLayer.attachChild(std::move(componentPropertiesDisplay));
-
-	return true;
 }
 
 

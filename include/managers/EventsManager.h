@@ -15,10 +15,8 @@
 
 namespace TIE {
 
-class EventsManager : public Singleton<EventsManager>, Manager {
+class EventsManager : public Singleton<EventsManager>, public Manager {
 	public:
-		bool initialize();
-
 		void processEvents();
 		
 		const sf::Vector2f& getMouseWindowPosition();

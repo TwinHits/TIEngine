@@ -6,9 +6,8 @@
 
 using namespace TIE;
 
-bool StringManager::initialize() {
+void StringManager::initialize() {
 	this->displayLanguage = ConfigManager::Instance()->getDefaultDisplayLanguage();
-	return true;
 }
 
 

@@ -20,11 +20,10 @@
 
 using namespace TIE;
 
-bool ConsoleManager::initialize() {
+void ConsoleManager::initialize() {
 	this->devConsole = &dynamic_cast<DevConsole&>(SceneManager::Instance()->getEngineLayer().attachChild(make_unique<DevConsole>()));
 	this->devConsole->initialize();
 	this->currentCommand = &this->devConsole->getCurrentCommand();
-	return true;
 }
 
 

@@ -26,7 +26,7 @@
 
 using namespace TIE;
 
-bool ScriptManager::initialize() {
+void ScriptManager::initialize() {
 
 	this->luaState.open_libraries(
 		sol::lib::base, 
@@ -50,8 +50,6 @@ bool ScriptManager::initialize() {
 		this->setScriptWorkingDirectory(String::getDirectoryFromPath(startUpScript));
 		this->loadScript(startUpScript);
 	}
-
-	return true;
 }
 
 
