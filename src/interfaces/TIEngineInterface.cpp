@@ -9,6 +9,7 @@
 #include "interfaces/MessageInterface.h"
 #include "interfaces/TIEntityInterface.h"
 #include "managers/AssetsManager.h"
+#include "managers/ComponentSystemsManager.h"
 #include "managers/EventsManager.h"
 #include "managers/SceneManager.h"
 #include "managers/ScriptManager.h"
@@ -168,7 +169,7 @@ const std::map<std::string, GlobalId>& TIEngineInterface::getMessageSubscription
 
 
 const ComponentSystems::ComponentSystemPropertiesMap& TIEngineInterface::getProperties() {
-    return SceneManager::Instance()->getComponentSystemPropertiesMap();
+    return ComponentSystemsManager::Instance()->getComponentSystemPropertiesMap();
 }
 
 

@@ -1,6 +1,7 @@
 #include "managers/StartUpManager.h"
 
 #include "managers/AssetsManager.h"
+#include "managers/ComponentSystemsManager.h"
 #include "managers/ConfigManager.h"
 #include "managers/ConsoleManager.h"
 #include "managers/EventsManager.h"
@@ -18,7 +19,6 @@
 using namespace TIE;
 
 void StartUpManager::initialize() {
-
 	WindowManager::Instance()->initialize();
 	ConfigManager::Instance()->initialize();
 	LogManager::Instance()->initialize();
@@ -27,6 +27,7 @@ void StartUpManager::initialize() {
 	ViewManager::Instance()->initialize();
 	EventsManager::Instance()->initialize();
 	SceneManager::Instance()->initialize();
+	ComponentSystemsManager::Instance()->initialize();
 	ConsoleManager::Instance()->initialize();
 	HashManager::Instance()->initialize();
 	TimeManager::Instance()->initialize();

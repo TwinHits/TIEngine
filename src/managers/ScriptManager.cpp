@@ -16,7 +16,7 @@
 #include "managers/ConfigManager.h"
 #include "managers/HashManager.h"
 #include "managers/LogManager.h"
-#include "managers/SceneManager.h"
+#include "managers/ComponentSystemsManager.h"
 #include "objects/factories/TIEntityFactory.h"
 #include "objects/factories/ai/FiniteStateMachineFactory.h"
 #include "utils/StringHelpers.h"
@@ -144,7 +144,7 @@ void ScriptManager::readComponentValues(TIEntityFactory& factory, const std::str
 
 
 bool ScriptManager::isValidDefinitionFieldName(const std::string& field) {
-	return SceneManager::Instance()->isValidComponentName(field) || field == "tientity";
+	return ComponentSystemsManager::Instance()->isValidComponentName(field) || field == "tientity";
  }
 
 

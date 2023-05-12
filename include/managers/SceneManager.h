@@ -5,9 +5,7 @@
 #include "templates/Singleton.h"
 
 #include <memory>
-#include <vector>
 
-#include "componentsystems/ComponentSystem.h"
 #include "managers/WindowManager.h"
 #include "objects/tientities/SceneLayer.h"
 
@@ -21,11 +19,6 @@ namespace TIE {
 		SceneLayer& getEngineLayer();
 		SceneLayer& getClientLayer();
 
-		const std::vector<ComponentSystem*>& getComponentSystems();
-		bool isValidComponentName(const std::string&);
-		ComponentSystem* getComponentSystemByComponentName(const std::string&);
-		const ComponentSystems::ComponentSystemPropertiesMap& getComponentSystemPropertiesMap();
-
 		void updateGameState(const float);
 		void render();
 
@@ -34,7 +27,7 @@ namespace TIE {
 		void setTIEntitiesMarkedForRemove(bool);
 
 		void setSimulationPaused(const bool);
-		const bool getSimulationPaused();
+		const bool isSimulationPaused();
 
 		SceneManager() {};
 		~SceneManager() {};
@@ -46,16 +39,10 @@ namespace TIE {
 		SceneLayer* engineLayer = nullptr;
 		SceneLayer* clientLayer = nullptr;
 
-		std::vector<ComponentSystem*> componentSystems;
-		std::map<std::string, ComponentSystem*> componentNamesToComponentSystems;
-		ComponentSystems::ComponentSystemPropertiesMap componentSystemPropertiesMap;
-
 		bool tientitiesMarkedForRemove = false;
 		bool simulationPaused = false;
 		
 		void removeTIEntities(TIEntity&);
-		void removeComponents(TIEntity&);
-		void updateEngineEntities(TIEntity&, const float);
 		void render(TIEntity&, sf::RenderWindow&, sf::RenderStates);
 
 		SceneManager(const SceneManager&);

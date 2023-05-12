@@ -7,6 +7,7 @@
 #include "componentsystems/ComponentSystem.h"
 #include "componentsystems/LifecycleComponentSystem.h"
 #include "componentsystems/WireframeComponentSystem.h"
+#include "managers/ComponentSystemsManager.h"
 #include "managers/SceneManager.h"
 #include "managers/ScriptManager.h"
 #include "managers/WorldManager.h"
@@ -39,7 +40,7 @@ TIEntity& TIEntityFactory::build() {
 	TIEntity& tientity = this->parent->attachChild();
 	tientity.setName(this->name);
 
-	for (ComponentSystem* componentSystem : SceneManager::Instance()->getComponentSystems()) {
+	for (ComponentSystem* componentSystem : ComponentSystemsManager::Instance()->getComponentSystems()) {
 		if (this->componentSystemNames.count(componentSystem->getName())) {
 			componentSystem->addComponent(*this, tientity);
 		}
@@ -60,7 +61,7 @@ TIEntity& TIEntityFactory::build() {
 
 
 TIEntityFactory& TIEntityFactory::addComponentSystemByComponentName(const std::string& name) {
-	if (SceneManager::Instance()->isValidComponentName(name)) {
+	if (ComponentSystemsManager::Instance()->isValidComponentName(name)) {
 		this->componentSystemNames[name] = true;
 	}
 	return *this;

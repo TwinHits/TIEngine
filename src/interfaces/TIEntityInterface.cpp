@@ -10,7 +10,7 @@
 #include "componentsystems/PositionComponentSystem.h"
 #include "componentsystems/SpriteComponentSystem.h"
 #include "interfaces/MessageInterface.h"
-#include "managers/SceneManager.h"
+#include "managers/ComponentSystemsManager.h"
 #include "objects/GlobalId.h"
 #include "objects/components/structs/EventState.h"
 #include "utils/ComponentSystems.h"
@@ -116,7 +116,7 @@ void TIEntityInterface::despawn() {
 
 
 void TIEntityInterface::setProperty(const std::string& key, const sol::object& value) {
-    ComponentSystem* componentSystem = SceneManager::Instance()->getComponentSystemByComponentName(ComponentSystems::getComponentNameFromKey(key));
+    ComponentSystem* componentSystem = ComponentSystemsManager::Instance()->getComponentSystemByComponentName(ComponentSystems::getComponentNameFromKey(key));
     if (componentSystem != nullptr) {
         if (value.is<float>()) {
             componentSystem->setComponentProperty(key, ScriptManager::Instance()->getValueFromObject<float>(value), *this->tientity);
@@ -134,7 +134,7 @@ void TIEntityInterface::setProperty(const std::string& key, const sol::object& v
 
 
 sol::object TIEntityInterface::getProperty(const std::string& key) {
-    ComponentSystem* componentSystem = SceneManager::Instance()->getComponentSystemByComponentName(ComponentSystems::getComponentNameFromKey(key));
+    ComponentSystem* componentSystem = ComponentSystemsManager::Instance()->getComponentSystemByComponentName(ComponentSystems::getComponentNameFromKey(key));
     if (componentSystem != nullptr) {
         return componentSystem->getComponentProperty(key, *this->tientity);
     }
