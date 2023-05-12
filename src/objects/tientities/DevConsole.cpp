@@ -38,7 +38,6 @@ void DevConsole::initialize() {
 	//GlobalId consoleHistoryViewId = ViewManager::Instance()->addView(devConsoleBounds);
 	//this->consoleHistorySceneLayer.setViewId(consoleHistoryViewId);
 	this->consoleHistorySceneLayer.setViewId(ViewManager::Instance()->getEngineViewId());
-	this->consoleHistorySceneLayer.setLayer(SceneLayer::Layer::ENGINE);
 	this->consoleHistorySceneLayer.setName("Console History Scene Layer");
 
 	// Command History Entity

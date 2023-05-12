@@ -14,7 +14,6 @@ SceneLayer& SceneLayerFactory::build() {
     SceneLayer& sceneLayer = dynamic_cast<SceneLayer&>(this->parent->attachChild(make_unique<SceneLayer>()));
     sceneLayer.setViewId(this->viewId);
     sceneLayer.setName(this->name);
-    sceneLayer.setLayer(this->layer);
     return sceneLayer;
 }
 
@@ -35,10 +34,3 @@ SceneLayerFactory& SceneLayerFactory::setViewId(GlobalId viewId) {
     this->viewId = viewId;
     return *this;
 }
-
-
-SceneLayerFactory& SceneLayerFactory::setLayer(SceneLayer::Layer layer) {
-    this->layer = layer;
-    return *this;
-}
-

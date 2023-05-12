@@ -7,18 +7,8 @@ namespace TIE {
 
 class SceneLayer : public TIEntity {
 	public:
-		enum class Layer {
-			ROOT,
-			ENGINE,
-			CLIENT,
-			WORLD,
-		};
-
 		SceneLayer() {};
 		virtual ~SceneLayer() {};
-
-		Layer getLayer();
-		void setLayer(Layer);
 
 		void setViewId(GlobalId);
 		GlobalId getViewId();
@@ -26,7 +16,6 @@ class SceneLayer : public TIEntity {
 		virtual bool isSceneLayer();
 		
 	private:
-		Layer layer = Layer::ROOT;
 		GlobalId viewId = 0;
 };
 

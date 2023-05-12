@@ -16,12 +16,20 @@ using namespace TIE;
 
 void SceneManager::initialize() {
 	this->sceneGraphRoot = make_unique<SceneLayer>();
-	this->sceneGraphRoot->setLayer(SceneLayer::Layer::ROOT);
 	this->sceneGraphRoot->setViewId(ViewManager::Instance()->getEngineViewId());
 	this->sceneGraphRoot->setName("SceneGraphRoot");
 
-	this->clientLayer = &SceneLayerFactory().setParent(this->getSceneGraphRoot()).setViewId(ViewManager::Instance()->getClientViewId()).setName("ClientLayer").setLayer(SceneLayer::Layer::CLIENT).build();
-	this->engineLayer = &SceneLayerFactory().setParent(this->getSceneGraphRoot()).setViewId(ViewManager::Instance()->getEngineViewId()).setName("EngineLayer").setLayer(SceneLayer::Layer::ENGINE).build();
+	this->clientLayer = &SceneLayerFactory()
+		.setParent(this->getSceneGraphRoot())
+		.setViewId(ViewManager::Instance()->getClientViewId())
+		.setName("ClientLayer")
+	.build();
+
+	this->engineLayer = &SceneLayerFactory()
+		.setParent(this->getSceneGraphRoot())
+		.setViewId(ViewManager::Instance()->getEngineViewId())
+		.setName("EngineLayer")
+	.build();
 }
 
 
