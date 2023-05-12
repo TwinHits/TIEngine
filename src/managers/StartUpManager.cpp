@@ -10,7 +10,6 @@
 #include "managers/MessageManager.h"
 #include "managers/SceneManager.h"
 #include "managers/ScriptManager.h"
-#include "managers/StringManager.h"
 #include "managers/TimeManager.h"
 #include "managers/UIManager.h"
 #include "managers/ViewManager.h"
@@ -34,5 +33,4 @@ void StartUpManager::initialize() {
 	WorldManager::Instance()->initialize();
 	UIManager::Instance()->initialize();
 	ScriptManager::Instance()->initialize();
-	StringManager::Instance()->initialize();
 }
