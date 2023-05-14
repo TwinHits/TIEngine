@@ -169,13 +169,15 @@ std::string ScriptManager::getStringFromObject(const sol::object& object) {
 
 FiniteStateMachineFactory& ScriptManager::loadFiniteStateMachineDefinition(FiniteStateMachineFactory& factory, const sol::table& definition) {
 	for (auto& pair : definition) {
-		const std::string& key = pair.first.as<std::string>();
+		const sol::object& key = pair.first;
 		const sol::object& value = pair.second;
-		if (value.valid()) {
-			if (value.is<sol::function>()) {
-				GlobalId functionId = HashManager::Instance()->getNewGlobalId();
-				this->functions.insert({ functionId, value.as<sol::function>() });
-				factory.functionValues.insert({ key, functionId });
+		if (key.valid() && value.valid() && value.is<sol::function>()) {
+            GlobalId functionId = HashManager::Instance()->getNewGlobalId();
+            this->functions.insert({ functionId, value.as<sol::function>() });
+			if (key.is<std::string>()) {
+				factory.stringToFunctionValues[key.as<std::string>()] = functionId;
+			} else if (key.is<GlobalId>()) {
+				factory.idToFunctionValues[key.as<GlobalId>()] = functionId;
 			}
 		}
 	}

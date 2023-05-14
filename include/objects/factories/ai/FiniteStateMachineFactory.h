@@ -20,7 +20,8 @@ class FiniteStateMachineFactory {
 
 		GlobalId getId();
 
-		std::map<std::string, GlobalId> functionValues;
+		std::map<std::string, GlobalId> stringToFunctionValues;
+		std::map<GlobalId, GlobalId> idToFunctionValues;
 	private:
 		GlobalId id = 0;
 };

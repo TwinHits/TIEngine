@@ -27,11 +27,10 @@ class FiniteStateMachine {
         const GlobalId getOnUpdateFunctionId();
         void setOnUpdateFunctionId(const GlobalId);
 
-        const GlobalId getOnMessageFunctionId();
-        void setOnMessageFunctionId(const GlobalId);
-
         const GlobalId getOnExitFunctionId();
         void setOnExitFunctionId(const GlobalId);
+
+        void subscribe(const GlobalId, const GlobalId);
 
         void setExit(bool);
         bool getExit();
@@ -48,7 +47,6 @@ class FiniteStateMachine {
 
 		static const inline std::string ON_ENTER = "onEnter";
 		static const inline std::string ON_UPDATE = "onUpdate";
-		static const inline std::string ON_MESSAGE = "onMessage";
 		static const inline std::string ON_EXIT = "onExit";
 
     private:
@@ -64,8 +62,8 @@ class FiniteStateMachine {
 
         GlobalId onEnterFunctionId = 0;
         GlobalId onUpdateFunctionId = 0;
-        GlobalId onMessageFunctionId = 0;
         GlobalId onExitFunctionId = 0;
+        std::map<GlobalId, GlobalId> subscriptions;
 
         bool exit = false;
 };

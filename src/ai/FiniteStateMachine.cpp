@@ -50,17 +50,6 @@ void FiniteStateMachine::setOnUpdateFunctionId(const GlobalId onUpdateFunctionId
 }
 
 
-const GlobalId FiniteStateMachine::getOnMessageFunctionId() {
-    return this->onMessageFunctionId;
-}
-
-
-void FiniteStateMachine::setOnMessageFunctionId(const GlobalId onMessageFunctionId) {
-    this->onMessageFunctionId = onMessageFunctionId;
-}
-
-
-
 const GlobalId FiniteStateMachine::getOnExitFunctionId() {
     return this->onExitFunctionId;
 
@@ -69,6 +58,11 @@ const GlobalId FiniteStateMachine::getOnExitFunctionId() {
 
 void FiniteStateMachine::setOnExitFunctionId(const GlobalId onExitFunctionId) {
     this->onExitFunctionId = onExitFunctionId;
+}
+
+
+void FiniteStateMachine::subscribe(const GlobalId subscriptionId, const GlobalId onMessageId) {
+    this->subscriptions[subscriptionId] = onMessageId;
 }
 
 
@@ -108,7 +102,9 @@ void FiniteStateMachine::update(float delta) {
 
 
 void FiniteStateMachine::onMessage(const Message& message) {
-    this->runFunction(this->onMessageFunctionId, message);
+    if (this->subscriptions.count(message.subscription)) {
+        this->runFunction(this->subscriptions.at(message.subscription), message);
+    }
     if (!this->childStates.empty()) {
         for (auto& childState : this->childStates) {
             childState.second->onMessage(message);
