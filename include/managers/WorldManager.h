@@ -4,11 +4,11 @@
 #include "managers/Manager.h"
 #include "templates/Singleton.h"
 
-#include "objects/tientities/SceneLayer.h"
 #include "objects/components/GridComponent.h"
 #include "objects/components/SpriteComponent.h"
-#include "objects/tientities/GridGuide.h"
 #include "objects/tientities/TIEntity.h"
+#include "objects/tientities/engine/GridGuide.h"
+#include "objects/tientities/common/SceneLayer.h"
 #include "objects/factories/TIEntityFactory.h"
 #include "objects/factories/ai/FiniteStateMachineFactory.h"
 

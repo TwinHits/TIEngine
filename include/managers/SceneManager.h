@@ -7,7 +7,7 @@
 #include <memory>
 
 #include "managers/WindowManager.h"
-#include "objects/tientities/SceneLayer.h"
+#include "objects/tientities/common/SceneLayer.h"
 
 namespace TIE {
 

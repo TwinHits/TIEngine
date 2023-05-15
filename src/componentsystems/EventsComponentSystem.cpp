@@ -3,11 +3,11 @@
 #include <string>
 #include <vector>
 
+#include "objects/GlobalId.h"
 #include "objects/components/EventsComponent.h"
 #include "objects/components/structs/EventState.h"
 #include "objects/tientities/TIEntity.h"
-#include "objects/GlobalId.h"
-#include "objects/tientities/SceneLayer.h"
+#include "objects/tientities/common/SceneLayer.h"
 #include "managers/EventsManager.h"
 #include "managers/ScriptManager.h"
 #include "managers/WindowManager.h"

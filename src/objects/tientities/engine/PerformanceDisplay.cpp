@@ -1,17 +1,17 @@
-#include "objects/tientities/PerformanceDisplay.h"
+#include "objects/tientities/engine/PerformanceDisplay.h"
 
 #include <sstream>
 
 #include <SFML/Graphics.hpp>
 
-#include "objects/components/TextComponent.h"
-#include "objects/constants/MessageSubscriptions.h"
 #include "managers/AssetsManager.h"
 #include "managers/ConfigManager.h"
 #include "managers/MessageManager.h"
 #include "managers/SceneManager.h"
 #include "managers/TimeManager.h"
 #include "managers/WindowManager.h"
+#include "objects/components/TextComponent.h"
+#include "objects/constants/MessageSubscriptions.h"
 
 using namespace TIE;
 

@@ -9,7 +9,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "managers/LogManager.h"
-#include "objects/tientities/SceneLayer.h"
+#include "objects/tientities/common/SceneLayer.h"
 
 namespace TIE {
 

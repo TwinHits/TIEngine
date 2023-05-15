@@ -1,4 +1,4 @@
-#include "objects/tientities/DevConsole.h" 
+#include "objects/tientities/engine/DevConsole.h" 
 
 #include <memory>
 
@@ -10,12 +10,12 @@
 #include "managers/MessageManager.h"
 #include "managers/ViewManager.h"
 #include "managers/WindowManager.h"
-#include "objects/tientities/SceneLayer.h"
 #include "objects/assets/FontAsset.h"
 #include "objects/components/PositionComponent.h" 
 #include "objects/components/SpriteComponent.h" 
 #include "objects/components/TextComponent.h" 
 #include "objects/constants/MessageSubscriptions.h" 
+#include "objects/tientities/common/SceneLayer.h"
 #include "templates/MakeUnique.h"
 #include "utils/ComponentSystems.h"
 
