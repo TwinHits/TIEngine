@@ -16,7 +16,7 @@
 #include "managers/ViewManager.h"
 #include "managers/WindowManager.h"
 #include "managers/WorldManager.h"
-#include "objects/factories/SceneLayerFactory.h"
+#include "objects/factories/tientities/SceneLayerFactory.h"
 #include "objects/factories/ai/FiniteStateMachineFactory.h"
 #include "utils/StringHelpers.h"
 

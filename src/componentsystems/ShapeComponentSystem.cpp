@@ -7,7 +7,7 @@
 #include "componentsystems/PositionComponentSystem.h"
 #include "objects/components/ShapeComponent.h"
 #include "objects/tientities/TIEntity.h"
-#include "objects/factories/TIEntityFactory.h"
+#include "objects/factories/tientities/TIEntityFactory.h"
 #include "managers/AssetsManager.h"
 #include "managers/HashManager.h"
 #include "managers/ScriptManager.h"

@@ -8,7 +8,7 @@
 #include <vector>
 
 #include "objects/components/BehavesComponent.h"
-#include "objects/factories/TIEntityFactory.h"
+#include "objects/factories/tientities/TIEntityFactory.h"
 #include "objects/tientities/TIEntity.h"
 
 namespace TIE {
@@ -24,6 +24,7 @@ class BehavesComponentSystem : public Singleton<BehavesComponentSystem>, public 
 		void setComponentProperty(const std::string&, float, TIEntity&);
 		sol::object getComponentProperty(const std::string&, TIEntity&);
 
+		void onMessage(TIEntity&, const Message&);
 		void onMessage(TIEntity&, const std::vector<Message>&);
 
 		static const inline std::string BEHAVES = "behaves";

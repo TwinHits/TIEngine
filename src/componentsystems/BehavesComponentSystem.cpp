@@ -2,7 +2,7 @@
 
 #include "interfaces/ai/FiniteStateMachineInterface.h"
 #include "managers/WorldManager.h"
-#include "objects/factories/TIEntityFactory.h"
+#include "objects/factories/tientities/TIEntityFactory.h"
 #include "objects/factories/ai/FiniteStateMachineFactory.h"
 #include "objects/tientities/TIEntity.h"
 #include "utils/ComponentSystems.h"
@@ -94,6 +94,13 @@ sol::object BehavesComponentSystem::getComponentProperty(const std::string& key,
 		}
 	}
 	return ScriptManager::Instance()->getObjectFromValue(nullptr);
+}
+
+
+void BehavesComponentSystem::onMessage(TIEntity& tientity, const Message& message) {
+	std::vector<Message> messages;
+	messages.push_back(message);
+	this->onMessage(tientity, messages);
 }
 
 

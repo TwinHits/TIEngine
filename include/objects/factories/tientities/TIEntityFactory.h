@@ -14,8 +14,10 @@ namespace TIE {
 
 class TIEntityFactory {
 	public:
-		TIEntityFactory() {};
+		TIEntityFactory();
 		TIEntityFactory(const sol::table&);
+
+		const GlobalId getId();
 
 		TIEntityFactory& setName(std::string);
 		const std::string& getName();
@@ -43,6 +45,7 @@ class TIEntityFactory {
 		~TIEntityFactory() {};
 
 	private:
+		GlobalId id = 0;
 		std::string name = "";
 		bool showWireframe = false;
 		TIEntity* parent = nullptr;

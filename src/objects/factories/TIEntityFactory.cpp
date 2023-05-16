@@ -1,4 +1,4 @@
-#include "objects/factories/TIEntityFactory.h"
+#include "objects/factories/tientities/TIEntityFactory.h"
 
 #include <sol/sol.hpp>
 
@@ -8,6 +8,7 @@
 #include "componentsystems/LifecycleComponentSystem.h"
 #include "componentsystems/WireframeComponentSystem.h"
 #include "managers/ComponentSystemsManager.h"
+#include "managers/HashManager.h"
 #include "managers/SceneManager.h"
 #include "managers/ScriptManager.h"
 #include "managers/WorldManager.h"
@@ -15,7 +16,13 @@
 
 using namespace TIE;
 
+TIEntityFactory::TIEntityFactory() {
+	this->id = HashManager::Instance()->getNewGlobalId();
+}
+
+
 TIEntityFactory::TIEntityFactory(const sol::table& definition) {
+	this->id = HashManager::Instance()->getNewGlobalId();
     ScriptManager::Instance()->loadTIEntityDefinition(*this, definition);
 }
 
@@ -78,6 +85,11 @@ TIEntityFactory& TIEntityFactory::addChild() {
 	this->children.push_back(TIEntityFactory());
 	TIEntityFactory& child = this->children.back();
 	return child;
+}
+
+
+const GlobalId TIEntityFactory::getId() {
+	return this->id;
 }
 
 

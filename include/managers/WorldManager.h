@@ -9,7 +9,7 @@
 #include "objects/tientities/TIEntity.h"
 #include "objects/tientities/engine/GridGuide.h"
 #include "objects/tientities/common/SceneLayer.h"
-#include "objects/factories/TIEntityFactory.h"
+#include "objects/factories/tientities/TIEntityFactory.h"
 #include "objects/factories/ai/FiniteStateMachineFactory.h"
 
 namespace TIE {

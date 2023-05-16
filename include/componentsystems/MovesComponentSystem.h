@@ -10,7 +10,7 @@
 
 #include "objects/components/MovesComponent.h"
 #include "objects/components/PositionComponent.h"
-#include "objects/factories/TIEntityFactory.h"
+#include "objects/factories/tientities/TIEntityFactory.h"
 #include "objects/tientities/TIEntity.h"
 #include "objects/enumeration/Direction.h"
 #include "utils/types/ComponentSystemsTypes.h"

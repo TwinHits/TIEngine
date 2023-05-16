@@ -4,7 +4,7 @@
 #include <string>
 
 #include "objects/tientities/TIEntity.h"
-#include "objects/factories/TIEntityFactory.h"
+#include "objects/factories/tientities/TIEntityFactory.h"
 #include "managers/ScriptManager.h"
 #include "utils/types/ComponentSystemsTypes.h"
 

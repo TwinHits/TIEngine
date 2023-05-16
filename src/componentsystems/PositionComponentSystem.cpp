@@ -6,7 +6,7 @@
 
 #include "objects/components/PositionComponent.h"
 #include "objects/components/SpriteComponent.h"
-#include "objects/factories/TIEntityFactory.h"
+#include "objects/factories/tientities/TIEntityFactory.h"
 #include "managers/ScriptManager.h"
 #include "utils/ComponentSystems.h"
 #include "utils/TIEMath.h"

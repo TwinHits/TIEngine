@@ -9,7 +9,7 @@
 #include "objects/components/ShapeComponent.h"
 #include "objects/components/SpriteComponent.h"
 #include "objects/components/TextComponent.h"
-#include "objects/factories/SceneLayerFactory.h"
+#include "objects/factories/tientities/SceneLayerFactory.h"
 #include "objects/tientities/common/SceneLayer.h"
 
 using namespace TIE;

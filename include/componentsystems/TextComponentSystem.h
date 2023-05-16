@@ -11,7 +11,7 @@
 #include "managers/ConfigManager.h"
 #include "objects/components/TextComponent.h"
 #include "objects/components/PositionComponent.h"
-#include "objects/factories/TIEntityFactory.h"
+#include "objects/factories/tientities/TIEntityFactory.h"
 #include "objects/tientities/TIEntity.h"
 
 namespace TIE {

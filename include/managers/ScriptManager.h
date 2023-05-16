@@ -15,7 +15,7 @@
 #include "interfaces/ai/FiniteStateMachineInterface.h"
 #include "objects/GlobalId.h"
 #include "objects/tientities/TIEntity.h"
-#include "objects/factories/TIEntityFactory.h"
+#include "objects/factories/tientities/TIEntityFactory.h"
 #include "objects/factories/ai/FiniteStateMachineFactory.h"
 
 namespace TIE {

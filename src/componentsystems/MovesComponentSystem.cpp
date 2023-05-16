@@ -12,7 +12,7 @@
 #include "managers/WorldManager.h"
 #include "objects/components/MovesComponent.h"
 #include "objects/components/PositionComponent.h"
-#include "objects/factories/TIEntityFactory.h"
+#include "objects/factories/tientities/TIEntityFactory.h"
 #include "objects/tientities/TIEntity.h"
 #include "utils/ComponentSystems.h"
 #include "utils/TIEMath.h"

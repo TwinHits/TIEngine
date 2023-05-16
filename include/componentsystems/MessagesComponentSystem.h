@@ -9,7 +9,7 @@
 
 #include "objects/Message.h"
 #include "objects/components/MessagesComponent.h"
-#include "objects/factories/TIEntityFactory.h"
+#include "objects/factories/tientities/TIEntityFactory.h"
 #include "objects/tientities/TIEntity.h"
 
 namespace TIE {

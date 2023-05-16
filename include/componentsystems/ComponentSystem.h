@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include "objects/factories/TIEntityFactory.h"
+#include "objects/factories/tientities/TIEntityFactory.h"
 #include "objects/tientities/TIEntity.h"
 #include "utils/ComponentSystems.h"
 #include "utils/types/ComponentSystemsTypes.h"
