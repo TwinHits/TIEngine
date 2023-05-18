@@ -27,11 +27,13 @@ CollidesComponentSystem::CollidesComponentSystem() {
 
 void CollidesComponentSystem::update(const float delta) {
 	// Two Pointer Technique
-	for (std::list<Components>::iterator c1 = components.begin(), c2 = std::next(c1, 1); c2 != components.end(); ++c1, c2 = std::next(c1, 1)) {
-		for (c2; c2 != components.end(); c2++) {
-			this->checkHitboxCollisions(*c1, *c2);
-			this->checkLineCollisions(*c1, *c2);
-			this->checkLineCollisions(*c2, *c1);
+	if (components.size() >= 2) {
+		for (std::list<Components>::iterator c1 = components.begin(), c2 = std::next(c1, 1); c2 != components.end(); ++c1, c2 = std::next(c1, 1)) {
+			for (c2; c2 != components.end(); c2++) {
+				this->checkHitboxCollisions(*c1, *c2);
+				this->checkLineCollisions(*c1, *c2);
+				this->checkLineCollisions(*c2, *c1);
+			}
 		}
 	}
 }
