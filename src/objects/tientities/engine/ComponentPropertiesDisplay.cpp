@@ -42,16 +42,19 @@ ComponentPropertiesDisplay::ComponentPropertiesDisplay() {
  
 void ComponentPropertiesDisplay::update(const float delta) {
     const std::vector<TIEntity*>& tientitiesUnderMousePosition = EventsManager::Instance()->getTIEntitiesUnderMousePosition();
-    TIEntity* tientity = tientitiesUnderMousePosition.back();
-
-    std::stringstream ss;
-    ss << tientity->getName() << std::endl << std::endl;
-    ss << tientity->getId() << std::endl << std::endl;
-    for (auto componentSystem : this->componentSystemsToDisplay) {
-        ss << componentSystem->getComponentPropertiesString(*tientity);
-    }
     TextComponent* textComponent = this->getComponent<TextComponent>();
-    textComponent->setString(ss.str());
+    if (tientitiesUnderMousePosition.size()) {
+        TIEntity* tientity = tientitiesUnderMousePosition.back();
+        std::stringstream ss;
+        ss << tientity->getName() << std::endl << std::endl;
+        ss << tientity->getId() << std::endl << std::endl;
+        for (auto componentSystem : this->componentSystemsToDisplay) {
+            ss << componentSystem->getComponentPropertiesString(*tientity);
+        }
+        textComponent->setString(ss.str());
+    } else {
+        textComponent->clearString();
+    }
 }
 
 

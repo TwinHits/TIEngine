@@ -15,6 +15,7 @@ class TextComponent : public Component, public sf::Text {
 		virtual ~TextComponent() {};
 
 		void setString(const std::string&);
+		void clearString();
 
 		void setDrawn(bool drawn);
 		bool isDrawn() const;

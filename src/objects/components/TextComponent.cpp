@@ -23,6 +23,12 @@ void TextComponent::setString(const std::string& string) {
 }
 
 
+void TextComponent::clearString() {
+	this->sf::Text::setString("");
+	TextComponentSystem::setOriginForTextAlignment(*this);
+}
+
+
 void TextComponent::setDrawn(bool drawn) {
 	this->drawn = drawn;
 }
