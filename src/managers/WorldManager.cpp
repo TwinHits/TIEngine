@@ -37,8 +37,10 @@ void WorldManager::setLevelEntity(TIEntityFactory& factory) {
 	factory.setParent(this->worldLayer);
 	this->levelEntity = &factory.build();
 	this->gridComponent = this->levelEntity->getComponent<GridComponent>();
-	SpriteComponent* spriteComponent = this->levelEntity->getComponent<SpriteComponent>();
-	this->recalculateScrollBounds(*spriteComponent);
+	if (this->levelEntity->hasComponent<SpriteComponent>()) {
+		SpriteComponent* spriteComponent = this->levelEntity->getComponent<SpriteComponent>();
+		this->recalculateScrollBounds(*spriteComponent);
+	}
 }
 
 
@@ -73,7 +75,7 @@ TIEntity* WorldManager::getTIEntityById(GlobalId id) {
 
 
 TIEntityFactory& WorldManager::saveTIEntityFactory(const std::string& name, TIEntityFactory& factory) {
-	this->tiEntityFactories.insert({ name, make_unique<TIEntityFactory>(factory) });
+	this->tiEntityFactories.insert({ name, TIE::make_unique<TIEntityFactory>(factory) });
 	return *this->tiEntityFactories.at(name);
 }
 
