@@ -41,8 +41,8 @@ GridComponent& GridComponentSystem::addComponent(const TIEntityFactory& factory,
 	GridComponent& gridComponent = this->addComponent(entity);
 	SpriteComponent& spriteComponent = entity.addComponent<SpriteComponent>();
 
-    float width = factory.floatValues.at(GridComponentSystem::WIDTH);
-    float height = factory.floatValues.at(GridComponentSystem::HEIGHT);
+    const float& width = *factory.getReader()->get<float>(GridComponentSystem::WIDTH);
+    const float& height = *factory.getReader()->get<float>(GridComponentSystem::HEIGHT);
     gridComponent.setGridSize(sf::Vector2i(width, height));
 
     sf::FloatRect textureSize = spriteComponent.getLocalBounds();

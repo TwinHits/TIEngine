@@ -54,14 +54,14 @@ AnimatedComponent& AnimatedComponentSystem::addComponent(const TIEntityFactory& 
 
 	// Get all the keys containing animations from the stringValues map 
 	std::vector<std::string> animatedStringKeys;
-	for (auto& i : factory.stringValues) {
+	for (auto& i : factory.getReader()->getValues<std::string>()) {
 		if (i.first.find("animated.") != std::string::npos) {
 			animatedStringKeys.push_back(i.first);
 		}
 	}
     
 	std::vector<std::string> animatedFloatKeys;
-	for (auto& i : factory.floatValues) {
+	for (auto& i : factory.getReader()->getValues<float>()) {
 		if (i.first.find("animated.") != std::string::npos) {
 			animatedFloatKeys.push_back(i.first);
 		}
@@ -74,7 +74,7 @@ AnimatedComponent& AnimatedComponentSystem::addComponent(const TIEntityFactory& 
             std::vector<std::string> keyParts = String::slice(key, '.', 1);
             std::string animationName = keyParts.at(0);
             std::string animationField = keyParts.at(1);
-			std::string value = factory.stringValues.at(key);
+            const std::string& value = *factory.getReader()->get<std::string>(key);
 
             if (!animations.count(animationName)) {
                 animations[animationName] = Animation();
@@ -94,7 +94,7 @@ AnimatedComponent& AnimatedComponentSystem::addComponent(const TIEntityFactory& 
             std::vector<std::string> keyParts = String::slice(key, '.', 1);
             std::string animationName = keyParts.at(0);
             std::string animationField = keyParts.at(1);
-			float value = factory.floatValues.at(key);
+			const float& value = *factory.getReader()->get<float>(key);
 
             if (!animations.count(animationName)) {
                 animations[animationName] = Animation();

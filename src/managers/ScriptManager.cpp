@@ -70,6 +70,12 @@ void ScriptManager::loadScript(const std::string& scriptPath) {
     }
 }
 
+const GlobalId ScriptManager::registerFunction(const sol::function& function) {
+    const GlobalId functionId = HashManager::Instance()->getNewGlobalId();
+    this->functions.insert({ functionId, function });
+	return functionId;
+}
+
 
 const std::string& ScriptManager::getScriptWorkingDirectory() {
     return this->scriptWorkingDirectory;
@@ -83,63 +89,6 @@ sol::table ScriptManager::getNewTable() {
 
 void ScriptManager::setScriptWorkingDirectory(const std::string& scriptWorkingDirectory) {
     this->scriptWorkingDirectory = scriptWorkingDirectory;
-}
-
-
-TIEntityFactory& ScriptManager::loadTIEntityDefinition(TIEntityFactory& factory, const sol::table& definition) {
-
-	std::vector<std::string> children;
-	for (auto& possibleComponent : definition) {
-		sol::optional<std::string> key = possibleComponent.first.as<sol::optional<std::string> >();
-		sol::optional<sol::table> definition = possibleComponent.second.as<sol::optional<sol::table> >();
-		if (key && definition) {
-			if (this->isValidDefinitionFieldName(*key)) {
-				factory.addComponentSystemByComponentName(*key);
-				this->readComponentValues(factory, *key, *definition);
-			} else {
-				children.push_back(*key);
-			}
-		}
-	}
-
-	//Any other property is a child entity
-	for (auto& child : children) {
-		this->loadTIEntityDefinition(factory.addChild(), definition[child]);
-	}
-
-	return factory;
-}
-
-
-// Iterate through each key of the table looking for values that can be casted to types.
-// Store those types in the revelant TIEfactory map for use by any given component
-// Call recursively if it finds another table
-void ScriptManager::readComponentValues(TIEntityFactory& factory, const std::string& componentName, const sol::table& component) {
-	if (componentName == CacheComponentSystem::CACHE) {
-		factory.tableValues.insert({ componentName, component });
-	} else {
-		for (auto& pair : component) {
-			const std::string& key = componentName + "." + pair.first.as<std::string>();
-			const sol::object& value = pair.second;
-			if (value.valid()) {
-				if (value.is<bool>()) {
-					factory.boolValues.insert({ key, value.as<bool>() });
-				} else if (value.is<float>()) {
-					factory.floatValues.insert({ key, value.as<float>() });
-				} else if (value.is<std::string>()) {
-					factory.stringValues.insert({ key, value.as<std::string>() });
-				} else if (value.is<sol::function>()) {
-					GlobalId functionId = HashManager::Instance()->getNewGlobalId();
-					factory.functionValues.insert({ key, functionId });
-					this->functions.insert({ functionId, value.as<sol::function>() });
-				} else if (value.is<sol::table>()) {
-					this->readComponentValues(factory, key, value);
-				} else {
-					LogManager::Instance()->error("Error casting value from script: " + key + ".");
-				}
-			}
-		}
-	}
 }
 
 

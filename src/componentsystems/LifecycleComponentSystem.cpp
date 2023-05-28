@@ -43,18 +43,18 @@ LifecycleComponent& LifecycleComponentSystem::addComponent(const TIEntityFactory
 	LifecycleComponent& lifecycleComponent = this->addComponent(tientity);
 
 	GlobalId createdFunctionId = 0;
-	if (factory.functionValues.count(LifecycleComponentSystem::CREATED)) {
-		createdFunctionId = factory.functionValues.at(LifecycleComponentSystem::CREATED);
+	if (factory.getReader()->has<GlobalId>(LifecycleComponentSystem::CREATED)) {
+		createdFunctionId = *factory.getReader()->get<GlobalId>(LifecycleComponentSystem::CREATED);
 	}
 
 	GlobalId updatedFunctionId = 0;
-	if (factory.functionValues.count(LifecycleComponentSystem::UPDATED)) {
-		updatedFunctionId = factory.functionValues.at(LifecycleComponentSystem::UPDATED);
+	if (factory.getReader()->has<GlobalId>(LifecycleComponentSystem::UPDATED)) {
+		updatedFunctionId = *factory.getReader()->get<GlobalId>(LifecycleComponentSystem::UPDATED);
 	}
 
 	GlobalId removedFunctionId = 0;
-	if (factory.functionValues.count(LifecycleComponentSystem::REMOVED)) {
-		removedFunctionId = factory.functionValues.at(LifecycleComponentSystem::REMOVED);
+	if (factory.getReader()->has<GlobalId>(LifecycleComponentSystem::REMOVED)) {
+		removedFunctionId = *factory.getReader()->get<GlobalId>(LifecycleComponentSystem::REMOVED);
 	}
 
     lifecycleComponent.createdFunctionId = createdFunctionId;

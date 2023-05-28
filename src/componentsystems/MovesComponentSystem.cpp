@@ -71,12 +71,12 @@ MovesComponent& MovesComponentSystem::addComponent(const TIEntityFactory& factor
     MovesComponent& movesComponent = this->addComponent(tientity);
 	PositionComponent& positionComponent = PositionComponentSystem::Instance()->addComponent(tientity);
 
-	float targetSpeed = ComponentSystems::getFactoryValue<float>(factory, MovesComponentSystem::SPEED, movesComponent.targetSpeed, tientity);
-	float acceleration = ComponentSystems::getFactoryValue<float>(factory, MovesComponentSystem::ACCELERATION, movesComponent.acceleration, tientity);
-	float deceleration = ComponentSystems::getFactoryValue<float>(factory, MovesComponentSystem::ACCELERATION, movesComponent.deceleration, tientity);
+	const float& targetSpeed = factory.getReader()->get<float>(MovesComponentSystem::SPEED, movesComponent.targetSpeed);
+	const float& acceleration = factory.getReader()->get<float>(MovesComponentSystem::ACCELERATION, movesComponent.acceleration);
+	const float& deceleration = factory.getReader()->get<float>(MovesComponentSystem::ACCELERATION, movesComponent.deceleration);
 
-	float destinationX = ComponentSystems::getFactoryValue<float>(factory, MovesComponentSystem::DESTINATION_X, movesComponent.targetPosition.x, tientity);
-	float destinationY = ComponentSystems::getFactoryValue<float>(factory, MovesComponentSystem::DESTINATION_Y, movesComponent.targetPosition.y, tientity);
+	float destinationX = factory.getReader()->get<float>(MovesComponentSystem::DESTINATION_X, movesComponent.targetPosition.x);
+	float destinationY = factory.getReader()->get<float>(MovesComponentSystem::DESTINATION_Y, movesComponent.targetPosition.y);
 	if (!destinationX) {
 		destinationX = positionComponent.position.x;
 	}
@@ -85,10 +85,10 @@ MovesComponent& MovesComponentSystem::addComponent(const TIEntityFactory& factor
 	}
 	this->setTargetPosition(movesComponent, positionComponent, sf::Vector2f(destinationX, destinationY), tientity);
 
-	float rotates = ComponentSystems::getFactoryValue<bool>(factory, MovesComponentSystem::ROTATES, movesComponent.rotates, tientity);
-	float targetRotationalSpeed = ComponentSystems::getFactoryValue<float>(factory, MovesComponentSystem::ROTATIONAL_SPEED, movesComponent.targetRotationalSpeed, tientity);
-	float rotationalAcceleraton = ComponentSystems::getFactoryValue<float>(factory, MovesComponentSystem::ROTATIONAL_ACCELERATION, movesComponent.rotationalAcceleration, tientity);
-	float targetRotation = ComponentSystems::getFactoryValue<float>(factory, MovesComponentSystem::TARGET_ROTATION, positionComponent.rotation, tientity);
+	const float& rotates = factory.getReader()->get<bool>(MovesComponentSystem::ROTATES, movesComponent.rotates);
+	const float& targetRotationalSpeed = factory.getReader()->get<float>(MovesComponentSystem::ROTATIONAL_SPEED, movesComponent.targetRotationalSpeed);
+	const float& rotationalAcceleraton = factory.getReader()->get<float>(MovesComponentSystem::ROTATIONAL_ACCELERATION, movesComponent.rotationalAcceleration);
+	const float& targetRotation = factory.getReader()->get<float>(MovesComponentSystem::TARGET_ROTATION, positionComponent.rotation);
 
     movesComponent.targetSpeed = targetSpeed;
     movesComponent.acceleration = acceleration;

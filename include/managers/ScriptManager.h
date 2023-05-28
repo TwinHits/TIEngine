@@ -25,7 +25,9 @@ public:
 	void initialize();
 
 	void loadScript(const std::string&);
-	TIEntityFactory& loadTIEntityDefinition(TIEntityFactory&, const sol::table&);
+
+	const GlobalId registerFunction(const sol::function&);
+
 	FiniteStateMachineFactory& loadFiniteStateMachineDefinition(FiniteStateMachineFactory&, const sol::table&);
 
 	template <typename T>
@@ -83,7 +85,6 @@ private:
 	std::string scriptWorkingDirectory = "";
 	std::map<GlobalId, sol::function> functions;
 
-	void readComponentValues(TIEntityFactory&, const std::string&, const sol::table&);
 	bool isValidDefinitionFieldName(const std::string&);
 
 	ScriptManager(const ScriptManager&);

@@ -45,7 +45,7 @@ LineComponent& LineComponentSystem::addComponent(const TIEntityFactory& factory,
 	LineComponent& lineComponent = this->addComponent(tientity);
 	PositionComponent& positionComponent = PositionComponentSystem::Instance()->addComponent(tientity);
 
-	float magnitude = ComponentSystems::getFactoryValue<float>(factory, LineComponentSystem::MAGNITUDE, lineComponent.getMagnitude(), tientity);
+	const float& magnitude = factory.getReader()->get<float>(LineComponentSystem::MAGNITUDE, lineComponent.getMagnitude());
 	lineComponent.setMagnitude(magnitude);
 
 	this->setLine(lineComponent, positionComponent);

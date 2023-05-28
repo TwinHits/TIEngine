@@ -82,9 +82,9 @@ EventsComponent& EventsComponentSystem::addComponent(const TIEntityFactory& fact
 
 	// Get all the keys containing events from the functionValues map 
 	std::vector<std::string> eventKeys;
-	for (auto& i : factory.functionValues) {
-		if (i.first.find("events.") != std::string::npos) {
-			eventKeys.push_back(i.first);
+	for (auto& [key, functionId] : factory.getReader()->getValues<GlobalId>()) {
+		if (key.find("events.") != std::string::npos) {
+			eventKeys.push_back(key);
 		}
 	}
 
@@ -99,7 +99,7 @@ EventsComponent& EventsComponentSystem::addComponent(const TIEntityFactory& fact
                 state = keyParts.at(0);
 			}
 
-			const GlobalId handler = factory.functionValues.at(key);
+			const GlobalId& handler = factory.getReader()->getValues<GlobalId>().at(key);
 
 			// If it's an event value store it in the events map
 			sf::Event::EventType sfEvent = String::stringToEvent(event);

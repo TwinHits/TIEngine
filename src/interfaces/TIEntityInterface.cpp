@@ -75,7 +75,7 @@ std::string TIEntityInterface::getName() {
 }
 
 void TIEntityInterface::setName(const std::string& name) {
-    return this->tientity->setName(name);
+    this->tientity->setName(name);
 }
 
 

@@ -33,7 +33,7 @@ CacheComponent& CacheComponentSystem::addComponent(TIEntity& tientity) {
 
 CacheComponent& CacheComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
     CacheComponent& cacheComponent = this->addComponent(tientity);
-    sol::table copy = ScriptManager::Instance()->copyTable(factory.tableValues.at("cache"));
+    sol::table copy = ScriptManager::Instance()->copyTable(*factory.getReader()->get<sol::table>("cache"));
     cacheComponent.setCache(copy);
     return cacheComponent;
 }

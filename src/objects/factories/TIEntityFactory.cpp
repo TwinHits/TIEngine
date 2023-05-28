@@ -23,55 +23,38 @@ TIEntityFactory::TIEntityFactory() {
 
 TIEntityFactory::TIEntityFactory(const sol::table& definition) {
 	this->id = HashManager::Instance()->getNewGlobalId();
-    ScriptManager::Instance()->loadTIEntityDefinition(*this, definition);
+	this->reader = TIE::make_unique<ScriptTableReader>(definition);
 }
 
 
 TIEntity& TIEntityFactory::build() {
-
-	if (this->stringValues.count(TIEntityFactory::NAME)) {
-		this->setName(this->stringValues.at(TIEntityFactory::NAME));
-	}
-
-	if (this->boolValues.count(TIEntityFactory::SHOW_WIREFRAME)) {
-		this->setShowWireFrame(this->boolValues.at(TIEntityFactory::SHOW_WIREFRAME));
-	}
-	if (this->getShowWireframe()) {
-		this->addComponentSystemByComponentName(WireframeComponentSystem::Instance()->getName());
-	}
-
 	if (this->parent == nullptr) {
 		this->setParent(&SceneManager::Instance()->getClientLayer());
 	}
-
 	TIEntity& tientity = this->parent->attachChild();
 	tientity.setName(this->name);
 
-	for (ComponentSystem* componentSystem : ComponentSystemsManager::Instance()->getComponentSystems()) {
-		if (this->componentSystemNames.count(componentSystem->getName())) {
-			componentSystem->addComponent(*this, tientity);
+	if (this->hasReader()) {
+        if (this->reader->has<std::string>(TIEntityFactory::NAME)) {
+            this->setName(*this->reader->get<std::string>(TIEntityFactory::NAME));
+        }
+
+        if (this->reader->has<bool>(TIEntityFactory::SHOW_WIREFRAME)) {
+            this->setShowWireFrame(*this->reader->get<bool>(TIEntityFactory::SHOW_WIREFRAME));
+        }
+
+        for (ComponentSystem* componentSystem : ComponentSystemsManager::Instance()->getComponentSystems()) {
+            if (this->reader && this->reader->hasKey(componentSystem->getName())) {
+				componentSystem->addComponent(*this, tientity);
+			}
 		}
 	}
 
 	LifecycleComponentSystem::Instance()->runCreated(tientity);
 
-	for (auto & child : this->children) {
-		child.setParent(&tientity);
-		child.setShowWireFrame(this->getShowWireframe());
-		child.build();
-	}
-
 	WorldManager::Instance()->registerTIEntity(tientity);
     WorldManager::Instance()->saveTIEntityFactory(tientity.getName(), *this);
 	return tientity;
-}
-
-
-TIEntityFactory& TIEntityFactory::addComponentSystemByComponentName(const std::string& name) {
-	if (ComponentSystemsManager::Instance()->isValidComponentName(name)) {
-		this->componentSystemNames[name] = true;
-	}
-	return *this;
 }
 
 
@@ -81,15 +64,23 @@ TIEntityFactory& TIEntityFactory::setParent(TIEntity* parent) {
 }
 
 
-TIEntityFactory& TIEntityFactory::addChild() {
-	this->children.push_back(TIEntityFactory());
-	TIEntityFactory& child = this->children.back();
-	return child;
+const GlobalId TIEntityFactory::getId() {
+	return this->id;
 }
 
 
-const GlobalId TIEntityFactory::getId() {
-	return this->id;
+const bool TIEntityFactory::hasReader() {
+	return this->reader != nullptr;
+}
+
+
+const ScriptTableReader* TIEntityFactory::getReader() {
+	return this->reader.get();
+}
+
+
+const ScriptTableReader* TIEntityFactory::getReader() const {
+	return this->reader.get();
 }
 
 

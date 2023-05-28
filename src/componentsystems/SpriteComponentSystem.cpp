@@ -59,27 +59,27 @@ SpriteComponent& SpriteComponentSystem::addComponent(const TIEntityFactory& fact
 
     spriteComponent.setPosition(positionComponent.position);
 
-	std::string& textureName = ComponentSystems::getFactoryValue<std::string>(factory, SpriteComponentSystem::TEXTURE, SpriteComponentSystem::MISSING_TEXTURE_NAME, tientity);
+	const std::string& textureName = factory.getReader()->get<std::string>(SpriteComponentSystem::TEXTURE, SpriteComponentSystem::MISSING_TEXTURE_NAME);
     sf::Texture& texture = AssetsManager::Instance()->getTexture(textureName);
 
-	bool repeated = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::REPEATED, texture.isRepeated(), tientity);
+	const bool& repeated = factory.getReader()->get<bool>(SpriteComponentSystem::REPEATED, texture.isRepeated());
     texture.setRepeated(repeated);
 
-	bool constrainProportions = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::CONSTRAIN_PROPORTIONS, spriteComponent.isConstrainProportions(), tientity);
+	const bool& constrainProportions = factory.getReader()->get<bool>(SpriteComponentSystem::CONSTRAIN_PROPORTIONS, spriteComponent.isConstrainProportions());
 	spriteComponent.setConstrainProportions(constrainProportions);
 
-	float width = ComponentSystems::getFactoryValue<float>(factory, SpriteComponentSystem::WIDTH, texture.getSize().x, tientity);
-	float height = ComponentSystems::getFactoryValue<float>(factory, SpriteComponentSystem::HEIGHT, texture.getSize().y, tientity);
+	const float& width = factory.getReader()->get<float>(SpriteComponentSystem::WIDTH, texture.getSize().x);
+	const float& height = factory.getReader()->get<float>(SpriteComponentSystem::HEIGHT, texture.getSize().y);
 	this->setTextureFields(spriteComponent, texture, width, height);
 
-	float originX = ComponentSystems::getFactoryValue<float>(factory, SpriteComponentSystem::ORIGIN_X, spriteComponent.getLocalBounds().width / 2, tientity);
-	float originY = ComponentSystems::getFactoryValue<float>(factory, SpriteComponentSystem::ORIGIN_Y, spriteComponent.getLocalBounds().height / 2, tientity);
+	const float& originX = factory.getReader()->get<float>(SpriteComponentSystem::ORIGIN_X, spriteComponent.getLocalBounds().width / 2);
+	const float& originY = factory.getReader()->get<float>(SpriteComponentSystem::ORIGIN_Y, spriteComponent.getLocalBounds().height / 2);
 	spriteComponent.setOrigin(originX, originY);
 
-	bool drawn = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::DRAWN, spriteComponent.isDrawn(), tientity);
+	const bool& drawn = factory.getReader()->get<bool>(SpriteComponentSystem::DRAWN, spriteComponent.isDrawn());
     spriteComponent.setDrawn(drawn);
 
-	bool rotates = ComponentSystems::getFactoryValue<bool>(factory, SpriteComponentSystem::ROTATES, spriteComponent.isRotates(), tientity);
+	const bool& rotates = factory.getReader()->get<bool>(SpriteComponentSystem::ROTATES, spriteComponent.isRotates());
 	spriteComponent.setRotates(rotates);
 
 	return spriteComponent;

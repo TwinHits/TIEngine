@@ -53,10 +53,10 @@ CollidesComponent& CollidesComponentSystem::addComponent(TIEntity& tientity) {
 CollidesComponent& CollidesComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
 	CollidesComponent& collidesComponent = this->addComponent(tientity);
 
-	bool collidable  = ComponentSystems::getFactoryValue<bool>(factory, CollidesComponentSystem::IS_COLLIDABLE, collidesComponent.isCollidable(), tientity);
+	const bool& collidable  = factory.getReader()->get<bool>(CollidesComponentSystem::IS_COLLIDABLE, collidesComponent.isCollidable());
 	collidesComponent.setCollidable(collidable);
 
-	bool collides  = ComponentSystems::getFactoryValue<bool>(factory, CollidesComponentSystem::IS_COLLIDES, collidesComponent.isCollides(), tientity);
+	const bool& collides = factory.getReader()->get<bool>(CollidesComponentSystem::IS_COLLIDES, collidesComponent.isCollides());
 	collidesComponent.setCollides(collides);
 
 	return collidesComponent;

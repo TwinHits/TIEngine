@@ -46,10 +46,10 @@ PositionComponent& PositionComponentSystem::addComponent(TIEntity& tientity) {
 PositionComponent& PositionComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
     PositionComponent& positionComponent = this->addComponent(tientity);
 
-	float x = ComponentSystems::getFactoryValue<float>(factory, PositionComponentSystem::POSITION_X, positionComponent.position.x, tientity);
-	float y = ComponentSystems::getFactoryValue<float>(factory, PositionComponentSystem::POSITION_Y, positionComponent.position.y, tientity);
-	float rotation = ComponentSystems::getFactoryValue<float>(factory, PositionComponentSystem::ROTATION, positionComponent.rotation, tientity);
-	bool rotates = ComponentSystems::getFactoryValue<bool>(factory, PositionComponentSystem::ROTATES, positionComponent.rotates, tientity);
+	const float& x = factory.getReader()->get<float>(PositionComponentSystem::POSITION_X, positionComponent.position.x);
+	const float& y = factory.getReader()->get<float>(PositionComponentSystem::POSITION_Y, positionComponent.position.y);
+	const float& rotation = factory.getReader()->get<float>(PositionComponentSystem::ROTATION, positionComponent.rotation);
+	const bool& rotates = factory.getReader()->get<bool>(PositionComponentSystem::ROTATES, positionComponent.rotates);
 
     positionComponent.position.x = x;
     positionComponent.position.y = y;

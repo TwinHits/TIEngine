@@ -91,8 +91,7 @@ void TIEngineInterface::setWindowFullScreen(const bool isFullscreen) {
 
 
 bool TIEngineInterface::setLevel(const sol::table& level) {
-    TIEntityFactory factory = TIEntityFactory();
-    ScriptManager::Instance()->loadTIEntityDefinition(factory, level);
+    TIEntityFactory factory = TIEntityFactory(level);
     WorldManager::Instance()->setLevelEntity(factory);
     return true;
 }

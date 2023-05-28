@@ -3,6 +3,7 @@
 
 #include <string>
 
+#include "objects/ScriptTableReader.h"
 #include "objects/tientities/TIEntity.h"
 #include "objects/factories/tientities/TIEntityFactory.h"
 #include "managers/ScriptManager.h"
@@ -10,20 +11,6 @@
 
 namespace TIE {
     namespace ComponentSystems {
-
-        template <typename T>
-        T getFactoryValue(const TIEntityFactory& factory, const std::string& key, T defaultReturn, TIEntity& tientity) {
-            return defaultReturn;
-        }
-
-        template <>
-        bool getFactoryValue<bool>(const TIEntityFactory&, const std::string&, bool, TIEntity&);
-
-        template <>
-        float getFactoryValue<float>(const TIEntityFactory&, const std::string&, float, TIEntity&);
-
-        template<>
-        std::string getFactoryValue<std::string>(const TIEntityFactory&, const std::string&, std::string, TIEntity&);
 
         std::string getComponentNameFromKey(const std::string&);
         ComponentSystemPropertiesMap& insertComponentPropertyIntoMap(const std::string&, ComponentSystemPropertiesMap&);

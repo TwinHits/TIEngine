@@ -2,13 +2,15 @@
 #define TIENTITYFACTORY_H
 
 #include <map>
-#include <vector>
+#include <memory>
 #include <string>
+#include <vector>
 
 #include <sol/sol.hpp>
 
 #include "objects/tientities/TIEntity.h" 
 #include "objects/GlobalId.h"
+#include "objects/ScriptTableReader.h"
 
 namespace TIE {
 
@@ -16,8 +18,13 @@ class TIEntityFactory {
 	public:
 		TIEntityFactory();
 		TIEntityFactory(const sol::table&);
+		TIEntityFactory(const TIEntityFactory&) {};
 
 		const GlobalId getId();
+
+		const bool hasReader();
+		const ScriptTableReader* getReader();
+		const ScriptTableReader* getReader() const;
 
 		TIEntityFactory& setName(std::string);
 		const std::string& getName();
@@ -27,15 +34,6 @@ class TIEntityFactory {
 		const bool getShowWireframe() const;
 
 		TIEntityFactory& setParent(TIEntity*);
-		TIEntityFactory& addChild();
-
-		TIEntityFactory& addComponentSystemByComponentName(const std::string&);
-
-		std::map<std::string, bool> boolValues;
-		std::map<std::string, float> floatValues;
-		std::map<std::string, std::string> stringValues;
-		std::map<std::string, GlobalId> functionValues;
-		std::map<std::string, sol::table> tableValues;
 
 		TIEntity& build();
 
@@ -49,8 +47,7 @@ class TIEntityFactory {
 		std::string name = "";
 		bool showWireframe = false;
 		TIEntity* parent = nullptr;
-		std::vector<TIEntityFactory> children;
-		std::map<std::string, bool> componentSystemNames;
+		std::unique_ptr<ScriptTableReader> reader;
 };
 
 }

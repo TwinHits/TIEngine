@@ -40,10 +40,10 @@ BehavesComponent& BehavesComponentSystem::addComponent(TIEntity& tientity) {
 BehavesComponent& BehavesComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
     BehavesComponent& component = this->addComponent(tientity);
 
-	GlobalId rootPayload = ComponentSystems::getFactoryValue<float>(factory, BehavesComponentSystem::ROOT_PAYLOAD, component.rootPayload, tientity);
+	const GlobalId& rootPayload = factory.getReader()->get<float>(BehavesComponentSystem::ROOT_PAYLOAD, component.rootPayload);
 	this->setComponentProperty(BehavesComponentSystem::ROOT_PAYLOAD, rootPayload, tientity);
 
-	GlobalId rootStateId = ComponentSystems::getFactoryValue<float>(factory, BehavesComponentSystem::ROOT_STATE, 0, tientity);
+	const GlobalId& rootStateId = factory.getReader()->get<float>(BehavesComponentSystem::ROOT_STATE, 0);
 	this->setComponentProperty(BehavesComponentSystem::ROOT_STATE, rootStateId, tientity);
 
 	return component;

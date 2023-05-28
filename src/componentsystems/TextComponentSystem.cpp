@@ -53,20 +53,20 @@ TextComponent& TextComponentSystem::addComponent(TIEntity& tientity) {
 TextComponent& TextComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
     TextComponent& textComponent = this->addComponent(tientity);
 
-	bool drawn = ComponentSystems::getFactoryValue<bool>(factory, TextComponentSystem::DRAWN, textComponent.isDrawn(), tientity);
+	const bool& drawn = factory.getReader()->get<bool>(TextComponentSystem::DRAWN, textComponent.isDrawn());
     textComponent.setDrawn(drawn);
 
-	const std::string& text = ComponentSystems::getFactoryValue<std::string>(factory, TextComponentSystem::STRING, textComponent.getText().getString(), tientity);
+	const std::string& text = factory.getReader()->get<std::string>(TextComponentSystem::STRING, textComponent.getText().getString());
     textComponent.setString(text);
 
-	const std::string& fontName = ComponentSystems::getFactoryValue<std::string>(factory, TextComponentSystem::FONT, TextComponentSystem::FONT_DEFAULT, tientity);
+	const std::string& fontName = factory.getReader()->get<std::string>(TextComponentSystem::FONT, TextComponentSystem::FONT_DEFAULT);
 	const FontAsset& font = AssetsManager::Instance()->getFont(fontName);
 	textComponent.setFont(font);
 
-	float characterSize = ComponentSystems::getFactoryValue<float>(factory, TextComponentSystem::CHARACTER_SIZE, textComponent.getCharacterSize(), tientity);
+	const float& characterSize = factory.getReader()->get<float>(TextComponentSystem::CHARACTER_SIZE, textComponent.getCharacterSize());
     textComponent.setCharacterSize(characterSize);
 
-	TextAlignment textAlignment = TIE::String::strToTextAlignment(ComponentSystems::getFactoryValue<std::string>(factory, TextComponentSystem::TEXT_ALIGNMENT, TIE::String::textAlignmentToStr(textComponent.getTextAlignment()), tientity));
+	TextAlignment textAlignment = TIE::String::strToTextAlignment(factory.getReader()->get<std::string>(TextComponentSystem::TEXT_ALIGNMENT, TIE::String::textAlignmentToStr(textComponent.getTextAlignment())));
 	textComponent.setTextAlignment(textAlignment);
 
 	return textComponent;
