@@ -31,6 +31,9 @@ class TIEntityInterface {
         TIEntityInterface spawn(const sol::table&);
         void despawn();
 
+        //Common Child TIEntities
+        void addTrace(const float, const float);
+
         // Property
         void setProperty(const std::string&, const sol::object&);
         sol::object getProperty(const std::string&);

@@ -38,7 +38,7 @@ class FiniteStateMachine {
         void update(float);
         void onEnter();
         void onEnter(const sol::object);
-        void onMessage(const Message&);
+        virtual void onMessage(const Message&);
         void onExit();
 
         const bool hasChildState(const GlobalId);

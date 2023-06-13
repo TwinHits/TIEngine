@@ -12,6 +12,7 @@
 #include "interfaces/MessageInterface.h"
 #include "managers/ComponentSystemsManager.h"
 #include "objects/GlobalId.h"
+#include "objects/factories/tientities/TraceFactory.h"
 #include "objects/components/structs/EventState.h"
 #include "utils/ComponentSystems.h"
 
@@ -39,6 +40,9 @@ void TIEntityInterface::registerUserType(sol::state& luaState) {
     interfaceUserType["getChild"] = &TIEntityInterface::getChild;
     interfaceUserType["spawn"] = &TIEntityInterface::spawn;
     interfaceUserType["despawn"] = &TIEntityInterface::despawn;
+
+    //Common Child TIEntities
+    interfaceUserType["addTrace"] = &TIEntityInterface::addTrace;
 
     //Property
     interfaceUserType["setProperty"] = &TIEntityInterface::setProperty;
@@ -201,4 +205,9 @@ void TIEntityInterface::sendMessage(const GlobalId subscription, sol::object rec
             }
         }
     }
+}
+
+
+void TIEntityInterface::addTrace(const float magnitude, const float direction) {
+    TraceFactory(this->tientity).setMagnitude(magnitude).setDirection(direction).build();
 }

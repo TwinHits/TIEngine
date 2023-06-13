@@ -2,8 +2,6 @@
 
 #include <sol/sol.hpp>
 
-#include <algorithm>
-
 #include "componentsystems/ComponentSystem.h"
 #include "componentsystems/LifecycleComponentSystem.h"
 #include "componentsystems/WireframeComponentSystem.h"
@@ -32,11 +30,10 @@ TIEntity& TIEntityFactory::build() {
 		this->setParent(&SceneManager::Instance()->getClientLayer());
 	}
 	TIEntity& tientity = this->parent->attachChild();
-	tientity.setName(this->name);
 
 	if (this->hasReader()) {
         if (this->reader->has<std::string>(TIEntityFactory::NAME)) {
-            this->setName(*this->reader->get<std::string>(TIEntityFactory::NAME));
+            this->name = *this->reader->get<std::string>(TIEntityFactory::NAME);
         }
 
         if (this->reader->has<bool>(TIEntityFactory::SHOW_WIREFRAME)) {
@@ -49,6 +46,8 @@ TIEntity& TIEntityFactory::build() {
 			}
 		}
 	}
+
+	tientity.setName(this->name);
 
 	LifecycleComponentSystem::Instance()->runCreated(tientity);
 

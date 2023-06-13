@@ -40,12 +40,8 @@ void ScriptTableReader::read(const std::string & prefix, const sol::table& table
             } else if (value.is<sol::function>()) {
                 this->functionValues.insert({ prefixedKey, ScriptManager::Instance()->registerFunction(value.as<sol::function>()) });
             } else if (value.is<sol::table>()) {
-                //Check against list of values to save as tables or
-                if (key.as<std::string>() == CacheComponentSystem::CACHE) {
-                    this->tableValues.insert({ prefixedKey, value.as<sol::table>() });
-                } else {
-                    this->read(prefixedKey + '.', value.as<sol::table>());
-                }
+                this->tableValues.insert({ prefixedKey, value.as<sol::table>() });
+                this->read(prefixedKey + '.', value.as<sol::table>());
             } else {
                 LogManager::Instance()->error("Error casting value from script: " + prefixedKey + ".");
             }
