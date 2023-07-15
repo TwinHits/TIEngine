@@ -30,9 +30,11 @@ void CollidesComponentSystem::update(const float delta) {
 	if (components.size() >= 2) {
 		for (std::list<Components>::iterator c1 = components.begin(), c2 = std::next(c1, 1); c2 != components.end(); ++c1, c2 = std::next(c1, 1)) {
 			for (c2; c2 != components.end(); c2++) {
-				this->checkHitboxCollisions(*c1, *c2);
-				this->checkLineCollisions(*c1, *c2);
-				this->checkLineCollisions(*c2, *c1);
+				if (!c1->tientity.isRelatedTo(c2->tientity)) {
+					this->checkHitboxCollisions(*c1, *c2);
+                    this->checkLineCollisions(*c1, *c2);
+                    this->checkLineCollisions(*c2, *c1);
+				}
 			}
 		}
 	}
@@ -58,6 +60,9 @@ CollidesComponent& CollidesComponentSystem::addComponent(const TIEntityFactory& 
 
 	const bool& collides = factory.getReader()->get<bool>(CollidesComponentSystem::IS_COLLIDES, collidesComponent.isCollides());
 	collidesComponent.setCollides(collides);
+
+	const GlobalId& payload = tientity.getId();
+	collidesComponent.setPayload(payload);
 
 	return collidesComponent;
 }
@@ -113,14 +118,14 @@ void CollidesComponentSystem::checkHitboxCollisions(Components& c1, Components& 
 					this->collisionMessageSubscription,
 					c2.tientity.getId(), // sender
 					c1.tientity.getId(), // recipient
-					ScriptManager::Instance()->getObjectFromValue(c2.tientity.getId()));
+					ScriptManager::Instance()->getObjectFromValue(c2.collidesComponent.getPayload()));
 			}
 			if (c2.collidesComponent.isCollides() && c2.collidesComponent.isCollidable()) {
 				MessagesComponentSystem::Instance()->sendMessage(
 					this->collisionMessageSubscription,
 					c1.tientity.getId(), // sender
 					c2.tientity.getId(), // recipient
-					ScriptManager::Instance()->getObjectFromValue(c1.tientity.getId()));
+					ScriptManager::Instance()->getObjectFromValue(c1.collidesComponent.getPayload()));
 			}
 		}
 	}
@@ -132,15 +137,13 @@ void CollidesComponentSystem::checkLineCollisions(Components& lineComponents, Co
         // if (I want to know when I hit things && they want to say they got hit)
         if (lineComponents.collidesComponent.isCollides() && hitboxComponents.collidesComponent.isCollidable()) {
             const sf::VertexArray& line = lineComponents.tientity.getComponent<LineComponent>()->getLine();
-			auto startpoint = line[0].position;
-			auto endpoint = line[1].position;
             const sf::FloatRect& c2Hitbox = ComponentSystems::getGlobalBounds(hitboxComponents.tientity);
 			if (Math::doesLineIntersectRect(line, c2Hitbox)) {
                 MessagesComponentSystem::Instance()->sendMessage(
                     this->collisionMessageSubscription,
 					hitboxComponents.tientity.getId(), // sender
 					lineComponents.tientity.getId(), // reciepent
-                    ScriptManager::Instance()->getObjectFromValue(hitboxComponents.tientity.getId()));
+                    ScriptManager::Instance()->getObjectFromValue(hitboxComponents.collidesComponent.getPayload()));
             }
 		}
 	}

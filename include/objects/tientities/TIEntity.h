@@ -56,6 +56,7 @@ class TIEntity {
 
 		void setParent(TIEntity*);
 		TIEntity& getParent();
+		bool hasParent();
 
 		void setRemove(bool);
 		bool getRemove() const;
@@ -68,6 +69,9 @@ class TIEntity {
 		TIEntity& attachChild();
 
 		virtual bool isSceneLayer();
+
+		bool isRelatedTo(TIEntity&);
+		bool isParentOf(TIEntity&);
 
 		bool operator==(const TIEntity&) const;
 		bool operator!=(const TIEntity&) const;

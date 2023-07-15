@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "objects/GlobalId.h"
+#include "managers/HashManager.h"
 #include "templates/MakeUnique.h"
 
 using namespace TIE;
@@ -29,9 +30,21 @@ const bool ShapeComponent::isRotates() const {
 }
 
 
+sf::RectangleShape& ShapeComponent::addRectangleShape() {
+	const GlobalId id = HashManager::Instance()->getNewGlobalId();
+	return this->addRectangleShape(id);
+}
+
+
 sf::RectangleShape& ShapeComponent::addRectangleShape(const GlobalId id) {
 	this->shapes[id] = TIE::make_unique<sf::RectangleShape>();
 	return dynamic_cast<sf::RectangleShape&>(*this->shapes.at(id));
+}
+
+
+sf::CircleShape& ShapeComponent::addCircleShape() {
+	const GlobalId id = HashManager::Instance()->getNewGlobalId();
+	return this->addCircleShape(id);
 }
 
 

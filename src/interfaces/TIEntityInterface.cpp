@@ -13,6 +13,7 @@
 #include "managers/ComponentSystemsManager.h"
 #include "objects/GlobalId.h"
 #include "objects/factories/tientities/TraceFactory.h"
+#include "objects/factories/tientities/CollisionBoxFactory.h"
 #include "objects/components/structs/EventState.h"
 #include "utils/ComponentSystems.h"
 
@@ -43,6 +44,7 @@ void TIEntityInterface::registerUserType(sol::state& luaState) {
 
     //Common Child TIEntities
     interfaceUserType["addTrace"] = &TIEntityInterface::addTrace;
+    interfaceUserType["addCollisionBox"] = &TIEntityInterface::addCollisionBox;
 
     //Property
     interfaceUserType["setProperty"] = &TIEntityInterface::setProperty;
@@ -210,4 +212,9 @@ void TIEntityInterface::sendMessage(const GlobalId subscription, sol::object rec
 
 void TIEntityInterface::addTrace(const float magnitude, const float direction) {
     TraceFactory(this->tientity).setMagnitude(magnitude).setDirection(direction).build();
+}
+
+
+void TIEntityInterface::addCollisionBox(const float x, const float y, const float width, const float height) {
+    CollisionBoxFactory(this->tientity).setRect(x, y, width, height).build();
 }

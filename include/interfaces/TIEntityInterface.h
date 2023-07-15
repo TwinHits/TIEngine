@@ -33,6 +33,7 @@ class TIEntityInterface {
 
         //Common Child TIEntities
         void addTrace(const float, const float);
+        void addCollisionBox(const float, const float, const float, const float);
 
         // Property
         void setProperty(const std::string&, const sol::object&);

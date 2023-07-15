@@ -22,7 +22,10 @@ class ShapeComponent : public Component {
         void setRotates(const bool);
         const bool isRotates() const;
 
+		sf::RectangleShape& addRectangleShape();
 		sf::RectangleShape& addRectangleShape(const GlobalId);
+
+		sf::CircleShape& addCircleShape();
 		sf::CircleShape& addCircleShape(const GlobalId);
 
 		const std::map<GlobalId, std::unique_ptr<sf::Shape> >& getShapes();

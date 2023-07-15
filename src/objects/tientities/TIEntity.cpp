@@ -24,7 +24,12 @@ void TIEntity::setParent(TIEntity* parent) {
 
 
 TIEntity& TIEntity::getParent() {
-	return *parent;
+	return *(this->parent);
+}
+
+
+bool TIEntity::hasParent() {
+	return this->parent != nullptr;
 }
 
 
@@ -70,6 +75,25 @@ TIEntity& TIEntity::attachChild() {
 
 
 bool TIEntity::isSceneLayer() {
+	return false;
+}
+
+
+bool TIEntity::isRelatedTo(TIEntity& rhs) {
+	TIEntity* parentClosestToSceneLayer = this;
+	while (parentClosestToSceneLayer->hasParent() && !parentClosestToSceneLayer->getParent().isSceneLayer()) {
+		parentClosestToSceneLayer = &parentClosestToSceneLayer->getParent();
+	}
+	return parentClosestToSceneLayer->isParentOf(rhs);
+}
+
+
+bool TIEntity::isParentOf(TIEntity& rhs) {
+	for (auto& child : this->getChildren()) {
+		if (*child == rhs || child->isParentOf(rhs)) {
+			return true;
+		}
+	}
 	return false;
 }
 
