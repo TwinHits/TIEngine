@@ -69,6 +69,11 @@ TIEntity& WorldManager::registerTIEntity(TIEntity& tientity) {
 }
 
 
+void WorldManager::deregisterTIEntity(TIEntity& tientity) {
+	this->tientities.erase(tientity.getId());
+}
+
+
 TIEntity* WorldManager::getTIEntityById(GlobalId id) {
 	return this->tientities.count(id) ? this->tientities.at(id) : nullptr;
 }

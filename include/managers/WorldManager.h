@@ -27,7 +27,9 @@ class WorldManager : public Singleton<WorldManager>, public Manager {
 		void showGridGuide(bool);
 
 		TIEntity& registerTIEntity(TIEntity&);
+		void deregisterTIEntity(TIEntity&);
 		TIEntity* getTIEntityById(GlobalId);
+
 		TIEntityFactory& saveTIEntityFactory(const std::string&, TIEntityFactory&);
 		TIEntityFactory* getTIEntityFactory(const std::string&);
 

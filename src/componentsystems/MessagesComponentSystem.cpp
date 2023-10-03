@@ -23,8 +23,10 @@ void MessagesComponentSystem::update(const float delta) {
 	std::swap(this->currentFrameMessages, this->nextFrameMessages);
 	for (auto& [reciepentId, subscriptions] : this->currentFrameMessages) {
 		TIEntity* receipent = WorldManager::Instance()->getTIEntityById(reciepentId);
-		for (auto& [subscriptionId, messages] : subscriptions) {
-			BehavesComponentSystem::Instance()->onMessage(*receipent, messages);
+		if (receipent) {
+			for (auto& [subscriptionId, messages] : subscriptions) {
+				BehavesComponentSystem::Instance()->onMessage(*receipent, messages);
+			}
 		}
 	}
 	this->currentFrameMessages.clear();
