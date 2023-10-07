@@ -48,6 +48,9 @@ TIEntity& TraceFactory::build() {
     TIEntity& trace = this->parent->attachChild();
 
     BehavesComponent& behavesComponent = BehavesComponentSystem::Instance()->addComponent(trace);
+    // Collisions with traces should get renamed when being redirected to TraceCollisions
+    // Perhaps MessageRedriect should have a map of types of messages to rename to other types of messages
+    // Collision -> TraceCollision
     std::unique_ptr<MessagesRedirect> messageRedirectFSM = MessagesRedirectFactory().build(trace, trace.getParent());
     behavesComponent.rootState = std::move(messageRedirectFSM);
 
