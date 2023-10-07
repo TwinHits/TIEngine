@@ -41,6 +41,9 @@ std::vector<std::unique_ptr<TIEntity> >& TIEntity::getChildren() {
 void TIEntity::setRemove(bool remove) {
 	SceneManager::Instance()->setTIEntitiesMarkedForRemove(true);
 	this->remove = remove;
+	for (auto child = children.begin(); child != children.end(); ++child) {
+		(*child)->setRemove(remove);
+	}
 }
 
 
