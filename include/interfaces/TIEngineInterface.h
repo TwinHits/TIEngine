@@ -34,14 +34,14 @@ class TIEngineInterface {
 
         bool setZoomSettings(const float, const float, const float);
 
-        TIEntityInterface spawn(const sol::table&);
+        sol::object spawn(const sol::table&);
 
         bool hasEvent(std::string& event);
         const sf::Vector2i getMouseClickPosition();
 
-        TIEntityInterface getTIEntityById(GlobalId);
+        sol::object getTIEntityById(GlobalId);
 
-        TIEntityInterface registerSceneLayer(const std::string&, bool);
+        sol::object registerSceneLayer(const std::string&, bool);
         GlobalId registerFiniteStateMachine(const sol::table&);
 
         GlobalId registerMessageSubscription(const std::string&);

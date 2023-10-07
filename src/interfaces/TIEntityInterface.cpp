@@ -2,19 +2,19 @@
 
 #include "sol/sol.hpp"
 
-#include <vector>
+#include <string>
 
 #include "componentsystems/CacheComponentSystem.h"
 #include "componentsystems/EventsComponentSystem.h"
 #include "componentsystems/MessagesComponentSystem.h"
 #include "componentsystems/PositionComponentSystem.h"
-#include "componentsystems/SpriteComponentSystem.h"
 #include "interfaces/MessageInterface.h"
 #include "managers/ComponentSystemsManager.h"
 #include "objects/GlobalId.h"
 #include "objects/factories/tientities/TraceFactory.h"
 #include "objects/factories/tientities/CollisionBoxFactory.h"
 #include "objects/components/structs/EventState.h"
+#include "managers/ScriptManager.h"
 #include "utils/ComponentSystems.h"
 
 using namespace TIE;
@@ -94,25 +94,25 @@ sol::table& TIEntityInterface::getChildren() {
 }
 
 
-TIEntityInterface TIEntityInterface::getChild(const std::string& name) {
+sol::object TIEntityInterface::getChild(const std::string& name) {
     for (auto& child : this->tientity->getChildren()) {
         if (child->getName() == name) {
-            return TIEntityInterface(*child);
+            return ScriptManager::Instance()->getObjectFromValue(TIEntityInterface(*child));
         }
     }
     return nullptr;
 }
 
 
-TIEntityInterface TIEntityInterface::getParent() {
-    return TIEntityInterface(this->tientity->getParent());
+sol::object TIEntityInterface::getParent() {
+    return ScriptManager::Instance()->getObjectFromValue(TIEntityInterface(this->tientity->getParent()));
 }
 
 
-TIEntityInterface TIEntityInterface::spawn(const sol::table& definition) {
+sol::object TIEntityInterface::spawn(const sol::table& definition) {
     TIEntityFactory factory = TIEntityFactory(definition);
     factory.setParent(this->tientity);
-    return TIEntityInterface(factory.build());
+    return ScriptManager::Instance()->getObjectFromValue(TIEntityInterface(factory.build()));
 }
 
 

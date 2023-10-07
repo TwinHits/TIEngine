@@ -2,7 +2,6 @@
 #define TIENTITYINTERFACE_H
 
 #include <string>
-#include <vector>
 
 #include <sol/sol.hpp>
 
@@ -26,9 +25,9 @@ class TIEntityInterface {
         std::string getName();
         void setName(const std::string&);
         sol::table& getChildren();
-        TIEntityInterface getChild(const std::string&);
-        TIEntityInterface getParent();
-        TIEntityInterface spawn(const sol::table&);
+        sol::object getChild(const std::string&);
+        sol::object getParent();
+        sol::object spawn(const sol::table&);
         void despawn();
 
         //Common Child TIEntities

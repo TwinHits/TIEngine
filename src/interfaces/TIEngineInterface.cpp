@@ -1,7 +1,6 @@
 #include "interfaces/TIEngineInterface.h"
 
 #include <string>
-#include <vector>
 
 #include <sol/sol.hpp>
 
@@ -103,9 +102,9 @@ bool TIEngineInterface::setZoomSettings(const float speed, const float minimum, 
 }
 
 
-TIEntityInterface TIEngineInterface::spawn(const sol::table& definition) {
+sol::object TIEngineInterface::spawn(const sol::table& definition) {
     TIEntityFactory factory = TIEntityFactory(definition);
-    return TIEntityInterface(factory.build());
+    return ScriptManager::Instance()->getObjectFromValue(TIEntityInterface(factory.build()));
 }
 
 
@@ -125,17 +124,17 @@ const sf::Vector2i TIEngineInterface::getMouseClickPosition() {
 }
 
 
-TIEntityInterface TIEngineInterface::getTIEntityById(GlobalId id) {
+sol::object TIEngineInterface::getTIEntityById(GlobalId id) {
     TIEntity* tientity = WorldManager::Instance()->getTIEntityById(id);
     if (tientity != nullptr) {
-        return TIEntityInterface(tientity);
+        return ScriptManager::Instance()->getObjectFromValue(TIEntityInterface(tientity));
     } else {
-        return nullptr;
+        return sol::nil;
     }
 }
 
 
-TIEntityInterface TIEngineInterface::registerSceneLayer(const std::string& name, bool scrollable) {
+sol::object TIEngineInterface::registerSceneLayer(const std::string& name, bool scrollable) {
     SceneLayerFactory sceneLayerFactory = SceneLayerFactory();
     sceneLayerFactory.setName(name);
     sceneLayerFactory.setParent(SceneManager::Instance()->getClientLayer());
@@ -147,7 +146,7 @@ TIEntityInterface TIEngineInterface::registerSceneLayer(const std::string& name,
     }
 
     SceneLayer& sceneLayer = sceneLayerFactory.build();
-    return TIEntityInterface(sceneLayer);
+    return ScriptManager::Instance()->getObjectFromValue(TIEntityInterface(sceneLayer));
 }
 
 
