@@ -49,10 +49,11 @@ TIEntity& TIEntityFactory::build() {
 
 	tientity.setName(this->name);
 
-	LifecycleComponentSystem::Instance()->runCreated(tientity);
 
 	WorldManager::Instance()->registerTIEntity(tientity);
     WorldManager::Instance()->saveTIEntityFactory(tientity.getName(), *this);
+
+	LifecycleComponentSystem::Instance()->runCreated(tientity);
 	return tientity;
 }
 
