@@ -14,6 +14,7 @@
 #include "componentsystems/LineComponentSystem.h"
 #include "componentsystems/MessagesComponentSystem.h"
 #include "componentsystems/MovesComponentSystem.h"
+#include "componentsystems/SelectableComponentSystem.h"
 #include "componentsystems/ShapeComponentSystem.h"
 #include "componentsystems/SpriteComponentSystem.h"
 #include "componentsystems/TextComponentSystem.h"
@@ -30,6 +31,7 @@ void ComponentSystemsManager::initialize() {
 	this->componentSystems.push_back(EventsComponentSystem::Instance());
 	this->componentSystems.push_back(LifecycleComponentSystem::Instance());
 	this->componentSystems.push_back(BehavesComponentSystem::Instance());
+	this->componentSystems.push_back(SelectableComponentSystem::Instance());
 
 	// Update Position Operations
 	this->componentSystems.push_back(PositionComponentSystem::Instance());
