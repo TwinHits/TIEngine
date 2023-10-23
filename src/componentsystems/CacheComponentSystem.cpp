@@ -2,6 +2,8 @@
 
 #include <sol/sol.hpp>
 
+#include <string>
+
 #include "objects/tientities/TIEntity.h"
 #include "objects/components/CacheComponent.h"
 #include "managers/ScriptManager.h"
@@ -73,3 +75,31 @@ sol::table& CacheComponentSystem::getCache(TIEntity& tientity) {
         return this->addComponent(tientity).getCache();
     }
 }
+
+
+void CacheComponentSystem::setCacheValue(TIEntity& tientity, const std::string& key, const sol::object& value) {
+    CacheComponent& cacheComponent = this->addComponent(tientity);
+    sol::table& cache = cacheComponent.getCache();
+    cache.traverse_set(key, value);
+}
+
+
+ sol::object CacheComponentSystem::getCacheValue(TIEntity& tientity, const std::string& key) {
+    CacheComponent* cacheComponent = tientity.getComponent<CacheComponent>();
+    if (cacheComponent != nullptr) {
+        sol::table& cache = cacheComponent->getCache();
+        return cache[key];
+    } else {
+        return sol::nil;
+    }
+}
+
+
+ sol::object CacheComponentSystem::getCacheValueOr(TIEntity& tientity, const std::string& key, const sol::object& value) {
+     CacheComponent& cacheComponent = this->addComponent(tientity);
+     sol::table& cache = cacheComponent.getCache();
+     if (!cache[key].valid()) {
+        cache.traverse_set(key, value);
+     }
+     return cache[key];
+ }

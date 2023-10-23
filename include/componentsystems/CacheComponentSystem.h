@@ -20,6 +20,10 @@ public:
     void updateCache(TIEntity&, sol::table&);
     sol::table& getCache(TIEntity&);
 
+    void setCacheValue(TIEntity&, const std::string&, const sol::object&);
+    sol::object getCacheValue(TIEntity&, const std::string&);
+    sol::object getCacheValueOr(TIEntity&, const std::string&, const sol::object&);
+
     static const inline std::string CACHE = "cache";
 private:
     struct Components {

@@ -62,6 +62,9 @@ void TIEntityInterface::registerUserType(sol::state& luaState) {
     //Cache
     interfaceUserType["setCache"] = &TIEntityInterface::setCache;
     interfaceUserType["getCache"] = &TIEntityInterface::getCache;
+    interfaceUserType["setCacheValue"] = &TIEntityInterface::setCacheValue;
+    interfaceUserType["getCacheValue"] = &TIEntityInterface::getCacheValue;
+    interfaceUserType["getCacheValueOr"] = &TIEntityInterface::getCacheValueOr;
 
     //Search
     interfaceUserType["findTIEntitiesWithinRange"] = &TIEntityInterface::findTIEntitiesWithinRange;
@@ -181,6 +184,21 @@ void TIEntityInterface::setCache(sol::table& cache) {
 
 sol::table& TIEntityInterface::getCache() {
     return CacheComponentSystem::Instance()->getCache(*this->tientity);
+}
+
+
+void TIEntityInterface::setCacheValue(const std::string& key, const sol::object& value) {
+    CacheComponentSystem::Instance()->setCacheValue(*this->tientity, key, value);
+}
+
+
+sol::object TIEntityInterface::getCacheValue(const std::string& key) {
+    return CacheComponentSystem::Instance()->getCacheValue(*this->tientity, key);
+}
+
+
+sol::object TIEntityInterface::getCacheValueOr(const std::string& key, const sol::object& value) {
+    return CacheComponentSystem::Instance()->getCacheValueOr(*this->tientity, key, value);
 }
 
 

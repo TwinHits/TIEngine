@@ -50,6 +50,9 @@ class TIEntityInterface {
         // Cache
         void setCache(sol::table&);
         sol::table& getCache();
+        void setCacheValue(const std::string&, const sol::object&);
+        sol::object getCacheValue(const std::string&);
+        sol::object getCacheValueOr(const std::string&, const sol::object&);
 
         // Search
         sol::table& findTIEntitiesWithinRange(const float, TIEntityInterface&);
