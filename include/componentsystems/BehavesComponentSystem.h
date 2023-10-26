@@ -24,6 +24,8 @@ class BehavesComponentSystem : public Singleton<BehavesComponentSystem>, public 
 		void setComponentProperty(const std::string&, float, TIEntity&);
 		sol::object getComponentProperty(const std::string&, TIEntity&);
 
+		void addSubscription(TIEntity&, const GlobalId, BehaviorTreeNode&);
+
 		void onMessage(TIEntity&, const Message&);
 		void onMessage(TIEntity&, const std::vector<Message>&);
 

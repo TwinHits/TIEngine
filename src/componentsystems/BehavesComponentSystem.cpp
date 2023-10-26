@@ -113,6 +113,15 @@ sol::object BehavesComponentSystem::getComponentProperty(const std::string& key,
 }
 
 
+void BehavesComponentSystem::addSubscription(TIEntity& tientity, const GlobalId subscription, BehaviorTreeNode& node) {
+	BehavesComponent& behavesComponent = this->addComponent(tientity);
+    if (!behavesComponent.subscriptions.count(subscription)) {
+        behavesComponent.subscriptions[subscription];
+	}
+	behavesComponent.subscriptions[subscription].push_back(&node);
+}
+
+
 void BehavesComponentSystem::onMessage(TIEntity& tientity, const Message& message) {
 	std::vector<Message> messages;
 	messages.push_back(message);
@@ -122,10 +131,23 @@ void BehavesComponentSystem::onMessage(TIEntity& tientity, const Message& messag
 
 void BehavesComponentSystem::onMessage(TIEntity& tientity, const std::vector<Message>& messages) {
 	BehavesComponent* component = tientity.getComponent<BehavesComponent>();
-	if (component && component->rootFiniteStateMachine) {
-        for (auto& message : messages) {
-			component->rootFiniteStateMachine->onMessage(message);
-        }
+	if (component) {
+		if (component->rootFiniteStateMachine) {
+			for (auto& message : messages) {
+				component->rootFiniteStateMachine->onMessage(message);
+			}
+		}
+		if (component->rootBehaviorTreeNode) {
+			for (auto& message : messages) {
+				if (component->subscriptions.count((message.subscription))) {
+					for (auto subscription : component->subscriptions.at(message.subscription)) {
+						for (auto& messsage : messages) {
+							subscription->onMessage(messsage);
+						}
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -144,6 +166,7 @@ void BehavesComponentSystem::initializeBehaviorTreeNodeTypes() {
 	this->behaviorTreeNodeTypes.insert({BehaviorTreeNodeFactory::LEAF_NODE, BehaviorTreeNodeFactory::LEAF_NODE});
 	this->behaviorTreeNodeTypes.insert({BehaviorTreeNodeFactory::SELECTOR_NODE, BehaviorTreeNodeFactory::SELECTOR_NODE});
 	this->behaviorTreeNodeTypes.insert({BehaviorTreeNodeFactory::SEQUENCE_NODE, BehaviorTreeNodeFactory::SEQUENCE_NODE });
+	this->behaviorTreeNodeTypes.insert({BehaviorTreeNodeFactory::HAS_EVENT_NODE, BehaviorTreeNodeFactory::HAS_EVENT_NODE });
 }
 
 

@@ -24,6 +24,7 @@ class BehaviorTreeNodeFactory {
 		static const inline std::string LEAF_NODE = "LeafNode";
 		static const inline std::string SELECTOR_NODE = "SelectorNode";
 		static const inline std::string SEQUENCE_NODE = "SequenceNode";
+		static const inline std::string HAS_EVENT_NODE = "HasEventNode";
 
 	private:
 		GlobalId id = 0;
@@ -33,6 +34,7 @@ class BehaviorTreeNodeFactory {
 		static const inline std::string ON_UPDATE = "update";
 		static const inline std::string NODE_TYPE = "NodeType";
 		static const inline std::string CHILDREN = "Children";
+		static const inline std::string SUBSCRIPTION = "Subscription";
 
 };
 }

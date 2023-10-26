@@ -4,6 +4,7 @@
 
 #include <vector>
 
+#include "componentsystems/BehavesComponentSystem.h"
 #include "managers/HashManager.h"
 #include "managers/LogManager.h"
 #include "managers/ScriptManager.h"
@@ -11,6 +12,7 @@
 #include "objects/GlobalId.h"
 #include "objects/ScriptTableReader.h"
 #include "objects/ai/behaviortree/BehaviorTreeNode.h"
+#include "objects/ai/behaviortree/HasEventNode.h"
 #include "objects/ai/behaviortree/LeafNode.h"
 #include "objects/ai/behaviortree/SelectorNode.h"
 #include "objects/ai/behaviortree/SequenceNode.h"
@@ -55,6 +57,13 @@ std::unique_ptr<BehaviorTreeNode> BehaviorTreeNodeFactory::build(TIEntity& tient
                     sequenceNode->addChild(childFactory->build(tientity));
                 }
                 return sequenceNode;
+
+            } else if (node_type == BehaviorTreeNodeFactory::HAS_EVENT_NODE) {
+                std::unique_ptr<HasEventNode> hasEventNode = make_unique<HasEventNode>(tientity);
+                GlobalId subscription = this->reader.get<float>(BehaviorTreeNodeFactory::SUBSCRIPTION, 0);
+                BehavesComponentSystem::Instance()->addSubscription(tientity, subscription, *hasEventNode);
+                return hasEventNode;
+
             } else {
                 LogManager::Instance()->error(node_type + " is an unknown behavior tree node type.");
             }

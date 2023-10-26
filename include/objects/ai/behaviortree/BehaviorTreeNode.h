@@ -5,6 +5,7 @@
 #include <memory>
 
 #include "objects/GlobalId.h"
+#include "objects/Message.h"
 #include "objects/enumeration/NodeStatus.h"
 #include "objects/tientities/TIEntity.h"
 
@@ -16,6 +17,7 @@ class BehaviorTreeNode {
         virtual ~BehaviorTreeNode() {}
 
         virtual BehaviorTree::NodeStatus update(float) = 0;
+        virtual void onMessage(const Message&);
 
         void addChild(std::unique_ptr<BehaviorTreeNode>);
 

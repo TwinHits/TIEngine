@@ -3,7 +3,9 @@
 
 #include "objects/components/Component.h"
 
+#include <map>
 #include <memory>
+#include <vector>
 
 #include "objects/ai/FiniteStateMachine.h"
 #include "objects/ai/behaviortree/BehaviorTreeNode.h"
@@ -18,6 +20,8 @@ class BehavesComponent : public Component {
 		std::unique_ptr<FiniteStateMachine> rootFiniteStateMachine;
 		std::unique_ptr<BehaviorTreeNode> rootBehaviorTreeNode;
 		GlobalId rootPayload = 0;
+
+		std::map<GlobalId, std::vector<BehaviorTreeNode*>> subscriptions = {};
 };
 
 }

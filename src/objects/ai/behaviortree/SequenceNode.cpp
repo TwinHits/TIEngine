@@ -25,6 +25,7 @@ BehaviorTree::NodeStatus SequenceNode::update(float delta) {
             } else if (result == BehaviorTree::NodeStatus::FAILURE) {
                 // Restart from beginning on next update
                 this->resumeNode = nullptr;
+                result = BehaviorTree::RUNNING;
                 break;
             }
         }
