@@ -52,7 +52,7 @@ TIEntity& TraceFactory::build() {
     // Perhaps MessageRedriect should have a map of types of messages to rename to other types of messages
     // Collision -> TraceCollision
     std::unique_ptr<MessagesRedirect> messageRedirectFSM = MessagesRedirectFactory().build(trace, trace.getParent());
-    behavesComponent.rootState = std::move(messageRedirectFSM);
+    behavesComponent.rootFiniteStateMachine = std::move(messageRedirectFSM);
 
     CollidesComponent& collidesComponent = CollidesComponentSystem::Instance()->addComponent(trace);
     collidesComponent.setCollides(true);

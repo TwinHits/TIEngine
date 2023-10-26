@@ -75,7 +75,7 @@ TIEntity& CollisionBoxFactory::build() {
 
     BehavesComponent& behavesComponent = BehavesComponentSystem::Instance()->addComponent(collisionBox);
     std::unique_ptr<MessagesRedirect> messageRedirectFSM = MessagesRedirectFactory().build(collisionBox, collisionBox.getParent());
-    behavesComponent.rootState = std::move(messageRedirectFSM);
+    behavesComponent.rootFiniteStateMachine = std::move(messageRedirectFSM);
 
     CollidesComponent& collidesComponent = CollidesComponentSystem::Instance()->addComponent(collisionBox);
     collidesComponent.setCollides(true);

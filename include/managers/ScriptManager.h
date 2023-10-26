@@ -45,6 +45,12 @@ public:
 	}
 
 	template <typename T>
+	T runFunction(const GlobalId functionId, TIEntity& tientity, const float delta) {
+		TIEntityInterface tientityInterface(tientity);
+		return this->functions.at(functionId)(std::tuple<TIEntityInterface, const float>(tientityInterface, delta));
+	}
+
+	template <typename T>
 	T runFunction(const GlobalId functionId, FiniteStateMachine& finiteStateMachine, const sol::object payload) {
 		TIEntityInterface tientityInterface(finiteStateMachine.getTIEntity());
 		FiniteStateMachineInterface finiteStateMachineInterface(finiteStateMachine);

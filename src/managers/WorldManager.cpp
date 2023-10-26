@@ -5,6 +5,7 @@
 #include "objects/tientities/TIEntity.h"
 #include "objects/tientities/engine/GridGuide.h"
 #include "objects/factories/tientities/SceneLayerFactory.h"
+#include "objects/factories/ai/BehaviorTreeNodeFactory.h"
 #include "objects/factories/ai/FiniteStateMachineFactory.h"
 #include "managers/LogManager.h"
 #include "managers/SceneManager.h"
@@ -103,6 +104,20 @@ FiniteStateMachineFactory& WorldManager::saveFiniteStateMachineFactory(GlobalId 
 FiniteStateMachineFactory* WorldManager::getFiniteStateMachineFactory(GlobalId id) {
 	if (this->finiteStateMachineFactories.count(id)) {
 		return this->finiteStateMachineFactories.at(id).get();
+	} else {
+		return nullptr;
+	}
+}
+
+BehaviorTreeNodeFactory& WorldManager::saveBehaviorTreeNodeFactory(GlobalId id, BehaviorTreeNodeFactory& factory) {
+	this->behaviorTreeNodeFactories.insert({ id, make_unique<BehaviorTreeNodeFactory>(factory) });
+	return *this->behaviorTreeNodeFactories.at(id);
+}
+
+
+BehaviorTreeNodeFactory* WorldManager::getBehaviorTreeNodeFactory(GlobalId id) {
+	if (this->behaviorTreeNodeFactories.count(id)) {
+		return this->behaviorTreeNodeFactories.at(id).get();
 	} else {
 		return nullptr;
 	}

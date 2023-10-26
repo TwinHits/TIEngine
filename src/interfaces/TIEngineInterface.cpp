@@ -4,6 +4,7 @@
 
 #include <sol/sol.hpp>
 
+#include "componentsystems/BehavesComponentSystem.h"
 #include "componentsystems/MessagesComponentSystem.h"
 #include "interfaces/MessageInterface.h"
 #include "interfaces/TIEntityInterface.h"
@@ -17,6 +18,7 @@
 #include "managers/WorldManager.h"
 #include "objects/factories/tientities/SceneLayerFactory.h"
 #include "objects/factories/ai/FiniteStateMachineFactory.h"
+#include "objects/factories/ai/BehaviorTreeNodeFactory.h"
 #include "utils/StringHelpers.h"
 
 using namespace TIE;
@@ -40,7 +42,10 @@ void TIEngineInterface::registerUserType(sol::state& luaState) {
     engineInterfaceUserType["getTIEntityById"] = &TIEngineInterface::getTIEntityById;
     engineInterfaceUserType["registerSceneLayer"] = &TIEngineInterface::registerSceneLayer;
     engineInterfaceUserType["registerFiniteStateMachine"] = &TIEngineInterface::registerFiniteStateMachine;
+    engineInterfaceUserType["registerBehaviorTreeNode"] = &TIEngineInterface::registerBehaviorTreeNode;
     engineInterfaceUserType["registerMessageSubscription"] = &TIEngineInterface::registerMessageSubscription;
+    engineInterfaceUserType["getBehaviorTreeNodeTypes"] = &TIEngineInterface::getBehaviorTreeNodeTypes;
+    engineInterfaceUserType["getBehaviorTreeNodeStatuses"] = &TIEngineInterface::getBehaviorTreeNodeStatuses;
     engineInterfaceUserType["getMessageSubscriptions"] = &TIEngineInterface::getMessageSubscriptions;
     engineInterfaceUserType["getProperties"] = &TIEngineInterface::getProperties;
     engineInterfaceUserType["sendMessage"] = &TIEngineInterface::sendMessage;
@@ -153,6 +158,22 @@ sol::object TIEngineInterface::registerSceneLayer(const std::string& name, bool 
 GlobalId TIEngineInterface::registerFiniteStateMachine(const sol::table& definition) {
     FiniteStateMachineFactory finiteStateMachineFactory = FiniteStateMachineFactory(definition);
     return finiteStateMachineFactory.getId();
+}
+
+
+GlobalId TIEngineInterface::registerBehaviorTreeNode(const sol::table& definition) {
+    BehaviorTreeNodeFactory finiteStateMachineFactory = BehaviorTreeNodeFactory(definition);
+    return finiteStateMachineFactory.getId();
+}
+
+
+const std::map<std::string, std::string>& TIEngineInterface::getBehaviorTreeNodeTypes() {
+    return BehavesComponentSystem::Instance()->getBehaviorTreeNodeTypes();
+}
+
+
+const std::map<std::string, int>& TIEngineInterface::getBehaviorTreeNodeStatuses() {
+    return BehavesComponentSystem::Instance()->getBehaviorTreeNodeStatuses();
 }
 
 

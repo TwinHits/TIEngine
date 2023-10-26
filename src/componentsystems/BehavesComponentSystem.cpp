@@ -4,6 +4,7 @@
 #include "managers/WorldManager.h"
 #include "objects/factories/tientities/TIEntityFactory.h"
 #include "objects/factories/ai/FiniteStateMachineFactory.h"
+#include "objects/factories/ai/BehaviorTreeNodeFactory.h"
 #include "objects/tientities/TIEntity.h"
 #include "utils/ComponentSystems.h"
 #include "utils/types/ComponentSystemsTypes.h"
@@ -12,15 +13,22 @@ using namespace TIE;
 
 BehavesComponentSystem::BehavesComponentSystem() {
 	this->setName(BehavesComponentSystem::BEHAVES);
-	ComponentSystems::insertComponentPropertyIntoMap(BehavesComponentSystem::ROOT_STATE, this->componentPropertyMap);
+	ComponentSystems::insertComponentPropertyIntoMap(BehavesComponentSystem::ROOT_BEHAVIOR_TREE_NODE, this->componentPropertyMap);
+	ComponentSystems::insertComponentPropertyIntoMap(BehavesComponentSystem::ROOT_FINITE_STATE_MACHINE, this->componentPropertyMap);
 	ComponentSystems::insertComponentPropertyIntoMap(BehavesComponentSystem::ROOT_PAYLOAD, this->componentPropertyMap);
+
+	this->initializeBehaviorTreeNodeTypes();
+	this->initializeBehaviorTreeNodeStatuses();
 }
 
 
 void BehavesComponentSystem::update(const float delta) {
 	for (auto& c : components) {
-		if (c.behavesComponent.rootState) {
-			c.behavesComponent.rootState->update(delta);
+		if (c.behavesComponent.rootFiniteStateMachine) {
+			c.behavesComponent.rootFiniteStateMachine->update(delta);
+		}
+		if (c.behavesComponent.rootBehaviorTreeNode) {
+			c.behavesComponent.rootBehaviorTreeNode->update(delta);
 		}
 	}
 }
@@ -43,8 +51,11 @@ BehavesComponent& BehavesComponentSystem::addComponent(const TIEntityFactory& fa
 	const GlobalId& rootPayload = factory.getReader()->get<float>(BehavesComponentSystem::ROOT_PAYLOAD, component.rootPayload);
 	this->setComponentProperty(BehavesComponentSystem::ROOT_PAYLOAD, rootPayload, tientity);
 
-	const GlobalId& rootStateId = factory.getReader()->get<float>(BehavesComponentSystem::ROOT_STATE, 0);
-	this->setComponentProperty(BehavesComponentSystem::ROOT_STATE, rootStateId, tientity);
+	const GlobalId& rootFiniteStateMachineId = factory.getReader()->get<float>(BehavesComponentSystem::ROOT_FINITE_STATE_MACHINE, 0);
+	this->setComponentProperty(BehavesComponentSystem::ROOT_FINITE_STATE_MACHINE, rootFiniteStateMachineId, tientity);
+
+	const GlobalId& rootBehaviorTreeNodeId = factory.getReader()->get<float>(BehavesComponentSystem::ROOT_BEHAVIOR_TREE_NODE, 0);
+	this->setComponentProperty(BehavesComponentSystem::ROOT_BEHAVIOR_TREE_NODE, rootBehaviorTreeNodeId, tientity);
 
 	return component;
 }
@@ -70,14 +81,19 @@ void BehavesComponentSystem::setComponentProperty(const std::string& key, float 
     BehavesComponent& component = this->addComponent(tientity);
 	if (key == BehavesComponentSystem::ROOT_PAYLOAD) {
 		component.rootPayload = value;
-	} else if (key == BehavesComponentSystem::ROOT_STATE) {
+	} else if (key == BehavesComponentSystem::ROOT_BEHAVIOR_TREE_NODE) {
+		BehaviorTreeNodeFactory* factory = WorldManager::Instance()->getBehaviorTreeNodeFactory(value);
+		if (factory) {
+			component.rootBehaviorTreeNode = std::move(factory->build(tientity));
+		}
+	} else if (key == BehavesComponentSystem::ROOT_FINITE_STATE_MACHINE) {
 		FiniteStateMachineFactory* factory = WorldManager::Instance()->getFiniteStateMachineFactory(value);
 		if (factory) {
-			if (component.rootState) {
-				component.rootState->onExit();
+			if (component.rootFiniteStateMachine) {
+				component.rootFiniteStateMachine->onExit();
 			}
-			component.rootState = std::move(factory->build(tientity));
-			component.rootState->onEnter(ScriptManager::Instance()->getObjectFromValue(component.rootPayload));
+			component.rootFiniteStateMachine = std::move(factory->build(tientity));
+			component.rootFiniteStateMachine->onEnter(ScriptManager::Instance()->getObjectFromValue(component.rootPayload));
 		}
     }
 }
@@ -86,10 +102,10 @@ void BehavesComponentSystem::setComponentProperty(const std::string& key, float 
 sol::object BehavesComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
 	BehavesComponent* component = tientity.getComponent<BehavesComponent>();
 	if (component != nullptr) {
-		if (key == BehavesComponentSystem::ROOT_STATE) {
-			FiniteStateMachine* root_state = component->rootState.get();
-			if (root_state) {
-				return ScriptManager::Instance()->getObjectFromValue(FiniteStateMachineInterface(root_state));
+		if (key == BehavesComponentSystem::ROOT_FINITE_STATE_MACHINE) {
+			FiniteStateMachine* rootFiniteStateMachine = component->rootFiniteStateMachine.get();
+			if (rootFiniteStateMachine) {
+				return ScriptManager::Instance()->getObjectFromValue(FiniteStateMachineInterface(rootFiniteStateMachine));
 			}
 		}
 	}
@@ -106,9 +122,33 @@ void BehavesComponentSystem::onMessage(TIEntity& tientity, const Message& messag
 
 void BehavesComponentSystem::onMessage(TIEntity& tientity, const std::vector<Message>& messages) {
 	BehavesComponent* component = tientity.getComponent<BehavesComponent>();
-	if (component && component->rootState) {
+	if (component && component->rootFiniteStateMachine) {
         for (auto& message : messages) {
-			component->rootState->onMessage(message);
+			component->rootFiniteStateMachine->onMessage(message);
         }
 	}
+}
+
+
+const std::map<std::string, std::string>& BehavesComponentSystem::getBehaviorTreeNodeTypes() {
+	return this->behaviorTreeNodeTypes;
+}
+
+
+const std::map<std::string, int>& BehavesComponentSystem::getBehaviorTreeNodeStatuses() {
+	return this->behaviorTreeNodeStatuses;
+}
+
+
+void BehavesComponentSystem::initializeBehaviorTreeNodeTypes() {
+	this->behaviorTreeNodeTypes.insert({BehaviorTreeNodeFactory::LEAF_NODE, BehaviorTreeNodeFactory::LEAF_NODE});
+	this->behaviorTreeNodeTypes.insert({BehaviorTreeNodeFactory::SELECTOR_NODE, BehaviorTreeNodeFactory::SELECTOR_NODE});
+	this->behaviorTreeNodeTypes.insert({BehaviorTreeNodeFactory::SEQUENCE_NODE, BehaviorTreeNodeFactory::SEQUENCE_NODE });
+}
+
+
+void BehavesComponentSystem::initializeBehaviorTreeNodeStatuses() {
+	this->behaviorTreeNodeStatuses.insert({"Success", BehaviorTree::NodeStatus::SUCCESS});
+	this->behaviorTreeNodeStatuses.insert({"Failure", BehaviorTree::NodeStatus::FAILURE});
+	this->behaviorTreeNodeStatuses.insert({"Running", BehaviorTree::NodeStatus::RUNNING});
 }

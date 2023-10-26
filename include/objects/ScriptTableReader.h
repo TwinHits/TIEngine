@@ -6,6 +6,7 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <vector>
 
 #include "objects/GlobalId.h"
 
@@ -149,6 +150,22 @@ class ScriptTableReader {
             } else {
                 return default;
             }
+        }
+
+		template <typename T>
+        T& get(const std::string& key, T& default) { return default; }
+
+        template <>
+        std::vector<GlobalId>& get(const std::string& key, std::vector<GlobalId>& container) {
+            if (this->tableValues.count(key)) {
+                if (this->tableValues.at(key).is<std::vector<GlobalId>>()) {
+                    sol::table& table = this->tableValues.at(key).as<sol::table>();
+                    for (int i = 1; i <= table.size(); i++) {
+                        container.push_back(table[i]);
+                    }
+                }
+            }
+            return container;
         }
 
     private:

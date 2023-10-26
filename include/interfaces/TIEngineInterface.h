@@ -43,6 +43,10 @@ class TIEngineInterface {
 
         sol::object registerSceneLayer(const std::string&, bool);
         GlobalId registerFiniteStateMachine(const sol::table&);
+        GlobalId registerBehaviorTreeNode(const sol::table&);
+
+        const std::map<std::string, std::string>& getBehaviorTreeNodeTypes();
+        const std::map<std::string, int>& getBehaviorTreeNodeStatuses();
 
         GlobalId registerMessageSubscription(const std::string&);
         const std::map<std::string, GlobalId>& getMessageSubscriptions();

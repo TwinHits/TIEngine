@@ -11,6 +11,7 @@
 #include "objects/tientities/common/SceneLayer.h"
 #include "objects/factories/tientities/TIEntityFactory.h"
 #include "objects/factories/ai/FiniteStateMachineFactory.h"
+#include "objects/factories/ai/BehaviorTreeNodeFactory.h"
 
 namespace TIE {
 
@@ -36,6 +37,9 @@ class WorldManager : public Singleton<WorldManager>, public Manager {
 		FiniteStateMachineFactory& saveFiniteStateMachineFactory(GlobalId, FiniteStateMachineFactory&);
 		FiniteStateMachineFactory* getFiniteStateMachineFactory(GlobalId);
 
+		BehaviorTreeNodeFactory& saveBehaviorTreeNodeFactory(GlobalId, BehaviorTreeNodeFactory&);
+		BehaviorTreeNodeFactory* getBehaviorTreeNodeFactory(GlobalId);
+
 		WorldManager() {};
 		~WorldManager() {};
 
@@ -45,6 +49,7 @@ class WorldManager : public Singleton<WorldManager>, public Manager {
 
 		std::map<std::string, std::unique_ptr<TIEntityFactory> > tiEntityFactories;
 		std::map<GlobalId, std::unique_ptr<FiniteStateMachineFactory> > finiteStateMachineFactories;
+		std::map<GlobalId, std::unique_ptr<BehaviorTreeNodeFactory> > behaviorTreeNodeFactories;
 		std::map<GlobalId, TIEntity*> tientities;
 
 		SceneLayer* worldLayer = nullptr;

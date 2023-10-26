@@ -6,6 +6,7 @@
 #include <memory>
 
 #include "objects/ai/FiniteStateMachine.h"
+#include "objects/ai/behaviortree/BehaviorTreeNode.h"
 
 namespace TIE {
 
@@ -14,7 +15,8 @@ class BehavesComponent : public Component {
 		BehavesComponent() {};
 		virtual ~BehavesComponent() {};
 
-		std::unique_ptr<FiniteStateMachine> rootState;
+		std::unique_ptr<FiniteStateMachine> rootFiniteStateMachine;
+		std::unique_ptr<BehaviorTreeNode> rootBehaviorTreeNode;
 		GlobalId rootPayload = 0;
 };
 

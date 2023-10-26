@@ -27,14 +27,24 @@ class BehavesComponentSystem : public Singleton<BehavesComponentSystem>, public 
 		void onMessage(TIEntity&, const Message&);
 		void onMessage(TIEntity&, const std::vector<Message>&);
 
+		const std::map<std::string, std::string>& getBehaviorTreeNodeTypes();
+		const std::map<std::string, int>& getBehaviorTreeNodeStatuses();
+
 		static const inline std::string BEHAVES = "behaves";
-		static const inline std::string ROOT_STATE = "behaves.rootState";
+		static const inline std::string ROOT_BEHAVIOR_TREE_NODE = "behaves.rootBehaviorTreeNode";
+		static const inline std::string ROOT_FINITE_STATE_MACHINE = "behaves.rootFiniteStateMachine";
 		static const inline std::string ROOT_PAYLOAD = "behaves.rootPayload";
 	private:
+		void initializeBehaviorTreeNodeTypes();
+		void initializeBehaviorTreeNodeStatuses();
+
 		struct Components {
 			BehavesComponent& behavesComponent;
 		};
 		std::list<Components> components;
+
+		std::map<std::string, std::string> behaviorTreeNodeTypes;
+		std::map<std::string, int> behaviorTreeNodeStatuses;
 };
 
 }
