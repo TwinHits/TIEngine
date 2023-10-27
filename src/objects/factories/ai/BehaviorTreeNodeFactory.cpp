@@ -33,10 +33,11 @@ std::unique_ptr<BehaviorTreeNode> BehaviorTreeNodeFactory::build(TIEntity& tient
         if (node_type_ptr) {
             const std::string& node_type = *node_type_ptr;
 
+            std::unique_ptr<BehaviorTreeNode> behaviorTreeNode;
             if (node_type == BehaviorTreeNodeFactory::LEAF_NODE) {
                 std::unique_ptr<LeafNode> leafNode = make_unique<LeafNode>(tientity);
                 leafNode->setUpdateFunctionId(*this->reader.get<GlobalId>(BehaviorTreeNodeFactory::ON_UPDATE));
-                return leafNode;
+                behaviorTreeNode = std::move(leafNode);
 
             } else if (node_type == BehaviorTreeNodeFactory::SELECTOR_NODE) {
                 std::unique_ptr<SelectorNode> selectorNode = make_unique<SelectorNode>(tientity);
@@ -46,7 +47,7 @@ std::unique_ptr<BehaviorTreeNode> BehaviorTreeNodeFactory::build(TIEntity& tient
                     BehaviorTreeNodeFactory* childFactory = WorldManager::Instance()->getBehaviorTreeNodeFactory(child);
                     selectorNode->addChild(childFactory->build(tientity));
                 }
-                return selectorNode;
+                behaviorTreeNode = std::move(selectorNode);
 
             } else if (node_type == BehaviorTreeNodeFactory::SEQUENCE_NODE) {
                 std::unique_ptr<SequenceNode> sequenceNode = make_unique<SequenceNode>(tientity);
@@ -56,23 +57,32 @@ std::unique_ptr<BehaviorTreeNode> BehaviorTreeNodeFactory::build(TIEntity& tient
                     BehaviorTreeNodeFactory* childFactory = WorldManager::Instance()->getBehaviorTreeNodeFactory(child);
                     sequenceNode->addChild(childFactory->build(tientity));
                 }
-                return sequenceNode;
+                behaviorTreeNode = std::move(sequenceNode);
 
             } else if (node_type == BehaviorTreeNodeFactory::HAS_EVENT_NODE) {
                 std::unique_ptr<HasEventNode> hasEventNode = make_unique<HasEventNode>(tientity);
                 GlobalId subscription = this->reader.get<float>(BehaviorTreeNodeFactory::SUBSCRIPTION, 0);
                 BehavesComponentSystem::Instance()->addSubscription(tientity, subscription, *hasEventNode);
-                return hasEventNode;
+                behaviorTreeNode = std::move(hasEventNode);
 
             } else {
                 LogManager::Instance()->error(node_type + " is an unknown behavior tree node type.");
             }
 
+            behaviorTreeNode->setPreConditonFunctionId(this->reader.get<GlobalId>(BehaviorTreeNodeFactory::PRE_CONDITION, 0));
+            behaviorTreeNode->setPostConditonFunctionId(this->reader.get<GlobalId>(BehaviorTreeNodeFactory::POST_CONDITION, 0));
+
+            return behaviorTreeNode;
+        } else {
+            LogManager::Instance()->error(tientity.getName() + " is missing a Node Type.");
         }
+    } else {
+        LogManager::Instance()->error(tientity.getName() + " is missing a Node Type.");
     }
+    return nullptr;
 }
 
 
 GlobalId BehaviorTreeNodeFactory::getId() {
-    return this->id;
+return this->id;
 }

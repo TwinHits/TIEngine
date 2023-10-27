@@ -31,7 +31,9 @@ class BehaviorTreeNodeFactory {
 
 		ScriptTableReader reader;
 
+		static const inline std::string PRE_CONDITION = "preCondition";
 		static const inline std::string ON_UPDATE = "update";
+		static const inline std::string POST_CONDITION = "postCondition";
 		static const inline std::string NODE_TYPE = "NodeType";
 		static const inline std::string CHILDREN = "Children";
 		static const inline std::string SUBSCRIPTION = "Subscription";

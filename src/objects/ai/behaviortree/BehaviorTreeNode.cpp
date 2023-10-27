@@ -2,6 +2,7 @@
 
 #include "objects/Message.h"
 #include "objects/tientities/TIEntity.h"
+#include "managers/ScriptManager.h"
 
 using namespace TIE;
 
@@ -9,7 +10,33 @@ using namespace TIE;
 BehaviorTreeNode::BehaviorTreeNode(TIEntity& tientity) : tientity(tientity) {}
 
 
+BehaviorTree::NodeStatus BehaviorTreeNode::preCondition() {
+    if (this->preConditionFunctionId) {
+        return ScriptManager::Instance()->runFunction<BehaviorTree::NodeStatus>(this->preConditionFunctionId, this->tientity);
+    }
+    return BehaviorTree::NodeStatus::SUCCESS;
+}
+
+
+BehaviorTree::NodeStatus BehaviorTreeNode::postCondition() {
+    if (this->postConditionFunctionId) {
+        return ScriptManager::Instance()->runFunction<BehaviorTree::NodeStatus>(this->postConditionFunctionId, this->tientity);
+    }
+    return BehaviorTree::NodeStatus::SUCCESS;
+}
+
+
 void BehaviorTreeNode::onMessage(const Message& message) {}
+
+
+void BehaviorTreeNode::setPreConditonFunctionId(const GlobalId preConditionFunctionId) {
+    this->preConditionFunctionId = preConditionFunctionId;
+}
+
+
+void BehaviorTreeNode::setPostConditonFunctionId(const GlobalId postConditionFunctionId) {
+    this->postConditionFunctionId = postConditionFunctionId;
+}
 
 
 void BehaviorTreeNode::addChild(std::unique_ptr<BehaviorTreeNode> behaviorTreeNode) {

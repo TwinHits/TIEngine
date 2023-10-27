@@ -13,11 +13,13 @@ class HasEventNode : public BehaviorTreeNode {
     public:
         HasEventNode(TIEntity&);
 
+        virtual BehaviorTree::NodeStatus preCondition(const Message&);
         virtual BehaviorTree::NodeStatus update(float);
 
         virtual void onMessage(const Message&);
     private:
         bool hasMessage = false;
+        Message message;
 };
 
 }

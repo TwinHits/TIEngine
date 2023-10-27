@@ -19,7 +19,6 @@ class LeafNode : public BehaviorTreeNode {
         void setUpdateFunctionId(const GlobalId);
     private:
         GlobalId updateFunctionId = 0;
-        BehaviorTree::NodeStatus runFunction(const GlobalId, const float);
 };
 
 }

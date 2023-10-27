@@ -10,7 +10,12 @@ LeafNode::LeafNode(TIEntity& tientity) : BehaviorTreeNode(tientity) {}
 
 
 BehaviorTree::NodeStatus LeafNode::update(float delta) {
-    return this->runFunction(this->getUpdateFunctionId(), delta);
+    BehaviorTree::NodeStatus result = this->preCondition();
+    if (result == BehaviorTree::NodeStatus::SUCCESS) {
+        return ScriptManager::Instance()->runFunction<BehaviorTree::NodeStatus>(this->updateFunctionId, this->tientity, delta);
+    }
+    // result = this->postCondition();
+    return result;
 }
 
 
@@ -22,9 +27,3 @@ const GlobalId LeafNode::getUpdateFunctionId() {
 void LeafNode::setUpdateFunctionId(const GlobalId updateFunctionId) {
     this->updateFunctionId = updateFunctionId;
 }
-
-
-BehaviorTree::NodeStatus LeafNode::runFunction(const GlobalId functionId, const float delta) {
-    return ScriptManager::Instance()->runFunction<BehaviorTree::NodeStatus>(functionId, this->tientity, delta);
-}
-

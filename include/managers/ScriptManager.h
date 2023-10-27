@@ -33,8 +33,7 @@ public:
 	template <typename T>
 	T runFunction(const GlobalId functionId, TIEntity& tientity) {
         TIEntityInterface tientityInterface(tientity);
-        TIEngineInterface engineInterface = TIEngineInterface();
-		return this->functions.at(functionId)(std::tuple<TIEntityInterface, TIEngineInterface>(tientityInterface, engineInterface));
+		return this->functions.at(functionId)(std::tuple<TIEntityInterface>(tientityInterface));
 	}
 
 	template <typename T>
@@ -64,6 +63,14 @@ public:
 		MessageInterface messageInterface(message);
 		return this->functions.at(functionId)(std::tuple<TIEntityInterface, FiniteStateMachineInterface, MessageInterface>(tientityInterface, finiteStateMachineInterface, messageInterface));
 	}
+
+	template <typename T>
+	T runFunction(const GlobalId functionId, TIEntity& tientity, const Message& message) {
+		TIEntityInterface tientityInterface(tientity);
+		MessageInterface messageInterface(message);
+		return this->functions.at(functionId)(std::tuple<TIEntityInterface, MessageInterface>(tientityInterface, messageInterface));
+	}
+
 
     void setScriptWorkingDirectory(const std::string&);
     const std::string& getScriptWorkingDirectory();
