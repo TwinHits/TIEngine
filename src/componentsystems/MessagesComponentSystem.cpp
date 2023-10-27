@@ -82,12 +82,22 @@ const std::map<std::string, GlobalId>& MessagesComponentSystem::getMessageSubscr
 }
 
 
-void MessagesComponentSystem::sendMessage(const GlobalId subscription, const GlobalId sender, const GlobalId reciepent, sol::object payload) {
-	if (!this->nextFrameMessages.count(reciepent)) {
-        this->nextFrameMessages[reciepent];
+void MessagesComponentSystem::sendMessage(const GlobalId subscription, TIEntity& sender, const GlobalId recipientId, sol::object payload) {
+	const GlobalId senderId = this->getSenderId(sender);
+	if (!this->nextFrameMessages.count(recipientId)) {
+        this->nextFrameMessages[recipientId];
 	}
-    if (!this->nextFrameMessages[reciepent].count(subscription)) {
-        this->nextFrameMessages[reciepent][subscription];
+    if (!this->nextFrameMessages[recipientId].count(subscription)) {
+        this->nextFrameMessages[recipientId][subscription];
     }
-    this->nextFrameMessages[reciepent][subscription].push_back({ subscription, sender, payload });
+    this->nextFrameMessages[recipientId][subscription].push_back({ subscription, senderId, payload });
+}
+
+const GlobalId MessagesComponentSystem::getSenderId(TIEntity& tientity) {
+	MessagesComponent& messagesComponent = this->addComponent(tientity);
+	if (messagesComponent.redirectFromId) {
+		return messagesComponent.redirectFromId;
+	} else {
+		return tientity.getId();
+	}
 }

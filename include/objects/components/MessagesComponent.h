@@ -12,6 +12,7 @@ namespace TIE {
 class MessagesComponent : public Component {
     public:
         std::list<GlobalId> subscriptions;
+        GlobalId redirectFromId = 0;
 };
 
 }

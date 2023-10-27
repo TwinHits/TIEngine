@@ -1,11 +1,9 @@
 #include "objects/factories/tientities/CollisionBoxFactory.h"
 
-#include "componentsystems/BehavesComponentSystem.h"
 #include "componentsystems/CollidesComponentSystem.h"
+#include "componentsystems/MessagesComponentSystem.h"
 #include "componentsystems/PositionComponentSystem.h"
 #include "componentsystems/ShapeComponentSystem.h"
-#include "objects/factories/ai/MessagesRedirectFactory.h"
-#include "objects/ai/MessagesRedirect.h"
 #include "managers/HashManager.h"
 #include "managers/WorldManager.h"
 #include "templates/MakeUnique.h"
@@ -73,9 +71,8 @@ TIEntity& CollisionBoxFactory::build() {
     TIEntity& collisionBox = this->parent->attachChild();
     collisionBox.setName("Collision Box");
 
-    BehavesComponent& behavesComponent = BehavesComponentSystem::Instance()->addComponent(collisionBox);
-    std::unique_ptr<MessagesRedirect> messageRedirectFSM = MessagesRedirectFactory().build(collisionBox, collisionBox.getParent());
-    behavesComponent.rootFiniteStateMachine = std::move(messageRedirectFSM);
+    MessagesComponent& messagesComponent = MessagesComponentSystem::Instance()->addComponent(collisionBox);
+    messagesComponent.redirectFromId = this->parent->getId();
 
     CollidesComponent& collidesComponent = CollidesComponentSystem::Instance()->addComponent(collisionBox);
     collidesComponent.setCollides(true);

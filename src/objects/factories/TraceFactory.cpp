@@ -4,8 +4,7 @@
 #include "componentsystems/CollidesComponentSystem.h"
 #include "componentsystems/LineComponentSystem.h"
 #include "componentsystems/PositionComponentSystem.h"
-#include "objects/factories/ai/MessagesRedirectFactory.h"
-#include "objects/ai/MessagesRedirect.h"
+#include "componentsystems/MessagesComponentSystem.h"
 #include "managers/HashManager.h"
 #include "managers/WorldManager.h"
 #include "templates/MakeUnique.h"
@@ -51,8 +50,8 @@ TIEntity& TraceFactory::build() {
     // Collisions with traces should get renamed when being redirected to TraceCollisions
     // Perhaps MessageRedriect should have a map of types of messages to rename to other types of messages
     // Collision -> TraceCollision
-    std::unique_ptr<MessagesRedirect> messageRedirectFSM = MessagesRedirectFactory().build(trace, trace.getParent());
-    behavesComponent.rootFiniteStateMachine = std::move(messageRedirectFSM);
+    MessagesComponent& messagesComponent = MessagesComponentSystem::Instance()->addComponent(trace);
+    messagesComponent.redirectFromId = this->parent->getId();
 
     CollidesComponent& collidesComponent = CollidesComponentSystem::Instance()->addComponent(trace);
     collidesComponent.setCollides(true);

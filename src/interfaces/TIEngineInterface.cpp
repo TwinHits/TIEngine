@@ -48,7 +48,6 @@ void TIEngineInterface::registerUserType(sol::state& luaState) {
     engineInterfaceUserType["getBehaviorTreeNodeStatuses"] = &TIEngineInterface::getBehaviorTreeNodeStatuses;
     engineInterfaceUserType["getMessageSubscriptions"] = &TIEngineInterface::getMessageSubscriptions;
     engineInterfaceUserType["getProperties"] = &TIEngineInterface::getProperties;
-    engineInterfaceUserType["sendMessage"] = &TIEngineInterface::sendMessage;
 }
 
 
@@ -189,18 +188,4 @@ const std::map<std::string, GlobalId>& TIEngineInterface::getMessageSubscription
 
 const ComponentSystems::ComponentSystemPropertiesMap& TIEngineInterface::getProperties() {
     return ComponentSystemsManager::Instance()->getComponentSystemPropertiesMap();
-}
-
-
-void TIEngineInterface::sendMessage(const GlobalId subscription, sol::object recievers, sol::object payload) {
-    if (recievers.is<GlobalId>()) {
-        MessagesComponentSystem::Instance()->sendMessage(subscription, 0, recievers.as<GlobalId>(), payload);
-    } else if (recievers.is<sol::table>()) {
-        for (auto& pair : recievers.as<sol::table>()) {
-            const sol::object& reciever = pair.second;
-            if (reciever.is<GlobalId>()) {
-                MessagesComponentSystem::Instance()->sendMessage(subscription, 0, reciever.as<GlobalId>(), payload);
-            }
-        }
-    }
 }

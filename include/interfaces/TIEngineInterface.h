@@ -50,7 +50,6 @@ class TIEngineInterface {
 
         GlobalId registerMessageSubscription(const std::string&);
         const std::map<std::string, GlobalId>& getMessageSubscriptions();
-        void sendMessage(const GlobalId, sol::object, sol::object);
 
         const ComponentSystems::ComponentSystemPropertiesMap& getProperties();
 };

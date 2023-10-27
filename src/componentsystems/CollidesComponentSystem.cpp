@@ -116,14 +116,14 @@ void CollidesComponentSystem::checkHitboxCollisions(Components& c1, Components& 
 			if (c1.collidesComponent.isCollides() && c2.collidesComponent.isCollidable()) {
 				MessagesComponentSystem::Instance()->sendMessage(
 					this->collisionMessageSubscription,
-					c2.tientity.getId(), // sender
+					c2.tientity, // sender
 					c1.tientity.getId(), // recipient
 					ScriptManager::Instance()->getObjectFromValue(c2.collidesComponent.getPayload()));
 			}
 			if (c2.collidesComponent.isCollides() && c2.collidesComponent.isCollidable()) {
 				MessagesComponentSystem::Instance()->sendMessage(
 					this->collisionMessageSubscription,
-					c1.tientity.getId(), // sender
+					c1.tientity, // sender
 					c2.tientity.getId(), // recipient
 					ScriptManager::Instance()->getObjectFromValue(c1.collidesComponent.getPayload()));
 			}
@@ -141,7 +141,7 @@ void CollidesComponentSystem::checkLineCollisions(Components& lineComponents, Co
 			if (Math::doesLineIntersectRect(line, c2Hitbox)) {
                 MessagesComponentSystem::Instance()->sendMessage(
                     this->collisionMessageSubscription,
-					hitboxComponents.tientity.getId(), // sender
+					hitboxComponents.tientity, // sender
 					lineComponents.tientity.getId(), // reciepent
                     ScriptManager::Instance()->getObjectFromValue(hitboxComponents.collidesComponent.getPayload()));
             }

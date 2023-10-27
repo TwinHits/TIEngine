@@ -215,13 +215,12 @@ sol::table& TIEntityInterface::findTIEntitiesWithinRange(const float range, TIEn
 
 void TIEntityInterface::sendMessage(const GlobalId subscription, sol::object recievers, sol::object payload) {
     if (recievers.is<GlobalId>()) {
-        MessagesComponentSystem::Instance()->sendMessage(subscription, this->tientity->getId(), recievers.as<GlobalId>(), payload);
+        MessagesComponentSystem::Instance()->sendMessage(subscription, *this->tientity, recievers.as<GlobalId>(), payload);
     } else if (recievers.is<sol::table>()) {
-        const GlobalId senderId = this->tientity->getId();
         for (auto& pair : recievers.as<sol::table>()) {
             const sol::object& reciever = pair.second;
             if (reciever.is<GlobalId>()) {
-                MessagesComponentSystem::Instance()->sendMessage(subscription, senderId, reciever.as<GlobalId>(), payload);
+                MessagesComponentSystem::Instance()->sendMessage(subscription, *this->tientity, reciever.as<GlobalId>(), payload);
             }
         }
     }
