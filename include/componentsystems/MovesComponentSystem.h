@@ -12,7 +12,6 @@
 #include "objects/components/PositionComponent.h"
 #include "objects/factories/tientities/TIEntityFactory.h"
 #include "objects/tientities/TIEntity.h"
-#include "objects/enumeration/Direction.h"
 #include "utils/types/ComponentSystemsTypes.h"
 
 namespace TIE {
@@ -70,10 +69,10 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, public Owns
 		bool atTargetSpeed(MovesComponent&);
 		bool atTargetRotation(MovesComponent&, PositionComponent&);
 
-		virtual void accelerate(MovesComponent&, PositionComponent&, const float);
-		virtual void accelerateRotation(MovesComponent&, PositionComponent&, const float);
-		virtual void rotate(MovesComponent&, PositionComponent&, const float);
-		virtual void move(MovesComponent&, PositionComponent&, const float);
+		void accelerate(MovesComponent&, PositionComponent&, const float);
+		void accelerateRotation(MovesComponent&, PositionComponent&, const float);
+		void rotate(MovesComponent&, PositionComponent&, const float);
+		void move(MovesComponent&, PositionComponent&, const float, TIEntity&);
 };
 
 }

@@ -82,6 +82,11 @@ const std::map<std::string, GlobalId>& MessagesComponentSystem::getMessageSubscr
 }
 
 
+void MessagesComponentSystem::sendMessage(const GlobalId subscription, TIEntity& sender, const GlobalId recipientId) {
+	this->sendMessage(subscription, sender, recipientId, sol::nil);
+}
+
+
 void MessagesComponentSystem::sendMessage(const GlobalId subscription, TIEntity& sender, const GlobalId recipientId, sol::object payload) {
 	const GlobalId senderId = this->getSenderId(sender);
 	if (!this->nextFrameMessages.count(recipientId)) {
@@ -92,6 +97,7 @@ void MessagesComponentSystem::sendMessage(const GlobalId subscription, TIEntity&
     }
     this->nextFrameMessages[recipientId][subscription].push_back({ subscription, senderId, payload });
 }
+
 
 const GlobalId MessagesComponentSystem::getSenderId(TIEntity& tientity) {
 	MessagesComponent& messagesComponent = this->addComponent(tientity);

@@ -42,7 +42,7 @@ void MovesComponentSystem::update(const float delta) {
 	for (auto& c : components) {
 
         this->accelerate(c.movesComponent, c.positionComponent, delta);
-        this->move(c.movesComponent, c.positionComponent, delta);
+        this->move(c.movesComponent, c.positionComponent, delta, c.tientity);
 
         if (c.movesComponent.rotates) {
 			if (!this->atTargetPosition(c.movesComponent, c.positionComponent)) {
@@ -345,7 +345,7 @@ void MovesComponentSystem::rotate(MovesComponent& movesComponent, PositionCompon
 } 
 
 
-void MovesComponentSystem::move(MovesComponent& movesComponent, PositionComponent& positionComponent, const float delta) {
+void MovesComponentSystem::move(MovesComponent& movesComponent, PositionComponent& positionComponent, const float delta, TIEntity& tientity) {
 	if (movesComponent.speed > 0.0f) {
         sf::Vector2f velocity = sf::Vector2f(movesComponent.speed, positionComponent.rotation);
         sf::Vector2f distance = Math::translateVelocityByTime(velocity, delta);
@@ -355,6 +355,8 @@ void MovesComponentSystem::move(MovesComponent& movesComponent, PositionComponen
 			Math::distanceBetweenTwoPoints(newPosition, movesComponent.targetPosition) < 1.0f
 		) {
             positionComponent.position = movesComponent.targetPosition;
+			// Implicitly only sent once because speed is set to zero
+			MessagesComponentSystem::Instance()->sendMessage(this->atDestinationMessageSubscription, tientity, tientity.getId());
         } else {
             positionComponent.position = newPosition;
         }
