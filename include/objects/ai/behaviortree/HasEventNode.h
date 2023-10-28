@@ -3,6 +3,8 @@
 
 #include "objects/ai/behaviortree/BehaviorTreeNode.h"
 
+#include <vector>
+
 #include "objects/Message.h"
 #include "objects/enumeration/NodeStatus.h"
 #include "objects/tientities/TIEntity.h"
@@ -18,8 +20,7 @@ class HasEventNode : public BehaviorTreeNode {
 
         virtual void onMessage(const Message&);
     private:
-        bool hasMessage = false;
-        Message message;
+        std::vector<Message> messages;
 };
 
 }

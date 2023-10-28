@@ -17,17 +17,21 @@ BehaviorTree::NodeStatus HasEventNode::preCondition(const Message& message) {
 
 
 BehaviorTree::NodeStatus HasEventNode::update(float delta) {
-    if (this->hasMessage) {
-        BehaviorTree::NodeStatus result = this->preCondition(this->message);
-        // result = this->postCondition();
-        this->hasMessage = false;
-        return result;
+    BehaviorTree::NodeStatus result = BehaviorTree::NodeStatus::FAILURE;
+    if (!messages.empty()) {
+        for (auto& message : this->messages) {
+            result = this->preCondition(message);
+            if (result == BehaviorTree::SUCCESS) {
+                break;
+            }
+        }
+        //result = this->postCondition();
+        this->messages.clear();
     }
-    return BehaviorTree::NodeStatus::FAILURE;
+    return result;
 }
 
 
 void HasEventNode::onMessage(const Message& message) {
-    this->hasMessage = true;
-    this->message = message;
+    this->messages.push_back(message);
 }
