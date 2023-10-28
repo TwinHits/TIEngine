@@ -25,18 +25,24 @@ class BehaviorTreeNodeFactory {
 		static const inline std::string SELECTOR_NODE = "SelectorNode";
 		static const inline std::string SEQUENCE_NODE = "SequenceNode";
 		static const inline std::string HAS_EVENT_NODE = "HasEventNode";
+		static const inline std::string WAIT_FOR_EVENT_NODE = "HasEventNode";
 
 	private:
 		GlobalId id = 0;
-
 		ScriptTableReader reader;
+
+		std::unique_ptr<BehaviorTreeNode> buildLeafNode(TIEntity&);
+		std::unique_ptr<BehaviorTreeNode> buildSelectorNode(TIEntity&);
+		std::unique_ptr<BehaviorTreeNode> buildSequenceNode(TIEntity&);
+		std::unique_ptr<BehaviorTreeNode> buildHasEventNode(TIEntity&);
+		std::unique_ptr<BehaviorTreeNode> buildWaitForEventNode(TIEntity&);
 
 		static const inline std::string PRE_CONDITION = "preCondition";
 		static const inline std::string ON_UPDATE = "update";
 		static const inline std::string POST_CONDITION = "postCondition";
 		static const inline std::string NODE_TYPE = "NodeType";
 		static const inline std::string CHILDREN = "Children";
-		static const inline std::string SUBSCRIPTION = "Subscription";
+		static const inline std::string SUBSCRIPTIONS = "Subscriptions";
 
 };
 }

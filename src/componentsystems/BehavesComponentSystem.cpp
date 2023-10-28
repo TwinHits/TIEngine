@@ -1,5 +1,8 @@
 #include "componentsystems/BehavesComponentSystem.h" 
 
+#include <string>
+#include <vector>
+
 #include "interfaces/ai/FiniteStateMachineInterface.h"
 #include "managers/WorldManager.h"
 #include "objects/factories/tientities/TIEntityFactory.h"
@@ -113,12 +116,14 @@ sol::object BehavesComponentSystem::getComponentProperty(const std::string& key,
 }
 
 
-void BehavesComponentSystem::addSubscription(TIEntity& tientity, const GlobalId subscription, BehaviorTreeNode& node) {
+void BehavesComponentSystem::addSubscriptions(TIEntity& tientity, const std::vector<GlobalId>& subscriptions, BehaviorTreeNode& node) {
 	BehavesComponent& behavesComponent = this->addComponent(tientity);
-    if (!behavesComponent.subscriptions.count(subscription)) {
-        behavesComponent.subscriptions[subscription];
+	for (auto subscription : subscriptions) {
+        if (!behavesComponent.subscriptions.count(subscription)) {
+            behavesComponent.subscriptions[subscription];
+        }
+        behavesComponent.subscriptions[subscription].push_back(&node);
 	}
-	behavesComponent.subscriptions[subscription].push_back(&node);
 }
 
 
@@ -167,6 +172,7 @@ void BehavesComponentSystem::initializeBehaviorTreeNodeTypes() {
 	this->behaviorTreeNodeTypes.insert({BehaviorTreeNodeFactory::SELECTOR_NODE, BehaviorTreeNodeFactory::SELECTOR_NODE});
 	this->behaviorTreeNodeTypes.insert({BehaviorTreeNodeFactory::SEQUENCE_NODE, BehaviorTreeNodeFactory::SEQUENCE_NODE });
 	this->behaviorTreeNodeTypes.insert({BehaviorTreeNodeFactory::HAS_EVENT_NODE, BehaviorTreeNodeFactory::HAS_EVENT_NODE });
+	this->behaviorTreeNodeTypes.insert({BehaviorTreeNodeFactory::WAIT_FOR_EVENT_NODE, BehaviorTreeNodeFactory::WAIT_FOR_EVENT_NODE });
 }
 
 
