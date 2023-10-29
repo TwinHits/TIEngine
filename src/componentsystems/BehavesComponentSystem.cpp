@@ -173,6 +173,7 @@ void BehavesComponentSystem::initializeBehaviorTreeNodeTypes() {
 	this->behaviorTreeNodeTypes.insert({BehaviorTreeNodeFactory::SEQUENCE_NODE, BehaviorTreeNodeFactory::SEQUENCE_NODE });
 	this->behaviorTreeNodeTypes.insert({BehaviorTreeNodeFactory::HAS_EVENT_NODE, BehaviorTreeNodeFactory::HAS_EVENT_NODE });
 	this->behaviorTreeNodeTypes.insert({BehaviorTreeNodeFactory::WAIT_FOR_EVENT_NODE, BehaviorTreeNodeFactory::WAIT_FOR_EVENT_NODE });
+	this->behaviorTreeNodeTypes.insert({BehaviorTreeNodeFactory::PARALLEL_NODE, BehaviorTreeNodeFactory::PARALLEL_NODE });
 }
 
 

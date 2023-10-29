@@ -14,6 +14,7 @@
 #include "objects/ai/behaviortree/BehaviorTreeNode.h"
 #include "objects/ai/behaviortree/HasEventNode.h"
 #include "objects/ai/behaviortree/LeafNode.h"
+#include "objects/ai/behaviortree/ParallelNode.h"
 #include "objects/ai/behaviortree/SelectorNode.h"
 #include "objects/ai/behaviortree/SequenceNode.h"
 #include "objects/ai/behaviortree/WaitForEventNode.h"
@@ -44,6 +45,8 @@ std::unique_ptr<BehaviorTreeNode> BehaviorTreeNodeFactory::build(TIEntity& tient
                 behaviorTreeNode = this->buildHasEventNode(tientity);
             } else if (node_type == BehaviorTreeNodeFactory::WAIT_FOR_EVENT_NODE) {
                 behaviorTreeNode = this->buildWaitForEventNode(tientity);
+            } else if (node_type == BehaviorTreeNodeFactory::PARALLEL_NODE) {
+                behaviorTreeNode = this->buildParallelNode(tientity);
             } else {
                 LogManager::Instance()->error(node_type + " is an unknown behavior tree node type.");
                 return nullptr;
@@ -112,4 +115,15 @@ std::unique_ptr<BehaviorTreeNode> BehaviorTreeNodeFactory::buildHasEventNode(TIE
 std::unique_ptr<BehaviorTreeNode> BehaviorTreeNodeFactory::buildWaitForEventNode(TIEntity& tientity) {
     std::unique_ptr<WaitForEventNode> waitForEventNode = make_unique<WaitForEventNode>(tientity);
     return std::move(waitForEventNode);
+}
+
+std::unique_ptr<BehaviorTreeNode> BehaviorTreeNodeFactory::buildParallelNode(TIEntity& tientity) {
+    std::unique_ptr<ParallelNode> parallelNode = make_unique<ParallelNode>(tientity);
+    std::vector<GlobalId> children;
+    this->reader.get<std::vector<GlobalId>>(BehaviorTreeNodeFactory::CHILDREN, children);
+    for (auto child : children) {
+        BehaviorTreeNodeFactory* childFactory = WorldManager::Instance()->getBehaviorTreeNodeFactory(child);
+        parallelNode->addChild(childFactory->build(tientity));
+    }
+    return std::move(parallelNode);
 }

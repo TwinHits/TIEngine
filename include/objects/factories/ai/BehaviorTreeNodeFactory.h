@@ -26,6 +26,7 @@ class BehaviorTreeNodeFactory {
 		static const inline std::string SEQUENCE_NODE = "SequenceNode";
 		static const inline std::string HAS_EVENT_NODE = "HasEventNode";
 		static const inline std::string WAIT_FOR_EVENT_NODE = "WaitForEventNode";
+		static const inline std::string PARALLEL_NODE = "ParallelNode";
 
 	private:
 		GlobalId id = 0;
@@ -36,6 +37,7 @@ class BehaviorTreeNodeFactory {
 		std::unique_ptr<BehaviorTreeNode> buildSequenceNode(TIEntity&);
 		std::unique_ptr<BehaviorTreeNode> buildHasEventNode(TIEntity&);
 		std::unique_ptr<BehaviorTreeNode> buildWaitForEventNode(TIEntity&);
+		std::unique_ptr<BehaviorTreeNode> buildParallelNode(TIEntity&);
 
 		static const inline std::string PRE_CONDITION = "preCondition";
 		static const inline std::string ON_UPDATE = "update";
