@@ -25,7 +25,7 @@ BehaviorTree::NodeStatus HasEventNode::update(float delta) {
                 break;
             }
         }
-        //result = this->postCondition();
+        result = this->postCondition(result);
         this->messages.clear();
     }
     return result;

@@ -18,15 +18,12 @@ BehaviorTree::NodeStatus BehaviorTreeNode::preCondition() {
 }
 
 
-BehaviorTree::NodeStatus BehaviorTreeNode::postCondition() {
+BehaviorTree::NodeStatus BehaviorTreeNode::postCondition(const BehaviorTree::NodeStatus status) {
     if (this->postConditionFunctionId) {
-        return ScriptManager::Instance()->runFunction<BehaviorTree::NodeStatus>(this->postConditionFunctionId, this->tientity);
+        return ScriptManager::Instance()->runFunction<BehaviorTree::NodeStatus>(this->postConditionFunctionId, this->tientity, status);
     }
-    return BehaviorTree::NodeStatus::SUCCESS;
+    return status;
 }
-
-
-void BehaviorTreeNode::onMessage(const Message& message) {}
 
 
 void BehaviorTreeNode::setPreConditonFunctionId(const GlobalId preConditionFunctionId) {
@@ -39,6 +36,18 @@ void BehaviorTreeNode::setPostConditonFunctionId(const GlobalId postConditionFun
 }
 
 
+void BehaviorTreeNode::setOnMessageFunctionId(const GlobalId onMessageFunctionId) {
+    this->onMessageFunctionId = onMessageFunctionId;
+}
+
+
 void BehaviorTreeNode::addChild(std::unique_ptr<BehaviorTreeNode> behaviorTreeNode) {
     this->children.push_back(std::move(behaviorTreeNode));
+}
+
+
+void BehaviorTreeNode::onMessage(const Message& message) {
+    if (this->onMessageFunctionId) {
+        ScriptManager::Instance()->runFunction<sol::optional<float>>(this->onMessageFunctionId, this->tientity, message);
+    }
 }

@@ -3,8 +3,6 @@
 
 #include "objects/ai/behaviortree/BehaviorTreeNode.h"
 
-#include <vector>
-
 #include "objects/Message.h"
 #include "objects/enumeration/NodeStatus.h"
 #include "objects/tientities/TIEntity.h"
@@ -20,7 +18,6 @@ class WaitForEventNode : public BehaviorTreeNode {
 
         virtual void onMessage(const Message&);
     private:
-        std::vector<Message> messages;
 };
 
 }

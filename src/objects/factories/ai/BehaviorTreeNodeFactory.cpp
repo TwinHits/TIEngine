@@ -16,6 +16,7 @@
 #include "objects/ai/behaviortree/LeafNode.h"
 #include "objects/ai/behaviortree/SelectorNode.h"
 #include "objects/ai/behaviortree/SequenceNode.h"
+#include "objects/ai/behaviortree/WaitForEventNode.h"
 #include "templates/MakeUnique.h"
 
 using namespace TIE;
@@ -50,6 +51,10 @@ std::unique_ptr<BehaviorTreeNode> BehaviorTreeNodeFactory::build(TIEntity& tient
 
             behaviorTreeNode->setPreConditonFunctionId(this->reader.get<GlobalId>(BehaviorTreeNodeFactory::PRE_CONDITION, 0));
             behaviorTreeNode->setPostConditonFunctionId(this->reader.get<GlobalId>(BehaviorTreeNodeFactory::POST_CONDITION, 0));
+            behaviorTreeNode->setOnMessageFunctionId(this->reader.get<GlobalId>(BehaviorTreeNodeFactory::ON_MESSAGE, 0));
+            std::vector<GlobalId> subscriptions;
+            this->reader.get<std::vector<GlobalId>>(BehaviorTreeNodeFactory::SUBSCRIPTIONS, subscriptions);
+            BehavesComponentSystem::Instance()->addSubscriptions(tientity, subscriptions, *behaviorTreeNode);
 
             return behaviorTreeNode;
         } else {
@@ -100,17 +105,11 @@ std::unique_ptr<BehaviorTreeNode> BehaviorTreeNodeFactory::buildSequenceNode(TIE
 
 std::unique_ptr<BehaviorTreeNode> BehaviorTreeNodeFactory::buildHasEventNode(TIEntity& tientity) {
     std::unique_ptr<HasEventNode> hasEventNode = make_unique<HasEventNode>(tientity);
-    std::vector<GlobalId> subscriptions;
-    this->reader.get<std::vector<GlobalId>>(BehaviorTreeNodeFactory::SUBSCRIPTIONS, subscriptions);
-    BehavesComponentSystem::Instance()->addSubscriptions(tientity, subscriptions, *hasEventNode);
     return std::move(hasEventNode);
 }
 
 
 std::unique_ptr<BehaviorTreeNode> BehaviorTreeNodeFactory::buildWaitForEventNode(TIEntity& tientity) {
-    std::unique_ptr<HasEventNode> hasEventNode = make_unique<HasEventNode>(tientity);
-    std::vector<GlobalId> subscriptions;
-    this->reader.get<std::vector<GlobalId>>(BehaviorTreeNodeFactory::SUBSCRIPTIONS, subscriptions);
-    BehavesComponentSystem::Instance()->addSubscriptions(tientity, subscriptions, *hasEventNode);
-    return std::move(hasEventNode);
+    std::unique_ptr<WaitForEventNode> waitForEventNode = make_unique<WaitForEventNode>(tientity);
+    return std::move(waitForEventNode);
 }
