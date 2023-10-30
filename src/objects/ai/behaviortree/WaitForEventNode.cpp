@@ -13,6 +13,7 @@ BehaviorTree::NodeStatus WaitForEventNode::preCondition(const Message& message) 
     if (this->preConditionFunctionId) {
         return ScriptManager::Instance()->runFunction<BehaviorTree::NodeStatus>(this->preConditionFunctionId, this->tientity, message);
     }
+    return BehaviorTree::NodeStatus::SUCCESS;
 }
 
 
