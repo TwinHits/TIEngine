@@ -18,11 +18,11 @@ BehaviorTree::NodeStatus BehaviorTreeNode::preCondition() {
 }
 
 
-BehaviorTree::NodeStatus BehaviorTreeNode::postCondition(const BehaviorTree::NodeStatus status) {
+BehaviorTree::NodeStatus BehaviorTreeNode::postCondition() {
     if (this->postConditionFunctionId) {
-        return ScriptManager::Instance()->runFunction<BehaviorTree::NodeStatus>(this->postConditionFunctionId, this->tientity, status);
+        return ScriptManager::Instance()->runFunction<BehaviorTree::NodeStatus>(this->postConditionFunctionId, this->tientity);
     }
-    return status;
+    return BehaviorTree::NodeStatus::SUCCESS;
 }
 
 

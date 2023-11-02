@@ -18,7 +18,7 @@ class BehaviorTreeNode {
 
         virtual BehaviorTree::NodeStatus preCondition();
         virtual BehaviorTree::NodeStatus update(float) = 0;
-        virtual BehaviorTree::NodeStatus postCondition(const BehaviorTree::NodeStatus);
+        virtual BehaviorTree::NodeStatus postCondition();
 
         void setPreConditonFunctionId(const GlobalId);
         void setPostConditonFunctionId(const GlobalId);

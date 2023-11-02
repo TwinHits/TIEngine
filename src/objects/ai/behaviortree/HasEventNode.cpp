@@ -22,14 +22,21 @@ BehaviorTree::NodeStatus HasEventNode::update(float delta) {
     if (!messages.empty()) {
         for (auto& message : this->messages) {
             result = this->preCondition(message);
-            if (result == BehaviorTree::SUCCESS) {
-                break;
+            if (result == BehaviorTree::NodeStatus::SUCCESS) {
+                result = this->postCondition(message);
             }
         }
-        result = this->postCondition(result);
         this->messages.clear();
     }
     return result;
+}
+
+
+BehaviorTree::NodeStatus HasEventNode::postCondition(const Message& message) {
+    if (this->postConditionFunctionId) {
+        return ScriptManager::Instance()->runFunction<BehaviorTree::NodeStatus>(this->postConditionFunctionId, this->tientity, message);
+    }
+    return BehaviorTree::NodeStatus::SUCCESS;
 }
 
 
