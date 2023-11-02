@@ -13,7 +13,6 @@ class WaitForEventNode : public BehaviorTreeNode {
     public:
         WaitForEventNode(TIEntity&);
 
-        virtual BehaviorTree::NodeStatus preCondition(const Message&);
         virtual BehaviorTree::NodeStatus update(float);
 
         virtual void onMessage(const Message&);

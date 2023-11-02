@@ -10,11 +10,11 @@ LeafNode::LeafNode(TIEntity& tientity) : BehaviorTreeNode(tientity) {}
 
 
 BehaviorTree::NodeStatus LeafNode::update(float delta) {
-    BehaviorTree::NodeStatus result = this->preCondition();
+    BehaviorTree::NodeStatus result = this->updatePreDecorators(delta);
     if (result == BehaviorTree::NodeStatus::SUCCESS) {
         return ScriptManager::Instance()->runFunction<BehaviorTree::NodeStatus>(this->updateFunctionId, this->tientity, delta);
+        result = this->updatePostDecorators(delta);
     }
-    // result = this->postCondition();
     return result;
 }
 

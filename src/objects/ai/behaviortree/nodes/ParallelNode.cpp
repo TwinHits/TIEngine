@@ -9,7 +9,7 @@ ParallelNode::ParallelNode(TIEntity& tientity) : BehaviorTreeNode(tientity) {}
 
 
 BehaviorTree::NodeStatus ParallelNode::update(float delta) {
-    BehaviorTree::NodeStatus result = this->preCondition();
+    BehaviorTree::NodeStatus result = this->updatePreDecorators(delta);
     if (result == BehaviorTree::NodeStatus::SUCCESS) {
         // Iterate through all children
         // Should it return sucess if one succeeds, or return failure if one fails?
@@ -19,7 +19,9 @@ BehaviorTree::NodeStatus ParallelNode::update(float delta) {
                 result = nodeResult;
             }
         }
+        if (result == BehaviorTree::NodeStatus::SUCCESS) {
+            result = this->updatePostDecorators(delta);
+        }
     }
-    // result = this->postCondition(result);
     return result;
 }

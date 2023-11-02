@@ -1,8 +1,9 @@
 #include "objects/ai/behaviortree/nodes/BehaviorTreeNode.h"
 
-#include "objects/Message.h"
-#include "objects/tientities/TIEntity.h"
 #include "managers/ScriptManager.h"
+#include "objects/Message.h"
+#include "objects/enumeration/NodeStatus.h"
+#include "objects/tientities/TIEntity.h"
 
 using namespace TIE;
 
@@ -10,29 +11,18 @@ using namespace TIE;
 BehaviorTreeNode::BehaviorTreeNode(TIEntity& tientity) : tientity(tientity) {}
 
 
-BehaviorTree::NodeStatus BehaviorTreeNode::preCondition() {
-    if (this->preConditionFunctionId) {
-        return ScriptManager::Instance()->runFunction<BehaviorTree::NodeStatus>(this->preConditionFunctionId, this->tientity);
-    }
-    return BehaviorTree::NodeStatus::SUCCESS;
+TIEntity& BehaviorTreeNode::getTIEntity() {
+    return this->tientity;
 }
 
 
-BehaviorTree::NodeStatus BehaviorTreeNode::postCondition() {
-    if (this->postConditionFunctionId) {
-        return ScriptManager::Instance()->runFunction<BehaviorTree::NodeStatus>(this->postConditionFunctionId, this->tientity);
-    }
-    return BehaviorTree::NodeStatus::SUCCESS;
+BehaviorTree::NodeStatus BehaviorTreeNode::updatePreDecorators(float delta) {
+    return this->updateDecorators(this->preDecorators, delta);
 }
 
 
-void BehaviorTreeNode::setPreConditonFunctionId(const GlobalId preConditionFunctionId) {
-    this->preConditionFunctionId = preConditionFunctionId;
-}
-
-
-void BehaviorTreeNode::setPostConditonFunctionId(const GlobalId postConditionFunctionId) {
-    this->postConditionFunctionId = postConditionFunctionId;
+BehaviorTree::NodeStatus BehaviorTreeNode::updatePostDecorators(float delta) {
+    return this->updateDecorators(this->postDecorators, delta);
 }
 
 
@@ -41,8 +31,18 @@ void BehaviorTreeNode::setOnMessageFunctionId(const GlobalId onMessageFunctionId
 }
 
 
+void BehaviorTreeNode::addPreDecorator(std::unique_ptr<NodeDecorator> decorator) {
+    this->preDecorators.push_back(std::move(decorator));
+}
+
+
 void BehaviorTreeNode::addChild(std::unique_ptr<BehaviorTreeNode> behaviorTreeNode) {
     this->children.push_back(std::move(behaviorTreeNode));
+}
+
+
+void BehaviorTreeNode::addPostDecorator(std::unique_ptr<NodeDecorator> decorator) {
+    this->postDecorators.push_back(std::move(decorator));
 }
 
 
@@ -50,4 +50,16 @@ void BehaviorTreeNode::onMessage(const Message& message) {
     if (this->onMessageFunctionId) {
         ScriptManager::Instance()->runFunction<sol::optional<float>>(this->onMessageFunctionId, this->tientity, message);
     }
+}
+
+
+BehaviorTree::NodeStatus BehaviorTreeNode::updateDecorators(const std::vector<std::unique_ptr<NodeDecorator>>& decorators, float delta) {
+    BehaviorTree::NodeStatus result = BehaviorTree::NodeStatus::SUCCESS;
+    for (auto& decorator : decorators) {
+        result = decorator->update(delta);
+        if (result == BehaviorTree::NodeStatus::FAILURE) {
+            break;
+        }
+    }
+    return result;
 }

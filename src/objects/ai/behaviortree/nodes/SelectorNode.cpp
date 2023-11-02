@@ -9,7 +9,7 @@ SelectorNode::SelectorNode(TIEntity& tientity) : BehaviorTreeNode(tientity) {}
 
 
 BehaviorTree::NodeStatus SelectorNode::update(float delta) {
-    BehaviorTree::NodeStatus result = this->preCondition();
+    BehaviorTree::NodeStatus result = this->updatePreDecorators(delta);
     if (result == BehaviorTree::NodeStatus::SUCCESS) {
         // Iterate through children until one returns a success
         // If one returns running, return running and continue that one on next frame
@@ -31,7 +31,9 @@ BehaviorTree::NodeStatus SelectorNode::update(float delta) {
                 }
             }
         }
+        if (result == BehaviorTree::NodeStatus::SUCCESS) {
+            result = this->updatePostDecorators(delta);
+        }
     }
-    // result = this->postCondition();
     return result;
 }

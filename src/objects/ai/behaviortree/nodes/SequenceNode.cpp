@@ -9,7 +9,7 @@ SequenceNode::SequenceNode(TIEntity& tientity) : BehaviorTreeNode(tientity) {}
 
 
 BehaviorTree::NodeStatus SequenceNode::update(float delta) {
-    BehaviorTree::NodeStatus result = this->preCondition();
+    BehaviorTree::NodeStatus result = this->updatePreDecorators(delta);
     if (result == BehaviorTree::NodeStatus::SUCCESS) {
         // Iterate through children until one does not return success. 
         // Return to that one on next run.
@@ -31,7 +31,9 @@ BehaviorTree::NodeStatus SequenceNode::update(float delta) {
                 }
             }
         }
+        if (result == BehaviorTree::NodeStatus::SUCCESS) {
+            result = this->updatePostDecorators(delta);
+        }
     }
-    // result = this->postCondition();
     return result;
 }

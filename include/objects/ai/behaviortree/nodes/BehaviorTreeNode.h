@@ -6,6 +6,7 @@
 
 #include "objects/GlobalId.h"
 #include "objects/Message.h"
+#include "objects/ai/behaviortree/decorators/NodeDecorator.h"
 #include "objects/enumeration/NodeStatus.h"
 #include "objects/tientities/TIEntity.h"
 
@@ -16,25 +17,30 @@ class BehaviorTreeNode {
         BehaviorTreeNode(TIEntity& tientity);
         virtual ~BehaviorTreeNode() {}
 
-        virtual BehaviorTree::NodeStatus preCondition();
-        virtual BehaviorTree::NodeStatus update(float) = 0;
-        virtual BehaviorTree::NodeStatus postCondition();
+        TIEntity& getTIEntity();
 
-        void setPreConditonFunctionId(const GlobalId);
-        void setPostConditonFunctionId(const GlobalId);
+
+        BehaviorTree::NodeStatus updatePreDecorators(float);
+        virtual BehaviorTree::NodeStatus update(float) = 0;
+        BehaviorTree::NodeStatus updatePostDecorators(float);
+
         void setOnMessageFunctionId(const GlobalId);
 
+        void addPreDecorator(std::unique_ptr<NodeDecorator>);
         void addChild(std::unique_ptr<BehaviorTreeNode>);
+        void addPostDecorator(std::unique_ptr<NodeDecorator>);
 
         virtual void onMessage(const Message&);
 
     protected:
         TIEntity& tientity;
-        GlobalId preConditionFunctionId = 0;
-        GlobalId postConditionFunctionId = 0;
         GlobalId onMessageFunctionId = 0;
+        std::vector<std::unique_ptr<NodeDecorator>> preDecorators;
         std::vector<std::unique_ptr<BehaviorTreeNode>> children;
+        std::vector<std::unique_ptr<NodeDecorator>> postDecorators;
         std::vector<Message> messages;
+
+        BehaviorTree::NodeStatus updateDecorators(const std::vector<std::unique_ptr<NodeDecorator>>&, float);
 };
 
 }

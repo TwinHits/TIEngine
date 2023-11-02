@@ -13,9 +13,7 @@ class HasEventNode : public BehaviorTreeNode {
     public:
         HasEventNode(TIEntity&);
 
-        virtual BehaviorTree::NodeStatus preCondition(const Message&);
         virtual BehaviorTree::NodeStatus update(float);
-        virtual BehaviorTree::NodeStatus postCondition(const Message&);
 
         virtual void onMessage(const Message&);
     private:

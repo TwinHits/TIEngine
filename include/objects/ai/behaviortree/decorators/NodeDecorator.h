@@ -2,15 +2,16 @@
 #define NODEDECORATOR_H
 
 #include "objects/enumeration/NodeStatus.h"
+#include "objects/tientities/TIEntity.h"
 
 namespace TIE {
 
 class NodeDecorator {
     public:
-        NodeDecorator(BehaviorTreeNode& node) : node(node) {}
+        NodeDecorator(TIEntity& tientity);
         virtual BehaviorTree::NodeStatus update(const float delta) = 0;
     protected:
-        BehaviorTreeNode& node;
+        TIEntity& tientity;
 
 };
 

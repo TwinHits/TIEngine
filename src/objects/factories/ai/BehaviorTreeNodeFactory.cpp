@@ -11,6 +11,8 @@
 #include "managers/WorldManager.h"
 #include "objects/GlobalId.h"
 #include "objects/ScriptTableReader.h"
+#include "objects/ai/behaviortree/decorators/PreConditionDecorator.h"
+#include "objects/ai/behaviortree/decorators/PostConditionDecorator.h"
 #include "objects/ai/behaviortree/nodes/BehaviorTreeNode.h"
 #include "objects/ai/behaviortree/nodes/HasEventNode.h"
 #include "objects/ai/behaviortree/nodes/LeafNode.h"
@@ -52,8 +54,17 @@ std::unique_ptr<BehaviorTreeNode> BehaviorTreeNodeFactory::build(TIEntity& tient
                 return nullptr;
             }
 
-            behaviorTreeNode->setPreConditonFunctionId(this->reader.get<GlobalId>(BehaviorTreeNodeFactory::PRE_CONDITION, 0));
-            behaviorTreeNode->setPostConditonFunctionId(this->reader.get<GlobalId>(BehaviorTreeNodeFactory::POST_CONDITION, 0));
+            if (this->reader.hasKey(BehaviorTreeNodeFactory::PRE_CONDITION)) {
+                std::unique_ptr<PreConditionDecorator> preConditionDecorator = make_unique<PreConditionDecorator>(tientity);
+                preConditionDecorator->setPreConditonFunctionId(this->reader.get<GlobalId>(BehaviorTreeNodeFactory::PRE_CONDITION, 0));
+                behaviorTreeNode->addPreDecorator(std::move(preConditionDecorator));
+            }
+            if (this->reader.hasKey(BehaviorTreeNodeFactory::POST_CONDITION)) {
+                std::unique_ptr<PostConditionDecorator> postConditionDecorator = make_unique<PostConditionDecorator>(tientity);
+                postConditionDecorator->setPostConditonFunctionId(this->reader.get<GlobalId>(BehaviorTreeNodeFactory::POST_CONDITION, 0));
+                behaviorTreeNode->addPostDecorator(std::move(postConditionDecorator));
+            }
+
             behaviorTreeNode->setOnMessageFunctionId(this->reader.get<GlobalId>(BehaviorTreeNodeFactory::ON_MESSAGE, 0));
             std::vector<GlobalId> subscriptions;
             this->reader.get<std::vector<GlobalId>>(BehaviorTreeNodeFactory::SUBSCRIPTIONS, subscriptions);
