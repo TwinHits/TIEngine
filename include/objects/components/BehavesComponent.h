@@ -8,7 +8,7 @@
 #include <vector>
 
 #include "objects/ai/FiniteStateMachine.h"
-#include "objects/ai/behaviortree/BehaviorTreeNode.h"
+#include "objects/ai/behaviortree/nodes/BehaviorTreeNode.h"
 
 namespace TIE {
 

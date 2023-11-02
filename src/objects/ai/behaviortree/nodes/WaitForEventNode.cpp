@@ -1,4 +1,4 @@
-#include "objects/ai/behaviortree/WaitForEventNode.h"
+#include "objects/ai/behaviortree/nodes/WaitForEventNode.h"
 
 #include "managers/ScriptManager.h"
 #include "objects/enumeration/NodeStatus.h"

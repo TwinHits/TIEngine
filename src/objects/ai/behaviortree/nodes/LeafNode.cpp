@@ -1,4 +1,4 @@
-#include "objects/ai/behaviortree/LeafNode.h"
+#include "objects/ai/behaviortree/nodes/LeafNode.h"
 
 #include "managers/ScriptManager.h"
 #include "objects/enumeration/NodeStatus.h"

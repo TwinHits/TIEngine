@@ -1,4 +1,4 @@
-#include "objects/ai/behaviortree/SelectorNode.h"
+#include "objects/ai/behaviortree/nodes/SelectorNode.h"
 
 #include "objects/enumeration/NodeStatus.h"
 #include "objects/tientities/TIEntity.h"

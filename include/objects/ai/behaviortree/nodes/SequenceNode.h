@@ -1,16 +1,16 @@
-#ifndef PARALLELNODE_H
-#define PARALLELNODE_H
+#ifndef SEQUENCENODE_H
+#define SEQUENCENODE_H
 
-#include "objects/ai/behaviortree/BehaviorTreeNode.h"
+#include "objects/ai/behaviortree/nodes/BehaviorTreeNode.h"
 
 #include "objects/enumeration/NodeStatus.h"
 #include "objects/tientities/TIEntity.h"
 
 namespace TIE {
 
-class ParallelNode : public BehaviorTreeNode {
+class SequenceNode : public BehaviorTreeNode {
     public:
-        ParallelNode(TIEntity&);
+        SequenceNode(TIEntity&);
 
         virtual BehaviorTree::NodeStatus update(float);
 

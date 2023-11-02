@@ -1,4 +1,4 @@
-#include "objects/ai/behaviortree/ParallelNode.h"
+#include "objects/ai/behaviortree/nodes/ParallelNode.h"
 
 #include "objects/enumeration/NodeStatus.h"
 #include "objects/tientities/TIEntity.h"

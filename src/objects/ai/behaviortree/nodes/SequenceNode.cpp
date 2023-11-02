@@ -1,4 +1,4 @@
-#include "objects/ai/behaviortree/SequenceNode.h"
+#include "objects/ai/behaviortree/nodes/SequenceNode.h"
 
 #include "objects/enumeration/NodeStatus.h"
 #include "objects/tientities/TIEntity.h"

@@ -1,4 +1,4 @@
-#include "objects/ai/behaviortree/HasEventNode.h"
+#include "objects/ai/behaviortree/nodes/HasEventNode.h"
 
 #include "managers/ScriptManager.h"
 #include "objects/enumeration/NodeStatus.h"
