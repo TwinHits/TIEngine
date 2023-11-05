@@ -25,6 +25,8 @@ class MessagesComponentSystem : public Singleton<MessagesComponentSystem>, publi
 		const GlobalId registerMessageSubscription(const std::string&);
 		const std::map<std::string, GlobalId>& getMessageSubscriptions();
 
+		void subscribe(TIEntity&, GlobalId, std::function<void(const Message&)>);
+
 		void sendMessage(const GlobalId, TIEntity&, const GlobalId);
 		void sendMessage(const GlobalId, TIEntity&, const GlobalId, sol::object);
 

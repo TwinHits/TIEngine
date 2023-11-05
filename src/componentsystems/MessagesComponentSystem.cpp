@@ -1,6 +1,5 @@
 #include "componentsystems/MessagesComponentSystem.h" 
 
-#include "componentsystems/BehavesComponentSystem.h"
 #include "managers/HashManager.h"
 #include "managers/LogManager.h"
 #include "managers/WorldManager.h"
@@ -20,12 +19,27 @@ MessagesComponentSystem::MessagesComponentSystem() {
 
 
 void MessagesComponentSystem::update(const float delta) {
+	// Get the next set of messages
 	std::swap(this->currentFrameMessages, this->nextFrameMessages);
-	for (auto& [reciepentId, subscriptions] : this->currentFrameMessages) {
-		TIEntity* receipent = WorldManager::Instance()->getTIEntityById(reciepentId);
-		if (receipent) {
-			for (auto& [subscriptionId, messages] : subscriptions) {
-				BehavesComponentSystem::Instance()->onMessage(*receipent, messages);
+	// For each recipient, get the subscription->messages sent to them
+	for (auto& [recipientId, subscriptions] : this->currentFrameMessages) {
+		TIEntity* recipient = WorldManager::Instance()->getTIEntityById(recipientId);
+		if (recipient) {
+			MessagesComponent* messagesComponent = recipient->getComponent<MessagesComponent>();
+			if (messagesComponent) {
+				// For each subscription sent to this recipient
+                for (auto& [subscriptionId, messages] : subscriptions) {
+					// If the recipient cares about this subscription
+					if (messagesComponent->subscriptions.count(subscriptionId)) {
+						// For each message in this subscription
+						for (auto& message : messages) {
+							// For each of the recipient's subscribed onMessage callback
+							for (auto& onMessage : messagesComponent->subscriptions[subscriptionId]) {
+								onMessage(message);
+							}
+						}
+					}
+                }
 			}
 		}
 	}
@@ -79,6 +93,12 @@ const GlobalId MessagesComponentSystem::registerMessageSubscription(const std::s
 
 const std::map<std::string, GlobalId>& MessagesComponentSystem::getMessageSubscriptions() {
 	return this->messageSubscriptions;
+}
+
+
+void MessagesComponentSystem::subscribe(TIEntity& tientity, GlobalId subscription, std::function<void(const Message&)> onMessage) {
+	MessagesComponent& messagesComponent = this->addComponent(tientity);
+	messagesComponent.subscribe(subscription, onMessage);
 }
 
 
