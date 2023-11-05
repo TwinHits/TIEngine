@@ -35,6 +35,7 @@ TIEntity& TIEntityFactory::build() {
         if (this->reader->has<std::string>(TIEntityFactory::NAME)) {
             this->name = *this->reader->get<std::string>(TIEntityFactory::NAME);
         }
+		tientity.setName(this->name);
 
         if (this->reader->has<bool>(TIEntityFactory::SHOW_WIREFRAME)) {
             this->setShowWireFrame(*this->reader->get<bool>(TIEntityFactory::SHOW_WIREFRAME));
@@ -47,7 +48,6 @@ TIEntity& TIEntityFactory::build() {
 		}
 	}
 
-	tientity.setName(this->name);
 
 
 	WorldManager::Instance()->registerTIEntity(tientity);
