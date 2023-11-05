@@ -16,6 +16,7 @@
 #include "objects/ai/behaviortree/decorators/OnEventDecorator.h"
 #include "objects/ai/behaviortree/decorators/PreConditionDecorator.h"
 #include "objects/ai/behaviortree/decorators/PostConditionDecorator.h"
+#include "objects/ai/behaviortree/decorators/WaitForEventDecorator.h"
 #include "objects/ai/behaviortree/nodes/BehaviorTreeNode.h"
 #include "objects/ai/behaviortree/nodes/LeafNode.h"
 #include "objects/ai/behaviortree/nodes/ParallelNode.h"
@@ -60,6 +61,17 @@ std::unique_ptr<BehaviorTreeNode> BehaviorTreeNodeFactory::build(TIEntity& tient
                     MessagesComponentSystem::Instance()->subscribe(tientity, subscription, std::bind(&OnEventDecorator::onMessage, onEventDecorator.get(), std::placeholders::_1));
                 }
                 behaviorTreeNode->addPreDecorator(std::move(onEventDecorator));
+            }
+            
+            if (this->reader.hasKey(BehaviorTreeNodeFactory::WAIT_FOR_MESSAGE)) {
+                std::unique_ptr<WaitForEventDecorator> waitForEventDecorator = make_unique<WaitForEventDecorator>(tientity);
+                waitForEventDecorator->setOnMessageFunctionId(this->reader.get<GlobalId>(BehaviorTreeNodeFactory::WAIT_FOR_MESSAGE, 0));
+                std::vector<GlobalId> subscriptions;
+                this->reader.get<std::vector<GlobalId>>(BehaviorTreeNodeFactory::SUBSCRIPTIONS, subscriptions);
+                for (auto subscription : subscriptions) {
+                    MessagesComponentSystem::Instance()->subscribe(tientity, subscription, std::bind(&WaitForEventDecorator::onMessage, waitForEventDecorator.get(), std::placeholders::_1));
+                }
+                behaviorTreeNode->addPreDecorator(std::move(waitForEventDecorator));
             }
 
             if (this->reader.hasKey(BehaviorTreeNodeFactory::PRE_CONDITION)) {

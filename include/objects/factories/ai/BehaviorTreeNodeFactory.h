@@ -39,6 +39,7 @@ class BehaviorTreeNodeFactory {
 		static const inline std::string ON_UPDATE = "update";
 		static const inline std::string POST_CONDITION = "postCondition";
 		static const inline std::string ON_MESSAGE = "onMessage";
+		static const inline std::string WAIT_FOR_MESSAGE = "waitForMessage";
 		static const inline std::string NODE_TYPE = "NodeType";
 		static const inline std::string CHILDREN = "Children";
 		static const inline std::string SUBSCRIPTIONS = "Subscriptions";
