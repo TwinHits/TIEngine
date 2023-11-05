@@ -24,8 +24,6 @@ class BehaviorTreeNodeFactory {
 		static const inline std::string LEAF_NODE = "LeafNode";
 		static const inline std::string SELECTOR_NODE = "SelectorNode";
 		static const inline std::string SEQUENCE_NODE = "SequenceNode";
-		static const inline std::string HAS_EVENT_NODE = "HasEventNode";
-		static const inline std::string WAIT_FOR_EVENT_NODE = "WaitForEventNode";
 		static const inline std::string PARALLEL_NODE = "ParallelNode";
 
 	private:
@@ -35,8 +33,6 @@ class BehaviorTreeNodeFactory {
 		std::unique_ptr<BehaviorTreeNode> buildLeafNode(TIEntity&);
 		std::unique_ptr<BehaviorTreeNode> buildSelectorNode(TIEntity&);
 		std::unique_ptr<BehaviorTreeNode> buildSequenceNode(TIEntity&);
-		std::unique_ptr<BehaviorTreeNode> buildHasEventNode(TIEntity&);
-		std::unique_ptr<BehaviorTreeNode> buildWaitForEventNode(TIEntity&);
 		std::unique_ptr<BehaviorTreeNode> buildParallelNode(TIEntity&);
 
 		static const inline std::string PRE_CONDITION = "preCondition";

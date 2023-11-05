@@ -5,21 +5,22 @@
 #include <vector>
 
 #include "componentsystems/BehavesComponentSystem.h"
+#include "componentsystems/MessagesComponentSystem.h"
 #include "managers/HashManager.h"
 #include "managers/LogManager.h"
 #include "managers/ScriptManager.h"
 #include "managers/WorldManager.h"
 #include "objects/GlobalId.h"
+#include "objects/Message.h"
 #include "objects/ScriptTableReader.h"
+#include "objects/ai/behaviortree/decorators/OnEventDecorator.h"
 #include "objects/ai/behaviortree/decorators/PreConditionDecorator.h"
 #include "objects/ai/behaviortree/decorators/PostConditionDecorator.h"
 #include "objects/ai/behaviortree/nodes/BehaviorTreeNode.h"
-#include "objects/ai/behaviortree/nodes/HasEventNode.h"
 #include "objects/ai/behaviortree/nodes/LeafNode.h"
 #include "objects/ai/behaviortree/nodes/ParallelNode.h"
 #include "objects/ai/behaviortree/nodes/SelectorNode.h"
 #include "objects/ai/behaviortree/nodes/SequenceNode.h"
-#include "objects/ai/behaviortree/nodes/WaitForEventNode.h"
 #include "templates/MakeUnique.h"
 
 using namespace TIE;
@@ -43,10 +44,6 @@ std::unique_ptr<BehaviorTreeNode> BehaviorTreeNodeFactory::build(TIEntity& tient
                 behaviorTreeNode = this->buildSelectorNode(tientity);
             } else if (node_type == BehaviorTreeNodeFactory::SEQUENCE_NODE) {
                 behaviorTreeNode = this->buildSequenceNode(tientity);
-            } else if (node_type == BehaviorTreeNodeFactory::HAS_EVENT_NODE) {
-                behaviorTreeNode = this->buildHasEventNode(tientity);
-            } else if (node_type == BehaviorTreeNodeFactory::WAIT_FOR_EVENT_NODE) {
-                behaviorTreeNode = this->buildWaitForEventNode(tientity);
             } else if (node_type == BehaviorTreeNodeFactory::PARALLEL_NODE) {
                 behaviorTreeNode = this->buildParallelNode(tientity);
             } else {
@@ -54,21 +51,28 @@ std::unique_ptr<BehaviorTreeNode> BehaviorTreeNodeFactory::build(TIEntity& tient
                 return nullptr;
             }
 
+            if (this->reader.hasKey(BehaviorTreeNodeFactory::ON_MESSAGE)) {
+                std::unique_ptr<OnEventDecorator> onEventDecorator = make_unique<OnEventDecorator>(tientity);
+                onEventDecorator->setOnMessageFunctionId(this->reader.get<GlobalId>(BehaviorTreeNodeFactory::ON_MESSAGE, 0));
+                std::vector<GlobalId> subscriptions;
+                this->reader.get<std::vector<GlobalId>>(BehaviorTreeNodeFactory::SUBSCRIPTIONS, subscriptions);
+                for (auto subscription : subscriptions) {
+                    MessagesComponentSystem::Instance()->subscribe(tientity, subscription, std::bind(&OnEventDecorator::onMessage, onEventDecorator.get(), std::placeholders::_1));
+                }
+                behaviorTreeNode->addPreDecorator(std::move(onEventDecorator));
+            }
+
             if (this->reader.hasKey(BehaviorTreeNodeFactory::PRE_CONDITION)) {
                 std::unique_ptr<PreConditionDecorator> preConditionDecorator = make_unique<PreConditionDecorator>(tientity);
                 preConditionDecorator->setPreConditonFunctionId(this->reader.get<GlobalId>(BehaviorTreeNodeFactory::PRE_CONDITION, 0));
                 behaviorTreeNode->addPreDecorator(std::move(preConditionDecorator));
             }
+
             if (this->reader.hasKey(BehaviorTreeNodeFactory::POST_CONDITION)) {
                 std::unique_ptr<PostConditionDecorator> postConditionDecorator = make_unique<PostConditionDecorator>(tientity);
                 postConditionDecorator->setPostConditonFunctionId(this->reader.get<GlobalId>(BehaviorTreeNodeFactory::POST_CONDITION, 0));
                 behaviorTreeNode->addPostDecorator(std::move(postConditionDecorator));
             }
-
-            behaviorTreeNode->setOnMessageFunctionId(this->reader.get<GlobalId>(BehaviorTreeNodeFactory::ON_MESSAGE, 0));
-            std::vector<GlobalId> subscriptions;
-            this->reader.get<std::vector<GlobalId>>(BehaviorTreeNodeFactory::SUBSCRIPTIONS, subscriptions);
-            BehavesComponentSystem::Instance()->addSubscriptions(tientity, subscriptions, *behaviorTreeNode);
 
             return behaviorTreeNode;
         } else {
@@ -88,7 +92,7 @@ GlobalId BehaviorTreeNodeFactory::getId() {
 
 std::unique_ptr<BehaviorTreeNode> BehaviorTreeNodeFactory::buildLeafNode(TIEntity& tientity) {
     std::unique_ptr<LeafNode> leafNode = make_unique<LeafNode>(tientity);
-    leafNode->setUpdateFunctionId(*this->reader.get<GlobalId>(BehaviorTreeNodeFactory::ON_UPDATE));
+    leafNode->setUpdateFunctionId(this->reader.get<GlobalId>(BehaviorTreeNodeFactory::ON_UPDATE, 0));
     return std::move(leafNode);
 }
 
@@ -116,17 +120,6 @@ std::unique_ptr<BehaviorTreeNode> BehaviorTreeNodeFactory::buildSequenceNode(TIE
     return std::move(sequenceNode);
 }
 
-
-std::unique_ptr<BehaviorTreeNode> BehaviorTreeNodeFactory::buildHasEventNode(TIEntity& tientity) {
-    std::unique_ptr<HasEventNode> hasEventNode = make_unique<HasEventNode>(tientity);
-    return std::move(hasEventNode);
-}
-
-
-std::unique_ptr<BehaviorTreeNode> BehaviorTreeNodeFactory::buildWaitForEventNode(TIEntity& tientity) {
-    std::unique_ptr<WaitForEventNode> waitForEventNode = make_unique<WaitForEventNode>(tientity);
-    return std::move(waitForEventNode);
-}
 
 std::unique_ptr<BehaviorTreeNode> BehaviorTreeNodeFactory::buildParallelNode(TIEntity& tientity) {
     std::unique_ptr<ParallelNode> parallelNode = make_unique<ParallelNode>(tientity);
