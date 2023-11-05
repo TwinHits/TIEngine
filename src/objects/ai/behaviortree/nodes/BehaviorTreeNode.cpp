@@ -46,19 +46,18 @@ void BehaviorTreeNode::addPostDecorator(std::unique_ptr<NodeDecorator> decorator
 }
 
 
-void BehaviorTreeNode::onMessage(const Message& message) {
-    if (this->onMessageFunctionId) {
-        ScriptManager::Instance()->runFunction<sol::optional<float>>(this->onMessageFunctionId, this->tientity, message);
-    }
-}
-
-
 BehaviorTree::NodeStatus BehaviorTreeNode::updateDecorators(const std::vector<std::unique_ptr<NodeDecorator>>& decorators, float delta) {
     BehaviorTree::NodeStatus result = BehaviorTree::NodeStatus::SUCCESS;
     for (auto& decorator : decorators) {
-        result = decorator->update(delta);
-        if (result == BehaviorTree::NodeStatus::FAILURE) {
-            break;
+        if (this->resumeDecorator == nullptr || this->resumeDecorator == decorator.get()) {
+            this->resumeDecorator = nullptr;
+            result = decorator->update(delta);
+            if (result == BehaviorTree::NodeStatus::FAILURE) {
+                break;
+            } else if (result == BehaviorTree::NodeStatus::RUNNING) {
+                this->resumeDecorator = decorator.get();
+                break;
+            }
         }
     }
     return result;

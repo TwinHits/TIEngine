@@ -19,6 +19,9 @@ BehaviorTree::NodeStatus OnEventDecorator::update(const float delta) {
                 BehaviorTree::NodeStatus callbackResult = ScriptManager::Instance()->runFunction<BehaviorTree::NodeStatus>(this->onMessageFunctionId, this->tientity, message);
                 if (callbackResult == BehaviorTree::NodeStatus::SUCCESS) {
                     result = BehaviorTree::NodeStatus::SUCCESS;
+                } else if (callbackResult == BehaviorTree::NodeStatus::RUNNING) {
+                    result = BehaviorTree::NodeStatus::RUNNING;
+                    break;
                 }
             }
         } else {

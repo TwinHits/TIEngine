@@ -30,15 +30,13 @@ class BehaviorTreeNode {
         void addChild(std::unique_ptr<BehaviorTreeNode>);
         void addPostDecorator(std::unique_ptr<NodeDecorator>);
 
-        virtual void onMessage(const Message&);
-
     protected:
         TIEntity& tientity;
         GlobalId onMessageFunctionId = 0;
         std::vector<std::unique_ptr<NodeDecorator>> preDecorators;
         std::vector<std::unique_ptr<BehaviorTreeNode>> children;
         std::vector<std::unique_ptr<NodeDecorator>> postDecorators;
-        std::vector<Message> messages;
+        NodeDecorator* resumeDecorator = nullptr;
 
         BehaviorTree::NodeStatus updateDecorators(const std::vector<std::unique_ptr<NodeDecorator>>&, float);
 };
