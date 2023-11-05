@@ -56,11 +56,14 @@ TIEntity& TraceFactory::build() {
     CollidesComponent& collidesComponent = CollidesComponentSystem::Instance()->addComponent(trace);
     collidesComponent.setCollides(true);
     
+    PositionComponent& positionComponent = PositionComponentSystem::Instance()->addComponent(trace);
+    PositionComponentSystem::Instance()->setPosition(trace, 0, 0);
+    positionComponent.rotation = direction;
+
     LineComponent& lineComponent = LineComponentSystem::Instance()->addComponent(trace);
     lineComponent.setMagnitude(magnitude);
+    LineComponentSystem::Instance()->setLine(lineComponent, positionComponent);
 
-    PositionComponent& positionComponent = PositionComponentSystem::Instance()->addComponent(trace);
-    positionComponent.rotation = direction;
     WorldManager::Instance()->registerTIEntity(trace);
     return trace;
 }

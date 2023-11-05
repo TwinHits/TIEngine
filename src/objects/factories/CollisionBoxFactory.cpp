@@ -80,10 +80,11 @@ TIEntity& CollisionBoxFactory::build() {
     collidesComponent.setPayload(this->parent->getId());
 
     PositionComponent& positionComponent = PositionComponentSystem::Instance()->addComponent(collisionBox);
-    positionComponent.position = this->position;
+    PositionComponentSystem::Instance()->setPosition(collisionBox, this->position);
 
     ShapeComponent& shapeComponent = ShapeComponentSystem::Instance()->addComponent(collisionBox);
     sf::RectangleShape& box = shapeComponent.addRectangleShape();
+    box.setPosition(positionComponent.worldPosition);
     box.setSize(this->size);
     box.setOrigin(this->size.x / 2, this->size.y / 2);
     box.setFillColor(sf::Color::Transparent);

@@ -121,13 +121,23 @@ bool PositionComponentSystem::removeComponent(TIEntity& tientity) {
 }
 
 
-void PositionComponentSystem::setPosition(TIEntity& tientity, float x, float y) {
-    PositionComponent* positionComponent = tientity.getComponent<PositionComponent>();
-    if (positionComponent != nullptr) {
-        positionComponent->position.x = x;
-        positionComponent->position.y = y;
-        this->updateWorldCoordinates(*positionComponent, tientity);
-    }
+void PositionComponentSystem::setPosition(TIEntity& tientity, const sf::Vector2f& position) {
+    this->setPosition(tientity, position.x, position.y);
+}
+
+
+void PositionComponentSystem::setPosition(TIEntity& tientity, const float x, const float y) {
+    PositionComponent& positionComponent = this->addComponent(tientity);
+    positionComponent.position.x = x;
+    positionComponent.position.y = y;
+    this->updateWorldCoordinates(positionComponent, tientity);
+}
+
+
+void PositionComponentSystem::setRotation(TIEntity& tientity, const float rotation) {
+    PositionComponent& positionComponent = this->addComponent(tientity);
+    positionComponent.rotation = rotation;
+    this->updateWorldCoordinates(positionComponent, tientity);
 }
 
 

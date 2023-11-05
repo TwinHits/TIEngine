@@ -26,7 +26,10 @@ class PositionComponentSystem : public Singleton<PositionComponentSystem>, publi
 		void setComponentProperty(const std::string&, const sf::Vector2f&, TIEntity&);
 		sol::object getComponentProperty(const std::string&, TIEntity&);
 
-		void setPosition(TIEntity&, float, float);
+		void setPosition(TIEntity&, const sf::Vector2f&);
+		void setPosition(TIEntity&, const float, const float);
+
+		void setRotation(TIEntity&, const float);
 
 		void updateWorldCoordinates(TIEntity&);
 		void updateWorldCoordinates(PositionComponent&, TIEntity&);
