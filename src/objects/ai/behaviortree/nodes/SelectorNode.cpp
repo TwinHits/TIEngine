@@ -1,11 +1,13 @@
 #include "objects/ai/behaviortree/nodes/SelectorNode.h"
 
+#include <string>
+
 #include "objects/enumeration/NodeStatus.h"
 #include "objects/tientities/TIEntity.h"
 
 using namespace TIE;
 
-SelectorNode::SelectorNode(TIEntity& tientity) : BehaviorTreeNode(tientity) {}
+SelectorNode::SelectorNode(TIEntity& tientity, const std::string& name) : BehaviorTreeNode(tientity, name) {}
 
 
 BehaviorTree::NodeStatus SelectorNode::update(float delta) {

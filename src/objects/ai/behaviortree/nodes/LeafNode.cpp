@@ -1,12 +1,14 @@
 #include "objects/ai/behaviortree/nodes/LeafNode.h"
 
+#include <string>
+
 #include "managers/ScriptManager.h"
 #include "objects/enumeration/NodeStatus.h"
 #include "objects/tientities/TIEntity.h"
 
 using namespace TIE;
 
-LeafNode::LeafNode(TIEntity& tientity) : BehaviorTreeNode(tientity) {}
+LeafNode::LeafNode(TIEntity& tientity, const std::string& name) : BehaviorTreeNode(tientity, name) {}
 
 
 BehaviorTree::NodeStatus LeafNode::update(float delta) {

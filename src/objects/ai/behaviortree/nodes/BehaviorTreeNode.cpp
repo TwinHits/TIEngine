@@ -1,5 +1,7 @@
 #include "objects/ai/behaviortree/nodes/BehaviorTreeNode.h"
 
+#include <string>
+
 #include "managers/ScriptManager.h"
 #include "objects/Message.h"
 #include "objects/enumeration/NodeStatus.h"
@@ -8,11 +10,17 @@
 using namespace TIE;
 
 
-BehaviorTreeNode::BehaviorTreeNode(TIEntity& tientity) : tientity(tientity) {}
+BehaviorTreeNode::BehaviorTreeNode(TIEntity& tientity, const std::string& name) : tientity(tientity) {
+    this->name = name;
+}
 
 
 TIEntity& BehaviorTreeNode::getTIEntity() {
     return this->tientity;
+}
+
+const std::string& BehaviorTreeNode::getName() {
+    return this->name;
 }
 
 
@@ -23,11 +31,6 @@ BehaviorTree::NodeStatus BehaviorTreeNode::updatePreDecorators(float delta) {
 
 BehaviorTree::NodeStatus BehaviorTreeNode::updatePostDecorators(float delta) {
     return this->updateDecorators(this->postDecorators, delta);
-}
-
-
-void BehaviorTreeNode::setOnMessageFunctionId(const GlobalId onMessageFunctionId) {
-    this->onMessageFunctionId = onMessageFunctionId;
 }
 
 

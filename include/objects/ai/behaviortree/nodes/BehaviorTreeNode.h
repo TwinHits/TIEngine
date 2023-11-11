@@ -1,8 +1,9 @@
 #ifndef BEHAVIORTREENODE_H
 #define BEHAVIORTREENODE_H
 
-#include <vector>
 #include <memory>
+#include <string>
+#include <vector>
 
 #include "objects/GlobalId.h"
 #include "objects/Message.h"
@@ -14,17 +15,15 @@ namespace TIE {
 
 class BehaviorTreeNode {
     public:
-        BehaviorTreeNode(TIEntity& tientity);
+        BehaviorTreeNode(TIEntity&, const std::string&);
         virtual ~BehaviorTreeNode() {}
 
         TIEntity& getTIEntity();
-
+        const std::string& getName();
 
         BehaviorTree::NodeStatus updatePreDecorators(float);
         virtual BehaviorTree::NodeStatus update(float) = 0;
         BehaviorTree::NodeStatus updatePostDecorators(float);
-
-        void setOnMessageFunctionId(const GlobalId);
 
         void addPreDecorator(std::unique_ptr<NodeDecorator>);
         void addChild(std::unique_ptr<BehaviorTreeNode>);
@@ -32,7 +31,7 @@ class BehaviorTreeNode {
 
     protected:
         TIEntity& tientity;
-        GlobalId onMessageFunctionId = 0;
+        std::string name;
         std::vector<std::unique_ptr<NodeDecorator>> preDecorators;
         std::vector<std::unique_ptr<BehaviorTreeNode>> children;
         std::vector<std::unique_ptr<NodeDecorator>> postDecorators;
