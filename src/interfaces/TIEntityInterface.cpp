@@ -125,7 +125,7 @@ void TIEntityInterface::despawn() {
 
 
 void TIEntityInterface::setProperty(const std::string& key, const sol::object& value) {
-    ComponentSystem* componentSystem = ComponentSystemsManager::Instance()->getComponentSystemByComponentName(ComponentSystems::getComponentNameFromKey(key));
+    ComponentSystem* componentSystem = ComponentSystemsManager::Instance()->getComponentSystemForKey(key);
     if (componentSystem != nullptr) {
         if (value.is<float>()) {
             componentSystem->setComponentProperty(key, ScriptManager::Instance()->getValueFromObject<float>(value), *this->tientity);
@@ -143,7 +143,7 @@ void TIEntityInterface::setProperty(const std::string& key, const sol::object& v
 
 
 sol::object TIEntityInterface::getProperty(const std::string& key) {
-    ComponentSystem* componentSystem = ComponentSystemsManager::Instance()->getComponentSystemByComponentName(ComponentSystems::getComponentNameFromKey(key));
+    ComponentSystem* componentSystem = ComponentSystemsManager::Instance()->getComponentSystemForKey(key);
     if (componentSystem != nullptr) {
         return componentSystem->getComponentProperty(key, *this->tientity);
     }

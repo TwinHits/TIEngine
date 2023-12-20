@@ -9,63 +9,6 @@
 
 using namespace TIE;
 
-
-std::string ComponentSystems::getComponentNameFromKey(const std::string& key) {
-    std::vector<std::string> parts;
-    String::split(key, '.', parts);
-    return parts.front();
-}
-
-
-ComponentSystems::ComponentSystemPropertiesMap& ComponentSystems::insertComponentPropertyIntoMap(const std::string& property, ComponentSystemPropertiesMap& map) {
-    std::vector<std::string> parts;
-    String::split(property, '.', parts);
-
-	if (!map.count(parts.front())) {
-		map[parts.front()];
-	}
-	map[parts.front()][parts.back()] = property;
-
-	return map;
-}
-
-
-ComponentSystems::ComponentSystemPropertiesMap& ComponentSystems::insertComponentPropertyIntoMap(const std::string& key, const std::string& property, ComponentSystemPropertiesMap& map) {
-
-	if (!map.count(key)) {
-		map[key];
-	}
-	map[key][property] = property;
-
-	return map;
-}
-
-
-ComponentSystems::ComponentSystemPropertyMap& ComponentSystems::insertComponentPropertyIntoMap(const std::string& property, ComponentSystemPropertyMap& map) {
-
-    std::vector<std::string> parts;
-    String::split(property, '.', parts);
-
-	if (!map.count(parts.front())) {
-		map[parts.front()];
-	}
-	map[parts.back()] = property;
-
-	return map;
-}
-
-
-ComponentSystems::ComponentSystemPropertyMap& ComponentSystems::insertComponentPropertyIntoMap(const std::string& key, const std::string& property, ComponentSystemPropertyMap& map) {
-
-	if (!map.count(key)) {
-		map[key];
-	}
-	map[property] = key + '.' + property;
-
-	return map;
-}
-
-
 void ComponentSystems::setDrawn(TIEntity& entity, const bool drawn) {
 
 	TextComponent* textComponent = entity.getComponent<TextComponent>();

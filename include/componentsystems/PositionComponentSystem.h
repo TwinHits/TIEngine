@@ -42,13 +42,13 @@ class PositionComponentSystem : public Singleton<PositionComponentSystem>, publi
 		static std::vector<TIEntity*> findTIEntitiesWithinRange(TIEntity&, const float, TIEntity&);
 
 		static const inline std::string POSITION = "position";
-		static const inline std::string ROTATION = "position.rotation";
-		static const inline std::string WORLD_ROTATION = "position.worldRotation";
-		static const inline std::string ROTATES = "position.rotates";
-		static const inline std::string POSITION_POSITION = "position.position";
-		static const inline std::string POSITION_X = "position.x";
-		static const inline std::string POSITION_Y = "position.y";
-		static const inline std::string WORLD_POSITION = "position.worldPosition";
+		static const inline std::string ROTATION = "rotation";
+		static const inline std::string WORLD_ROTATION = "worldRotation";
+		static const inline std::string ROTATES = "position_rotates";
+		static const inline std::string POSITION_POSITION = "position";
+		static const inline std::string POSITION_X = "position_x";
+		static const inline std::string POSITION_Y = "position_y";
+		static const inline std::string WORLD_POSITION = "worldPosition";
 
     private:
 		struct Components {

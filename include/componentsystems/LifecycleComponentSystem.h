@@ -20,9 +20,9 @@ public:
 	void runRemoved(TIEntity& tientity);
 
 	static const inline std::string LIFECYCLE = "lifecycle";
-	static const inline std::string CREATED = "lifecycle.created";
-	static const inline std::string UPDATED = "lifecycle.updated";
-	static const inline std::string REMOVED = "lifecycle.removed";
+	static const inline std::string CREATED = "created";
+	static const inline std::string UPDATED = "updated";
+	static const inline std::string REMOVED = "removed";
 private:
 	struct Components {
 		TIEntity& tientity;

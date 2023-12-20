@@ -29,15 +29,16 @@ class SpriteComponentSystem : public Singleton<SpriteComponentSystem>, public Ow
 		std::pair<GlobalId, GlobalId> addWireframe(TIEntity&);
 
 		static const inline std::string SPRITE = "sprite";
-		static const inline std::string DRAWN = "sprite.drawn";
-		static const inline std::string TEXTURE = "sprite.texture";
-		static const inline std::string WIDTH = "sprite.width";
-		static const inline std::string HEIGHT = "sprite.height";
-		static const inline std::string ORIGIN_X = "sprite.origin.x";
-		static const inline std::string ORIGIN_Y = "sprite.origin.y";
-		static const inline std::string REPEATED = "sprite.repeated";
-		static const inline std::string ROTATES = "sprite.rotates";
-		static const inline std::string CONSTRAIN_PROPORTIONS = "sprite.constrainProportions";
+		static const inline std::string DRAWN = "sprite_drawn";
+		static const inline std::string TEXTURE = "texture";
+		static const inline std::string WIDTH = "sprite_width";
+		static const inline std::string HEIGHT = "sprite_height";
+		static const inline std::string ORIGIN = "origin";
+		static const inline std::string ORIGIN_X = "origin_x";
+		static const inline std::string ORIGIN_Y = "origin_y";
+		static const inline std::string REPEATED = "repeated";
+		static const inline std::string ROTATES = "sprite_rotates";
+		static const inline std::string CONSTRAIN_PROPORTIONS = "constrainProportions";
 
 		static const inline std::string MISSING_TEXTURE_NAME = "missing_texture.png";
 	private: 

@@ -27,8 +27,8 @@ class GridComponentSystem : public Singleton<GridComponentSystem>, public OwnsCo
 		sf::Vector2f normalizePositionToGrid(const sf::Vector2f&);
 
 		static const inline std::string GRID = "grid";
-		static const inline std::string WIDTH = "grid.width";
-		static const inline std::string HEIGHT = "grid.height";
+		static const inline std::string WIDTH = "grid_width";
+		static const inline std::string HEIGHT = "grid_height";
 	private:
 		struct Components {
 			GridComponent& gridComponent;

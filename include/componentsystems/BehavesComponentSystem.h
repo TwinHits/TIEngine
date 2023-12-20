@@ -25,14 +25,16 @@ class BehavesComponentSystem : public Singleton<BehavesComponentSystem>, public 
 		sol::object getComponentProperty(const std::string&, TIEntity&);
 
 		const std::map<std::string, std::string>& getBehaviorTreeNodeTypes();
+		const std::map<std::string, std::string>& getBehaviorTreeDecoratorTypes();
 		const std::map<std::string, int>& getBehaviorTreeNodeStatuses();
 
 		static const inline std::string BEHAVES = "behaves";
-		static const inline std::string ROOT_BEHAVIOR_TREE_NODE = "behaves.rootBehaviorTreeNode";
-		static const inline std::string ROOT_FINITE_STATE_MACHINE = "behaves.rootFiniteStateMachine";
-		static const inline std::string ROOT_PAYLOAD = "behaves.rootPayload";
+		static const inline std::string ROOT_BEHAVIOR_TREE_NODE = "rootBehaviorTreeNode";
+		static const inline std::string ROOT_FINITE_STATE_MACHINE = "rootFiniteStateMachine";
+		static const inline std::string ROOT_PAYLOAD = "rootPayload";
 	private:
 		void initializeBehaviorTreeNodeTypes();
+		void initializeBehaviorTreeDecoratorTypes();
 		void initializeBehaviorTreeNodeStatuses();
 
 		struct Components {
@@ -41,7 +43,9 @@ class BehavesComponentSystem : public Singleton<BehavesComponentSystem>, public 
 		std::list<Components> components;
 
 		std::map<std::string, std::string> behaviorTreeNodeTypes;
+		std::map<std::string, std::string> behaviorTreeDecoratorTypes;
 		std::map<std::string, int> behaviorTreeNodeStatuses;
+
 };
 
 }

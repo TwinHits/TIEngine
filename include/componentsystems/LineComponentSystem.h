@@ -31,7 +31,7 @@ class LineComponentSystem : public Singleton<LineComponentSystem>, public OwnsCo
 		std::pair<GlobalId, GlobalId> addWireframe(TIEntity& tientity);
 
 		const static inline std::string LINE = "line";
-		const static inline std::string MAGNITUDE = "line.magnitude";
+		const static inline std::string MAGNITUDE = "magnitude";
 
 	private:        
 		struct Components {

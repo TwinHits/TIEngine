@@ -33,13 +33,14 @@ class TextComponentSystem : public Singleton<TextComponentSystem>, public OwnsCo
 		static void setOriginForTextAlignment(TextComponent&);
 
 		static const inline std::string TEXT = "text";
-		static const inline std::string DRAWN = "text.drawn";
-		static const inline std::string STRING = "text.string";
-		static const inline std::string FONT = "text.font";
-		static const inline std::string OFFSET_X = "text.offset.x";
-		static const inline std::string OFFSET_Y = "text.offset.y";
-		static const inline std::string CHARACTER_SIZE = "text.characterSize";
-		static const inline std::string TEXT_ALIGNMENT = "text.align";
+		static const inline std::string DRAWN = "text_drawn";
+		static const inline std::string STRING = "string";
+		static const inline std::string FONT = "font";
+		static const inline std::string OFFSET = "offset";
+		static const inline std::string OFFSET_X = "offset_x";
+		static const inline std::string OFFSET_Y = "offset_y";
+		static const inline std::string CHARACTER_SIZE = "characterSize";
+		static const inline std::string TEXT_ALIGNMENT = "align";
 
 		static const inline std::string FONT_DEFAULT = ConfigManager::Instance()->getEngineFontName();
 

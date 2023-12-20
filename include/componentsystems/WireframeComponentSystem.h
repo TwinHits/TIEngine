@@ -27,7 +27,7 @@ class WireframeComponentSystem : public Singleton<WireframeComponentSystem>, pub
 		std::pair<GlobalId, GlobalId> createWireframe(TIEntity&, const sf::FloatRect&, const sf::Vector2f&, const float);
 
 		const static inline std::string WIREFRAME = "wireframe";
-		const static inline std::string SHOW_WIREFRAME = "tientity.wireframe";
+		const static inline std::string SHOW_WIREFRAME = "ShowWireframe";
 
 	private:        
 		struct Components {

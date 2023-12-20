@@ -19,8 +19,7 @@ namespace TIE {
 		bool removeComponent(TIEntity&);
 
 		static const inline std::string SELECTABLE = "selectable";
-		static const inline std::string SELECTABLE_SELECTABLE = "selectable.selectable";
-		static const inline std::string SELECTED = "selectable.selected";
+		static const inline std::string SELECTED = "can_be_selected";
 
 	private:
 		struct Components {

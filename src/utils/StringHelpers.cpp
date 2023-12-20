@@ -126,122 +126,124 @@ std::string TIE::String::textAlignmentToStr(TIE::TextAlignment textAlignment) {
 }
 
 
-sf::Event::EventType TIE::String::stringToEvent(std::string& event) {
-    TIE::String::toUpper(event);
-    if (event == "TEXTENTERED") { return sf::Event::TextEntered; }
-    else if (event == "KEYPRESSED") { return sf::Event::KeyPressed; }
-    else if (event == "KEYRELEASED") { return sf::Event::KeyReleased; }
-    else if (event == "MOUSEWHEELMOVED") { return sf::Event::MouseWheelMoved; }
-    else if (event == "MOUSEWHEELSCROLLED") { return sf::Event::MouseWheelScrolled; }
-    else if (event == "MOUSEBUTTONPRESSED") { return sf::Event::MouseButtonPressed; }
-    else if (event == "MOUSEBUTTONRELEASED") { return sf::Event::MouseButtonReleased; }
-    else if (event == "MOUSEMOVED") { return sf::Event::MouseMoved; }
+sf::Event::EventType TIE::String::stringToEvent(const std::string& event) {
+    std::string uppercasedEvent = std::string(event);
+    TIE::String::toUpper(uppercasedEvent);
+    if (uppercasedEvent == "TEXTENTERED") { return sf::Event::TextEntered; }
+    else if (uppercasedEvent == "KEYPRESSED") { return sf::Event::KeyPressed; }
+    else if (uppercasedEvent == "KEYRELEASED") { return sf::Event::KeyReleased; }
+    else if (uppercasedEvent == "MOUSEWHEELMOVED") { return sf::Event::MouseWheelMoved; }
+    else if (uppercasedEvent == "MOUSEWHEELSCROLLED") { return sf::Event::MouseWheelScrolled; }
+    else if (uppercasedEvent == "MOUSEBUTTONPRESSED") { return sf::Event::MouseButtonPressed; }
+    else if (uppercasedEvent == "MOUSEBUTTONRELEASED") { return sf::Event::MouseButtonReleased; }
+    else if (uppercasedEvent == "MOUSEMOVED") { return sf::Event::MouseMoved; }
 	return sf::Event::Count;
 }
 
-sf::Keyboard::Key TIE::String::stringToKey(std::string& key) {
-    TIE::String::toUpper(key);
-    if (key == "A") { return sf::Keyboard::A; }
-    else if (key == "B") { return sf::Keyboard::B; }
-    else if (key == "C") { return sf::Keyboard::C; }
-    else if (key == "D") { return sf::Keyboard::D; }
-    else if (key == "E") { return sf::Keyboard::E; }
-    else if (key == "F") { return sf::Keyboard::F; }
-    else if (key == "G") { return sf::Keyboard::G; }
-    else if (key == "H") { return sf::Keyboard::H; }
-    else if (key == "I") { return sf::Keyboard::I; }
-    else if (key == "J") { return sf::Keyboard::J; }
-    else if (key == "K") { return sf::Keyboard::K; }
-    else if (key == "L") { return sf::Keyboard::L; }
-    else if (key == "M") { return sf::Keyboard::M; }
-    else if (key == "N") { return sf::Keyboard::N; }
-    else if (key == "O") { return sf::Keyboard::O; }
-    else if (key == "P") { return sf::Keyboard::P; }
-    else if (key == "Q") { return sf::Keyboard::Q; }
-    else if (key == "R") { return sf::Keyboard::R; }
-    else if (key == "S") { return sf::Keyboard::S; }
-    else if (key == "T") { return sf::Keyboard::T; }
-    else if (key == "U") { return sf::Keyboard::U; }
-    else if (key == "V") { return sf::Keyboard::V; }
-    else if (key == "W") { return sf::Keyboard::W; }
-    else if (key == "X") { return sf::Keyboard::X; }
-    else if (key == "Y") { return sf::Keyboard::Y; }
-    else if (key == "Z") { return sf::Keyboard::Z; }
-    else if (key == "NUM0") { return sf::Keyboard::Num0; }
-    else if (key == "NUM1") { return sf::Keyboard::Num1; }
-    else if (key == "NUM2") { return sf::Keyboard::Num2; }
-    else if (key == "NUM3") { return sf::Keyboard::Num3; }
-    else if (key == "NUM4") { return sf::Keyboard::Num4; }
-    else if (key == "NUM5") { return sf::Keyboard::Num5; }
-    else if (key == "NUM6") { return sf::Keyboard::Num6; }
-    else if (key == "NUM7") { return sf::Keyboard::Num7; }
-    else if (key == "NUM8") { return sf::Keyboard::Num8; }
-    else if (key == "NUM9") { return sf::Keyboard::Num9; }
-    else if (key == "ESCAPE") { return sf::Keyboard::Escape; }
-    else if (key == "LCONTROL") { return sf::Keyboard::LControl; }
-    else if (key == "LSHIFT") { return sf::Keyboard::LShift; }
-    else if (key == "LALT") { return sf::Keyboard::LAlt; }
-    else if (key == "LSYSTEM") { return sf::Keyboard::LSystem; }
-    else if (key == "RCONTROL") { return sf::Keyboard::RControl; }
-    else if (key == "RSHIFT") { return sf::Keyboard::RShift; }
-    else if (key == "RALT") { return sf::Keyboard::RAlt; }
-    else if (key == "RSYSTEM") { return sf::Keyboard::RSystem; }
-    else if (key == "MENU") { return sf::Keyboard::Menu; }
-    else if (key == "LBRACKET") { return sf::Keyboard::LBracket; }
-    else if (key == "RBRACKET") { return sf::Keyboard::RBracket; }
-    else if (key == "SEMICOLON") { return sf::Keyboard::SemiColon; }
-    else if (key == "COMMA") { return sf::Keyboard::Comma; }
-    else if (key == "PERIOD") { return sf::Keyboard::Period; }
-    else if (key == "QUOTE") { return sf::Keyboard::Quote; }
-    else if (key == "SLASH") { return sf::Keyboard::Slash; }
-    else if (key == "BACKSLASH") { return sf::Keyboard::BackSlash; }
-    else if (key == "TILDE") { return sf::Keyboard::Tilde; }
-    else if (key == "EQUAL") { return sf::Keyboard::Equal; }
-    else if (key == "DASH") { return sf::Keyboard::Dash; }
-    else if (key == "SPACE") { return sf::Keyboard::Space; }
-    else if (key == "RETURN") { return sf::Keyboard::Return; }
-    else if (key == "BACKSPACE") { return sf::Keyboard::BackSpace; }
-    else if (key == "TAB") { return sf::Keyboard::Tab; }
-    else if (key == "PAGEUP") { return sf::Keyboard::PageUp; }
-    else if (key == "PAGEDOWN") { return sf::Keyboard::PageDown; }
-    else if (key == "END") { return sf::Keyboard::End; }
-    else if (key == "HOME") { return sf::Keyboard::Home; }
-    else if (key == "INSERT") { return sf::Keyboard::Insert; }
-    else if (key == "DELETE") { return sf::Keyboard::Delete; }
-    else if (key == "ADD") { return sf::Keyboard::Add; }
-    else if (key == "SUBTRACT") { return sf::Keyboard::Subtract; }
-    else if (key == "MULTIPLY") { return sf::Keyboard::Multiply; }
-    else if (key == "DIVIDE") { return sf::Keyboard::Divide; }
-    else if (key == "LEFT") { return sf::Keyboard::Left; }
-    else if (key == "RIGHT") { return sf::Keyboard::Right; }
-    else if (key == "UP") { return sf::Keyboard::Up; }
-    else if (key == "DOWN") { return sf::Keyboard::Down; }
-    else if (key == "NUMPAD0") { return sf::Keyboard::Numpad0; }
-    else if (key == "NUMPAD1") { return sf::Keyboard::Numpad1; }
-    else if (key == "NUMPAD2") { return sf::Keyboard::Numpad2; }
-    else if (key == "NUMPAD3") { return sf::Keyboard::Numpad3; }
-    else if (key == "NUMPAD4") { return sf::Keyboard::Numpad4; }
-    else if (key == "NUMPAD5") { return sf::Keyboard::Numpad5; }
-    else if (key == "NUMPAD6") { return sf::Keyboard::Numpad6; }
-    else if (key == "NUMPAD7") { return sf::Keyboard::Numpad7; }
-    else if (key == "NUMPAD8") { return sf::Keyboard::Numpad8; }
-    else if (key == "NUMPAD9") { return sf::Keyboard::Numpad9; }
-    else if (key == "F1") { return sf::Keyboard::F1; }
-    else if (key == "F2") { return sf::Keyboard::F2; }
-    else if (key == "F3") { return sf::Keyboard::F3; }
-    else if (key == "F4") { return sf::Keyboard::F4; }
-    else if (key == "F5") { return sf::Keyboard::F5; }
-    else if (key == "F6") { return sf::Keyboard::F6; }
-    else if (key == "F7") { return sf::Keyboard::F7; }
-    else if (key == "F8") { return sf::Keyboard::F8; }
-    else if (key == "F9") { return sf::Keyboard::F9; }
-    else if (key == "F10") { return sf::Keyboard::F10; }
-    else if (key == "F11") { return sf::Keyboard::F11; }
-    else if (key == "F12") { return sf::Keyboard::F12; }
-    else if (key == "F13") { return sf::Keyboard::F13; }
-    else if (key == "F14") { return sf::Keyboard::F14; }
-    else if (key == "F15") { return sf::Keyboard::F15; }
-    else if (key == "PAUSE") { return sf::Keyboard::Pause; }
+sf::Keyboard::Key TIE::String::stringToKey(const std::string& key) {
+    std::string uppercasedKey = std::string(key);
+    TIE::String::toUpper(uppercasedKey);
+    if (uppercasedKey == "A") { return sf::Keyboard::A; }
+    else if (uppercasedKey == "B") { return sf::Keyboard::B; }
+    else if (uppercasedKey == "C") { return sf::Keyboard::C; }
+    else if (uppercasedKey == "D") { return sf::Keyboard::D; }
+    else if (uppercasedKey == "E") { return sf::Keyboard::E; }
+    else if (uppercasedKey == "F") { return sf::Keyboard::F; }
+    else if (uppercasedKey == "G") { return sf::Keyboard::G; }
+    else if (uppercasedKey == "H") { return sf::Keyboard::H; }
+    else if (uppercasedKey == "I") { return sf::Keyboard::I; }
+    else if (uppercasedKey == "J") { return sf::Keyboard::J; }
+    else if (uppercasedKey == "K") { return sf::Keyboard::K; }
+    else if (uppercasedKey == "L") { return sf::Keyboard::L; }
+    else if (uppercasedKey == "M") { return sf::Keyboard::M; }
+    else if (uppercasedKey == "N") { return sf::Keyboard::N; }
+    else if (uppercasedKey == "O") { return sf::Keyboard::O; }
+    else if (uppercasedKey == "P") { return sf::Keyboard::P; }
+    else if (uppercasedKey == "Q") { return sf::Keyboard::Q; }
+    else if (uppercasedKey == "R") { return sf::Keyboard::R; }
+    else if (uppercasedKey == "S") { return sf::Keyboard::S; }
+    else if (uppercasedKey == "T") { return sf::Keyboard::T; }
+    else if (uppercasedKey == "U") { return sf::Keyboard::U; }
+    else if (uppercasedKey == "V") { return sf::Keyboard::V; }
+    else if (uppercasedKey == "W") { return sf::Keyboard::W; }
+    else if (uppercasedKey == "X") { return sf::Keyboard::X; }
+    else if (uppercasedKey == "Y") { return sf::Keyboard::Y; }
+    else if (uppercasedKey == "Z") { return sf::Keyboard::Z; }
+    else if (uppercasedKey == "NUM0") { return sf::Keyboard::Num0; }
+    else if (uppercasedKey == "NUM1") { return sf::Keyboard::Num1; }
+    else if (uppercasedKey == "NUM2") { return sf::Keyboard::Num2; }
+    else if (uppercasedKey == "NUM3") { return sf::Keyboard::Num3; }
+    else if (uppercasedKey == "NUM4") { return sf::Keyboard::Num4; }
+    else if (uppercasedKey == "NUM5") { return sf::Keyboard::Num5; }
+    else if (uppercasedKey == "NUM6") { return sf::Keyboard::Num6; }
+    else if (uppercasedKey == "NUM7") { return sf::Keyboard::Num7; }
+    else if (uppercasedKey == "NUM8") { return sf::Keyboard::Num8; }
+    else if (uppercasedKey == "NUM9") { return sf::Keyboard::Num9; }
+    else if (uppercasedKey == "ESCAPE") { return sf::Keyboard::Escape; }
+    else if (uppercasedKey == "LCONTROL") { return sf::Keyboard::LControl; }
+    else if (uppercasedKey == "LSHIFT") { return sf::Keyboard::LShift; }
+    else if (uppercasedKey == "LALT") { return sf::Keyboard::LAlt; }
+    else if (uppercasedKey == "LSYSTEM") { return sf::Keyboard::LSystem; }
+    else if (uppercasedKey == "RCONTROL") { return sf::Keyboard::RControl; }
+    else if (uppercasedKey == "RSHIFT") { return sf::Keyboard::RShift; }
+    else if (uppercasedKey == "RALT") { return sf::Keyboard::RAlt; }
+    else if (uppercasedKey == "RSYSTEM") { return sf::Keyboard::RSystem; }
+    else if (uppercasedKey == "MENU") { return sf::Keyboard::Menu; }
+    else if (uppercasedKey == "LBRACKET") { return sf::Keyboard::LBracket; }
+    else if (uppercasedKey == "RBRACKET") { return sf::Keyboard::RBracket; }
+    else if (uppercasedKey == "SEMICOLON") { return sf::Keyboard::SemiColon; }
+    else if (uppercasedKey == "COMMA") { return sf::Keyboard::Comma; }
+    else if (uppercasedKey == "PERIOD") { return sf::Keyboard::Period; }
+    else if (uppercasedKey == "QUOTE") { return sf::Keyboard::Quote; }
+    else if (uppercasedKey == "SLASH") { return sf::Keyboard::Slash; }
+    else if (uppercasedKey == "BACKSLASH") { return sf::Keyboard::BackSlash; }
+    else if (uppercasedKey == "TILDE") { return sf::Keyboard::Tilde; }
+    else if (uppercasedKey == "EQUAL") { return sf::Keyboard::Equal; }
+    else if (uppercasedKey == "DASH") { return sf::Keyboard::Dash; }
+    else if (uppercasedKey == "SPACE") { return sf::Keyboard::Space; }
+    else if (uppercasedKey == "RETURN") { return sf::Keyboard::Return; }
+    else if (uppercasedKey == "BACKSPACE") { return sf::Keyboard::BackSpace; }
+    else if (uppercasedKey == "TAB") { return sf::Keyboard::Tab; }
+    else if (uppercasedKey == "PAGEUP") { return sf::Keyboard::PageUp; }
+    else if (uppercasedKey == "PAGEDOWN") { return sf::Keyboard::PageDown; }
+    else if (uppercasedKey == "END") { return sf::Keyboard::End; }
+    else if (uppercasedKey == "HOME") { return sf::Keyboard::Home; }
+    else if (uppercasedKey == "INSERT") { return sf::Keyboard::Insert; }
+    else if (uppercasedKey == "DELETE") { return sf::Keyboard::Delete; }
+    else if (uppercasedKey == "ADD") { return sf::Keyboard::Add; }
+    else if (uppercasedKey == "SUBTRACT") { return sf::Keyboard::Subtract; }
+    else if (uppercasedKey == "MULTIPLY") { return sf::Keyboard::Multiply; }
+    else if (uppercasedKey == "DIVIDE") { return sf::Keyboard::Divide; }
+    else if (uppercasedKey == "LEFT") { return sf::Keyboard::Left; }
+    else if (uppercasedKey == "RIGHT") { return sf::Keyboard::Right; }
+    else if (uppercasedKey == "UP") { return sf::Keyboard::Up; }
+    else if (uppercasedKey == "DOWN") { return sf::Keyboard::Down; }
+    else if (uppercasedKey == "NUMPAD0") { return sf::Keyboard::Numpad0; }
+    else if (uppercasedKey == "NUMPAD1") { return sf::Keyboard::Numpad1; }
+    else if (uppercasedKey == "NUMPAD2") { return sf::Keyboard::Numpad2; }
+    else if (uppercasedKey == "NUMPAD3") { return sf::Keyboard::Numpad3; }
+    else if (uppercasedKey == "NUMPAD4") { return sf::Keyboard::Numpad4; }
+    else if (uppercasedKey == "NUMPAD5") { return sf::Keyboard::Numpad5; }
+    else if (uppercasedKey == "NUMPAD6") { return sf::Keyboard::Numpad6; }
+    else if (uppercasedKey == "NUMPAD7") { return sf::Keyboard::Numpad7; }
+    else if (uppercasedKey == "NUMPAD8") { return sf::Keyboard::Numpad8; }
+    else if (uppercasedKey == "NUMPAD9") { return sf::Keyboard::Numpad9; }
+    else if (uppercasedKey == "F1") { return sf::Keyboard::F1; }
+    else if (uppercasedKey == "F2") { return sf::Keyboard::F2; }
+    else if (uppercasedKey == "F3") { return sf::Keyboard::F3; }
+    else if (uppercasedKey == "F4") { return sf::Keyboard::F4; }
+    else if (uppercasedKey == "F5") { return sf::Keyboard::F5; }
+    else if (uppercasedKey == "F6") { return sf::Keyboard::F6; }
+    else if (uppercasedKey == "F7") { return sf::Keyboard::F7; }
+    else if (uppercasedKey == "F8") { return sf::Keyboard::F8; }
+    else if (uppercasedKey == "F9") { return sf::Keyboard::F9; }
+    else if (uppercasedKey == "F10") { return sf::Keyboard::F10; }
+    else if (uppercasedKey == "F11") { return sf::Keyboard::F11; }
+    else if (uppercasedKey == "F12") { return sf::Keyboard::F12; }
+    else if (uppercasedKey == "F13") { return sf::Keyboard::F13; }
+    else if (uppercasedKey == "F14") { return sf::Keyboard::F14; }
+    else if (uppercasedKey == "F15") { return sf::Keyboard::F15; }
+    else if (uppercasedKey == "PAUSE") { return sf::Keyboard::Pause; }
     return sf::Keyboard::Unknown;
 }
 

@@ -24,8 +24,8 @@ class CollidesComponentSystem : public Singleton<CollidesComponentSystem>, publi
 		sol::object getComponentProperty(const std::string&, TIEntity&);
 			
 		const static inline std::string COLLIDES = "collides";
-		const static inline std::string IS_COLLIDABLE = "collides.collidable";
-		const static inline std::string IS_COLLIDES = "collides.collides";
+		const static inline std::string IS_COLLIDABLE = "collidable";
+		const static inline std::string IS_COLLIDES = "collides";
 
 	private:        
 		struct Components {

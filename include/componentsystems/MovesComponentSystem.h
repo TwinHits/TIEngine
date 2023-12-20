@@ -38,20 +38,20 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, public Owns
 		bool atTargetRotation(TIEntity&);
 
 		static const inline std::string MOVES = "moves";
-		static const inline std::string SPEED = "moves.speed";
-		static const inline std::string ACCELERATION = "moves.acceleration";
-		static const inline std::string DECELERATION = "moves.deceleration";
+		static const inline std::string SPEED = "moves_speed";
+		static const inline std::string ACCELERATION = "acceleration";
+		static const inline std::string DECELERATION = "deceleration";
 
-		static const inline std::string ROTATES = "moves.rotates";
-		static const inline std::string ROTATIONAL_SPEED = "moves.rotationalSpeed";
-		static const inline std::string ROTATIONAL_ACCELERATION = "moves.rotationalAcceleration";
+		static const inline std::string ROTATES = "moves_rotates";
+		static const inline std::string ROTATIONAL_SPEED = "rotationalSpeed";
+		static const inline std::string ROTATIONAL_ACCELERATION = "rotationalAcceleration";
 
-		static const inline std::string DESTINATION = "moves.destination";
-		static const inline std::string DESTINATION_X = "moves.destination.x";
-		static const inline std::string DESTINATION_Y = "moves.destination.y";
-		static const inline std::string AT_DESTINATION = "moves.atDestination";
-		static const inline std::string TARGET_ROTATION = "moves.targetRotation";
-		static const inline std::string AT_ROTATION = "moves.atRotation";
+		static const inline std::string DESTINATION = "destination";
+		static const inline std::string DESTINATION_X = "destination_x";
+		static const inline std::string DESTINATION_Y = "destination_y";
+		static const inline std::string AT_DESTINATION = "atDestination";
+		static const inline std::string TARGET_ROTATION = "targetRotation";
+		static const inline std::string AT_ROTATION = "atRotation";
 	private:
 		struct Components {
 			MovesComponent& movesComponent;

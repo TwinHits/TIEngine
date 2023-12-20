@@ -17,6 +17,7 @@ class ComponentSystem {
 
 		virtual void update(const float) = 0;
 		virtual const std::string& getName();
+		void addPropertyToComponentPropertyMap(const std::string&);
 
 		virtual bool hasComponent(const TIEntity&) = 0;
 		virtual Component& addComponent(TIEntity&) = 0;

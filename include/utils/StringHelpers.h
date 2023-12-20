@@ -22,8 +22,8 @@ namespace TIE {
 		LogLevel strToLogLevel(std::string&);
 		TextAlignment strToTextAlignment(std::string);
 		std::string textAlignmentToStr(TextAlignment);
-		sf::Event::EventType stringToEvent(std::string&);
-		sf::Keyboard::Key stringToKey(std::string&);
+		sf::Event::EventType stringToEvent(const std::string&);
+		sf::Keyboard::Key stringToKey(const std::string&);
 		sf::IntRect stringToIntRect(const std::string&);
 		sf::FloatRect stringToFloatRect(const std::string&);
 		sf::Vector2f stringToVector2f(const std::string&);

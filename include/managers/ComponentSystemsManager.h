@@ -5,6 +5,7 @@
 #include "templates/Singleton.h"
 
 #include <map>
+#include <string>
 #include <vector>
 
 #include "componentsystems/ComponentSystem.h"
@@ -20,6 +21,9 @@ namespace TIE {
 		ComponentSystem* getComponentSystemByComponentName(const std::string&);
 		const ComponentSystems::ComponentSystemPropertiesMap& getComponentSystemPropertiesMap();
 
+		void registerComponentPropertyKey(const std::string&, ComponentSystem*);
+		ComponentSystem* getComponentSystemForKey(const std::string&);
+
 		void updateComponentSystems(const float);
 
 		void removeComponents(TIEntity&);
@@ -30,6 +34,8 @@ namespace TIE {
 		std::vector<ComponentSystem*> componentSystems;
 		std::map<std::string, ComponentSystem*> componentNamesToComponentSystems;
 		ComponentSystems::ComponentSystemPropertiesMap componentSystemPropertiesMap;
+
+		std::map<std::string, ComponentSystem*> componentSystemByPropertyKey;
 
 		ComponentSystemsManager(const ComponentSystemsManager&);
 		void operator=(const ComponentSystemsManager&) {};

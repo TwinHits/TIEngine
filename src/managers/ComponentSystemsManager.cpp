@@ -20,6 +20,7 @@
 #include "componentsystems/TextComponentSystem.h"
 #include "componentsystems/PositionComponentSystem.h"
 #include "componentsystems/WireframeComponentSystem.h"
+#include "managers/LogManager.h"
 
 using namespace TIE;
 
@@ -79,6 +80,29 @@ ComponentSystem* ComponentSystemsManager::getComponentSystemByComponentName(cons
 
 const ComponentSystems::ComponentSystemPropertiesMap& ComponentSystemsManager::getComponentSystemPropertiesMap() {
 	return this->componentSystemPropertiesMap;
+}
+
+void ComponentSystemsManager::registerComponentPropertyKey(const std::string& key, ComponentSystem* componentSystem) {
+	if (!this->componentSystemByPropertyKey.count(key)) {
+		this->componentSystemByPropertyKey[key] = componentSystem;
+	} else {
+		LogManager::Instance()->error("Component property " + key + " is already registered to " + this->componentSystemByPropertyKey[key]->getName()
+			+ " and cannot be registered to " + componentSystem->getName());
+	}
+}
+
+ComponentSystem* ComponentSystemsManager::getComponentSystemForKey(const std::string& key) {
+	if (this->componentSystemByPropertyKey.count(key)) {
+		return this->componentSystemByPropertyKey[key];
+	} else {
+		LogManager::Instance()->error("Component property " + key + " is not registered.");
+		return nullptr;
+	}
+}
+
+
+void ComponentSystemsManager::registerSetComponentProperty(const std::string& key, std::function<void(const std::string&, bool, TIEntity&)> function) {
+	this->boolSetComponentProperties[key] = function;
 }
 
 

@@ -25,7 +25,7 @@ class AnimatedComponentSystem : public Singleton<AnimatedComponentSystem>, publi
         static const inline std::string ANIMATED = "animated";
 		static const inline std::string FRAMES = "frames";
 		static const inline std::string RANGE = "range";
-		static const inline std::string SPEED = "speed";
+		static const inline std::string SPEED = "animation_speed";
 		static const inline std::string DIRECTION = "direction";
 
     private:

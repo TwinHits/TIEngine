@@ -31,7 +31,6 @@ class MessagesComponentSystem : public Singleton<MessagesComponentSystem>, publi
 		void sendMessage(const GlobalId, TIEntity&, const GlobalId, sol::object);
 
 		static const inline std::string MESSAGES = "messages";
-		static const inline std::string SUBSCRIPTIONS = "messages.subscriptions";
 	private:
 		struct Components {
 			MessagesComponent& messagesComponent;
