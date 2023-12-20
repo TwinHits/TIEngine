@@ -6,6 +6,7 @@
 #include <string>
 
 #include "componentsystems/MessagesComponentSystem.h" 
+#include "managers/ComponentSystemsManager.h"
 #include "managers/ScriptManager.h"
 #include "objects/components/CollidesComponent.h"
 #include "objects/components/LineComponent.h"
@@ -18,8 +19,12 @@ using namespace TIE;
 CollidesComponentSystem::CollidesComponentSystem() {
 	this->setName(CollidesComponentSystem::COLLIDES);
 
-	ComponentSystems::insertComponentPropertyIntoMap(CollidesComponentSystem::IS_COLLIDABLE, this->componentPropertyMap);
-	ComponentSystems::insertComponentPropertyIntoMap(CollidesComponentSystem::IS_COLLIDES, this->componentPropertyMap);
+	this->addPropertyToComponentPropertyMap(CollidesComponentSystem::IS_COLLIDABLE);
+	this->addPropertyToComponentPropertyMap(CollidesComponentSystem::IS_COLLIDES);
+
+	for (auto& [key, property] : this->componentPropertyMap) {
+		ComponentSystemsManager::Instance()->registerComponentPropertyKey(key, this);
+	}
 
 	this->collisionMessageSubscription = MessagesComponentSystem::Instance()->registerMessageSubscription("Collision");
 }
@@ -54,11 +59,12 @@ CollidesComponent& CollidesComponentSystem::addComponent(TIEntity& tientity) {
 
 CollidesComponent& CollidesComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
 	CollidesComponent& collidesComponent = this->addComponent(tientity);
+	const ScriptTableReader& reader = factory.getReader().getReader(CollidesComponentSystem::COLLIDES);
 
-	const bool& collidable  = factory.getReader()->get<bool>(CollidesComponentSystem::IS_COLLIDABLE, collidesComponent.isCollidable());
+	const bool& collidable  = reader.get<bool>(CollidesComponentSystem::IS_COLLIDABLE, collidesComponent.isCollidable());
 	collidesComponent.setCollidable(collidable);
 
-	const bool& collides = factory.getReader()->get<bool>(CollidesComponentSystem::IS_COLLIDES, collidesComponent.isCollides());
+	const bool& collides = reader.get<bool>(CollidesComponentSystem::IS_COLLIDES, collidesComponent.isCollides());
 	collidesComponent.setCollides(collides);
 
 	const GlobalId& payload = tientity.getId();

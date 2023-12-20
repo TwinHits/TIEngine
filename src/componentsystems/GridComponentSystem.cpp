@@ -3,9 +3,10 @@
 #include <SFML/Graphics.hpp>
  
 #include "componentsystems/SpriteComponentSystem.h"
-#include "managers/WorldManager.h"
+#include "managers/ComponentSystemsManager.h"
 #include "managers/LogManager.h"
 #include "managers/ScriptManager.h"
+#include "managers/WorldManager.h"
 #include "objects/components/GridComponent.h"
 #include "objects/components/SpriteComponent.h"
 #include "objects/tientities/TIEntity.h"
@@ -17,8 +18,12 @@ using namespace TIE;
 
 GridComponentSystem::GridComponentSystem() {
 	this->setName(GridComponentSystem::GRID);
-	ComponentSystems::insertComponentPropertyIntoMap(GridComponentSystem::WIDTH, this->componentPropertyMap);
-	ComponentSystems::insertComponentPropertyIntoMap(GridComponentSystem::HEIGHT, this->componentPropertyMap);
+	this->addPropertyToComponentPropertyMap(GridComponentSystem::WIDTH);
+	this->addPropertyToComponentPropertyMap(GridComponentSystem::HEIGHT);
+
+	for (auto& [key, property] : this->componentPropertyMap) {
+		ComponentSystemsManager::Instance()->registerComponentPropertyKey(key, this);
+	}
 }
 
 
@@ -40,9 +45,10 @@ GridComponent& GridComponentSystem::addComponent(TIEntity& tientity) {
 GridComponent& GridComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& entity) {
 	GridComponent& gridComponent = this->addComponent(entity);
 	SpriteComponent& spriteComponent = entity.addComponent<SpriteComponent>();
+	const ScriptTableReader& reader = factory.getReader().getReader(GridComponentSystem::GRID);
 
-    const float& width = *factory.getReader()->get<float>(GridComponentSystem::WIDTH);
-    const float& height = *factory.getReader()->get<float>(GridComponentSystem::HEIGHT);
+    const float& width = *reader.get<float>(GridComponentSystem::WIDTH);
+    const float& height = *reader.get<float>(GridComponentSystem::HEIGHT);
     gridComponent.setGridSize(sf::Vector2i(width, height));
 
     sf::FloatRect textureSize = spriteComponent.getLocalBounds();

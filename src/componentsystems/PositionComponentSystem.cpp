@@ -7,6 +7,7 @@
 #include "objects/components/PositionComponent.h"
 #include "objects/components/SpriteComponent.h"
 #include "objects/factories/tientities/TIEntityFactory.h"
+#include "managers/ComponentSystemsManager.h"
 #include "managers/ScriptManager.h"
 #include "utils/ComponentSystems.h"
 #include "utils/TIEMath.h"
@@ -15,13 +16,17 @@ using namespace TIE;
 
 PositionComponentSystem::PositionComponentSystem() {
     this->setName(PositionComponentSystem::POSITION);
-    ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::ROTATION, this->componentPropertyMap);
-    ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::ROTATES, this->componentPropertyMap);
-    ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::POSITION_POSITION, this->componentPropertyMap);
-    ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::POSITION_X, this->componentPropertyMap);
-    ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::POSITION_Y, this->componentPropertyMap);
-    ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::WORLD_POSITION, this->componentPropertyMap);
-    ComponentSystems::insertComponentPropertyIntoMap(PositionComponentSystem::WORLD_ROTATION, this->componentPropertyMap);
+    this->addPropertyToComponentPropertyMap(PositionComponentSystem::ROTATION);
+    this->addPropertyToComponentPropertyMap(PositionComponentSystem::ROTATES);
+    this->addPropertyToComponentPropertyMap(PositionComponentSystem::POSITION_POSITION);
+    this->addPropertyToComponentPropertyMap(PositionComponentSystem::POSITION_X);
+    this->addPropertyToComponentPropertyMap(PositionComponentSystem::POSITION_Y);
+    this->addPropertyToComponentPropertyMap(PositionComponentSystem::WORLD_POSITION);
+    this->addPropertyToComponentPropertyMap(PositionComponentSystem::WORLD_ROTATION);
+
+    for (auto& [key, property] : this->componentPropertyMap) {
+        ComponentSystemsManager::Instance()->registerComponentPropertyKey(key, this);
+    }
 }
 
 
@@ -45,15 +50,18 @@ PositionComponent& PositionComponentSystem::addComponent(TIEntity& tientity) {
 
 PositionComponent& PositionComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
     PositionComponent& positionComponent = this->addComponent(tientity);
+    const ScriptTableReader& reader = factory.getReader().getReader(PositionComponentSystem::POSITION);
 
-	const float& x = factory.getReader()->get<float>(PositionComponentSystem::POSITION_X, positionComponent.position.x);
-	const float& y = factory.getReader()->get<float>(PositionComponentSystem::POSITION_Y, positionComponent.position.y);
-	const float& rotation = factory.getReader()->get<float>(PositionComponentSystem::ROTATION, positionComponent.rotation);
-	const bool& rotates = factory.getReader()->get<bool>(PositionComponentSystem::ROTATES, positionComponent.rotates);
-
+	const float& x = reader.get<float>(PositionComponentSystem::POSITION_X, positionComponent.position.x);
     positionComponent.position.x = x;
+
+	const float& y = reader.get<float>(PositionComponentSystem::POSITION_Y, positionComponent.position.y);
     positionComponent.position.y = y;
+
+	const float& rotation = reader.get<float>(PositionComponentSystem::ROTATION, positionComponent.rotation);
     positionComponent.rotation = Math::normalizeAngleDegrees(rotation);
+
+	const bool& rotates = reader.get<bool>(PositionComponentSystem::ROTATES, positionComponent.rotates);
     positionComponent.rotates = rotates;
 
     this->updateWorldCoordinates(positionComponent, tientity);

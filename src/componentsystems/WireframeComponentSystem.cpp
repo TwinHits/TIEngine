@@ -10,6 +10,7 @@
 #include "componentsystems/ShapeComponentSystem.h" 
 #include "componentsystems/SpriteComponentSystem.h" 
 #include "componentsystems/TextComponentSystem.h"
+#include "managers/ComponentSystemsManager.h"
 #include "managers/HashManager.h"
 #include "managers/ScriptManager.h"
 #include "objects/components/WireframeComponent.h"
@@ -22,6 +23,13 @@ using namespace TIE;
 
 WireframeComponentSystem::WireframeComponentSystem() {
 	this->setName(WireframeComponentSystem::WIREFRAME);
+
+	this->addPropertyToComponentPropertyMap(WireframeComponentSystem::SHOW_WIREFRAME);
+
+	for (auto& [key, property] : this->componentPropertyMap) {
+		ComponentSystemsManager::Instance()->registerComponentPropertyKey(key, this);
+	}
+
 }
 
 

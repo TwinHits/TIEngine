@@ -4,6 +4,7 @@
 
 #include <string>
 
+#include "managers/ComponentSystemsManager.h"
 #include "managers/LogManager.h" 
 #include "managers/ScriptManager.h"
 #include "objects/components/LifecycleComponent.h"
@@ -13,9 +14,13 @@ using namespace TIE;
 
 LifecycleComponentSystem::LifecycleComponentSystem() {
 	this->setName(LifecycleComponentSystem::LIFECYCLE);
-	ComponentSystems::insertComponentPropertyIntoMap(LifecycleComponentSystem::CREATED, this->componentPropertyMap);
-	ComponentSystems::insertComponentPropertyIntoMap(LifecycleComponentSystem::REMOVED, this->componentPropertyMap);
-	ComponentSystems::insertComponentPropertyIntoMap(LifecycleComponentSystem::UPDATED, this->componentPropertyMap);
+	this->addPropertyToComponentPropertyMap(LifecycleComponentSystem::CREATED);
+	this->addPropertyToComponentPropertyMap(LifecycleComponentSystem::REMOVED);
+	this->addPropertyToComponentPropertyMap(LifecycleComponentSystem::UPDATED);
+
+	for (auto& [key, property] : this->componentPropertyMap) {
+		ComponentSystemsManager::Instance()->registerComponentPropertyKey(key, this);
+	}
 }
 
 
@@ -41,24 +46,15 @@ LifecycleComponent& LifecycleComponentSystem::addComponent(TIEntity& tientity) {
 
 LifecycleComponent& LifecycleComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
 	LifecycleComponent& lifecycleComponent = this->addComponent(tientity);
+	const ScriptTableReader& reader = factory.getReader().getReader(LifecycleComponentSystem::LIFECYCLE);
 
-	GlobalId createdFunctionId = 0;
-	if (factory.getReader()->has<GlobalId>(LifecycleComponentSystem::CREATED)) {
-		createdFunctionId = *factory.getReader()->get<GlobalId>(LifecycleComponentSystem::CREATED);
-	}
-
-	GlobalId updatedFunctionId = 0;
-	if (factory.getReader()->has<GlobalId>(LifecycleComponentSystem::UPDATED)) {
-		updatedFunctionId = *factory.getReader()->get<GlobalId>(LifecycleComponentSystem::UPDATED);
-	}
-
-	GlobalId removedFunctionId = 0;
-	if (factory.getReader()->has<GlobalId>(LifecycleComponentSystem::REMOVED)) {
-		removedFunctionId = *factory.getReader()->get<GlobalId>(LifecycleComponentSystem::REMOVED);
-	}
-
+	GlobalId createdFunctionId = reader.get<GlobalId>(LifecycleComponentSystem::CREATED, lifecycleComponent.createdFunctionId);
     lifecycleComponent.createdFunctionId = createdFunctionId;
+
+	GlobalId updatedFunctionId = reader.get<GlobalId>(LifecycleComponentSystem::UPDATED, lifecycleComponent.updatedFunctionId);
     lifecycleComponent.updatedFunctionId = updatedFunctionId;
+
+	GlobalId removedFunctionId = reader.get<GlobalId>(LifecycleComponentSystem::REMOVED, lifecycleComponent.removedFunctionId);
     lifecycleComponent.removedFunctionId = removedFunctionId;
 
 	return lifecycleComponent;

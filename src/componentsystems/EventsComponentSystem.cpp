@@ -8,6 +8,7 @@
 #include "objects/components/structs/EventState.h"
 #include "objects/tientities/TIEntity.h"
 #include "objects/tientities/common/SceneLayer.h"
+#include "managers/ComponentSystemsManager.h"
 #include "managers/EventsManager.h"
 #include "managers/ScriptManager.h"
 #include "managers/WindowManager.h"
@@ -20,10 +21,14 @@ using namespace TIE;
 
 EventsComponentSystem::EventsComponentSystem() {
 	this->setName(EventsComponentSystem::EVENTS);
-	ComponentSystems::insertComponentPropertyIntoMap(EventsComponentSystem::EVENTS, EventsComponentSystem::SELECTED, this->componentPropertyMap);
-	ComponentSystems::insertComponentPropertyIntoMap(EventsComponentSystem::EVENTS, EventsComponentSystem::UNSELECTED, this->componentPropertyMap);
-	ComponentSystems::insertComponentPropertyIntoMap(EventsComponentSystem::EVENTS, EventsComponentSystem::NEUTRAL, this->componentPropertyMap);
-	ComponentSystems::insertComponentPropertyIntoMap(EventsComponentSystem::EVENTS, EventsComponentSystem::HOVER, this->componentPropertyMap);
+	this->addPropertyToComponentPropertyMap(EventsComponentSystem::SELECTED);
+	this->addPropertyToComponentPropertyMap(EventsComponentSystem::UNSELECTED);
+	this->addPropertyToComponentPropertyMap(EventsComponentSystem::NEUTRAL);
+	this->addPropertyToComponentPropertyMap(EventsComponentSystem::HOVER);
+
+	for (auto& [key, property] : this->componentPropertyMap) {
+		ComponentSystemsManager::Instance()->registerComponentPropertyKey(key, this);
+	}
 }
 
 
@@ -79,38 +84,21 @@ EventsComponent& EventsComponentSystem::addComponent(TIEntity& tientity) {
 
 EventsComponent& EventsComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& entity) {
 	EventsComponent& eventsComponent = this->addComponent(entity);
+	const ScriptTableReader& reader = factory.getReader().getReader(EventsComponentSystem::EVENTS);
 
-	// Get all the keys containing events from the functionValues map 
-	std::vector<std::string> eventKeys;
-	for (auto& [key, functionId] : factory.getReader()->getValues<GlobalId>()) {
-		if (key.find("events.") != std::string::npos) {
-			eventKeys.push_back(key);
-		}
-	}
-
-	if (!eventKeys.empty()) {
-		for (auto& key : eventKeys) {
-			// Split the key into parts for state, event, and handler
-			std::vector<std::string> keyParts = String::slice(key, '.', 1);
-
-			std::string state = EventsComponentSystem::NEUTRAL;
-			std::string event = keyParts.back();
-			if (keyParts.size() > 1) {
-                state = keyParts.at(0);
-			}
-
-			const GlobalId& handler = factory.getReader()->getValues<GlobalId>().at(key);
+	for (auto& [state, eventReader] : reader.getReaders()) {
+		for (auto& [event, functionId] : eventReader.getValues<GlobalId>()) {
 
 			// If it's an event value store it in the events map
 			sf::Event::EventType sfEvent = String::stringToEvent(event);
 			if (sfEvent != sf::Event::Count) {
-				eventsComponent.setEventHandler(state, sfEvent, handler);
+				eventsComponent.setEventHandler(state, sfEvent, functionId);
 			}
 
 			// If it's a keypress value store it in the keypress map
 			sf::Keyboard::Key sfKey = String::stringToKey(event);
 			if (sfKey != sf::Keyboard::Unknown) {
-				eventsComponent.setKeyHandler(state, sfKey, handler);
+				eventsComponent.setKeyHandler(state, sfKey, functionId);
 			}
 
 			// If it's for the selected state than this component is selectable
@@ -124,9 +112,9 @@ EventsComponent& EventsComponentSystem::addComponent(const TIEntityFactory& fact
 				eventsComponent.setHoverable(true);
 			}
 
-			// All components have neutral
-			eventsComponent.addState(EventsComponentSystem::NEUTRAL);
 		}
+        // All components have neutral
+        eventsComponent.addState(EventsComponentSystem::NEUTRAL);
 	}
 
 	return eventsComponent;

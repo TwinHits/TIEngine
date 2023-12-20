@@ -22,9 +22,8 @@ class TIEntityFactory {
 
 		const GlobalId getId();
 
-		const bool hasReader();
-		const ScriptTableReader* getReader();
-		const ScriptTableReader* getReader() const;
+		const ScriptTableReader& getReader();
+		const ScriptTableReader& getReader() const;
 
 		TIEntityFactory& setName(std::string);
 		const std::string& getName();
@@ -37,8 +36,8 @@ class TIEntityFactory {
 
 		TIEntity& build();
 
-		static const inline std::string NAME = "tientity.name";
-		static const inline std::string SHOW_WIREFRAME = "tientity.showWireframe";
+		static const inline std::string NAME = "name";
+		static const inline std::string SHOW_WIREFRAME = "showWireframe";
 
 		~TIEntityFactory() {};
 

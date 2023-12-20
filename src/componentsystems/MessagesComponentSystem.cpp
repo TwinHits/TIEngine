@@ -14,7 +14,6 @@ using namespace TIE;
 
 MessagesComponentSystem::MessagesComponentSystem() {
 	this->setName(MessagesComponentSystem::MESSAGES);
-	ComponentSystems::insertComponentPropertyIntoMap(MessagesComponentSystem::SUBSCRIPTIONS, this->componentPropertyMap);
 }
 
 

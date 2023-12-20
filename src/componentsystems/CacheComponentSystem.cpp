@@ -6,6 +6,7 @@
 
 #include "objects/tientities/TIEntity.h"
 #include "objects/components/CacheComponent.h"
+#include "managers/ComponentSystemsManager.h"
 #include "managers/ScriptManager.h"
 #include "utils/StringHelpers.h"
 #include "utils/ComponentSystems.h"
@@ -14,7 +15,11 @@ using namespace TIE;
 
 CacheComponentSystem::CacheComponentSystem() {
     this->setName(CacheComponentSystem::CACHE);
-    ComponentSystems::insertComponentPropertyIntoMap(CacheComponentSystem::CACHE, this->componentPropertyMap);
+    this->addPropertyToComponentPropertyMap(CacheComponentSystem::CACHE);
+
+    for (auto& [key, property] : this->componentPropertyMap) {
+        ComponentSystemsManager::Instance()->registerComponentPropertyKey(key, this);
+    }
 }
 
 
@@ -35,7 +40,7 @@ CacheComponent& CacheComponentSystem::addComponent(TIEntity& tientity) {
 
 CacheComponent& CacheComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
     CacheComponent& cacheComponent = this->addComponent(tientity);
-    sol::table copy = ScriptManager::Instance()->copyTable(*factory.getReader()->get<sol::table>("cache"));
+    sol::table copy = ScriptManager::Instance()->copyTable(*factory.getReader().get<sol::table>(CacheComponentSystem::CACHE));
     cacheComponent.setCache(copy);
     return cacheComponent;
 }

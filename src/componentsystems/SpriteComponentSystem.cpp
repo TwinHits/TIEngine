@@ -11,6 +11,7 @@
 #include "objects/tientities/TIEntity.h"
 #include "objects/factories/tientities/TIEntityFactory.h"
 #include "managers/AssetsManager.h"
+#include "managers/ComponentSystemsManager.h"
 #include "utils/ComponentSystems.h"
 #include "utils/StringHelpers.h"
 #include "utils/TIEMath.h"
@@ -19,15 +20,21 @@ using namespace TIE;
 
 SpriteComponentSystem::SpriteComponentSystem() {
 	this->setName(SpriteComponentSystem::SPRITE);
-	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::DRAWN, this->componentPropertyMap);
-	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::TEXTURE, this->componentPropertyMap);
-	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::WIDTH, this->componentPropertyMap);
-	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::HEIGHT, this->componentPropertyMap);
-	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::ORIGIN_X, this->componentPropertyMap);
-	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::ORIGIN_Y, this->componentPropertyMap);
-	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::REPEATED, this->componentPropertyMap);
-	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::ROTATES, this->componentPropertyMap);
-	ComponentSystems::insertComponentPropertyIntoMap(SpriteComponentSystem::CONSTRAIN_PROPORTIONS, this->componentPropertyMap);
+	// Can these be moved to ComponentSystemsManager now then?
+	// Only if the whole of the propertymap is moved to ComponenetSystemsManager, which is a later idea
+	this->addPropertyToComponentPropertyMap(SpriteComponentSystem::DRAWN);
+	this->addPropertyToComponentPropertyMap(SpriteComponentSystem::TEXTURE);
+	this->addPropertyToComponentPropertyMap(SpriteComponentSystem::WIDTH);
+	this->addPropertyToComponentPropertyMap(SpriteComponentSystem::HEIGHT);
+	this->addPropertyToComponentPropertyMap(SpriteComponentSystem::ORIGIN_X);
+	this->addPropertyToComponentPropertyMap(SpriteComponentSystem::ORIGIN_Y);
+	this->addPropertyToComponentPropertyMap(SpriteComponentSystem::REPEATED);
+	this->addPropertyToComponentPropertyMap(SpriteComponentSystem::ROTATES);
+	this->addPropertyToComponentPropertyMap(SpriteComponentSystem::CONSTRAIN_PROPORTIONS);
+
+	for (auto& [key, property] : this->componentPropertyMap) {
+		ComponentSystemsManager::Instance()->registerComponentPropertyKey(key, this);
+	}
 }
 
 
@@ -56,30 +63,33 @@ SpriteComponent& SpriteComponentSystem::addComponent(TIEntity& tientity) {
 SpriteComponent& SpriteComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
 	SpriteComponent& spriteComponent = this->addComponent(tientity);
 	PositionComponent& positionComponent = PositionComponentSystem::Instance()->addComponent(tientity);
+	const ScriptTableReader& reader = factory.getReader().getReader(SpriteComponentSystem::SPRITE);
 
     spriteComponent.setPosition(positionComponent.position);
 
-	const std::string& textureName = factory.getReader()->get<std::string>(SpriteComponentSystem::TEXTURE, SpriteComponentSystem::MISSING_TEXTURE_NAME);
+	const std::string& textureName = reader.get<std::string>(SpriteComponentSystem::TEXTURE, SpriteComponentSystem::MISSING_TEXTURE_NAME);
     sf::Texture& texture = AssetsManager::Instance()->getTexture(textureName);
 
-	const bool& repeated = factory.getReader()->get<bool>(SpriteComponentSystem::REPEATED, texture.isRepeated());
+	const bool& repeated = reader.get<bool>(SpriteComponentSystem::REPEATED, texture.isRepeated());
     texture.setRepeated(repeated);
 
-	const bool& constrainProportions = factory.getReader()->get<bool>(SpriteComponentSystem::CONSTRAIN_PROPORTIONS, spriteComponent.isConstrainProportions());
+	const bool& constrainProportions = reader.get<bool>(SpriteComponentSystem::CONSTRAIN_PROPORTIONS, spriteComponent.isConstrainProportions());
 	spriteComponent.setConstrainProportions(constrainProportions);
 
-	const float& width = factory.getReader()->get<float>(SpriteComponentSystem::WIDTH, texture.getSize().x);
-	const float& height = factory.getReader()->get<float>(SpriteComponentSystem::HEIGHT, texture.getSize().y);
+	const float& width = reader.get<float>(SpriteComponentSystem::WIDTH, texture.getSize().x);
+	const float& height = reader.get<float>(SpriteComponentSystem::HEIGHT, texture.getSize().y);
 	this->setTextureFields(spriteComponent, texture, width, height);
 
-	const float& originX = factory.getReader()->get<float>(SpriteComponentSystem::ORIGIN_X, spriteComponent.getLocalBounds().width / 2);
-	const float& originY = factory.getReader()->get<float>(SpriteComponentSystem::ORIGIN_Y, spriteComponent.getLocalBounds().height / 2);
-	spriteComponent.setOrigin(originX, originY);
 
-	const bool& drawn = factory.getReader()->get<bool>(SpriteComponentSystem::DRAWN, spriteComponent.isDrawn());
+	const ScriptTableReader& originReader = reader.getReader(SpriteComponentSystem::ORIGIN);
+    const float& originX = originReader.get<float>(SpriteComponentSystem::ORIGIN_X, spriteComponent.getLocalBounds().width / 2);
+    const float& originY = originReader.get<float>(SpriteComponentSystem::ORIGIN_Y, spriteComponent.getLocalBounds().height / 2);
+    spriteComponent.setOrigin(originX, originY);
+
+	const bool& drawn = reader.get<bool>(SpriteComponentSystem::DRAWN, spriteComponent.isDrawn());
     spriteComponent.setDrawn(drawn);
 
-	const bool& rotates = factory.getReader()->get<bool>(SpriteComponentSystem::ROTATES, spriteComponent.isRotates());
+	const bool& rotates = reader.get<bool>(SpriteComponentSystem::ROTATES, spriteComponent.isRotates());
 	spriteComponent.setRotates(rotates);
 
 	return spriteComponent;

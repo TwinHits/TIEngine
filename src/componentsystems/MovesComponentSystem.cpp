@@ -8,6 +8,7 @@
 #include "componentsystems/PositionComponentSystem.h"
 #include "componentsystems/GridComponentSystem.h"
 #include "componentsystems/MessagesComponentSystem.h"
+#include "managers/ComponentSystemsManager.h"
 #include "managers/LogManager.h" 
 #include "managers/WorldManager.h"
 #include "objects/components/MovesComponent.h"
@@ -22,18 +23,23 @@ using namespace TIE;
 
 MovesComponentSystem::MovesComponentSystem() {
 	this->name = MovesComponentSystem::MOVES;
-	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::SPEED, this->componentPropertyMap);
-	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::ACCELERATION, this->componentPropertyMap);
-	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::DECELERATION, this->componentPropertyMap);
-	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::ROTATES, this->componentPropertyMap);
-	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::ROTATIONAL_SPEED, this->componentPropertyMap);
-	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::ROTATIONAL_ACCELERATION, this->componentPropertyMap);
-	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::DESTINATION, this->componentPropertyMap);
-	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::DESTINATION_X, this->componentPropertyMap);
-	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::DESTINATION_Y, this->componentPropertyMap);
-	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::AT_DESTINATION, this->componentPropertyMap);
-	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::TARGET_ROTATION, this->componentPropertyMap);
-	ComponentSystems::insertComponentPropertyIntoMap(MovesComponentSystem::AT_ROTATION, this->componentPropertyMap);
+	this->addPropertyToComponentPropertyMap(MovesComponentSystem::SPEED);
+	this->addPropertyToComponentPropertyMap(MovesComponentSystem::ACCELERATION);
+	this->addPropertyToComponentPropertyMap(MovesComponentSystem::DECELERATION);
+	this->addPropertyToComponentPropertyMap(MovesComponentSystem::ROTATES);
+	this->addPropertyToComponentPropertyMap(MovesComponentSystem::ROTATIONAL_SPEED);
+	this->addPropertyToComponentPropertyMap(MovesComponentSystem::ROTATIONAL_ACCELERATION);
+	this->addPropertyToComponentPropertyMap(MovesComponentSystem::DESTINATION);
+	this->addPropertyToComponentPropertyMap(MovesComponentSystem::DESTINATION_X);
+	this->addPropertyToComponentPropertyMap(MovesComponentSystem::DESTINATION_Y);
+	this->addPropertyToComponentPropertyMap(MovesComponentSystem::AT_DESTINATION);
+	this->addPropertyToComponentPropertyMap(MovesComponentSystem::TARGET_ROTATION);
+	this->addPropertyToComponentPropertyMap(MovesComponentSystem::AT_ROTATION);
+
+	for (auto& [key, property] : this->componentPropertyMap) {
+		ComponentSystemsManager::Instance()->registerComponentPropertyKey(key, this);
+	}
+
 	this->atDestinationMessageSubscription = MessagesComponentSystem::Instance()->registerMessageSubscription("AtDestination");
 }
 
@@ -70,13 +76,15 @@ MovesComponent& MovesComponentSystem::addComponent(TIEntity& tientity) {
 MovesComponent& MovesComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
     MovesComponent& movesComponent = this->addComponent(tientity);
 	PositionComponent& positionComponent = PositionComponentSystem::Instance()->addComponent(tientity);
+	const ScriptTableReader& reader = factory.getReader().getReader(MovesComponentSystem::MOVES);
 
-	const float& targetSpeed = factory.getReader()->get<float>(MovesComponentSystem::SPEED, movesComponent.targetSpeed);
-	const float& acceleration = factory.getReader()->get<float>(MovesComponentSystem::ACCELERATION, movesComponent.acceleration);
-	const float& deceleration = factory.getReader()->get<float>(MovesComponentSystem::ACCELERATION, movesComponent.deceleration);
+	const float& targetSpeed = reader.get<float>(MovesComponentSystem::SPEED, movesComponent.targetSpeed);
+	const float& acceleration = reader.get<float>(MovesComponentSystem::ACCELERATION, movesComponent.acceleration);
+	const float& deceleration = reader.get<float>(MovesComponentSystem::ACCELERATION, movesComponent.deceleration);
 
-	float destinationX = factory.getReader()->get<float>(MovesComponentSystem::DESTINATION_X, movesComponent.targetPosition.x);
-	float destinationY = factory.getReader()->get<float>(MovesComponentSystem::DESTINATION_Y, movesComponent.targetPosition.y);
+	const ScriptTableReader& destinationReader = reader.getReader(MovesComponentSystem::DESTINATION);
+	float destinationX = destinationReader.get<float>(MovesComponentSystem::DESTINATION_X, movesComponent.targetPosition.x);
+	float destinationY = destinationReader.get<float>(MovesComponentSystem::DESTINATION_Y, movesComponent.targetPosition.y);
 	if (!destinationX) {
 		destinationX = positionComponent.position.x;
 	}
@@ -85,10 +93,10 @@ MovesComponent& MovesComponentSystem::addComponent(const TIEntityFactory& factor
 	}
 	this->setTargetPosition(movesComponent, positionComponent, sf::Vector2f(destinationX, destinationY), tientity);
 
-	const float& rotates = factory.getReader()->get<bool>(MovesComponentSystem::ROTATES, movesComponent.rotates);
-	const float& targetRotationalSpeed = factory.getReader()->get<float>(MovesComponentSystem::ROTATIONAL_SPEED, movesComponent.targetRotationalSpeed);
-	const float& rotationalAcceleraton = factory.getReader()->get<float>(MovesComponentSystem::ROTATIONAL_ACCELERATION, movesComponent.rotationalAcceleration);
-	const float& targetRotation = factory.getReader()->get<float>(MovesComponentSystem::TARGET_ROTATION, positionComponent.rotation);
+	const bool& rotates = reader.get<bool>(MovesComponentSystem::ROTATES, movesComponent.rotates);
+	const float& targetRotationalSpeed = reader.get<float>(MovesComponentSystem::ROTATIONAL_SPEED, movesComponent.targetRotationalSpeed);
+	const float& rotationalAcceleraton = reader.get<float>(MovesComponentSystem::ROTATIONAL_ACCELERATION, movesComponent.rotationalAcceleration);
+	const float& targetRotation = reader.get<float>(MovesComponentSystem::TARGET_ROTATION, positionComponent.rotation);
 
     movesComponent.targetSpeed = targetSpeed;
     movesComponent.acceleration = acceleration;

@@ -16,6 +16,7 @@ using namespace TIE;
 
 TIEntityFactory::TIEntityFactory() {
 	this->id = HashManager::Instance()->getNewGlobalId();
+	this->reader = TIE::make_unique<ScriptTableReader>();
 }
 
 
@@ -31,24 +32,15 @@ TIEntity& TIEntityFactory::build() {
 	}
 	TIEntity& tientity = this->parent->attachChild();
 
-	if (this->hasReader()) {
-        if (this->reader->has<std::string>(TIEntityFactory::NAME)) {
-            this->name = *this->reader->get<std::string>(TIEntityFactory::NAME);
+	const ScriptTableReader& metaReader = this->getReader().getReader("tientity");
+	tientity.setName(metaReader.get<std::string>(TIEntityFactory::NAME, this->name));
+	this->setShowWireFrame(metaReader.get<bool>(TIEntityFactory::SHOW_WIREFRAME, this->showWireframe));
+
+    for (ComponentSystem* componentSystem : ComponentSystemsManager::Instance()->getComponentSystems()) {
+        if (this->getReader().hasKey(componentSystem->getName())) {
+            componentSystem->addComponent(*this, tientity);
         }
-		tientity.setName(this->name);
-
-        if (this->reader->has<bool>(TIEntityFactory::SHOW_WIREFRAME)) {
-            this->setShowWireFrame(*this->reader->get<bool>(TIEntityFactory::SHOW_WIREFRAME));
-        }
-
-        for (ComponentSystem* componentSystem : ComponentSystemsManager::Instance()->getComponentSystems()) {
-            if (this->reader && this->reader->hasKey(componentSystem->getName())) {
-				componentSystem->addComponent(*this, tientity);
-			}
-		}
-	}
-
-
+    }
 
 	WorldManager::Instance()->registerTIEntity(tientity);
     WorldManager::Instance()->saveTIEntityFactory(tientity.getName(), *this);
@@ -69,18 +61,13 @@ const GlobalId TIEntityFactory::getId() {
 }
 
 
-const bool TIEntityFactory::hasReader() {
-	return this->reader != nullptr;
+const ScriptTableReader& TIEntityFactory::getReader() {
+	return *this->reader;
 }
 
 
-const ScriptTableReader* TIEntityFactory::getReader() {
-	return this->reader.get();
-}
-
-
-const ScriptTableReader* TIEntityFactory::getReader() const {
-	return this->reader.get();
+const ScriptTableReader& TIEntityFactory::getReader() const {
+	return *this->reader;
 }
 
 

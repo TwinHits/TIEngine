@@ -4,7 +4,7 @@
 
 #include "componentsystems/PositionComponentSystem.h"
 #include "componentsystems/SpriteComponentSystem.h"
-#include "managers/ScriptManager.h"
+#include "managers/ComponentSystemsManager.h"
 #include "objects/components/AnimatedComponent.h"
 #include "objects/components/PositionComponent.h"
 #include "objects/components/SpriteComponent.h"
@@ -18,10 +18,14 @@ using namespace TIE;
 
 AnimatedComponentSystem::AnimatedComponentSystem() {
     this->setName(AnimatedComponentSystem::ANIMATED);
-    ComponentSystems::insertComponentPropertyIntoMap(AnimatedComponentSystem::ANIMATED, AnimatedComponentSystem::FRAMES, this->componentPropertyMap);
-    ComponentSystems::insertComponentPropertyIntoMap(AnimatedComponentSystem::ANIMATED, AnimatedComponentSystem::RANGE, this->componentPropertyMap);
-    ComponentSystems::insertComponentPropertyIntoMap(AnimatedComponentSystem::ANIMATED, AnimatedComponentSystem::SPEED, this->componentPropertyMap);
-    ComponentSystems::insertComponentPropertyIntoMap(AnimatedComponentSystem::ANIMATED, AnimatedComponentSystem::DIRECTION, this->componentPropertyMap);
+    this->addPropertyToComponentPropertyMap(AnimatedComponentSystem::FRAMES);
+    this->addPropertyToComponentPropertyMap(AnimatedComponentSystem::RANGE);
+    this->addPropertyToComponentPropertyMap(AnimatedComponentSystem::SPEED);
+    this->addPropertyToComponentPropertyMap(AnimatedComponentSystem::DIRECTION);
+
+    for (auto& [key, property] : this->componentPropertyMap) {
+        ComponentSystemsManager::Instance()->registerComponentPropertyKey(key, this);
+    }
 }
 
 
@@ -51,30 +55,11 @@ AnimatedComponent& AnimatedComponentSystem::addComponent(TIEntity& tientity) {
 
 AnimatedComponent& AnimatedComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
     AnimatedComponent& animatedComponent = this->addComponent(tientity);
+    const ScriptTableReader& reader = factory.getReader().getReader(AnimatedComponentSystem::ANIMATED);
 
-	// Get all the keys containing animations from the stringValues map 
-	std::vector<std::string> animatedStringKeys;
-	for (auto& i : factory.getReader()->getValues<std::string>()) {
-		if (i.first.find("animated.") != std::string::npos) {
-			animatedStringKeys.push_back(i.first);
-		}
-	}
-    
-	std::vector<std::string> animatedFloatKeys;
-	for (auto& i : factory.getReader()->getValues<float>()) {
-		if (i.first.find("animated.") != std::string::npos) {
-			animatedFloatKeys.push_back(i.first);
-		}
-	}
-
-    if (animatedStringKeys.size()) {
-
+    for (auto& [animationName, animationReader] : reader.getReaders()) {
         std::map<std::string, Animation>& animations = animatedComponent.getAnimations();
-        for (auto& key : animatedStringKeys) {
-            std::vector<std::string> keyParts = String::slice(key, '.', 1);
-            std::string animationName = keyParts.at(0);
-            std::string animationField = keyParts.at(1);
-            const std::string& value = *factory.getReader()->get<std::string>(key);
+        for (auto& [animationField, value] : animationReader.getValues<std::string>()) {
 
             if (!animations.count(animationName)) {
                 animations[animationName] = Animation();
@@ -90,11 +75,7 @@ AnimatedComponent& AnimatedComponentSystem::addComponent(const TIEntityFactory& 
             }
         }
 
-        for (auto& key : animatedFloatKeys) {
-            std::vector<std::string> keyParts = String::slice(key, '.', 1);
-            std::string animationName = keyParts.at(0);
-            std::string animationField = keyParts.at(1);
-			const float& value = *factory.getReader()->get<float>(key);
+        for (auto& [animationField, value] : animationReader.getValues<float>()) {
 
             if (!animations.count(animationName)) {
                 animations[animationName] = Animation();

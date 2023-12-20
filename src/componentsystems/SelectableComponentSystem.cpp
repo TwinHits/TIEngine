@@ -1,15 +1,20 @@
 #include "componentsystems/SelectableComponentSystem.h" 
 
+#include "managers/ComponentSystemsManager.h"
 #include "objects/components/SelectableComponent.h"
-#include "objects/tientities/TIEntity.h"
 #include "objects/factories/tientities/TIEntityFactory.h"
+#include "objects/tientities/TIEntity.h"
 
 using namespace TIE;
 
 SelectableComponentSystem::SelectableComponentSystem() {
 	this->setName(SelectableComponentSystem::SELECTABLE);
-	ComponentSystems::insertComponentPropertyIntoMap(SelectableComponentSystem::SELECTABLE_SELECTABLE, this->componentPropertyMap);
-	ComponentSystems::insertComponentPropertyIntoMap(SelectableComponentSystem::SELECTED, this->componentPropertyMap);
+	this->addPropertyToComponentPropertyMap(SelectableComponentSystem::SELECTABLE);
+	this->addPropertyToComponentPropertyMap(SelectableComponentSystem::SELECTED);
+
+	for (auto& [key, property] : this->componentPropertyMap) {
+		ComponentSystemsManager::Instance()->registerComponentPropertyKey(key, this);
+	}
 }
 
 
@@ -19,11 +24,12 @@ void SelectableComponentSystem::update(const float delta) {
 
 SelectableComponent& SelectableComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
 	SelectableComponent& component =  this->addComponent(tientity);
+	const ScriptTableReader& reader = factory.getReader().getReader(SelectableComponentSystem::SELECTABLE);
 
-	const bool& selectable = factory.getReader()->get<bool>(SelectableComponentSystem::SELECTABLE_SELECTABLE, component.isSelectable());
-	const bool& selected = factory.getReader()->get<bool>(SelectableComponentSystem::SELECTED, component.isSelected());
-
+	const bool& selectable = reader.get<bool>(SelectableComponentSystem::SELECTABLE, component.isSelectable());
 	component.setSelectable(selectable);
+
+	const bool& selected = reader.get<bool>(SelectableComponentSystem::SELECTED, component.isSelected());
 	component.setSelected(selected);
 
 	return component;

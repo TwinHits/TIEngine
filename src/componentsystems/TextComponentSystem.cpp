@@ -7,6 +7,7 @@
 #include "componentsystems/PositionComponentSystem.h"
 #include "componentsystems/WireframeComponentSystem.h"
 #include "managers/AssetsManager.h"
+#include "managers/ComponentSystemsManager.h"
 #include "objects/assets/FontAsset.h"
 #include "objects/components/TextComponent.h"
 #include "objects/components/PositionComponent.h"
@@ -20,13 +21,17 @@ using namespace TIE;
 
 TextComponentSystem::TextComponentSystem() {
 	this->setName(TextComponentSystem::TEXT);
-	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::DRAWN, this->componentPropertyMap);
-	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::STRING, this->componentPropertyMap);
-	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::FONT, this->componentPropertyMap);
-	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::OFFSET_X, this->componentPropertyMap);
-	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::OFFSET_Y, this->componentPropertyMap);
-	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::TEXT_ALIGNMENT, this->componentPropertyMap);
-	ComponentSystems::insertComponentPropertyIntoMap(TextComponentSystem::CHARACTER_SIZE, this->componentPropertyMap);
+	this->addPropertyToComponentPropertyMap(TextComponentSystem::DRAWN);
+	this->addPropertyToComponentPropertyMap(TextComponentSystem::STRING);
+	this->addPropertyToComponentPropertyMap(TextComponentSystem::FONT);
+	this->addPropertyToComponentPropertyMap(TextComponentSystem::OFFSET_X);
+	this->addPropertyToComponentPropertyMap(TextComponentSystem::OFFSET_Y);
+	this->addPropertyToComponentPropertyMap(TextComponentSystem::TEXT_ALIGNMENT);
+	this->addPropertyToComponentPropertyMap(TextComponentSystem::CHARACTER_SIZE);
+
+	for (auto& [key, property] : this->componentPropertyMap) {
+		ComponentSystemsManager::Instance()->registerComponentPropertyKey(key, this);
+	}
 }
 
 
@@ -52,21 +57,22 @@ TextComponent& TextComponentSystem::addComponent(TIEntity& tientity) {
 
 TextComponent& TextComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
     TextComponent& textComponent = this->addComponent(tientity);
+	const ScriptTableReader& reader = factory.getReader().getReader(TextComponentSystem::TEXT);
 
-	const bool& drawn = factory.getReader()->get<bool>(TextComponentSystem::DRAWN, textComponent.isDrawn());
+	const bool& drawn = reader.get<bool>(TextComponentSystem::DRAWN, textComponent.isDrawn());
     textComponent.setDrawn(drawn);
 
-	const std::string& text = factory.getReader()->get<std::string>(TextComponentSystem::STRING, textComponent.getText().getString());
+	const std::string& text = reader.get<std::string>(TextComponentSystem::STRING, textComponent.getText().getString());
     textComponent.setString(text);
 
-	const std::string& fontName = factory.getReader()->get<std::string>(TextComponentSystem::FONT, TextComponentSystem::FONT_DEFAULT);
+	const std::string& fontName = reader.get<std::string>(TextComponentSystem::FONT, TextComponentSystem::FONT_DEFAULT);
 	const FontAsset& font = AssetsManager::Instance()->getFont(fontName);
 	textComponent.setFont(font);
 
-	const float& characterSize = factory.getReader()->get<float>(TextComponentSystem::CHARACTER_SIZE, textComponent.getCharacterSize());
+	const float& characterSize = reader.get<float>(TextComponentSystem::CHARACTER_SIZE, textComponent.getCharacterSize());
     textComponent.setCharacterSize(characterSize);
 
-	TextAlignment textAlignment = TIE::String::strToTextAlignment(factory.getReader()->get<std::string>(TextComponentSystem::TEXT_ALIGNMENT, TIE::String::textAlignmentToStr(textComponent.getTextAlignment())));
+	TextAlignment textAlignment = TIE::String::strToTextAlignment(reader.get<std::string>(TextComponentSystem::TEXT_ALIGNMENT, TIE::String::textAlignmentToStr(textComponent.getTextAlignment())));
 	textComponent.setTextAlignment(textAlignment);
 
 	return textComponent;

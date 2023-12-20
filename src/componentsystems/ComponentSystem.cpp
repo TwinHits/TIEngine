@@ -11,6 +11,10 @@ const std::string& ComponentSystem::getName() {
     return this->name;
 }
 
+void ComponentSystem::addPropertyToComponentPropertyMap(const std::string& property) {
+	this->componentPropertyMap[property] = property;
+}
+
 
 void ComponentSystem::setName(const std::string& name) {
     this->name = name;

@@ -9,16 +9,19 @@
 #include <vector>
 
 #include "objects/GlobalId.h"
+#include "templates/MakeUnique.h"
 
 namespace TIE {
 
 class ScriptTableReader {
     public:
         ScriptTableReader(const sol::table&);
+        ScriptTableReader();
 
-        void read(const sol::table&);
+        const bool hasKey(const std::string&) const;
 
-        const bool hasKey(const std::string&);
+        const ScriptTableReader& getReader(const std::string&) const;
+        const std::map<std::string, ScriptTableReader>& getReaders() const;
 
 		template <typename T>
         const std::map<std::string, T>& getValues() const { return std::map<std::string, T>(); }
@@ -169,7 +172,8 @@ class ScriptTableReader {
         }
 
     private:
-        void read(const std::string&, const sol::table&);
+        void read(const sol::table&);
+        static const ScriptTableReader& getEmptyReader();
 
 		std::map<std::string, bool> keys;
 		std::map<std::string, bool> boolValues;
@@ -177,6 +181,7 @@ class ScriptTableReader {
 		std::map<std::string, std::string> stringValues;
 		std::map<std::string, GlobalId> functionValues;
 		std::map<std::string, sol::table> tableValues;
+		std::map<std::string, ScriptTableReader> readers;
 };
 
 }

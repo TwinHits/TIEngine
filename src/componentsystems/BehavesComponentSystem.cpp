@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "interfaces/ai/FiniteStateMachineInterface.h"
+#include "managers/ComponentSystemsManager.h"
 #include "managers/WorldManager.h"
 #include "objects/factories/tientities/TIEntityFactory.h"
 #include "objects/factories/ai/FiniteStateMachineFactory.h"
@@ -16,11 +17,16 @@ using namespace TIE;
 
 BehavesComponentSystem::BehavesComponentSystem() {
 	this->setName(BehavesComponentSystem::BEHAVES);
-	ComponentSystems::insertComponentPropertyIntoMap(BehavesComponentSystem::ROOT_BEHAVIOR_TREE_NODE, this->componentPropertyMap);
-	ComponentSystems::insertComponentPropertyIntoMap(BehavesComponentSystem::ROOT_FINITE_STATE_MACHINE, this->componentPropertyMap);
-	ComponentSystems::insertComponentPropertyIntoMap(BehavesComponentSystem::ROOT_PAYLOAD, this->componentPropertyMap);
+	this->addPropertyToComponentPropertyMap(BehavesComponentSystem::ROOT_BEHAVIOR_TREE_NODE);
+	this->addPropertyToComponentPropertyMap(BehavesComponentSystem::ROOT_FINITE_STATE_MACHINE);
+	this->addPropertyToComponentPropertyMap(BehavesComponentSystem::ROOT_PAYLOAD);
+
+	for (auto& [key, property] : this->componentPropertyMap) {
+		ComponentSystemsManager::Instance()->registerComponentPropertyKey(key, this);
+	}
 
 	this->initializeBehaviorTreeNodeTypes();
+	this->initializeBehaviorTreeDecoratorTypes();
 	this->initializeBehaviorTreeNodeStatuses();
 }
 
@@ -50,14 +56,15 @@ BehavesComponent& BehavesComponentSystem::addComponent(TIEntity& tientity) {
 
 BehavesComponent& BehavesComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
     BehavesComponent& component = this->addComponent(tientity);
+	const ScriptTableReader& reader = factory.getReader().getReader(BehavesComponentSystem::BEHAVES);
 
-	const GlobalId& rootPayload = factory.getReader()->get<float>(BehavesComponentSystem::ROOT_PAYLOAD, component.rootPayload);
+	const GlobalId& rootPayload = reader.get<float>(BehavesComponentSystem::ROOT_PAYLOAD, component.rootPayload);
 	this->setComponentProperty(BehavesComponentSystem::ROOT_PAYLOAD, rootPayload, tientity);
 
-	const GlobalId& rootFiniteStateMachineId = factory.getReader()->get<float>(BehavesComponentSystem::ROOT_FINITE_STATE_MACHINE, 0);
+	const GlobalId& rootFiniteStateMachineId = reader.get<float>(BehavesComponentSystem::ROOT_FINITE_STATE_MACHINE, 0);
 	this->setComponentProperty(BehavesComponentSystem::ROOT_FINITE_STATE_MACHINE, rootFiniteStateMachineId, tientity);
 
-	const GlobalId& rootBehaviorTreeNodeId = factory.getReader()->get<float>(BehavesComponentSystem::ROOT_BEHAVIOR_TREE_NODE, 0);
+	const GlobalId& rootBehaviorTreeNodeId = reader.get<float>(BehavesComponentSystem::ROOT_BEHAVIOR_TREE_NODE, 0);
 	this->setComponentProperty(BehavesComponentSystem::ROOT_BEHAVIOR_TREE_NODE, rootBehaviorTreeNodeId, tientity);
 
 	return component;
@@ -121,6 +128,11 @@ const std::map<std::string, std::string>& BehavesComponentSystem::getBehaviorTre
 }
 
 
+const std::map<std::string, std::string>& BehavesComponentSystem::getBehaviorTreeDecoratorTypes() {
+	return this->behaviorTreeDecoratorTypes;
+}
+
+
 const std::map<std::string, int>& BehavesComponentSystem::getBehaviorTreeNodeStatuses() {
 	return this->behaviorTreeNodeStatuses;
 }
@@ -131,6 +143,15 @@ void BehavesComponentSystem::initializeBehaviorTreeNodeTypes() {
 	this->behaviorTreeNodeTypes.insert({BehaviorTreeNodeFactory::SELECTOR_NODE, BehaviorTreeNodeFactory::SELECTOR_NODE});
 	this->behaviorTreeNodeTypes.insert({BehaviorTreeNodeFactory::SEQUENCE_NODE, BehaviorTreeNodeFactory::SEQUENCE_NODE });
 	this->behaviorTreeNodeTypes.insert({BehaviorTreeNodeFactory::PARALLEL_NODE, BehaviorTreeNodeFactory::PARALLEL_NODE });
+}
+
+
+void BehavesComponentSystem::initializeBehaviorTreeDecoratorTypes() {
+	this->behaviorTreeDecoratorTypes.insert({BehaviorTreeNodeFactory::PRE_CONDITION, BehaviorTreeNodeFactory::PRE_CONDITION});
+	this->behaviorTreeDecoratorTypes.insert({BehaviorTreeNodeFactory::POST_CONDITION, BehaviorTreeNodeFactory::POST_CONDITION});
+	this->behaviorTreeDecoratorTypes.insert({BehaviorTreeNodeFactory::ON_MESSAGE, BehaviorTreeNodeFactory::ON_MESSAGE});
+	this->behaviorTreeDecoratorTypes.insert({BehaviorTreeNodeFactory::WAIT_FOR_MESSAGE, BehaviorTreeNodeFactory::WAIT_FOR_MESSAGE});
+
 }
 
 

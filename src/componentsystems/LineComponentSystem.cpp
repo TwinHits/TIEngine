@@ -7,6 +7,7 @@
 
 #include "componentsystems/PositionComponentSystem.h" 
 #include "componentsystems/WireframeComponentSystem.h" 
+#include "managers/ComponentSystemsManager.h"
 #include "managers/ScriptManager.h"
 #include "objects/components/LineComponent.h"
 #include "objects/components/PositionComponent.h"
@@ -18,7 +19,11 @@ using namespace TIE;
 
 LineComponentSystem::LineComponentSystem() {
 	this->setName(LineComponentSystem::LINE);
-	ComponentSystems::insertComponentPropertyIntoMap(LineComponentSystem::MAGNITUDE, this->componentPropertyMap);
+	this->addPropertyToComponentPropertyMap(LineComponentSystem::MAGNITUDE);
+
+	for (auto& [key, property] : this->componentPropertyMap) {
+		ComponentSystemsManager::Instance()->registerComponentPropertyKey(key, this);
+	}
 }
 
 
@@ -44,8 +49,9 @@ LineComponent& LineComponentSystem::addComponent(TIEntity& tientity) {
 LineComponent& LineComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
 	LineComponent& lineComponent = this->addComponent(tientity);
 	PositionComponent& positionComponent = PositionComponentSystem::Instance()->addComponent(tientity);
+	const ScriptTableReader& reader = factory.getReader().getReader(LineComponentSystem::LINE);
 
-	const float& magnitude = factory.getReader()->get<float>(LineComponentSystem::MAGNITUDE, lineComponent.getMagnitude());
+	const float& magnitude = reader.get<float>(LineComponentSystem::MAGNITUDE, lineComponent.getMagnitude());
 	lineComponent.setMagnitude(magnitude);
 
 	this->setLine(lineComponent, positionComponent);
