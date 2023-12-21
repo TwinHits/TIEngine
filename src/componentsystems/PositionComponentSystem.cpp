@@ -16,17 +16,13 @@ using namespace TIE;
 
 PositionComponentSystem::PositionComponentSystem() {
     this->setName(PositionComponentSystem::POSITION);
-    this->addPropertyToComponentPropertyMap(PositionComponentSystem::ROTATION);
-    this->addPropertyToComponentPropertyMap(PositionComponentSystem::ROTATES);
-    this->addPropertyToComponentPropertyMap(PositionComponentSystem::POSITION_POSITION);
-    this->addPropertyToComponentPropertyMap(PositionComponentSystem::POSITION_X);
-    this->addPropertyToComponentPropertyMap(PositionComponentSystem::POSITION_Y);
-    this->addPropertyToComponentPropertyMap(PositionComponentSystem::WORLD_POSITION);
-    this->addPropertyToComponentPropertyMap(PositionComponentSystem::WORLD_ROTATION);
-
-    for (auto& [key, property] : this->componentPropertyMap) {
-        ComponentSystemsManager::Instance()->registerComponentPropertyKey(key, this);
-    }
+    ComponentSystemsManager::Instance()->registerComponentPropertyKey(PositionComponentSystem::ROTATION, this);
+    ComponentSystemsManager::Instance()->registerComponentPropertyKey(PositionComponentSystem::ROTATES, this);
+    ComponentSystemsManager::Instance()->registerComponentPropertyKey(PositionComponentSystem::POSITION_POSITION, this);
+    ComponentSystemsManager::Instance()->registerComponentPropertyKey(PositionComponentSystem::POSITION_X, this);
+    ComponentSystemsManager::Instance()->registerComponentPropertyKey(PositionComponentSystem::POSITION_Y, this);
+    ComponentSystemsManager::Instance()->registerComponentPropertyKey(PositionComponentSystem::WORLD_POSITION, this);
+    ComponentSystemsManager::Instance()->registerComponentPropertyKey(PositionComponentSystem::WORLD_ROTATION, this);
 }
 
 

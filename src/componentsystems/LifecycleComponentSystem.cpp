@@ -14,13 +14,9 @@ using namespace TIE;
 
 LifecycleComponentSystem::LifecycleComponentSystem() {
 	this->setName(LifecycleComponentSystem::LIFECYCLE);
-	this->addPropertyToComponentPropertyMap(LifecycleComponentSystem::CREATED);
-	this->addPropertyToComponentPropertyMap(LifecycleComponentSystem::REMOVED);
-	this->addPropertyToComponentPropertyMap(LifecycleComponentSystem::UPDATED);
-
-	for (auto& [key, property] : this->componentPropertyMap) {
-		ComponentSystemsManager::Instance()->registerComponentPropertyKey(key, this);
-	}
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(LifecycleComponentSystem::CREATED, this);
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(LifecycleComponentSystem::REMOVED, this);
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(LifecycleComponentSystem::UPDATED, this);
 }
 
 

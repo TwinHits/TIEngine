@@ -19,12 +19,8 @@ using namespace TIE;
 CollidesComponentSystem::CollidesComponentSystem() {
 	this->setName(CollidesComponentSystem::COLLIDES);
 
-	this->addPropertyToComponentPropertyMap(CollidesComponentSystem::IS_COLLIDABLE);
-	this->addPropertyToComponentPropertyMap(CollidesComponentSystem::IS_COLLIDES);
-
-	for (auto& [key, property] : this->componentPropertyMap) {
-		ComponentSystemsManager::Instance()->registerComponentPropertyKey(key, this);
-	}
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(CollidesComponentSystem::IS_COLLIDABLE, this);
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(CollidesComponentSystem::IS_COLLIDES, this);
 
 	this->collisionMessageSubscription = MessagesComponentSystem::Instance()->registerMessageSubscription("Collision");
 }

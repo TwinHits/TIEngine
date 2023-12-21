@@ -22,19 +22,15 @@ SpriteComponentSystem::SpriteComponentSystem() {
 	this->setName(SpriteComponentSystem::SPRITE);
 	// Can these be moved to ComponentSystemsManager now then?
 	// Only if the whole of the propertymap is moved to ComponenetSystemsManager, which is a later idea
-	this->addPropertyToComponentPropertyMap(SpriteComponentSystem::DRAWN);
-	this->addPropertyToComponentPropertyMap(SpriteComponentSystem::TEXTURE);
-	this->addPropertyToComponentPropertyMap(SpriteComponentSystem::WIDTH);
-	this->addPropertyToComponentPropertyMap(SpriteComponentSystem::HEIGHT);
-	this->addPropertyToComponentPropertyMap(SpriteComponentSystem::ORIGIN_X);
-	this->addPropertyToComponentPropertyMap(SpriteComponentSystem::ORIGIN_Y);
-	this->addPropertyToComponentPropertyMap(SpriteComponentSystem::REPEATED);
-	this->addPropertyToComponentPropertyMap(SpriteComponentSystem::ROTATES);
-	this->addPropertyToComponentPropertyMap(SpriteComponentSystem::CONSTRAIN_PROPORTIONS);
-
-	for (auto& [key, property] : this->componentPropertyMap) {
-		ComponentSystemsManager::Instance()->registerComponentPropertyKey(key, this);
-	}
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(SpriteComponentSystem::DRAWN, this);
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(SpriteComponentSystem::TEXTURE, this);
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(SpriteComponentSystem::WIDTH, this);
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(SpriteComponentSystem::HEIGHT, this);
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(SpriteComponentSystem::ORIGIN_X, this);
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(SpriteComponentSystem::ORIGIN_Y, this);
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(SpriteComponentSystem::REPEATED, this);
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(SpriteComponentSystem::ROTATES, this);
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(SpriteComponentSystem::CONSTRAIN_PROPORTIONS, this);
 }
 
 

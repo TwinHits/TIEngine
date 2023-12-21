@@ -19,11 +19,7 @@ using namespace TIE;
 
 LineComponentSystem::LineComponentSystem() {
 	this->setName(LineComponentSystem::LINE);
-	this->addPropertyToComponentPropertyMap(LineComponentSystem::MAGNITUDE);
-
-	for (auto& [key, property] : this->componentPropertyMap) {
-		ComponentSystemsManager::Instance()->registerComponentPropertyKey(key, this);
-	}
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(LineComponentSystem::MAGNITUDE, this);
 }
 
 

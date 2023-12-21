@@ -17,13 +17,9 @@ using namespace TIE;
 
 BehavesComponentSystem::BehavesComponentSystem() {
 	this->setName(BehavesComponentSystem::BEHAVES);
-	this->addPropertyToComponentPropertyMap(BehavesComponentSystem::ROOT_BEHAVIOR_TREE_NODE);
-	this->addPropertyToComponentPropertyMap(BehavesComponentSystem::ROOT_FINITE_STATE_MACHINE);
-	this->addPropertyToComponentPropertyMap(BehavesComponentSystem::ROOT_PAYLOAD);
-
-	for (auto& [key, property] : this->componentPropertyMap) {
-		ComponentSystemsManager::Instance()->registerComponentPropertyKey(key, this);
-	}
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(BehavesComponentSystem::ROOT_BEHAVIOR_TREE_NODE, this);
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(BehavesComponentSystem::ROOT_FINITE_STATE_MACHINE, this);
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(BehavesComponentSystem::ROOT_PAYLOAD, this);
 
 	this->initializeBehaviorTreeNodeTypes();
 	this->initializeBehaviorTreeDecoratorTypes();

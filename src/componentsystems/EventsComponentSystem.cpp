@@ -21,14 +21,10 @@ using namespace TIE;
 
 EventsComponentSystem::EventsComponentSystem() {
 	this->setName(EventsComponentSystem::EVENTS);
-	this->addPropertyToComponentPropertyMap(EventsComponentSystem::SELECTED);
-	this->addPropertyToComponentPropertyMap(EventsComponentSystem::UNSELECTED);
-	this->addPropertyToComponentPropertyMap(EventsComponentSystem::NEUTRAL);
-	this->addPropertyToComponentPropertyMap(EventsComponentSystem::HOVER);
-
-	for (auto& [key, property] : this->componentPropertyMap) {
-		ComponentSystemsManager::Instance()->registerComponentPropertyKey(key, this);
-	}
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(EventsComponentSystem::SELECTED, this);
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(EventsComponentSystem::UNSELECTED, this);
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(EventsComponentSystem::NEUTRAL, this);
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(EventsComponentSystem::HOVER, this);
 }
 
 

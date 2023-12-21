@@ -53,8 +53,6 @@ void ComponentSystemsManager::initialize() {
 	for (ComponentSystem* componentSystem : ComponentSystemsManager::Instance()->getComponentSystems()) {
 		// List of valid component names
 		this->componentNamesToComponentSystems[componentSystem->getName()] = componentSystem;
-		// Assemble component system properties map
-		this->componentSystemPropertiesMap = componentSystem->populateComponentSystemsPropertiesMap(this->componentSystemPropertiesMap);
 	}
 }
 
@@ -82,14 +80,23 @@ const ComponentSystems::ComponentSystemPropertiesMap& ComponentSystemsManager::g
 	return this->componentSystemPropertiesMap;
 }
 
+
 void ComponentSystemsManager::registerComponentPropertyKey(const std::string& key, ComponentSystem* componentSystem) {
 	if (!this->componentSystemByPropertyKey.count(key)) {
+
 		this->componentSystemByPropertyKey[key] = componentSystem;
+
+		if (!this->componentSystemPropertiesMap.count(componentSystem->getName())) {
+			this->componentSystemPropertiesMap[componentSystem->getName()];
+		}
+		this->componentSystemPropertiesMap[componentSystem->getName()][key] = key;
+
 	} else {
 		LogManager::Instance()->error("Component property " + key + " is already registered to " + this->componentSystemByPropertyKey[key]->getName()
 			+ " and cannot be registered to " + componentSystem->getName());
 	}
 }
+
 
 ComponentSystem* ComponentSystemsManager::getComponentSystemForKey(const std::string& key) {
 	if (this->componentSystemByPropertyKey.count(key)) {
@@ -101,8 +108,8 @@ ComponentSystem* ComponentSystemsManager::getComponentSystemForKey(const std::st
 }
 
 
-void ComponentSystemsManager::registerSetComponentProperty(const std::string& key, std::function<void(const std::string&, bool, TIEntity&)> function) {
-	this->boolSetComponentProperties[key] = function;
+const ComponentSystems::ComponentSystemPropertyMap& ComponentSystemsManager::getComponentSystemPropertyMap(const std::string& name) {
+	return this->componentSystemPropertiesMap[name];
 }
 
 

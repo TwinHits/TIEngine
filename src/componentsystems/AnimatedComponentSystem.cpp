@@ -18,14 +18,10 @@ using namespace TIE;
 
 AnimatedComponentSystem::AnimatedComponentSystem() {
     this->setName(AnimatedComponentSystem::ANIMATED);
-    this->addPropertyToComponentPropertyMap(AnimatedComponentSystem::FRAMES);
-    this->addPropertyToComponentPropertyMap(AnimatedComponentSystem::RANGE);
-    this->addPropertyToComponentPropertyMap(AnimatedComponentSystem::SPEED);
-    this->addPropertyToComponentPropertyMap(AnimatedComponentSystem::DIRECTION);
-
-    for (auto& [key, property] : this->componentPropertyMap) {
-        ComponentSystemsManager::Instance()->registerComponentPropertyKey(key, this);
-    }
+    ComponentSystemsManager::Instance()->registerComponentPropertyKey(AnimatedComponentSystem::FRAMES, this);
+    ComponentSystemsManager::Instance()->registerComponentPropertyKey(AnimatedComponentSystem::RANGE, this);
+    ComponentSystemsManager::Instance()->registerComponentPropertyKey(AnimatedComponentSystem::SPEED, this);
+    ComponentSystemsManager::Instance()->registerComponentPropertyKey(AnimatedComponentSystem::DIRECTION, this);
 }
 
 

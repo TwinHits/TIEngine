@@ -15,11 +15,7 @@ using namespace TIE;
 
 CacheComponentSystem::CacheComponentSystem() {
     this->setName(CacheComponentSystem::CACHE);
-    this->addPropertyToComponentPropertyMap(CacheComponentSystem::CACHE);
-
-    for (auto& [key, property] : this->componentPropertyMap) {
-        ComponentSystemsManager::Instance()->registerComponentPropertyKey(key, this);
-    }
+    ComponentSystemsManager::Instance()->registerComponentPropertyKey(CacheComponentSystem::CACHE, this);
 }
 
 

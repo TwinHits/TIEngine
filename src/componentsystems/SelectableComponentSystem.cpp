@@ -9,12 +9,8 @@ using namespace TIE;
 
 SelectableComponentSystem::SelectableComponentSystem() {
 	this->setName(SelectableComponentSystem::SELECTABLE);
-	this->addPropertyToComponentPropertyMap(SelectableComponentSystem::SELECTABLE);
-	this->addPropertyToComponentPropertyMap(SelectableComponentSystem::SELECTED);
-
-	for (auto& [key, property] : this->componentPropertyMap) {
-		ComponentSystemsManager::Instance()->registerComponentPropertyKey(key, this);
-	}
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(SelectableComponentSystem::SELECTABLE, this);
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(SelectableComponentSystem::SELECTED, this);
 }
 
 

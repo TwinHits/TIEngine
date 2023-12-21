@@ -18,12 +18,8 @@ using namespace TIE;
 
 GridComponentSystem::GridComponentSystem() {
 	this->setName(GridComponentSystem::GRID);
-	this->addPropertyToComponentPropertyMap(GridComponentSystem::WIDTH);
-	this->addPropertyToComponentPropertyMap(GridComponentSystem::HEIGHT);
-
-	for (auto& [key, property] : this->componentPropertyMap) {
-		ComponentSystemsManager::Instance()->registerComponentPropertyKey(key, this);
-	}
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(GridComponentSystem::WIDTH, this);
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(GridComponentSystem::HEIGHT, this);
 }
 
 

@@ -21,17 +21,13 @@ using namespace TIE;
 
 TextComponentSystem::TextComponentSystem() {
 	this->setName(TextComponentSystem::TEXT);
-	this->addPropertyToComponentPropertyMap(TextComponentSystem::DRAWN);
-	this->addPropertyToComponentPropertyMap(TextComponentSystem::STRING);
-	this->addPropertyToComponentPropertyMap(TextComponentSystem::FONT);
-	this->addPropertyToComponentPropertyMap(TextComponentSystem::OFFSET_X);
-	this->addPropertyToComponentPropertyMap(TextComponentSystem::OFFSET_Y);
-	this->addPropertyToComponentPropertyMap(TextComponentSystem::TEXT_ALIGNMENT);
-	this->addPropertyToComponentPropertyMap(TextComponentSystem::CHARACTER_SIZE);
-
-	for (auto& [key, property] : this->componentPropertyMap) {
-		ComponentSystemsManager::Instance()->registerComponentPropertyKey(key, this);
-	}
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(TextComponentSystem::DRAWN, this);
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(TextComponentSystem::STRING, this);
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(TextComponentSystem::FONT, this);
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(TextComponentSystem::OFFSET_X, this);
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(TextComponentSystem::OFFSET_Y, this);
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(TextComponentSystem::TEXT_ALIGNMENT, this);
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(TextComponentSystem::CHARACTER_SIZE, this);
 }
 
 

@@ -9,6 +9,8 @@
 #include <vector>
 
 #include "componentsystems/ComponentSystem.h"
+#include "utils/ComponentSystems.h"
+#include "utils/types/ComponentSystemsTypes.h"
 
 namespace TIE {
 
@@ -23,6 +25,8 @@ namespace TIE {
 
 		void registerComponentPropertyKey(const std::string&, ComponentSystem*);
 		ComponentSystem* getComponentSystemForKey(const std::string&);
+
+		const ComponentSystems::ComponentSystemPropertyMap& getComponentSystemPropertyMap(const std::string&);
 
 		void updateComponentSystems(const float);
 

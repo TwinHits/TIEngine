@@ -23,22 +23,18 @@ using namespace TIE;
 
 MovesComponentSystem::MovesComponentSystem() {
 	this->name = MovesComponentSystem::MOVES;
-	this->addPropertyToComponentPropertyMap(MovesComponentSystem::SPEED);
-	this->addPropertyToComponentPropertyMap(MovesComponentSystem::ACCELERATION);
-	this->addPropertyToComponentPropertyMap(MovesComponentSystem::DECELERATION);
-	this->addPropertyToComponentPropertyMap(MovesComponentSystem::ROTATES);
-	this->addPropertyToComponentPropertyMap(MovesComponentSystem::ROTATIONAL_SPEED);
-	this->addPropertyToComponentPropertyMap(MovesComponentSystem::ROTATIONAL_ACCELERATION);
-	this->addPropertyToComponentPropertyMap(MovesComponentSystem::DESTINATION);
-	this->addPropertyToComponentPropertyMap(MovesComponentSystem::DESTINATION_X);
-	this->addPropertyToComponentPropertyMap(MovesComponentSystem::DESTINATION_Y);
-	this->addPropertyToComponentPropertyMap(MovesComponentSystem::AT_DESTINATION);
-	this->addPropertyToComponentPropertyMap(MovesComponentSystem::TARGET_ROTATION);
-	this->addPropertyToComponentPropertyMap(MovesComponentSystem::AT_ROTATION);
-
-	for (auto& [key, property] : this->componentPropertyMap) {
-		ComponentSystemsManager::Instance()->registerComponentPropertyKey(key, this);
-	}
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(MovesComponentSystem::SPEED, this);
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(MovesComponentSystem::ACCELERATION, this);
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(MovesComponentSystem::DECELERATION, this);
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(MovesComponentSystem::ROTATES, this);
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(MovesComponentSystem::ROTATIONAL_SPEED, this);
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(MovesComponentSystem::ROTATIONAL_ACCELERATION, this);
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(MovesComponentSystem::DESTINATION, this);
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(MovesComponentSystem::DESTINATION_X, this);
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(MovesComponentSystem::DESTINATION_Y, this);
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(MovesComponentSystem::AT_DESTINATION, this);
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(MovesComponentSystem::TARGET_ROTATION, this);
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(MovesComponentSystem::AT_ROTATION, this);
 
 	this->atDestinationMessageSubscription = MessagesComponentSystem::Instance()->registerMessageSubscription("AtDestination");
 }

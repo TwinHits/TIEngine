@@ -24,12 +24,7 @@ using namespace TIE;
 WireframeComponentSystem::WireframeComponentSystem() {
 	this->setName(WireframeComponentSystem::WIREFRAME);
 
-	this->addPropertyToComponentPropertyMap(WireframeComponentSystem::SHOW_WIREFRAME);
-
-	for (auto& [key, property] : this->componentPropertyMap) {
-		ComponentSystemsManager::Instance()->registerComponentPropertyKey(key, this);
-	}
-
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(WireframeComponentSystem::SHOW_WIREFRAME, this);
 }
 
 

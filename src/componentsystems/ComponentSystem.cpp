@@ -2,17 +2,14 @@
 
 #include <string>
 
+#include "managers/ComponentSystemsManager.h"
+#include "managers/ScriptManager.h"
 #include "objects/tientities/TIEntity.h"
-#include "utils/ComponentSystems.h"
 
 using namespace TIE;
 
 const std::string& ComponentSystem::getName() {
     return this->name;
-}
-
-void ComponentSystem::addPropertyToComponentPropertyMap(const std::string& property) {
-	this->componentPropertyMap[property] = property;
 }
 
 
@@ -41,18 +38,12 @@ sol::object ComponentSystem::getComponentProperty(const std::string& key, TIEnti
 }
 
 
-ComponentSystems::ComponentSystemPropertiesMap& ComponentSystem::populateComponentSystemsPropertiesMap(ComponentSystems::ComponentSystemPropertiesMap& map) {
-    map[this->getName()] = this->componentPropertyMap;
-    return map;
-}
-
-
 std::string ComponentSystem::getComponentPropertiesString(TIEntity& tientity) {
     if (this->hasComponent(tientity)) {
         std::stringstream ss;
         ss << this->getName() << ":" << std::endl;
         ss << "-------" << std::endl;
-        for (auto& componentPropertyPair : this->componentPropertyMap) {
+        for (auto& componentPropertyPair : ComponentSystemsManager::Instance()->getComponentSystemPropertyMap(this->getName())) {
             sol::object property = this->getComponentProperty(componentPropertyPair.second, tientity);
             ss << componentPropertyPair.first << ": " << ScriptManager::Instance()->getStringFromObject(property) << std::endl;
         }
