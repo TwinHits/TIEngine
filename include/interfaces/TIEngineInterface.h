@@ -46,6 +46,7 @@ class TIEngineInterface {
         GlobalId registerBehaviorTreeNode(const sol::table&);
 
         const std::map<std::string, std::string>& getBehaviorTreeNodeTypes();
+        const std::map<std::string, std::string>& getBehaviorTreeDecoratorTypes();
         const std::map<std::string, int>& getBehaviorTreeNodeStatuses();
 
         GlobalId registerMessageSubscription(const std::string&);

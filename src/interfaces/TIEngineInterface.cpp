@@ -45,6 +45,7 @@ void TIEngineInterface::registerUserType(sol::state& luaState) {
     engineInterfaceUserType["registerBehaviorTreeNode"] = &TIEngineInterface::registerBehaviorTreeNode;
     engineInterfaceUserType["registerMessageSubscription"] = &TIEngineInterface::registerMessageSubscription;
     engineInterfaceUserType["getBehaviorTreeNodeTypes"] = &TIEngineInterface::getBehaviorTreeNodeTypes;
+    engineInterfaceUserType["getBehaviorTreeDecoratorTypes"] = &TIEngineInterface::getBehaviorTreeDecoratorTypes;
     engineInterfaceUserType["getBehaviorTreeNodeStatuses"] = &TIEngineInterface::getBehaviorTreeNodeStatuses;
     engineInterfaceUserType["getMessageSubscriptions"] = &TIEngineInterface::getMessageSubscriptions;
     engineInterfaceUserType["getProperties"] = &TIEngineInterface::getProperties;
@@ -168,6 +169,11 @@ GlobalId TIEngineInterface::registerBehaviorTreeNode(const sol::table& definitio
 
 const std::map<std::string, std::string>& TIEngineInterface::getBehaviorTreeNodeTypes() {
     return BehavesComponentSystem::Instance()->getBehaviorTreeNodeTypes();
+}
+
+
+const std::map<std::string, std::string>& TIEngineInterface::getBehaviorTreeDecoratorTypes() {
+    return BehavesComponentSystem::Instance()->getBehaviorTreeDecoratorTypes();
 }
 
 
