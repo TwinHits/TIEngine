@@ -13,10 +13,10 @@
 #include "objects/GlobalId.h"
 #include "objects/Message.h"
 #include "objects/ScriptTableReader.h"
-#include "objects/ai/behaviortree/decorators/OnEventDecorator.h"
+#include "objects/ai/behaviortree/decorators/OnMessageDecorator.h"
 #include "objects/ai/behaviortree/decorators/PreConditionDecorator.h"
 #include "objects/ai/behaviortree/decorators/PostConditionDecorator.h"
-#include "objects/ai/behaviortree/decorators/WaitForEventDecorator.h"
+#include "objects/ai/behaviortree/decorators/WaitForMessageDecorator.h"
 #include "objects/ai/behaviortree/nodes/BehaviorTreeNode.h"
 #include "objects/ai/behaviortree/nodes/LeafNode.h"
 #include "objects/ai/behaviortree/nodes/ParallelNode.h"
@@ -146,24 +146,24 @@ void BehaviorTreeNodeFactory::addPostConditionDecorator(TIEntity& tientity, cons
 
 
 void BehaviorTreeNodeFactory::addOnMessageDecorator(TIEntity& tientity, const ScriptTableReader& reader, BehaviorTreeNode& behaviorTreeNode) {
-    std::unique_ptr<OnEventDecorator> onEventDecorator = make_unique<OnEventDecorator>(tientity);
-    onEventDecorator->setOnMessageFunctionId(reader.get<GlobalId>(BehaviorTreeNodeFactory::ON_MESSAGE, 0));
+    std::unique_ptr<OnMessageDecorator> onMessageDecorator = make_unique<OnMessageDecorator>(tientity);
+    onMessageDecorator->setOnMessageFunctionId(reader.get<GlobalId>(BehaviorTreeNodeFactory::ON_MESSAGE, 0));
     for (auto& [index, subscriptionReader] : reader.getReaders()) {
         for (auto& [index, subscription] : subscriptionReader.getValues<float>()) {
-            MessagesComponentSystem::Instance()->subscribe(tientity, subscription, std::bind(&OnEventDecorator::onMessage, onEventDecorator.get(), std::placeholders::_1));
+            MessagesComponentSystem::Instance()->subscribe(tientity, subscription, std::bind(&OnMessageDecorator::onMessage, onMessageDecorator.get(), std::placeholders::_1));
         }
     }
-    behaviorTreeNode.addPreDecorator(std::move(onEventDecorator));
+    behaviorTreeNode.addPreDecorator(std::move(onMessageDecorator));
 }
 
 
 void BehaviorTreeNodeFactory::addWaitForMessageDecorator(TIEntity& tientity, const ScriptTableReader& reader, BehaviorTreeNode& behaviorTreeNode) {
-    std::unique_ptr<WaitForEventDecorator> waitForEventDecorator = make_unique<WaitForEventDecorator>(tientity);
-    waitForEventDecorator->setOnMessageFunctionId(reader.get<GlobalId>(BehaviorTreeNodeFactory::ON_MESSAGE, 0));
+    std::unique_ptr<WaitForMessageDecorator> waitForMessageDecorator = make_unique<WaitForMessageDecorator>(tientity);
+    waitForMessageDecorator->setOnMessageFunctionId(reader.get<GlobalId>(BehaviorTreeNodeFactory::ON_MESSAGE, 0));
     for (auto& [index, subscriptionReader] : reader.getReaders()) {
         for (auto& [index, subscription] : subscriptionReader.getValues<float>()) {
-            MessagesComponentSystem::Instance()->subscribe(tientity, subscription, std::bind(&WaitForEventDecorator::onMessage, waitForEventDecorator.get(), std::placeholders::_1));
+            MessagesComponentSystem::Instance()->subscribe(tientity, subscription, std::bind(&WaitForMessageDecorator::onMessage, waitForMessageDecorator.get(), std::placeholders::_1));
         }
     }
-    behaviorTreeNode.addPreDecorator(std::move(waitForEventDecorator));
+    behaviorTreeNode.addPreDecorator(std::move(waitForMessageDecorator));
 }

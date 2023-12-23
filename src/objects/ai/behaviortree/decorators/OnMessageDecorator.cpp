@@ -1,4 +1,4 @@
-#include "objects/ai/behaviortree/decorators/OnEventDecorator.h"
+#include "objects/ai/behaviortree/decorators/OnMessageDecorator.h"
 
 #include "managers/ScriptManager.h"
 #include "objects/GlobalId.h"
@@ -7,10 +7,10 @@
 
 using namespace TIE;
 
-OnEventDecorator::OnEventDecorator(TIEntity& tientity) : NodeDecorator(tientity) {}
+OnMessageDecorator::OnMessageDecorator(TIEntity& tientity) : NodeDecorator(tientity) {}
 
 
-BehaviorTree::NodeStatus OnEventDecorator::update(const float delta) {
+BehaviorTree::NodeStatus OnMessageDecorator::update(const float delta) {
     BehaviorTree::NodeStatus result = BehaviorTree::NodeStatus::FAILURE;
     if (!this->messages.empty()) {
         // If any of the messages result in a success, then success
@@ -33,11 +33,11 @@ BehaviorTree::NodeStatus OnEventDecorator::update(const float delta) {
 }
 
 
-void OnEventDecorator::setOnMessageFunctionId(const GlobalId onUpdateFunctionId) {
+void OnMessageDecorator::setOnMessageFunctionId(const GlobalId onUpdateFunctionId) {
     this->onMessageFunctionId = onUpdateFunctionId;
 }
 
 
-void OnEventDecorator::onMessage(const Message& message) {
+void OnMessageDecorator::onMessage(const Message& message) {
     this->messages.push_back(message);
 }

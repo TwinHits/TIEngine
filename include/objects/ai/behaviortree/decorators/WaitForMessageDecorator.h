@@ -1,5 +1,5 @@
-#ifndef WAITFOREVENTDECORATOR_H
-#define WAITFOREVENTDECORATOR_H
+#ifndef WAITFORMESSAGEDECORATOR_H
+#define WAITFORMESSAGEDECORATOR_H
 
 #include "objects/ai/behaviortree/decorators/NodeDecorator.h"
 
@@ -10,9 +10,9 @@
 
 namespace TIE {
 
-    class WaitForEventDecorator : public NodeDecorator {
+    class WaitForMessageDecorator : public NodeDecorator {
     public:
-        WaitForEventDecorator(TIEntity&);
+        WaitForMessageDecorator(TIEntity&);
         virtual BehaviorTree::NodeStatus update(const float delta);
 
         void setOnMessageFunctionId(const GlobalId);

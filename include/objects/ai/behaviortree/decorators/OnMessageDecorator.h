@@ -1,5 +1,5 @@
-#ifndef ONEVENTDECORATOR_H
-#define ONEVENTDECORATOR_H
+#ifndef ONMESSAGEDECORATOR_H
+#define ONMESSAGEDECORATOR_H
 
 #include "objects/ai/behaviortree/decorators/NodeDecorator.h"
 
@@ -10,9 +10,9 @@
 
 namespace TIE {
 
-    class OnEventDecorator : public NodeDecorator {
+    class OnMessageDecorator : public NodeDecorator {
     public:
-        OnEventDecorator(TIEntity&);
+        OnMessageDecorator(TIEntity&);
         virtual BehaviorTree::NodeStatus update(const float delta);
 
         void setOnMessageFunctionId(const GlobalId);
