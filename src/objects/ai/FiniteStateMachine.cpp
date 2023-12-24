@@ -101,7 +101,7 @@ void FiniteStateMachine::update(float delta) {
 };
 
 
-void FiniteStateMachine::onMessage(const Message& message) {
+void FiniteStateMachine::onMessage(Message& message) {
     if (this->subscriptions.count(message.subscription)) {
         this->runFunction(this->subscriptions.at(message.subscription), message);
     }
@@ -164,7 +164,7 @@ void FiniteStateMachine::runFunction(const GlobalId functionId, const sol::objec
 }
 
 
-void FiniteStateMachine::runFunction(const GlobalId functionId, const Message& message) {
+void FiniteStateMachine::runFunction(const GlobalId functionId, Message& message) {
     if (functionId) {
         ScriptManager::Instance()->runFunction<sol::optional<float> >(functionId, *this, message);
     }

@@ -12,14 +12,19 @@ namespace TIE {
 
 class MessageInterface {
     public:
-        MessageInterface(const Message&);
-        MessageInterface(const Message*);
+        MessageInterface(Message&);
         ~MessageInterface() {};
 
         static void registerUserType(sol::state&);
         GlobalId subscription = 0;
         GlobalId senderId = 0;
         sol::object payload = sol::nil;
+
+        const bool isValid();
+        void setValid(const bool);
+
+    private:
+        Message& message;
 };
 
 }

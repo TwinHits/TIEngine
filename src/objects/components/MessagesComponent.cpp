@@ -5,7 +5,7 @@
 
 using namespace TIE;
 
-void MessagesComponent::subscribe(GlobalId subscriptionId, std::function<void(const Message&)> onMessage) {
+void MessagesComponent::subscribe(GlobalId subscriptionId, std::function<void(Message&)> onMessage) {
     if (!this->subscriptions.count(subscriptionId)) {
         this->subscriptions[subscriptionId];
     }

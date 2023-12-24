@@ -38,6 +38,6 @@ void WaitForMessageDecorator::setOnMessageFunctionId(const GlobalId onUpdateFunc
 }
 
 
-void WaitForMessageDecorator::onMessage(const Message& message) {
+void WaitForMessageDecorator::onMessage(Message& message) {
     this->messages.push_back(message);
 }

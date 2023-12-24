@@ -38,7 +38,7 @@ class FiniteStateMachine {
         void update(float);
         void onEnter();
         void onEnter(const sol::object);
-        virtual void onMessage(const Message&);
+        virtual void onMessage(Message&);
         void onExit();
 
         const bool hasChildState(const GlobalId);
@@ -53,7 +53,7 @@ class FiniteStateMachine {
         void runFunction(const GlobalId);
         void runFunction(const GlobalId, const float);
         void runFunction(const GlobalId, const sol::object);
-        void runFunction(const GlobalId, const Message&);
+        void runFunction(const GlobalId, Message&);
 
         TIEntity& tientity;
         GlobalId factoryId;

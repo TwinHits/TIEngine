@@ -13,6 +13,7 @@ struct Message {
     GlobalId subscription = 0;
     GlobalId senderId = 0;
     sol::object payload;
+    bool valid = true;
 };
 
 }

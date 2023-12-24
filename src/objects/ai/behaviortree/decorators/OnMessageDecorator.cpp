@@ -38,6 +38,6 @@ void OnMessageDecorator::setOnMessageFunctionId(const GlobalId onUpdateFunctionI
 }
 
 
-void OnMessageDecorator::onMessage(const Message& message) {
+void OnMessageDecorator::onMessage(Message& message) {
     this->messages.push_back(message);
 }

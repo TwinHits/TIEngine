@@ -17,7 +17,7 @@ namespace TIE {
 
         void setOnMessageFunctionId(const GlobalId);
 
-        void onMessage(const Message&);
+        void onMessage(Message&);
 
     private:
         GlobalId onMessageFunctionId = 0;

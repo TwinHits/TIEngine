@@ -57,7 +57,7 @@ public:
 	}
 
 	template <typename T>
-	T runFunction(const GlobalId functionId, FiniteStateMachine& finiteStateMachine, const Message& message) {
+	T runFunction(const GlobalId functionId, FiniteStateMachine& finiteStateMachine, Message& message) {
 		TIEntityInterface tientityInterface(finiteStateMachine.getTIEntity());
 		FiniteStateMachineInterface finiteStateMachineInterface(finiteStateMachine);
 		MessageInterface messageInterface(message);
@@ -65,7 +65,7 @@ public:
 	}
 
 	template <typename T>
-	T runFunction(const GlobalId functionId, TIEntity& tientity, const Message& message) {
+	T runFunction(const GlobalId functionId, TIEntity& tientity, Message& message) {
 		TIEntityInterface tientityInterface(tientity);
 		MessageInterface messageInterface(message);
 		return this->functions.at(functionId)(std::tuple<TIEntityInterface, MessageInterface>(tientityInterface, messageInterface));

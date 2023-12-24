@@ -32,9 +32,12 @@ void MessagesComponentSystem::update(const float delta) {
 					if (messagesComponent->subscriptions.count(subscriptionId)) {
 						// For each message for this subscription
 						for (auto& message : messages) {
-							// For each of the recipient's subscribed onMessage callback
-							for (auto& onMessage : messagesComponent->subscriptions[subscriptionId]) {
-								onMessage(message);
+							// If the message is still valid
+							if (message.valid) {
+								// For each of the recipient's subscribed onMessage callback
+								for (auto& onMessage : messagesComponent->subscriptions[subscriptionId]) {
+									onMessage(message);
+								}
 							}
 						}
 					}
@@ -95,7 +98,7 @@ const std::map<std::string, GlobalId>& MessagesComponentSystem::getMessageSubscr
 }
 
 
-void MessagesComponentSystem::subscribe(TIEntity& tientity, GlobalId subscription, std::function<void(const Message&)> onMessage) {
+void MessagesComponentSystem::subscribe(TIEntity& tientity, GlobalId subscription, std::function<void(Message&)> onMessage) {
 	MessagesComponent& messagesComponent = this->addComponent(tientity);
 	messagesComponent.subscribe(subscription, onMessage);
 }
