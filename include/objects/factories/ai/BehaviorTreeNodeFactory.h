@@ -25,6 +25,7 @@ class BehaviorTreeNodeFactory {
 		static const inline std::string SELECTOR_NODE = "SelectorNode";
 		static const inline std::string SEQUENCE_NODE = "SequenceNode";
 		static const inline std::string PARALLEL_NODE = "ParallelNode";
+		static const inline std::string PRIORITY_SELECTOR_NODE = "PrioritySelectorNode";
 
 		static const inline std::string PRE_CONDITION = "preCondition";
 		static const inline std::string POST_CONDITION = "postCondition";
@@ -35,9 +36,10 @@ class BehaviorTreeNodeFactory {
 		ScriptTableReader reader;
 
 		std::unique_ptr<BehaviorTreeNode> buildLeafNode(TIEntity&);
+		std::unique_ptr<BehaviorTreeNode> buildParallelNode(TIEntity&);
+		std::unique_ptr<BehaviorTreeNode> buildPrioritySelectorNode(TIEntity&);
 		std::unique_ptr<BehaviorTreeNode> buildSelectorNode(TIEntity&);
 		std::unique_ptr<BehaviorTreeNode> buildSequenceNode(TIEntity&);
-		std::unique_ptr<BehaviorTreeNode> buildParallelNode(TIEntity&);
 
 		void addPreConditionDecorator(TIEntity&, const ScriptTableReader&, BehaviorTreeNode&);
 		void addPostConditionDecorator(TIEntity&, const ScriptTableReader&, BehaviorTreeNode&);

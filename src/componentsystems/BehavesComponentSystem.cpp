@@ -136,9 +136,10 @@ const std::map<std::string, int>& BehavesComponentSystem::getBehaviorTreeNodeSta
 
 void BehavesComponentSystem::initializeBehaviorTreeNodeTypes() {
 	this->behaviorTreeNodeTypes.insert({BehaviorTreeNodeFactory::LEAF_NODE, BehaviorTreeNodeFactory::LEAF_NODE});
+	this->behaviorTreeNodeTypes.insert({BehaviorTreeNodeFactory::PARALLEL_NODE, BehaviorTreeNodeFactory::PARALLEL_NODE });
+	this->behaviorTreeNodeTypes.insert({BehaviorTreeNodeFactory::PRIORITY_SELECTOR_NODE, BehaviorTreeNodeFactory::PRIORITY_SELECTOR_NODE });
 	this->behaviorTreeNodeTypes.insert({BehaviorTreeNodeFactory::SELECTOR_NODE, BehaviorTreeNodeFactory::SELECTOR_NODE});
 	this->behaviorTreeNodeTypes.insert({BehaviorTreeNodeFactory::SEQUENCE_NODE, BehaviorTreeNodeFactory::SEQUENCE_NODE });
-	this->behaviorTreeNodeTypes.insert({BehaviorTreeNodeFactory::PARALLEL_NODE, BehaviorTreeNodeFactory::PARALLEL_NODE });
 }
 
 

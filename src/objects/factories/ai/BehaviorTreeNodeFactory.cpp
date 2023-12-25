@@ -20,6 +20,7 @@
 #include "objects/ai/behaviortree/nodes/BehaviorTreeNode.h"
 #include "objects/ai/behaviortree/nodes/LeafNode.h"
 #include "objects/ai/behaviortree/nodes/ParallelNode.h"
+#include "objects/ai/behaviortree/nodes/PrioritySelectorNode.h"
 #include "objects/ai/behaviortree/nodes/SelectorNode.h"
 #include "objects/ai/behaviortree/nodes/SequenceNode.h"
 #include "templates/MakeUnique.h"
@@ -41,12 +42,14 @@ std::unique_ptr<BehaviorTreeNode> BehaviorTreeNodeFactory::build(TIEntity& tient
         std::unique_ptr<BehaviorTreeNode> behaviorTreeNode;
         if (nodeType == BehaviorTreeNodeFactory::LEAF_NODE) {
             behaviorTreeNode = this->buildLeafNode(tientity);
+        } else if (nodeType == BehaviorTreeNodeFactory::PARALLEL_NODE) {
+            behaviorTreeNode = this->buildParallelNode(tientity);
+        } else if (nodeType == BehaviorTreeNodeFactory::PRIORITY_SELECTOR_NODE) {
+            behaviorTreeNode = this->buildPrioritySelectorNode(tientity);
         } else if (nodeType == BehaviorTreeNodeFactory::SELECTOR_NODE) {
             behaviorTreeNode = this->buildSelectorNode(tientity);
         } else if (nodeType == BehaviorTreeNodeFactory::SEQUENCE_NODE) {
             behaviorTreeNode = this->buildSequenceNode(tientity);
-        } else if (nodeType == BehaviorTreeNodeFactory::PARALLEL_NODE) {
-            behaviorTreeNode = this->buildParallelNode(tientity);
         } else {
             LogManager::Instance()->error(nodeType + " is an unknown behavior tree node type.");
             return nullptr;
@@ -92,6 +95,31 @@ std::unique_ptr<BehaviorTreeNode> BehaviorTreeNodeFactory::buildLeafNode(TIEntit
 }
 
 
+std::unique_ptr<BehaviorTreeNode> BehaviorTreeNodeFactory::buildParallelNode(TIEntity& tientity) {
+    const std::string& name = this->reader.get<std::string>(BehaviorTreeNodeFactory::NAME, "");
+    std::unique_ptr<ParallelNode> parallelNode = std::make_unique<ParallelNode>(tientity, name);
+    std::vector<GlobalId> children;
+    this->reader.get<std::vector<GlobalId>>(BehaviorTreeNodeFactory::CHILDREN, children);
+    for (auto child : children) {
+        BehaviorTreeNodeFactory* childFactory = WorldManager::Instance()->getBehaviorTreeNodeFactory(child);
+        parallelNode->addChild(childFactory->build(tientity));
+    }
+    return std::move(parallelNode);
+}
+
+
+std::unique_ptr<BehaviorTreeNode> BehaviorTreeNodeFactory::buildPrioritySelectorNode(TIEntity& tientity) {
+    const std::string& name = this->reader.get<std::string>(BehaviorTreeNodeFactory::NAME, "");
+    std::unique_ptr<PrioritySelectorNode> prioritySelectorNode = std::make_unique<PrioritySelectorNode>(tientity, name);
+    std::vector<GlobalId> children;
+    this->reader.get<std::vector<GlobalId>>(BehaviorTreeNodeFactory::CHILDREN, children);
+    for (auto child : children) {
+        BehaviorTreeNodeFactory* childFactory = WorldManager::Instance()->getBehaviorTreeNodeFactory(child);
+        prioritySelectorNode->addChild(childFactory->build(tientity));
+    }
+   return std::move(prioritySelectorNode);
+}
+
 std::unique_ptr<BehaviorTreeNode> BehaviorTreeNodeFactory::buildSelectorNode(TIEntity& tientity) {
     const std::string& name = this->reader.get<std::string>(BehaviorTreeNodeFactory::NAME, "");
     std::unique_ptr<SelectorNode> selectorNode = std::make_unique<SelectorNode>(tientity, name);
@@ -115,19 +143,6 @@ std::unique_ptr<BehaviorTreeNode> BehaviorTreeNodeFactory::buildSequenceNode(TIE
         sequenceNode->addChild(childFactory->build(tientity));
     }
     return std::move(sequenceNode);
-}
-
-
-std::unique_ptr<BehaviorTreeNode> BehaviorTreeNodeFactory::buildParallelNode(TIEntity& tientity) {
-    const std::string& name = this->reader.get<std::string>(BehaviorTreeNodeFactory::NAME, "");
-    std::unique_ptr<ParallelNode> parallelNode = std::make_unique<ParallelNode>(tientity, name);
-    std::vector<GlobalId> children;
-    this->reader.get<std::vector<GlobalId>>(BehaviorTreeNodeFactory::CHILDREN, children);
-    for (auto child : children) {
-        BehaviorTreeNodeFactory* childFactory = WorldManager::Instance()->getBehaviorTreeNodeFactory(child);
-        parallelNode->addChild(childFactory->build(tientity));
-    }
-    return std::move(parallelNode);
 }
 
 
