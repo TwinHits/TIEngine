@@ -16,12 +16,14 @@ BehaviorTree::NodeStatus WaitForMessageDecorator::update(const float delta) {
         // If any of the messages result in a success, then success
         if (this->onMessageFunctionId) {
             for (auto& message : messages) {
-                BehaviorTree::NodeStatus callbackResult = ScriptManager::Instance()->runFunction<BehaviorTree::NodeStatus>(this->onMessageFunctionId, this->tientity, message);
-                if (callbackResult == BehaviorTree::NodeStatus::SUCCESS) {
-                    result = BehaviorTree::NodeStatus::SUCCESS;
-                } else if (callbackResult == BehaviorTree::NodeStatus::RUNNING) {
-                    result = BehaviorTree::NodeStatus::RUNNING;
-                    break;
+                if (message->valid) {
+                    BehaviorTree::NodeStatus callbackResult = ScriptManager::Instance()->runFunction<BehaviorTree::NodeStatus>(this->onMessageFunctionId, this->tientity, *message);
+                    if (callbackResult == BehaviorTree::NodeStatus::SUCCESS) {
+                        result = BehaviorTree::NodeStatus::SUCCESS;
+                    } else if (callbackResult == BehaviorTree::NodeStatus::RUNNING) {
+                        result = BehaviorTree::NodeStatus::RUNNING;
+                        break;
+                    }
                 }
             }
         } else {
@@ -39,5 +41,5 @@ void WaitForMessageDecorator::setOnMessageFunctionId(const GlobalId onUpdateFunc
 
 
 void WaitForMessageDecorator::onMessage(Message& message) {
-    this->messages.push_back(message);
+    this->messages.push_back(&message);
 }

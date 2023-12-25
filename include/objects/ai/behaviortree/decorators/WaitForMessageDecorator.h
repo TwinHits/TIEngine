@@ -21,7 +21,7 @@ namespace TIE {
 
     private:
         GlobalId onMessageFunctionId = 0;
-        std::vector<Message> messages;
+        std::vector<Message*> messages;
     };
 
 }
