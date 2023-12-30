@@ -7,6 +7,9 @@
 #include <sol/sol.hpp>
 
 #include "objects/components/ShapeComponent.h"
+#include "objects/components/LineComponent.h"
+#include "objects/components/SpriteComponent.h"
+#include "objects/components/TextComponent.h"
 #include "objects/components/WireframeComponent.h"
 #include "objects/tientities/TIEntity.h"
 
@@ -19,15 +22,21 @@ class WireframeComponentSystem : public Singleton<WireframeComponentSystem>, pub
 		WireframeComponent& addComponent(TIEntity&);
 		WireframeComponent& addComponent(const TIEntityFactory&, TIEntity&);
 		bool removeComponent(TIEntity&);
-		
+
 		void setComponentProperty(const std::string&, float, TIEntity&);
 		sol::object getComponentProperty(const std::string&, TIEntity&);
+
+		bool getShowWireframe(TIEntity&);
+
+		void addWireframe(TIEntity&, SpriteComponent&);
+		void addWireframe(TIEntity&, TextComponent&);
+		void addWireframe(TIEntity&, LineComponent&);
 			
 		std::pair<GlobalId, GlobalId> createWireframe(TIEntity&, const sf::FloatRect&, const sf::Vector2f&);
 		std::pair<GlobalId, GlobalId> createWireframe(TIEntity&, const sf::FloatRect&, const sf::Vector2f&, const float);
 
 		const static inline std::string WIREFRAME = "wireframe";
-		const static inline std::string SHOW_WIREFRAME = "ShowWireframe";
+		const static inline std::string SHOW_WIREFRAME = "showWireframe";
 
 	private:        
 		struct Components {

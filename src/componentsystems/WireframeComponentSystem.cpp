@@ -6,7 +6,6 @@
 #include <string>
 
 #include "componentsystems/LineComponentSystem.h"
-#include "componentsystems/PositionComponentSystem.h" 
 #include "componentsystems/ShapeComponentSystem.h" 
 #include "componentsystems/SpriteComponentSystem.h" 
 #include "componentsystems/TextComponentSystem.h"
@@ -14,7 +13,9 @@
 #include "managers/HashManager.h"
 #include "managers/ScriptManager.h"
 #include "objects/components/WireframeComponent.h"
-#include "objects/components/PositionComponent.h"
+#include "objects/components/LineComponent.h"
+#include "objects/components/SpriteComponent.h"
+#include "objects/components/TextComponent.h"
 #include "objects/tientities/TIEntity.h"
 #include "utils/ComponentSystems.h"
 #include "utils/TIEMath.h"
@@ -87,28 +88,25 @@ WireframeComponent& WireframeComponentSystem::addComponent(TIEntity& tientity) {
 
 WireframeComponent& WireframeComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
 	WireframeComponent& wireframeComponent = this->addComponent(tientity);
-	ShapeComponent& shapeComponent = ShapeComponentSystem::Instance()->addComponent(tientity);
+	const ScriptTableReader& reader = factory.getReader().getReader(WireframeComponentSystem::WIREFRAME);
 
-	wireframeComponent.setShowWireframe(factory.getShowWireframe());
-	shapeComponent.setDrawn(wireframeComponent.getShowWireframe());
+	bool showWireframe = reader.get<bool>(WireframeComponentSystem::SHOW_WIREFRAME, factory.getShowWireframe());
+	wireframeComponent.setShowWireframe(showWireframe);
 
 	if (wireframeComponent.getShowWireframe()) {
 		SpriteComponent* spriteComponent = tientity.getComponent<SpriteComponent>();
 		if (spriteComponent) {
-			std::pair<GlobalId, GlobalId> wireframeShapeIds = SpriteComponentSystem::Instance()->addWireframe(tientity);
-			wireframeComponent.addWireframeShapeIds(spriteComponent, wireframeShapeIds);
+			this->addWireframe(tientity, *spriteComponent);
 		}
 
 		TextComponent* textComponent = tientity.getComponent<TextComponent>();
 		if (textComponent) {
-			std::pair<GlobalId, GlobalId> wireframeShapeIds = TextComponentSystem::Instance()->addWireframe(tientity);
-			wireframeComponent.addWireframeShapeIds(textComponent, wireframeShapeIds);
+			this->addWireframe(tientity, *textComponent);
 		}
 
 		LineComponent* lineComponent = tientity.getComponent<LineComponent>();
 		if (lineComponent) {
-			std::pair<GlobalId, GlobalId> wireframeShapeIds = LineComponentSystem::Instance()->addWireframe(tientity);
-			wireframeComponent.addWireframeShapeIds(textComponent, wireframeShapeIds);
+			this->addWireframe(tientity, *lineComponent);
 		}
 	}
 
@@ -140,6 +138,51 @@ void WireframeComponentSystem::setComponentProperty(const std::string& key, floa
 sol::object WireframeComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
 	WireframeComponent* component = tientity.getComponent<WireframeComponent>();
 	return ScriptManager::Instance()->getObjectFromValue(nullptr);
+}
+
+
+bool WireframeComponentSystem::getShowWireframe(TIEntity& tientity) {
+	WireframeComponent* component = tientity.getComponent<WireframeComponent>();
+	return component && component->getShowWireframe();
+}
+
+
+void WireframeComponentSystem::addWireframe(TIEntity& tientity, SpriteComponent& spriteComponent) {
+	WireframeComponent& wireframeComponent = this->addComponent(tientity);
+	ShapeComponent& shapeComponent = ShapeComponentSystem::Instance()->addComponent(tientity);
+
+    std::pair<GlobalId, GlobalId> wireframeShapeIds = SpriteComponentSystem::Instance()->addWireframe(tientity);
+    wireframeComponent.addWireframeShapeIds(&spriteComponent, wireframeShapeIds);
+	wireframeComponent.setShowWireframe(true);
+
+	shapeComponent.setDrawn(true);
+	shapeComponent.setRotates(true);
+}
+
+
+void WireframeComponentSystem::addWireframe(TIEntity& tientity, TextComponent& textComponent) {
+	WireframeComponent& wireframeComponent = this->addComponent(tientity);
+	ShapeComponent& shapeComponent = ShapeComponentSystem::Instance()->addComponent(tientity);
+
+    std::pair<GlobalId, GlobalId> wireframeShapeIds = TextComponentSystem::Instance()->addWireframe(tientity);
+    wireframeComponent.addWireframeShapeIds(&textComponent, wireframeShapeIds);
+	wireframeComponent.setShowWireframe(true);
+
+	shapeComponent.setDrawn(true);
+	shapeComponent.setRotates(true);
+}
+
+
+void WireframeComponentSystem::addWireframe(TIEntity& tientity, LineComponent& lineComponent) {
+	WireframeComponent& wireframeComponent = this->addComponent(tientity);
+	ShapeComponent& shapeComponent = ShapeComponentSystem::Instance()->addComponent(tientity);
+
+    std::pair<GlobalId, GlobalId> wireframeShapeIds = LineComponentSystem::Instance()->addWireframe(tientity);
+    wireframeComponent.addWireframeShapeIds(&lineComponent, wireframeShapeIds);
+	wireframeComponent.setShowWireframe(true);
+
+	shapeComponent.setDrawn(true);
+	shapeComponent.setRotates(true);
 }
 
 

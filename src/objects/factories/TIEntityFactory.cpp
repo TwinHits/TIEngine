@@ -34,18 +34,20 @@ TIEntity& TIEntityFactory::build() {
 
 	const ScriptTableReader& metaReader = this->getReader().getReader("tientity");
 	tientity.setName(metaReader.get<std::string>(TIEntityFactory::NAME, this->name));
-	this->setShowWireFrame(metaReader.get<bool>(TIEntityFactory::SHOW_WIREFRAME, this->showWireframe));
+	this->setShowWireFrame(WireframeComponentSystem::Instance()->getShowWireframe(tientity.getParent()));
 
     for (ComponentSystem* componentSystem : ComponentSystemsManager::Instance()->getComponentSystems()) {
         if (this->getReader().hasKey(componentSystem->getName())) {
+            componentSystem->addComponent(*this, tientity);
+        } else if (componentSystem->getName() == WireframeComponentSystem::WIREFRAME && this->getShowWireframe()) {
             componentSystem->addComponent(*this, tientity);
         }
     }
 
 	WorldManager::Instance()->registerTIEntity(tientity);
     WorldManager::Instance()->saveTIEntityFactory(tientity.getName(), *this);
-
 	LifecycleComponentSystem::Instance()->runCreated(tientity);
+
 	return tientity;
 }
 

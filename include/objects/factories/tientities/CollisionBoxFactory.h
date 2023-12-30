@@ -26,6 +26,8 @@ class CollisionBoxFactory {
 		CollisionBoxFactory& setRect(const float, const float, const float, const float);
 
 		TIEntity& build();
+
+		static const inline std::string COLLISION_BOX = "Collision Box";
     private:
 		GlobalId id = 0;
 		TIEntity* parent = nullptr;

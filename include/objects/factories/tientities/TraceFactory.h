@@ -20,6 +20,9 @@ class TraceFactory {
 		TraceFactory& setDirection(const float);
 
 		TIEntity& build();
+
+		static const inline std::string TRACE = "Trace";
+
     private:
 		GlobalId id = 0;
 

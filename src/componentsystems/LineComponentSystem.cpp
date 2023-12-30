@@ -118,7 +118,7 @@ std::pair<GlobalId, GlobalId> LineComponentSystem::addWireframe(TIEntity& tienti
 	LineComponent* component = tientity.getComponent<LineComponent>();
 	if (component) {
 		PositionComponent* positionComponent = tientity.getComponent<PositionComponent>();
-		WireframeComponentSystem::Instance()->createWireframe(tientity, sf::FloatRect(0,0,component->getMagnitude(), 0), positionComponent->position, positionComponent->rotation);
+		return WireframeComponentSystem::Instance()->createWireframe(tientity, sf::FloatRect(0,0,component->getMagnitude(), 0), positionComponent->position, positionComponent->rotation);
 	}
 	return std::pair(0,0);
 }
