@@ -71,7 +71,6 @@ public:
 		return this->functions.at(functionId)(std::tuple<TIEntityInterface, MessageInterface>(tientityInterface, messageInterface));
 	}
 
-
     void setScriptWorkingDirectory(const std::string&);
     const std::string& getScriptWorkingDirectory();
 

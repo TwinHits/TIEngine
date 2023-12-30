@@ -69,10 +69,11 @@ CollisionBoxFactory& CollisionBoxFactory::setRect(const float x, const float y, 
 
 TIEntity& CollisionBoxFactory::build() {
     TIEntity& collisionBox = this->parent->attachChild();
-    collisionBox.setName("Collision Box");
+    collisionBox.setName(CollisionBoxFactory::COLLISION_BOX);
 
     MessagesComponent& messagesComponent = MessagesComponentSystem::Instance()->addComponent(collisionBox);
     messagesComponent.redirectFromId = this->parent->getId();
+    messagesComponent.redirectToId = this->parent->getId();
 
     CollidesComponent& collidesComponent = CollidesComponentSystem::Instance()->addComponent(collisionBox);
     collidesComponent.setCollides(true);

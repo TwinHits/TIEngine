@@ -12,7 +12,6 @@ class NodeDecorator {
         virtual BehaviorTree::NodeStatus update(const float delta) = 0;
     protected:
         TIEntity& tientity;
-
 };
 
 }

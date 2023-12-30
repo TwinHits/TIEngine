@@ -15,6 +15,7 @@ class MessagesComponent : public Component {
     public:
         std::map<GlobalId, std::vector<std::function<void(Message&)>>> subscriptions;
         GlobalId redirectFromId = 0;
+        GlobalId redirectToId = 0;
 
         void subscribe(GlobalId, std::function<void(Message&)>);
 };

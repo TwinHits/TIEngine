@@ -113,13 +113,14 @@ void MessagesComponentSystem::sendMessage(const GlobalId subscription, TIEntity&
 
 void MessagesComponentSystem::sendMessage(const GlobalId subscription, TIEntity& sender, const GlobalId recipientId, sol::object payload) {
 	const GlobalId senderId = this->getSenderId(sender);
-	if (!this->nextFrameMessages.count(recipientId)) {
-        this->nextFrameMessages[recipientId];
+	const GlobalId redirectedReciepentId = this->getReciepentId(recipientId);
+	if (!this->nextFrameMessages.count(redirectedReciepentId)) {
+        this->nextFrameMessages[redirectedReciepentId];
 	}
-    if (!this->nextFrameMessages[recipientId].count(subscription)) {
-        this->nextFrameMessages[recipientId][subscription];
+    if (!this->nextFrameMessages[redirectedReciepentId].count(subscription)) {
+        this->nextFrameMessages[redirectedReciepentId][subscription];
     }
-    this->nextFrameMessages[recipientId][subscription].push_back({ subscription, senderId, payload });
+    this->nextFrameMessages[redirectedReciepentId][subscription].push_back({ subscription, senderId, payload });
 }
 
 
@@ -130,4 +131,15 @@ const GlobalId MessagesComponentSystem::getSenderId(TIEntity& tientity) {
 	} else {
 		return tientity.getId();
 	}
+}
+
+const GlobalId MessagesComponentSystem::getReciepentId(const GlobalId recipientId) {
+	TIEntity* recipient = WorldManager::Instance()->getTIEntityById(recipientId);
+	if (recipient) {
+		MessagesComponent& messagesComponent = this->addComponent(*recipient);
+		if (messagesComponent.redirectToId) {
+			return messagesComponent.redirectToId;
+		}
+	}
+	return recipientId;
 }

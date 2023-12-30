@@ -42,6 +42,7 @@ class MessagesComponentSystem : public Singleton<MessagesComponentSystem>, publi
 		std::map<GlobalId, std::map<GlobalId, std::vector<Message>>> nextFrameMessages;
 
 		const GlobalId getSenderId(TIEntity&);
+		const GlobalId getReciepentId(const GlobalId);
 };
 
 }

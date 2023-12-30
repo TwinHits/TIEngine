@@ -5,6 +5,7 @@
 #include "componentsystems/LineComponentSystem.h"
 #include "componentsystems/PositionComponentSystem.h"
 #include "componentsystems/MessagesComponentSystem.h"
+#include "componentsystems/WireframeComponentSystem.h"
 #include "managers/HashManager.h"
 #include "managers/WorldManager.h"
 #include "templates/MakeUnique.h"
@@ -45,6 +46,7 @@ TraceFactory& TraceFactory::setDirection(const float direction) {
 
 TIEntity& TraceFactory::build() {
     TIEntity& trace = this->parent->attachChild();
+    trace.setName(TraceFactory::TRACE);
 
     BehavesComponent& behavesComponent = BehavesComponentSystem::Instance()->addComponent(trace);
     // Collisions with traces should get renamed when being redirected to TraceCollisions
@@ -52,6 +54,7 @@ TIEntity& TraceFactory::build() {
     // Collision -> TraceCollision
     MessagesComponent& messagesComponent = MessagesComponentSystem::Instance()->addComponent(trace);
     messagesComponent.redirectFromId = this->parent->getId();
+    messagesComponent.redirectToId = this->parent->getId();
 
     CollidesComponent& collidesComponent = CollidesComponentSystem::Instance()->addComponent(trace);
     collidesComponent.setCollides(true);
@@ -63,6 +66,10 @@ TIEntity& TraceFactory::build() {
     LineComponent& lineComponent = LineComponentSystem::Instance()->addComponent(trace);
     lineComponent.setMagnitude(magnitude);
     LineComponentSystem::Instance()->setLine(lineComponent, positionComponent);
+
+    if (WireframeComponentSystem::Instance()->getShowWireframe(trace.getParent())) {
+        WireframeComponentSystem::Instance()->addWireframe(trace, lineComponent);
+    }
 
     WorldManager::Instance()->registerTIEntity(trace);
     return trace;
