@@ -5,12 +5,14 @@
 #include <SFML/Graphics.hpp>
 
 #include "managers/ConsoleManager.h"
+#include "managers/MessageManager.h"
 #include "managers/LogManager.h"
 #include "managers/SceneManager.h"
 #include "managers/ViewManager.h"
 #include "managers/WindowManager.h"
 #include "templates/MakeUnique.h"
 #include "utils/ComponentSystems.h"
+#include "utils/constants/SfEventStringMap.h"
 
 using namespace TIE;
 
@@ -34,7 +36,7 @@ const std::map<sf::Event::EventType, sf::Event>& EventsManager::getEvents() {
 }
 
 
-const sf::Event* const EventsManager::getEvent(sf::Event::EventType eventType) {
+const sf::Event* const EventsManager::getEvent(const sf::Event::EventType& eventType) {
 	if (this->events.find(eventType) != events.end()) {
 		return &(events.at(eventType));
 	}
@@ -60,6 +62,12 @@ void EventsManager::processEvents() {
 
 		//Window Input Commands
 		if (!consoleManager->checkConsole()) {
+            if (event.type == sf::Event::KeyPressed) {
+                MessageManager::Instance()->publish(SfEventStringMap::KEY_TO_STRING.at(event.key.code));
+            } else {
+                MessageManager::Instance()->publish(SfEventStringMap::EVENT_TYPE_TO_STRING.at(event.type));
+            }
+
 			switch (event.type) {
 			case sf::Event::Closed:
 				window.close();

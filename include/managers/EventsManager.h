@@ -26,7 +26,7 @@ class EventsManager : public Singleton<EventsManager>, public Manager {
 
 		bool hasEvents();
 		const std::map<sf::Event::EventType, sf::Event>& getEvents();
-		const sf::Event* const getEvent(sf::Event::EventType);
+		const sf::Event* const getEvent(const sf::Event::EventType&);
 		void removeEvent(sf::Event::EventType);
 
 		EventsManager() {};
