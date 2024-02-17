@@ -26,8 +26,8 @@ ComponentPropertiesDisplay::ComponentPropertiesDisplay() {
     TextComponent& textComponent = TextComponentSystem::Instance()->addComponent(*this);
     textComponent.setCharacterSize(16.0f);
     textComponent.setFont(AssetsManager::Instance()->getFont(ConfigManager::Instance()->getEngineFontName()));
-    textComponent.setDrawn(true);
     textComponent.setTextAlignment(TextAlignment::TOP_LEFT);
+    textComponent.setDrawn(false);
 
     this->componentSystemsToDisplay = {
         PositionComponentSystem::Instance(),
@@ -73,7 +73,7 @@ void ComponentPropertiesDisplay::setSize(const sf::Vector2i& windowSize) {
     const sf::Vector2f scale = sf::Vector2f(scaleX, scaleY);
     spriteComponent.setScale(scale);
     spriteComponent.setOrigin(0, 0);
-    spriteComponent.setDrawn(true);
+    spriteComponent.setDrawn(false);
 }
 
 
