@@ -21,7 +21,7 @@ namespace TIE {
 
     private:
         GlobalId onMessageFunctionId = 0;
-        std::vector<Message*> messages;
+        BehaviorTree::NodeStatus onMessageResult = BehaviorTree::NodeStatus::FAILURE;
     };
 
 }

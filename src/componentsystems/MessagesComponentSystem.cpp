@@ -19,6 +19,7 @@ MessagesComponentSystem::MessagesComponentSystem() {
 
 void MessagesComponentSystem::update(const float delta) {
 	// Get the next set of messages
+	this->currentFrameMessages.clear();
 	std::swap(this->currentFrameMessages, this->nextFrameMessages);
 	// For each recipient, get the subscriptions with messages sent to them
 	for (auto& [recipientId, subscriptions] : this->currentFrameMessages) {
@@ -47,7 +48,6 @@ void MessagesComponentSystem::update(const float delta) {
 			}
 		}
 	}
-	this->nextFrameMessages.clear();
 }
 
 
