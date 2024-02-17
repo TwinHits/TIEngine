@@ -1,4 +1,4 @@
-#include "objects/tientities/engine/ComponentPropertiesDisplay.h"
+#include "objects/tientities/engine/explorer/ComponentPropertiesDisplay.h"
 
 #include <sstream>
 

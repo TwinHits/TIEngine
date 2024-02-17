@@ -2,10 +2,10 @@
 
 #include "managers/SceneManager.h"
 #include "objects/tientities/TIEntity.h"
-#include "objects/tientities/engine/ComponentPropertiesDisplay.h"
 #include "objects/tientities/engine/DegreeGuide.h"
 #include "objects/tientities/engine/MousePtrCoords.h"
 #include "objects/tientities/engine/PerformanceDisplay.h"
+#include "objects/tientities/engine/explorer/TIEntityExplorer.h"
 
 using namespace TIE;
 
@@ -20,8 +20,8 @@ void UIManager::initialize() {
 	std::unique_ptr<PerformanceDisplay> performanceDisplay = make_unique<PerformanceDisplay>();
 	engineLayer.attachChild(std::move(performanceDisplay));
 
-	std::unique_ptr<ComponentPropertiesDisplay> componentPropertiesDisplay = make_unique<ComponentPropertiesDisplay>();
-	engineLayer.attachChild(std::move(componentPropertiesDisplay));
+	std::unique_ptr<TIEntityExplorer> tientityExplorer = make_unique<TIEntityExplorer>();
+	engineLayer.attachChild(std::move(tientityExplorer));
 }
 
 
