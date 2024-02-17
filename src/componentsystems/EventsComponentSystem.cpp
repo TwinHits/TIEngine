@@ -15,7 +15,7 @@
 #include "managers/ViewManager.h"
 #include "templates/VectorHelpers.h"
 #include "utils/ComponentSystems.h"
-#include "utils/StringHelpers.h"
+#include "utils/constants/SfEventStringMap.h"
 
 using namespace TIE;
 
@@ -86,15 +86,19 @@ EventsComponent& EventsComponentSystem::addComponent(const TIEntityFactory& fact
 		for (auto& [event, functionId] : eventReader.getValues<GlobalId>()) {
 
 			// If it's an event value store it in the events map
-			sf::Event::EventType sfEvent = String::stringToEvent(event);
-			if (sfEvent != sf::Event::Count) {
-				eventsComponent.setEventHandler(state, sfEvent, functionId);
+			if (SfEventStringMap::STRING_TO_EVENT_TYPE.count(event)) {
+				sf::Event::EventType sfEvent = SfEventStringMap::STRING_TO_EVENT_TYPE.at(event);
+				if (sfEvent != sf::Event::Count) {
+					eventsComponent.setEventHandler(state, sfEvent, functionId);
+				}
 			}
 
 			// If it's a keypress value store it in the keypress map
-			sf::Keyboard::Key sfKey = String::stringToKey(event);
-			if (sfKey != sf::Keyboard::Unknown) {
-				eventsComponent.setKeyHandler(state, sfKey, functionId);
+			if (SfEventStringMap::STRING_TO_KEY.count(event)) {
+				sf::Keyboard::Key sfKey = SfEventStringMap::STRING_TO_KEY.at(event);
+				if (sfKey != sf::Keyboard::Unknown) {
+					eventsComponent.setKeyHandler(state, sfKey, functionId);
+				}
 			}
 
 			// If it's for the selected state than this component is selectable

@@ -19,7 +19,7 @@
 #include "objects/factories/tientities/SceneLayerFactory.h"
 #include "objects/factories/ai/FiniteStateMachineFactory.h"
 #include "objects/factories/ai/BehaviorTreeNodeFactory.h"
-#include "utils/StringHelpers.h"
+#include "utils/constants/SfEventStringMap.h"
 
 using namespace TIE;
 
@@ -114,7 +114,7 @@ sol::object TIEngineInterface::spawn(const sol::table& definition) {
 
 
 bool TIEngineInterface::hasEvent(std::string& event) {
-    const sf::Event* eventPtr = EventsManager::Instance()->getEvent(String::stringToEvent(event));
+    const sf::Event* eventPtr = EventsManager::Instance()->getEvent(SfEventStringMap::STRING_TO_EVENT_TYPE.at(event));
     return eventPtr != nullptr;
 }
 
