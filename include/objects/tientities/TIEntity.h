@@ -64,6 +64,7 @@ class TIEntity {
 		void setName(const std::string&);
 		const std::string& getName() const;
 
+		bool hasChildren();
 		std::vector<std::unique_ptr<TIEntity> >& getChildren();
 		TIEntity& attachChild(std::unique_ptr<TIEntity>);
 		TIEntity& attachChild();

@@ -33,6 +33,10 @@ bool TIEntity::hasParent() {
 }
 
 
+bool TIEntity::hasChildren() {
+	return !this->children.empty();
+}
+
 std::vector<std::unique_ptr<TIEntity> >& TIEntity::getChildren() {
 	return this->children;
 }

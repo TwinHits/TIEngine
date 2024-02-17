@@ -32,7 +32,7 @@ void UIManager::updateEngineEntities(const float delta) {
 
 void UIManager::updateEngineEntities(TIEntity& tientity, const float delta) {
 	tientity.update(delta);
-	if (tientity.getChildren().size() > 0) {
+	if (tientity.hasChildren()) {
 		for (auto& child : tientity.getChildren()) {
 			this->updateEngineEntities(*child, delta);
 		}
