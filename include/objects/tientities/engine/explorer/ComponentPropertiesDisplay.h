@@ -13,11 +13,7 @@ class ComponentPropertiesDisplay : public TIEntity {
 
         void update(const float);
 
-		void onWindowSizeChange();
     private:
-        void setPosition(const sf::Vector2i&);
-        void setSize(const sf::Vector2i&);
-
         std::vector<ComponentSystem*> componentSystemsToDisplay;
 };
 

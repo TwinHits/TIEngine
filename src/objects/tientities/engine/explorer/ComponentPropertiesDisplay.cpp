@@ -11,17 +11,12 @@
 #include "managers/EventsManager.h"
 #include "managers/MessageManager.h"
 #include "managers/WindowManager.h"
-#include "objects/constants/MessageSubscriptions.h"
 #include "objects/enumeration/TextAlignment.h"
 
 using namespace TIE;
 
 ComponentPropertiesDisplay::ComponentPropertiesDisplay() {
     this->setName("Component Properties Display");
-
-    const sf::Vector2i& windowSize = WindowManager::Instance()->getWindowSize();
-    this->setPosition(windowSize);
-    this->setSize(windowSize);
 
     TextComponent& textComponent = TextComponentSystem::Instance()->addComponent(*this);
     textComponent.setCharacterSize(16.0f);
@@ -35,8 +30,6 @@ ComponentPropertiesDisplay::ComponentPropertiesDisplay() {
         SpriteComponentSystem::Instance(),
         TextComponentSystem::Instance(),
     };
-
-	MessageManager::Instance()->subscribe(MessageSubscriptions::WINDOW_SIZE_CHANGE, std::bind(&ComponentPropertiesDisplay::onWindowSizeChange, this));
 }
 
  
@@ -57,28 +50,3 @@ void ComponentPropertiesDisplay::update(const float delta) {
     }
 }
 
-
-void ComponentPropertiesDisplay::setPosition(const sf::Vector2i& windowSize) {
-    PositionComponent& positionComponent = PositionComponentSystem::Instance()->addComponent(*this);
-    positionComponent.position = sf::Vector2f(windowSize.x / 4.0f, -windowSize.y / 2.0f);
-}
-
-
-void ComponentPropertiesDisplay::setSize(const sf::Vector2i& windowSize) {
-    SpriteComponent& spriteComponent = SpriteComponentSystem::Instance()->addComponent(*this);
-    spriteComponent.setTexture(AssetsManager::Instance()->getTexture("dev_console.png"));
-    sf::FloatRect& bounds = spriteComponent.getLocalBounds();
-    float scaleX = float(windowSize.x / 4.0f) / float(bounds.width);
-    float scaleY = float(windowSize.y) / float(bounds.height);
-    const sf::Vector2f scale = sf::Vector2f(scaleX, scaleY);
-    spriteComponent.setScale(scale);
-    spriteComponent.setOrigin(0, 0);
-    spriteComponent.setDrawn(false);
-}
-
-
-void ComponentPropertiesDisplay::onWindowSizeChange() {
-    const sf::Vector2i& windowSize = WindowManager::Instance()->getWindowSize();
-    this->setPosition(windowSize);
-    this->setSize(windowSize);
-}

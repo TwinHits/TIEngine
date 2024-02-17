@@ -11,7 +11,11 @@ class TIEntityExplorer : public SceneLayer {
         ~TIEntityExplorer() {};
 
     private:
-        void toggleShowHide();
+        void setBackgroundSize(const sf::Vector2i&);
+        void setBackgroundPosition(const sf::Vector2i&);
+
+        void onToggleShowHide();
+        void onWindowSizeChange();
 
 };
 
