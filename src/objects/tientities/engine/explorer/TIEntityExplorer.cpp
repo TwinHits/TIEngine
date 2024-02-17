@@ -5,6 +5,7 @@
 #include "objects/tientities/engine/explorer/ComponentPropertiesDisplay.h"
 #include "templates/MakeUnique.h"
 #include "managers/MessageManager.h"
+#include "managers/SceneManager.h"
 #include "managers/ViewManager.h"
 #include "utils/ComponentSystems.h"
 
@@ -17,11 +18,12 @@ TIEntityExplorer::TIEntityExplorer() {
     std::unique_ptr<ComponentPropertiesDisplay> componentPropertiesDisplay = make_unique<ComponentPropertiesDisplay>();
     this->attachChild(std::move(componentPropertiesDisplay));
 
-    MessageManager::Instance()->subscribe("END", std::bind(&TIEntityExplorer::onShowHide, this));
+    MessageManager::Instance()->subscribe("END", std::bind(&TIEntityExplorer::toggleShowHide, this));
 }
 
 
-void TIEntityExplorer::onShowHide() {
+void TIEntityExplorer::toggleShowHide() {
+    SceneManager::Instance()->setSimulationPaused(!SceneManager::Instance()->isSimulationPaused());
     for (auto& child : this->getChildren()) {
         ComponentSystems::setDrawn(*child, !ComponentSystems::isDrawn(*child));
     }

@@ -11,7 +11,7 @@ class TIEntityExplorer : public SceneLayer {
         ~TIEntityExplorer() {};
 
     private:
-        void onShowHide();
+        void toggleShowHide();
 
 };
 
