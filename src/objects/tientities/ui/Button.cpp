@@ -8,7 +8,6 @@
 #include "componentsystems/ShapeComponentSystem.h"
 #include "componentsystems/TextComponentSystem.h"
 #include "managers/MessageManager.h"
-#include "managers/WorldManager.h"
 #include "objects/GlobalId.h"
 #include "objects/enumeration/TextAlignment.h"
 
