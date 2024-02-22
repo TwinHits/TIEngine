@@ -44,7 +44,6 @@ TIEntity& TIEntityFactory::build() {
         }
     }
 
-	WorldManager::Instance()->registerTIEntity(tientity);
     WorldManager::Instance()->saveTIEntityFactory(tientity.getName(), *this);
 	LifecycleComponentSystem::Instance()->runCreated(tientity);
 

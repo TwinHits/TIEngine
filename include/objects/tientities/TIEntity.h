@@ -18,7 +18,7 @@ namespace TIE {
 class TIEntity {
 	public:
 		TIEntity();
-		virtual ~TIEntity() {};
+		virtual ~TIEntity();
 
 		template<typename T>
 		T& addComponent() {

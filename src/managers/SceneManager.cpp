@@ -6,7 +6,6 @@
 #include "managers/ComponentSystemsManager.h"
 #include "managers/ViewManager.h"
 #include "managers/UIManager.h"
-#include "managers/WorldManager.h"
 #include "objects/components/ShapeComponent.h"
 #include "objects/components/SpriteComponent.h"
 #include "objects/components/TextComponent.h"
@@ -72,7 +71,6 @@ void SceneManager::removeTIEntities(TIEntity& tientity) {
 			this->removeTIEntities(**child);
 			if ((*child)->getRemove()) {
 				ComponentSystemsManager::Instance()->removeComponents(**child);
-				WorldManager::Instance()->deregisterTIEntity(**child);
 			}
 		}
 		children.erase(std::remove_if(children.begin(), children.end(), std::mem_fn(&TIEntity::getRemove)), children.end());

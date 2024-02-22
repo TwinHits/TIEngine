@@ -71,6 +71,5 @@ TIEntity& TraceFactory::build() {
         WireframeComponentSystem::Instance()->addWireframe(trace, lineComponent);
     }
 
-    WorldManager::Instance()->registerTIEntity(trace);
     return trace;
 }

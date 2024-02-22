@@ -5,7 +5,6 @@
 #include "componentsystems/PositionComponentSystem.h"
 #include "componentsystems/ShapeComponentSystem.h"
 #include "managers/HashManager.h"
-#include "managers/WorldManager.h"
 #include "templates/MakeUnique.h"
 
 using namespace TIE;
@@ -92,6 +91,5 @@ TIEntity& CollisionBoxFactory::build() {
     shapeComponent.setRotates(false);
     shapeComponent.setDrawn(true);
     
-    WorldManager::Instance()->registerTIEntity(collisionBox);
     return collisionBox;
 }

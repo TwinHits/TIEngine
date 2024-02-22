@@ -4,12 +4,18 @@
 
 #include "managers/HashManager.h"
 #include "managers/SceneManager.h"
+#include "managers/WorldManager.h"
 #include "templates/MakeUnique.h"
 
 using namespace TIE;
 
 TIEntity::TIEntity() {
 	this->id = HashManager::Instance()->getNewGlobalId();
+	WorldManager::Instance()->registerTIEntity(*this);
+}
+
+TIEntity::~TIEntity() {
+	WorldManager::Instance()->deregisterTIEntity(*this);
 }
 
 
