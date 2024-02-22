@@ -47,6 +47,7 @@ std::string ComponentSystem::getComponentPropertiesString(TIEntity& tientity) {
             sol::object property = this->getComponentProperty(componentPropertyPair.second, tientity);
             ss << componentPropertyPair.first << ": " << ScriptManager::Instance()->getStringFromObject(property) << std::endl;
         }
+        ss << "-------" << std::endl;
         ss << std::endl;
         return ss.str();
     }
