@@ -8,21 +8,17 @@
 #include "componentsystems/MovesComponentSystem.h"
 #include "managers/AssetsManager.h"
 #include "managers/ConfigManager.h"
-#include "managers/EventsManager.h"
-#include "managers/MessageManager.h"
-#include "managers/WindowManager.h"
 #include "objects/enumeration/TextAlignment.h"
 
 using namespace TIE;
 
-ComponentPropertiesDisplay::ComponentPropertiesDisplay() {
+ComponentPropertiesDisplay::ComponentPropertiesDisplay() : textComponent(TextComponentSystem::Instance()->addComponent(*this)) {
     this->setName("Component Properties Display");
 
-    TextComponent& textComponent = TextComponentSystem::Instance()->addComponent(*this);
-    textComponent.setCharacterSize(16.0f);
-    textComponent.setFont(AssetsManager::Instance()->getFont(ConfigManager::Instance()->getEngineFontName()));
-    textComponent.setTextAlignment(TextAlignment::TOP_LEFT);
-    textComponent.setDrawn(false);
+    this->textComponent.setCharacterSize(16.0f);
+    this->textComponent.setFont(AssetsManager::Instance()->getFont(ConfigManager::Instance()->getEngineFontName()));
+    this->textComponent.setTextAlignment(TextAlignment::TOP_LEFT);
+    this->textComponent.setDrawn(false);
 
     this->componentSystemsToDisplay = {
         PositionComponentSystem::Instance(),
@@ -34,19 +30,18 @@ ComponentPropertiesDisplay::ComponentPropertiesDisplay() {
 
  
 void ComponentPropertiesDisplay::update(const float delta) {
-    const std::vector<TIEntity*>& tientitiesUnderMousePosition = EventsManager::Instance()->getTIEntitiesUnderMousePosition();
-    TextComponent* textComponent = this->getComponent<TextComponent>();
-    if (tientitiesUnderMousePosition.size()) {
-        TIEntity* tientity = tientitiesUnderMousePosition.back();
+    if (this->tientity && this->textComponent.isDrawn()) {
         std::stringstream ss;
-        ss << tientity->getName() << std::endl << std::endl;
-        ss << tientity->getId() << std::endl << std::endl;
+        ss << this->tientity->getName() << std::endl << std::endl;
+        ss << this->tientity->getId() << std::endl << std::endl;
         for (auto componentSystem : this->componentSystemsToDisplay) {
             ss << componentSystem->getComponentPropertiesString(*tientity);
         }
-        textComponent->setString(ss.str());
-    } else {
-        textComponent->clearString();
+        this->textComponent.setString(ss.str());
     }
+}
+
+void ComponentPropertiesDisplay::setTIEntity(TIEntity* tientity) {
+    this->tientity = tientity;
 }
 
