@@ -2,17 +2,19 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "componentsystems/ClickableComponentSystem.h"
 #include "componentsystems/MessagesComponentSystem.h"
 #include "componentsystems/PositionComponentSystem.h"
 #include "componentsystems/ShapeComponentSystem.h"
 #include "componentsystems/TextComponentSystem.h"
 #include "managers/MessageManager.h"
+#include "managers/WorldManager.h"
 #include "objects/GlobalId.h"
 #include "objects/enumeration/TextAlignment.h"
 
 using namespace TIE;
 
-Button::Button(const std::string text, const sf::Vector2f& position, const sf::Vector2f& size) {
+Button::Button(const std::string text, const sf::Vector2f& position, const sf::Vector2f& size, std::function<void(Message&)> onClick) {
     this->setName(text + " Button");
 
     PositionComponent& positionComponent = PositionComponentSystem::Instance()->addComponent(*this);
@@ -30,4 +32,6 @@ Button::Button(const std::string text, const sf::Vector2f& position, const sf::V
     textComponent.setTextAlignment(TextAlignment::CENTER);
     textComponent.setString(text);
     textComponent.setCharacterSize(16);
+
+    ClickableComponentSystem::Instance()->setOnClick(*this, onClick);
 }
