@@ -72,7 +72,7 @@ void ClickableComponentSystem::setOnClick(TIEntity& tientity, std::function<void
 
 
 void ClickableComponentSystem::onClick() {
-    const sf::Vector2f& clickPosition = EventsManager::Instance()->getMouseWorldPosition();
+    const sf::Vector2f& clickPosition = EventsManager::Instance()->getMouseWindowPosition();
     for (auto& c : this->components) {
         if (c.clickableComponent.isClickable()) {
             if (ComponentSystems::getGlobalBounds(c.tientity).contains(clickPosition)) {
