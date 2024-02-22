@@ -61,6 +61,8 @@ class TIEntity {
 		void setRemove(bool);
 		bool getRemove() const;
 
+		void setRemoveChildren(bool);
+
 		void setName(const std::string&);
 		const std::string& getName() const;
 

@@ -37,6 +37,7 @@ bool TIEntity::hasChildren() {
 	return !this->children.empty();
 }
 
+
 std::vector<std::unique_ptr<TIEntity> >& TIEntity::getChildren() {
 	return this->children;
 }
@@ -45,6 +46,11 @@ std::vector<std::unique_ptr<TIEntity> >& TIEntity::getChildren() {
 void TIEntity::setRemove(bool remove) {
 	SceneManager::Instance()->setTIEntitiesMarkedForRemove(true);
 	this->remove = remove;
+	this->setRemoveChildren(remove);
+}
+
+
+void TIEntity::setRemoveChildren(bool remove) {
 	for (auto child = children.begin(); child != children.end(); ++child) {
 		(*child)->setRemove(remove);
 	}
