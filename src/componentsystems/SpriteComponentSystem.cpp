@@ -20,8 +20,7 @@ using namespace TIE;
 
 SpriteComponentSystem::SpriteComponentSystem() {
 	this->setName(SpriteComponentSystem::SPRITE);
-	// Can these be moved to ComponentSystemsManager now then?
-	// Only if the whole of the propertymap is moved to ComponenetSystemsManager, which is a later idea
+
 	ComponentSystemsManager::Instance()->registerComponentPropertyKey(SpriteComponentSystem::DRAWN, this);
 	ComponentSystemsManager::Instance()->registerComponentPropertyKey(SpriteComponentSystem::TEXTURE, this);
 	ComponentSystemsManager::Instance()->registerComponentPropertyKey(SpriteComponentSystem::WIDTH, this);

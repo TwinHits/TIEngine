@@ -112,7 +112,7 @@ void MessagesComponentSystem::sendMessage(const GlobalId subscription, TIEntity&
 
 
 void MessagesComponentSystem::sendMessage(const GlobalId subscription, TIEntity& sender, const GlobalId recipientId, sol::object payload) {
-	const GlobalId senderId = this->getSenderId(sender);
+	const GlobalId redirectedSenderId = this->getSenderId(sender);
 	const GlobalId redirectedReciepentId = this->getReciepentId(recipientId);
 	if (!this->nextFrameMessages.count(redirectedReciepentId)) {
         this->nextFrameMessages[redirectedReciepentId];
@@ -120,7 +120,7 @@ void MessagesComponentSystem::sendMessage(const GlobalId subscription, TIEntity&
     if (!this->nextFrameMessages[redirectedReciepentId].count(subscription)) {
         this->nextFrameMessages[redirectedReciepentId][subscription];
     }
-    this->nextFrameMessages[redirectedReciepentId][subscription].push_back({ subscription, senderId, payload });
+    this->nextFrameMessages[redirectedReciepentId][subscription].push_back({ subscription, redirectedSenderId, payload });
 }
 
 

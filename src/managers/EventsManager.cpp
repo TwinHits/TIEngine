@@ -62,12 +62,6 @@ void EventsManager::processEvents() {
 
 		//Window Input Commands
 		if (!consoleManager->checkConsole()) {
-            if (event.type == sf::Event::KeyPressed) {
-                MessageManager::Instance()->publish(SfEventStringMap::KEY_TO_STRING.at(event.key.code));
-            } else {
-                MessageManager::Instance()->publish(SfEventStringMap::EVENT_TYPE_TO_STRING.at(event.type));
-            }
-
 			switch (event.type) {
 			case sf::Event::Closed:
 				window.close();
@@ -105,11 +99,8 @@ void EventsManager::processEvents() {
 					this->events.insert({ event.type, event });
 				break;
 			}
-			continue;
-		}
-
-		//Console Input Commands
-		if (consoleManager->checkConsole()) {
+		} else if (consoleManager->checkConsole()) {
+			//Console Input Commands
 			switch (event.type) {
 			case sf::Event::Closed:
 				window.close();
@@ -142,8 +133,14 @@ void EventsManager::processEvents() {
 			default:
 				break;
 			}
-			continue;
 		}
+
+        // Send messages
+        if (event.type == sf::Event::KeyPressed) {
+            MessageManager::Instance()->publish(SfEventStringMap::KEY_TO_STRING.at(event.key.code));
+        } else {
+            MessageManager::Instance()->publish(SfEventStringMap::EVENT_TYPE_TO_STRING.at(event.type));
+        }
 	}
 
     // Get hovered entities

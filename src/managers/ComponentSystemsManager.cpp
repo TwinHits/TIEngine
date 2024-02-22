@@ -5,6 +5,7 @@
 
 #include "componentsystems/AnimatedComponentSystem.h"
 #include "componentsystems/BehavesComponentSystem.h"
+#include "componentsystems/ClickableComponentSystem.h"
 #include "componentsystems/CollidesComponentSystem.h"
 #include "componentsystems/ComponentSystem.h"
 #include "componentsystems/CacheComponentSystem.h"
@@ -29,6 +30,7 @@ void ComponentSystemsManager::initialize() {
 	// Update data operations
 	this->componentSystems.push_back(CacheComponentSystem::Instance());
 	this->componentSystems.push_back(MessagesComponentSystem::Instance());
+	this->componentSystems.push_back(ClickableComponentSystem::Instance());
 	this->componentSystems.push_back(EventsComponentSystem::Instance());
 	this->componentSystems.push_back(LifecycleComponentSystem::Instance());
 	this->componentSystems.push_back(BehavesComponentSystem::Instance());
