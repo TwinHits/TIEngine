@@ -27,6 +27,7 @@ class BehaviorTreeNode {
 
         void addPreDecorator(std::unique_ptr<NodeDecorator>);
         void addChild(std::unique_ptr<BehaviorTreeNode>);
+        const std::vector<std::unique_ptr<BehaviorTreeNode>>& getChildren();
         void addPostDecorator(std::unique_ptr<NodeDecorator>);
 
     protected:

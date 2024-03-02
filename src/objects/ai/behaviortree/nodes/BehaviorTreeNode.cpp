@@ -44,6 +44,11 @@ void BehaviorTreeNode::addChild(std::unique_ptr<BehaviorTreeNode> behaviorTreeNo
 }
 
 
+const std::vector<std::unique_ptr<BehaviorTreeNode>>& BehaviorTreeNode::getChildren() {
+    return this->children;
+}
+
+
 void BehaviorTreeNode::addPostDecorator(std::unique_ptr<NodeDecorator> decorator) {
     this->postDecorators.push_back(std::move(decorator));
 }
