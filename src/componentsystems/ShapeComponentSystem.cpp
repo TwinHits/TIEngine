@@ -63,5 +63,3 @@ bool ShapeComponentSystem::removeComponent(TIEntity& tientity) {
 		return false;
 	}
 }
-
-

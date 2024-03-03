@@ -195,16 +195,16 @@ float PositionComponentSystem::getWorldRotation(TIEntity& tientity) {
 
 
 sf::Transform PositionComponentSystem::getWorldTransform(TIEntity& tientity) {
-        sf::Transform transform = sf::Transform::Identity;
+    sf::Transform transform = sf::Transform::Identity;
 
-        for (TIEntity* t = &tientity; t != nullptr; t = &t->getParent()) {
-            SpriteComponent* component = t->getComponent<SpriteComponent>();
-            if (component != nullptr) {
-                transform *= component->getTransform();
-            }
+    for (TIEntity* t = &tientity; t != nullptr; t = &t->getParent()) {
+        SpriteComponent* component = t->getComponent<SpriteComponent>();
+        if (component != nullptr) {
+            transform *= component->getTransform();
         }
+    }
 
-        return transform;
+    return transform;
 }
 
 
