@@ -8,7 +8,9 @@
 
 using namespace TIE;
 
-LeafNode::LeafNode(TIEntity& tientity, const std::string& name) : BehaviorTreeNode(tientity, name) {}
+LeafNode::LeafNode(TIEntity& tientity, const std::string& name) : BehaviorTreeNode(tientity, name) {
+    this->nodeType = "LeafNode";
+}
 
 
 BehaviorTree::NodeStatus LeafNode::update(float delta) {

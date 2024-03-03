@@ -7,7 +7,9 @@
 
 using namespace TIE;
 
-SelectorNode::SelectorNode(TIEntity& tientity, const std::string& name) : BehaviorTreeNode(tientity, name) {}
+SelectorNode::SelectorNode(TIEntity& tientity, const std::string& name) : BehaviorTreeNode(tientity, name) {
+    this->nodeType = "SelectorNode";
+}
 
 
 BehaviorTree::NodeStatus SelectorNode::update(float delta) {

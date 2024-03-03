@@ -7,7 +7,9 @@
 
 using namespace TIE;
 
-PrioritySelectorNode::PrioritySelectorNode(TIEntity& tientity, const std::string& name) : BehaviorTreeNode(tientity, name) {}
+PrioritySelectorNode::PrioritySelectorNode(TIEntity& tientity, const std::string& name) : BehaviorTreeNode(tientity, name) {
+    this->nodeType = "PrioritySelectorNode";
+}
 
 
 BehaviorTree::NodeStatus PrioritySelectorNode::update(float delta) {

@@ -7,7 +7,9 @@
 
 using namespace TIE;
 
-SequenceNode::SequenceNode(TIEntity& tientity, const std::string& name) : BehaviorTreeNode(tientity, name) {}
+SequenceNode::SequenceNode(TIEntity& tientity, const std::string& name) : BehaviorTreeNode(tientity, name) {
+    this->nodeType = "SequenceNode";
+}
 
 
 BehaviorTree::NodeStatus SequenceNode::update(float delta) {

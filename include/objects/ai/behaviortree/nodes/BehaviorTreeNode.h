@@ -20,6 +20,7 @@ class BehaviorTreeNode {
 
         TIEntity& getTIEntity();
         const std::string& getName();
+        const std::string& getNodeType();
 
         BehaviorTree::NodeStatus updatePreDecorators(float);
         virtual BehaviorTree::NodeStatus update(float) = 0;
@@ -33,6 +34,8 @@ class BehaviorTreeNode {
     protected:
         TIEntity& tientity;
         std::string name;
+        std::string nodeType;
+
         std::vector<std::unique_ptr<NodeDecorator>> preDecorators;
         std::vector<std::unique_ptr<BehaviorTreeNode>> children;
         std::vector<std::unique_ptr<NodeDecorator>> postDecorators;

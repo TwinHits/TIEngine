@@ -7,7 +7,9 @@
 
 using namespace TIE;
 
-ParallelNode::ParallelNode(TIEntity& tientity, const std::string& name) : BehaviorTreeNode(tientity, name) {}
+ParallelNode::ParallelNode(TIEntity& tientity, const std::string& name) : BehaviorTreeNode(tientity, name) {
+    this->nodeType = "ParallelNode";
+}
 
 
 BehaviorTree::NodeStatus ParallelNode::update(float delta) {

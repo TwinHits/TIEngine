@@ -12,6 +12,7 @@ using namespace TIE;
 
 BehaviorTreeNode::BehaviorTreeNode(TIEntity& tientity, const std::string& name) : tientity(tientity) {
     this->name = name;
+    this->nodeType = "BehaviorTreeNode";
 }
 
 
@@ -21,6 +22,10 @@ TIEntity& BehaviorTreeNode::getTIEntity() {
 
 const std::string& BehaviorTreeNode::getName() {
     return this->name;
+}
+
+const std::string& BehaviorTreeNode::getNodeType() {
+    return this->nodeType;
 }
 
 
