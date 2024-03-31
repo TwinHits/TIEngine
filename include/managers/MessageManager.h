@@ -6,6 +6,7 @@
 
 #include <functional>
 #include <map>
+#include <string>
 #include <vector>
 
 #include "objects/GlobalId.h"
