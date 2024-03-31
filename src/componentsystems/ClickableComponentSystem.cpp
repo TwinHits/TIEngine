@@ -75,7 +75,7 @@ void ClickableComponentSystem::onClick() {
     const sf::Vector2f& clickPosition = EventsManager::Instance()->getMouseWindowPosition();
     for (auto& c : this->components) {
         if (c.clickableComponent.isClickable()) {
-            if (ComponentSystems::getGlobalBounds(c.tientity).contains(clickPosition)) {
+            if (ComponentSystems::doesGlobalBoundsContain(c.tientity, clickPosition)) {
                 MessagesComponentSystem::Instance()->sendMessage(this->clickedMessageSubscription, c.tientity, c.tientity.getId());
             }
         }

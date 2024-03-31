@@ -50,7 +50,6 @@ bool ComponentSystems::isDrawn(TIEntity& entity) {
 	return false;
 }
 
-
 const sf::FloatRect ComponentSystems::getGlobalBounds(TIEntity& tientity) {
 
 	SpriteComponent* spriteComponent = tientity.getComponent<SpriteComponent>();
@@ -95,3 +94,33 @@ const sf::FloatRect ComponentSystems::getLocalBounds(TIEntity& tientity) {
 
 	return sf::FloatRect(-1, 0, 0, 0);
 }
+
+
+bool ComponentSystems::doesGlobalBoundsContain(TIEntity& tientity, const sf::Vector2f& position) {
+	ShapeComponent* shapeComponent = tientity.getComponent<ShapeComponent>();
+	if (shapeComponent != nullptr && shapeComponent->isDrawn()) {
+		for (auto& [id, shape] : shapeComponent->getShapes()) {
+			if (shape->getGlobalBounds().contains(position)) {
+				return true;
+			}
+		}
+	}
+
+	SpriteComponent* spriteComponent = tientity.getComponent<SpriteComponent>();
+	if (spriteComponent != nullptr && spriteComponent->isDrawn()) {
+		if (spriteComponent->getGlobalBounds().contains(position)) {
+			return true;
+		}
+	}
+
+	TextComponent* textComponent = tientity.getComponent<TextComponent>();
+	if (textComponent != nullptr && textComponent->isDrawn()) {
+		if (textComponent->getGlobalBounds().contains(position)) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+
