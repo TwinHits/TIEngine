@@ -13,7 +13,6 @@
 #include "objects/GlobalId.h"
 #include "objects/factories/tientities/TraceFactory.h"
 #include "objects/factories/tientities/CollisionBoxFactory.h"
-#include "objects/components/structs/EventState.h"
 #include "managers/ScriptManager.h"
 #include "utils/ComponentSystems.h"
 
@@ -54,11 +53,6 @@ void TIEntityInterface::registerUserType(sol::state& luaState) {
     interfaceUserType["setDrawn"] = &TIEntityInterface::setDrawn;
     interfaceUserType["isDrawn"] = &TIEntityInterface::isDrawn;
 
-    //Event
-    interfaceUserType["addState"] = &TIEntityInterface::addState;
-    interfaceUserType["removeState"] = &TIEntityInterface::removeState;
-    interfaceUserType["getState"] = &TIEntityInterface::getState;
-    
     //Cache
     interfaceUserType["setCache"] = &TIEntityInterface::setCache;
     interfaceUserType["getCache"] = &TIEntityInterface::getCache;
@@ -158,22 +152,6 @@ void TIEntityInterface::setDrawn(bool drawn) {
 
 bool TIEntityInterface::isDrawn() {
     return ComponentSystems::isDrawn(*this->tientity);
-}
-
-
-void TIEntityInterface::addState(const std::string& state) {
-    EventsComponentSystem::Instance()->addState(*this->tientity, state);
-}
-
-
-void TIEntityInterface::removeState(const std::string& state) {
-    EventsComponentSystem::Instance()->removeState(*this->tientity, state);
-}
-
-
-EventState* TIEntityInterface::getState(const std::string& state) {
-    EventState* eventState = EventsComponentSystem::Instance()->getState(*this->tientity, state);
-    return eventState;
 }
 
 
