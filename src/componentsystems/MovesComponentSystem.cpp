@@ -360,7 +360,7 @@ void MovesComponentSystem::move(MovesComponent& movesComponent, PositionComponen
 		) {
             positionComponent.position = movesComponent.targetPosition;
 			// Implicitly only sent once because speed is set to zero
-			MessagesComponentSystem::Instance()->sendMessage(this->atDestinationMessageSubscription, tientity, tientity.getId());
+			MessagesComponentSystem::Instance()->sendMessage({ this->atDestinationMessageSubscription, tientity.getId(), tientity.getId()});
         } else {
             positionComponent.position = newPosition;
         }

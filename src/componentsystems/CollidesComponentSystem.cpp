@@ -116,18 +116,20 @@ void CollidesComponentSystem::checkHitboxCollisions(Components& c1, Components& 
 		if (c1Hitbox.intersects(c2Hitbox)) {
 			// if (I want to know when I hit things && they want to say they got hit)
 			if (c1.collidesComponent.isCollides() && c2.collidesComponent.isCollidable()) {
-				MessagesComponentSystem::Instance()->sendMessage(
+				MessagesComponentSystem::Instance()->sendMessage({
 					this->collisionMessageSubscription,
-					c2.tientity, // sender
+					c2.tientity.getId(), // sender
 					c1.tientity.getId(), // recipient
-					ScriptManager::Instance()->getObjectFromValue(c2.collidesComponent.getPayload()));
+					ScriptManager::Instance()->getObjectFromValue(c2.collidesComponent.getPayload())
+				});
 			}
 			if (c2.collidesComponent.isCollides() && c2.collidesComponent.isCollidable()) {
-				MessagesComponentSystem::Instance()->sendMessage(
+				MessagesComponentSystem::Instance()->sendMessage({
 					this->collisionMessageSubscription,
-					c1.tientity, // sender
+					c1.tientity.getId(), // sender
 					c2.tientity.getId(), // recipient
-					ScriptManager::Instance()->getObjectFromValue(c1.collidesComponent.getPayload()));
+					ScriptManager::Instance()->getObjectFromValue(c1.collidesComponent.getPayload()) 
+				});
 			}
 		}
 	}
@@ -141,11 +143,12 @@ void CollidesComponentSystem::checkLineCollisions(Components& lineComponents, Co
             const sf::VertexArray& line = lineComponents.tientity.getComponent<LineComponent>()->getLine();
             const sf::FloatRect& c2Hitbox = ComponentSystems::getGlobalBounds(hitboxComponents.tientity);
 			if (Math::doesLineIntersectRect(line, c2Hitbox)) {
-                MessagesComponentSystem::Instance()->sendMessage(
-                    this->collisionMessageSubscription,
-					hitboxComponents.tientity, // sender
-					lineComponents.tientity.getId(), // reciepent
-                    ScriptManager::Instance()->getObjectFromValue(hitboxComponents.collidesComponent.getPayload()));
+				MessagesComponentSystem::Instance()->sendMessage({
+					this->collisionMessageSubscription,
+					hitboxComponents.tientity.getId(), // sender
+					lineComponents.tientity.getId(), // recipient
+					ScriptManager::Instance()->getObjectFromValue(hitboxComponents.collidesComponent.getPayload())
+				});
             }
 		}
 	}

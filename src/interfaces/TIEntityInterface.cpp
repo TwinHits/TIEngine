@@ -191,14 +191,14 @@ sol::table& TIEntityInterface::findTIEntitiesWithinRange(const float range, TIEn
 }
 
 
-void TIEntityInterface::sendMessage(const GlobalId subscription, sol::object recievers, sol::object payload) {
-    if (recievers.is<GlobalId>()) {
-        MessagesComponentSystem::Instance()->sendMessage(subscription, *this->tientity, recievers.as<GlobalId>(), payload);
-    } else if (recievers.is<sol::table>()) {
-        for (auto& pair : recievers.as<sol::table>()) {
+void TIEntityInterface::sendMessage(const GlobalId subscription, sol::object receivers, sol::object payload) {
+    if (receivers.is<GlobalId>()) {
+        MessagesComponentSystem::Instance()->sendMessage(Message(subscription, this->tientity->getId(), receivers.as<GlobalId>(), payload));
+    } else if (receivers.is<sol::table>()) {
+        for (auto& pair : receivers.as<sol::table>()) {
             const sol::object& reciever = pair.second;
             if (reciever.is<GlobalId>()) {
-                MessagesComponentSystem::Instance()->sendMessage(subscription, *this->tientity, reciever.as<GlobalId>(), payload);
+                MessagesComponentSystem::Instance()->sendMessage(Message(subscription, this->tientity->getId(), reciever.as<GlobalId>(), payload));
             }
         }
     }

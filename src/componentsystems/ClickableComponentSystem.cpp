@@ -76,7 +76,7 @@ void ClickableComponentSystem::onClick() {
     for (auto& c : this->components) {
         if (c.clickableComponent.isClickable()) {
             if (ComponentSystems::doesGlobalBoundsContain(c.tientity, clickPosition)) {
-                MessagesComponentSystem::Instance()->sendMessage(this->clickedMessageSubscription, c.tientity, c.tientity.getId());
+				MessagesComponentSystem::Instance()->sendMessage({ this->clickedMessageSubscription, c.tientity.getId(), c.tientity.getId() });
             }
         }
     }
