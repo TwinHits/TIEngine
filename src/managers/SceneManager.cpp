@@ -126,17 +126,26 @@ float SceneManager::calculateRollingAverageFPS(const float delta) {
 
 
 void SceneManager::render(TIEntity& entity, sf::RenderWindow& window, sf::RenderStates states) {
+	ShapeComponent* shapeComponent = entity.getComponent<ShapeComponent>();
 	SpriteComponent* spriteComponent = entity.getComponent<SpriteComponent>();
 	TextComponent* textComponent = entity.getComponent<TextComponent>();
-	ShapeComponent* shapeComponent = entity.getComponent<ShapeComponent>();
 
 	if (entity.isSceneLayer()) {
 		SceneLayer* sceneLayer = dynamic_cast<SceneLayer*>(&entity);
 		ViewManager::Instance()->setActiveView(sceneLayer->getViewId());
 	}
 	
-	//Continue traversal if there's no graphics components, or if any graphics component is drawn
-	bool continueTraversal = textComponent == nullptr && spriteComponent == nullptr && shapeComponent == nullptr;
+	// Continue traversal if there's no graphics components, or if any graphics component is drawn
+	bool continueTraversal = shapeComponent == nullptr && spriteComponent == nullptr && textComponent == nullptr;
+
+	// Draw components so that Text goes over Sprite and Sprite goes over Shape
+	if (shapeComponent != nullptr && shapeComponent->isDrawn()) {
+		for (auto& [id, shape] : shapeComponent->getShapes()) {
+			window.draw(*shape, states);
+		}
+		continueTraversal = true;
+	}
+
 	if (spriteComponent != nullptr && spriteComponent->isDrawn()) {
 		window.draw(spriteComponent->getSprite(), states);
 		continueTraversal = true;
@@ -144,13 +153,6 @@ void SceneManager::render(TIEntity& entity, sf::RenderWindow& window, sf::Render
 
 	if (textComponent != nullptr && textComponent->isDrawn()) {
 		window.draw(textComponent->getText(), states);
-		continueTraversal = true;
-	}
-
-	if (shapeComponent != nullptr && shapeComponent->isDrawn()) {
-		for (auto& [id, shape] : shapeComponent->getShapes()) {
-			window.draw(*shape, states);
-		}
 		continueTraversal = true;
 	}
 
