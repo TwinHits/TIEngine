@@ -1,11 +1,13 @@
 #ifndef BEHAVIORTREEDISPLAYNODE_H
 #define BEHAVIORTREEDISPLAYNODE_H
 
+#include "objects/tientities/TIEntity.h"
+
 #include "SFML/Graphics.hpp"
 
-#include "objects/components/TextComponent.h"
-#include "objects/tientities/TIEntity.h"
+#include "objects/Message.h"
 #include "objects/ai/behaviortree/nodes/BehaviorTreeNode.h"
+#include "objects/components/TextComponent.h"
 
 namespace TIE {
 

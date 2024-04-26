@@ -2,15 +2,16 @@
 
 #include "SFML/Graphics.hpp"
 
+#include "componentsystems/BehavesComponentSystem.h"
 #include "componentsystems/EventsComponentSystem.h"
-#include "componentsystems/MessagesComponentSystem.h"
 #include "componentsystems/TextComponentSystem.h"
 #include "componentsystems/PositionComponentSystem.h"
 #include "componentsystems/ShapeComponentSystem.h"
+#include "objects/Message.h"
 #include "objects/ai/behaviortree/nodes/BehaviorTreeNode.h"
 #include "objects/components/ShapeComponent.h"
 #include "objects/components/TextComponent.h"
-#include "objects/constants/MessageSubscriptions.h"
+#include "objects/enumeration/NodeStatus.h"
 #include "utils/TIEMath.h"
 
 using namespace TIE;
@@ -35,8 +36,9 @@ BehaviorTreeDisplayNode::BehaviorTreeDisplayNode(BehaviorTreeNode& behaviorTreeN
     this->textComponent->setCharacterSize(16);
     this->textComponent->setDrawn(true);
 
-    const GlobalId behaviorTreeNodeUpdatedMessageSubscriptionId = MessagesComponentSystem::Instance()->registerMessageSubscription(MessageSubscriptions::BEHAVIOR_TREE_NODE_UPDATED);
-    EventsComponentSystem::Instance()->subscribe(*this, behaviorTreeNodeUpdatedMessageSubscriptionId, std::bind(&BehaviorTreeDisplayNode::onEvent, this, std::placeholders::_1));
+    EventsComponentSystem::Instance()->subscribe(*this, BehavesComponentSystem::Instance()->getMessageSubscriptionForNodeStatus(BehaviorTree::NodeStatus::SUCCESS), std::bind(&BehaviorTreeDisplayNode::onEvent, this, std::placeholders::_1));
+    EventsComponentSystem::Instance()->subscribe(*this, BehavesComponentSystem::Instance()->getMessageSubscriptionForNodeStatus(BehaviorTree::NodeStatus::RUNNING), std::bind(&BehaviorTreeDisplayNode::onEvent, this, std::placeholders::_1));
+    EventsComponentSystem::Instance()->subscribe(*this, BehavesComponentSystem::Instance()->getMessageSubscriptionForNodeStatus(BehaviorTree::NodeStatus::FAILURE), std::bind(&BehaviorTreeDisplayNode::onEvent, this, std::placeholders::_1));
 }
 
 
@@ -86,13 +88,23 @@ void BehaviorTreeDisplayNode::update(const float delta) {
 
 
 void BehaviorTreeDisplayNode::onEvent(Message& message) {
+    BehaviorTree::NodeStatus nodeStatus = BehavesComponentSystem::Instance()->getNodeStatusForMessageSubscription(message.subscription);
+    sf::Color fillColor;
+    if (nodeStatus == BehaviorTree::NodeStatus::SUCCESS) {
+        fillColor = sf::Color::Green;
+    } else if (nodeStatus == BehaviorTree::NodeStatus::RUNNING) {
+        fillColor = sf::Color::Yellow;
+    } else if (nodeStatus == BehaviorTree::NodeStatus::FAILURE) {
+        fillColor = sf::Color::Red;
+    }
+
     if (message.senderId == this->behaviorTreeNode.getId()) {
-        this->rectangleShape->setFillColor(sf::Color::White);
+        this->rectangleShape->setFillColor(fillColor);
         this->textComponent->setFillColor(sf::Color::Black);
         this->textComponent->setOutlineColor(sf::Color::Black);
         if (this->lineShape) {
-            this->lineShape->setFillColor(sf::Color::White);
-            this->lineShape->setOutlineColor(sf::Color::White);
+            this->lineShape->setFillColor(fillColor);
+            this->lineShape->setOutlineColor(fillColor);
         }
         this->isNodeHighlightedTernaryFlag = 1;
     }

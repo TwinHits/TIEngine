@@ -34,6 +34,6 @@ BehaviorTree::NodeStatus PrioritySelectorNode::update(float delta) {
             result = this->updatePostDecorators(delta);
         }
     }
-    BehaviorTreeNode::update(delta);
+    BehaviorTreeNode::publishNodeStatusEvent(result);
     return result;
 }

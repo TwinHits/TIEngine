@@ -2,12 +2,10 @@
 
 #include <string>
 
+#include "componentsystems/BehavesComponentSystem.h"
 #include "componentsystems/EventsComponentSystem.h"
-#include "componentsystems/MessagesComponentSystem.h"
 #include "managers/HashManager.h"
-#include "managers/ScriptManager.h"
 #include "objects/Message.h"
-#include "objects/constants/MessageSubscriptions.h"
 #include "objects/enumeration/NodeStatus.h"
 #include "objects/tientities/TIEntity.h"
 
@@ -18,7 +16,6 @@ BehaviorTreeNode::BehaviorTreeNode(TIEntity& tientity, const std::string& name) 
     this->id = HashManager::Instance()->getNewGlobalId();
     this->name = name;
     this->nodeType = "BehaviorTreeNode";
-    this->behaviorTreeNodeUpdatedMessageSubscriptionId = MessagesComponentSystem::Instance()->registerMessageSubscription(MessageSubscriptions::BEHAVIOR_TREE_NODE_UPDATED);
 }
 
 
@@ -42,11 +39,6 @@ const std::string& BehaviorTreeNode::getNodeType() {
 
 BehaviorTree::NodeStatus BehaviorTreeNode::updatePreDecorators(float delta) {
     return this->updateDecorators(this->preDecorators, delta);
-}
-
-BehaviorTree::NodeStatus BehaviorTreeNode::update(float) {
-    EventsComponentSystem::Instance()->publish(Message(this->behaviorTreeNodeUpdatedMessageSubscriptionId, this->id));
-    return BehaviorTree::NodeStatus::SUCCESS;
 }
 
 
@@ -90,4 +82,9 @@ BehaviorTree::NodeStatus BehaviorTreeNode::updateDecorators(const std::vector<st
         }
     }
     return result;
+}
+
+
+void BehaviorTreeNode::publishNodeStatusEvent(BehaviorTree::NodeStatus nodeStatus) {
+    EventsComponentSystem::Instance()->publish(Message(BehavesComponentSystem::Instance()->getMessageSubscriptionForNodeStatus(nodeStatus), this->id));
 }

@@ -6,7 +6,6 @@
 #include <vector>
 
 #include "objects/GlobalId.h"
-#include "objects/Message.h"
 #include "objects/ai/behaviortree/decorators/NodeDecorator.h"
 #include "objects/enumeration/NodeStatus.h"
 #include "objects/tientities/TIEntity.h"
@@ -24,7 +23,7 @@ class BehaviorTreeNode {
         const std::string& getNodeType();
 
         BehaviorTree::NodeStatus updatePreDecorators(float);
-        virtual BehaviorTree::NodeStatus update(float);
+        virtual BehaviorTree::NodeStatus update(float) = 0;
         BehaviorTree::NodeStatus updatePostDecorators(float);
 
         void addPreDecorator(std::unique_ptr<NodeDecorator>);
@@ -37,7 +36,6 @@ class BehaviorTreeNode {
         TIEntity& tientity;
         std::string name;
         std::string nodeType;
-        GlobalId behaviorTreeNodeUpdatedMessageSubscriptionId = 0;
 
         std::vector<std::unique_ptr<NodeDecorator>> preDecorators;
         std::vector<std::unique_ptr<BehaviorTreeNode>> children;
@@ -45,6 +43,8 @@ class BehaviorTreeNode {
         NodeDecorator* resumeDecorator = nullptr;
 
         BehaviorTree::NodeStatus updateDecorators(const std::vector<std::unique_ptr<NodeDecorator>>&, float);
+
+        void publishNodeStatusEvent(BehaviorTree::NodeStatus);
 };
 
 }

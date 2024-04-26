@@ -7,7 +7,9 @@
 #include <string>
 #include <vector>
 
+#include "objects/GlobalId.h"
 #include "objects/components/BehavesComponent.h"
+#include "objects/enumeration/NodeStatus.h"
 #include "objects/factories/tientities/TIEntityFactory.h"
 #include "objects/tientities/TIEntity.h"
 
@@ -27,6 +29,8 @@ class BehavesComponentSystem : public Singleton<BehavesComponentSystem>, public 
 		const std::map<std::string, std::string>& getBehaviorTreeNodeTypes();
 		const std::map<std::string, std::string>& getBehaviorTreeDecoratorTypes();
 		const std::map<std::string, int>& getBehaviorTreeNodeStatuses();
+		const BehaviorTree::NodeStatus getNodeStatusForMessageSubscription(const GlobalId);
+		const GlobalId getMessageSubscriptionForNodeStatus(const BehaviorTree::NodeStatus);
 
 		static const inline std::string BEHAVES = "behaves";
 		static const inline std::string ROOT_BEHAVIOR_TREE_NODE = "rootBehaviorTreeNode";
@@ -36,6 +40,7 @@ class BehavesComponentSystem : public Singleton<BehavesComponentSystem>, public 
 		void initializeBehaviorTreeNodeTypes();
 		void initializeBehaviorTreeDecoratorTypes();
 		void initializeBehaviorTreeNodeStatuses();
+		void initializeBehaviorTreeNodeStatusMessageSubscriptions();
 
 		struct Components {
 			BehavesComponent& behavesComponent;
@@ -45,6 +50,8 @@ class BehavesComponentSystem : public Singleton<BehavesComponentSystem>, public 
 		std::map<std::string, std::string> behaviorTreeNodeTypes;
 		std::map<std::string, std::string> behaviorTreeDecoratorTypes;
 		std::map<std::string, int> behaviorTreeNodeStatuses;
+		std::map<BehaviorTree::NodeStatus, GlobalId> behaviorTreeNodeStatusToMessageSubscription;
+		std::map<GlobalId, BehaviorTree::NodeStatus> messageSubscriptionToBehaviorTreeNodeStatus;
 
 };
 
