@@ -10,6 +10,7 @@
 #include "objects/Message.h"
 #include "objects/tientities/TIEntity.h"
 #include "objects/tientities/common/SceneLayer.h"
+#include "objects/tientities/engine/explorer/BehaviorTreeDisplay.h"
 #include "objects/tientities/engine/explorer/ComponentPropertiesDisplay.h"
 
 namespace TIE {
@@ -25,6 +26,7 @@ class TIEntityExplorer : public SceneLayer {
         TIEntity* selectedTIEntity = nullptr;
         SceneLayer* buttonSceneLayer = nullptr;
         ComponentPropertiesDisplay* componentPropertiesDisplay = nullptr;
+        BehaviorTreeDisplay* behaviorTreeDisplay = nullptr;
 
         bool show = false;
         sf::Vector2f componentPropertiesDisplayPosition = sf::Vector2f(0, 0);
@@ -36,6 +38,7 @@ class TIEntityExplorer : public SceneLayer {
         void setBackgroundPosition(const sf::Vector2i&);
         void setAreaPositions(const sf::Vector2i&);
         void setComponentPropertiesDisplay();
+        void setBehaviorTreeDisplay();
 
         void createButtons();
 
