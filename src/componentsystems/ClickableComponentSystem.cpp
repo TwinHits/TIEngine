@@ -4,6 +4,7 @@
 #include "managers/ComponentSystemsManager.h"
 #include "managers/EventsManager.h"
 #include "managers/MessageManager.h"
+#include "managers/ScriptManager.h"
 #include "objects/components/ClickableComponent.h"
 #include "objects/constants/MessageSubscriptions.h"
 #include "objects/factories/tientities/TIEntityFactory.h"
@@ -14,10 +15,11 @@ using namespace TIE;
 ClickableComponentSystem::ClickableComponentSystem() {
 	this->setName(ClickableComponentSystem::CLICKABLE);
 	ComponentSystemsManager::Instance()->registerComponentPropertyKey(ClickableComponentSystem::CLICKABLE, this);
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(ClickableComponentSystem::ON_CLICK, this);
 
 	this->clickedMessageSubscription = MessagesComponentSystem::Instance()->registerMessageSubscription("Clicked");
 
-	MessageManager::Instance()->subscribe(MessageSubscriptions::MOUSE_BUTTON_PRESSED,  std::bind(&ClickableComponentSystem::onClick, this));
+	MessageManager::Instance()->subscribe(MessageSubscriptions::MOUSE_BUTTON_PRESSED, std::bind(&ClickableComponentSystem::onClick, this));
 }
 
 void ClickableComponentSystem::update(const float delta) {
@@ -31,6 +33,9 @@ ClickableComponent& ClickableComponentSystem::addComponent(const TIEntityFactory
 
 	const bool& clickable = reader.get<bool>(ClickableComponentSystem::CLICKABLE, component.isClickable());
 	component.setClickable(clickable);
+
+	const GlobalId& onClickFunctionId = reader.get<GlobalId>(ClickableComponentSystem::ON_CLICK, component.getOnClickFunctionId());
+	component.setOnClickFunctionId(onClickFunctionId);
 
 	return component;
 }
@@ -66,8 +71,14 @@ bool ClickableComponentSystem::removeComponent(TIEntity& tientity) {
 
 void ClickableComponentSystem::setOnClick(TIEntity& tientity, std::function<void(Message&)> onClick) {
 	ClickableComponent& clickableComponent = this->addComponent(tientity);
-	clickableComponent.setOnClick(onClick);
+	clickableComponent.setOnClickFunction(onClick);
 	MessagesComponentSystem::Instance()->subscribe(tientity, this->clickedMessageSubscription, onClick);
+}
+
+
+void ClickableComponentSystem::setOnClick(TIEntity& tientity, const GlobalId onClickFunctionId) {
+	ClickableComponent& clickableComponent = this->addComponent(tientity);
+	clickableComponent.setOnClickFunctionId(onClickFunctionId);
 }
 
 
@@ -76,7 +87,12 @@ void ClickableComponentSystem::onClick() {
     for (auto& c : this->components) {
         if (c.clickableComponent.isClickable()) {
             if (ComponentSystems::doesGlobalBoundsContain(c.tientity, clickPosition)) {
-				MessagesComponentSystem::Instance()->sendMessage({ this->clickedMessageSubscription, c.tientity.getId(), c.tientity.getId() });
+				if (c.clickableComponent.getOnClickFunction()) {
+					MessagesComponentSystem::Instance()->sendMessage({ this->clickedMessageSubscription, c.tientity.getId(), c.tientity.getId() });
+				}
+				if (c.clickableComponent.getOnClickFunctionId()) {
+					ScriptManager::Instance()->runFunction<sol::optional<bool>>(c.clickableComponent.getOnClickFunctionId(), c.tientity);
+				}
             }
         }
     }

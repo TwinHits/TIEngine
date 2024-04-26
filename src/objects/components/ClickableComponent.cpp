@@ -20,10 +20,22 @@ const bool ClickableComponent::isClickable() const {
     return this->clickable;
 }
 
-const std::function<void(Message&)> ClickableComponent::getOnClick() {
-    return this->onClick;
+
+const std::function<void(Message&)> ClickableComponent::getOnClickFunction() {
+    return this->onClickFunction;
 }
 
-void ClickableComponent::setOnClick(std::function<void(Message&)> onClick) {
-    this->onClick = onClick;
+
+void ClickableComponent::setOnClickFunction(std::function<void(Message&)> onClick) {
+    this->onClickFunction = onClick;
+}
+
+
+const GlobalId ClickableComponent::getOnClickFunctionId() {
+    return this->onClickFunctionId;
+}
+
+
+void ClickableComponent::setOnClickFunctionId(const GlobalId onClickFunctionId) {
+    this->onClickFunctionId = onClickFunctionId;
 }
