@@ -23,6 +23,7 @@ BehaviorTree::NodeStatus LeafNode::update(float delta) {
             result = this->updatePostDecorators(delta);
         }
     }
+    BehaviorTreeNode::update(delta);
     return result;
 }
 

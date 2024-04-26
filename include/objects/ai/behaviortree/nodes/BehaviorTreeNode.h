@@ -18,12 +18,13 @@ class BehaviorTreeNode {
         BehaviorTreeNode(TIEntity&, const std::string&);
         virtual ~BehaviorTreeNode() {}
 
+        const GlobalId getId();
         TIEntity& getTIEntity();
         const std::string& getName();
         const std::string& getNodeType();
 
         BehaviorTree::NodeStatus updatePreDecorators(float);
-        virtual BehaviorTree::NodeStatus update(float) = 0;
+        virtual BehaviorTree::NodeStatus update(float);
         BehaviorTree::NodeStatus updatePostDecorators(float);
 
         void addPreDecorator(std::unique_ptr<NodeDecorator>);
@@ -32,9 +33,11 @@ class BehaviorTreeNode {
         void addPostDecorator(std::unique_ptr<NodeDecorator>);
 
     protected:
+        GlobalId id;
         TIEntity& tientity;
         std::string name;
         std::string nodeType;
+        GlobalId behaviorTreeNodeUpdatedMessageSubscriptionId = 0;
 
         std::vector<std::unique_ptr<NodeDecorator>> preDecorators;
         std::vector<std::unique_ptr<BehaviorTreeNode>> children;
