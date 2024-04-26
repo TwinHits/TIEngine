@@ -14,9 +14,7 @@ TIEntity::TIEntity() {
 	WorldManager::Instance()->registerTIEntity(*this);
 }
 
-TIEntity::~TIEntity() {
-	WorldManager::Instance()->deregisterTIEntity(*this);
-}
+TIEntity::~TIEntity() {}
 
 
 GlobalId TIEntity::getId() const {

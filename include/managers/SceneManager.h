@@ -39,7 +39,7 @@ namespace TIE {
 		SceneLayer* engineLayer = nullptr;
 		SceneLayer* clientLayer = nullptr;
 
-		bool tientitiesMarkedForRemove = false;
+		bool areTIEntitiesMarkedForRemove = false;
 		bool simulationPaused = false;
 		
 		void removeTIEntities(TIEntity&);
