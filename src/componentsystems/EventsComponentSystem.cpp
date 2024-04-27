@@ -38,17 +38,20 @@ void EventsComponentSystem::update(const float delta) {
 					if (!message.recipientId || message.recipientId == c.tientity.getId()) {
 
 						// For each handler for this subscriptionId
-						for (auto& onMessage : *c.eventsComponent.getHandlersFor(subscriptionId)) {
+						if (c.eventsComponent.hasHandlersFor(subscriptionId)) {
+							for (auto& onMessage : *c.eventsComponent.getHandlersFor(subscriptionId)) {
 
-							// If the message is still valid
-							if (message.valid) {
-								onMessage(message);
-							} else {
-								break;
+								// If the message is still valid
+								if (message.valid) {
+									onMessage(message);
+								} else {
+									break;
+								}
 							}
 						}
 
 						// For each functionId from this subscriptionId
+						if (c.eventsComponent.hasFunctionIdsFor(subscriptionId)) {
 						for (auto functionId : *c.eventsComponent.getFunctionIdsFor(subscriptionId)) {
 
 							// If the message is still valid
@@ -58,6 +61,7 @@ void EventsComponentSystem::update(const float delta) {
 								break;
 							}
 						}
+
 					}
                 }
 			}

@@ -13,8 +13,11 @@ struct Message {
     GlobalId subscription = 0;
     GlobalId senderId = 0;
     GlobalId recipientId = 0;
-    sol::object payload;
+    sol::object payload = sol::nil;
     bool valid = true;
+
+    Message(const GlobalId subscription) :
+        subscription(subscription) {};
 
     Message(const GlobalId subscription, const GlobalId senderId) :
         subscription(subscription),

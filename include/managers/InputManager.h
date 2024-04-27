@@ -18,16 +18,17 @@ namespace TIE {
 class InputManager : public Singleton<InputManager>, public Manager {
 	public:
 		void processInput();
-		
+
 		const sf::Vector2f& getMouseWindowPosition();
 		const sf::Vector2f& getMouseWorldPosition();
-
 		const sf::Event* const getEvent(const sf::Event::EventType&);
 
 		InputManager() {};
 		~InputManager() {};
 
 	private:
+		void publishInputEvent(const sf::Event&);
+		
 		ConsoleManager* consoleManager = ConsoleManager::Instance();
 
 		sf::Vector2f mouseWindowPosition = sf::Vector2f(0, 0);
