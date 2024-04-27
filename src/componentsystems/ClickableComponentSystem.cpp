@@ -2,7 +2,7 @@
 
 #include "componentsystems/MessagesComponentSystem.h"
 #include "managers/ComponentSystemsManager.h"
-#include "managers/EventsManager.h"
+#include "managers/InputManager.h"
 #include "managers/MessageManager.h"
 #include "managers/ScriptManager.h"
 #include "objects/components/ClickableComponent.h"
@@ -83,7 +83,7 @@ void ClickableComponentSystem::setOnClick(TIEntity& tientity, const GlobalId onC
 
 
 void ClickableComponentSystem::onClick() {
-    const sf::Vector2f& clickPosition = EventsManager::Instance()->getMouseWindowPosition();
+    const sf::Vector2f& clickPosition = InputManager::Instance()->getMouseWindowPosition();
     for (auto& c : this->components) {
         if (c.clickableComponent.isClickable()) {
             if (ComponentSystems::doesGlobalBoundsContain(c.tientity, clickPosition)) {

@@ -10,7 +10,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "managers/ConsoleManager.h"
-#include "managers/EventsManager.h"
+#include "managers/InputManager.h"
 #include "objects/GlobalId.h"
 #include "objects/enumeration/Direction.h"
 
@@ -59,7 +59,7 @@ class ViewManager : public Singleton<ViewManager>, public Manager {
 		const sf::Vector2f calculateEngineScroll(const sf::Vector2f&, const float);
 		void zoomCamera(const float);
 
-		EventsManager* eventsManager = EventsManager::Instance();
+		InputManager* inputManager = InputManager::Instance();
 		ConsoleManager* consoleManager = ConsoleManager::Instance();
 
 		std::map<GlobalId, std::unique_ptr<sf::View> > views;

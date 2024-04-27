@@ -109,7 +109,7 @@ void ViewManager::setActiveView(GlobalId id) {
 
 
 void ViewManager::updateCamera(const float delta) {
-	const sf::Vector2f& mouseWindowPosition = this->eventsManager->getMouseWindowPosition();
+	const sf::Vector2f& mouseWindowPosition = this->inputManager->getMouseWindowPosition();
 	if (!this->consoleManager->checkConsole()) {
 		this->clientView->move(this->calculateClientScroll(mouseWindowPosition, delta));
 		this->zoomCamera(delta);
@@ -120,7 +120,7 @@ void ViewManager::updateCamera(const float delta) {
 
 
 void ViewManager::zoomCamera(const float delta) {
-	const sf::Event* zoomEvent = this->eventsManager->getEvent(sf::Event::MouseWheelMoved);
+	const sf::Event* zoomEvent = this->inputManager->getEvent(sf::Event::MouseWheelMoved);
 	if (zoomEvent != nullptr) {
 
 		float change = this->zoomSpeed * delta * zoomEvent->mouseWheel.delta; //mousewheel.delta is -1 or 1 depending on scroll direction
@@ -136,7 +136,7 @@ void ViewManager::zoomCamera(const float delta) {
 const sf::Vector2f ViewManager::calculateClientScroll(const sf::Vector2f mousePosition, const float delta) {
 
 	sf::Vector2f translation = sf::Vector2f(0, 0);
-	sf::Vector2f mouseWorldPosition = eventsManager->getMouseWorldPosition();
+	sf::Vector2f mouseWorldPosition = inputManager->getMouseWorldPosition();
 	
 	if (this->scrollBounds.contains(mouseWorldPosition)) {
 		if (this->scrollUpZone.contains(mousePosition)) {

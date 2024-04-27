@@ -10,7 +10,7 @@
 #include "interfaces/TIEntityInterface.h"
 #include "managers/AssetsManager.h"
 #include "managers/ComponentSystemsManager.h"
-#include "managers/EventsManager.h"
+#include "managers/InputManager.h"
 #include "managers/SceneManager.h"
 #include "managers/ScriptManager.h"
 #include "managers/ViewManager.h"
@@ -114,13 +114,13 @@ sol::object TIEngineInterface::spawn(const sol::table& definition) {
 
 
 bool TIEngineInterface::hasEvent(std::string& event) {
-    const sf::Event* eventPtr = EventsManager::Instance()->getEvent(SfEventStringMap::STRING_TO_EVENT_TYPE.at(event));
+    const sf::Event* eventPtr = InputManager::Instance()->getEvent(SfEventStringMap::STRING_TO_EVENT_TYPE.at(event));
     return eventPtr != nullptr;
 }
 
 
 const sf::Vector2i TIEngineInterface::getMouseClickPosition() {
-    const sf::Event* clickEvent = EventsManager::Instance()->getEvent(sf::Event::MouseButtonPressed);
+    const sf::Event* clickEvent = InputManager::Instance()->getEvent(sf::Event::MouseButtonPressed);
     if (clickEvent != nullptr) {
         return sf::Vector2i(clickEvent->mouseButton.x, clickEvent->mouseButton.y);
     } else {

@@ -1,7 +1,7 @@
 #include "componentsystems/EventsComponentSystem.h"
 
 #include "componentsystems/MessagesComponentSystem.h"
-#include "managers/EventsManager.h"
+#include "managers/InputManager.h"
 #include "managers/MessageManager.h"
 #include "managers/ScriptManager.h"
 #include "managers/WorldManager.h"

@@ -4,7 +4,7 @@
 #include "managers/ComponentSystemsManager.h"
 #include "managers/ConfigManager.h"
 #include "managers/ConsoleManager.h"
-#include "managers/EventsManager.h"
+#include "managers/InputManager.h"
 #include "managers/WorldManager.h"
 #include "managers/HashManager.h"
 #include "managers/LogManager.h"
@@ -25,7 +25,7 @@ void StartUpManager::initialize() {
 	AssetsManager::Instance()->initialize();
 	MessageManager::Instance()->initialize();
 	ViewManager::Instance()->initialize();
-	EventsManager::Instance()->initialize();
+	InputManager::Instance()->initialize();
 	SceneManager::Instance()->initialize();
 	ComponentSystemsManager::Instance()->initialize();
 	ConsoleManager::Instance()->initialize();

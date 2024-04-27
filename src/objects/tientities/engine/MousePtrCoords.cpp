@@ -14,7 +14,7 @@ using namespace TIE;
 MousePtrCoords::MousePtrCoords() {
 	this->setName("MousePtrCoords");
 
-	sf::Vector2f mouseWindowPosition = this->eventsManager->getMouseWindowPosition();
+	sf::Vector2f mouseWindowPosition = this->inputManager->getMouseWindowPosition();
 
 	TextComponent& textComponent = this->addComponent<TextComponent>();
 	textComponent.setString("0, 0");
@@ -27,9 +27,9 @@ MousePtrCoords::MousePtrCoords() {
 
 void MousePtrCoords::update(const float delta) {
 	if (ComponentSystems::isDrawn(*this)) {
-		if (this->cachedMouseWorldPostion != this->eventsManager->getMouseWorldPosition() || this->cachedMouseWindowPostion == this->eventsManager->getMouseWindowPosition()) {
-			this->cachedMouseWorldPostion = this->eventsManager->getMouseWorldPosition();
-			this->cachedMouseWindowPostion = this->eventsManager->getMouseWindowPosition();
+		if (this->cachedMouseWorldPostion != this->inputManager->getMouseWorldPosition() || this->cachedMouseWindowPostion == this->inputManager->getMouseWindowPosition()) {
+			this->cachedMouseWorldPostion = this->inputManager->getMouseWorldPosition();
+			this->cachedMouseWindowPostion = this->inputManager->getMouseWindowPosition();
 			TextComponent* textComponent = this->getComponent<TextComponent>();
 
 			std::stringstream ss;
