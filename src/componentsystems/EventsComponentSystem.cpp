@@ -1,18 +1,13 @@
 #include "componentsystems/EventsComponentSystem.h"
 
+#include "componentsystems/MessagesComponentSystem.h"
+#include "managers/EventsManager.h"
+#include "managers/MessageManager.h"
+#include "managers/ScriptManager.h"
+#include "managers/WorldManager.h"
 #include "objects/GlobalId.h"
 #include "objects/components/EventsComponent.h"
 #include "objects/tientities/TIEntity.h"
-#include "objects/tientities/common/SceneLayer.h"
-#include "managers/ComponentSystemsManager.h"
-#include "managers/EventsManager.h"
-#include "managers/ScriptManager.h"
-#include "managers/WindowManager.h"
-#include "managers/WorldManager.h"
-#include "managers/ViewManager.h"
-#include "templates/VectorHelpers.h"
-#include "utils/ComponentSystems.h"
-#include "utils/constants/SfEventStringMap.h"
 
 using namespace TIE;
 
@@ -34,7 +29,7 @@ void EventsComponentSystem::update(const float delta) {
 		for (auto& [subscriptionId, messages] : this->currentFrameEvents) {
 
 			// If this tientity cares about this event
-			if (c.eventsComponent.isSubscribedTo(subscriptionId)) {
+			if (c.eventsComponent.hasHandlersFor(subscriptionId) || c.eventsComponent.hasFunctionIdsFor(subscriptionId)) {
 
 				// For each message for this event
                 for (auto& message : messages) {
@@ -48,6 +43,17 @@ void EventsComponentSystem::update(const float delta) {
 							// If the message is still valid
 							if (message.valid) {
 								onMessage(message);
+							} else {
+								break;
+							}
+						}
+
+						// For each functionId from this subscriptionId
+						for (auto functionId : *c.eventsComponent.getFunctionIdsFor(subscriptionId)) {
+
+							// If the message is still valid
+							if (message.valid) {
+								ScriptManager::Instance()->runFunction<sol::optional<bool>>(functionId, c.tientity);
 							} else {
 								break;
 							}
@@ -74,9 +80,15 @@ EventsComponent& EventsComponentSystem::addComponent(TIEntity& tientity) {
 EventsComponent& EventsComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& entity) {
 	EventsComponent& eventsComponent = this->addComponent(entity);
 	const ScriptTableReader& reader = factory.getReader().getReader(EventsComponentSystem::EVENTS);
+
+	for (auto& pair : reader.getValues<GlobalId>()) {
+		const GlobalId subscriptionId = MessagesComponentSystem::Instance()->registerMessageSubscription(pair.first);
+		GlobalId functionId = pair.second;
+		eventsComponent.subscribe(subscriptionId, functionId);
+	}
+
 	return eventsComponent;
 }
-
 
 
 bool EventsComponentSystem::removeComponent(TIEntity& tientity) {

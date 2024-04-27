@@ -5,25 +5,47 @@
 
 using namespace TIE;
 
-bool EventsComponent::isSubscribedTo(const GlobalId subscriptionId) {
-	return this->subscriptions.count(subscriptionId);
+void EventsComponent::subscribe(const GlobalId subscriptionId, std::function<void(Message&)> handler) {
+	if (!this->hasHandlersFor(subscriptionId)) {
+		this->subscriptionToHandlers[subscriptionId];
+	}
+	this->subscriptionToHandlers[subscriptionId].push_back(handler);
+}
+
+
+bool EventsComponent::hasHandlersFor(const GlobalId subscriptionId) {
+	return this->subscriptionToHandlers.count(subscriptionId);
 }
 
 
 const std::vector<std::function<void(Message&)>>* EventsComponent::getHandlersFor(const GlobalId subscriptionId) {
-	if (this->isSubscribedTo(subscriptionId)) {
-		return &this->subscriptions.at(subscriptionId);
+	if (this->hasHandlersFor(subscriptionId)) {
+		return &this->subscriptionToHandlers.at(subscriptionId);
 	} else {
 		return nullptr;
 	}
 }
 
 
-void EventsComponent::subscribe(const GlobalId subscriptionId, std::function<void(Message&)> handler) {
-	if (!this->isSubscribedTo(subscriptionId)) {
-		this->subscriptions[subscriptionId];
+void EventsComponent::subscribe(const GlobalId subscriptionId, const GlobalId functionId) {
+	if (!this->hasHandlersFor(subscriptionId)) {
+		this->subscriptionToFunctionIds[subscriptionId];
 	}
-	this->subscriptions[subscriptionId].push_back(handler);
+	this->subscriptionToFunctionIds[subscriptionId].push_back(functionId);
+}
+
+
+bool EventsComponent::hasFunctionIdsFor(const GlobalId subscriptionId) {
+	return this->subscriptionToFunctionIds.count(subscriptionId);
+}
+
+
+const std::vector<GlobalId>* EventsComponent::getFunctionIdsFor(const GlobalId subscriptionId) {
+	if (this->hasHandlersFor(subscriptionId)) {
+		return &this->subscriptionToFunctionIds.at(subscriptionId);
+	} else {
+		return nullptr;
+	}
 }
 
 
