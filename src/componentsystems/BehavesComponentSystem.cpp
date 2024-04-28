@@ -3,9 +3,9 @@
 #include <string>
 #include <vector>
 
-#include "componentsystems/MessagesComponentSystem.h"
 #include "interfaces/ai/FiniteStateMachineInterface.h"
 #include "managers/ComponentSystemsManager.h"
+#include "managers/MessageManager.h"
 #include "managers/WorldManager.h"
 #include "objects/constants/MessageSubscriptions.h"
 #include "objects/factories/tientities/TIEntityFactory.h"
@@ -171,9 +171,9 @@ void BehavesComponentSystem::initializeBehaviorTreeNodeStatuses() {
 
 
 void BehavesComponentSystem::initializeBehaviorTreeNodeStatusMessageSubscriptions() {
-	this->behaviorTreeNodeStatusToMessageSubscription.insert({ BehaviorTree::NodeStatus::SUCCESS, MessagesComponentSystem::Instance()->registerMessageSubscription(MessageSubscriptions::BEHAVIOR_TREE_NODE_SUCCESS) });
-	this->behaviorTreeNodeStatusToMessageSubscription.insert({ BehaviorTree::NodeStatus::RUNNING, MessagesComponentSystem::Instance()->registerMessageSubscription(MessageSubscriptions::BEHAVIOR_TREE_NODE_RUNNING) });
-	this->behaviorTreeNodeStatusToMessageSubscription.insert({ BehaviorTree::NodeStatus::FAILURE, MessagesComponentSystem::Instance()->registerMessageSubscription(MessageSubscriptions::BEHAVIOR_TREE_NODE_FAILURE) });
+	this->behaviorTreeNodeStatusToMessageSubscription.insert({ BehaviorTree::NodeStatus::SUCCESS, MessageManager::Instance()->getSubscriptionId(MessageSubscriptions::BEHAVIOR_TREE_NODE_SUCCESS) });
+	this->behaviorTreeNodeStatusToMessageSubscription.insert({ BehaviorTree::NodeStatus::RUNNING, MessageManager::Instance()->getSubscriptionId(MessageSubscriptions::BEHAVIOR_TREE_NODE_RUNNING) });
+	this->behaviorTreeNodeStatusToMessageSubscription.insert({ BehaviorTree::NodeStatus::FAILURE, MessageManager::Instance()->getSubscriptionId(MessageSubscriptions::BEHAVIOR_TREE_NODE_FAILURE) });
 
 	this->messageSubscriptionToBehaviorTreeNodeStatus.insert({ this->behaviorTreeNodeStatusToMessageSubscription[BehaviorTree::NodeStatus::SUCCESS], BehaviorTree::NodeStatus::SUCCESS});
 	this->messageSubscriptionToBehaviorTreeNodeStatus.insert({ this->behaviorTreeNodeStatusToMessageSubscription[BehaviorTree::NodeStatus::RUNNING], BehaviorTree::NodeStatus::RUNNING});

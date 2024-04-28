@@ -7,6 +7,7 @@
 
 #include "componentsystems/MessagesComponentSystem.h" 
 #include "managers/ComponentSystemsManager.h"
+#include "managers/MessageManager.h"
 #include "managers/ScriptManager.h"
 #include "objects/components/CollidesComponent.h"
 #include "objects/components/LineComponent.h"
@@ -22,7 +23,7 @@ CollidesComponentSystem::CollidesComponentSystem() {
 	ComponentSystemsManager::Instance()->registerComponentPropertyKey(CollidesComponentSystem::IS_COLLIDABLE, this);
 	ComponentSystemsManager::Instance()->registerComponentPropertyKey(CollidesComponentSystem::IS_COLLIDES, this);
 
-	this->collisionMessageSubscription = MessagesComponentSystem::Instance()->registerMessageSubscription("Collision");
+	this->collisionMessageSubscription = MessageManager::Instance()->getSubscriptionId("Collision");
 }
 
 

@@ -10,6 +10,7 @@
 #include "componentsystems/MessagesComponentSystem.h"
 #include "managers/ComponentSystemsManager.h"
 #include "managers/LogManager.h" 
+#include "managers/MessageManager.h"
 #include "managers/WorldManager.h"
 #include "objects/components/MovesComponent.h"
 #include "objects/components/PositionComponent.h"
@@ -36,7 +37,7 @@ MovesComponentSystem::MovesComponentSystem() {
 	ComponentSystemsManager::Instance()->registerComponentPropertyKey(MovesComponentSystem::TARGET_ROTATION, this);
 	ComponentSystemsManager::Instance()->registerComponentPropertyKey(MovesComponentSystem::AT_ROTATION, this);
 
-	this->atDestinationMessageSubscription = MessagesComponentSystem::Instance()->registerMessageSubscription("AtDestination");
+	this->atDestinationMessageSubscription = MessageManager::Instance()->getSubscriptionId("AtDestination");
 }
 
 

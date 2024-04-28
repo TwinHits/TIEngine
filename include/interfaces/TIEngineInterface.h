@@ -49,7 +49,7 @@ class TIEngineInterface {
         const std::map<std::string, int>& getBehaviorTreeNodeStatuses();
 
         GlobalId registerMessageSubscription(const std::string&);
-        const std::map<std::string, GlobalId>& getMessageSubscriptions();
+        const std::map<const std::string, GlobalId>& getMessageSubscriptions();
 
         const ComponentSystems::ComponentSystemPropertiesMap& getProperties();
 };

@@ -3,7 +3,6 @@
 #include <SFML/Graphics.hpp>
 
 #include "componentsystems/EventsComponentSystem.h"
-#include "componentsystems/MessagesComponentSystem.h"
 #include "managers/MessageManager.h"
 #include "managers/ViewManager.h"
 #include "managers/WindowManager.h"
@@ -62,7 +61,6 @@ void InputManager::publishInputEvent(const sf::Event& event) {
 		key = SfEventStringMap::EVENT_TYPE_TO_STRING.at(event.type);
 	}
 	MessageManager::Instance()->publish(key);
-	const GlobalId subscriptionId = MessagesComponentSystem::Instance()->registerMessageSubscription(key);
+	const GlobalId subscriptionId = MessageManager::Instance()->getSubscriptionId(key);
 	EventsComponentSystem::Instance()->publish(Message(subscriptionId));
-
 }

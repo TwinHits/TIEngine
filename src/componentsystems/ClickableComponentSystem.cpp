@@ -17,7 +17,7 @@ ClickableComponentSystem::ClickableComponentSystem() {
 	ComponentSystemsManager::Instance()->registerComponentPropertyKey(ClickableComponentSystem::CLICKABLE, this);
 	ComponentSystemsManager::Instance()->registerComponentPropertyKey(ClickableComponentSystem::ON_CLICK, this);
 
-	this->clickedMessageSubscription = MessagesComponentSystem::Instance()->registerMessageSubscription("Clicked");
+	this->clickedMessageSubscription = MessageManager::Instance()->getSubscriptionId("Clicked");
 
 	MessageManager::Instance()->subscribe(MessageSubscriptions::MOUSE_BUTTON_PRESSED, std::bind(&ClickableComponentSystem::onClick, this));
 }

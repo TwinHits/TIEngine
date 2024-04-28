@@ -22,9 +22,6 @@ class MessagesComponentSystem : public Singleton<MessagesComponentSystem>, publi
 		MessagesComponent& addComponent(const TIEntityFactory&, TIEntity&);
 		bool removeComponent(TIEntity&);
 		
-		const GlobalId registerMessageSubscription(const std::string&);
-		const std::map<std::string, GlobalId>& getMessageSubscriptions();
-
 		void subscribe(TIEntity&, GlobalId, std::function<void(Message&)>);
 
 		void sendMessage(const Message&);

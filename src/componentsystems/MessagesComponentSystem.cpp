@@ -84,19 +84,6 @@ bool MessagesComponentSystem::removeComponent(TIEntity& tientity) {
 }
 
 
-const GlobalId MessagesComponentSystem::registerMessageSubscription(const std::string& name) {
-	if (!this->messageSubscriptions.count(name)) {
-		this->messageSubscriptions[name] = HashManager::Instance()->getNewGlobalId();
-	}
-	return this->messageSubscriptions.at(name);
-}
-
-
-const std::map<std::string, GlobalId>& MessagesComponentSystem::getMessageSubscriptions() {
-	return this->messageSubscriptions;
-}
-
-
 void MessagesComponentSystem::subscribe(TIEntity& tientity, GlobalId subscription, std::function<void(Message&)> onMessage) {
 	MessagesComponent& messagesComponent = this->addComponent(tientity);
 	messagesComponent.subscribe(subscription, onMessage);

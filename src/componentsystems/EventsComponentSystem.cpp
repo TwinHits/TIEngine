@@ -1,6 +1,5 @@
 #include "componentsystems/EventsComponentSystem.h"
 
-#include "componentsystems/MessagesComponentSystem.h"
 #include "managers/InputManager.h"
 #include "managers/MessageManager.h"
 #include "managers/ScriptManager.h"
@@ -86,7 +85,7 @@ EventsComponent& EventsComponentSystem::addComponent(const TIEntityFactory& fact
 	const ScriptTableReader& reader = factory.getReader().getReader(EventsComponentSystem::EVENTS);
 
 	for (auto& pair : reader.getValues<GlobalId>()) {
-		const GlobalId subscriptionId = MessagesComponentSystem::Instance()->registerMessageSubscription(pair.first);
+		const GlobalId subscriptionId = MessageManager::Instance()->getSubscriptionId(pair.first);
 		GlobalId functionId = pair.second;
 		eventsComponent.subscribe(subscriptionId, functionId);
 	}
