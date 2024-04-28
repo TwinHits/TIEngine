@@ -52,16 +52,16 @@ void EventsComponentSystem::update(const float delta) {
 
 						// For each functionId from this subscriptionId
 						if (c.eventsComponent.hasFunctionIdsFor(subscriptionId)) {
-						for (auto functionId : *c.eventsComponent.getFunctionIdsFor(subscriptionId)) {
+							for (auto functionId : *c.eventsComponent.getFunctionIdsFor(subscriptionId)) {
 
-							// If the message is still valid
-							if (message.valid) {
-								ScriptManager::Instance()->runFunction<sol::optional<bool>>(functionId, c.tientity);
-							} else {
-								break;
+								// If the message is still valid
+								if (message.valid) {
+									ScriptManager::Instance()->runFunction<sol::optional<bool>>(functionId, c.tientity);
+								} else {
+									break;
+								}
 							}
 						}
-
 					}
                 }
 			}

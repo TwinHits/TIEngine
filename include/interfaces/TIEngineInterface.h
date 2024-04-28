@@ -36,8 +36,7 @@ class TIEngineInterface {
 
         sol::object spawn(const sol::table&);
 
-        bool hasEvent(std::string& event);
-        const sf::Vector2i getMouseClickPosition();
+        const sf::Vector2f getMouseWorldPosition();
 
         sol::object getTIEntityById(GlobalId);
 

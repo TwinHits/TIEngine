@@ -5,7 +5,6 @@
 #include <string>
 
 #include "componentsystems/CacheComponentSystem.h"
-#include "componentsystems/EventsComponentSystem.h"
 #include "componentsystems/MessagesComponentSystem.h"
 #include "componentsystems/PositionComponentSystem.h"
 #include "interfaces/MessageInterface.h"

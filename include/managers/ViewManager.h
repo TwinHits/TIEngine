@@ -49,7 +49,6 @@ class ViewManager : public Singleton<ViewManager>, public Manager {
 
 		void setZoomSettings(const float, const float, const float);
 
-		void onWindowSizeChange();
 
 		ViewManager() {};
 		~ViewManager() {};
@@ -57,7 +56,9 @@ class ViewManager : public Singleton<ViewManager>, public Manager {
 	private:
 		const sf::Vector2f calculateClientScroll(const sf::Vector2f, const float);
 		const sf::Vector2f calculateEngineScroll(const sf::Vector2f&, const float);
-		void zoomCamera(const float);
+
+		void onMouseWheelMoved();
+		void onWindowSizeChange();
 
 		InputManager* inputManager = InputManager::Instance();
 		ConsoleManager* consoleManager = ConsoleManager::Instance();
