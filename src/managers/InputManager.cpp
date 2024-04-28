@@ -5,7 +5,6 @@
 #include "componentsystems/EventsComponentSystem.h"
 #include "componentsystems/MessagesComponentSystem.h"
 #include "managers/MessageManager.h"
-#include "managers/LogManager.h"
 #include "managers/ViewManager.h"
 #include "managers/WindowManager.h"
 #include "objects/Message.h"
@@ -41,60 +40,15 @@ void InputManager::processInput() {
 
 	sf::Event event;
 	while (window.pollEvent(event)) {
-
-		//Window Input Commands
-		if (!consoleManager->checkConsole()) {
-			switch (event.type) {
-			case sf::Event::KeyPressed:
-				switch (event.key.code) {
-				case sf::Keyboard::Tilde:
-					consoleManager->showConsole();
-					break;
-				default:
-					this->events.insert({ event.type, event });
-					break;
-				}
-				break;
-			case sf::Event::MouseButtonPressed:
-				event.mouseButton.x = this->mouseWorldPosition.x;
-				event.mouseButton.y = this->mouseWorldPosition.y;
-				this->events.insert({ event.type, event });
-				break;
-			default:
-					this->events.insert({ event.type, event });
-				break;
-			}
-		} else if (consoleManager->checkConsole()) {
-			//Console Input Commands
-			switch (event.type) {
-			case sf::Event::KeyPressed:
-				switch (event.key.code) {
-				case sf::Keyboard::Escape:
-					consoleManager->hideConsole();
-					break;
-				case sf::Keyboard::Tilde:
-					consoleManager->hideConsole();
-					break;
-				case sf::Keyboard::Return:
-					consoleManager->runCommand();
-					break;
-				case sf::Keyboard::Up:
-					consoleManager->traverseUpHistory();
-					break;
-				case sf::Keyboard::Down:
-					consoleManager->traverseDownHistory();
-					break;
-				default:
-					break;
-				}
-				break;
-			case sf::Event::TextEntered:
-				consoleManager->addToInput(event.text.unicode);
-				break;
-			default:
-				break;
-			}
-		}
+        switch (event.type) {
+            case sf::Event::MouseButtonPressed:
+                event.mouseButton.x = this->mouseWorldPosition.x;
+                event.mouseButton.y = this->mouseWorldPosition.y;
+                break;
+            default:
+                break;
+        }
+        this->events.insert({ event.type, event });
 		this->publishInputEvent(event);
 	}
 }

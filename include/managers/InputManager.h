@@ -8,8 +8,6 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "managers/ConsoleManager.h"
-
 namespace TIE {
 
 class InputManager : public Singleton<InputManager>, public Manager {
@@ -26,8 +24,6 @@ class InputManager : public Singleton<InputManager>, public Manager {
 	private:
 		void publishInputEvent(const sf::Event&);
 		
-		ConsoleManager* consoleManager = ConsoleManager::Instance();
-
 		sf::Vector2f mouseWindowPosition = sf::Vector2f(0, 0);
 		sf::Vector2f mouseWorldPosition = sf::Vector2f(0, 0);
 
