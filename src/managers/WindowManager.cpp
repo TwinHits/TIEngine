@@ -13,6 +13,8 @@ void WindowManager::initialize() {
 	this->addWindow();
 
 	MessageManager::Instance()->subscribe(MessageSubscriptions::ACTIVE_VIEW_CHANGE, std::bind(&WindowManager::onActiveViewChange, this));
+	MessageManager::Instance()->subscribe("ESCAPE", std::bind(&WindowManager::removeWindow, this));
+	MessageManager::Instance()->subscribe("CLOSED", std::bind(&WindowManager::removeWindow, this));
 }
 
 
@@ -59,6 +61,7 @@ sf::RenderWindow& WindowManager::addWindow() {
 
 void WindowManager::removeWindow() {
 	this->window->close();
+	LogManager::Instance()->debug("Window closed.");
 }
 
 

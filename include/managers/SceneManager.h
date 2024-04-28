@@ -26,7 +26,6 @@ namespace TIE {
 
 		void setTIEntitiesMarkedForRemove(bool);
 
-		void setSimulationPaused(const bool);
 		const bool isSimulationPaused();
 
 		SceneManager() {};
@@ -44,6 +43,8 @@ namespace TIE {
 		
 		void removeTIEntities(TIEntity&);
 		void render(TIEntity&, sf::RenderWindow&, sf::RenderStates);
+
+		void toggleSimulationPaused();
 
 		SceneManager(const SceneManager&);
 		void operator=(const SceneManager&) {};

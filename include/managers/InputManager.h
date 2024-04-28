@@ -4,14 +4,11 @@
 #include "managers/Manager.h"
 #include "templates/Singleton.h"
 
-#include <memory>
-#include <string>
-#include <vector>
+#include <map>
 
 #include <SFML/Graphics.hpp>
 
 #include "managers/ConsoleManager.h"
-#include "managers/WindowManager.h"
 
 namespace TIE {
 

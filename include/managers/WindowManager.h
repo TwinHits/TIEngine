@@ -36,8 +36,6 @@ class WindowManager : public Singleton<WindowManager>, public Manager {
 		void setFullScreen(const bool);
 		const bool getFullScreen();
 
-		void onActiveViewChange();
-
 		WindowManager() {};
 		~WindowManager();
 
@@ -47,6 +45,8 @@ class WindowManager : public Singleton<WindowManager>, public Manager {
 		std::string title = "Twin Ion Engine";
 		sf::Vector2i windowSize = sf::Vector2i(1280, 720);
 		int style = sf::Style::Default;
+
+		void onActiveViewChange();
 
 		WindowManager(const WindowManager&);
 		void operator=(const WindowManager&) {};

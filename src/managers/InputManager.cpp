@@ -1,14 +1,11 @@
 #include "managers/InputManager.h" 
 
-#include <cstdio>
-
 #include <SFML/Graphics.hpp>
 
 #include "componentsystems/EventsComponentSystem.h"
 #include "componentsystems/MessagesComponentSystem.h"
 #include "managers/MessageManager.h"
 #include "managers/LogManager.h"
-#include "managers/SceneManager.h"
 #include "managers/ViewManager.h"
 #include "managers/WindowManager.h"
 #include "objects/Message.h"
@@ -48,19 +45,8 @@ void InputManager::processInput() {
 		//Window Input Commands
 		if (!consoleManager->checkConsole()) {
 			switch (event.type) {
-			case sf::Event::Closed:
-				window.close();
-				LogManager::Instance()->debug("Window closed by X.");
-				break;
 			case sf::Event::KeyPressed:
 				switch (event.key.code) {
-				case sf::Keyboard::Escape:
-					window.close();
-					LogManager::Instance()->debug("Window closed by escape.");
-					break;
-				case sf::Keyboard::Home:
-					SceneManager::Instance()->setSimulationPaused(!SceneManager::Instance()->isSimulationPaused());
-					break;
 				case sf::Keyboard::Tilde:
 					consoleManager->showConsole();
 					break;
@@ -74,12 +60,6 @@ void InputManager::processInput() {
 				event.mouseButton.y = this->mouseWorldPosition.y;
 				this->events.insert({ event.type, event });
 				break;
-			case sf::Event::MouseMoved:
-			case sf::Event::MouseEntered:
-			case sf::Event::MouseLeft:
-			case sf::Event::LostFocus:
-			case sf::Event::GainedFocus:
-				break;
 			default:
 					this->events.insert({ event.type, event });
 				break;
@@ -87,10 +67,6 @@ void InputManager::processInput() {
 		} else if (consoleManager->checkConsole()) {
 			//Console Input Commands
 			switch (event.type) {
-			case sf::Event::Closed:
-				window.close();
-				LogManager::Instance()->info("Window closed.");
-				break;
 			case sf::Event::KeyPressed:
 				switch (event.key.code) {
 				case sf::Keyboard::Escape:
