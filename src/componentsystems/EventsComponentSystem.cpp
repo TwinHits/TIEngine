@@ -1,66 +1,69 @@
 #include "componentsystems/EventsComponentSystem.h"
 
-#include <string>
-#include <vector>
-
+#include "componentsystems/MessagesComponentSystem.h"
+#include "managers/InputManager.h"
+#include "managers/MessageManager.h"
+#include "managers/ScriptManager.h"
+#include "managers/WorldManager.h"
 #include "objects/GlobalId.h"
 #include "objects/components/EventsComponent.h"
-#include "objects/components/structs/EventState.h"
 #include "objects/tientities/TIEntity.h"
-#include "objects/tientities/common/SceneLayer.h"
-#include "managers/ComponentSystemsManager.h"
-#include "managers/EventsManager.h"
-#include "managers/ScriptManager.h"
-#include "managers/WindowManager.h"
-#include "managers/ViewManager.h"
-#include "templates/VectorHelpers.h"
-#include "utils/ComponentSystems.h"
-#include "utils/constants/SfEventStringMap.h"
 
 using namespace TIE;
 
 EventsComponentSystem::EventsComponentSystem() {
 	this->setName(EventsComponentSystem::EVENTS);
-	ComponentSystemsManager::Instance()->registerComponentPropertyKey(EventsComponentSystem::SELECTED, this);
-	ComponentSystemsManager::Instance()->registerComponentPropertyKey(EventsComponentSystem::UNSELECTED, this);
-	ComponentSystemsManager::Instance()->registerComponentPropertyKey(EventsComponentSystem::NEUTRAL, this);
-	ComponentSystemsManager::Instance()->registerComponentPropertyKey(EventsComponentSystem::HOVER, this);
 }
 
 
 void EventsComponentSystem::update(const float delta) {
-	const sf::Event* clickEvent = EventsManager::Instance()->getEvent(sf::Event::MouseButtonPressed);
-	const sf::Vector2f& worldMousePosition = EventsManager::Instance()->getMouseWorldPosition();
-	const sf::Vector2f& windowMousePosition = EventsManager::Instance()->getMouseWindowPosition();
 
+	// Get the next set of messages
+	this->currentFrameEvents.clear();
+	std::swap(this->currentFrameEvents, this->nextFrameEvents);
+
+	// For each tientity that cares about events
 	for (auto& c : this->components) {
-		// Update engine managed states
-		if (clickEvent != nullptr) {
-			this->updateSelectedStates(c.eventsComponent, c.tientity, *clickEvent);
 
-		}
+		// For each subscription id that has an event
+		for (auto& [subscriptionId, messages] : this->currentFrameEvents) {
 
-        if (this->isEntityInAScrollableView(c.tientity)) {
-            this->updateHoverStates(c.eventsComponent, c.tientity, worldMousePosition);
-        } else {
-            this->updateHoverStates(c.eventsComponent, c.tientity, windowMousePosition);
-        }
+			// If this tientity cares about this event
+			if (c.eventsComponent.hasHandlersFor(subscriptionId) || c.eventsComponent.hasFunctionIdsFor(subscriptionId)) {
 
-		// Add time elapsed to each state
-		for (auto& state : c.eventsComponent.getStates()) {
-			state.timeElapsed += delta;
-		}
+				// For each message for this event
+                for (auto& message : messages) {
 
-		// Check if any handlers run from events
-		if (c.eventsComponent.hasHandlers() && EventsManager::Instance()->hasEvents()) {
-			const std::map<sf::Event::EventType, sf::Event>& events = EventsManager::Instance()->getEvents();
-			for (const EventState& state : c.eventsComponent.getStates()) {
-				for (auto& event : events) {
-					const GlobalId eventHandler = c.eventsComponent.getEventHandler(state.name, event.second);
-					if (eventHandler) {
-						ScriptManager::Instance()->runFunction<bool>(eventHandler, c.tientity);
+					// If this message is for anyone or for a specific recipient
+					if (!message.recipientId || message.recipientId == c.tientity.getId()) {
+
+						// For each handler for this subscriptionId
+						if (c.eventsComponent.hasHandlersFor(subscriptionId)) {
+							for (auto& onMessage : *c.eventsComponent.getHandlersFor(subscriptionId)) {
+
+								// If the message is still valid
+								if (message.valid) {
+									onMessage(message);
+								} else {
+									break;
+								}
+							}
+						}
+
+						// For each functionId from this subscriptionId
+						if (c.eventsComponent.hasFunctionIdsFor(subscriptionId)) {
+							for (auto functionId : *c.eventsComponent.getFunctionIdsFor(subscriptionId)) {
+
+								// If the message is still valid
+								if (message.valid) {
+									ScriptManager::Instance()->runFunction<sol::optional<bool>>(functionId, c.tientity);
+								} else {
+									break;
+								}
+							}
+						}
 					}
-				}
+                }
 			}
 		}
 	}
@@ -82,44 +85,14 @@ EventsComponent& EventsComponentSystem::addComponent(const TIEntityFactory& fact
 	EventsComponent& eventsComponent = this->addComponent(entity);
 	const ScriptTableReader& reader = factory.getReader().getReader(EventsComponentSystem::EVENTS);
 
-	for (auto& [state, eventReader] : reader.getReaders()) {
-		for (auto& [event, functionId] : eventReader.getValues<GlobalId>()) {
-
-			// If it's an event value store it in the events map
-			if (SfEventStringMap::STRING_TO_EVENT_TYPE.count(event)) {
-				sf::Event::EventType sfEvent = SfEventStringMap::STRING_TO_EVENT_TYPE.at(event);
-				if (sfEvent != sf::Event::Count) {
-					eventsComponent.setEventHandler(state, sfEvent, functionId);
-				}
-			}
-
-			// If it's a keypress value store it in the keypress map
-			if (SfEventStringMap::STRING_TO_KEY.count(event)) {
-				sf::Keyboard::Key sfKey = SfEventStringMap::STRING_TO_KEY.at(event);
-				if (sfKey != sf::Keyboard::Unknown) {
-					eventsComponent.setKeyHandler(state, sfKey, functionId);
-				}
-			}
-
-			// If it's for the selected state than this component is selectable
-			if (state == EventsComponentSystem::SELECTED) {
-				eventsComponent.setSelectable(true);
-				eventsComponent.addState(EventsComponentSystem::UNSELECTED);
-			}
-
-			// If it's for the hover state than this component is hoverable
-			if (state == EventsComponentSystem::HOVER) {
-				eventsComponent.setHoverable(true);
-			}
-
-		}
-        // All components have neutral
-        eventsComponent.addState(EventsComponentSystem::NEUTRAL);
+	for (auto& pair : reader.getValues<GlobalId>()) {
+		const GlobalId subscriptionId = MessagesComponentSystem::Instance()->registerMessageSubscription(pair.first);
+		GlobalId functionId = pair.second;
+		eventsComponent.subscribe(subscriptionId, functionId);
 	}
 
 	return eventsComponent;
 }
-
 
 
 bool EventsComponentSystem::removeComponent(TIEntity& tientity) {
@@ -138,89 +111,43 @@ bool EventsComponentSystem::removeComponent(TIEntity& tientity) {
 }
 
 
-void EventsComponentSystem::addState(TIEntity& tientity, const std::string& state) {
-	EventsComponent* eventsComponent = tientity.getComponent<EventsComponent>();
-	if (eventsComponent == nullptr) {
-		eventsComponent = &(this->addComponent(tientity));
+void EventsComponentSystem::subscribe(TIEntity& tientity, const GlobalId subscriptionId, std::function<void(Message&)> handler) {
+	EventsComponent& eventsComponent = this->addComponent(tientity);
+	eventsComponent.subscribe(subscriptionId, handler);
+}
+
+
+void EventsComponentSystem::publish(Message message) {
+	message = this->setSenderId(message);
+	message = this->setRecipientId(message);
+	if (!this->nextFrameEvents.count(message.subscription)) {
+		this->nextFrameEvents[message.subscription];
 	}
-	eventsComponent->addState(state);
+	this->nextFrameEvents[message.subscription].push_back(message);
 }
 
 
-bool EventsComponentSystem::removeState(TIEntity& tientity, const std::string& state) {
-	EventsComponent* eventsComponent = tientity.getComponent<EventsComponent>();
-	if (eventsComponent != nullptr) {
-		eventsComponent->removeState(state);
-		return true;
-	} else {
-		return false;
-	}
-}
-
-
-EventState* EventsComponentSystem::getState(TIEntity& tientity, const std::string& name) {
-	EventsComponent* eventsComponent = tientity.getComponent<EventsComponent>();
-	if (eventsComponent != nullptr) {
-		return eventsComponent->getState(name);
-	} else {
-		return nullptr;
-	}
-}
-
-
-bool EventsComponentSystem::isEntityInAScrollableView(TIEntity& tientity) {
-	SceneLayer* sceneLayer = nullptr;
-	TIEntity* current = &tientity;
-	while (current != nullptr && sceneLayer == nullptr) {
-		sceneLayer = dynamic_cast<SceneLayer*>(current);
-		current = &current->getParent();
-	}
-
-	return ViewManager::Instance()->isViewIdScrollable(sceneLayer->getViewId());
-}
-
-
-void EventsComponentSystem::updateSelectedStates(EventsComponent& eventsComponent, TIEntity& tientity, const sf::Event& clickEvent) {
-    if (!eventsComponent.hasState(EventsComponentSystem::SELECTED) && eventsComponent.isSelectable()) {
-        if (ComponentSystems::getGlobalBounds(tientity).contains(sf::Vector2f(clickEvent.mouseButton.x, clickEvent.mouseButton.y))) {
-
-            eventsComponent.addState(EventsComponentSystem::SELECTED);
-            eventsComponent.removeState(EventsComponentSystem::UNSELECTED);
-
-            for (auto& eventsComponent : this->cachedSelectedComponents) {
-                eventsComponent->addState(EventsComponentSystem::UNSELECTED);
-                eventsComponent->removeState(EventsComponentSystem::SELECTED);
-            }
-
-			this->clearSelectedComponents();
-            this->addSelectedComponent(eventsComponent);
-            EventsManager::Instance()->removeEvent(sf::Event::MouseButtonPressed);
-        }
-    }
-}
-
-
-void EventsComponentSystem::updateHoverStates(EventsComponent& eventsComponent, TIEntity& tientity, const sf::Vector2f& mousePosition) {
-    if (eventsComponent.isHoverable()) {
-        if (ComponentSystems::getGlobalBounds(tientity).contains(mousePosition)) {
-			eventsComponent.addState(EventsComponentSystem::HOVER);
-		} else {
-			eventsComponent.removeState(EventsComponentSystem::HOVER);
+Message& EventsComponentSystem::setSenderId(Message& message) {
+	TIEntity* sender = WorldManager::Instance()->getTIEntityById(message.senderId);
+	if (sender) {
+		EventsComponent& eventsComponent = this->addComponent(*sender);
+		if (eventsComponent.redirectsFrom()) {
+			message.senderId = eventsComponent.redirectsFrom();
 		}
-    }
+	}
+	return message;
 }
 
 
-void EventsComponentSystem::addSelectedComponent(EventsComponent& eventsComponent) {
-	this->cachedSelectedComponents.push_back(&eventsComponent);
+Message& EventsComponentSystem::setRecipientId(Message& message) {
+	TIEntity* recipient = WorldManager::Instance()->getTIEntityById(message.recipientId);
+	if (recipient) {
+		EventsComponent& eventsComponent = this->addComponent(*recipient);
+		if (eventsComponent.redirectsTo()) {
+			message.recipientId = eventsComponent.redirectsTo();
+		}
+	}
+	return message;
 }
 
 
-void EventsComponentSystem::removeSelectedComponent(EventsComponent& eventsComponent) {
-	Vector::remove(this->cachedSelectedComponents, &eventsComponent);
-}
-
-
-void EventsComponentSystem::clearSelectedComponents() {
-	this->cachedSelectedComponents.clear();
-}

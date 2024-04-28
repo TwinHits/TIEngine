@@ -1,42 +1,32 @@
-#include "managers/EventsManager.h" 
+#include "managers/InputManager.h" 
 
 #include <cstdio>
 
 #include <SFML/Graphics.hpp>
 
-#include "managers/ConsoleManager.h"
+#include "componentsystems/EventsComponentSystem.h"
+#include "componentsystems/MessagesComponentSystem.h"
 #include "managers/MessageManager.h"
 #include "managers/LogManager.h"
 #include "managers/SceneManager.h"
 #include "managers/ViewManager.h"
 #include "managers/WindowManager.h"
-#include "templates/MakeUnique.h"
-#include "utils/ComponentSystems.h"
+#include "objects/Message.h"
 #include "utils/constants/SfEventStringMap.h"
 
 using namespace TIE;
 
-const sf::Vector2f& EventsManager::getMouseWindowPosition() {
+const sf::Vector2f& InputManager::getMouseWindowPosition() {
 	return this->mouseWindowPosition;
 }
 
 
-const sf::Vector2f& EventsManager::getMouseWorldPosition() {
+const sf::Vector2f& InputManager::getMouseWorldPosition() {
 	return this->mouseWorldPosition;
 }
 
 
-bool EventsManager::hasEvents() {
-	return this->events.size();
-}
-
-
-const std::map<sf::Event::EventType, sf::Event>& EventsManager::getEvents() {
-	return this->events;
-}
-
-
-const sf::Event* const EventsManager::getEvent(const sf::Event::EventType& eventType) {
+const sf::Event* const InputManager::getEvent(const sf::Event::EventType& eventType) {
 	if (this->events.find(eventType) != events.end()) {
 		return &(events.at(eventType));
 	}
@@ -44,12 +34,7 @@ const sf::Event* const EventsManager::getEvent(const sf::Event::EventType& event
 }
 
 
-void EventsManager::removeEvent(sf::Event::EventType eventType) {
-	this->events.erase(eventType);
-}
-
-
-void EventsManager::processEvents() {
+void InputManager::processInput() {
 	sf::RenderWindow& window = WindowManager::Instance()->getWindow();
 	sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
 	sf::View& clientView = ViewManager::Instance()->getClientView();
@@ -134,33 +119,20 @@ void EventsManager::processEvents() {
 				break;
 			}
 		}
-
-        // Send messages
-        if (event.type == sf::Event::KeyPressed) {
-            MessageManager::Instance()->publish(SfEventStringMap::KEY_TO_STRING.at(event.key.code));
-        } else {
-            MessageManager::Instance()->publish(SfEventStringMap::EVENT_TYPE_TO_STRING.at(event.type));
-        }
+		this->publishInputEvent(event);
 	}
-
-    // Get hovered entities
-    this->tientitiesUnderMousePosition.clear();
-    this->setTIEntitiesUnderMousePosition(SceneManager::Instance()->getClientLayer(), this->mouseWorldPosition);
 }
 
 
-const std::vector<TIEntity*>& EventsManager::getTIEntitiesUnderMousePosition() {
-	return this->tientitiesUnderMousePosition;
-}
-
-
-void EventsManager::setTIEntitiesUnderMousePosition(TIEntity& tientity, const sf::Vector2f& mousePosition) {
-	if (!tientity.isSceneLayer()) {
-        if (ComponentSystems::getGlobalBounds(tientity).contains(mousePosition)) {
-			this->tientitiesUnderMousePosition.push_back(&tientity);
-        }
+void InputManager::publishInputEvent(const sf::Event& event) {
+	std::string key;
+	if (event.type == sf::Event::KeyPressed) {
+		key = SfEventStringMap::KEY_TO_STRING.at(event.key.code);
+	} else {
+		key = SfEventStringMap::EVENT_TYPE_TO_STRING.at(event.type);
 	}
-	for (auto& child : tientity.getChildren()) {
-		this->setTIEntitiesUnderMousePosition(*child, mousePosition);
-	}
+	MessageManager::Instance()->publish(key);
+	const GlobalId subscriptionId = MessagesComponentSystem::Instance()->registerMessageSubscription(key);
+	EventsComponentSystem::Instance()->publish(Message(subscriptionId));
+
 }

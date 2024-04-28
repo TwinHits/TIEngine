@@ -10,7 +10,7 @@
 #include "interfaces/TIEntityInterface.h"
 #include "managers/AssetsManager.h"
 #include "managers/ComponentSystemsManager.h"
-#include "managers/EventsManager.h"
+#include "managers/InputManager.h"
 #include "managers/SceneManager.h"
 #include "managers/ScriptManager.h"
 #include "managers/ViewManager.h"
@@ -37,8 +37,7 @@ void TIEngineInterface::registerUserType(sol::state& luaState) {
     engineInterfaceUserType["setZoomSettings"] = &TIEngineInterface::setZoomSettings;
     engineInterfaceUserType["setLevel"] = &TIEngineInterface::setLevel;
 	engineInterfaceUserType["spawn"] = &TIEngineInterface::spawn;
-	engineInterfaceUserType["hasEvent"] = &TIEngineInterface::hasEvent;
-	engineInterfaceUserType["getMouseClickPosition"] = &TIEngineInterface::getMouseClickPosition;
+	engineInterfaceUserType["getMouseWorldPosition"] = &TIEngineInterface::getMouseWorldPosition;
     engineInterfaceUserType["getTIEntityById"] = &TIEngineInterface::getTIEntityById;
     engineInterfaceUserType["registerSceneLayer"] = &TIEngineInterface::registerSceneLayer;
     engineInterfaceUserType["registerFiniteStateMachine"] = &TIEngineInterface::registerFiniteStateMachine;
@@ -113,19 +112,8 @@ sol::object TIEngineInterface::spawn(const sol::table& definition) {
 }
 
 
-bool TIEngineInterface::hasEvent(std::string& event) {
-    const sf::Event* eventPtr = EventsManager::Instance()->getEvent(SfEventStringMap::STRING_TO_EVENT_TYPE.at(event));
-    return eventPtr != nullptr;
-}
-
-
-const sf::Vector2i TIEngineInterface::getMouseClickPosition() {
-    const sf::Event* clickEvent = EventsManager::Instance()->getEvent(sf::Event::MouseButtonPressed);
-    if (clickEvent != nullptr) {
-        return sf::Vector2i(clickEvent->mouseButton.x, clickEvent->mouseButton.y);
-    } else {
-        return sf::Vector2i(0,0);
-    }
+const sf::Vector2f TIEngineInterface::getMouseWorldPosition() {
+    return InputManager::Instance()->getMouseWorldPosition();
 }
 
 

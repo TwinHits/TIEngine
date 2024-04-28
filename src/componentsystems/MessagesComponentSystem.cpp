@@ -85,15 +85,12 @@ bool MessagesComponentSystem::removeComponent(TIEntity& tientity) {
 
 
 const GlobalId MessagesComponentSystem::registerMessageSubscription(const std::string& name) {
-	const GlobalId subscription = HashManager::Instance()->getNewGlobalId();
-	if (!this->messageSubscriptions[name]) {
-		this->messageSubscriptions[name] = subscription;
-		return subscription;
-	} else {
-		LogManager::Instance()->error("Message subscription with name " + name + " already exists.");
-		return 0;
+	if (!this->messageSubscriptions.count(name)) {
+		this->messageSubscriptions[name] = HashManager::Instance()->getNewGlobalId();
 	}
+	return this->messageSubscriptions.at(name);
 }
+
 
 const std::map<std::string, GlobalId>& MessagesComponentSystem::getMessageSubscriptions() {
 	return this->messageSubscriptions;
@@ -106,34 +103,32 @@ void MessagesComponentSystem::subscribe(TIEntity& tientity, GlobalId subscriptio
 }
 
 
-void MessagesComponentSystem::sendMessage(const GlobalId subscription, TIEntity& sender, const GlobalId recipientId) {
-	this->sendMessage(subscription, sender, recipientId, sol::nil);
-}
-
-
-void MessagesComponentSystem::sendMessage(const GlobalId subscription, TIEntity& sender, const GlobalId recipientId, sol::object payload) {
-	const GlobalId redirectedSenderId = this->getSenderId(sender);
-	const GlobalId redirectedReciepentId = this->getReciepentId(recipientId);
-	if (!this->nextFrameMessages.count(redirectedReciepentId)) {
-        this->nextFrameMessages[redirectedReciepentId];
+void MessagesComponentSystem::sendMessage(const Message& message) {
+	const GlobalId redirectedSenderI  = this->getSenderId(message.senderId);
+	const GlobalId redirectedRecipientId = this->getRecipientId(message.recipientId);
+	if (!this->nextFrameMessages.count(redirectedRecipientId)) {
+        this->nextFrameMessages[redirectedRecipientId];
 	}
-    if (!this->nextFrameMessages[redirectedReciepentId].count(subscription)) {
-        this->nextFrameMessages[redirectedReciepentId][subscription];
+    if (!this->nextFrameMessages[redirectedRecipientId].count(message.subscription)) {
+        this->nextFrameMessages[redirectedRecipientId][message.subscription];
     }
-    this->nextFrameMessages[redirectedReciepentId][subscription].push_back({ subscription, redirectedSenderId, payload });
+    this->nextFrameMessages[redirectedRecipientId][message.subscription].push_back(message);
 }
 
 
-const GlobalId MessagesComponentSystem::getSenderId(TIEntity& tientity) {
-	MessagesComponent& messagesComponent = this->addComponent(tientity);
-	if (messagesComponent.redirectFromId) {
-		return messagesComponent.redirectFromId;
-	} else {
-		return tientity.getId();
+const GlobalId MessagesComponentSystem::getSenderId(const GlobalId senderId) {
+	TIEntity* sender = WorldManager::Instance()->getTIEntityById(senderId);
+	if (sender) {
+		MessagesComponent& messagesComponent = this->addComponent(*sender);
+		if (messagesComponent.redirectFromId) {
+			return messagesComponent.redirectFromId;
+		}
 	}
+	return senderId;
 }
 
-const GlobalId MessagesComponentSystem::getReciepentId(const GlobalId recipientId) {
+
+const GlobalId MessagesComponentSystem::getRecipientId(const GlobalId recipientId) {
 	TIEntity* recipient = WorldManager::Instance()->getTIEntityById(recipientId);
 	if (recipient) {
 		MessagesComponent& messagesComponent = this->addComponent(*recipient);

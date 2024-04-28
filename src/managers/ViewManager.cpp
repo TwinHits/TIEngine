@@ -21,6 +21,7 @@ void ViewManager::initialize() {
 	this->recalculateScrollZones(windowSize);
 
 	MessageManager::Instance()->subscribe(MessageSubscriptions::WINDOW_SIZE_CHANGE, std::bind(&ViewManager::onWindowSizeChange, this));
+	MessageManager::Instance()->subscribe("MOUSEWHEELMOVED", std::bind(&ViewManager::onMouseWheelMoved, this));
 }
 
 
@@ -109,21 +110,20 @@ void ViewManager::setActiveView(GlobalId id) {
 
 
 void ViewManager::updateCamera(const float delta) {
-	const sf::Vector2f& mouseWindowPosition = this->eventsManager->getMouseWindowPosition();
+	const sf::Vector2f& mouseWindowPosition = this->inputManager->getMouseWindowPosition();
 	if (!this->consoleManager->checkConsole()) {
 		this->clientView->move(this->calculateClientScroll(mouseWindowPosition, delta));
-		this->zoomCamera(delta);
 	} else if (this->consoleManager->checkConsole()) {
 	
 	}
 }	
 
 
-void ViewManager::zoomCamera(const float delta) {
-	const sf::Event* zoomEvent = this->eventsManager->getEvent(sf::Event::MouseWheelMoved);
+void ViewManager::onMouseWheelMoved() {
+	const sf::Event* zoomEvent = this->inputManager->getEvent(sf::Event::MouseWheelMoved);
 	if (zoomEvent != nullptr) {
-
-		float change = this->zoomSpeed * delta * zoomEvent->mouseWheel.delta; //mousewheel.delta is -1 or 1 depending on scroll direction
+		float tick = 0.01666666666f;
+		float change = this->zoomSpeed * tick * zoomEvent->mouseWheel.delta; //mouseWheel.delta is -1 or 1 depending on scroll direction
 		if (this->currentZoom - change > this->zoomMinimum && this->currentZoom - change < this->zoomMaximum) { // But it's inverse of what I'd expect, so - to swap direction
 			this->currentZoom -= change;
 			const sf::Vector2i& windowSize = WindowManager::Instance()->getWindowSize();
@@ -136,7 +136,7 @@ void ViewManager::zoomCamera(const float delta) {
 const sf::Vector2f ViewManager::calculateClientScroll(const sf::Vector2f mousePosition, const float delta) {
 
 	sf::Vector2f translation = sf::Vector2f(0, 0);
-	sf::Vector2f mouseWorldPosition = eventsManager->getMouseWorldPosition();
+	sf::Vector2f mouseWorldPosition = inputManager->getMouseWorldPosition();
 	
 	if (this->scrollBounds.contains(mouseWorldPosition)) {
 		if (this->scrollUpZone.contains(mousePosition)) {

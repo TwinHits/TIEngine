@@ -5,7 +5,6 @@
 #include <string>
 
 #include "componentsystems/CacheComponentSystem.h"
-#include "componentsystems/EventsComponentSystem.h"
 #include "componentsystems/MessagesComponentSystem.h"
 #include "componentsystems/PositionComponentSystem.h"
 #include "interfaces/MessageInterface.h"
@@ -13,7 +12,6 @@
 #include "objects/GlobalId.h"
 #include "objects/factories/tientities/TraceFactory.h"
 #include "objects/factories/tientities/CollisionBoxFactory.h"
-#include "objects/components/structs/EventState.h"
 #include "managers/ScriptManager.h"
 #include "utils/ComponentSystems.h"
 
@@ -54,11 +52,6 @@ void TIEntityInterface::registerUserType(sol::state& luaState) {
     interfaceUserType["setDrawn"] = &TIEntityInterface::setDrawn;
     interfaceUserType["isDrawn"] = &TIEntityInterface::isDrawn;
 
-    //Event
-    interfaceUserType["addState"] = &TIEntityInterface::addState;
-    interfaceUserType["removeState"] = &TIEntityInterface::removeState;
-    interfaceUserType["getState"] = &TIEntityInterface::getState;
-    
     //Cache
     interfaceUserType["setCache"] = &TIEntityInterface::setCache;
     interfaceUserType["getCache"] = &TIEntityInterface::getCache;
@@ -161,22 +154,6 @@ bool TIEntityInterface::isDrawn() {
 }
 
 
-void TIEntityInterface::addState(const std::string& state) {
-    EventsComponentSystem::Instance()->addState(*this->tientity, state);
-}
-
-
-void TIEntityInterface::removeState(const std::string& state) {
-    EventsComponentSystem::Instance()->removeState(*this->tientity, state);
-}
-
-
-EventState* TIEntityInterface::getState(const std::string& state) {
-    EventState* eventState = EventsComponentSystem::Instance()->getState(*this->tientity, state);
-    return eventState;
-}
-
-
 void TIEntityInterface::setCache(sol::table& cache) {
     CacheComponentSystem::Instance()->updateCache(*this->tientity, cache);
 }
@@ -213,14 +190,14 @@ sol::table& TIEntityInterface::findTIEntitiesWithinRange(const float range, TIEn
 }
 
 
-void TIEntityInterface::sendMessage(const GlobalId subscription, sol::object recievers, sol::object payload) {
-    if (recievers.is<GlobalId>()) {
-        MessagesComponentSystem::Instance()->sendMessage(subscription, *this->tientity, recievers.as<GlobalId>(), payload);
-    } else if (recievers.is<sol::table>()) {
-        for (auto& pair : recievers.as<sol::table>()) {
+void TIEntityInterface::sendMessage(const GlobalId subscription, sol::object receivers, sol::object payload) {
+    if (receivers.is<GlobalId>()) {
+        MessagesComponentSystem::Instance()->sendMessage(Message(subscription, this->tientity->getId(), receivers.as<GlobalId>(), payload));
+    } else if (receivers.is<sol::table>()) {
+        for (auto& pair : receivers.as<sol::table>()) {
             const sol::object& reciever = pair.second;
             if (reciever.is<GlobalId>()) {
-                MessagesComponentSystem::Instance()->sendMessage(subscription, *this->tientity, reciever.as<GlobalId>(), payload);
+                MessagesComponentSystem::Instance()->sendMessage(Message(subscription, this->tientity->getId(), reciever.as<GlobalId>(), payload));
             }
         }
     }

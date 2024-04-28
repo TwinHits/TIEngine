@@ -7,7 +7,6 @@
 
 #include "interfaces/MessageInterface.h"
 #include "objects/GlobalId.h"
-#include "objects/components/structs/EventState.h"
 #include "objects/tientities/TIEntity.h"
 
 namespace TIE {
@@ -41,11 +40,6 @@ class TIEntityInterface {
         // Rendering
         void setDrawn(bool);
         bool isDrawn();
-
-        // Events
-        void addState(const std::string&);
-        void removeState(const std::string&);
-        EventState* getState(const std::string&);
 
         // Cache
         void setCache(sol::table&);

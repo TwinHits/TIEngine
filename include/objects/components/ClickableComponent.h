@@ -5,6 +5,7 @@
 
 #include <functional>
 
+#include "objects/GlobalId.h"
 #include "objects/Message.h"
 
 namespace TIE {
@@ -18,11 +19,15 @@ namespace TIE {
 		const bool isClickable();
 		const bool isClickable() const;
 
-		void setOnClick(std::function<void(Message&)>);
-		const std::function<void(Message&)> getOnClick();
+		void setOnClickFunction(std::function<void(Message&)>);
+		const std::function<void(Message&)> getOnClickFunction();
+
+		void setOnClickFunctionId(const GlobalId);
+		const GlobalId getOnClickFunctionId();
 	private:
 		bool clickable = true;
-		std::function<void(Message&)> onClick;
+		std::function<void(Message&)> onClickFunction = nullptr;
+		GlobalId onClickFunctionId = 0;
 	};
 
 }

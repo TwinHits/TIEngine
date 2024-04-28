@@ -7,7 +7,6 @@
 #define SOL_ALL_SAFETIES_ON 1
 
 #include "componentsystems/CacheComponentSystem.h"
-#include "interfaces/EventStateInterface.h"
 #include "interfaces/MessageInterface.h"
 #include "interfaces/TIEngineInterface.h"
 #include "interfaces/TIEntityInterface.h"
@@ -35,7 +34,6 @@ void ScriptManager::initialize() {
 	);
 
 	//Register user types with lua state
-    EventStateInterface::registerUserType(this->luaState);
     FiniteStateMachineInterface::registerUserType(this->luaState);
 	MessageInterface::registerUserType(this->luaState);
     TIEngineInterface::registerUserType(this->luaState);

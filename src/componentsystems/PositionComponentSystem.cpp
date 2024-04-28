@@ -163,7 +163,7 @@ void PositionComponentSystem::updateWorldCoordinates(PositionComponent& position
 sf::Vector2f PositionComponentSystem::getWorldPosition(TIEntity& tientity) {
     sf::Vector2f worldPosition = sf::Vector2f();
 
-    for (TIEntity* t = &tientity; t != nullptr; t = &t->getParent()) {
+    for (TIEntity* t = &tientity; t != nullptr && &t->getParent() != nullptr; t = &t->getParent()) {
         PositionComponent* component = t->getComponent<PositionComponent>();
         if (component != nullptr) {
             PositionComponent* parentComponent = t->getParent().getComponent<PositionComponent>();

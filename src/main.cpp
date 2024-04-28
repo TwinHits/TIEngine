@@ -5,7 +5,7 @@
  * Glory and gore go hand in hand.
 */
 
-#include "managers/EventsManager.h"
+#include "managers/InputManager.h"
 #include "managers/SceneManager.h"
 #include "managers/StartUpManager.h"
 #include "managers/TimeManager.h"
@@ -20,7 +20,7 @@ int main() {
 	sf::Clock& gameClock = TimeManager::Instance()->addClock();
 	while (window.isOpen()) {
 		if (gameClock.getElapsedTime().asSeconds() >= 0.01666666666f) { // 60 FPS frame rate
-			EventsManager::Instance()->processEvents();
+			InputManager::Instance()->processInput();
 			SceneManager::Instance()->updateGameState(gameClock.restart().asSeconds());
 			SceneManager::Instance()->render();		
 		}

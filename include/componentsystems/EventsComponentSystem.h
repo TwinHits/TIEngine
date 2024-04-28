@@ -7,7 +7,6 @@
 #include <string>
 
 #include "objects/components/EventsComponent.h"
-#include "objects/components/structs/EventState.h"
 #include "objects/tientities/TIEntity.h"
 #include "objects/factories/tientities/TIEntityFactory.h"
 
@@ -17,27 +16,15 @@ class EventsComponentSystem : public Singleton<EventsComponentSystem>, public Ow
 	public:
 		EventsComponentSystem();
 		void update(const float);
+
 		EventsComponent& addComponent(const TIEntityFactory&, TIEntity&);
 		EventsComponent& addComponent(TIEntity&);
 		bool removeComponent(TIEntity&);
 
-		// Helpers
-		void addState(TIEntity&, const std::string&);
-		bool removeState(TIEntity&, const std::string&);
-		EventState* getState(TIEntity&, const std::string&);
+		void subscribe(TIEntity&, const GlobalId, std::function<void(Message&)>);
+		void publish(Message);
 
-		void addSelectedComponent(EventsComponent&);
-		void removeSelectedComponent(EventsComponent&);
-		void clearSelectedComponents();
-
-		// TIEFactory keys / Name
 		const static inline std::string EVENTS = "events";
-
-		// Engine handled events
-		const static inline std::string SELECTED = "selected";
-		const static inline std::string UNSELECTED = "unselected";
-		const static inline std::string HOVER = "hover";
-		const static inline std::string NEUTRAL = "neutral";
 
 	private:
 		struct Components {
@@ -46,11 +33,11 @@ class EventsComponentSystem : public Singleton<EventsComponentSystem>, public Ow
 		};
 		std::list<Components> components;
 
-		std::vector<EventsComponent*> cachedSelectedComponents;
+		std::map<GlobalId, std::vector<Message>> currentFrameEvents;
+		std::map<GlobalId, std::vector<Message>> nextFrameEvents;
 
-		bool isEntityInAScrollableView(TIEntity&);
-		void updateSelectedStates(EventsComponent&, TIEntity&, const sf::Event&);
-		void updateHoverStates(EventsComponent&, TIEntity&, const sf::Vector2f& mousePosition);
+		Message& setSenderId(Message&);
+		Message& setRecipientId(Message&);
 };
 
 }

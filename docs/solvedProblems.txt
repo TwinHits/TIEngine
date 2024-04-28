@@ -59,5 +59,9 @@ I had a ton of problems installing boost, first abut not being able to find cl a
 Trying to install pybind11 and had to upgrade to visual studio 2022 because I was getting end of life warnings. This
 messed up cmake. I got an error about unable to find cl, which I fixed by adding the new visual studio to the
 environment variables.
-Then I got an error about mt.exe, which is some windows SDK thing. I found it in windows Kits/bin and picked the highest
-version and x64 and added it to the PATH, that fixed it but I don't reall understand why.
+Then I got an error about mt.exe, which is some windows SDK thing. I found it
+in windows Kits/bin and picked the highest version and x64 and added it to the PATH, that fixed it but I don't reall understand why.
+
+4/24/2024
+To use Unreal engine I had to update Visual Studio again, which caused cmake
+to break. I had to update the environment variable created above.

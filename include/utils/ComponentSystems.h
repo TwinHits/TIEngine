@@ -16,6 +16,7 @@ namespace TIE {
         bool isDrawn(TIEntity&);
         const sf::FloatRect getGlobalBounds(TIEntity&);
         const sf::FloatRect getLocalBounds(TIEntity&);
+        bool doesGlobalBoundsContain(TIEntity&, const sf::Vector2f&);
 
     }
 }

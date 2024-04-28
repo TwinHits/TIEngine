@@ -2,7 +2,9 @@
 
 #include <string>
 
-#include "managers/ScriptManager.h"
+#include "componentsystems/BehavesComponentSystem.h"
+#include "componentsystems/EventsComponentSystem.h"
+#include "managers/HashManager.h"
 #include "objects/Message.h"
 #include "objects/enumeration/NodeStatus.h"
 #include "objects/tientities/TIEntity.h"
@@ -11,8 +13,14 @@ using namespace TIE;
 
 
 BehaviorTreeNode::BehaviorTreeNode(TIEntity& tientity, const std::string& name) : tientity(tientity) {
+    this->id = HashManager::Instance()->getNewGlobalId();
     this->name = name;
     this->nodeType = "BehaviorTreeNode";
+}
+
+
+const GlobalId BehaviorTreeNode::getId() {
+    return this->id;
 }
 
 
@@ -74,4 +82,9 @@ BehaviorTree::NodeStatus BehaviorTreeNode::updateDecorators(const std::vector<st
         }
     }
     return result;
+}
+
+
+void BehaviorTreeNode::publishNodeStatusEvent(BehaviorTree::NodeStatus nodeStatus) {
+    EventsComponentSystem::Instance()->publish(Message(BehavesComponentSystem::Instance()->getMessageSubscriptionForNodeStatus(nodeStatus), this->id));
 }

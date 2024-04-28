@@ -27,5 +27,6 @@ BehaviorTree::NodeStatus ParallelNode::update(float delta) {
             result = this->updatePostDecorators(delta);
         }
     }
+    BehaviorTreeNode::publishNodeStatusEvent(result);
     return result;
 }

@@ -39,5 +39,6 @@ BehaviorTree::NodeStatus SelectorNode::update(float delta) {
             result = this->updatePostDecorators(delta);
         }
     }
+    BehaviorTreeNode::publishNodeStatusEvent(result);
     return result;
 }

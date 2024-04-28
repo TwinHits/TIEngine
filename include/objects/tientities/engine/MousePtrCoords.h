@@ -3,7 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "managers/EventsManager.h"
+#include "managers/InputManager.h"
 #include "objects/tientities/TIEntity.h"
 
 namespace TIE {
@@ -19,7 +19,7 @@ class MousePtrCoords : public TIEntity {
 
 		sf::Vector2f cachedMouseWorldPostion = sf::Vector2f(0, 0);
 		sf::Vector2f cachedMouseWindowPostion = sf::Vector2f(0, 0);
-		EventsManager* eventsManager = EventsManager::Instance();
+		InputManager* inputManager = InputManager::Instance();
 };
 
 }

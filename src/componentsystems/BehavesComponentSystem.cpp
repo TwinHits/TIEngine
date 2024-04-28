@@ -3,9 +3,11 @@
 #include <string>
 #include <vector>
 
+#include "componentsystems/MessagesComponentSystem.h"
 #include "interfaces/ai/FiniteStateMachineInterface.h"
 #include "managers/ComponentSystemsManager.h"
 #include "managers/WorldManager.h"
+#include "objects/constants/MessageSubscriptions.h"
 #include "objects/factories/tientities/TIEntityFactory.h"
 #include "objects/factories/ai/FiniteStateMachineFactory.h"
 #include "objects/factories/ai/BehaviorTreeNodeFactory.h"
@@ -134,6 +136,15 @@ const std::map<std::string, int>& BehavesComponentSystem::getBehaviorTreeNodeSta
 }
 
 
+const BehaviorTree::NodeStatus BehavesComponentSystem::getNodeStatusForMessageSubscription(const GlobalId messageSubscription) {
+	return this->messageSubscriptionToBehaviorTreeNodeStatus[messageSubscription];
+}
+
+const GlobalId BehavesComponentSystem::getMessageSubscriptionForNodeStatus(const BehaviorTree::NodeStatus nodeStatus) {
+	return this->behaviorTreeNodeStatusToMessageSubscription[nodeStatus];
+}
+
+
 void BehavesComponentSystem::initializeBehaviorTreeNodeTypes() {
 	this->behaviorTreeNodeTypes.insert({BehaviorTreeNodeFactory::LEAF_NODE, BehaviorTreeNodeFactory::LEAF_NODE});
 	this->behaviorTreeNodeTypes.insert({BehaviorTreeNodeFactory::PARALLEL_NODE, BehaviorTreeNodeFactory::PARALLEL_NODE });
@@ -156,4 +167,15 @@ void BehavesComponentSystem::initializeBehaviorTreeNodeStatuses() {
 	this->behaviorTreeNodeStatuses.insert({"Success", BehaviorTree::NodeStatus::SUCCESS});
 	this->behaviorTreeNodeStatuses.insert({"Failure", BehaviorTree::NodeStatus::FAILURE});
 	this->behaviorTreeNodeStatuses.insert({"Running", BehaviorTree::NodeStatus::RUNNING});
+}
+
+
+void BehavesComponentSystem::initializeBehaviorTreeNodeStatusMessageSubscriptions() {
+	this->behaviorTreeNodeStatusToMessageSubscription.insert({ BehaviorTree::NodeStatus::SUCCESS, MessagesComponentSystem::Instance()->registerMessageSubscription(MessageSubscriptions::BEHAVIOR_TREE_NODE_SUCCESS) });
+	this->behaviorTreeNodeStatusToMessageSubscription.insert({ BehaviorTree::NodeStatus::RUNNING, MessagesComponentSystem::Instance()->registerMessageSubscription(MessageSubscriptions::BEHAVIOR_TREE_NODE_RUNNING) });
+	this->behaviorTreeNodeStatusToMessageSubscription.insert({ BehaviorTree::NodeStatus::FAILURE, MessagesComponentSystem::Instance()->registerMessageSubscription(MessageSubscriptions::BEHAVIOR_TREE_NODE_FAILURE) });
+
+	this->messageSubscriptionToBehaviorTreeNodeStatus.insert({ this->behaviorTreeNodeStatusToMessageSubscription[BehaviorTree::NodeStatus::SUCCESS], BehaviorTree::NodeStatus::SUCCESS});
+	this->messageSubscriptionToBehaviorTreeNodeStatus.insert({ this->behaviorTreeNodeStatusToMessageSubscription[BehaviorTree::NodeStatus::RUNNING], BehaviorTree::NodeStatus::RUNNING});
+	this->messageSubscriptionToBehaviorTreeNodeStatus.insert({ this->behaviorTreeNodeStatusToMessageSubscription[BehaviorTree::NodeStatus::FAILURE], BehaviorTree::NodeStatus::FAILURE});
 }

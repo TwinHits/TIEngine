@@ -20,8 +20,10 @@ namespace TIE {
 		bool removeComponent(TIEntity&);
 
 		void setOnClick(TIEntity&, std::function<void(Message&)>);
+		void setOnClick(TIEntity&, const GlobalId onClickFunctonId);
 
 		static const inline std::string CLICKABLE = "clickable";
+		static const inline std::string ON_CLICK = "onClick";
 
 	private:
 		void onClick();

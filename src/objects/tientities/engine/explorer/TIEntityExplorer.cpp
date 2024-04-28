@@ -10,6 +10,7 @@
 #include "managers/ViewManager.h"
 #include "objects/components/SpriteComponent.h"
 #include "objects/constants/MessageSubscriptions.h"
+#include "objects/tientities/engine/explorer/BehaviorTreeDisplay.h"
 #include "objects/tientities/engine/explorer/ComponentPropertiesDisplay.h"
 #include "objects/tientities/ui/Button.h"
 #include "templates/MakeUnique.h"
@@ -75,16 +76,26 @@ void TIEntityExplorer::setBackgroundPosition(const sf::Vector2i& windowSize) {
 void TIEntityExplorer::setAreaPositions(const sf::Vector2i& windowSize) {
     this->tientitiesDisplayPosition = sf::Vector2f(windowSize.x * 0.1f, 0);
     this->componentPropertiesDisplayPosition = sf::Vector2f(windowSize.x * 0.2f, 0);
-    this->behaviorTreeDisplayPosition = sf::Vector2f(windowSize.x * 0.5f, 0);
+    this->behaviorTreeDisplayPosition = sf::Vector2f(windowSize.x * 0.33f, 0);
 }
 
 
 void TIEntityExplorer::setComponentPropertiesDisplay() {
-    std::unique_ptr<ComponentPropertiesDisplay> componentPropertiesDisplayPtr = make_unique<ComponentPropertiesDisplay>();
-    this->componentPropertiesDisplay = componentPropertiesDisplayPtr.get();
+    std::unique_ptr<ComponentPropertiesDisplay> componentPropertiesDisplay = make_unique<ComponentPropertiesDisplay>();
+    this->componentPropertiesDisplay = componentPropertiesDisplay.get();
     this->componentPropertiesDisplay->setTIEntity(this->selectedTIEntity);
-    this->attachChild(std::move(componentPropertiesDisplayPtr));
+    this->attachChild(std::move(componentPropertiesDisplay));
     PositionComponentSystem::Instance()->setPosition(*this->componentPropertiesDisplay, this->componentPropertiesDisplayPosition);
+}
+
+
+void TIEntityExplorer::setBehaviorTreeDisplay() {
+    const sf::Vector2i& windowSize = WindowManager::Instance()->getWindowSize();
+    sf::Vector2f behaviorTreeDisplaySize = sf::Vector2f(windowSize.x - this->behaviorTreeDisplayPosition.x, windowSize.y);
+    std::unique_ptr<BehaviorTreeDisplay> behaviorTreeDisplay = make_unique<BehaviorTreeDisplay>(*this->selectedTIEntity, behaviorTreeDisplaySize);
+    this->behaviorTreeDisplay = behaviorTreeDisplay.get();
+    this->attachChild(std::move(behaviorTreeDisplay));
+    PositionComponentSystem::Instance()->setPosition(*this->behaviorTreeDisplay, this->behaviorTreeDisplayPosition);
 }
 
 
@@ -98,6 +109,7 @@ void TIEntityExplorer::onToggleShowHide() {
 
         this->createButtons();
         this->setComponentPropertiesDisplay();
+        this->setBehaviorTreeDisplay();
         for (auto& child : this->getChildren()) {
             ComponentSystems::setDrawn(*child, this->show);
         }
@@ -119,6 +131,7 @@ void TIEntityExplorer::onButtonClick(Message& message) {
     if (this->buttonToChild.count(message.senderId) && this->buttonToChild.at(message.senderId) != nullptr) {
         this->selectedTIEntity = this->buttonToChild.at(message.senderId);
         this->componentPropertiesDisplay->setTIEntity(this->selectedTIEntity);
+        this->behaviorTreeDisplay->setTIEntity(*this->selectedTIEntity);
         this->createButtons();
     } else {
         LogManager::Instance()->error("TIEntityExplorer buttonToChild map does not have this message's sender id as a key.");

@@ -6,6 +6,7 @@
 
 #include <functional>
 #include <map>
+#include <string>
 #include <vector>
 
 #include "objects/GlobalId.h"
@@ -20,7 +21,7 @@ class MessageManager : public Singleton<MessageManager>, public Manager {
 		MessageManager() {};
 		~MessageManager() {};
 	private:
-		// map of id to function pointer with no args that returns void
+		// map of subscription id to function pointer with no args that returns void
 		std::map<const std::string, std::vector<std::function<void()>>> subscriptions;
 
 		MessageManager(const MessageManager&);

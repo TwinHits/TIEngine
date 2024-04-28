@@ -27,8 +27,7 @@ class MessagesComponentSystem : public Singleton<MessagesComponentSystem>, publi
 
 		void subscribe(TIEntity&, GlobalId, std::function<void(Message&)>);
 
-		void sendMessage(const GlobalId, TIEntity&, const GlobalId);
-		void sendMessage(const GlobalId, TIEntity&, const GlobalId, sol::object);
+		void sendMessage(const Message&);
 
 		static const inline std::string MESSAGES = "messages";
 	private:
@@ -41,8 +40,8 @@ class MessagesComponentSystem : public Singleton<MessagesComponentSystem>, publi
 		std::map<GlobalId, std::map<GlobalId, std::vector<Message>>> currentFrameMessages;
 		std::map<GlobalId, std::map<GlobalId, std::vector<Message>>> nextFrameMessages;
 
-		const GlobalId getSenderId(TIEntity&);
-		const GlobalId getReciepentId(const GlobalId);
+		const GlobalId getSenderId(const GlobalId);
+		const GlobalId getRecipientId(const GlobalId);
 };
 
 }

@@ -6,7 +6,6 @@
 #include <vector>
 
 #include "objects/GlobalId.h"
-#include "objects/Message.h"
 #include "objects/ai/behaviortree/decorators/NodeDecorator.h"
 #include "objects/enumeration/NodeStatus.h"
 #include "objects/tientities/TIEntity.h"
@@ -18,6 +17,7 @@ class BehaviorTreeNode {
         BehaviorTreeNode(TIEntity&, const std::string&);
         virtual ~BehaviorTreeNode() {}
 
+        const GlobalId getId();
         TIEntity& getTIEntity();
         const std::string& getName();
         const std::string& getNodeType();
@@ -32,6 +32,7 @@ class BehaviorTreeNode {
         void addPostDecorator(std::unique_ptr<NodeDecorator>);
 
     protected:
+        GlobalId id;
         TIEntity& tientity;
         std::string name;
         std::string nodeType;
@@ -42,6 +43,8 @@ class BehaviorTreeNode {
         NodeDecorator* resumeDecorator = nullptr;
 
         BehaviorTree::NodeStatus updateDecorators(const std::vector<std::unique_ptr<NodeDecorator>>&, float);
+
+        void publishNodeStatusEvent(BehaviorTree::NodeStatus);
 };
 
 }
