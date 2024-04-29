@@ -93,7 +93,7 @@ void BehaviorTreeDisplayNode::onEvent(Message& message) {
     if (nodeStatus == BehaviorTree::NodeStatus::SUCCESS) {
         fillColor = sf::Color::Green;
     } else if (nodeStatus == BehaviorTree::NodeStatus::RUNNING) {
-        fillColor = sf::Color::Yellow;
+        fillColor = sf::Color(255,255,158, 255);
     } else if (nodeStatus == BehaviorTree::NodeStatus::FAILURE) {
         fillColor = sf::Color::Red;
     }
