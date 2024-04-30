@@ -24,7 +24,7 @@ class MessagesComponentSystem : public Singleton<MessagesComponentSystem>, publi
 		
 		void subscribe(TIEntity&, GlobalId, std::function<void(Message&)>);
 
-		void sendMessage(const Message&);
+		void sendMessage(Message&);
 
 		static const inline std::string MESSAGES = "messages";
 	private:

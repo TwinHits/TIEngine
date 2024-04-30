@@ -90,8 +90,8 @@ void MessagesComponentSystem::subscribe(TIEntity& tientity, GlobalId subscriptio
 }
 
 
-void MessagesComponentSystem::sendMessage(const Message& message) {
-	const GlobalId redirectedSenderI  = this->getSenderId(message.senderId);
+void MessagesComponentSystem::sendMessage(Message& message) {
+	message.senderId = this->getSenderId(message.senderId);
 	const GlobalId redirectedRecipientId = this->getRecipientId(message.recipientId);
 	if (!this->nextFrameMessages.count(redirectedRecipientId)) {
         this->nextFrameMessages[redirectedRecipientId];

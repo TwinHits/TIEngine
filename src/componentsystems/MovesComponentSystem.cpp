@@ -12,6 +12,7 @@
 #include "managers/LogManager.h" 
 #include "managers/MessageManager.h"
 #include "managers/WorldManager.h"
+#include "objects/Message.h"
 #include "objects/components/MovesComponent.h"
 #include "objects/components/PositionComponent.h"
 #include "objects/factories/tientities/TIEntityFactory.h"
@@ -361,7 +362,7 @@ void MovesComponentSystem::move(MovesComponent& movesComponent, PositionComponen
 		) {
             positionComponent.position = movesComponent.targetPosition;
 			// Implicitly only sent once because speed is set to zero
-			MessagesComponentSystem::Instance()->sendMessage({ this->atDestinationMessageSubscription, tientity.getId(), tientity.getId()});
+			MessagesComponentSystem::Instance()->sendMessage(Message(this->atDestinationMessageSubscription, tientity.getId(), tientity.getId()));
         } else {
             positionComponent.position = newPosition;
         }

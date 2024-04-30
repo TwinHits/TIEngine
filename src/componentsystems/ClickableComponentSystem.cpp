@@ -5,6 +5,7 @@
 #include "managers/InputManager.h"
 #include "managers/MessageManager.h"
 #include "managers/ScriptManager.h"
+#include "objects/Message.h"
 #include "objects/components/ClickableComponent.h"
 #include "objects/constants/MessageSubscriptions.h"
 #include "objects/factories/tientities/TIEntityFactory.h"
@@ -88,7 +89,7 @@ void ClickableComponentSystem::onClick() {
         if (c.clickableComponent.isClickable()) {
             if (ComponentSystems::doesGlobalBoundsContain(c.tientity, clickPosition)) {
 				if (c.clickableComponent.getOnClickFunction()) {
-					MessagesComponentSystem::Instance()->sendMessage({ this->clickedMessageSubscription, c.tientity.getId(), c.tientity.getId() });
+					MessagesComponentSystem::Instance()->sendMessage(Message(this->clickedMessageSubscription, c.tientity.getId(), c.tientity.getId()));
 				}
 				if (c.clickableComponent.getOnClickFunctionId()) {
 					ScriptManager::Instance()->runFunction<sol::optional<bool>>(c.clickableComponent.getOnClickFunctionId(), c.tientity);
