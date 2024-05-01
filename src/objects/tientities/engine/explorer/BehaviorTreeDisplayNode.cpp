@@ -59,8 +59,8 @@ void BehaviorTreeDisplayNode::addLineToParent() {
 
         ShapeComponent& shapeComponent = ShapeComponentSystem::Instance()->addComponent(lineTIEntity);
         this->lineShape = &shapeComponent.addRectangleShape();
-        this->lineShape->setFillColor(sf::Color::Black);
-        this->lineShape->setOutlineColor(sf::Color::Black);
+        this->lineShape->setFillColor(sf::Color::White);
+        this->lineShape->setOutlineColor(sf::Color::White);
         this->lineShape->setSize(sf::Vector2f(magnitude, 1));
     }
 }
@@ -77,8 +77,8 @@ void BehaviorTreeDisplayNode::update(const float delta) {
         this->textComponent->setFillColor(sf::Color::White);
         this->textComponent->setOutlineColor(sf::Color::White);
         if (this->lineShape) {
-            this->lineShape->setFillColor(sf::Color::Black);
-            this->lineShape->setOutlineColor(sf::Color::Black);
+            this->lineShape->setFillColor(sf::Color::White);
+            this->lineShape->setOutlineColor(sf::Color::White);
         }
         this->isNodeHighlightedTernaryFlag = 0;
     } else if (this->isNodeHighlightedTernaryFlag == 1) {
