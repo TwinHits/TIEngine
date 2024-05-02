@@ -1,7 +1,9 @@
 #ifndef WAITFORMESSAGEDECORATOR_H
 #define WAITFORMESSAGEDECORATOR_H
-
+ 
 #include "objects/ai/behaviortree/decorators/NodeDecorator.h"
+
+#include <memory>
 
 #include "objects/tientities/TIEntity.h"
 #include "objects/enumeration/NodeStatus.h"
@@ -17,11 +19,11 @@ namespace TIE {
 
         void setOnMessageFunctionId(const GlobalId);
 
-        void onMessage(Message&);
+        void onMessage(std::shared_ptr<Message>);
 
     private:
         GlobalId onMessageFunctionId = 0;
-        BehaviorTree::NodeStatus onMessageResult = BehaviorTree::NodeStatus::RUNNING;
+        std::weak_ptr<Message> message = std::weak_ptr<Message>();
     };
 
 }

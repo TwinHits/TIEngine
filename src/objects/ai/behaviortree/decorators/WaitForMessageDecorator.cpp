@@ -1,5 +1,7 @@
 #include "objects/ai/behaviortree/decorators/WaitForMessageDecorator.h"
 
+#include <memory>
+
 #include "managers/ScriptManager.h"
 #include "objects/GlobalId.h"
 #include "objects/ai/behaviortree/decorators/NodeDecorator.h"
@@ -11,8 +13,11 @@ WaitForMessageDecorator::WaitForMessageDecorator(TIEntity& tientity) : NodeDecor
 
 
 BehaviorTree::NodeStatus WaitForMessageDecorator::update(const float delta) {
-    BehaviorTree::NodeStatus result = this->onMessageResult;
-    this->onMessageResult = BehaviorTree::NodeStatus::RUNNING;
+    BehaviorTree::NodeStatus result = BehaviorTree::NodeStatus::RUNNING;
+    if (!this->message.expired() && this->onMessageFunctionId) {
+        std::shared_ptr message = this->message.lock();
+        result = ScriptManager::Instance()->runFunction<BehaviorTree::NodeStatus>(this->onMessageFunctionId, this->tientity, *message);
+    }
     return result;
 }
 
@@ -22,11 +27,6 @@ void WaitForMessageDecorator::setOnMessageFunctionId(const GlobalId onUpdateFunc
 }
 
 
-void WaitForMessageDecorator::onMessage(Message& message) {
-    if (this->onMessageFunctionId) {
-        BehaviorTree::NodeStatus result = ScriptManager::Instance()->runFunction<BehaviorTree::NodeStatus>(this->onMessageFunctionId, this->tientity, message);
-        if (result == BehaviorTree::NodeStatus::SUCCESS) {
-            this->onMessageResult = result;
-        }
-    }
+void WaitForMessageDecorator::onMessage(std::shared_ptr<Message> message) {
+    this->message = std::weak_ptr<Message>(message);
 }

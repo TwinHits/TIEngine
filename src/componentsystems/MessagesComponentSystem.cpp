@@ -36,7 +36,7 @@ void MessagesComponentSystem::update(const float delta) {
                             // For each of the recipient's subscribed onMessage callback
                             for (auto& onMessage : messagesComponent->subscriptions[subscriptionId]) {
 								// If the message is still valid
-                                if (message.valid) {
+                                if (message->valid) {
                                     onMessage(message);
 								} else {
 									break;
@@ -84,7 +84,7 @@ bool MessagesComponentSystem::removeComponent(TIEntity& tientity) {
 }
 
 
-void MessagesComponentSystem::subscribe(TIEntity& tientity, GlobalId subscription, std::function<void(Message&)> onMessage) {
+void MessagesComponentSystem::subscribe(TIEntity& tientity, GlobalId subscription, std::function<void(std::shared_ptr<Message>)> onMessage) {
 	MessagesComponent& messagesComponent = this->addComponent(tientity);
 	messagesComponent.subscribe(subscription, onMessage);
 }
@@ -99,7 +99,7 @@ void MessagesComponentSystem::sendMessage(Message& message) {
     if (!this->nextFrameMessages[redirectedRecipientId].count(message.subscription)) {
         this->nextFrameMessages[redirectedRecipientId][message.subscription];
     }
-    this->nextFrameMessages[redirectedRecipientId][message.subscription].push_back(message);
+    this->nextFrameMessages[redirectedRecipientId][message.subscription].push_back(std::make_shared<Message>(message));
 }
 
 
