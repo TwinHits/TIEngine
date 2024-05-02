@@ -1,6 +1,5 @@
 #include "componentsystems/ClickableComponentSystem.h" 
 
-#include "componentsystems/MessagesComponentSystem.h"
 #include "managers/ComponentSystemsManager.h"
 #include "managers/InputManager.h"
 #include "managers/MessageManager.h"
@@ -45,8 +44,7 @@ ClickableComponent& ClickableComponentSystem::addComponent(const TIEntityFactory
 ClickableComponent& ClickableComponentSystem::addComponent(TIEntity& tientity) {
 	if (!tientity.hasComponent<ClickableComponent>()) {
 		ClickableComponent& clickableComponent = tientity.addComponent<ClickableComponent>();
-		MessagesComponent& messagesComponent = MessagesComponentSystem::Instance()->addComponent(tientity);
-		this->components.push_back({ clickableComponent, messagesComponent, tientity });
+		this->components.push_back({ clickableComponent, tientity });
 		return clickableComponent;
 	} else {
 		return *tientity.getComponent<ClickableComponent>();
@@ -73,7 +71,6 @@ bool ClickableComponentSystem::removeComponent(TIEntity& tientity) {
 void ClickableComponentSystem::setOnClick(TIEntity& tientity, std::function<void(Message&)> onClick) {
 	ClickableComponent& clickableComponent = this->addComponent(tientity);
 	clickableComponent.setOnClickFunction(onClick);
-	MessagesComponentSystem::Instance()->subscribe(tientity, this->clickedMessageSubscription, onClick);
 }
 
 
@@ -89,7 +86,7 @@ void ClickableComponentSystem::onClick() {
         if (c.clickableComponent.isClickable()) {
             if (ComponentSystems::doesGlobalBoundsContain(c.tientity, clickPosition)) {
 				if (c.clickableComponent.getOnClickFunction()) {
-					MessagesComponentSystem::Instance()->sendMessage(Message(this->clickedMessageSubscription, c.tientity.getId(), c.tientity.getId()));
+					c.clickableComponent.getOnClickFunction()(Message(this->clickedMessageSubscription, c.tientity.getId(), c.tientity.getId()));
 				}
 				if (c.clickableComponent.getOnClickFunctionId()) {
 					ScriptManager::Instance()->runFunction<sol::optional<bool>>(c.clickableComponent.getOnClickFunctionId(), c.tientity);

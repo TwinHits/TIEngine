@@ -32,7 +32,6 @@ namespace TIE {
 
 		struct Components {
 			ClickableComponent& clickableComponent;
-			MessagesComponent& messagesComponent;
 			TIEntity& tientity;
 		};
 		std::list<Components> components;
