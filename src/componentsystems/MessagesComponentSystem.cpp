@@ -36,7 +36,7 @@ void MessagesComponentSystem::update(const float delta) {
                             // For each of the recipient's subscribed onMessage callback
                             for (auto& onMessage : messagesComponent->subscriptions[subscriptionId]) {
 								// If the message is still valid
-                                if (message.valid) {
+                                if (message->valid) {
                                     onMessage(message);
 								} else {
 									break;
@@ -84,27 +84,14 @@ bool MessagesComponentSystem::removeComponent(TIEntity& tientity) {
 }
 
 
-const GlobalId MessagesComponentSystem::registerMessageSubscription(const std::string& name) {
-	if (!this->messageSubscriptions.count(name)) {
-		this->messageSubscriptions[name] = HashManager::Instance()->getNewGlobalId();
-	}
-	return this->messageSubscriptions.at(name);
-}
-
-
-const std::map<std::string, GlobalId>& MessagesComponentSystem::getMessageSubscriptions() {
-	return this->messageSubscriptions;
-}
-
-
-void MessagesComponentSystem::subscribe(TIEntity& tientity, GlobalId subscription, std::function<void(Message&)> onMessage) {
+void MessagesComponentSystem::subscribe(TIEntity& tientity, GlobalId subscription, std::function<void(std::shared_ptr<Message>)> onMessage) {
 	MessagesComponent& messagesComponent = this->addComponent(tientity);
 	messagesComponent.subscribe(subscription, onMessage);
 }
 
 
-void MessagesComponentSystem::sendMessage(const Message& message) {
-	const GlobalId redirectedSenderI  = this->getSenderId(message.senderId);
+void MessagesComponentSystem::sendMessage(Message& message) {
+	message.senderId = this->getSenderId(message.senderId);
 	const GlobalId redirectedRecipientId = this->getRecipientId(message.recipientId);
 	if (!this->nextFrameMessages.count(redirectedRecipientId)) {
         this->nextFrameMessages[redirectedRecipientId];
@@ -112,7 +99,7 @@ void MessagesComponentSystem::sendMessage(const Message& message) {
     if (!this->nextFrameMessages[redirectedRecipientId].count(message.subscription)) {
         this->nextFrameMessages[redirectedRecipientId][message.subscription];
     }
-    this->nextFrameMessages[redirectedRecipientId][message.subscription].push_back(message);
+    this->nextFrameMessages[redirectedRecipientId][message.subscription].push_back(std::make_shared<Message>(message));
 }
 
 

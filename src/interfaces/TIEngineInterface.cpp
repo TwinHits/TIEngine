@@ -5,12 +5,12 @@
 #include <sol/sol.hpp>
 
 #include "componentsystems/BehavesComponentSystem.h"
-#include "componentsystems/MessagesComponentSystem.h"
 #include "interfaces/MessageInterface.h"
 #include "interfaces/TIEntityInterface.h"
 #include "managers/AssetsManager.h"
 #include "managers/ComponentSystemsManager.h"
 #include "managers/InputManager.h"
+#include "managers/MessageManager.h"
 #include "managers/SceneManager.h"
 #include "managers/ScriptManager.h"
 #include "managers/ViewManager.h"
@@ -171,12 +171,12 @@ const std::map<std::string, int>& TIEngineInterface::getBehaviorTreeNodeStatuses
 
 
 GlobalId TIEngineInterface::registerMessageSubscription(const std::string& name) {
-    return MessagesComponentSystem::Instance()->registerMessageSubscription(name);
+    return MessageManager::Instance()->getSubscriptionId(name);
 }
 
 
-const std::map<std::string, GlobalId>& TIEngineInterface::getMessageSubscriptions() {
-    return MessagesComponentSystem::Instance()->getMessageSubscriptions();
+const std::map<const std::string, GlobalId>& TIEngineInterface::getMessageSubscriptions() {
+    return MessageManager::Instance()->getSubscriptionIds();
 }
 
 

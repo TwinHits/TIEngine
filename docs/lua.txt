@@ -1,3 +1,0 @@
-Lua Interface Notes
-
-	Changing a reference coming into the interface does not change the value in the lua script

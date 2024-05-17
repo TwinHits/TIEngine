@@ -4,6 +4,7 @@
 #include "objects/components/Component.h"
 
 #include <map>
+#include <memory>
 #include <vector>
 
 #include "objects/GlobalId.h"
@@ -13,11 +14,11 @@ namespace TIE {
 
 class MessagesComponent : public Component {
     public:
-        std::map<GlobalId, std::vector<std::function<void(Message&)>>> subscriptions;
+        std::map<GlobalId, std::vector<std::function<void(std::shared_ptr<Message>)>>> subscriptions;
         GlobalId redirectFromId = 0;
         GlobalId redirectToId = 0;
 
-        void subscribe(GlobalId, std::function<void(Message&)>);
+        void subscribe(GlobalId, std::function<void(std::shared_ptr<Message>)>);
 };
 
 }

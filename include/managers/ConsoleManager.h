@@ -17,14 +17,8 @@ class ConsoleManager : public Singleton<ConsoleManager>, public Manager {
 	public:
 		void initialize();
 
-		void showConsole();
-		void hideConsole();
-		bool checkConsole();
-		void runCommand();
+		bool isConsoleDrawn();
 		void scroll(Direction direction);
-		void traverseDownHistory();
-		void traverseUpHistory();
-		void addToInput(unsigned int unicodeCharacter);
 		const std::string& getInput();
 
 		void setDevConsole(std::unique_ptr<DevConsole> devConsole);
@@ -32,6 +26,12 @@ class ConsoleManager : public Singleton<ConsoleManager>, public Manager {
 		ConsoleManager() {};
 		~ConsoleManager() {};
 	private:
+		void toggleConsole();
+		void runCommand();
+		void traverseDownHistory();
+		void traverseUpHistory();
+		void appendToInput();
+
 		void printSceneGraph(TIEntity&);
 		void clearConsoleHistory();
 		void clearDebugLog();

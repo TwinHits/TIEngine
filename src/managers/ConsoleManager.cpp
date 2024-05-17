@@ -5,12 +5,14 @@
 #include <queue>
 
 #include "componentsystems/SpriteComponentSystem.h"
-#include "managers/WorldManager.h"
+#include "managers/InputManager.h"
 #include "managers/LogManager.h"
+#include "managers/MessageManager.h"
 #include "managers/SceneManager.h"
 #include "managers/ScriptManager.h"
 #include "managers/ViewManager.h"
 #include "managers/WindowManager.h"
+#include "managers/WorldManager.h"
 #include "objects/components/TextComponent.h"
 #include "objects/constants/ConsoleCommands.h"
 #include "templates/MakeUnique.h"
@@ -23,20 +25,21 @@ void ConsoleManager::initialize() {
 	this->devConsole = &dynamic_cast<DevConsole&>(SceneManager::Instance()->getEngineLayer().attachChild(make_unique<DevConsole>()));
 	this->devConsole->initialize();
 	this->currentCommand = &this->devConsole->getCurrentCommand();
+
+	MessageManager::Instance()->subscribe("TILDE", std::bind(&ConsoleManager::toggleConsole, this));
+	MessageManager::Instance()->subscribe("RETURN", std::bind(&ConsoleManager::runCommand, this));
+	MessageManager::Instance()->subscribe("UP", std::bind(&ConsoleManager::traverseUpHistory, this));
+	MessageManager::Instance()->subscribe("DOWN", std::bind(&ConsoleManager::traverseDownHistory, this));
+	MessageManager::Instance()->subscribe("TEXTENTERED", std::bind(&ConsoleManager::appendToInput, this));
 }
 
 
-void ConsoleManager::showConsole() {
-	ComponentSystems::setDrawn(*this->devConsole, true);
+void ConsoleManager::toggleConsole() {
+	ComponentSystems::setDrawn(*this->devConsole, !ComponentSystems::isDrawn(*this->devConsole));
 }
 
 
-void ConsoleManager::hideConsole() {
-	ComponentSystems::setDrawn(*this->devConsole, false);
-}
-
-
-bool ConsoleManager::checkConsole() {
+bool ConsoleManager::isConsoleDrawn() {
 	return ComponentSystems::isDrawn(*this->devConsole);
 }
 
@@ -140,17 +143,21 @@ void ConsoleManager::traverseUpHistory() {
 }
 
 
-void ConsoleManager::addToInput(unsigned int unicodeCharacter) {
-	if (unicodeCharacter < 128  // if it's a character
-	&& unicodeCharacter != 126 // tilde
-	&& unicodeCharacter != 96 // back tick/open quote
-	&& unicodeCharacter != 13 // return
-	&& unicodeCharacter != 8) { // backspace
-		this->input += static_cast<char>(unicodeCharacter);
-	} else if (unicodeCharacter == 8) { //backspace
-		this->input = this->input.substr(0, this->input.length() - 1);
+void ConsoleManager::appendToInput() {
+	const sf::Event* textEnteredEvent = InputManager::Instance()->getEvent(sf::Event::TextEntered);
+	if (textEnteredEvent) {
+		const unsigned int unicodeCharacter = textEnteredEvent->text.unicode;
+		if (unicodeCharacter < 128  // if it's a character
+			&& unicodeCharacter != 126 // tilde
+			&& unicodeCharacter != 96 // back tick/open quote
+			&& unicodeCharacter != 13 // return
+			&& unicodeCharacter != 8) { // backspace
+			this->input += static_cast<char>(unicodeCharacter);
+		} else if (unicodeCharacter == 8) { //backspace
+			this->input = this->input.substr(0, this->input.length() - 1);
+		}
+		this->currentCommand->getComponent<TextComponent>()->setString(this->input);
 	}
-	this->currentCommand->getComponent<TextComponent>()->setString(this->input);
 }
 
 

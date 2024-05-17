@@ -4,6 +4,7 @@
 #include "componentSystems/OwnsComponent.h"
 #include "templates/Singleton.h"
 
+#include <memory>
 #include <vector>
 #include <string>
 
@@ -22,12 +23,9 @@ class MessagesComponentSystem : public Singleton<MessagesComponentSystem>, publi
 		MessagesComponent& addComponent(const TIEntityFactory&, TIEntity&);
 		bool removeComponent(TIEntity&);
 		
-		const GlobalId registerMessageSubscription(const std::string&);
-		const std::map<std::string, GlobalId>& getMessageSubscriptions();
+		void subscribe(TIEntity&, GlobalId, std::function<void(std::shared_ptr<Message>)> onMessage);
 
-		void subscribe(TIEntity&, GlobalId, std::function<void(Message&)>);
-
-		void sendMessage(const Message&);
+		void sendMessage(Message&);
 
 		static const inline std::string MESSAGES = "messages";
 	private:
@@ -37,8 +35,8 @@ class MessagesComponentSystem : public Singleton<MessagesComponentSystem>, publi
 		std::list<Components> components;
 
 		std::map<std::string, GlobalId> messageSubscriptions;
-		std::map<GlobalId, std::map<GlobalId, std::vector<Message>>> currentFrameMessages;
-		std::map<GlobalId, std::map<GlobalId, std::vector<Message>>> nextFrameMessages;
+		std::map<GlobalId, std::map<GlobalId, std::vector<std::shared_ptr<Message>>>> currentFrameMessages;
+		std::map<GlobalId, std::map<GlobalId, std::vector<std::shared_ptr<Message>>>> nextFrameMessages;
 
 		const GlobalId getSenderId(const GlobalId);
 		const GlobalId getRecipientId(const GlobalId);

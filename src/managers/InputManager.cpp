@@ -1,14 +1,9 @@
 #include "managers/InputManager.h" 
 
-#include <cstdio>
-
 #include <SFML/Graphics.hpp>
 
 #include "componentsystems/EventsComponentSystem.h"
-#include "componentsystems/MessagesComponentSystem.h"
 #include "managers/MessageManager.h"
-#include "managers/LogManager.h"
-#include "managers/SceneManager.h"
 #include "managers/ViewManager.h"
 #include "managers/WindowManager.h"
 #include "objects/Message.h"
@@ -44,81 +39,15 @@ void InputManager::processInput() {
 
 	sf::Event event;
 	while (window.pollEvent(event)) {
-
-		//Window Input Commands
-		if (!consoleManager->checkConsole()) {
-			switch (event.type) {
-			case sf::Event::Closed:
-				window.close();
-				LogManager::Instance()->debug("Window closed by X.");
-				break;
-			case sf::Event::KeyPressed:
-				switch (event.key.code) {
-				case sf::Keyboard::Escape:
-					window.close();
-					LogManager::Instance()->debug("Window closed by escape.");
-					break;
-				case sf::Keyboard::Home:
-					SceneManager::Instance()->setSimulationPaused(!SceneManager::Instance()->isSimulationPaused());
-					break;
-				case sf::Keyboard::Tilde:
-					consoleManager->showConsole();
-					break;
-				default:
-					this->events.insert({ event.type, event });
-					break;
-				}
-				break;
-			case sf::Event::MouseButtonPressed:
-				event.mouseButton.x = this->mouseWorldPosition.x;
-				event.mouseButton.y = this->mouseWorldPosition.y;
-				this->events.insert({ event.type, event });
-				break;
-			case sf::Event::MouseMoved:
-			case sf::Event::MouseEntered:
-			case sf::Event::MouseLeft:
-			case sf::Event::LostFocus:
-			case sf::Event::GainedFocus:
-				break;
-			default:
-					this->events.insert({ event.type, event });
-				break;
-			}
-		} else if (consoleManager->checkConsole()) {
-			//Console Input Commands
-			switch (event.type) {
-			case sf::Event::Closed:
-				window.close();
-				LogManager::Instance()->info("Window closed.");
-				break;
-			case sf::Event::KeyPressed:
-				switch (event.key.code) {
-				case sf::Keyboard::Escape:
-					consoleManager->hideConsole();
-					break;
-				case sf::Keyboard::Tilde:
-					consoleManager->hideConsole();
-					break;
-				case sf::Keyboard::Return:
-					consoleManager->runCommand();
-					break;
-				case sf::Keyboard::Up:
-					consoleManager->traverseUpHistory();
-					break;
-				case sf::Keyboard::Down:
-					consoleManager->traverseDownHistory();
-					break;
-				default:
-					break;
-				}
-				break;
-			case sf::Event::TextEntered:
-				consoleManager->addToInput(event.text.unicode);
-				break;
-			default:
-				break;
-			}
-		}
+        switch (event.type) {
+            case sf::Event::MouseButtonPressed:
+                event.mouseButton.x = this->mouseWorldPosition.x;
+                event.mouseButton.y = this->mouseWorldPosition.y;
+                break;
+            default:
+                break;
+        }
+        this->events.insert({ event.type, event });
 		this->publishInputEvent(event);
 	}
 }
@@ -132,7 +61,6 @@ void InputManager::publishInputEvent(const sf::Event& event) {
 		key = SfEventStringMap::EVENT_TYPE_TO_STRING.at(event.type);
 	}
 	MessageManager::Instance()->publish(key);
-	const GlobalId subscriptionId = MessagesComponentSystem::Instance()->registerMessageSubscription(key);
+	const GlobalId subscriptionId = MessageManager::Instance()->getSubscriptionId(key);
 	EventsComponentSystem::Instance()->publish(Message(subscriptionId));
-
 }

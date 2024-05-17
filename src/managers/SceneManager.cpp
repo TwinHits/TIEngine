@@ -4,6 +4,7 @@
 #include <memory>
 
 #include "managers/ComponentSystemsManager.h"
+#include "managers/MessageManager.h"
 #include "managers/UIManager.h"
 #include "managers/ViewManager.h"
 #include "managers/WorldManager.h"
@@ -31,6 +32,8 @@ void SceneManager::initialize() {
 		.setViewId(ViewManager::Instance()->getEngineViewId())
 		.setName("EngineLayer")
 	.build();
+
+	MessageManager::Instance()->subscribe("HOME", std::bind(&SceneManager::toggleSimulationPaused, this));
 }
 
 
@@ -99,8 +102,8 @@ void SceneManager::setTIEntitiesMarkedForRemove(bool flag) {
 }
 
 
-void SceneManager::setSimulationPaused(const bool simulationPaused) {
-	this->simulationPaused = simulationPaused;
+void SceneManager::toggleSimulationPaused() {
+	this->simulationPaused = !this->simulationPaused;
 }
 
 

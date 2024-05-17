@@ -20,3 +20,16 @@ void MessageManager::publish(const std::string& subscription) {
 		}
 	}
 }
+
+
+const GlobalId MessageManager::getSubscriptionId(const std::string& subscription) {
+	if (!this->subscriptionIds.count(subscription)) {
+		this->subscriptionIds[subscription] = HashManager::Instance()->getNewGlobalId();
+	}
+	return this->subscriptionIds.at(subscription);
+}
+
+
+const std::map<const std::string, GlobalId>& MessageManager::getSubscriptionIds() {
+	return this->subscriptionIds;
+}

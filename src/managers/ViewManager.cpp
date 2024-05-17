@@ -111,9 +111,9 @@ void ViewManager::setActiveView(GlobalId id) {
 
 void ViewManager::updateCamera(const float delta) {
 	const sf::Vector2f& mouseWindowPosition = this->inputManager->getMouseWindowPosition();
-	if (!this->consoleManager->checkConsole()) {
+	if (!this->consoleManager->isConsoleDrawn()) {
 		this->clientView->move(this->calculateClientScroll(mouseWindowPosition, delta));
-	} else if (this->consoleManager->checkConsole()) {
+	} else if (this->consoleManager->isConsoleDrawn()) {
 	
 	}
 }	

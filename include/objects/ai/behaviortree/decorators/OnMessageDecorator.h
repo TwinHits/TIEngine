@@ -3,6 +3,8 @@
 
 #include "objects/ai/behaviortree/decorators/NodeDecorator.h"
 
+#include <memory>
+
 #include "objects/tientities/TIEntity.h"
 #include "objects/enumeration/NodeStatus.h"
 #include "objects/GlobalId.h"
@@ -17,11 +19,11 @@ namespace TIE {
 
         void setOnMessageFunctionId(const GlobalId);
 
-        void onMessage(Message&);
+        void onMessage(std::shared_ptr<Message>);
 
     private:
         GlobalId onMessageFunctionId = 0;
-        BehaviorTree::NodeStatus onMessageResult = BehaviorTree::NodeStatus::FAILURE;
+        std::weak_ptr<Message> message = std::weak_ptr<Message>();
     };
 
 }
