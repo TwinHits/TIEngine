@@ -3,12 +3,14 @@
 #include "sol/sol.hpp"
 
 #include <string>
+#include <vector>
 
 #include "componentsystems/CacheComponentSystem.h"
 #include "componentsystems/MessagesComponentSystem.h"
 #include "componentsystems/PositionComponentSystem.h"
 #include "interfaces/MessageInterface.h"
 #include "managers/ComponentSystemsManager.h"
+#include "managers/ScriptManager.h"
 #include "objects/GlobalId.h"
 #include "objects/factories/tientities/TraceFactory.h"
 #include "objects/factories/tientities/CollisionBoxFactory.h"
@@ -130,6 +132,8 @@ void TIEntityInterface::setProperty(const std::string& key, const sol::object& v
             componentSystem->setComponentProperty(key, ScriptManager::Instance()->getValueFromObject<sf::Vector2f>(value), *this->tientity);
         } else if (value.is<sf::Vector2i>()) {
             componentSystem->setComponentProperty(key, ScriptManager::Instance()->getValueFromObject<sf::Vector2i>(value), *this->tientity);
+        } else if (value.is<std::vector<sf::Vector2f>>()) {
+            componentSystem->setComponentProperty(key, ScriptManager::Instance()->getValueFromObject<std::vector<sf::Vector2f>>(value), *this->tientity);
         }
     }
 }

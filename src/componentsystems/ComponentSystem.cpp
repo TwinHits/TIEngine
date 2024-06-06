@@ -33,6 +33,9 @@ void ComponentSystem::setComponentProperty(const std::string& key, const sf::Vec
 void ComponentSystem::setComponentProperty(const std::string& key, const sf::Vector2i& value, TIEntity& tientity) {}
 
 
+void ComponentSystem::setComponentProperty(const std::string& key, const std::vector<sf::Vector2f>& value, TIEntity& tientity) {}
+
+
 sol::object ComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
     return ScriptManager::Instance()->getObjectFromValue(nullptr);
 }

@@ -1,7 +1,6 @@
 #include "managers/ScriptManager.h"
 
 #include <string>
-#include <vector>
 
 #include <sol/sol.hpp>
 #define SOL_ALL_SAFETIES_ON 1

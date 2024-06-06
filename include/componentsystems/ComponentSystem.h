@@ -26,6 +26,7 @@ class ComponentSystem {
 		virtual void setComponentProperty(const std::string&, const std::string&, TIEntity&);
 		virtual void setComponentProperty(const std::string&, const sf::Vector2f&, TIEntity&);
 		virtual void setComponentProperty(const std::string&, const sf::Vector2i&, TIEntity&);
+		virtual void setComponentProperty(const std::string&, const std::vector<sf::Vector2f>&, TIEntity&);
 		virtual sol::object getComponentProperty(const std::string&, TIEntity&);
 
 		virtual std::string getComponentPropertiesString(TIEntity& tientity);
