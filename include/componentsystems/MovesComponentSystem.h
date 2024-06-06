@@ -28,6 +28,7 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, public Owns
 		void setComponentProperty(const std::string&, float, TIEntity&);
 		void setComponentProperty(const std::string&, const sf::Vector2f&, TIEntity&);
 		void setComponentProperty(const std::string&, const sf::Vector2i&, TIEntity&);
+		void setComponentProperty(const std::string&, const std::vector<sf::Vector2f>&, TIEntity&);
 		sol::object getComponentProperty(const std::string&, TIEntity&);
 
 		void setTargetPosition(TIEntity&, float);
@@ -47,6 +48,7 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, public Owns
 		static const inline std::string ROTATIONAL_ACCELERATION = "rotationalAcceleration";
 
 		static const inline std::string DESTINATION = "destination";
+		static const inline std::string DESTINATION_PATH = "destination_path";
 		static const inline std::string DESTINATION_X = "destination_x";
 		static const inline std::string DESTINATION_Y = "destination_y";
 		static const inline std::string AT_DESTINATION = "atDestination";
@@ -68,6 +70,9 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, public Owns
 		bool atTargetPosition(MovesComponent&, PositionComponent&);
 		bool atTargetSpeed(MovesComponent&);
 		bool atTargetRotation(MovesComponent&, PositionComponent&);
+
+		void setNextTargetPosition(TIEntity&);
+		void setNextTargetPosition(MovesComponent&, PositionComponent&);
 
 		void accelerate(MovesComponent&, PositionComponent&, const float);
 		void accelerateRotation(MovesComponent&, PositionComponent&, const float);
