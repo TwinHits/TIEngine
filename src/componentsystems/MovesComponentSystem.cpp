@@ -2,6 +2,7 @@
 
 #include <cmath>
 #include <string>
+#include <queue>
 
 #include <SFML/Graphics.hpp>
 
@@ -32,6 +33,7 @@ MovesComponentSystem::MovesComponentSystem() {
 	ComponentSystemsManager::Instance()->registerComponentPropertyKey(MovesComponentSystem::ROTATIONAL_SPEED, this);
 	ComponentSystemsManager::Instance()->registerComponentPropertyKey(MovesComponentSystem::ROTATIONAL_ACCELERATION, this);
 	ComponentSystemsManager::Instance()->registerComponentPropertyKey(MovesComponentSystem::DESTINATION, this);
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(MovesComponentSystem::DESTINATION_PATH, this);
 	ComponentSystemsManager::Instance()->registerComponentPropertyKey(MovesComponentSystem::DESTINATION_X, this);
 	ComponentSystemsManager::Instance()->registerComponentPropertyKey(MovesComponentSystem::DESTINATION_Y, this);
 	ComponentSystemsManager::Instance()->registerComponentPropertyKey(MovesComponentSystem::AT_DESTINATION, this);
@@ -165,6 +167,18 @@ void MovesComponentSystem::setComponentProperty(const std::string& key, const sf
 }
 
 
+void MovesComponentSystem::setComponentProperty(const std::string& key, const std::vector<sf::Vector2f>& value, TIEntity& tientity) {
+	MovesComponent& movesComponent = this->addComponent(tientity);
+    if (key == MovesComponentSystem::DESTINATION_PATH) {
+		movesComponent.path = std::queue<sf::Vector2f>();
+		for (auto& point : value) {
+			movesComponent.path.push(point);
+		}
+		this->setNextTargetPosition(tientity);
+    }
+}
+
+
 void MovesComponentSystem::setComponentProperty(const std::string& key, const sf::Vector2i& value, TIEntity& tientity) {
 	MovesComponent& movesComponent = this->addComponent(tientity);
     if (key == MovesComponentSystem::DESTINATION) {
@@ -284,6 +298,23 @@ bool MovesComponentSystem::atTargetRotation(MovesComponent& movesComponent, Posi
 }
 
 
+void MovesComponentSystem::setNextTargetPosition(TIEntity& tientity) {
+    MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
+    PositionComponent* positionComponent = tientity.getComponent<PositionComponent>();
+	if (movesComponent != nullptr && positionComponent != nullptr) {
+		this->setNextTargetPosition(*movesComponent, *positionComponent);
+	}
+}
+
+
+void MovesComponentSystem::setNextTargetPosition(MovesComponent& movesComponent, PositionComponent& positionComponent) {
+	if (movesComponent.path.size() && this->atTargetPosition(movesComponent, positionComponent)) {
+		movesComponent.targetPosition = movesComponent.path.front();
+		movesComponent.path.pop();
+	}
+}
+
+
 void MovesComponentSystem::accelerate(MovesComponent& movesComponent, PositionComponent& positionComponent, const float delta) {
 	if (!this->atTargetPosition(movesComponent, positionComponent)) {
 		if (Math::areFloatsEqual(movesComponent.acceleration, 0.0f) && Math::areFloatsEqual(movesComponent.deceleration, 0.0f)) {
@@ -361,8 +392,11 @@ void MovesComponentSystem::move(MovesComponent& movesComponent, PositionComponen
 			Math::distanceBetweenTwoPoints(newPosition, movesComponent.targetPosition) < 1.0f
 		) {
             positionComponent.position = movesComponent.targetPosition;
-			// Implicitly only sent once because speed is set to zero
-			MessagesComponentSystem::Instance()->sendMessage(Message(this->atDestinationMessageSubscription, tientity.getId(), tientity.getId()));
+			this->setNextTargetPosition(movesComponent, positionComponent);
+			if (this->atTargetPosition(movesComponent, positionComponent)) {
+				// Implicitly only sent once because speed is set to zero
+				MessagesComponentSystem::Instance()->sendMessage(Message(this->atDestinationMessageSubscription, tientity.getId(), tientity.getId()));
+			}
         } else {
             positionComponent.position = newPosition;
         }

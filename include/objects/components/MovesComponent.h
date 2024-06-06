@@ -3,6 +3,8 @@
 
 #include "objects/components/Component.h"
 
+#include <queue>
+
 #include <SFML/Graphics.hpp>
 
 namespace TIE {
@@ -21,6 +23,7 @@ class MovesComponent : public Component {
 		float rotationalAcceleration = 0.0f;
 
 		sf::Vector2f targetPosition = sf::Vector2f(0, 0);
+		std::queue<sf::Vector2f> path;
 
 		float targetRotation = 0.0f;
 
