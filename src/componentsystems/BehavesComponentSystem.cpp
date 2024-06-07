@@ -159,6 +159,7 @@ void BehavesComponentSystem::initializeBehaviorTreeDecoratorTypes() {
 	this->behaviorTreeDecoratorTypes.insert({BehaviorTreeNodeFactory::POST_CONDITION, BehaviorTreeNodeFactory::POST_CONDITION});
 	this->behaviorTreeDecoratorTypes.insert({BehaviorTreeNodeFactory::ON_MESSAGE, BehaviorTreeNodeFactory::ON_MESSAGE});
 	this->behaviorTreeDecoratorTypes.insert({BehaviorTreeNodeFactory::WAIT_FOR_MESSAGE, BehaviorTreeNodeFactory::WAIT_FOR_MESSAGE});
+	this->behaviorTreeDecoratorTypes.insert({BehaviorTreeNodeFactory::LOOP, BehaviorTreeNodeFactory::LOOP});
 
 }
 

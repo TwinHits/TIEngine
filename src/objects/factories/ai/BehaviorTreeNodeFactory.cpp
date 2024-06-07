@@ -13,6 +13,7 @@
 #include "objects/GlobalId.h"
 #include "objects/Message.h"
 #include "objects/ScriptTableReader.h"
+#include "objects/ai/behaviortree/decorators/LoopDecorator.h"
 #include "objects/ai/behaviortree/decorators/OnMessageDecorator.h"
 #include "objects/ai/behaviortree/decorators/PreConditionDecorator.h"
 #include "objects/ai/behaviortree/decorators/PostConditionDecorator.h"
@@ -68,6 +69,8 @@ std::unique_ptr<BehaviorTreeNode> BehaviorTreeNodeFactory::build(TIEntity& tient
                     this->addOnMessageDecorator(tientity, decoratorReader, *behaviorTreeNode);
                 } else if (decoratorType == BehaviorTreeNodeFactory::WAIT_FOR_MESSAGE) {
                     this->addWaitForMessageDecorator(tientity, decoratorReader, *behaviorTreeNode);
+                } else if (decoratorType == BehaviorTreeNodeFactory::LOOP) {
+                    this->addLoopDecorator(tientity, decoratorReader, *behaviorTreeNode);
                 } else {
                     LogManager::Instance()->error(decoratorType + " is an unknown decorator type.");
                 }
@@ -181,4 +184,10 @@ void BehaviorTreeNodeFactory::addWaitForMessageDecorator(TIEntity& tientity, con
         }
     }
     behaviorTreeNode.addPreDecorator(std::move(waitForMessageDecorator));
+}
+
+
+void BehaviorTreeNodeFactory::addLoopDecorator(TIEntity& tientity, const ScriptTableReader& reader, BehaviorTreeNode& behaviorTreeNode) {
+    std::unique_ptr<LoopDecorator> loopDecorator = make_unique<LoopDecorator>(tientity);
+    behaviorTreeNode.addPostDecorator(std::move(loopDecorator));
 }

@@ -12,7 +12,7 @@ namespace TIE {
 class PreConditionDecorator : public NodeDecorator {
     public:
         PreConditionDecorator(TIEntity&);
-        virtual BehaviorTree::NodeStatus update(const float delta);
+        virtual BehaviorTree::NodeStatus update(const float);
 
         void setPreConditonFunctionId(const GlobalId);
 

@@ -27,9 +27,10 @@ class BehaviorTreeNodeFactory {
 		static const inline std::string PARALLEL_NODE = "ParallelNode";
 		static const inline std::string PRIORITY_SELECTOR_NODE = "PrioritySelectorNode";
 
+		static const inline std::string LOOP = "loop";
+		static const inline std::string ON_MESSAGE = "onMessage";
 		static const inline std::string PRE_CONDITION = "preCondition";
 		static const inline std::string POST_CONDITION = "postCondition";
-		static const inline std::string ON_MESSAGE = "onMessage";
 		static const inline std::string WAIT_FOR_MESSAGE = "waitForMessage";
 	private:
 		GlobalId id = 0;
@@ -45,6 +46,7 @@ class BehaviorTreeNodeFactory {
 		void addPostConditionDecorator(TIEntity&, const ScriptTableReader&, BehaviorTreeNode&);
 		void addOnMessageDecorator(TIEntity&, const ScriptTableReader&, BehaviorTreeNode&);
 		void addWaitForMessageDecorator(TIEntity&, const ScriptTableReader&, BehaviorTreeNode&);
+		void addLoopDecorator(TIEntity&, const ScriptTableReader&, BehaviorTreeNode&);
 
 		static const inline std::string NAME = "Name";
 		static const inline std::string ON_UPDATE = "update";
