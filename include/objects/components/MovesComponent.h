@@ -22,7 +22,6 @@ class MovesComponent : public Component {
 		sf::Vector2f rotationalVelocity = sf::Vector2f(0, 0);
 		float rotationalAcceleration = 0.0f;
 
-		sf::Vector2f targetPosition = sf::Vector2f(0, 0);
 		std::queue<sf::Vector2f> path;
 
 		float targetRotation = 0.0f;
@@ -32,6 +31,14 @@ class MovesComponent : public Component {
 
 		float lastDistanceToTarget = 0.0f;
 		float lastRotationDistanceToTarget = 0.0f;
+
+		const bool hasTargetPosition() {
+			return this->path.size();
+		};
+
+		const sf::Vector2f& getTargetPosition() {
+			return this->path.front();
+		};
 };
 
 }
