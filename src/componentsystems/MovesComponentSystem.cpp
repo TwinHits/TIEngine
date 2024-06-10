@@ -9,6 +9,7 @@
 #include "componentsystems/PositionComponentSystem.h"
 #include "componentsystems/GridComponentSystem.h"
 #include "componentsystems/MessagesComponentSystem.h"
+#include "componentsystems/WireframeComponentSystem.h"
 #include "managers/ComponentSystemsManager.h"
 #include "managers/MessageManager.h"
 #include "managers/WorldManager.h"
@@ -407,3 +408,20 @@ void MovesComponentSystem::move(MovesComponent& movesComponent, PositionComponen
     }
 }
 
+
+std::pair<GlobalId, GlobalId> MovesComponentSystem::addWireframe(TIEntity& tientity) {
+	MovesComponent& movesComponent = this->addComponent(tientity);
+	PositionComponent& positionComponent = PositionComponentSystem::Instance()->addComponent(tientity);
+
+	const sf::Vector2f origin = sf::Vector2f(0, 0);
+	float distanceToTargetPosition = 0;
+    sf::FloatRect bounds = sf::FloatRect(0, 0, 0, 0);
+    float angleToTargetPosition = 0;
+    if (movesComponent.hasTargetPosition()) {
+        const sf::Vector2f& targetPosition = movesComponent.getTargetPosition();
+		distanceToTargetPosition = Math::distanceBetweenTwoPoints(positionComponent.worldPosition, targetPosition);
+		bounds = sf::FloatRect(0, 0, distanceToTargetPosition, 0);
+        angleToTargetPosition = Math::angleBetweenTwoPoints(positionComponent.worldPosition, targetPosition);
+	}
+	return WireframeComponentSystem::Instance()->createWireframe(tientity, bounds, origin, angleToTargetPosition);
+}

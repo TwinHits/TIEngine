@@ -38,6 +38,8 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, public Owns
 		bool atTargetPosition(TIEntity&);
 		bool atTargetRotation(TIEntity&);
 
+		std::pair<GlobalId, GlobalId> addWireframe(TIEntity&);
+
 		static const inline std::string MOVES = "moves";
 		static const inline std::string SPEED = "moves_speed";
 		static const inline std::string ACCELERATION = "acceleration";
@@ -70,9 +72,6 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, public Owns
 		bool atTargetPosition(MovesComponent&, PositionComponent&);
 		bool atTargetSpeed(MovesComponent&);
 		bool atTargetRotation(MovesComponent&, PositionComponent&);
-
-		void setNextTargetPosition(TIEntity&);
-		void setNextTargetPosition(MovesComponent&, PositionComponent&);
 
 		void accelerate(MovesComponent&, PositionComponent&, const float);
 		void accelerateRotation(MovesComponent&, PositionComponent&, const float);
