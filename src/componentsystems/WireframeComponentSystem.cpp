@@ -6,16 +6,18 @@
 #include <string>
 
 #include "componentsystems/LineComponentSystem.h"
+#include "componentsystems/MovesComponentSystem.h"
 #include "componentsystems/ShapeComponentSystem.h" 
 #include "componentsystems/SpriteComponentSystem.h" 
 #include "componentsystems/TextComponentSystem.h"
 #include "managers/ComponentSystemsManager.h"
 #include "managers/HashManager.h"
 #include "managers/ScriptManager.h"
-#include "objects/components/WireframeComponent.h"
 #include "objects/components/LineComponent.h"
+#include "objects/components/MovesComponent.h"
 #include "objects/components/SpriteComponent.h"
 #include "objects/components/TextComponent.h"
+#include "objects/components/WireframeComponent.h"
 #include "objects/tientities/TIEntity.h"
 #include "utils/ComponentSystems.h"
 #include "utils/TIEMath.h"
@@ -69,6 +71,25 @@ void WireframeComponentSystem::update(const float delta) {
 					}
 				}
             }
+
+			MovesComponent* movesComponent = c.tientity.getComponent<MovesComponent>();
+			if (movesComponent) {
+				const std::pair<GlobalId, GlobalId>* wireframeShapeIds = c.wireframeComponent.getWireframeShapeIds(movesComponent);
+				if (wireframeShapeIds) {
+					sf::Shape* sizeWireframeShape = c.shapeComponent.getShape(wireframeShapeIds->second);
+					if (sizeWireframeShape) {
+						sf::RectangleShape* rectangleShape = dynamic_cast<sf::RectangleShape*>(sizeWireframeShape);
+						PositionComponent* positionComponent = c.tientity.getComponent<PositionComponent>();
+						if (movesComponent->hasTargetPosition() && positionComponent) {
+							const sf::Vector2f& targetPosition = movesComponent->getTargetPosition();
+							const float distanceToTargetPosition = Math::distanceBetweenTwoPoints(positionComponent->worldPosition, targetPosition);
+							const float angleToTargetPosition = Math::angleBetweenTwoPoints(positionComponent->worldPosition, targetPosition);
+							rectangleShape->setSize(sf::Vector2f(distanceToTargetPosition, 0));
+							rectangleShape->setRotation(angleToTargetPosition);
+						}
+					}
+				}
+			}
 		}
 	}
 }
@@ -108,6 +129,11 @@ WireframeComponent& WireframeComponentSystem::addComponent(const TIEntityFactory
 		if (lineComponent) {
 			this->addWireframe(tientity, *lineComponent);
 		}
+
+		MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
+		if (movesComponent) {
+			this->addWireframe(tientity, *movesComponent);
+		}
 	}
 
 	return wireframeComponent;
@@ -130,8 +156,32 @@ bool WireframeComponentSystem::removeComponent(TIEntity& tientity) {
 }
 
 
-void WireframeComponentSystem::setComponentProperty(const std::string& key, float value, TIEntity& tientity)  {
+void WireframeComponentSystem::setComponentProperty(const std::string& key, bool value, TIEntity& tientity)  {
 	WireframeComponent& component = this->addComponent(tientity);
+    if (key == WireframeComponentSystem::SHOW_WIREFRAME) {
+        component.setShowWireframe(value);
+        if (component.getShowWireframe()) {
+            SpriteComponent* spriteComponent = tientity.getComponent<SpriteComponent>();
+            if (spriteComponent) {
+                this->addWireframe(tientity, *spriteComponent);
+            }
+
+            TextComponent* textComponent = tientity.getComponent<TextComponent>();
+            if (textComponent) {
+                this->addWireframe(tientity, *textComponent);
+            }
+
+            LineComponent* lineComponent = tientity.getComponent<LineComponent>();
+            if (lineComponent) {
+                this->addWireframe(tientity, *lineComponent);
+            }
+
+            MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
+            if (movesComponent) {
+                this->addWireframe(tientity, *movesComponent);
+            }
+		}
+    }
 }
 
 
@@ -179,6 +229,19 @@ void WireframeComponentSystem::addWireframe(TIEntity& tientity, LineComponent& l
 
     std::pair<GlobalId, GlobalId> wireframeShapeIds = LineComponentSystem::Instance()->addWireframe(tientity);
     wireframeComponent.addWireframeShapeIds(&lineComponent, wireframeShapeIds);
+	wireframeComponent.setShowWireframe(true);
+
+	shapeComponent.setDrawn(true);
+	shapeComponent.setRotates(true);
+}
+
+
+void WireframeComponentSystem::addWireframe(TIEntity& tientity, MovesComponent& movesComponent) {
+	WireframeComponent& wireframeComponent = this->addComponent(tientity);
+	ShapeComponent& shapeComponent = ShapeComponentSystem::Instance()->addComponent(tientity);
+
+    std::pair<GlobalId, GlobalId> wireframeShapeIds = MovesComponentSystem::Instance()->addWireframe(tientity);
+    wireframeComponent.addWireframeShapeIds(&movesComponent, wireframeShapeIds);
 	wireframeComponent.setShowWireframe(true);
 
 	shapeComponent.setDrawn(true);
