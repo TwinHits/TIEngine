@@ -6,8 +6,9 @@
 
 #include <sol/sol.hpp>
 
-#include "objects/components/ShapeComponent.h"
 #include "objects/components/LineComponent.h"
+#include "objects/components/MovesComponent.h"
+#include "objects/components/ShapeComponent.h"
 #include "objects/components/SpriteComponent.h"
 #include "objects/components/TextComponent.h"
 #include "objects/components/WireframeComponent.h"
@@ -23,7 +24,7 @@ class WireframeComponentSystem : public Singleton<WireframeComponentSystem>, pub
 		WireframeComponent& addComponent(const TIEntityFactory&, TIEntity&);
 		bool removeComponent(TIEntity&);
 
-		void setComponentProperty(const std::string&, float, TIEntity&);
+		void setComponentProperty(const std::string&, bool, TIEntity&);
 		sol::object getComponentProperty(const std::string&, TIEntity&);
 
 		bool getShowWireframe(TIEntity&);
@@ -31,6 +32,7 @@ class WireframeComponentSystem : public Singleton<WireframeComponentSystem>, pub
 		void addWireframe(TIEntity&, SpriteComponent&);
 		void addWireframe(TIEntity&, TextComponent&);
 		void addWireframe(TIEntity&, LineComponent&);
+		void addWireframe(TIEntity&, MovesComponent&);
 			
 		std::pair<GlobalId, GlobalId> createWireframe(TIEntity&, const sf::FloatRect&, const sf::Vector2f&);
 		std::pair<GlobalId, GlobalId> createWireframe(TIEntity&, const sf::FloatRect&, const sf::Vector2f&, const float);
