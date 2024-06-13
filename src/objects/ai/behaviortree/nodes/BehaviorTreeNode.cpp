@@ -28,9 +28,11 @@ TIEntity& BehaviorTreeNode::getTIEntity() {
     return this->tientity;
 }
 
+
 const std::string& BehaviorTreeNode::getName() {
     return this->name;
 }
+
 
 const std::string& BehaviorTreeNode::getNodeType() {
     return this->nodeType;
