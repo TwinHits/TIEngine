@@ -26,6 +26,7 @@ BehavesComponentSystem::BehavesComponentSystem() {
 	this->initializeBehaviorTreeNodeTypes();
 	this->initializeBehaviorTreeDecoratorTypes();
 	this->initializeBehaviorTreeNodeStatuses();
+	this->initializeBehaviorTreeNodeStatusMessageSubscriptions();
 }
 
 
