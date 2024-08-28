@@ -55,7 +55,7 @@ void EventsComponentSystem::update(const float delta) {
 
 								// If the message is still valid
 								if (message.valid) {
-									ScriptManager::Instance()->runFunction<sol::optional<bool>>(functionId, c.tientity);
+									ScriptManager::Instance()->runFunction<sol::optional<bool>>(functionId, c.tientity, message);
 								} else {
 									break;
 								}
