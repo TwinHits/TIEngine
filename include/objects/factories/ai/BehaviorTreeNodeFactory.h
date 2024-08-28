@@ -27,7 +27,7 @@ class BehaviorTreeNodeFactory {
 		static const inline std::string PARALLEL_NODE = "ParallelNode";
 		static const inline std::string PRIORITY_SELECTOR_NODE = "PrioritySelectorNode";
 
-		static const inline std::string LOOP = "loop";
+	static const inline std::string LOOP = "Loop";
 		static const inline std::string ON_MESSAGE = "onMessage";
 		static const inline std::string PRE_CONDITION = "preCondition";
 		static const inline std::string POST_CONDITION = "postCondition";
