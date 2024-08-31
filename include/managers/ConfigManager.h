@@ -29,6 +29,7 @@ class ConfigManager: public Singleton<ConfigManager>, public Manager {
 		const bool getShowDegreeGuide();
 		const std::string& getStartUpScript();
 		const std::string& getEngineFontName();
+		const bool isLuaProfilerEnabled();
 
 		void setDefaultDisplayLanguage(const Language& defaultDisplayLanguage);
 		void setDebugLogLevel(LogLevel debugLogLevel);
@@ -52,6 +53,7 @@ class ConfigManager: public Singleton<ConfigManager>, public Manager {
 		bool defaultShowDegreeGuide = false;
 		std::string defaultStartUpScript = "";
 		std::string defaultEngineFontName = "DevConsole.ttf";
+		bool defaultLuaProfilerEnabled = false;
 
 		std::string debugLogPath = defaultDebugLogPath;
 		std::string assetsPath = defaultAssetsPath;
@@ -61,6 +63,7 @@ class ConfigManager: public Singleton<ConfigManager>, public Manager {
 		bool showDegreeGuide = defaultShowDegreeGuide;
 		std::string startUpScript = defaultStartUpScript;
 		std::string engineFontName = defaultEngineFontName;
+		bool luaProfilerEnabled = defaultLuaProfilerEnabled;
 
 		ConfigManager(const ConfigManager&);
 		void operator=(const ConfigManager&) {};

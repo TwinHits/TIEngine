@@ -33,27 +33,39 @@ public:
 	template <typename T>
 	T runFunction(const GlobalId functionId, TIEntity& tientity) {
         TIEntityInterface tientityInterface(tientity);
-		return this->functions.at(functionId)(std::tuple<TIEntityInterface>(tientityInterface));
+		this->startProfiler(functionId);
+		T result = this->functions.at(functionId)(std::tuple<TIEntityInterface>(tientityInterface));
+		this->stopProfiler(functionId);
+		return result;
 	}
 
 	template <typename T>
 	T runFunction(const GlobalId functionId, FiniteStateMachine& finiteStateMachine, const float delta) {
         TIEntityInterface tientityInterface(finiteStateMachine.getTIEntity());
 		FiniteStateMachineInterface finiteStateMachineInterface(finiteStateMachine);
-		return this->functions.at(functionId)(std::tuple<TIEntityInterface, FiniteStateMachineInterface, const float>(tientityInterface, finiteStateMachineInterface, delta));
+		this->startProfiler(functionId);
+		T result = this->functions.at(functionId)(std::tuple<TIEntityInterface, FiniteStateMachineInterface, const float>(tientityInterface, finiteStateMachineInterface, delta));
+		this->stopProfiler(functionId);
+		return result;
 	}
 
 	template <typename T>
 	T runFunction(const GlobalId functionId, TIEntity& tientity, const float delta) {
 		TIEntityInterface tientityInterface(tientity);
-		return this->functions.at(functionId)(std::tuple<TIEntityInterface, const float>(tientityInterface, delta));
+		this->startProfiler(functionId);
+		T result = this->functions.at(functionId)(std::tuple<TIEntityInterface, const float>(tientityInterface, delta));
+		this->stopProfiler(functionId);
+		return result;
 	}
 
 	template <typename T>
 	T runFunction(const GlobalId functionId, FiniteStateMachine& finiteStateMachine, const sol::object payload) {
 		TIEntityInterface tientityInterface(finiteStateMachine.getTIEntity());
 		FiniteStateMachineInterface finiteStateMachineInterface(finiteStateMachine);
-		return this->functions.at(functionId)(std::tuple<TIEntityInterface, FiniteStateMachineInterface, const sol::object>(tientityInterface, finiteStateMachineInterface, payload));
+		this->startProfiler(functionId);
+		T result = this->functions.at(functionId)(std::tuple<TIEntityInterface, FiniteStateMachineInterface, const sol::object>(tientityInterface, finiteStateMachineInterface, payload));
+		this->stopProfiler(functionId);
+		return result;
 	}
 
 	template <typename T>
@@ -61,14 +73,20 @@ public:
 		TIEntityInterface tientityInterface(finiteStateMachine.getTIEntity());
 		FiniteStateMachineInterface finiteStateMachineInterface(finiteStateMachine);
 		MessageInterface messageInterface(message);
-		return this->functions.at(functionId)(std::tuple<TIEntityInterface, FiniteStateMachineInterface, MessageInterface>(tientityInterface, finiteStateMachineInterface, messageInterface));
+		this->startProfiler(functionId);
+		T result = this->functions.at(functionId)(std::tuple<TIEntityInterface, FiniteStateMachineInterface, MessageInterface>(tientityInterface, finiteStateMachineInterface, messageInterface));
+		this->stopProfiler(functionId);
+		return result;
 	}
 
 	template <typename T>
 	T runFunction(const GlobalId functionId, TIEntity& tientity, Message& message) {
 		TIEntityInterface tientityInterface(tientity);
 		MessageInterface messageInterface(message);
-		return this->functions.at(functionId)(std::tuple<TIEntityInterface, MessageInterface>(tientityInterface, messageInterface));
+		this->startProfiler(functionId);
+		T result = this->functions.at(functionId)(std::tuple<TIEntityInterface, MessageInterface>(tientityInterface, messageInterface));
+		this->stopProfiler(functionId);
+		return result;
 	}
 
     void setScriptWorkingDirectory(const std::string&);
@@ -96,11 +114,20 @@ private:
 	sol::state luaState;
 	std::string scriptWorkingDirectory = "";
 	std::map<GlobalId, sol::function> functions;
+	std::map<GlobalId, std::string> functionNames;
+
+	// functionId to times run and average runtime
+	sf::Clock* profilerClock = nullptr;
+	std::map<GlobalId, std::pair<long, int>> functionMetrics;
 
 	bool isValidDefinitionFieldName(const std::string&);
+	std::string getFunctionName(sol::protected_function);
+	void startProfiler(const GlobalId);
+	void stopProfiler(const GlobalId);
 
 	ScriptManager(const ScriptManager&);
 	void operator=(const ScriptManager&) {};
+
 };
 
 }
