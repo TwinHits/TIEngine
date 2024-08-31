@@ -5,3 +5,4 @@ DefaultDisplayLanguage=en_US
 ShowMousePtrCoords=true
 ShowDegreeGuide=true
 StartUpScript=
+LuaProfilerEnabled=false

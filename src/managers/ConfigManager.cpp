@@ -60,6 +60,11 @@ const std::string& ConfigManager::getEngineFontName() {
 }
 
 
+const bool ConfigManager::isLuaProfilerEnabled() {
+	return this->luaProfilerEnabled;
+}
+
+
 void ConfigManager::setDefaultDisplayLanguage(const Language& defaultDisplayLanguage) {
 	this->defaultDisplayLanguage = defaultDisplayLanguage;
 }
@@ -116,6 +121,8 @@ void ConfigManager::parseConfig(std::ifstream& config) {
 				this->startUpScript = value;
 			} else if (key == "EngineFontName") {
 				this->engineFontName = value;
+			} else if (key == "LuaProfilerEnabled") {
+				this->luaProfilerEnabled = TIE::String::stringToBool(value);
 			}
 		}	 
 	}
@@ -131,4 +138,5 @@ void ConfigManager::restoreDefaultConfiguration() {
 	this->showMousePtrCoords = this->showMousePtrCoords;
 	this->startUpScript = this->defaultStartUpScript;
 	this->engineFontName = this->defaultEngineFontName;
+	this->luaProfilerEnabled = this->defaultLuaProfilerEnabled;
 }

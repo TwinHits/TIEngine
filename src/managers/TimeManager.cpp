@@ -1,7 +1,6 @@
 #include "managers/TimeManager.h"
 
 #include "managers/HashManager.h"
-#include "managers/LogManager.h"
 
 using namespace TIE;
 

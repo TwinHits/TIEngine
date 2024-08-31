@@ -14,6 +14,7 @@
 #include "managers/ConfigManager.h"
 #include "managers/HashManager.h"
 #include "managers/LogManager.h"
+#include "managers/TimeManager.h"
 #include "managers/ComponentSystemsManager.h"
 #include "objects/factories/tientities/TIEntityFactory.h"
 #include "objects/factories/ai/FiniteStateMachineFactory.h"
@@ -22,6 +23,8 @@
 using namespace TIE;
 
 void ScriptManager::initialize() {
+
+	this->profilerClock = &TimeManager::Instance()->addClock();
 
 	this->luaState.open_libraries(
 		sol::lib::base, 
@@ -70,7 +73,30 @@ void ScriptManager::loadScript(const std::string& scriptPath) {
 const GlobalId ScriptManager::registerFunction(const sol::function& function) {
     const GlobalId functionId = HashManager::Instance()->getNewGlobalId();
     this->functions.insert({ functionId, function });
+	if (ConfigManager::Instance()->isLuaProfilerEnabled()) {
+        // const std::string functionName = this->getFunctionName(function);
+        // this->functionNames.insert({ functionId, functionName });
+	}
 	return functionId;
+}
+
+
+std::string ScriptManager::getFunctionName(sol::protected_function func) {
+	// Push the function onto the stack
+	lua_State* L = func.lua_state();
+	func.push();
+
+	// Use Lua's debug library to get function info
+	lua_Debug ar;
+	lua_getinfo(L, ">n", &ar);
+	const char* func_name = lua_tostring(L, -1);
+	lua_pop(L, 1); // Pop the name off the stack
+
+	if (func_name) {
+		return func_name;
+	} else {
+		return "unknown";
+	}
 }
 
 
@@ -144,3 +170,24 @@ sol::table ScriptManager::copyTable(const sol::table& original) {
 	}
 	return copy;
 }
+
+
+void ScriptManager::startProfiler(const GlobalId functionId) {
+	if (ConfigManager::Instance()->isLuaProfilerEnabled()) {
+		if (this->functionMetrics.count(functionId)) {
+			this->functionMetrics[functionId];
+		}
+		profilerClock->restart();
+	}
+}
+
+
+void ScriptManager::stopProfiler(const GlobalId functionId) {
+	if (ConfigManager::Instance()->isLuaProfilerEnabled()) {
+		const int elapsedTime = profilerClock->getElapsedTime().asMicroseconds();
+		std::pair<long, int>& metrics = this->functionMetrics[functionId];
+		// average runtime * times run + new runtime / times run plus one
+		metrics.second = (metrics.second * metrics.first + elapsedTime) / ++metrics.first;
+	}
+}
+
