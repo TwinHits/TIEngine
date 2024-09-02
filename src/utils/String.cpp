@@ -24,6 +24,7 @@ std::vector<std::string> TIE::String::slice(const std::string& string, const cha
     }
 }
 
+
 std::vector<std::string> TIE::String::slice(const std::string& string, const char delimiter, const int start, const int end) {
     std::vector<std::string> parts;
     TIE::String::split(string, delimiter, parts);
