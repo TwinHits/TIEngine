@@ -18,6 +18,7 @@
 #include "objects/tientities/common/SceneLayer.h"
 #include "templates/MakeUnique.h"
 #include "utils/ComponentSystems.h"
+#include "utils/String.h"
 
 using namespace TIE;
 
@@ -59,6 +60,7 @@ void DevConsole::initialize() {
 	currentCommandTextComponent.setDrawn(true);
 
 	this->setPosition();
+	this->setLineCharacterLimit();
 
 	ComponentSystems::setDrawn(*this, false);
 
@@ -71,8 +73,26 @@ void DevConsole::update(const float delta) {
 	while (!this->queueToDraw.empty()) {
 		TextComponent* textComponent = this->consoleHistory.getComponent<TextComponent>();
 		if (textComponent != nullptr) {
-			auto s = this->queueToDraw.front();
-			textComponent->setString(textComponent->getString() + '\n' + s);
+			const std::string& s = this->queueToDraw.front();
+			if (s.length() > this->lineCharacterLimit) {
+
+				std::vector<std::string> breakNewLines;
+                String::split(s, '\n', breakNewLines);
+
+                std::vector<std::string> lines;
+                for (auto& breakNewLine : breakNewLines) {
+                    for (int i = 0; i <= breakNewLine.length() / this->lineCharacterLimit; i++) {
+                        const std::string line = breakNewLine.substr(this->lineCharacterLimit * i, this->lineCharacterLimit * (i + 1));
+                        lines.push_back(line);
+                    }
+                }
+
+                for (const std::string& line : lines) {
+                    textComponent->setString(textComponent->getString() + '\n' + s);
+				}
+			} else {
+				textComponent->setString(textComponent->getString() + '\n' + s);
+			}
 			this->queueToDraw.pop();
 		}
 	}
@@ -125,6 +145,13 @@ void DevConsole::setPosition() {
 }
 
 
+void DevConsole::setLineCharacterLimit() {
+	const sf::Vector2i& windowSize = WindowManager::Instance()->getWindowSize();
+	this->lineCharacterLimit = windowSize.x * .95 / this->fontSize;
+}
+
+
 void DevConsole::onWindowSizeChange() {
 	this->setPosition();
+	this->setLineCharacterLimit();
 }

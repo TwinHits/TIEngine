@@ -32,10 +32,12 @@ class DevConsole : public TIEntity {
 		SceneLayer& consoleHistorySceneLayer;
 		TIEntity& consoleHistory;
 		int fontSize = 16;
+		int lineCharacterLimit = 80;
 		sf::Vector2i textWritePosition;
 		std::queue<std::string>& queueToDraw = LogManager::Instance()->getQueueToDraw();
 
 		void setPosition();
+		void setLineCharacterLimit();
 };
 
 } 
