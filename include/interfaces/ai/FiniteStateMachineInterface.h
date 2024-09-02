@@ -5,7 +5,7 @@
 
 #include <sol/sol.hpp>
 
-#include "objects/ai/FiniteStateMachine.h"
+#include "ai/FiniteStateMachine.h"
 #include "objects/GlobalId.h"
 
 namespace TIE {

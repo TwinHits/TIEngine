@@ -5,7 +5,7 @@
 #include "managers/HashManager.h"
 #include "managers/ScriptManager.h"
 #include "managers/WorldManager.h"
-#include "objects/ai/FiniteStateMachine.h"
+#include "ai/FiniteStateMachine.h"
 #include "templates/MakeUnique.h"
 
 using namespace TIE;

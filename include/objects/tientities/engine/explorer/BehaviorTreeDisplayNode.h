@@ -6,7 +6,7 @@
 #include "SFML/Graphics.hpp"
 
 #include "objects/Message.h"
-#include "objects/ai/behaviortree/nodes/BehaviorTreeNode.h"
+#include "ai/behaviortree/nodes/BehaviorTreeNode.h"
 #include "objects/components/TextComponent.h"
 
 namespace TIE {
