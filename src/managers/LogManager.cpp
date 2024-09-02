@@ -80,13 +80,15 @@ void LogManager::debug(const std::string& message) {
 	if (this->isDebugEnabled()) {
 		std::string logString = "[" +  LocalTime() +  "]" + " DEBUG: " +  message;
 		logHistory.push(logString);
-		log << logString << std::endl;
+		if (this->log.is_open()) {
+			log << logString << std::endl;
+		}
 	}
 }
 
 
 void LogManager::info(const std::string& message) {
-	if (this->isInfoEnabled()) {
+	if (this->isInfoEnabled() && this->log.is_open()) {
 		std::string logString = "[" +  LocalTime() +  "]" + " INFO: " +  message;
 		logHistory.push(logString);
 		log << logString << std::endl;
@@ -95,10 +97,12 @@ void LogManager::info(const std::string& message) {
 
 
 void LogManager::warn(const std::string& message) {
-	if (this->isErrorEnabled()) {
+	if (this->isWarnEnabled()) {
 		std::string logString = "[" +  LocalTime() +  "]" + " WARN: " +  message;
 		logHistory.push(logString);
-		log << logString << std::endl;
+		if (this->log.is_open()) {
+			log << logString << std::endl;
+		}
 	}
 }
 
@@ -107,7 +111,9 @@ void LogManager::error(const std::string& message) {
 	if (this->isErrorEnabled()) {
 		std::string logString = "[" +  LocalTime() +  "]" + " ERROR: " +  message;
 		logHistory.push(logString);
-		log << logString << std::endl;
+		if (this->log.is_open()) {
+			log << logString << std::endl;
+		}
 	}
 }
 
@@ -115,5 +121,7 @@ void LogManager::error(const std::string& message) {
 void LogManager::command(const std::string& message) {
     std::string logString = "[" +  LocalTime() +  "]" + " COMMAND: " +  message;
     logHistory.push(logString);
-    log << logString << std::endl;
+	if (this->log.is_open()) {
+		log << logString << std::endl;
+	}
 }
