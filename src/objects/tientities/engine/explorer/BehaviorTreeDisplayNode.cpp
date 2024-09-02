@@ -8,7 +8,7 @@
 #include "componentsystems/PositionComponentSystem.h"
 #include "componentsystems/ShapeComponentSystem.h"
 #include "objects/Message.h"
-#include "objects/ai/behaviortree/nodes/BehaviorTreeNode.h"
+#include "ai/behaviortree/nodes/BehaviorTreeNode.h"
 #include "objects/components/ShapeComponent.h"
 #include "objects/components/TextComponent.h"
 #include "objects/enumeration/NodeStatus.h"

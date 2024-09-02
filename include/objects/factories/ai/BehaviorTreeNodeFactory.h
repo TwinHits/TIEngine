@@ -8,7 +8,7 @@
 #include <string>
 
 #include "objects/GlobalId.h"
-#include "objects/ai/behaviortree/nodes/BehaviorTreeNode.h"
+#include "ai/behaviortree/nodes/BehaviorTreeNode.h"
 #include "objects/ScriptTableReader.h"
 
 namespace TIE {
