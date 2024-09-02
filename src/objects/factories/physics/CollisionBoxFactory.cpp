@@ -1,4 +1,4 @@
-#include "objects/factories/tientities/CollisionBoxFactory.h"
+#include "objects/factories/physics/CollisionBoxFactory.h"
 
 #include "componentsystems/CollidesComponentSystem.h"
 #include "componentsystems/MessagesComponentSystem.h"

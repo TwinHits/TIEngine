@@ -1,4 +1,4 @@
-#include "objects/factories/tientities/TraceFactory.h"
+#include "objects/factories/physics/TraceFactory.h"
 
 #include "componentsystems/BehavesComponentSystem.h"
 #include "componentsystems/CollidesComponentSystem.h"
