@@ -1,9 +1,9 @@
 #include "objects/components/TextComponent.h"
 
 #include "componentsystems/TextComponentSystem.h"
+#include "enumeration/TextAlignment.h"
 #include "managers/AssetsManager.h"
 #include "objects/assets/FontAsset.h"
-#include "objects/enumeration/TextAlignment.h"
 
 using namespace TIE;
 

@@ -6,8 +6,8 @@
 #include <vector>
 
 #include "ai/behaviortree/decorators/NodeDecorator.h"
+#include "enumeration/NodeStatus.h"
 #include "objects/GlobalId.h"
-#include "objects/enumeration/NodeStatus.h"
 #include "objects/tientities/TIEntity.h"
 
 namespace TIE {

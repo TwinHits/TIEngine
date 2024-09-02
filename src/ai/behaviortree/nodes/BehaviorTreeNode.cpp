@@ -4,9 +4,9 @@
 
 #include "componentsystems/BehavesComponentSystem.h"
 #include "componentsystems/EventsComponentSystem.h"
+#include "enumeration/NodeStatus.h"
 #include "managers/HashManager.h"
 #include "objects/Message.h"
-#include "objects/enumeration/NodeStatus.h"
 #include "objects/tientities/TIEntity.h"
 
 using namespace TIE;

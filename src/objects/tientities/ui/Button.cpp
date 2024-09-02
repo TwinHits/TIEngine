@@ -7,9 +7,9 @@
 #include "componentsystems/PositionComponentSystem.h"
 #include "componentsystems/ShapeComponentSystem.h"
 #include "componentsystems/TextComponentSystem.h"
+#include "enumeration/TextAlignment.h"
 #include "managers/MessageManager.h"
 #include "objects/GlobalId.h"
-#include "objects/enumeration/TextAlignment.h"
 
 using namespace TIE;
 

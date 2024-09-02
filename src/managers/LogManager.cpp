@@ -4,8 +4,8 @@
 
 #include <boost/filesystem.hpp>
 
+#include "enumeration/LogLevel.h"
 #include "managers/ConfigManager.h"
-#include "objects/enumeration/LogLevel.h"
 #include "utils/LocalTime.h"
 #include "utils/String.h"
 

@@ -8,10 +8,10 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "enumeration/Language.h"
+#include "enumeration/LogLevel.h"
+#include "enumeration/TextAlignment.h"
 #include "managers/LogManager.h"
-#include "objects/enumeration/Language.h"
-#include "objects/enumeration/LogLevel.h"
-#include "objects/enumeration/TextAlignment.h"
 
 
 std::vector<std::string> TIE::String::slice(const std::string& string, const char delimiter, const int start) {

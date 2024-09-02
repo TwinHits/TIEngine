@@ -2,8 +2,8 @@
 
 #include <string>
 
+#include "enumeration/NodeStatus.h"
 #include "managers/ScriptManager.h"
-#include "objects/enumeration/NodeStatus.h"
 #include "objects/tientities/TIEntity.h"
 
 using namespace TIE;

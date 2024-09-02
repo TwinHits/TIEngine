@@ -3,7 +3,7 @@
 
 #include "ai/behaviortree/decorators/NodeDecorator.h"
 
-#include "objects/enumeration/NodeStatus.h"
+#include "enumeration/NodeStatus.h"
 #include "objects/tientities/TIEntity.h"
 
 namespace TIE {

@@ -7,9 +7,9 @@
 #include <string>
 #include <vector>
 
+#include "enumeration/NodeStatus.h"
 #include "objects/GlobalId.h"
 #include "objects/components/BehavesComponent.h"
-#include "objects/enumeration/NodeStatus.h"
 #include "objects/factories/tientities/TIEntityFactory.h"
 #include "objects/tientities/TIEntity.h"
 

@@ -5,7 +5,7 @@
 
 #include <boost/filesystem.hpp>
 
-#include "objects/enumeration/LogLevel.h"
+#include "enumeration/LogLevel.h"
 #include "utils/String.h"
 
 using namespace TIE;

@@ -3,9 +3,9 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "enumeration/TextAlignment.h"
 #include "objects/assets/FontAsset.h"
 #include "objects/components/Component.h"
-#include "objects/enumeration/TextAlignment.h"
 
 namespace TIE {
 
