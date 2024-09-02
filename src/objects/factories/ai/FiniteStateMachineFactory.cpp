@@ -2,10 +2,10 @@
 
 #include <sol/sol.hpp>
 
+#include "ai/FiniteStateMachine.h"
 #include "managers/HashManager.h"
 #include "managers/ScriptManager.h"
 #include "managers/WorldManager.h"
-#include "ai/FiniteStateMachine.h"
 #include "templates/MakeUnique.h"
 
 using namespace TIE;

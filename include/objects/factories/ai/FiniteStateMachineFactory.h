@@ -7,8 +7,8 @@
 #include <memory>
 #include <string>
 
-#include "objects/GlobalId.h"
 #include "ai/FiniteStateMachine.h"
+#include "objects/GlobalId.h"
 
 namespace TIE {
 

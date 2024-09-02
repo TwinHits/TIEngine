@@ -2,8 +2,8 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "componentsystems/PositionComponentSystem.h"
 #include "ai/behaviortree/nodes/BehaviorTreeNode.h"
+#include "componentsystems/PositionComponentSystem.h"
 #include "objects/components/BehavesComponent.h"
 #include "objects/tientities/TIEntity.h"
 #include "objects/tientities/engine/explorer/BehaviorTreeDisplayNode.h"
