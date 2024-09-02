@@ -3,11 +3,11 @@
 #include <string>
 #include <vector>
 
+#include "constants/MessageSubscriptions.h"
 #include "interfaces/ai/FiniteStateMachineInterface.h"
 #include "managers/ComponentSystemsManager.h"
 #include "managers/MessageManager.h"
 #include "managers/WorldManager.h"
-#include "objects/constants/MessageSubscriptions.h"
 #include "objects/factories/tientities/TIEntityFactory.h"
 #include "objects/factories/ai/FiniteStateMachineFactory.h"
 #include "objects/factories/ai/BehaviorTreeNodeFactory.h"

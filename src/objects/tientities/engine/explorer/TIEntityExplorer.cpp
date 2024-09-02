@@ -4,12 +4,12 @@
 
 #include "componentsystems/PositionComponentSystem.h"
 #include "componentsystems/SpriteComponentSystem.h"
+#include "constants/MessageSubscriptions.h"
 #include "managers/AssetsManager.h"
 #include "managers/MessageManager.h"
 #include "managers/SceneManager.h"
 #include "managers/ViewManager.h"
 #include "objects/components/SpriteComponent.h"
-#include "objects/constants/MessageSubscriptions.h"
 #include "objects/tientities/engine/explorer/BehaviorTreeDisplay.h"
 #include "objects/tientities/engine/explorer/ComponentPropertiesDisplay.h"
 #include "objects/tientities/ui/Button.h"

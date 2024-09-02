@@ -1,12 +1,12 @@
 #include "componentsystems/ClickableComponentSystem.h" 
 
+#include "constants/MessageSubscriptions.h"
 #include "managers/ComponentSystemsManager.h"
 #include "managers/InputManager.h"
 #include "managers/MessageManager.h"
 #include "managers/ScriptManager.h"
 #include "objects/Message.h"
 #include "objects/components/ClickableComponent.h"
-#include "objects/constants/MessageSubscriptions.h"
 #include "objects/factories/tientities/TIEntityFactory.h"
 #include "objects/tientities/TIEntity.h"
 

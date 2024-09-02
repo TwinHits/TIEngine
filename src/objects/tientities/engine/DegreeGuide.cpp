@@ -4,12 +4,12 @@
 
 #include "componentsystems/PositionComponentSystem.h"
 #include "componentsystems/TextComponentSystem.h"
+#include "constants/MessageSubscriptions.h"
 #include "managers/AssetsManager.h"
 #include "managers/ConfigManager.h"
 #include "managers/MessageManager.h"
 #include "managers/WindowManager.h"
 #include "objects/assets/FontAsset.h"
-#include "objects/constants/MessageSubscriptions.h"
 #include "utils/TIEMath.h"
 
 using namespace TIE;

@@ -1,11 +1,11 @@
 #include "managers/ViewManager.h"
 
+#include "constants/MessageSubscriptions.h"
 #include "objects/components/SpriteComponent.h"
 #include "managers/HashManager.h"
 #include "managers/LogManager.h"
 #include "managers/MessageManager.h"
 #include "managers/WindowManager.h"
-#include "objects/constants/MessageSubscriptions.h"
 #include "objects/enumeration/Direction.h"
 #include "templates/MakeUnique.h"
 #include "utils/TIEMath.h"

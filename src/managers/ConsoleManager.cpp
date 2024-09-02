@@ -5,6 +5,7 @@
 #include <queue>
 
 #include "componentsystems/SpriteComponentSystem.h"
+#include "constants/ConsoleCommands.h"
 #include "managers/InputManager.h"
 #include "managers/LogManager.h"
 #include "managers/MessageManager.h"
@@ -14,7 +15,6 @@
 #include "managers/WindowManager.h"
 #include "managers/WorldManager.h"
 #include "objects/components/TextComponent.h"
-#include "objects/constants/ConsoleCommands.h"
 #include "templates/MakeUnique.h"
 #include "utils/ComponentSystems.h"
 #include "utils/String.h"
