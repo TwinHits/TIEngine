@@ -18,7 +18,7 @@
 #include "managers/ComponentSystemsManager.h"
 #include "objects/factories/tientities/TIEntityFactory.h"
 #include "objects/factories/ai/FiniteStateMachineFactory.h"
-#include "utils/StringHelpers.h"
+#include "utils/String.h"
 
 using namespace TIE;
 

@@ -11,7 +11,7 @@
 #include "managers/AssetsManager.h"
 #include "managers/HashManager.h"
 #include "managers/ScriptManager.h"
-#include "utils/StringHelpers.h"
+#include "utils/String.h"
 
 using namespace TIE;
 

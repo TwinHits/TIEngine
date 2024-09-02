@@ -17,7 +17,7 @@
 #include "objects/constants/ConsoleCommands.h"
 #include "templates/MakeUnique.h"
 #include "utils/ComponentSystems.h"
-#include "utils/StringHelpers.h"
+#include "utils/String.h"
 
 using namespace TIE;
 

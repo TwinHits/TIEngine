@@ -7,7 +7,7 @@
 #include "managers/ConfigManager.h"
 #include "objects/enumeration/LogLevel.h"
 #include "utils/LocalTime.h"
-#include "utils/StringHelpers.h"
+#include "utils/String.h"
 
 using namespace TIE;
 

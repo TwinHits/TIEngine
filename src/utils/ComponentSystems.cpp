@@ -4,7 +4,7 @@
 #include "objects/components/TextComponent.h"
 #include "objects/components/ShapeComponent.h"
 #include "objects/components/SpriteComponent.h"
-#include "utils/StringHelpers.h"
+#include "utils/String.h"
 #include "utils/types/ComponentSystemsTypes.h"
 
 using namespace TIE;

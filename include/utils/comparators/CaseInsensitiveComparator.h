@@ -1,4 +1,4 @@
-#include "utils/StringHelpers.h"
+#include "utils/String.h"
 
 namespace TIE {
     struct CaseInsensitiveCompare {
