@@ -1,10 +1,10 @@
 #include "managers/WindowManager.h"
 
+#include "constants/MessageSubscriptions.h"
 #include "managers/LogManager.h"
 #include "managers/MessageManager.h"
 #include "managers/ViewManager.h"
 #include "templates/MakeUnique.h"
-#include "objects/constants/MessageSubscriptions.h"
 
 using namespace TIE;
 
