@@ -2,13 +2,13 @@
 
 #include "SFML/Graphics.hpp"
 
+#include "ai/behaviortree/nodes/BehaviorTreeNode.h"
 #include "componentsystems/BehavesComponentSystem.h"
 #include "componentsystems/EventsComponentSystem.h"
 #include "componentsystems/TextComponentSystem.h"
 #include "componentsystems/PositionComponentSystem.h"
 #include "componentsystems/ShapeComponentSystem.h"
 #include "objects/Message.h"
-#include "ai/behaviortree/nodes/BehaviorTreeNode.h"
 #include "objects/components/ShapeComponent.h"
 #include "objects/components/TextComponent.h"
 #include "objects/enumeration/NodeStatus.h"

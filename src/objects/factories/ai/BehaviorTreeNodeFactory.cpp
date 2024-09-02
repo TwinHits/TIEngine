@@ -4,15 +4,6 @@
 
 #include <vector>
 
-#include "componentsystems/BehavesComponentSystem.h"
-#include "componentsystems/MessagesComponentSystem.h"
-#include "managers/HashManager.h"
-#include "managers/LogManager.h"
-#include "managers/ScriptManager.h"
-#include "managers/WorldManager.h"
-#include "objects/GlobalId.h"
-#include "objects/Message.h"
-#include "objects/ScriptTableReader.h"
 #include "ai/behaviortree/decorators/LoopDecorator.h"
 #include "ai/behaviortree/decorators/OnMessageDecorator.h"
 #include "ai/behaviortree/decorators/PreConditionDecorator.h"
@@ -24,6 +15,15 @@
 #include "ai/behaviortree/nodes/PrioritySelectorNode.h"
 #include "ai/behaviortree/nodes/SelectorNode.h"
 #include "ai/behaviortree/nodes/SequenceNode.h"
+#include "componentsystems/BehavesComponentSystem.h"
+#include "componentsystems/MessagesComponentSystem.h"
+#include "managers/HashManager.h"
+#include "managers/LogManager.h"
+#include "managers/ScriptManager.h"
+#include "managers/WorldManager.h"
+#include "objects/GlobalId.h"
+#include "objects/Message.h"
+#include "objects/ScriptTableReader.h"
 #include "templates/MakeUnique.h"
 
 using namespace TIE;

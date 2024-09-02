@@ -5,8 +5,8 @@
 
 #include "SFML/Graphics.hpp"
 
-#include "objects/Message.h"
 #include "ai/behaviortree/nodes/BehaviorTreeNode.h"
+#include "objects/Message.h"
 #include "objects/components/TextComponent.h"
 
 namespace TIE {
