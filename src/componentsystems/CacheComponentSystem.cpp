@@ -8,7 +8,7 @@
 #include "objects/components/CacheComponent.h"
 #include "managers/ComponentSystemsManager.h"
 #include "managers/ScriptManager.h"
-#include "utils/StringHelpers.h"
+#include "utils/String.h"
 #include "utils/ComponentSystems.h"
 
 using namespace TIE;

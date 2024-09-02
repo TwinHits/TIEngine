@@ -6,7 +6,7 @@
 #include <boost/filesystem.hpp>
 
 #include "objects/enumeration/LogLevel.h"
-#include "utils/StringHelpers.h"
+#include "utils/String.h"
 
 using namespace TIE;
 

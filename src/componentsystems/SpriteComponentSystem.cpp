@@ -13,7 +13,7 @@
 #include "managers/AssetsManager.h"
 #include "managers/ComponentSystemsManager.h"
 #include "utils/ComponentSystems.h"
-#include "utils/StringHelpers.h"
+#include "utils/String.h"
 #include "utils/TIEMath.h"
 
 using namespace TIE;
