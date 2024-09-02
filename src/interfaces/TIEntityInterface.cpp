@@ -12,8 +12,8 @@
 #include "managers/ComponentSystemsManager.h"
 #include "managers/ScriptManager.h"
 #include "objects/GlobalId.h"
-#include "objects/factories/tientities/TraceFactory.h"
-#include "objects/factories/tientities/CollisionBoxFactory.h"
+#include "objects/factories/physics/TraceFactory.h"
+#include "objects/factories/physics/CollisionBoxFactory.h"
 #include "managers/ScriptManager.h"
 #include "utils/ComponentSystems.h"
 
