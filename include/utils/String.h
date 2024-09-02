@@ -6,9 +6,9 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "objects/enumeration/Language.h"
-#include "objects/enumeration/LogLevel.h"
-#include "objects/enumeration/TextAlignment.h"
+#include "enumeration/Language.h"
+#include "enumeration/LogLevel.h"
+#include "enumeration/TextAlignment.h"
 
 namespace TIE {
 	namespace String {

@@ -6,9 +6,9 @@
 #include "componentsystems/SpriteComponentSystem.h"
 #include "componentsystems/TextComponentSystem.h"
 #include "componentsystems/MovesComponentSystem.h"
+#include "enumeration/TextAlignment.h"
 #include "managers/AssetsManager.h"
 #include "managers/ConfigManager.h"
-#include "objects/enumeration/TextAlignment.h"
 
 using namespace TIE;
 

@@ -8,8 +8,8 @@
 #include <map>
 #include <string>
 
-#include "objects/enumeration/LogLevel.h"	
-#include "objects/enumeration/Language.h"
+#include "enumeration/LogLevel.h"	
+#include "enumeration/Language.h"
 
 namespace TIE {
 

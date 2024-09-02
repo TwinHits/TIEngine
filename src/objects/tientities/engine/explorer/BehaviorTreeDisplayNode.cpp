@@ -8,10 +8,10 @@
 #include "componentsystems/TextComponentSystem.h"
 #include "componentsystems/PositionComponentSystem.h"
 #include "componentsystems/ShapeComponentSystem.h"
+#include "enumeration/NodeStatus.h"
 #include "objects/Message.h"
 #include "objects/components/ShapeComponent.h"
 #include "objects/components/TextComponent.h"
-#include "objects/enumeration/NodeStatus.h"
 #include "utils/TIEMath.h"
 
 using namespace TIE;

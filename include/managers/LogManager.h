@@ -9,7 +9,7 @@
 #include <string>
 #include <queue>
 
-#include "objects/enumeration/LogLevel.h"
+#include "enumeration/LogLevel.h"
 
 namespace TIE {
 

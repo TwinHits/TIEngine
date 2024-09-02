@@ -9,10 +9,10 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "enumeration/Direction.h"
 #include "managers/ConsoleManager.h"
 #include "managers/InputManager.h"
 #include "objects/GlobalId.h"
-#include "objects/enumeration/Direction.h"
 
 namespace TIE {
 

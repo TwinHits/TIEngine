@@ -4,6 +4,7 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "enumeration/TextAlignment.h"
 #include "componentsystems/PositionComponentSystem.h"
 #include "componentsystems/WireframeComponentSystem.h"
 #include "managers/AssetsManager.h"
@@ -12,7 +13,6 @@
 #include "objects/components/TextComponent.h"
 #include "objects/components/PositionComponent.h"
 #include "objects/tientities/TIEntity.h"
-#include "objects/enumeration/TextAlignment.h"
 #include "objects/factories/tientities/TIEntityFactory.h"
 #include "utils/ComponentSystems.h"
 #include "utils/String.h"
