@@ -83,7 +83,7 @@ const GlobalId ScriptManager::registerFunction(const sol::function& function) {
 
 std::string ScriptManager::getFunctionName(sol::protected_function func) {
 	// Push the function onto the stack
-	lua_State* L = func.lua_state();
+	lua_State* L = this->luaState.lua_state();
 	func.push();
 
 	// Use Lua's debug library to get function info
