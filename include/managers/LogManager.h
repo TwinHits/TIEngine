@@ -17,8 +17,7 @@ class LogManager: public Singleton<LogManager>, public Manager {
 	public:
 		void initialize();
 
-		std::queue<std::string>& getQueueToDraw();
-		void clearQueueToDraw();
+		const std::string& getLastLogEntered();
 
 		void setDebugLogLevel(LogLevel debugLogLevel);
 
@@ -45,7 +44,7 @@ class LogManager: public Singleton<LogManager>, public Manager {
 	private:
 		std::string debugLogPath;
 		std::ofstream log;
-		std::queue<std::string> logHistory;
+		std::string lastLogEntered;
 
 		LogManager(const LogManager&);
 		void operator=(const LogManager&) {};

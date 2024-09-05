@@ -174,7 +174,6 @@ void ConsoleManager::clearConsoleHistory() {
 		child->setRemove(true);
 	}
 	this->devConsole->resetWritePosition();
-	LogManager::Instance()->clearQueueToDraw();
 }
 
 

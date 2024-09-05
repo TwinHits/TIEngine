@@ -8,6 +8,7 @@
 #include "constants/MessageSubscriptions.h" 
 #include "managers/AssetsManager.h"
 #include "managers/ConfigManager.h"
+#include "managers/LogManager.h"
 #include "managers/MessageManager.h"
 #include "managers/ViewManager.h"
 #include "managers/WindowManager.h"
@@ -36,8 +37,8 @@ void DevConsole::initialize() {
 	this->setName("DevConsole");
 
 	// Command History SceneLayer
-	//GlobalId consoleHistoryViewId = ViewManager::Instance()->addView(devConsoleBounds);
-	//this->consoleHistorySceneLayer.setViewId(consoleHistoryViewId);
+	// GlobalId consoleHistoryViewId = ViewManager::Instance()->addView(devConsoleBounds);
+	// this->consoleHistorySceneLayer.setViewId(consoleHistoryViewId);
 	this->consoleHistorySceneLayer.setViewId(ViewManager::Instance()->getEngineViewId());
 	this->consoleHistorySceneLayer.setName("Console History Scene Layer");
 
@@ -65,37 +66,9 @@ void DevConsole::initialize() {
 	ComponentSystems::setDrawn(*this, false);
 
 	MessageManager::Instance()->subscribe(MessageSubscriptions::WINDOW_SIZE_CHANGE, std::bind(&DevConsole::onWindowSizeChange, this));
-}
-
-
-void DevConsole::update(const float delta) {
-	//To get the messages to display in console, get not yet processed messages from the LogManager, turn them into tientities, and draw them. This happens every frame.
-	while (!this->queueToDraw.empty()) {
-		TextComponent* textComponent = this->consoleHistory.getComponent<TextComponent>();
-		if (textComponent != nullptr) {
-			const std::string& s = this->queueToDraw.front();
-			if (s.length() > this->lineCharacterLimit) {
-
-				std::vector<std::string> breakNewLines;
-                String::split(s, '\n', breakNewLines);
-
-                std::vector<std::string> lines;
-                for (auto& breakNewLine : breakNewLines) {
-                    for (int i = 0; i <= breakNewLine.length() / this->lineCharacterLimit; i++) {
-                        const std::string line = breakNewLine.substr(this->lineCharacterLimit * i, this->lineCharacterLimit * (i + 1));
-                        lines.push_back(line);
-                    }
-                }
-
-                for (const std::string& line : lines) {
-                    textComponent->setString(textComponent->getString() + '\n' + s);
-				}
-			} else {
-				textComponent->setString(textComponent->getString() + '\n' + s);
-			}
-			this->queueToDraw.pop();
-		}
-	}
+	MessageManager::Instance()->subscribe(MessageSubscriptions::LOG_ENTERED, std::bind(&DevConsole::onLogEntered, this));
+	LogManager::Instance()->debug("This is a test of a long string this is I'm on the edge of glory, hanging on a moment of truth. Everybody wants to rule the world. Welcome to your life, while we make the most of freedom and of passion.");
+	LogManager::Instance()->debug("This is a test of a long string this is I'm on the edge of glory, hanging on a moment of truth. Everybody wants to rule the world. Welcome to your life, while we make the most of freedom and of passion.");
 }
 
 
@@ -147,11 +120,46 @@ void DevConsole::setPosition() {
 
 void DevConsole::setLineCharacterLimit() {
 	const sf::Vector2i& windowSize = WindowManager::Instance()->getWindowSize();
-	this->lineCharacterLimit = windowSize.x * .95 / this->fontSize;
+	this->maxLineLength = windowSize.x / (this->fontSize / 2);
 }
 
 
 void DevConsole::onWindowSizeChange() {
 	this->setPosition();
 	this->setLineCharacterLimit();
+}
+
+
+void DevConsole::onLogEntered() {
+    TextComponent* textComponent = this->consoleHistory.getComponent<TextComponent>();
+    if (textComponent != nullptr) {
+        const std::string& logEntered = LogManager::Instance()->getLastLogEntered();
+        std::vector<std::string> breakNewLines;
+        breakNewLines = String::split(logEntered, '\n', breakNewLines);
+
+        std::vector<std::string> lines;
+        for (auto& breakNewLine : breakNewLines) {
+			if (breakNewLine.length() > this->maxLineLength) {
+				std::string line;
+
+				std::vector<std::string> words;
+				words = String::split(breakNewLine, ' ', words);
+				for (auto& word : words) {
+					if ((line + " " + word).length() > this->maxLineLength) {
+						lines.push_back(line);
+						line = word;
+					} else {
+						line = line + word + " ";
+					}
+				}
+				lines.push_back(line);
+			} else {
+				lines.push_back(breakNewLine);
+			}
+        }
+
+        for (const std::string& line : lines) {
+            textComponent->setString(textComponent->getString() + '\n' + line);
+        }
+    }
 }

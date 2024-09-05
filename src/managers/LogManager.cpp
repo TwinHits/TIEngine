@@ -4,8 +4,10 @@
 
 #include <boost/filesystem.hpp>
 
+#include "constants/MessageSubscriptions.h"
 #include "enumeration/LogLevel.h"
 #include "managers/ConfigManager.h"
+#include "managers/MessageManager.h"
 #include "utils/LocalTime.h"
 #include "utils/String.h"
 
@@ -32,19 +34,14 @@ LogManager::~LogManager() {
 
 
 void LogManager::setDebugLogLevel(LogLevel debugLogLevel) {
-	TIE::ConfigManager::Instance()->setDebugLogLevel(debugLogLevel);
+	ConfigManager::Instance()->setDebugLogLevel(debugLogLevel);
 }
 
 
-std::queue<std::string>& LogManager::getQueueToDraw() {
-	return logHistory;
+const std::string& LogManager::getLastLogEntered() {
+	return this->lastLogEntered;
 }
 
-void LogManager::clearQueueToDraw() {
-	// Efficently clear queue
-	std::queue<std::string> swap;
-	this->logHistory.swap(swap);
-}
 
 void LogManager::clearLog() {
 	this->log.close();
@@ -52,7 +49,6 @@ void LogManager::clearLog() {
 	if (!this->log.is_open()) {
 		std::cout << "Could not open '" + this->debugLogPath + "' after clearing." << std::endl;
 	}
-	this->clearQueueToDraw();
 }
 
 
@@ -79,19 +75,23 @@ bool LogManager::isErrorEnabled() {
 void LogManager::debug(const std::string& message) {
 	if (this->isDebugEnabled()) {
 		std::string logString = "[" +  LocalTime() +  "]" + " DEBUG: " +  message;
-		logHistory.push(logString);
+		this->lastLogEntered = logString;
 		if (this->log.is_open()) {
 			log << logString << std::endl;
 		}
+		MessageManager::Instance()->publish(MessageSubscriptions::LOG_ENTERED);
 	}
 }
 
 
 void LogManager::info(const std::string& message) {
-	if (this->isInfoEnabled() && this->log.is_open()) {
+	if (this->isInfoEnabled()) {
 		std::string logString = "[" +  LocalTime() +  "]" + " INFO: " +  message;
-		logHistory.push(logString);
-		log << logString << std::endl;
+		this->lastLogEntered = logString;
+		if (this->log.is_open()) {
+			log << logString << std::endl;
+		}
+		MessageManager::Instance()->publish(MessageSubscriptions::LOG_ENTERED);
 	}
 }
 
@@ -99,10 +99,11 @@ void LogManager::info(const std::string& message) {
 void LogManager::warn(const std::string& message) {
 	if (this->isWarnEnabled()) {
 		std::string logString = "[" +  LocalTime() +  "]" + " WARN: " +  message;
-		logHistory.push(logString);
+		this->lastLogEntered = logString;
 		if (this->log.is_open()) {
 			log << logString << std::endl;
 		}
+		MessageManager::Instance()->publish(MessageSubscriptions::LOG_ENTERED);
 	}
 }
 
@@ -110,18 +111,20 @@ void LogManager::warn(const std::string& message) {
 void LogManager::error(const std::string& message) {
 	if (this->isErrorEnabled()) {
 		std::string logString = "[" +  LocalTime() +  "]" + " ERROR: " +  message;
-		logHistory.push(logString);
+		this->lastLogEntered = logString;
 		if (this->log.is_open()) {
 			log << logString << std::endl;
 		}
+		MessageManager::Instance()->publish(MessageSubscriptions::LOG_ENTERED);
 	}
 }
 
 
 void LogManager::command(const std::string& message) {
     std::string logString = "[" +  LocalTime() +  "]" + " COMMAND: " +  message;
-    logHistory.push(logString);
+	this->lastLogEntered = logString;
 	if (this->log.is_open()) {
 		log << logString << std::endl;
 	}
+	MessageManager::Instance()->publish(MessageSubscriptions::LOG_ENTERED);
 }
