@@ -61,7 +61,6 @@ sf::RenderWindow& WindowManager::addWindow() {
 
 void WindowManager::removeWindow() {
 	this->window->close();
-	LogManager::Instance()->debug("Window closed.");
 }
 
 

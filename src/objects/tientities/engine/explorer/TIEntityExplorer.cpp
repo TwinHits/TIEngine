@@ -6,6 +6,7 @@
 #include "componentsystems/SpriteComponentSystem.h"
 #include "constants/MessageSubscriptions.h"
 #include "managers/AssetsManager.h"
+#include "managers/LogManager.h"
 #include "managers/MessageManager.h"
 #include "managers/SceneManager.h"
 #include "managers/ViewManager.h"
