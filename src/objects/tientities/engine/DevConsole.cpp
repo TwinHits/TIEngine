@@ -36,39 +36,43 @@ void DevConsole::initialize() {
 	// DevConsole Entity
 	this->setName("DevConsole");
 
+	this->setPosition();
+	this->setLineCharacterLimit();
+
 	// Command History SceneLayer
-	// GlobalId consoleHistoryViewId = ViewManager::Instance()->addView(devConsoleBounds);
-	// this->consoleHistorySceneLayer.setViewId(consoleHistoryViewId);
-	this->consoleHistorySceneLayer.setViewId(ViewManager::Instance()->getEngineViewId());
+	SpriteComponent& spriteComponent = SpriteComponentSystem::Instance()->addComponent(*this);
+	sf::FloatRect devConsoleBounds = spriteComponent.getGlobalBounds();
+	GlobalId consoleHistoryViewId = ViewManager::Instance()->addView(devConsoleBounds);
+	this->consoleHistorySceneLayer.setViewId(consoleHistoryViewId);
 	this->consoleHistorySceneLayer.setName("Console History Scene Layer");
 
 	// Command History Entity
 	this->consoleHistory.setName("Console History");
-	TextComponent& historyTextComponent = TextComponentSystem::Instance()->addComponent(this->consoleHistory);
-	historyTextComponent.setFont(font);
-	historyTextComponent.setCharacterSize(this->fontSize);
-	historyTextComponent.setTextAlignment(TextAlignment::TOP_LEFT);
-	historyTextComponent.setString("Initialized Developer console.");
-	historyTextComponent.setDrawn(true);
+	TextComponent& historyTextComponent = TextComponentSystem::Instance()->addComponent(
+		this->consoleHistory, 
+		font,
+		"Initialized Developer console.",
+		this->fontSize,
+		TextAlignment::TOP_LEFT,
+		true
+	);
 
 	// Command Input Entity
 	this->currentCommand.setName("Current Command");
 
-	TextComponent& currentCommandTextComponent = TextComponentSystem::Instance()->addComponent(this->currentCommand);
-	currentCommandTextComponent.setFont(font);
-	currentCommandTextComponent.setCharacterSize(this->fontSize);
-	currentCommandTextComponent.setTextAlignment(TextAlignment::BOTTOM_LEFT);
-	currentCommandTextComponent.setDrawn(true);
-
-	this->setPosition();
-	this->setLineCharacterLimit();
+	TextComponent& currentCommandTextComponent = TextComponentSystem::Instance()->addComponent(
+		this->currentCommand,
+		font,
+		"",
+		this->fontSize,
+		TextAlignment::BOTTOM_LEFT,
+		true
+	);
 
 	ComponentSystems::setDrawn(*this, false);
 
 	MessageManager::Instance()->subscribe(MessageSubscriptions::WINDOW_SIZE_CHANGE, std::bind(&DevConsole::onWindowSizeChange, this));
 	MessageManager::Instance()->subscribe(MessageSubscriptions::LOG_ENTERED, std::bind(&DevConsole::onLogEntered, this));
-	LogManager::Instance()->debug("This is a test of a long string this is I'm on the edge of glory, hanging on a moment of truth. Everybody wants to rule the world. Welcome to your life, while we make the most of freedom and of passion.");
-	LogManager::Instance()->debug("This is a test of a long string this is I'm on the edge of glory, hanging on a moment of truth. Everybody wants to rule the world. Welcome to your life, while we make the most of freedom and of passion.");
 }
 
 

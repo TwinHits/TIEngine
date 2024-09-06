@@ -9,6 +9,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "managers/ConfigManager.h"
+#include "objects/assets/FontAsset.h"
 #include "objects/components/TextComponent.h"
 #include "objects/components/PositionComponent.h"
 #include "objects/factories/tientities/TIEntityFactory.h"
@@ -22,6 +23,7 @@ class TextComponentSystem : public Singleton<TextComponentSystem>, public OwnsCo
 		void update(const float);
 		TextComponent& addComponent(TIEntity&);
 		TextComponent& addComponent(const TIEntityFactory&, TIEntity&);
+		TextComponent& addComponent(TIEntity&, const FontAsset&, const std::string&, const int, const TextAlignment, const bool);
 		bool removeComponent(TIEntity&);
 
 		void setComponentProperty(const std::string&, bool, TIEntity&);
