@@ -74,6 +74,16 @@ TextComponent& TextComponentSystem::addComponent(const TIEntityFactory& factory,
 	return textComponent;
 }
 
+TextComponent& TextComponentSystem::addComponent(TIEntity& tientity, const FontAsset& font, const std::string& text, const int fontSize, const TextAlignment textAlignment, const bool drawn) {
+	TextComponent& textComponent = this->addComponent(tientity);
+	textComponent.setFont(font);
+	textComponent.setString(text);
+	textComponent.setCharacterSize(fontSize);
+	textComponent.setTextAlignment(textAlignment);
+	textComponent.setDrawn(true);
+	return textComponent;
+}
+
 
 bool TextComponentSystem::removeComponent(TIEntity& tientity) {
 	TextComponent* textComponent = tientity.getComponent<TextComponent>();
