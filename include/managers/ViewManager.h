@@ -22,12 +22,8 @@ class ViewManager : public Singleton<ViewManager>, public Manager {
 		
 		GlobalId addView();
 		GlobalId addView(const sf::FloatRect&);
+		GlobalId addView(const sf::FloatRect&, const sf::FloatRect&);
 		sf::View& getView(GlobalId);
-		sf::View& updateView(GlobalId, const sf::Vector2i&);
-		sf::View& updateView(sf::View&, const sf::Vector2i&);
-		sf::View& updateView(GlobalId, const sf::FloatRect&);
-		sf::View& updateView(sf::View&, const sf::FloatRect&);
-		void updateViews(const sf::Vector2i&);
 		void removeView(GlobalId);
 
 		void updateCamera(const float);
@@ -55,7 +51,10 @@ class ViewManager : public Singleton<ViewManager>, public Manager {
 
 	private:
 		const sf::Vector2f calculateClientScroll(const sf::Vector2f, const float);
-		const sf::Vector2f calculateEngineScroll(const sf::Vector2f&, const float);
+
+		sf::View& updateView(sf::View&, const sf::FloatRect&);
+		sf::View& updateView(sf::View&, const sf::FloatRect&, const sf::Vector2i);
+		void updateViews(const sf::Vector2i&);
 
 		void onMouseWheelMoved();
 		void onWindowSizeChange();
@@ -64,6 +63,7 @@ class ViewManager : public Singleton<ViewManager>, public Manager {
 		ConsoleManager* consoleManager = ConsoleManager::Instance();
 
 		std::map<GlobalId, std::unique_ptr<sf::View> > views;
+		std::map<GlobalId, sf::FloatRect> viewSizes;
 
 		GlobalId activeViewId = 0;
 		GlobalId clientViewId = 0;

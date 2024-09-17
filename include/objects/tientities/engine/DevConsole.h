@@ -3,12 +3,9 @@
 
 #include "objects/tientities/TIEntity.h"
 
-#include <string>
-#include <queue>
+#include "objects/tientities/common/SceneLayer.h"
 
 #include <SFML/Graphics.hpp>
-
-#include "objects/tientities/common/SceneLayer.h"
 
 namespace TIE {
 

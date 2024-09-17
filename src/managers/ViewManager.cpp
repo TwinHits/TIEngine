@@ -1,8 +1,6 @@
 #include "managers/ViewManager.h"
 
 #include "constants/MessageSubscriptions.h"
-#include "enumeration/Direction.h"
-#include "objects/components/SpriteComponent.h"
 #include "managers/HashManager.h"
 #include "managers/LogManager.h"
 #include "managers/MessageManager.h"
@@ -14,9 +12,9 @@ using namespace TIE;
 
 void ViewManager::initialize() {
 	const sf::Vector2i& windowSize = WindowManager::Instance()->getWindowSize();
-	this->engineViewId = this->addView(sf::FloatRect(0, 0, windowSize.x, windowSize.y));
+	this->engineViewId = this->addView(sf::FloatRect(0, 0, 1.0f, 1.0f));
 	this->engineView = &this->getEngineView();
-	this->clientViewId = this->addView(sf::FloatRect(0, 0, windowSize.x, windowSize.y));
+	this->clientViewId = this->addView(sf::FloatRect(0, 0, 1.0f, 1.0f));
 	this->clientView = &this->getClientView();
 	this->recalculateScrollZones(windowSize);
 
@@ -27,15 +25,25 @@ void ViewManager::initialize() {
 
 GlobalId ViewManager::addView() {
 	const sf::Vector2i& windowSize = WindowManager::Instance()->getWindowSize();
-	return this->addView(sf::FloatRect(0, 0, windowSize.x, windowSize.y));
+	return this->addView(sf::FloatRect(0, 0, 1.0f, 1.0f));
 }
 
 
-GlobalId ViewManager::addView(const sf::FloatRect& rect) {
+GlobalId ViewManager::addView(const sf::FloatRect& size) {
+	return this->addView(size, sf::FloatRect(0.0f, 0.0f, 1.0f, 1.0f));
+}
+
+
+GlobalId ViewManager::addView(const sf::FloatRect& size, const sf::FloatRect& viewport) {
     GlobalId id = HashManager::Instance()->getNewGlobalId();
-    std::unique_ptr<sf::View> view = TIE::make_unique<sf::View>(rect);
+    std::unique_ptr<sf::View> view = TIE::make_unique<sf::View>();
     view->setCenter(0, 0);
+	view->setViewport(viewport);
     this->views[id] = std::move(view);
+	this->viewSizes[id] = size;
+
+	this->updateView(*this->views[id], size);
+
     return id;
 }
 
@@ -51,33 +59,29 @@ sf::View& ViewManager::getView(GlobalId id) {
 }
 
 
-sf::View& ViewManager::updateView(GlobalId id, const sf::Vector2i& size) {
-	sf::View& view = this->getView(id);
-	return this->updateView(view, sf::FloatRect(0, 0, size.x, size.y));
+sf::View& ViewManager::updateView(sf::View& view, const sf::FloatRect& viewSize) {
+	const sf::Vector2i windowSize = WindowManager::Instance()->getWindowSize();
+	return this->updateView(view, viewSize, windowSize);
 }
 
 
-sf::View& ViewManager::updateView(GlobalId id, const sf::FloatRect& size) {
-	sf::View& view = this->getView(id);
-	return this->updateView(view, size);
-}
-
-
-sf::View& ViewManager::updateView(sf::View& view, const sf::Vector2i& size) {
-	return this->updateView(view, sf::FloatRect(0, 0, size.x, size.y));
-}
-
-
-sf::View& ViewManager::updateView(sf::View& view, const sf::FloatRect& size) {
+sf::View& ViewManager::updateView(sf::View& view, const sf::FloatRect& viewSize, sf::Vector2i windowSize) {
+    sf::FloatRect size = sf::FloatRect(
+        viewSize.left,
+        viewSize.top,
+        windowSize.x * viewSize.width,
+        windowSize.y * viewSize.height
+    );
 	view.setCenter(sf::Vector2f(size.left, size.top));
 	view.setSize(sf::Vector2f(size.width, size.height));
 	return view;
 }
 
 
-void ViewManager::updateViews(const sf::Vector2i& size) {
+void ViewManager::updateViews(const sf::Vector2i& windowSize) {
 	for (auto& [id, view] : this->views) {
-		this->updateView(*view, size);
+		const sf::FloatRect& viewSize = this->viewSizes[id];
+		this->updateView(*view, viewSize, windowSize);
 	}
 }
 
@@ -114,7 +118,7 @@ void ViewManager::updateCamera(const float delta) {
 	if (!this->consoleManager->isConsoleDrawn()) {
 		this->clientView->move(this->calculateClientScroll(mouseWindowPosition, delta));
 	} else if (this->consoleManager->isConsoleDrawn()) {
-	
+		
 	}
 }	
 
@@ -157,21 +161,6 @@ const sf::Vector2f ViewManager::calculateClientScroll(const sf::Vector2f mousePo
 	}
 
 	return translation;
-}
-
-const sf::Vector2f ViewManager::calculateEngineScroll(const sf::Vector2f& mousePosition, const float delta) {
-	/*
-	if (this->scrollUpZone.contains(mouseWindowPosition)) {
-		this->consoleManager->scroll(TOP);
-		this->getEngineView().move(0, -this->scrollSpeed);
-	}
-
-	if (this->scrollDownZone.contains(mouseWindowPosition)) {
-		//this->consoleManager->scroll(BOTTOM);
-		this->getEngineView().move(0, this->scrollSpeed);
-	}
-	*/
-	return sf::Vector2f(0, 0);
 }
 
 
