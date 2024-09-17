@@ -35,16 +35,17 @@ void DevConsole::initialize() {
 
 	// DevConsole Entity
 	this->setName("DevConsole");
-
 	this->setPosition();
 	this->setLineCharacterLimit();
 
 	// Command History SceneLayer
-	SpriteComponent& spriteComponent = SpriteComponentSystem::Instance()->addComponent(*this);
-	sf::FloatRect devConsoleBounds = spriteComponent.getGlobalBounds();
-	GlobalId consoleHistoryViewId = ViewManager::Instance()->addView(devConsoleBounds);
-	this->consoleHistorySceneLayer.setViewId(consoleHistoryViewId);
+	// Clipping the dev console is supposedly possible through using views,
+	// But as is the text is being scaled by the scaling of the viewport
+	// SFML 3.0 adds support for scissoring, which does exactly what I want it to do.
 	this->consoleHistorySceneLayer.setName("Console History Scene Layer");
+	const sf::Vector2i& windowSize = WindowManager::Instance()->getWindowSize();
+	GlobalId consoleHistoryViewId = ViewManager::Instance()->addView(sf::FloatRect(0, 0, 1.0f, 1.0f), sf::FloatRect(0, 0, 1.0f, 0.5f));
+	this->consoleHistorySceneLayer.setViewId(consoleHistoryViewId);
 
 	// Command History Entity
 	this->consoleHistory.setName("Console History");
@@ -59,7 +60,6 @@ void DevConsole::initialize() {
 
 	// Command Input Entity
 	this->currentCommand.setName("Current Command");
-
 	TextComponent& currentCommandTextComponent = TextComponentSystem::Instance()->addComponent(
 		this->currentCommand,
 		font,
@@ -112,7 +112,7 @@ void DevConsole::setPosition() {
 	float scalex = float(windowSize.x) / float(bounds.width);
 	float scaley = float(windowSize.y/2.0f) / float(bounds.height);
 	const sf::Vector2f scale = sf::Vector2f(scalex, scaley);
-	spriteComponent.scale(scale);
+	spriteComponent.setScale(scale);
 	spriteComponent.setOrigin(0,0);
 
 	sf::FloatRect devConsoleBounds = spriteComponent.getGlobalBounds();
@@ -165,5 +165,6 @@ void DevConsole::onLogEntered() {
         for (const std::string& line : lines) {
             textComponent->setString(textComponent->getString() + '\n' + line);
         }
+
     }
 }
