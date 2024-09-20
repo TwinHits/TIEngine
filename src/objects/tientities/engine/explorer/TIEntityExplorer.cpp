@@ -13,10 +13,9 @@
 #include "objects/components/SpriteComponent.h"
 #include "objects/tientities/engine/explorer/BehaviorTreeDisplay.h"
 #include "objects/tientities/engine/explorer/ComponentPropertiesDisplay.h"
-#include "objects/tientities/ui/Button.h"
-#include "templates/MakeUnique.h"
 #include "utils/ComponentSystems.h"
 #include "objects/factories/tientities/SceneLayerFactory.h"
+#include "objects/factories/ui/ButtonFactory.h"
 
 using namespace TIE;
 
@@ -45,8 +44,15 @@ void TIEntityExplorer::createButtons() {
         sf::Vector2f position = this->tientitiesDisplayPosition;
         for (auto& child : this->selectedTIEntity->getChildren()) {
             position += sf::Vector2f(0, buttonPadding);
-            TIEntity& button = this->buttonSceneLayer->attachChild(std::make_unique<Button>(child->getName(), position, buttonSize, std::bind(&TIEntityExplorer::onButtonClick, this, std::placeholders::_1)));
-            ComponentSystems::setDrawn(button, this->show);
+            ButtonFactory buttonFactory = ButtonFactory();
+            buttonFactory.setParent(this->buttonSceneLayer);
+            TIEntity& button = buttonFactory.setText(child->getName())
+                .setPosition(position)
+                .setSize(buttonSize)
+                .setOnClick(std::bind(&TIEntityExplorer::onButtonClick, this, std::placeholders::_1))
+                .setDrawn(this->show)
+                .build();
+
             this->buttonToChild.insert({ button.getId(), child.get()});
             position += sf::Vector2f(0, buttonSize.y);
             position += sf::Vector2f(0, buttonPadding);
