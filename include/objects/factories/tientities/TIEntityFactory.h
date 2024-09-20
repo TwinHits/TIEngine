@@ -34,7 +34,7 @@ class TIEntityFactory {
 
 		TIEntityFactory& setParent(TIEntity*);
 
-		TIEntity& build();
+		virtual TIEntity& build();
 
 		static const inline std::string NAME = "name";
 		static const inline std::string SHOW_WIREFRAME = "showWireframe";
