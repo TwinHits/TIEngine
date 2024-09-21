@@ -175,6 +175,7 @@ class ScriptTableReader {
         void read(const sol::table&);
         static const ScriptTableReader& getEmptyReader();
 
+        // Rename to just plurals like floats bools strings
 		std::map<std::string, bool> keys;
 		std::map<std::string, bool> boolValues;
 		std::map<std::string, float> floatValues;
