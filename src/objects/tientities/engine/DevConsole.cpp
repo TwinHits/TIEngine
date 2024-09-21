@@ -44,7 +44,7 @@ void DevConsole::initialize() {
 	// SFML 3.0 adds support for scissoring, which does exactly what I want it to do.
 	this->consoleHistorySceneLayer.setName("Console History Scene Layer");
 	const sf::Vector2i& windowSize = WindowManager::Instance()->getWindowSize();
-	GlobalId consoleHistoryViewId = ViewManager::Instance()->addView(sf::FloatRect(0, 0, 1.0f, 1.0f), sf::FloatRect(0, 0, 1.0f, 0.5f));
+	GlobalId consoleHistoryViewId = ViewManager::Instance()->addView(sf::FloatRect(0, 0, 1.0f, 1.0f));
 	this->consoleHistorySceneLayer.setViewId(consoleHistoryViewId);
 
 	// Command History Entity
