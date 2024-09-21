@@ -27,6 +27,7 @@ class TIEntityInterface {
         sol::object getChild(const std::string&);
         sol::object getParent();
         sol::object spawn(const sol::table&);
+        sol::object createUIElement(const sol::table&);
         void despawn();
 
         //Common Child TIEntities

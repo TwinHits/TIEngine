@@ -14,6 +14,7 @@
 #include "objects/GlobalId.h"
 #include "objects/factories/physics/TraceFactory.h"
 #include "objects/factories/physics/CollisionBoxFactory.h"
+#include "objects/factories/ui/UIElementFactory.h"
 #include "managers/ScriptManager.h"
 #include "utils/ComponentSystems.h"
 
@@ -40,6 +41,7 @@ void TIEntityInterface::registerUserType(sol::state& luaState) {
     interfaceUserType["getChildren"] = &TIEntityInterface::getChildren;
     interfaceUserType["getChild"] = &TIEntityInterface::getChild;
     interfaceUserType["spawn"] = &TIEntityInterface::spawn;
+	interfaceUserType["createUIElement"] = &TIEntityInterface::createUIElement;
     interfaceUserType["despawn"] = &TIEntityInterface::despawn;
 
     //Common Child TIEntities
@@ -109,6 +111,13 @@ sol::object TIEntityInterface::getParent() {
 
 sol::object TIEntityInterface::spawn(const sol::table& definition) {
     TIEntityFactory factory = TIEntityFactory(definition);
+    factory.setParent(this->tientity);
+    return ScriptManager::Instance()->getObjectFromValue(TIEntityInterface(factory.build()));
+}
+
+
+sol::object TIEntityInterface::createUIElement(const sol::table& definition) {
+    UIElementFactory factory = UIElementFactory(definition);
     factory.setParent(this->tientity);
     return ScriptManager::Instance()->getObjectFromValue(TIEntityInterface(factory.build()));
 }
