@@ -150,8 +150,8 @@ GlobalId TIEngineInterface::registerFiniteStateMachine(const sol::table& definit
 
 
 GlobalId TIEngineInterface::registerBehaviorTreeNode(const sol::table& definition) {
-    BehaviorTreeNodeFactory finiteStateMachineFactory = BehaviorTreeNodeFactory(definition);
-    return finiteStateMachineFactory.getId();
+    BehaviorTreeNodeFactory behaviorTreeNodeFactory = BehaviorTreeNodeFactory(definition);
+    return behaviorTreeNodeFactory.getId();
 }
 
 
