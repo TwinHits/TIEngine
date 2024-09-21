@@ -1,7 +1,7 @@
 #ifndef BUTTONFACTORY_H
 #define BUTTONFACTORY_H 
 
-#include "objects/factories/ui/UIElementFactory.h"
+#include "objects/factories/tientities/TIEntityFactory.h"
 
 #include "sol/sol.hpp"
 
@@ -14,7 +14,7 @@
 
 namespace TIE {
 
-class ButtonFactory : public UIElementFactory {
+class ButtonFactory : public TIEntityFactory {
     public:
         ButtonFactory();
         ButtonFactory(const sol::table&);
@@ -27,6 +27,7 @@ class ButtonFactory : public UIElementFactory {
         ButtonFactory& setOnClick(const std::function<void(Message&)>);
         ButtonFactory& setDrawn(const bool);
 
+        TIEntity& build(const ScriptTableReader&);
         TIEntity& build();
     private:
         sf::Vector2f position = sf::Vector2f(0, 0);
@@ -35,6 +36,10 @@ class ButtonFactory : public UIElementFactory {
         GlobalId onClickId = 0;
         std::function<void(Message&)> onClick = nullptr;
         bool drawn = true;
+
+		static const inline std::string TEXT  = "text";
+		static const inline std::string ON_CLICK = "onClick";
+
 };
 
 }

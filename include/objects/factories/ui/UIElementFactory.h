@@ -5,7 +5,6 @@
 
 #include "sol/sol.hpp"
 
-#include "objects/tientities/ui/UIElement.h"
 #include "objects/ScriptTableReader.h"
 
 namespace TIE {
@@ -16,9 +15,12 @@ class UIElementFactory : public TIEntityFactory {
         UIElementFactory(const sol::table&);
         ~UIElementFactory() {};
 
-        virtual TIEntity& build();
+        TIEntity& build();
+        TIEntity& build(const ScriptTableReader&);
     private:
-		static const inline std::string BUTTON = "button";
+		static const inline std::string TYPE = "type";
+		static const inline std::string MENU = "Menu";
+		static const inline std::string BUTTON = "Button";
 
 };
 

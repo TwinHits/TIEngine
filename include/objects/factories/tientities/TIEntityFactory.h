@@ -33,8 +33,10 @@ class TIEntityFactory {
 		const bool getShowWireframe() const;
 
 		TIEntityFactory& setParent(TIEntity*);
+		TIEntity* getParent();
 
 		virtual TIEntity& build();
+		virtual TIEntity& build(const ScriptTableReader&);
 
 		static const inline std::string NAME = "name";
 		static const inline std::string SHOW_WIREFRAME = "showWireframe";

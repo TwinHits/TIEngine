@@ -27,17 +27,22 @@ TIEntityFactory::TIEntityFactory(const sol::table& definition) {
 
 
 TIEntity& TIEntityFactory::build() {
+	return this->build(this->getReader());
+}
+
+
+TIEntity& TIEntityFactory::build(const ScriptTableReader& reader) {
 	if (this->parent == nullptr) {
 		this->setParent(&SceneManager::Instance()->getClientLayer());
 	}
 	TIEntity& tientity = this->parent->attachChild();
 
-	const ScriptTableReader& metaReader = this->getReader().getReader("tientity");
+	const ScriptTableReader& metaReader = reader.getReader("tientity");
 	tientity.setName(metaReader.get<std::string>(TIEntityFactory::NAME, this->name));
 	this->setShowWireFrame(WireframeComponentSystem::Instance()->getShowWireframe(tientity.getParent()));
 
     for (ComponentSystem* componentSystem : ComponentSystemsManager::Instance()->getComponentSystems()) {
-        if (this->getReader().hasKey(componentSystem->getName())) {
+        if (reader.hasKey(componentSystem->getName())) {
             componentSystem->addComponent(*this, tientity);
         } else if (componentSystem->getName() == WireframeComponentSystem::WIREFRAME && this->getShowWireframe()) {
             componentSystem->addComponent(*this, tientity);
@@ -54,6 +59,11 @@ TIEntity& TIEntityFactory::build() {
 TIEntityFactory& TIEntityFactory::setParent(TIEntity* parent) {
 	this->parent = parent;
 	return *this;
+}
+
+
+TIEntity* TIEntityFactory::getParent() {
+	return this->parent;
 }
 
 

@@ -5,17 +5,14 @@
 #include "componentsystems/ShapeComponentSystem.h"
 #include "componentsystems/TextComponentSystem.h"
 #include "objects/ScriptTableReader.h"
-#include "objects/factories/ui/UIElementFactory.h"
+#include "objects/factories/tientities/TIEntityFactory.h"
 
 using namespace TIE;
 
-ButtonFactory::ButtonFactory(): UIElementFactory() {}
+ButtonFactory::ButtonFactory(): TIEntityFactory() {}
 
 
-ButtonFactory::ButtonFactory(const sol::table& definition): UIElementFactory(definition) {
-    const ScriptTableReader& reader = this->getReader();
-    this->text = reader.get<std::string>("text", this->text);
-    this->onClickId = reader.get<GlobalId>("onClick", this->onClickId);
+ButtonFactory::ButtonFactory(const sol::table& definition): TIEntityFactory(definition) {
 }
 
 
@@ -48,6 +45,7 @@ ButtonFactory& ButtonFactory::setOnClick(const std::function<void(Message&)> onC
     return *this;
 }
 
+
 ButtonFactory& ButtonFactory::setDrawn(const bool drawn) {
     this->drawn = drawn;
     return *this;
@@ -55,12 +53,20 @@ ButtonFactory& ButtonFactory::setDrawn(const bool drawn) {
 
 
 TIEntity& ButtonFactory::build() {
-	TIEntity& uiElement = this->UIElementFactory::build();
+    return this->build(this->getReader());
+}
 
-    PositionComponent& positionComponent = PositionComponentSystem::Instance()->addComponent(uiElement);
+
+TIEntity& ButtonFactory::build(const ScriptTableReader& reader) {
+	TIEntity& button = this->TIEntityFactory::build(reader);
+
+    this->text = reader.get<std::string>(ButtonFactory::TEXT, this->text);
+    this->onClickId = reader.get<GlobalId>(ButtonFactory::ON_CLICK, this->onClickId);
+
+    PositionComponent& positionComponent = PositionComponentSystem::Instance()->addComponent(button);
     positionComponent.position = this->position;
 
-    ShapeComponent& shapeComponent = ShapeComponentSystem::Instance()->addComponent(uiElement);
+    ShapeComponent& shapeComponent = ShapeComponentSystem::Instance()->addComponent(button);
     sf::RectangleShape& rectangleShape = shapeComponent.addRectangleShape();
     rectangleShape.setSize(this->size);
     rectangleShape.setOrigin(sf::Vector2f(size.x / 2, size.y / 2));
@@ -69,17 +75,17 @@ TIEntity& ButtonFactory::build() {
     rectangleShape.setFillColor(sf::Color::Transparent);
     shapeComponent.setDrawn(this->drawn);
 
-    TextComponent& textComponent = TextComponentSystem::Instance()->addComponent(uiElement);
+    TextComponent& textComponent = TextComponentSystem::Instance()->addComponent(button);
     textComponent.setTextAlignment(TextAlignment::CENTER);
     textComponent.setString(this->text);
     textComponent.setCharacterSize(16);
     textComponent.setDrawn(this->drawn);
 
     if (this->onClickId) {
-        ClickableComponentSystem::Instance()->setOnClick(uiElement, this->onClickId);
+        ClickableComponentSystem::Instance()->setOnClick(button, this->onClickId);
     } else if (this->onClick) {
-        ClickableComponentSystem::Instance()->setOnClick(uiElement, this->onClick);
+        ClickableComponentSystem::Instance()->setOnClick(button, this->onClick);
     }
 
-	return uiElement;
+	return button;
 }
