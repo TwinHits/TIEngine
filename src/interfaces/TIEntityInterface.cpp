@@ -41,12 +41,12 @@ void TIEntityInterface::registerUserType(sol::state& luaState) {
     interfaceUserType["getChildren"] = &TIEntityInterface::getChildren;
     interfaceUserType["getChild"] = &TIEntityInterface::getChild;
     interfaceUserType["spawn"] = &TIEntityInterface::spawn;
-	interfaceUserType["createUIElement"] = &TIEntityInterface::createUIElement;
     interfaceUserType["despawn"] = &TIEntityInterface::despawn;
 
     //Common Child TIEntities
     interfaceUserType["addTrace"] = &TIEntityInterface::addTrace;
     interfaceUserType["addCollisionBox"] = &TIEntityInterface::addCollisionBox;
+	interfaceUserType["addUIElement"] = &TIEntityInterface::addUIElement;
 
     //Property
     interfaceUserType["setProperty"] = &TIEntityInterface::setProperty;
@@ -111,13 +111,6 @@ sol::object TIEntityInterface::getParent() {
 
 sol::object TIEntityInterface::spawn(const sol::table& definition) {
     TIEntityFactory factory = TIEntityFactory(definition);
-    factory.setParent(this->tientity);
-    return ScriptManager::Instance()->getObjectFromValue(TIEntityInterface(factory.build()));
-}
-
-
-sol::object TIEntityInterface::createUIElement(const sol::table& definition) {
-    UIElementFactory factory = UIElementFactory(definition);
     factory.setParent(this->tientity);
     return ScriptManager::Instance()->getObjectFromValue(TIEntityInterface(factory.build()));
 }
@@ -224,4 +217,11 @@ void TIEntityInterface::addTrace(const float magnitude, const float direction) {
 
 void TIEntityInterface::addCollisionBox(const float x, const float y, const float width, const float height) {
     CollisionBoxFactory(this->tientity).setRect(x, y, width, height).build();
+}
+
+
+sol::object TIEntityInterface::addUIElement(const sol::table& definition) {
+    UIElementFactory factory = UIElementFactory(definition);
+    factory.setParent(this->tientity);
+    return ScriptManager::Instance()->getObjectFromValue(TIEntityInterface(factory.build()));
 }

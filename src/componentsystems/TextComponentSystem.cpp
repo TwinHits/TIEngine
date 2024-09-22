@@ -80,7 +80,7 @@ TextComponent& TextComponentSystem::addComponent(TIEntity& tientity, const FontA
 	textComponent.setString(text);
 	textComponent.setCharacterSize(fontSize);
 	textComponent.setTextAlignment(textAlignment);
-	textComponent.setDrawn(true);
+	textComponent.setDrawn(drawn);
 	return textComponent;
 }
 

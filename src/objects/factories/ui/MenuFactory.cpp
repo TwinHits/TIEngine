@@ -4,6 +4,7 @@
 #include "componentsystems/PositionComponentSystem.h"
 #include "componentsystems/TextComponentSystem.h"
 #include "constants/MessageSubscriptions.h"
+#include "managers/AssetsManager.h"
 #include "managers/MessageManager.h"
 #include "objects/ScriptTableReader.h"
 #include "objects/factories/tientities/TIEntityFactory.h"
@@ -12,10 +13,10 @@
 
 using namespace TIE;
 
-MenuFactory::MenuFactory(): TIEntityFactory() {}
+MenuFactory::MenuFactory(): UIElementFactory() {}
 
 
-MenuFactory::MenuFactory(const sol::table& definition): TIEntityFactory(definition) {}
+MenuFactory::MenuFactory(const sol::table& definition): UIElementFactory(definition) {}
 
 
 MenuFactory& MenuFactory::setPosition(const sf::Vector2f& position) {
@@ -24,20 +25,10 @@ MenuFactory& MenuFactory::setPosition(const sf::Vector2f& position) {
 }
 
 
-MenuFactory& MenuFactory::setOnClick(const std::function<void(Message&)> onClick) {
-    this->onClick = onClick;
-    return *this;
-}
-
-MenuFactory& MenuFactory::setDrawn(const bool drawn) {
-    this->drawn = drawn;
-    return *this;
-}
-
-
 TIEntity& MenuFactory::build() {
     return this->build(this->getReader());
 }
+
 
 TIEntity& MenuFactory::build(const ScriptTableReader& reader) {
     Menu* menu = static_cast<Menu*>(&this->TIEntityFactory::build(reader));
@@ -45,13 +36,22 @@ TIEntity& MenuFactory::build(const ScriptTableReader& reader) {
     PositionComponent& positionComponent = PositionComponentSystem::Instance()->addComponent(*menu);
     positionComponent.position = this->position;
 
+	const FontAsset& font = AssetsManager::Instance()->getFont(ConfigManager::Instance()->getEngineFontName());
+    TextComponentSystem::Instance()->addComponent(*menu, font, this->getName(), 16, TextAlignment::BOTTOM_LEFT, this->getDrawn());
+
     const GlobalId subscriptionId = MessageManager::Instance()->getSubscriptionId(MessageSubscriptions::MOUSE_BUTTON_PRESSED);
     EventsComponentSystem::Instance()->subscribe(*menu, subscriptionId, std::bind(&Menu::onClick, menu, std::placeholders::_1));
 
-    for (auto& buttonReader : reader.getReader(MenuFactory::BUTTONS).getReaders()) {
+    sf::Vector2f buttonSize = sf::Vector2f(100, 25);
+    sf::Vector2f position = sf::Vector2f(buttonSize.x / 2 ,buttonSize.y / 2);
+    for (auto& menuItemReader : reader.getReader(MenuFactory::MENU_ITEMS).getReaders()) {
         UIElementFactory uiElementFactory = UIElementFactory();
         uiElementFactory.setParent(menu);
-        TIEntity& button = UIElementFactory().build(buttonReader.second);
+        uiElementFactory.setDrawn(true);
+        uiElementFactory.setSize(buttonSize);
+        uiElementFactory.setPosition(position);
+        TIEntity& menuItem = uiElementFactory.build(menuItemReader.second);
+        position.y = position.y + uiElementFactory.getSize().y;
     }
 
 	return *menu;

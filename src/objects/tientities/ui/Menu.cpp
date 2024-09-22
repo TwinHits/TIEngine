@@ -11,10 +11,10 @@
 using namespace TIE;
 
 void Menu::onClick(Message& message) {
-    this->show = !this->show;
-    if (this->show) {
+    const bool drawn = ComponentSystems::isDrawn(*this);
+    if (!drawn) {
         const sf::Vector2f& clickPosition = InputManager::Instance()->getMouseWindowPosition();
         PositionComponentSystem::Instance()->setPosition(*this, clickPosition);
     }
-    ComponentSystems::setDrawn(*this, this->show);
+    ComponentSystems::setDrawn(*this, !drawn);
 }
