@@ -13,9 +13,6 @@ class Menu : public TIEntity {
         ~Menu() {};
 
         void onClick(Message&);
-    private:
-        bool show = false;
-
 };
 
 }

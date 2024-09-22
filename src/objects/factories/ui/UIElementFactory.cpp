@@ -14,6 +14,38 @@ UIElementFactory::UIElementFactory() : TIEntityFactory() {}
 UIElementFactory::UIElementFactory(const sol::table& definition) : TIEntityFactory(definition) {}
 
 
+UIElementFactory& UIElementFactory::setDrawn(const bool drawn) {
+    this->drawn = drawn;
+    return *this;
+}
+
+const bool UIElementFactory::getDrawn() {
+    return this->drawn;
+}
+
+
+UIElementFactory& UIElementFactory::setPosition(const sf::Vector2f& position) {
+    this->position = position;
+    return *this;
+}
+
+
+const sf::Vector2f& UIElementFactory::getPosition() {
+    return this->position;
+}
+
+
+UIElementFactory& UIElementFactory::setSize(const sf::Vector2f& size) {
+    this->size = size;
+    return *this;
+}
+
+
+const sf::Vector2f& UIElementFactory::getSize() {
+    return this->size;
+}
+
+
 TIEntity& UIElementFactory::build() {
     return this->build(this->getReader());
 }
@@ -21,16 +53,22 @@ TIEntity& UIElementFactory::build() {
 
 TIEntity& UIElementFactory::build(const ScriptTableReader& reader) {
     const std::string type = reader.get<std::string>(UIElementFactory::TYPE, "");
-    std::unique_ptr<TIEntityFactory> tientityFactory = nullptr;
+    const std::string name = reader.get<std::string>(TIEntityFactory::NAME, "");
+
+    std::unique_ptr<UIElementFactory> uiElementFactory = nullptr;
     if (type == UIElementFactory::MENU) {
-        tientityFactory = TIE::make_unique<MenuFactory>();
+        uiElementFactory = TIE::make_unique<MenuFactory>();
     } else if (type == UIElementFactory::BUTTON) {
-        tientityFactory = TIE::make_unique<ButtonFactory>();
+        uiElementFactory = TIE::make_unique<ButtonFactory>();
     } else {
         return this->TIEntityFactory::build();
     }
 
-    tientityFactory->setParent(this->getParent());
+    uiElementFactory->setParent(this->getParent());
+    uiElementFactory->setName(name);
+    uiElementFactory->setPosition(this->position);
+    uiElementFactory->setSize(this->size);
+    uiElementFactory->setDrawn(this->drawn);
     
-    return tientityFactory->build(reader);
+    return uiElementFactory->build(reader);
 }
