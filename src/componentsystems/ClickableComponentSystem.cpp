@@ -19,7 +19,7 @@ ClickableComponentSystem::ClickableComponentSystem() {
 
 	this->clickedMessageSubscription = MessageManager::Instance()->getSubscriptionId("Clicked");
 
-	MessageManager::Instance()->subscribe(MessageSubscriptions::MOUSE_BUTTON_PRESSED, std::bind(&ClickableComponentSystem::onClick, this));
+	MessageManager::Instance()->subscribe(MessageSubscriptions::LEFT_MOUSE_BUTTON_PRESSED, std::bind(&ClickableComponentSystem::onClick, this));
 }
 
 void ClickableComponentSystem::update(const float delta) {
