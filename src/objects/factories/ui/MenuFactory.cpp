@@ -39,7 +39,7 @@ TIEntity& MenuFactory::build(const ScriptTableReader& reader) {
 	const FontAsset& font = AssetsManager::Instance()->getFont(ConfigManager::Instance()->getEngineFontName());
     TextComponentSystem::Instance()->addComponent(*menu, font, this->getName(), 16, TextAlignment::BOTTOM_LEFT, this->getDrawn());
 
-    const GlobalId subscriptionId = MessageManager::Instance()->getSubscriptionId(MessageSubscriptions::MOUSE_BUTTON_PRESSED);
+    const GlobalId subscriptionId = MessageManager::Instance()->getSubscriptionId(MessageSubscriptions::RIGHT_MOUSE_BUTTON_PRESSED);
     EventsComponentSystem::Instance()->subscribe(*menu, subscriptionId, std::bind(&Menu::onClick, menu, std::placeholders::_1));
 
     sf::Vector2f buttonSize = sf::Vector2f(100, 25);
