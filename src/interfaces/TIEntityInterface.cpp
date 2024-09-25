@@ -222,5 +222,7 @@ void TIEntityInterface::addCollisionBox(const float x, const float y, const floa
 
 
 sol::object TIEntityInterface::addUIElement(const sol::table& definition) {
-    return ScriptManager::Instance()->getObjectFromValue(TIEntityInterface(UIElementFactoryBuilder::make_factory(definition, this->tientity)->build()));
+    std::unique_ptr<UIElementFactory> uiElementFactory = UIElementFactoryBuilder::make_factory(definition);
+    uiElementFactory->setParent(this->tientity);
+    return ScriptManager::Instance()->getObjectFromValue(TIEntityInterface(uiElementFactory->build()));
 }

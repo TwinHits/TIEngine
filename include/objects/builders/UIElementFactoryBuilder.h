@@ -17,8 +17,8 @@ class UIElementFactoryBuilder {
         UIElementFactoryBuilder() {}
         ~UIElementFactoryBuilder() {}
 
-        static std::unique_ptr<UIElementFactory> make_factory(const sol::table&, TIEntity*);
-        static std::unique_ptr<UIElementFactory> make_factory(const ScriptTableReader&, TIEntity*);
+        static std::unique_ptr<UIElementFactory> make_factory(const sol::table&);
+        static std::unique_ptr<UIElementFactory> make_factory(const ScriptTableReader&);
 
     private:
 		static const inline std::string TYPE = "type";
