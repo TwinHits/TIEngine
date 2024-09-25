@@ -19,12 +19,6 @@ ButtonFactory::ButtonFactory(const sol::table& definition): UIElementFactory(def
 ButtonFactory::ButtonFactory(const ScriptTableReader& reader): UIElementFactory(reader) {}
 
 
-ButtonFactory& ButtonFactory::setText(const std::string& text) {
-    this->text = text;
-    return *this;
-}
-
-
 ButtonFactory& ButtonFactory::setOnClickId(GlobalId onClickId) {
     this->onClickId = onClickId;
     return *this;
@@ -40,7 +34,6 @@ ButtonFactory& ButtonFactory::setOnClick(const std::function<void(Message&)> onC
 TIEntity& ButtonFactory::build() {
 	TIEntity& button = this->UIElementFactory::build();
 
-    this->text = this->getReader().get<std::string>(ButtonFactory::TEXT, this->text);
     this->onClickId = this->getReader().get<GlobalId>(ButtonFactory::ON_CLICK, this->onClickId);
 
     PositionComponent& positionComponent = PositionComponentSystem::Instance()->addComponent(button);
@@ -57,7 +50,7 @@ TIEntity& ButtonFactory::build() {
 
     TextComponent& textComponent = TextComponentSystem::Instance()->addComponent(button);
     textComponent.setTextAlignment(TextAlignment::CENTER);
-    textComponent.setString(this->text);
+    textComponent.setString(this->getText());
     textComponent.setCharacterSize(16);
     textComponent.setDrawn(this->getDrawn());
 

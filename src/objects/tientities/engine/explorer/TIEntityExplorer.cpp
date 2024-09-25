@@ -45,11 +45,13 @@ void TIEntityExplorer::createButtons() {
         for (auto& child : this->selectedTIEntity->getChildren()) {
             position += sf::Vector2f(0, buttonPadding);
             TIEntity& button = ButtonFactory()
-                .setText(child->getName())
                 .setOnClick(std::bind(&TIEntityExplorer::onButtonClick, this, std::placeholders::_1))
                 .setPosition(position)
                 .setSize(buttonSize)
-                .setDrawn(this->show).setParent(this->buttonSceneLayer).build();
+                .setText(child->getName())
+                .setDrawn(this->show)
+                .setParent(this->buttonSceneLayer)
+                .build();
 
             this->buttonToChild.insert({ button.getId(), child.get()});
             position += sf::Vector2f(0, buttonSize.y);
