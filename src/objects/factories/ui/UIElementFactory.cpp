@@ -46,8 +46,20 @@ const sf::Vector2f& UIElementFactory::getSize() {
 }
 
 
+UIElementFactory& UIElementFactory::setText(const std::string& text) {
+    this->text = text;
+    return *this;
+}
+
+
+const std::string& UIElementFactory::getText() {
+    return this->text;
+}
+
+
 TIEntity& UIElementFactory::build() {
     const std::string name = this->getReader().get<std::string>(TIEntityFactory::NAME, "");
+    this->text = this->getReader().get<std::string>(UIElementFactory::TEXT, this->text);
 
     this->setName(name);
 

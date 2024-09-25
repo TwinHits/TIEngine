@@ -20,17 +20,13 @@ namespace TIE {
         MenuFactory(const ScriptTableReader&);
         ~MenuFactory() {};
 
-        MenuFactory& setPosition(const sf::Vector2f&);
-
         MenuFactory& setEvent(const std::string&);
 
         TIEntity& build();
     private:
-        sf::Vector2f position = sf::Vector2f(0, 0);
         std::string event = "";
 
-		static const inline std::string EVENT  = "event";
-
+		static const inline std::string EVENT = "event";
 		static const inline std::string MENU_ITEMS  = "menuItems";
 		static const inline std::string ON_CLICK = "onClick";
     };
