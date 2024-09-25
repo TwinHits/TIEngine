@@ -6,6 +6,7 @@
 #include "componentsystems/TextComponentSystem.h"
 #include "objects/ScriptTableReader.h"
 #include "objects/factories/ui/UIElementFactory.h"
+#include "objects/tientities/TIEntity.h"
 
 using namespace TIE;
 
@@ -13,6 +14,9 @@ ButtonFactory::ButtonFactory(): UIElementFactory() {}
 
 
 ButtonFactory::ButtonFactory(const sol::table& definition): UIElementFactory(definition) {}
+
+
+ButtonFactory::ButtonFactory(const ScriptTableReader& reader): UIElementFactory(reader) {}
 
 
 ButtonFactory& ButtonFactory::setText(const std::string& text) {
@@ -34,15 +38,10 @@ ButtonFactory& ButtonFactory::setOnClick(const std::function<void(Message&)> onC
 
 
 TIEntity& ButtonFactory::build() {
-    return this->build(this->getReader());
-}
+	TIEntity& button = this->UIElementFactory::build();
 
-
-TIEntity& ButtonFactory::build(const ScriptTableReader& reader) {
-	TIEntity& button = this->TIEntityFactory::build(reader);
-
-    this->text = reader.get<std::string>(ButtonFactory::TEXT, this->text);
-    this->onClickId = reader.get<GlobalId>(ButtonFactory::ON_CLICK, this->onClickId);
+    this->text = this->getReader().get<std::string>(ButtonFactory::TEXT, this->text);
+    this->onClickId = this->getReader().get<GlobalId>(ButtonFactory::ON_CLICK, this->onClickId);
 
     PositionComponent& positionComponent = PositionComponentSystem::Instance()->addComponent(button);
     positionComponent.position = this->getPosition();

@@ -8,9 +8,9 @@
 
 #include <sol/sol.hpp>
 
-#include "objects/tientities/TIEntity.h" 
 #include "objects/GlobalId.h"
 #include "objects/ScriptTableReader.h"
+#include "objects/tientities/TIEntity.h" 
 
 namespace TIE {
 
@@ -18,6 +18,7 @@ class TIEntityFactory {
 	public:
 		TIEntityFactory();
 		TIEntityFactory(const sol::table&);
+		TIEntityFactory(const ScriptTableReader&);
 		TIEntityFactory(const TIEntityFactory&) {};
 
 		const GlobalId getId();
@@ -36,7 +37,6 @@ class TIEntityFactory {
 		TIEntity* getParent();
 
 		virtual TIEntity& build();
-		virtual TIEntity& build(const ScriptTableReader&);
 
 		static const inline std::string NAME = "name";
 		static const inline std::string SHOW_WIREFRAME = "showWireframe";
@@ -48,7 +48,7 @@ class TIEntityFactory {
 		std::string name = "";
 		bool showWireframe = false;
 		TIEntity* parent = nullptr;
-		std::unique_ptr<ScriptTableReader> reader;
+		std::shared_ptr<ScriptTableReader> reader;
 };
 
 }

@@ -12,6 +12,7 @@
 #include "managers/ComponentSystemsManager.h"
 #include "managers/ScriptManager.h"
 #include "objects/GlobalId.h"
+#include "objects/builders/UIElementFactoryBuilder.h"
 #include "objects/factories/physics/TraceFactory.h"
 #include "objects/factories/physics/CollisionBoxFactory.h"
 #include "objects/factories/ui/UIElementFactory.h"
@@ -221,7 +222,5 @@ void TIEntityInterface::addCollisionBox(const float x, const float y, const floa
 
 
 sol::object TIEntityInterface::addUIElement(const sol::table& definition) {
-    UIElementFactory factory = UIElementFactory(definition);
-    factory.setParent(this->tientity);
-    return ScriptManager::Instance()->getObjectFromValue(TIEntityInterface(factory.build()));
+    return ScriptManager::Instance()->getObjectFromValue(TIEntityInterface(UIElementFactoryBuilder::make_factory(definition, this->tientity)->build()));
 }

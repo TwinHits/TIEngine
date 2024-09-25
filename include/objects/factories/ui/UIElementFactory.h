@@ -7,6 +7,7 @@
 #include "SFML/Graphics.hpp"
 
 #include "objects/ScriptTableReader.h"
+#include "objects/tientities/TIEntity.h"
 
 namespace TIE {
 
@@ -14,6 +15,7 @@ class UIElementFactory : public TIEntityFactory {
     public:
         UIElementFactory();
         UIElementFactory(const sol::table&);
+        UIElementFactory(const ScriptTableReader&);
         ~UIElementFactory() {};
 
         UIElementFactory& setDrawn(const bool);
@@ -26,15 +28,10 @@ class UIElementFactory : public TIEntityFactory {
         const sf::Vector2f& getSize();
 
         TIEntity& build();
-        TIEntity& build(const ScriptTableReader&);
     private:
         bool drawn = false;
         sf::Vector2f position = sf::Vector2f(0, 0);
         sf::Vector2f size = sf::Vector2f(0, 0);
-
-		static const inline std::string TYPE = "type";
-		static const inline std::string MENU = "Menu";
-		static const inline std::string BUTTON = "Button";
 
 };
 

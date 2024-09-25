@@ -18,13 +18,13 @@ class ButtonFactory : public UIElementFactory {
     public:
         ButtonFactory();
         ButtonFactory(const sol::table&);
+        ButtonFactory(const ScriptTableReader&);
         ~ButtonFactory() {};
 
         ButtonFactory& setText(const std::string&);
         ButtonFactory& setOnClickId(const GlobalId);
         ButtonFactory& setOnClick(const std::function<void(Message&)>);
 
-        TIEntity& build(const ScriptTableReader&);
         TIEntity& build();
     private:
         std::string text = "";

@@ -1,5 +1,7 @@
 #include "objects/factories/tientities/TIEntityFactory.h"
 
+#include <memory>
+
 #include <sol/sol.hpp>
 
 #include "componentsystems/ComponentSystem.h"
@@ -10,39 +12,41 @@
 #include "managers/SceneManager.h"
 #include "managers/ScriptManager.h"
 #include "managers/WorldManager.h"
+#include "objects/ScriptTableReader.h"
 #include "objects/tientities/TIEntity.h"
 
 using namespace TIE;
 
 TIEntityFactory::TIEntityFactory() {
 	this->id = HashManager::Instance()->getNewGlobalId();
-	this->reader = TIE::make_unique<ScriptTableReader>();
+	this->reader = std::make_shared<ScriptTableReader>();
 }
 
 
 TIEntityFactory::TIEntityFactory(const sol::table& definition) {
 	this->id = HashManager::Instance()->getNewGlobalId();
-	this->reader = TIE::make_unique<ScriptTableReader>(definition);
+	this->reader = std::make_shared<ScriptTableReader>(definition);
+}
+
+
+TIEntityFactory::TIEntityFactory(const ScriptTableReader& reader) {
+	this->id = HashManager::Instance()->getNewGlobalId();
+	this->reader = std::make_shared<ScriptTableReader>(reader);
 }
 
 
 TIEntity& TIEntityFactory::build() {
-	return this->build(this->getReader());
-}
-
-
-TIEntity& TIEntityFactory::build(const ScriptTableReader& reader) {
 	if (this->parent == nullptr) {
 		this->setParent(&SceneManager::Instance()->getClientLayer());
 	}
 	TIEntity& tientity = this->parent->attachChild();
 
-	const ScriptTableReader& metaReader = reader.getReader("tientity");
+	const ScriptTableReader& metaReader = this->getReader().getReader("tientity");
 	tientity.setName(metaReader.get<std::string>(TIEntityFactory::NAME, this->name));
 	this->setShowWireFrame(WireframeComponentSystem::Instance()->getShowWireframe(tientity.getParent()));
 
     for (ComponentSystem* componentSystem : ComponentSystemsManager::Instance()->getComponentSystems()) {
-        if (reader.hasKey(componentSystem->getName())) {
+        if (this->getReader().hasKey(componentSystem->getName())) {
             componentSystem->addComponent(*this, tientity);
         } else if (componentSystem->getName() == WireframeComponentSystem::WIREFRAME && this->getShowWireframe()) {
             componentSystem->addComponent(*this, tientity);

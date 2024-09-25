@@ -1,10 +1,7 @@
 #include "objects/factories/ui/UIElementFactory.h"
 
-#include "managers/HashManager.h"
 #include "objects/ScriptTableReader.h"
-#include "objects/factories/ui/ButtonFactory.h"
-#include "objects/factories/ui/MenuFactory.h"
-#include "templates/MakeUnique.h"
+#include "objects/tientities/TIEntity.h"
 
 using namespace TIE;
 
@@ -12,6 +9,9 @@ UIElementFactory::UIElementFactory() : TIEntityFactory() {}
 
 
 UIElementFactory::UIElementFactory(const sol::table& definition) : TIEntityFactory(definition) {}
+
+
+UIElementFactory::UIElementFactory(const ScriptTableReader& reader) : TIEntityFactory(reader) {}
 
 
 UIElementFactory& UIElementFactory::setDrawn(const bool drawn) {
@@ -47,28 +47,11 @@ const sf::Vector2f& UIElementFactory::getSize() {
 
 
 TIEntity& UIElementFactory::build() {
-    return this->build(this->getReader());
-}
+    const std::string name = this->getReader().get<std::string>(TIEntityFactory::NAME, "");
 
+    this->setName(name);
 
-TIEntity& UIElementFactory::build(const ScriptTableReader& reader) {
-    const std::string type = reader.get<std::string>(UIElementFactory::TYPE, "");
-    const std::string name = reader.get<std::string>(TIEntityFactory::NAME, "");
+    TIEntity& uiElement = TIEntityFactory::build();
 
-    std::unique_ptr<UIElementFactory> uiElementFactory = nullptr;
-    if (type == UIElementFactory::MENU) {
-        uiElementFactory = TIE::make_unique<MenuFactory>();
-    } else if (type == UIElementFactory::BUTTON) {
-        uiElementFactory = TIE::make_unique<ButtonFactory>();
-    } else {
-        return this->TIEntityFactory::build();
-    }
-
-    uiElementFactory->setParent(this->getParent());
-    uiElementFactory->setName(name);
-    uiElementFactory->setPosition(this->position);
-    uiElementFactory->setSize(this->size);
-    uiElementFactory->setDrawn(this->drawn);
-    
-    return uiElementFactory->build(reader);
+    return uiElement;
 }

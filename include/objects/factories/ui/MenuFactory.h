@@ -7,7 +7,6 @@
 
 #include <string>
 
-#include "objects/Message.h"
 #include "objects/ScriptTableReader.h"
 #include "objects/tientities/TIEntity.h"
 
@@ -18,14 +17,17 @@ namespace TIE {
     public:
         MenuFactory();
         MenuFactory(const sol::table&);
+        MenuFactory(const ScriptTableReader&);
         ~MenuFactory() {};
 
         MenuFactory& setPosition(const sf::Vector2f&);
 
-        TIEntity& build(const ScriptTableReader&);
+        MenuFactory& setEvent(const std::string&);
+
         TIEntity& build();
     private:
         sf::Vector2f position = sf::Vector2f(0, 0);
+        std::string event = "RIGHTMOUSEBUTTONPRESSED";
 
 		static const inline std::string MENU_ITEMS  = "menuItems";
 		static const inline std::string ON_CLICK = "onClick";
