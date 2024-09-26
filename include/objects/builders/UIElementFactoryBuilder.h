@@ -24,6 +24,7 @@ class UIElementFactoryBuilder {
 		static const inline std::string TYPE = "type";
 
 		static const inline std::string MENU = "Menu";
+		static const inline std::string LABEL = "Label";
 		static const inline std::string BUTTON = "Button";
 };
 
