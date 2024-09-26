@@ -58,12 +58,13 @@ const std::string& UIElementFactory::getText() {
 
 
 TIEntity& UIElementFactory::build() {
-    const std::string name = this->getReader().get<std::string>(TIEntityFactory::NAME, "");
+    this->setName(this->getReader().get<std::string>(TIEntityFactory::NAME, this->getName()));
+    this->drawn = this->getReader().get<bool>(UIElementFactory::DRAWN, this->drawn);
     this->text = this->getReader().get<std::string>(UIElementFactory::TEXT, this->text);
+    this->position = sf::Vector2f(
+        this->getReader().get<float>(UIElementFactory::POSITION_X, this->position.x),
+        this->getReader().get<float>(UIElementFactory::POSITION_Y, this->position.y)
+    );
 
-    this->setName(name);
-
-    TIEntity& uiElement = TIEntityFactory::build();
-
-    return uiElement;
+    return TIEntityFactory::build();
 }

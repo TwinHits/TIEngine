@@ -39,7 +39,10 @@ class UIElementFactory : public TIEntityFactory {
         sf::Vector2f size = sf::Vector2f(0, 0);
         std::string text = "";
         
+		static const inline std::string DRAWN = "drawn";
 		static const inline std::string TEXT = "text";
+		static const inline std::string POSITION_X = "x";
+		static const inline std::string POSITION_Y = "y";
 };
 
 }

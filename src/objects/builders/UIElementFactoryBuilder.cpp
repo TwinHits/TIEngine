@@ -7,6 +7,7 @@
 #include "managers/LogManager.h"
 #include "objects/ScriptTableReader.h"
 #include "objects/factories/ui/ButtonFactory.h"
+#include "objects/factories/ui/LabelFactory.h"
 #include "objects/factories/ui/MenuFactory.h"
 
 using namespace TIE;
@@ -19,6 +20,8 @@ std::unique_ptr<UIElementFactory> UIElementFactoryBuilder::make_factory(const Sc
         uiElementFactory = std::make_unique<MenuFactory>(reader);
     } else if (type == UIElementFactoryBuilder::BUTTON) {
         uiElementFactory = std::make_unique<ButtonFactory>(reader);
+    } else if (type == UIElementFactoryBuilder::LABEL) {
+        uiElementFactory = std::make_unique<LabelFactory>(reader);
     } else {
         LogManager::Instance()->error("Attempted to build UIElement with an unknown type " + type);
         uiElementFactory = std::make_unique<UIElementFactory>(reader);
@@ -35,6 +38,8 @@ std::unique_ptr<UIElementFactory> UIElementFactoryBuilder::make_factory(const so
         uiElementFactory = std::make_unique<MenuFactory>(definition);
     } else if (type == UIElementFactoryBuilder::BUTTON) {
         uiElementFactory = std::make_unique<ButtonFactory>(definition);
+    } else if (type == UIElementFactoryBuilder::LABEL) {
+        uiElementFactory = std::make_unique<LabelFactory>(definition);
     } else {
         LogManager::Instance()->error("Attempted to build UIElement with an unknown type " + type);
         uiElementFactory = std::make_unique<UIElementFactory>(definition);
