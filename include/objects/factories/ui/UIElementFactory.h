@@ -32,17 +32,22 @@ class UIElementFactory : public TIEntityFactory {
         UIElementFactory& setText(const std::string&);
         const std::string& getText();
 
+        UIElementFactory& setOnEventId(const GlobalId);
+        const GlobalId getOnEventId();
+
         TIEntity& build();
     private:
         bool drawn = false;
         sf::Vector2f position = sf::Vector2f(0, 0);
         sf::Vector2f size = sf::Vector2f(0, 0);
         std::string text = "";
+        GlobalId onEventId = 0;
         
 		static const inline std::string DRAWN = "drawn";
 		static const inline std::string TEXT = "text";
 		static const inline std::string POSITION_X = "x";
 		static const inline std::string POSITION_Y = "y";
+		static const inline std::string ON_EVENT_ID = "onEvent";
 };
 
 }

@@ -57,6 +57,17 @@ const std::string& UIElementFactory::getText() {
 }
 
 
+UIElementFactory& UIElementFactory::setOnEventId(const GlobalId onEventId) {
+    this->onEventId = onEventId;
+    return *this;
+}
+
+
+const GlobalId UIElementFactory::getOnEventId() {
+    return this->onEventId;
+}
+
+
 TIEntity& UIElementFactory::build() {
     this->setName(this->getReader().get<std::string>(TIEntityFactory::NAME, this->getName()));
     this->drawn = this->getReader().get<bool>(UIElementFactory::DRAWN, this->drawn);
@@ -65,6 +76,7 @@ TIEntity& UIElementFactory::build() {
         this->getReader().get<float>(UIElementFactory::POSITION_X, this->position.x),
         this->getReader().get<float>(UIElementFactory::POSITION_Y, this->position.y)
     );
+    this->onEventId = (this->getReader().get<GlobalId>(UIElementFactory::ON_EVENT_ID, this->onEventId));
 
     return TIEntityFactory::build();
 }

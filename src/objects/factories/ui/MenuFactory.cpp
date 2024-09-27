@@ -43,6 +43,9 @@ TIEntity& MenuFactory::build() {
     if (!this->event.empty()) {
         const GlobalId subscriptionId = MessageManager::Instance()->getSubscriptionId(this->event);
         EventsComponentSystem::Instance()->subscribe(*menu, subscriptionId, std::bind(&Menu::onClick, menu, std::placeholders::_1));
+        if (this->getOnEventId()) {
+            EventsComponentSystem::Instance()->subscribe(*menu, subscriptionId, this->getOnEventId());
+        }
     }
 
     sf::Vector2f buttonSize = sf::Vector2f(100, 25);
