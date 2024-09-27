@@ -22,6 +22,7 @@ class EventsComponentSystem : public Singleton<EventsComponentSystem>, public Ow
 		bool removeComponent(TIEntity&);
 
 		void subscribe(TIEntity&, const GlobalId, std::function<void(Message&)>);
+		void subscribe(TIEntity&, const GlobalId, const GlobalId);
 		void publish(Message);
 
 		const static inline std::string EVENTS = "events";

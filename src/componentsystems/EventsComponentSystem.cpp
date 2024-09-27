@@ -80,14 +80,14 @@ EventsComponent& EventsComponentSystem::addComponent(TIEntity& tientity) {
 }
 
 
-EventsComponent& EventsComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& entity) {
-	EventsComponent& eventsComponent = this->addComponent(entity);
+EventsComponent& EventsComponentSystem::addComponent(const TIEntityFactory& factory, TIEntity& tientity) {
+	EventsComponent& eventsComponent = this->addComponent(tientity);
 	const ScriptTableReader& reader = factory.getReader().getReader(EventsComponentSystem::EVENTS);
 
 	for (auto& pair : reader.getValues<GlobalId>()) {
 		const GlobalId subscriptionId = MessageManager::Instance()->getSubscriptionId(pair.first);
 		GlobalId functionId = pair.second;
-		eventsComponent.subscribe(subscriptionId, functionId);
+		this->subscribe(tientity, subscriptionId, functionId);
 	}
 
 	return eventsComponent;
@@ -113,6 +113,12 @@ bool EventsComponentSystem::removeComponent(TIEntity& tientity) {
 void EventsComponentSystem::subscribe(TIEntity& tientity, const GlobalId subscriptionId, std::function<void(Message&)> handler) {
 	EventsComponent& eventsComponent = this->addComponent(tientity);
 	eventsComponent.subscribe(subscriptionId, handler);
+}
+
+
+void EventsComponentSystem::subscribe(TIEntity& tientity, const GlobalId subscriptionId, const GlobalId functionId) {
+	EventsComponent& eventsComponent = this->addComponent(tientity);
+	eventsComponent.subscribe(subscriptionId, functionId);
 }
 
 
