@@ -23,7 +23,7 @@ ClickableComponentSystem::ClickableComponentSystem() {
 }
 
 void ClickableComponentSystem::update(const float delta) {
-
+	this->cache.clear();
 }
 
 
@@ -79,6 +79,10 @@ void ClickableComponentSystem::setOnClick(TIEntity& tientity, const GlobalId onC
 	clickableComponent.setOnClickFunctionId(onClickFunctionId);
 }
 
+const std::vector<TIEntity*>& ClickableComponentSystem::getClickedTIEntities() {
+	return this->cache;
+}
+
 
 void ClickableComponentSystem::onClick() {
     const sf::Vector2f& clickPosition = InputManager::Instance()->getMouseWindowPosition();
@@ -91,6 +95,7 @@ void ClickableComponentSystem::onClick() {
 				if (c.clickableComponent.getOnClickFunctionId()) {
 					ScriptManager::Instance()->runFunction<sol::optional<bool>>(c.clickableComponent.getOnClickFunctionId(), c.tientity);
 				}
+				this->cache.push_back(&c.tientity);
             }
         }
     }
