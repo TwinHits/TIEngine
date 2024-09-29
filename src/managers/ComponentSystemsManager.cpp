@@ -11,6 +11,7 @@
 #include "componentsystems/CacheComponentSystem.h"
 #include "componentsystems/EventsComponentSystem.h"
 #include "componentsystems/GridComponentSystem.h"
+#include "componentsystems/HoverableComponentSystem.h"
 #include "componentsystems/LifecycleComponentSystem.h"
 #include "componentsystems/LineComponentSystem.h"
 #include "componentsystems/MessagesComponentSystem.h"
@@ -30,6 +31,7 @@ void ComponentSystemsManager::initialize() {
 	// Update data operations
 	this->componentSystems.push_back(CacheComponentSystem::Instance());
 	this->componentSystems.push_back(MessagesComponentSystem::Instance());
+	this->componentSystems.push_back(HoverableComponentSystem::Instance());
 	this->componentSystems.push_back(ClickableComponentSystem::Instance());
 	this->componentSystems.push_back(EventsComponentSystem::Instance());
 	this->componentSystems.push_back(LifecycleComponentSystem::Instance());

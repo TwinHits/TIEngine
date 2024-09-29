@@ -39,6 +39,7 @@ class TIEngineInterface {
         const sf::Vector2f getMouseWorldPosition();
 
         sol::object getTIEntityById(GlobalId);
+        sol::object getTIEntitiesUnderCursor();
 
         sol::object registerSceneLayer(const std::string&, bool);
         GlobalId registerFiniteStateMachine(const sol::table&);

@@ -1,10 +1,12 @@
 #include "interfaces/TIEngineInterface.h"
 
 #include <string>
+#include <vector>
 
 #include <sol/sol.hpp>
 
 #include "componentsystems/BehavesComponentSystem.h"
+#include "componentsystems/HoverableComponentSystem.h"
 #include "interfaces/MessageInterface.h"
 #include "interfaces/TIEntityInterface.h"
 #include "managers/AssetsManager.h"
@@ -39,6 +41,7 @@ void TIEngineInterface::registerUserType(sol::state& luaState) {
 	engineInterfaceUserType["spawn"] = &TIEngineInterface::spawn;
 	engineInterfaceUserType["getMouseWorldPosition"] = &TIEngineInterface::getMouseWorldPosition;
     engineInterfaceUserType["getTIEntityById"] = &TIEngineInterface::getTIEntityById;
+    engineInterfaceUserType["getTIEntitiesUnderCursor"] = &TIEngineInterface::getTIEntitiesUnderCursor;
     engineInterfaceUserType["registerSceneLayer"] = &TIEngineInterface::registerSceneLayer;
     engineInterfaceUserType["registerFiniteStateMachine"] = &TIEngineInterface::registerFiniteStateMachine;
     engineInterfaceUserType["registerBehaviorTreeNode"] = &TIEngineInterface::registerBehaviorTreeNode;
@@ -124,6 +127,16 @@ sol::object TIEngineInterface::getTIEntityById(GlobalId id) {
     } else {
         return sol::nil;
     }
+}
+
+
+sol::object TIEngineInterface::getTIEntitiesUnderCursor() {
+    const std::vector<std::reference_wrapper<TIEntity>>& tientities = HoverableComponentSystem::Instance()->getHoveredTIEntities();
+    std::vector<TIEntityInterface> tientityInterfaces;
+    for (auto& tientity : tientities) {
+        tientityInterfaces.push_back(TIEntityInterface(tientity));
+    }
+    return ScriptManager::Instance()->getObjectFromValue(tientityInterfaces);
 }
 
 
