@@ -1,17 +1,6 @@
 #include "componentsystems/ShapeComponentSystem.h" 
 
-#include <string>
-
-#include <SFML/Graphics.hpp>
-
 #include "componentsystems/PositionComponentSystem.h"
-#include "objects/components/ShapeComponent.h"
-#include "objects/tientities/TIEntity.h"
-#include "objects/factories/tientities/TIEntityFactory.h"
-#include "managers/AssetsManager.h"
-#include "managers/HashManager.h"
-#include "managers/ScriptManager.h"
-#include "utils/String.h"
 
 using namespace TIE;
 

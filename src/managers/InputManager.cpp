@@ -1,7 +1,5 @@
 #include "managers/InputManager.h" 
 
-#include <SFML/Graphics.hpp>
-
 #include "componentsystems/EventsComponentSystem.h"
 #include "managers/MessageManager.h"
 #include "managers/ViewManager.h"

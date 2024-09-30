@@ -3,9 +3,6 @@
 #include "managers/ConfigManager.h"
 #include "managers/LogManager.h"
 #include "managers/HashManager.h"
-#include "objects/GlobalId.h"
-#include "objects/assets/FontAsset.h"
-#include "templates/MakeUnique.h"
 
 using namespace TIE;
 
@@ -156,7 +153,7 @@ bool AssetsManager::loadFontsFromPath(const boost::filesystem::path& path) {
 				if (!boost::filesystem::is_directory(file)) {
 					const std::string filename = file.path().filename().string();
 					GlobalId id = HashManager::Instance()->getHash(filename);
-					this->fonts[id] = TIE::make_unique<FontAsset>(filename, id);
+					this->fonts[id] = std::make_unique<FontAsset>(filename, id);
                     if (this->fonts[id]->loadFromFile(file.path().string())) {
                         LogManager::Instance()->info("Loaded font '" + file.path().string() + "'. Id: " + std::to_string(id));
                     } else {

@@ -1,11 +1,7 @@
 #include "objects/tientities/engine/GridGuide.h"
 
-#include <SFML/Graphics.hpp>
-
 #include "componentsystems/ShapeComponentSystem.h"
 #include "managers/HashManager.h"
-#include "objects/components/ShapeComponent.h"
-#include "objects/tientities/TIEntity.h"
 
 using namespace TIE;
 

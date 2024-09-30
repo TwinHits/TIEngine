@@ -1,7 +1,6 @@
 #include "managers/MessageManager.h"
 
 #include "managers/HashManager.h"
-#include "objects/GlobalId.h"
 
 using namespace TIE;
 

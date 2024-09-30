@@ -1,10 +1,7 @@
 #include "managers/ConsoleManager.h"
 
 #include <algorithm>
-#include <memory>
-#include <queue>
 
-#include "componentsystems/SpriteComponentSystem.h"
 #include "constants/ConsoleCommands.h"
 #include "managers/InputManager.h"
 #include "managers/LogManager.h"

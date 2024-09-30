@@ -4,13 +4,10 @@
 #include "componentsystems/OwnsComponent.h"
 #include "templates/Singleton.h"
 
-#include "objects/components/LineComponent.h"
+#include <string>
+
 #include "objects/components/PositionComponent.h"
 #include "objects/components/ShapeComponent.h"
-#include "objects/components/SpriteComponent.h"
-#include "objects/components/TextComponent.h"
-#include "objects/factories/tientities/TIEntityFactory.h"
-#include "objects/tientities/TIEntity.h"
 
 namespace TIE {
 

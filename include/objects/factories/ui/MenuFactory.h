@@ -7,10 +7,6 @@
 
 #include <string>
 
-#include "objects/ScriptTableReader.h"
-#include "objects/tientities/TIEntity.h"
-
-
 namespace TIE {
 
     class MenuFactory : public UIElementFactory {

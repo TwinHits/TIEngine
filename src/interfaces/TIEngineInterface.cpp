@@ -3,8 +3,6 @@
 #include <string>
 #include <vector>
 
-#include <sol/sol.hpp>
-
 #include "componentsystems/BehavesComponentSystem.h"
 #include "componentsystems/HoverableComponentSystem.h"
 #include "interfaces/MessageInterface.h"
@@ -21,7 +19,6 @@
 #include "objects/factories/tientities/SceneLayerFactory.h"
 #include "objects/factories/ai/FiniteStateMachineFactory.h"
 #include "objects/factories/ai/BehaviorTreeNodeFactory.h"
-#include "utils/constants/SfEventStringMap.h"
 
 using namespace TIE;
 

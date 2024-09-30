@@ -7,11 +7,6 @@
 #include "managers/LogManager.h"
 #include "managers/ScriptManager.h"
 #include "managers/WorldManager.h"
-#include "objects/components/GridComponent.h"
-#include "objects/components/SpriteComponent.h"
-#include "objects/tientities/TIEntity.h"
-#include "objects/factories/tientities/TIEntityFactory.h"
-#include "utils/ComponentSystems.h"
 #include "utils/TIEMath.h"
 
 using namespace TIE;

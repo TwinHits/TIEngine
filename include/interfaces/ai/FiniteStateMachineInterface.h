@@ -3,10 +3,7 @@
 
 #include <string>
 
-#include <sol/sol.hpp>
-
 #include "ai/FiniteStateMachine.h"
-#include "objects/GlobalId.h"
 
 namespace TIE {
 

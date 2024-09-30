@@ -5,8 +5,6 @@
 #include "templates/Singleton.h"
 
 #include "objects/components/SelectableComponent.h"
-#include "objects/factories/tientities/TIEntityFactory.h"
-#include "objects/tientities/TIEntity.h"
 
 namespace TIE {
 

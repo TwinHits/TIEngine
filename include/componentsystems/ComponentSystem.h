@@ -1,6 +1,8 @@
 #ifndef COMPONENTSYSTEM_H
 #define COMPONENTSYSTEM_H
 
+#include <SFML/Graphics.hpp>
+
 #include <string>
 
 #include "objects/factories/tientities/TIEntityFactory.h"

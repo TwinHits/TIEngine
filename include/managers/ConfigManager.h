@@ -5,7 +5,6 @@
 #include "templates/Singleton.h"
 
 #include <fstream>
-#include <map>
 #include <string>
 
 #include "enumeration/LogLevel.h"	

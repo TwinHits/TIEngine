@@ -4,11 +4,10 @@
 #include "componentsystems/OwnsComponent.h"
 #include "templates/Singleton.h"
 
+#include <map>
 #include <string>
 
 #include "objects/components/EventsComponent.h"
-#include "objects/tientities/TIEntity.h"
-#include "objects/factories/tientities/TIEntityFactory.h"
 
 namespace TIE {
 

@@ -1,11 +1,12 @@
 #include "managers/ViewManager.h"
 
 #include "constants/MessageSubscriptions.h"
+#include "managers/ConsoleManager.h"
 #include "managers/HashManager.h"
+#include "managers/InputManager.h"
 #include "managers/LogManager.h"
 #include "managers/MessageManager.h"
 #include "managers/WindowManager.h"
-#include "templates/MakeUnique.h"
 #include "utils/TIEMath.h"
 
 using namespace TIE;
@@ -114,17 +115,17 @@ void ViewManager::setActiveView(GlobalId id) {
 
 
 void ViewManager::updateCamera(const float delta) {
-	const sf::Vector2f& mouseWindowPosition = this->inputManager->getMouseWindowPosition();
-	if (!this->consoleManager->isConsoleDrawn()) {
+	const sf::Vector2f& mouseWindowPosition = InputManager::Instance()->getMouseWindowPosition();
+	if (!ConsoleManager::Instance()->isConsoleDrawn()) {
 		this->clientView->move(this->calculateClientScroll(mouseWindowPosition, delta));
-	} else if (this->consoleManager->isConsoleDrawn()) {
+	} else if (ConsoleManager::Instance()->isConsoleDrawn()) {
 		
 	}
 }	
 
 
 void ViewManager::onMouseWheelMoved() {
-	const sf::Event* zoomEvent = this->inputManager->getEvent(sf::Event::MouseWheelMoved);
+	const sf::Event* zoomEvent = InputManager::Instance()->getEvent(sf::Event::MouseWheelMoved);
 	if (zoomEvent != nullptr) {
 		float tick = 0.01666666666f;
 		float change = this->zoomSpeed * tick * zoomEvent->mouseWheel.delta; //mouseWheel.delta is -1 or 1 depending on scroll direction
@@ -140,7 +141,7 @@ void ViewManager::onMouseWheelMoved() {
 const sf::Vector2f ViewManager::calculateClientScroll(const sf::Vector2f mousePosition, const float delta) {
 
 	sf::Vector2f translation = sf::Vector2f(0, 0);
-	sf::Vector2f mouseWorldPosition = inputManager->getMouseWorldPosition();
+	sf::Vector2f mouseWorldPosition = InputManager::Instance()->getMouseWorldPosition();
 	
 	if (this->scrollBounds.contains(mouseWorldPosition)) {
 		if (this->scrollUpZone.contains(mousePosition)) {

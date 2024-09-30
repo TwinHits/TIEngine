@@ -5,7 +5,6 @@
 #include "managers/HashManager.h"
 #include "managers/SceneManager.h"
 #include "managers/WorldManager.h"
-#include "templates/MakeUnique.h"
 
 using namespace TIE;
 

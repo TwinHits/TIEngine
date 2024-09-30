@@ -1,9 +1,5 @@
 #include "objects/assets/FontAsset.h"
 
-#include <string>
-
-#include "objects/GlobalId.h"
-
 using namespace TIE;
 
 FontAsset::FontAsset(const std::string& name, const GlobalId id) {

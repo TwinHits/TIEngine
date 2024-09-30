@@ -1,11 +1,6 @@
 #include "objects/builders/UIElementFactoryBuilder.h"
 
-#include <memory>
-
-#include "sol/sol.hpp"
-
 #include "managers/LogManager.h"
-#include "objects/ScriptTableReader.h"
 #include "objects/factories/ui/ButtonFactory.h"
 #include "objects/factories/ui/LabelFactory.h"
 #include "objects/factories/ui/MenuFactory.h"

@@ -21,9 +21,7 @@
 #include "managers/LogManager.h"
 #include "managers/ScriptManager.h"
 #include "managers/WorldManager.h"
-#include "objects/GlobalId.h"
 #include "objects/Message.h"
-#include "objects/ScriptTableReader.h"
 #include "templates/MakeUnique.h"
 
 using namespace TIE;

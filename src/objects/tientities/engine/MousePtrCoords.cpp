@@ -7,6 +7,7 @@
 #include "componentsystems/TextComponentSystem.h"
 #include "managers/AssetsManager.h"
 #include "managers/ConfigManager.h"
+#include "managers/InputManager.h"
 #include "utils/ComponentSystems.h"
 
 using namespace TIE;
@@ -14,7 +15,7 @@ using namespace TIE;
 MousePtrCoords::MousePtrCoords() {
 	this->setName("MousePtrCoords");
 
-	sf::Vector2f mouseWindowPosition = this->inputManager->getMouseWindowPosition();
+	sf::Vector2f mouseWindowPosition = InputManager::Instance()->getMouseWindowPosition();
 
 	TextComponent& textComponent = this->addComponent<TextComponent>();
 	textComponent.setString("0, 0");
@@ -27,9 +28,9 @@ MousePtrCoords::MousePtrCoords() {
 
 void MousePtrCoords::update(const float delta) {
 	if (ComponentSystems::isDrawn(*this)) {
-		if (this->cachedMouseWorldPostion != this->inputManager->getMouseWorldPosition() || this->cachedMouseWindowPostion == this->inputManager->getMouseWindowPosition()) {
-			this->cachedMouseWorldPostion = this->inputManager->getMouseWorldPosition();
-			this->cachedMouseWindowPostion = this->inputManager->getMouseWindowPosition();
+		if (this->cachedMouseWorldPostion != InputManager::Instance()->getMouseWorldPosition() || this->cachedMouseWindowPostion == InputManager::Instance()->getMouseWindowPosition()) {
+			this->cachedMouseWorldPostion = InputManager::Instance()->getMouseWorldPosition();
+			this->cachedMouseWindowPostion = InputManager::Instance()->getMouseWindowPosition();
 			TextComponent* textComponent = this->getComponent<TextComponent>();
 
 			std::stringstream ss;

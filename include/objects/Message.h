@@ -1,8 +1,6 @@
 #ifndef MESSAGE_H
 #define MESSAGE_H
 
-#include <vector>
-
 #include <sol/sol.hpp>
 
 #include "objects/GlobalId.h"

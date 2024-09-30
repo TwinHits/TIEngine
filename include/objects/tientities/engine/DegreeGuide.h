@@ -3,6 +3,8 @@
 
 #include "objects/tientities/TIEntity.h"
 
+#include <SFML/Graphics.hpp>
+
 #include <array>
 #include <map>
 

@@ -1,10 +1,5 @@
 #include "ai/behaviortree/nodes/SequenceNode.h"
 
-#include <string>
-
-#include "enumeration/NodeStatus.h"
-#include "objects/tientities/TIEntity.h"
-
 using namespace TIE;
 
 SequenceNode::SequenceNode(TIEntity& tientity, const std::string& name) : BehaviorTreeNode(tientity, name) {

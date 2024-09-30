@@ -1,19 +1,10 @@
 #include "componentsystems/SpriteComponentSystem.h" 
 
-#include <string>
-
-#include <SFML/Graphics.hpp>
-
 #include "componentsystems/PositionComponentSystem.h"
 #include "componentsystems/WireframeComponentSystem.h"
-#include "objects/components/SpriteComponent.h"
-#include "objects/components/PositionComponent.h"
-#include "objects/tientities/TIEntity.h"
-#include "objects/factories/tientities/TIEntityFactory.h"
 #include "managers/AssetsManager.h"
 #include "managers/ComponentSystemsManager.h"
-#include "utils/ComponentSystems.h"
-#include "utils/String.h"
+#include "managers/ScriptManager.h"
 #include "utils/TIEMath.h"
 
 using namespace TIE;

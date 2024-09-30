@@ -1,9 +1,6 @@
 #include "ai/behaviortree/decorators/PreConditionDecorator.h"
 
-#include "ai/behaviortree/decorators/NodeDecorator.h"
 #include "managers/ScriptManager.h"
-#include "objects/GlobalId.h"
-#include "objects/tientities/TIEntity.h"
 
 using namespace TIE;
 

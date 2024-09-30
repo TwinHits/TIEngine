@@ -6,11 +6,6 @@
 #include <string>
 #include <stdexcept>
 
-#include <SFML/Graphics.hpp>
-
-#include "enumeration/Language.h"
-#include "enumeration/LogLevel.h"
-#include "enumeration/TextAlignment.h"
 #include "managers/LogManager.h"
 
 

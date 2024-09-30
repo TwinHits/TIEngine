@@ -1,9 +1,6 @@
 #include "componentsystems/SelectableComponentSystem.h" 
 
 #include "managers/ComponentSystemsManager.h"
-#include "objects/components/SelectableComponent.h"
-#include "objects/factories/tientities/TIEntityFactory.h"
-#include "objects/tientities/TIEntity.h"
 
 using namespace TIE;
 

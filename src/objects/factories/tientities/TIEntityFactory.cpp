@@ -1,19 +1,11 @@
 #include "objects/factories/tientities/TIEntityFactory.h"
 
-#include <memory>
-
-#include <sol/sol.hpp>
-
-#include "componentsystems/ComponentSystem.h"
 #include "componentsystems/LifecycleComponentSystem.h"
 #include "componentsystems/WireframeComponentSystem.h"
 #include "managers/ComponentSystemsManager.h"
 #include "managers/HashManager.h"
 #include "managers/SceneManager.h"
-#include "managers/ScriptManager.h"
 #include "managers/WorldManager.h"
-#include "objects/ScriptTableReader.h"
-#include "objects/tientities/TIEntity.h"
 
 using namespace TIE;
 

@@ -4,15 +4,12 @@
 #include "componentsystems/OwnsComponent.h"
 #include "templates/Singleton.h"
 
-#include <sol/sol.hpp>
-
 #include "objects/components/LineComponent.h"
 #include "objects/components/MovesComponent.h"
 #include "objects/components/ShapeComponent.h"
 #include "objects/components/SpriteComponent.h"
 #include "objects/components/TextComponent.h"
 #include "objects/components/WireframeComponent.h"
-#include "objects/tientities/TIEntity.h"
 
 namespace TIE {
 

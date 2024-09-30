@@ -1,11 +1,9 @@
-#include <map>
 #include <sstream>
 
 #include "managers/ConfigManager.h"
 
 #include <boost/filesystem.hpp>
 
-#include "enumeration/LogLevel.h"
 #include "utils/String.h"
 
 using namespace TIE;

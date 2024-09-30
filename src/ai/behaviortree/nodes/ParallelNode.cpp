@@ -1,10 +1,5 @@
 #include "ai/behaviortree/nodes/ParallelNode.h"
 
-#include <string>
-
-#include "enumeration/NodeStatus.h"
-#include "objects/tientities/TIEntity.h"
-
 using namespace TIE;
 
 ParallelNode::ParallelNode(TIEntity& tientity, const std::string& name) : BehaviorTreeNode(tientity, name) {

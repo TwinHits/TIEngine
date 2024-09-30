@@ -8,8 +8,6 @@
 #include "managers/MessageManager.h"
 #include "objects/ScriptTableReader.h"
 #include "objects/builders/UIElementFactoryBuilder.h"
-#include "objects/factories/ui/UIElementFactory.h"
-#include "objects/tientities/TIEntity.h"
 #include "objects/tientities/ui/Menu.h"
 
 using namespace TIE;

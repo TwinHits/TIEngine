@@ -1,10 +1,5 @@
 #include "componentsystems/WireframeComponentSystem.h" 
 
-#include <sol/sol.hpp>
-#include "SFML/Graphics.hpp"
-
-#include <string>
-
 #include "componentsystems/LineComponentSystem.h"
 #include "componentsystems/MovesComponentSystem.h"
 #include "componentsystems/ShapeComponentSystem.h" 
@@ -13,13 +8,6 @@
 #include "managers/ComponentSystemsManager.h"
 #include "managers/HashManager.h"
 #include "managers/ScriptManager.h"
-#include "objects/components/LineComponent.h"
-#include "objects/components/MovesComponent.h"
-#include "objects/components/SpriteComponent.h"
-#include "objects/components/TextComponent.h"
-#include "objects/components/WireframeComponent.h"
-#include "objects/tientities/TIEntity.h"
-#include "utils/ComponentSystems.h"
 #include "utils/TIEMath.h"
 
 using namespace TIE;

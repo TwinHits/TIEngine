@@ -6,7 +6,6 @@
 #include <map>
 #include <memory>
 
-#include "objects/GlobalId.h"
 #include "objects/Message.h"
 #include "objects/tientities/TIEntity.h"
 

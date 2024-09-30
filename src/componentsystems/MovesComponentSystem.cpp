@@ -1,10 +1,7 @@
 #include "componentsystems/MovesComponentSystem.h" 
 
 #include <cmath>
-#include <string>
 #include <queue>
-
-#include <SFML/Graphics.hpp>
 
 #include "componentsystems/PositionComponentSystem.h"
 #include "componentsystems/GridComponentSystem.h"
@@ -12,12 +9,8 @@
 #include "componentsystems/WireframeComponentSystem.h"
 #include "managers/ComponentSystemsManager.h"
 #include "managers/MessageManager.h"
+#include "managers/ScriptManager.h"
 #include "managers/WorldManager.h"
-#include "objects/Message.h"
-#include "objects/components/MovesComponent.h"
-#include "objects/components/PositionComponent.h"
-#include "objects/factories/tientities/TIEntityFactory.h"
-#include "objects/tientities/TIEntity.h"
 #include "utils/TIEMath.h"
 
 using namespace TIE;

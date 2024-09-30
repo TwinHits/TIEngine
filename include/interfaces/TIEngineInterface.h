@@ -1,11 +1,9 @@
 #ifndef TIENGINEINTERFACE_H
 #define TIENGINEINTERFACE_H
 
-#include <string>
-
 #include <sol/sol.hpp>
+#include <SFML/Graphics.hpp>
 
-#include "interfaces/TIEntityInterface.h"
 #include "objects/GlobalId.h"
 #include "utils/types/ComponentSystemsTypes.h"
 

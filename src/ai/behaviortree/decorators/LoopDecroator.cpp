@@ -1,8 +1,5 @@
 #include "ai/behaviortree/decorators/LoopDecorator.h"
 
-#include "enumeration/NodeStatus.h"
-#include "objects/tientities/TIEntity.h"
-
 using namespace TIE;
 
 LoopDecorator::LoopDecorator(TIEntity& tientity) : NodeDecorator(tientity) {}

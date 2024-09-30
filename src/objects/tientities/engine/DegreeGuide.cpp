@@ -9,7 +9,6 @@
 #include "managers/ConfigManager.h"
 #include "managers/MessageManager.h"
 #include "managers/WindowManager.h"
-#include "objects/assets/FontAsset.h"
 #include "utils/TIEMath.h"
 
 using namespace TIE;

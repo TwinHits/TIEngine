@@ -4,10 +4,6 @@
 #include <memory>
 #include <string>
 
-#include <sol/sol.hpp>
-
-#include "objects/ScriptTableReader.h"
-#include "objects/tientities/TIEntity.h"
 #include "objects/factories/ui/UIElementFactory.h"
 
 namespace TIE {

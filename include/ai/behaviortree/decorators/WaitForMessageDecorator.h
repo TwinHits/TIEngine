@@ -5,10 +5,7 @@
 
 #include <memory>
 
-#include "enumeration/NodeStatus.h"
-#include "objects/GlobalId.h"
 #include "objects/Message.h"
-#include "objects/tientities/TIEntity.h"
 
 namespace TIE {
 

@@ -1,23 +1,15 @@
 #include "managers/ScriptManager.h"
 
-#include <string>
-
-#include <sol/sol.hpp>
 #define SOL_ALL_SAFETIES_ON 1
 
 #include "componentsystems/CacheComponentSystem.h"
-#include "interfaces/MessageInterface.h"
 #include "interfaces/TIEngineInterface.h"
-#include "interfaces/TIEntityInterface.h"
 #include "interfaces/Vector2Interface.h"
-#include "interfaces/ai/FiniteStateMachineInterface.h"
 #include "managers/ConfigManager.h"
 #include "managers/HashManager.h"
 #include "managers/LogManager.h"
 #include "managers/TimeManager.h"
 #include "managers/ComponentSystemsManager.h"
-#include "objects/factories/tientities/TIEntityFactory.h"
-#include "objects/factories/ai/FiniteStateMachineFactory.h"
 #include "utils/String.h"
 
 using namespace TIE;

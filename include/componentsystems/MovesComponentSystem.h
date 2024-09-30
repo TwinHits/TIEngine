@@ -4,15 +4,8 @@
 #include "componentsystems/OwnsComponent.h"
 #include "templates/Singleton.h"
 
-#include <string>
-
-#include <SFML/Graphics.hpp>
-
 #include "objects/components/MovesComponent.h"
 #include "objects/components/PositionComponent.h"
-#include "objects/factories/tientities/TIEntityFactory.h"
-#include "objects/tientities/TIEntity.h"
-#include "utils/types/ComponentSystemsTypes.h"
 
 namespace TIE {
 

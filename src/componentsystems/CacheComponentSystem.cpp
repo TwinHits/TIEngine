@@ -4,8 +4,6 @@
 
 #include <string>
 
-#include "objects/tientities/TIEntity.h"
-#include "objects/components/CacheComponent.h"
 #include "managers/ComponentSystemsManager.h"
 #include "managers/ScriptManager.h"
 #include "utils/String.h"

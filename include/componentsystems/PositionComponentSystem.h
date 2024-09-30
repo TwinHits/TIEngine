@@ -7,11 +7,7 @@
 #include <string>
 #include <vector>
 
-#include <SFML/Graphics.hpp>
-
 #include "objects/components/PositionComponent.h"
-#include "objects/tientities/TIEntity.h"
-#include "utils/types/ComponentSystemsTypes.h"
 
 namespace TIE {
 class PositionComponentSystem : public Singleton<PositionComponentSystem>, public OwnsComponent<PositionComponent> {

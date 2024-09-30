@@ -1,6 +1,5 @@
 #include "utils/TIEMath.h"
 
-#include "managers/LogManager.h"
 #include "utils/constants/TIEMathConstants.h"
 
 float TIE::Math::toRadians(float degrees) { 

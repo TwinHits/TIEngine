@@ -4,13 +4,11 @@
 #include "componentsystems/OwnsComponent.h"
 #include "templates/Singleton.h"
 
-#include <vector>
+#include <string>
 
 #include "objects/components/AnimatedComponent.h"
 #include "objects/components/PositionComponent.h"
 #include "objects/components/SpriteComponent.h"
-#include "objects/tientities/TIEntity.h"
-#include "objects/factories/tientities/TIEntityFactory.h"
 
 namespace TIE {
 

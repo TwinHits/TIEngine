@@ -1,7 +1,6 @@
 #include "objects/factories/tientities/SceneLayerFactory.h"
 
 #include "managers/SceneManager.h"
-#include "objects/tientities/common/SceneLayer.h"
 
 using namespace TIE;
 

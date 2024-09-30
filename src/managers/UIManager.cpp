@@ -1,7 +1,6 @@
 #include "managers/UIManager.h"
 
 #include "managers/SceneManager.h"
-#include "objects/tientities/TIEntity.h"
 #include "objects/tientities/engine/DegreeGuide.h"
 #include "objects/tientities/engine/MousePtrCoords.h"
 #include "objects/tientities/engine/PerformanceDisplay.h"

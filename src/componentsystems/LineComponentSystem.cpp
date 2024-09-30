@@ -1,18 +1,9 @@
 #include "componentsystems/LineComponentSystem.h" 
 
-#include <sol/sol.hpp>
-#include "SFML/Graphics.hpp"
-
-#include <string>
-
 #include "componentsystems/PositionComponentSystem.h" 
 #include "componentsystems/WireframeComponentSystem.h" 
 #include "managers/ComponentSystemsManager.h"
 #include "managers/ScriptManager.h"
-#include "objects/components/LineComponent.h"
-#include "objects/components/PositionComponent.h"
-#include "objects/tientities/TIEntity.h"
-#include "utils/ComponentSystems.h"
 #include "utils/TIEMath.h"
 
 using namespace TIE;

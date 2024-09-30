@@ -4,12 +4,8 @@
 #include "componentsystems/OwnsComponent.h"
 #include "templates/Singleton.h"
 
-#include <sol/sol.hpp>
-
 #include "objects/components/LineComponent.h"
 #include "objects/components/PositionComponent.h"
-#include "objects/tientities/TIEntity.h"
-#include "objects/factories/tientities/TIEntityFactory.h"
 
 namespace TIE {
 

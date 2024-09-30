@@ -1,6 +1,8 @@
 #ifndef FONTASSET_H
 #define FONTASSET_H
 
+#include <string>
+
 #include <SFML/Graphics.hpp>
 
 #include "objects/GlobalId.h"

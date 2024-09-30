@@ -5,7 +5,6 @@
 #include "componentsystems/PositionComponentSystem.h"
 #include "componentsystems/ShapeComponentSystem.h"
 #include "managers/HashManager.h"
-#include "templates/MakeUnique.h"
 
 using namespace TIE;
 

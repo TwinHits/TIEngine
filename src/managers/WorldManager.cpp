@@ -1,16 +1,9 @@
 #include "managers/WorldManager.h"
 
-#include "objects/components/GridComponent.h"
-#include "objects/components/SpriteComponent.h"
-#include "objects/tientities/TIEntity.h"
-#include "objects/tientities/engine/GridGuide.h"
 #include "objects/factories/tientities/SceneLayerFactory.h"
-#include "objects/factories/ai/BehaviorTreeNodeFactory.h"
-#include "objects/factories/ai/FiniteStateMachineFactory.h"
 #include "managers/LogManager.h"
 #include "managers/SceneManager.h"
 #include "managers/ViewManager.h"
-#include "templates/MakeUnique.h"
 #include "utils/ComponentSystems.h"
 
 using namespace TIE;

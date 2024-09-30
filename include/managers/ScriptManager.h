@@ -5,17 +5,14 @@
 #include "templates/Singleton.h"
 
 #include <sol/sol.hpp>
+#include <SFML/Graphics.hpp>
 
 #include <map>
 #include <string>
 
-#include "interfaces/TIEngineInterface.h"
 #include "interfaces/TIEntityInterface.h"
 #include "interfaces/MessageInterface.h"
 #include "interfaces/ai/FiniteStateMachineInterface.h"
-#include "objects/GlobalId.h"
-#include "objects/tientities/TIEntity.h"
-#include "objects/factories/tientities/TIEntityFactory.h"
 #include "objects/factories/ai/FiniteStateMachineFactory.h"
 
 namespace TIE {

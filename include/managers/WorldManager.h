@@ -4,9 +4,11 @@
 #include "managers/Manager.h"
 #include "templates/Singleton.h"
 
+#include <map>
+#include <memory>
+
 #include "objects/components/GridComponent.h"
 #include "objects/components/SpriteComponent.h"
-#include "objects/tientities/TIEntity.h"
 #include "objects/tientities/engine/GridGuide.h"
 #include "objects/tientities/common/SceneLayer.h"
 #include "objects/factories/tientities/TIEntityFactory.h"

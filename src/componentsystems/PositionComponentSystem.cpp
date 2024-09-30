@@ -1,15 +1,10 @@
 #include "componentsystems/PositionComponentSystem.h"
 
 #include <sstream>
-#include <string>
-#include <vector>
 
-#include "objects/components/PositionComponent.h"
-#include "objects/components/SpriteComponent.h"
-#include "objects/factories/tientities/TIEntityFactory.h"
 #include "managers/ComponentSystemsManager.h"
 #include "managers/ScriptManager.h"
-#include "utils/ComponentSystems.h"
+#include "objects/components/SpriteComponent.h"
 #include "utils/TIEMath.h"
 
 using namespace TIE;

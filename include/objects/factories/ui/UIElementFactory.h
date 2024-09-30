@@ -8,9 +8,6 @@
 #include <sol/sol.hpp>
 #include <SFML/Graphics.hpp>
 
-#include "objects/ScriptTableReader.h"
-#include "objects/tientities/TIEntity.h"
-
 namespace TIE {
 
 class UIElementFactory : public TIEntityFactory {

@@ -1,11 +1,8 @@
 #include "managers/LogManager.h"
 
-#include <iostream>
-
 #include <boost/filesystem.hpp>
 
 #include "constants/MessageSubscriptions.h"
-#include "enumeration/LogLevel.h"
 #include "managers/ConfigManager.h"
 #include "managers/MessageManager.h"
 #include "utils/LocalTime.h"

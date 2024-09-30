@@ -1,18 +1,15 @@
 #include "managers/SceneManager.h"
 
-#include <functional>
-#include <memory>
-
 #include "managers/ComponentSystemsManager.h"
 #include "managers/MessageManager.h"
 #include "managers/UIManager.h"
 #include "managers/ViewManager.h"
+#include "managers/WindowManager.h"
 #include "managers/WorldManager.h"
 #include "objects/components/ShapeComponent.h"
 #include "objects/components/SpriteComponent.h"
 #include "objects/components/TextComponent.h"
 #include "objects/factories/tientities/SceneLayerFactory.h"
-#include "objects/tientities/common/SceneLayer.h"
 
 using namespace TIE;
 

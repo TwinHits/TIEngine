@@ -6,7 +6,6 @@
 #include <sol/sol.hpp>
 
 #include "interfaces/MessageInterface.h"
-#include "objects/GlobalId.h"
 #include "objects/tientities/TIEntity.h"
 
 namespace TIE {

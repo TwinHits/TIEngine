@@ -1,8 +1,5 @@
 #include "objects/factories/ui/UIElementFactory.h"
 
-#include "objects/ScriptTableReader.h"
-#include "objects/tientities/TIEntity.h"
-
 using namespace TIE;
 
 UIElementFactory::UIElementFactory() : TIEntityFactory() {}

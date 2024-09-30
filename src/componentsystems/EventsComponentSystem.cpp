@@ -4,9 +4,6 @@
 #include "managers/MessageManager.h"
 #include "managers/ScriptManager.h"
 #include "managers/WorldManager.h"
-#include "objects/GlobalId.h"
-#include "objects/components/EventsComponent.h"
-#include "objects/tientities/TIEntity.h"
 
 using namespace TIE;
 

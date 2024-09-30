@@ -1,7 +1,6 @@
 #ifndef TRACEFACTORY_H
 #define TRACEFACTORY_H
 
-#include "objects/GlobalId.h"
 #include "objects/tientities/TIEntity.h"
 
 namespace TIE {

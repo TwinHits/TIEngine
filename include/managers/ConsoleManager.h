@@ -6,8 +6,6 @@
 
 #include <memory>
 
-#include <SFML/Graphics.hpp>
-
 #include "enumeration/Direction.h"
 #include "objects/tientities/engine/DevConsole.h"
 

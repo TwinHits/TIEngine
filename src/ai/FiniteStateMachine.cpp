@@ -1,12 +1,6 @@
 #include "ai/FiniteStateMachine.h"
 
-#include "sol/sol.hpp"
-
-#include <memory>
-
 #include "managers/ScriptManager.h"
-#include "objects/GlobalId.h"
-#include "objects/tientities/TIEntity.h"
 
 using namespace TIE;
 

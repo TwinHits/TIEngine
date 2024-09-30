@@ -7,13 +7,11 @@
 #include "interfaces/ai/FiniteStateMachineInterface.h"
 #include "managers/ComponentSystemsManager.h"
 #include "managers/MessageManager.h"
+#include "managers/ScriptManager.h"
 #include "managers/WorldManager.h"
-#include "objects/factories/tientities/TIEntityFactory.h"
 #include "objects/factories/ai/FiniteStateMachineFactory.h"
 #include "objects/factories/ai/BehaviorTreeNodeFactory.h"
-#include "objects/tientities/TIEntity.h"
 #include "utils/ComponentSystems.h"
-#include "utils/types/ComponentSystemsTypes.h"
 
 using namespace TIE;
 

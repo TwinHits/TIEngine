@@ -6,9 +6,9 @@
 
 #include <sol/sol.hpp>
 
+#include <string>
+
 #include "objects/components/CollidesComponent.h"
-#include "objects/tientities/TIEntity.h"
-#include "objects/factories/tientities/TIEntityFactory.h"
 
 namespace TIE {
 

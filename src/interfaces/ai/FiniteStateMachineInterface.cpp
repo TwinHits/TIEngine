@@ -1,11 +1,6 @@
 #include "interfaces/ai/FiniteStateMachineInterface.h"
 
-#include "sol/sol.hpp"
-
-#include "managers/SceneManager.h"
 #include "managers/WorldManager.h"
-#include "objects/GlobalId.h"
-#include "utils/ComponentSystems.h"
 
 using namespace TIE;
 

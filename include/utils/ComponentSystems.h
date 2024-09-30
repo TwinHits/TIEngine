@@ -3,10 +3,9 @@
 
 #include <string>
 
-#include "objects/ScriptTableReader.h"
+#include <SFML/Graphics.hpp>
+
 #include "objects/tientities/TIEntity.h"
-#include "objects/factories/tientities/TIEntityFactory.h"
-#include "managers/ScriptManager.h"
 #include "utils/types/ComponentSystemsTypes.h"
 
 namespace TIE {

@@ -6,9 +6,6 @@
 #include <string>
 #include <vector>
 
-#include <sol/sol.hpp>
-
-#include "objects/GlobalId.h"
 #include "objects/ScriptTableReader.h"
 #include "objects/tientities/TIEntity.h" 
 

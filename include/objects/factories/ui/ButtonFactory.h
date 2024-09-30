@@ -3,13 +3,11 @@
 
 #include "objects/factories/ui/UIElementFactory.h"
 
-#include "sol/sol.hpp"
+#include <sol/sol.hpp>
 
 #include <string>
 
 #include "objects/Message.h"
-#include "objects/ScriptTableReader.h"
-#include "objects/tientities/TIEntity.h"
 
 
 namespace TIE {

@@ -1,6 +1,5 @@
 #include "componentsystems/CollidesComponentSystem.h" 
 
-#include <sol/sol.hpp>
 #include "SFML/Graphics.hpp"
 
 #include <string>
@@ -9,10 +8,7 @@
 #include "managers/ComponentSystemsManager.h"
 #include "managers/MessageManager.h"
 #include "managers/ScriptManager.h"
-#include "objects/Message.h"
-#include "objects/components/CollidesComponent.h"
 #include "objects/components/LineComponent.h"
-#include "objects/tientities/TIEntity.h"
 #include "utils/ComponentSystems.h"
 #include "utils/TIEMath.h"
 

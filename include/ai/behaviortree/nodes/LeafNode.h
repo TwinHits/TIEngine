@@ -5,10 +5,6 @@
 
 #include <string>
 
-#include "enumeration/NodeStatus.h"
-#include "objects/GlobalId.h"
-#include "objects/tientities/TIEntity.h"
-
 namespace TIE {
 
 class LeafNode : public BehaviorTreeNode {

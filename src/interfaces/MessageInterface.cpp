@@ -1,7 +1,5 @@
 #include "interfaces/MessageInterface.h"
 
-#include "objects/Message.h"
-
 using namespace TIE;
 
 MessageInterface::MessageInterface(Message& message) : message(message) {

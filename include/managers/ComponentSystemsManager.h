@@ -9,7 +9,6 @@
 #include <vector>
 
 #include "componentsystems/ComponentSystem.h"
-#include "utils/ComponentSystems.h"
 #include "utils/types/ComponentSystemsTypes.h"
 
 namespace TIE {

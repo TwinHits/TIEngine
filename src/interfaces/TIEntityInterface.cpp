@@ -1,7 +1,5 @@
 #include "interfaces/TIEntityInterface.h"
 
-#include "sol/sol.hpp"
-
 #include <string>
 #include <vector>
 
@@ -16,7 +14,6 @@
 #include "objects/factories/physics/TraceFactory.h"
 #include "objects/factories/physics/CollisionBoxFactory.h"
 #include "objects/factories/ui/UIElementFactory.h"
-#include "managers/ScriptManager.h"
 #include "utils/ComponentSystems.h"
 
 using namespace TIE;

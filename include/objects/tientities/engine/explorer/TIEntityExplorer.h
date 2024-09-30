@@ -8,8 +8,6 @@
 #include <SFML/Graphics.hpp>
 
 #include "objects/Message.h"
-#include "objects/tientities/TIEntity.h"
-#include "objects/tientities/common/SceneLayer.h"
 #include "objects/tientities/engine/explorer/BehaviorTreeDisplay.h"
 #include "objects/tientities/engine/explorer/ComponentPropertiesDisplay.h"
 

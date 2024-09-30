@@ -2,13 +2,8 @@
 
 #include <sol/sol.hpp>
 
-#include <string>
-
 #include "managers/ComponentSystemsManager.h"
-#include "managers/LogManager.h" 
 #include "managers/ScriptManager.h"
-#include "objects/components/LifecycleComponent.h"
-#include "utils/ComponentSystems.h"
 
 using namespace TIE;
 

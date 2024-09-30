@@ -5,14 +5,8 @@
 #include "componentsystems/PositionComponentSystem.h"
 #include "componentsystems/SpriteComponentSystem.h"
 #include "managers/ComponentSystemsManager.h"
-#include "objects/components/AnimatedComponent.h"
-#include "objects/components/PositionComponent.h"
-#include "objects/components/SpriteComponent.h"
-#include "objects/tientities/TIEntity.h"
-#include "objects/factories/tientities/TIEntityFactory.h"
 #include "utils/String.h"
 #include "utils/TIEMath.h"
-#include "utils/ComponentSystems.h"
 
 using namespace TIE;
 

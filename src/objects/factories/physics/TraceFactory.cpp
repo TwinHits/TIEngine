@@ -7,7 +7,6 @@
 #include "componentsystems/MessagesComponentSystem.h"
 #include "componentsystems/WireframeComponentSystem.h"
 #include "managers/HashManager.h"
-#include "templates/MakeUnique.h"
 
 using namespace TIE;
 

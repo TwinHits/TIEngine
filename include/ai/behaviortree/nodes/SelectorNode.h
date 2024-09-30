@@ -5,9 +5,6 @@
 
 #include <string>
 
-#include "enumeration/NodeStatus.h"
-#include "objects/tientities/TIEntity.h"
-
 namespace TIE {
 
 class SelectorNode : public BehaviorTreeNode {

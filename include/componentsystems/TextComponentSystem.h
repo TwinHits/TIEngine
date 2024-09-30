@@ -4,16 +4,12 @@
 #include "componentsystems/OwnsComponent.h"
 #include "templates/Singleton.h"
 
-#include <string>
-
 #include <SFML/Graphics.hpp>
 
 #include "managers/ConfigManager.h"
 #include "objects/assets/FontAsset.h"
 #include "objects/components/TextComponent.h"
 #include "objects/components/PositionComponent.h"
-#include "objects/factories/tientities/TIEntityFactory.h"
-#include "objects/tientities/TIEntity.h"
 
 namespace TIE {
 

@@ -1,13 +1,7 @@
 #include "objects/ScriptTableReader.h"
 
-#include <map>
-#include <string>
-
-#include "componentsystems/CacheComponentSystem.h"
-#include "managers/ComponentSystemsManager.h"
 #include "managers/LogManager.h"
 #include "managers/ScriptManager.h"
-#include "templates/MakeUnique.h"
 
 using namespace TIE;
 

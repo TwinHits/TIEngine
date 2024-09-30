@@ -3,6 +3,7 @@
 
 namespace TIE {
 
+// TODO Move to types
 typedef unsigned long GlobalId;
 
 }

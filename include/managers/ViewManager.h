@@ -9,9 +9,6 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "enumeration/Direction.h"
-#include "managers/ConsoleManager.h"
-#include "managers/InputManager.h"
 #include "objects/GlobalId.h"
 
 namespace TIE {
@@ -58,9 +55,6 @@ class ViewManager : public Singleton<ViewManager>, public Manager {
 
 		void onMouseWheelMoved();
 		void onWindowSizeChange();
-
-		InputManager* inputManager = InputManager::Instance();
-		ConsoleManager* consoleManager = ConsoleManager::Instance();
 
 		std::map<GlobalId, std::unique_ptr<sf::View> > views;
 		std::map<GlobalId, sf::FloatRect> viewSizes;

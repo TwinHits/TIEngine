@@ -5,9 +5,6 @@
 #include "componentsystems/PositionComponentSystem.h"
 #include "componentsystems/ShapeComponentSystem.h"
 #include "componentsystems/TextComponentSystem.h"
-#include "objects/ScriptTableReader.h"
-#include "objects/factories/ui/UIElementFactory.h"
-#include "objects/tientities/TIEntity.h"
 
 using namespace TIE;
 

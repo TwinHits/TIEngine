@@ -6,7 +6,8 @@
 
 #include <memory>
 
-#include "managers/WindowManager.h"
+#include <SFML/Graphics.hpp>
+
 #include "objects/tientities/common/SceneLayer.h"
 
 namespace TIE {

@@ -1,20 +1,11 @@
 #include "componentsystems/TextComponentSystem.h" 
 
-#include <string>
-
-#include <SFML/Graphics.hpp>
-
 #include "enumeration/TextAlignment.h"
 #include "componentsystems/PositionComponentSystem.h"
 #include "componentsystems/WireframeComponentSystem.h"
 #include "managers/AssetsManager.h"
 #include "managers/ComponentSystemsManager.h"
-#include "objects/assets/FontAsset.h"
-#include "objects/components/TextComponent.h"
-#include "objects/components/PositionComponent.h"
-#include "objects/tientities/TIEntity.h"
-#include "objects/factories/tientities/TIEntityFactory.h"
-#include "utils/ComponentSystems.h"
+#include "managers/ScriptManager.h"
 #include "utils/String.h"
 
 using namespace TIE;

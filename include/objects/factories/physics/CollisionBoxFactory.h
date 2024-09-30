@@ -1,7 +1,8 @@
 #ifndef COLLISIONBOXFACTORY_H
 #define COLLISIONBOXFACTORY_H
 
-#include "objects/GlobalId.h"
+#include <SFML/Graphics.hpp>
+
 #include "objects/tientities/TIEntity.h"
 
 namespace TIE {

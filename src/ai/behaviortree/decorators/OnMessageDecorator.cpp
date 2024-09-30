@@ -1,11 +1,6 @@
 #include "ai/behaviortree/decorators/OnMessageDecorator.h"
 
-#include "memory"
-
-#include "ai/behaviortree/decorators/NodeDecorator.h"
 #include "managers/ScriptManager.h"
-#include "objects/GlobalId.h"
-#include "objects/tientities/TIEntity.h"
 
 using namespace TIE;
 

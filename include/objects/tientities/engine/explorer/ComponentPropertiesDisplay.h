@@ -1,9 +1,10 @@
 #ifndef COMPONENTPROPERTIESDISPLAY_H
 #define COMPONENTPROPERTIESDISPLAY_H
 
+#include "objects/tientities/TIEntity.h"
+
 #include "componentsystems/ComponentSystem.h"
 #include "objects/components/TextComponent.h"
-#include "objects/tientities/TIEntity.h"
 
 namespace TIE {
 

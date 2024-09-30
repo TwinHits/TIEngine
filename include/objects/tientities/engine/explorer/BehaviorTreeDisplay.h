@@ -3,9 +3,10 @@
 
 #include "objects/tientities/TIEntity.h"
 
+#include <map>
+
 #include <SFML/Graphics.hpp>
 
-#include "objects/components/BehavesComponent.h"
 #include "objects/tientities/engine/explorer/BehaviorTreeDisplayNode.h"
 
 namespace TIE {

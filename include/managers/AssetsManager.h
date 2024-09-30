@@ -6,7 +6,6 @@
 
 #include <map>
 #include <memory>
-#include <set>
 
 #include <boost/filesystem.hpp>
 #include <SFML/Graphics.hpp>

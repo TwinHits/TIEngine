@@ -1,8 +1,5 @@
 #include "managers/ComponentSystemsManager.h"
 
-#include <map>
-#include <vector>
-
 #include "componentsystems/AnimatedComponentSystem.h"
 #include "componentsystems/BehavesComponentSystem.h"
 #include "componentsystems/ClickableComponentSystem.h"
@@ -27,7 +24,8 @@
 using namespace TIE;
 
 void ComponentSystemsManager::initialize() {
-	// Component System registration, order of initialization, and order of update
+	// Component System registration in order of initialization and order of update
+
 	// Update data operations
 	this->componentSystems.push_back(CacheComponentSystem::Instance());
 	this->componentSystems.push_back(MessagesComponentSystem::Instance());

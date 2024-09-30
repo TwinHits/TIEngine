@@ -7,8 +7,6 @@
 #include <unordered_map>
 #include <vector>
 
-#include <SFML/Graphics.hpp>
-
 #include "objects/GlobalId.h"
 #include "objects/components/Component.h"
 #include "templates/MakeUnique.h"

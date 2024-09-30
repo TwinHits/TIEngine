@@ -3,9 +3,6 @@
 
 #include "componentsystems/ComponentSystem.h"
 
-#include "objects/tientities/TIEntity.h"
-#include "objects/GlobalId.h"
-
 namespace TIE {
 
 template <typename T>

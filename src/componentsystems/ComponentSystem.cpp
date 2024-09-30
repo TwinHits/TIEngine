@@ -4,7 +4,6 @@
 
 #include "managers/ComponentSystemsManager.h"
 #include "managers/ScriptManager.h"
-#include "objects/tientities/TIEntity.h"
 
 using namespace TIE;
 
