@@ -52,9 +52,11 @@ void InputManager::processInput() {
 
 
 void InputManager::publishInputEvent(const sf::Event& event) {
-	std::string key;
+	std::string key = "";
 	if (event.type == sf::Event::KeyPressed) {
-		key = SfEventStringMap::KEY_TO_STRING.at(event.key.code);
+		if (SfEventStringMap::KEY_TO_STRING.count(event.key.code)) {
+			key = SfEventStringMap::KEY_TO_STRING.at(event.key.code);
+		}
 	} else if (event.type == sf::Event::MouseButtonPressed) {
 		if (event.mouseButton.button == sf::Mouse::Left) {
 			key = "LEFTMOUSEBUTTONPRESSED";
