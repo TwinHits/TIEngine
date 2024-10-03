@@ -319,7 +319,7 @@ void MovesComponentSystem::accelerate(MovesComponent& movesComponent, PositionCo
 
             float acceleration = movesComponent.acceleration;
             float minimumSpeed = movesComponent.targetSpeed / movesComponent.targetSpeed;
-			if (movesComponent.deceleration > 0.0f) {
+			if (movesComponent.deceleration > 0.0f && movesComponent.path.size() <= 1) {
 				float distanceToStop = (movesComponent.speed / movesComponent.deceleration) * movesComponent.speed;
 				float distanceToTarget = Math::distanceBetweenTwoPoints(positionComponent.position, movesComponent.getTargetPosition());
 				if (distanceToTarget <= distanceToStop) {
