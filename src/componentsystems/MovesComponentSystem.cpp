@@ -1,12 +1,15 @@
 #include "componentsystems/MovesComponentSystem.h" 
 
 #include <cmath>
+#include <memory>
 #include <queue>
 
 #include "componentsystems/PositionComponentSystem.h"
 #include "componentsystems/GridComponentSystem.h"
 #include "componentsystems/MessagesComponentSystem.h"
 #include "componentsystems/WireframeComponentSystem.h"
+#include "componentsystems/strategies/AcceleratedTurnMovesStrategy.h"
+#include "componentsystems/strategies/SnapTurnMovesStrategy.h"
 #include "managers/ComponentSystemsManager.h"
 #include "managers/MessageManager.h"
 #include "managers/ScriptManager.h"
@@ -17,9 +20,9 @@ using namespace TIE;
 
 MovesComponentSystem::MovesComponentSystem() {
 	this->name = MovesComponentSystem::MOVES;
+	ComponentSystemsManager::Instance()->registerComponentPropertyKey(MovesComponentSystem::STRATEGY, this);
 	ComponentSystemsManager::Instance()->registerComponentPropertyKey(MovesComponentSystem::SPEED, this);
 	ComponentSystemsManager::Instance()->registerComponentPropertyKey(MovesComponentSystem::ACCELERATION, this);
-	ComponentSystemsManager::Instance()->registerComponentPropertyKey(MovesComponentSystem::DECELERATION, this);
 	ComponentSystemsManager::Instance()->registerComponentPropertyKey(MovesComponentSystem::ROTATES, this);
 	ComponentSystemsManager::Instance()->registerComponentPropertyKey(MovesComponentSystem::ROTATIONAL_SPEED, this);
 	ComponentSystemsManager::Instance()->registerComponentPropertyKey(MovesComponentSystem::ROTATIONAL_ACCELERATION, this);
@@ -37,17 +40,12 @@ MovesComponentSystem::MovesComponentSystem() {
 
 void MovesComponentSystem::update(const float delta) {
 	for (auto& c : components) {
-
-        this->accelerate(c.movesComponent, c.positionComponent, delta);
-        this->move(c.movesComponent, c.positionComponent, delta, c.tientity);
-
-        if (c.movesComponent.rotates) {
-			if (!this->atTargetPosition(c.movesComponent, c.positionComponent)) {
-				this->setTargetRotation(c.movesComponent, c.positionComponent, c.tientity);
+		if (!this->atTargetPosition(c.movesComponent, c.positionComponent)) {
+			bool atTargetPosition = c.movesComponent.movesStrategy->execute(delta, c.tientity);
+			if (atTargetPosition) {
+				MessagesComponentSystem::Instance()->sendMessage(Message(this->atDestinationMessageSubscription, c.tientity.getId(), c.tientity.getId()));
 			}
-            this->accelerateRotation(c.movesComponent, c.positionComponent, delta);
-            this->rotate(c.movesComponent, c.positionComponent, delta);
-        }
+		}
 	}
 }
 
@@ -69,9 +67,11 @@ MovesComponent& MovesComponentSystem::addComponent(const TIEntityFactory& factor
 	PositionComponent& positionComponent = PositionComponentSystem::Instance()->addComponent(tientity);
 	const ScriptTableReader& reader = factory.getReader().getReader(MovesComponentSystem::MOVES);
 
+	const std::string& strategyName = reader.get<std::string>(MovesComponentSystem::STRATEGY, "SnapTurn");
+	this->assignMovesStrategyByName(movesComponent, strategyName);
+
 	const float& targetSpeed = reader.get<float>(MovesComponentSystem::SPEED, movesComponent.targetSpeed);
 	const float& acceleration = reader.get<float>(MovesComponentSystem::ACCELERATION, movesComponent.acceleration);
-	const float& deceleration = reader.get<float>(MovesComponentSystem::ACCELERATION, movesComponent.deceleration);
 
 	if (reader.hasKey(MovesComponentSystem::DESTINATION)) {
 		const ScriptTableReader& destinationReader = reader.getReader(MovesComponentSystem::DESTINATION);
@@ -86,16 +86,13 @@ MovesComponent& MovesComponentSystem::addComponent(const TIEntityFactory& factor
 		this->setTargetPosition(movesComponent, positionComponent, sf::Vector2f(destinationX, destinationY), tientity);
 	}
 
-	const bool& rotates = reader.get<bool>(MovesComponentSystem::ROTATES, movesComponent.rotates);
 	const float& targetRotationalSpeed = reader.get<float>(MovesComponentSystem::ROTATIONAL_SPEED, movesComponent.targetRotationalSpeed);
 	const float& rotationalAcceleraton = reader.get<float>(MovesComponentSystem::ROTATIONAL_ACCELERATION, movesComponent.rotationalAcceleration);
 	const float& targetRotation = reader.get<float>(MovesComponentSystem::TARGET_ROTATION, positionComponent.rotation);
 
     movesComponent.targetSpeed = targetSpeed;
     movesComponent.acceleration = acceleration;
-    movesComponent.deceleration = deceleration;
 
-	movesComponent.rotates = rotates;
 	movesComponent.targetRotation = Math::normalizeAngleDegrees(targetRotation);
 	movesComponent.targetRotationalSpeed = targetRotationalSpeed;
 	movesComponent.rotationalAcceleration = rotationalAcceleraton;
@@ -118,14 +115,6 @@ bool MovesComponentSystem::removeComponent(TIEntity& tientity) {
 	} else {
 		return false;
 	}
-}
-
-
-void MovesComponentSystem::setComponentProperty(const std::string& key, bool value, TIEntity& tientity) {
-	MovesComponent& movesComponent = this->addComponent(tientity);
-    if (key == MovesComponentSystem::ROTATES) {
-        movesComponent.rotates = value;
-    }
 }
 
 
@@ -243,14 +232,23 @@ void MovesComponentSystem::setTargetPosition(TIEntity& tientity, const sf::Vecto
 
 
 void MovesComponentSystem::setTargetPosition(MovesComponent& movesComponent, PositionComponent& positionComponent, const sf::Vector2f& targetPosition, TIEntity& tientity) {
-		sf::Vector2f normalizedPosition = targetPosition;
-		if (WorldManager::Instance()->isGridConfigured()) {
-			normalizedPosition = GridComponentSystem::Instance()->normalizePositionToGrid(targetPosition);
-		}
+    sf::Vector2f normalizedPosition = targetPosition;
+    if (WorldManager::Instance()->isGridConfigured()) {
+        normalizedPosition = GridComponentSystem::Instance()->normalizePositionToGrid(targetPosition);
+    }
 
-		movesComponent.path = {};
-		movesComponent.path.push(normalizedPosition);
-		this->setTargetRotation(movesComponent, positionComponent, tientity);
+    movesComponent.path = {};
+    movesComponent.path.push(normalizedPosition);
+    this->setTargetRotation(movesComponent, positionComponent, tientity);
+}
+
+
+void MovesComponentSystem::assignMovesStrategyByName(MovesComponent& movesComponent, const std::string& strategyName) {
+	if (strategyName == SnapTurnMovesStrategy::NAME) {
+		movesComponent.movesStrategy = std::make_unique<SnapTurnMovesStrategy>();
+	} else if (strategyName == AcceleratedTurnMovesStrategy::NAME) {
+		movesComponent.movesStrategy = std::make_unique<AcceleratedTurnMovesStrategy>();
+	}
 }
 
 
@@ -308,97 +306,6 @@ bool MovesComponentSystem::atTargetRotation(TIEntity& tientity) {
 
 bool MovesComponentSystem::atTargetRotation(MovesComponent& movesComponent, PositionComponent& positionComponent) {
 	return Math::areFloatsEqual(movesComponent.targetRotation, positionComponent.rotation);
-}
-
-
-void MovesComponentSystem::accelerate(MovesComponent& movesComponent, PositionComponent& positionComponent, const float delta) {
-	if (movesComponent.hasTargetPosition() && !this->atTargetPosition(movesComponent, positionComponent)) {
-		if (Math::areFloatsEqual(movesComponent.acceleration, 0.0f) && Math::areFloatsEqual(movesComponent.deceleration, 0.0f)) {
-			movesComponent.speed = movesComponent.targetSpeed;
-		} else {
-
-            float acceleration = movesComponent.acceleration;
-            float minimumSpeed = movesComponent.targetSpeed / movesComponent.targetSpeed;
-			if (movesComponent.deceleration > 0.0f && movesComponent.path.size() <= 1) {
-				float distanceToStop = (movesComponent.speed / movesComponent.deceleration) * movesComponent.speed;
-				float distanceToTarget = Math::distanceBetweenTwoPoints(positionComponent.position, movesComponent.getTargetPosition());
-				if (distanceToTarget <= distanceToStop) {
-					acceleration = -movesComponent.deceleration;
-				}
-			}
-
-            // Set speed according to delta, don't go below minimum or above target
-            movesComponent.speed += acceleration * delta;
-            movesComponent.speed = fmaxf(minimumSpeed, movesComponent.speed);
-            movesComponent.speed = fminf(movesComponent.speed, movesComponent.targetSpeed);
-		}
-	} else {
-		movesComponent.speed = 0.0f; // Fallback to zero
-	}
-}
-
-
-void MovesComponentSystem::accelerateRotation(MovesComponent& movesComponent, PositionComponent& positionComponent, const float delta) {
-	if (!this->atTargetRotation(movesComponent, positionComponent)) {
-        if (Math::areFloatsEqual(movesComponent.rotationalAcceleration, 0.0f)) {
-            movesComponent.rotationalVelocity.x = movesComponent.targetRotationalSpeed * movesComponent.rotationalVelocity.y;
-        } else {
-            float rotationalAcceleration = movesComponent.rotationalAcceleration * movesComponent.rotationalVelocity.y;
-            float minimumSpeed = -movesComponent.targetRotationalSpeed;
-
-            float distanceToStop = fabsf((movesComponent.rotationalVelocity.x / movesComponent.rotationalAcceleration) * movesComponent.rotationalVelocity.x);
-            float rotationDistanceToTarget = Math::distanceBetweenTwoAngles(positionComponent.rotation, movesComponent.targetRotation);
-            if (rotationDistanceToTarget <= distanceToStop) {
-                rotationalAcceleration = movesComponent.rotationalAcceleration * movesComponent.rotationalVelocity.y;
-            }
-
-            movesComponent.rotationalVelocity.x += rotationalAcceleration * delta;
-            movesComponent.rotationalVelocity.x = fmaxf(minimumSpeed, movesComponent.rotationalVelocity.x);
-            movesComponent.rotationalVelocity.x = fminf(movesComponent.rotationalVelocity.x, movesComponent.targetRotationalSpeed);
-        }
-    } else {
-        movesComponent.rotationalVelocity.x = 0.0f;
-    }
-}
-
-
-void MovesComponentSystem::rotate(MovesComponent& movesComponent, PositionComponent& positionComponent, const float delta) {
-	if (!this->atTargetRotation(movesComponent, positionComponent)) {
-        float distance = movesComponent.rotationalVelocity.x * delta;
-        float newRotation = positionComponent.rotation + distance;
-        if (Math::areFloatsEqual(newRotation, movesComponent.targetRotation) ||
-			Math::isAngleBetweenAngles(movesComponent.targetRotation, positionComponent.rotation, newRotation) ||
-			Math::distanceBetweenTwoAngles(newRotation, movesComponent.targetRotation) < 1.0f
-		) {
-            positionComponent.rotation = movesComponent.targetRotation;
-        } else {
-            positionComponent.rotation = newRotation;
-        }
-	}
-} 
-
-
-void MovesComponentSystem::move(MovesComponent& movesComponent, PositionComponent& positionComponent, const float delta, TIEntity& tientity) {
-	if (movesComponent.speed > 0.0f) {
-        sf::Vector2f velocity = sf::Vector2f(movesComponent.speed, positionComponent.rotation);
-        sf::Vector2f distance = Math::translateVelocityByTime(velocity, delta);
-        sf::Vector2f newPosition = sf::Vector2f(positionComponent.position.x + distance.x, positionComponent.position.y + distance.y);
-        if (
-			movesComponent.hasTargetPosition() && (
-                Math::areVectorsEqual(newPosition, movesComponent.getTargetPosition()) || 
-                Math::isVectorBetweenVectors(positionComponent.position, newPosition, movesComponent.getTargetPosition()) || 
-                Math::distanceBetweenTwoPoints(newPosition, movesComponent.getTargetPosition()) < 1.0f
-			)
-		) {
-            positionComponent.position = movesComponent.getTargetPosition();
-			if (this->atTargetPosition(movesComponent, positionComponent)) {
-				// Implicitly only sent once because speed is set to zero
-				MessagesComponentSystem::Instance()->sendMessage(Message(this->atDestinationMessageSubscription, tientity.getId(), tientity.getId()));
-			}
-        } else {
-            positionComponent.position = newPosition;
-        }
-    }
 }
 
 

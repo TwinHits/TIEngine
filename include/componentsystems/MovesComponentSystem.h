@@ -4,6 +4,8 @@
 #include "componentsystems/OwnsComponent.h"
 #include "templates/Singleton.h"
 
+#include <string>
+
 #include "objects/components/MovesComponent.h"
 #include "objects/components/PositionComponent.h"
 
@@ -17,7 +19,6 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, public Owns
 		MovesComponent& addComponent(const TIEntityFactory&, TIEntity&);
 		bool removeComponent(TIEntity&);
 		
-		void setComponentProperty(const std::string&, bool, TIEntity&);
 		void setComponentProperty(const std::string&, float, TIEntity&);
 		void setComponentProperty(const std::string&, const sf::Vector2f&, TIEntity&);
 		void setComponentProperty(const std::string&, const sf::Vector2i&, TIEntity&);
@@ -29,14 +30,19 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, public Owns
 		void setTargetPosition(MovesComponent&, PositionComponent&, const sf::Vector2f&, TIEntity&);
 
 		bool atTargetPosition(TIEntity&);
+		bool atTargetPosition(MovesComponent&, PositionComponent&);
+
+		void setTargetRotation(MovesComponent&, PositionComponent&, TIEntity&);
+
 		bool atTargetRotation(TIEntity&);
+		bool atTargetRotation(MovesComponent&, PositionComponent&);
 
 		std::pair<GlobalId, GlobalId> addWireframe(TIEntity&);
 
 		static const inline std::string MOVES = "moves";
+		static const inline std::string STRATEGY = "strategy";
 		static const inline std::string SPEED = "moves_speed";
 		static const inline std::string ACCELERATION = "acceleration";
-		static const inline std::string DECELERATION = "deceleration";
 
 		static const inline std::string ROTATES = "moves_rotates";
 		static const inline std::string ROTATIONAL_SPEED = "rotationalSpeed";
@@ -59,17 +65,16 @@ class MovesComponentSystem : public Singleton<MovesComponentSystem>, public Owns
 
 		GlobalId atDestinationMessageSubscription = 0;
 
-		void setTargetRotation(MovesComponent&, PositionComponent&, TIEntity&);
+		void assignMovesStrategyByName(MovesComponent&, const std::string&);
+
 		void setTargetRotationDirection(MovesComponent&, PositionComponent&);
 
-		bool atTargetPosition(MovesComponent&, PositionComponent&);
 		bool atTargetSpeed(MovesComponent&);
-		bool atTargetRotation(MovesComponent&, PositionComponent&);
 
 		void accelerate(MovesComponent&, PositionComponent&, const float);
 		void accelerateRotation(MovesComponent&, PositionComponent&, const float);
 		void rotate(MovesComponent&, PositionComponent&, const float);
-		void move(MovesComponent&, PositionComponent&, const float, TIEntity&);
+		void move(MovesComponent&, PositionComponent&, const float);
 };
 
 }

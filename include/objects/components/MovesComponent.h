@@ -3,9 +3,12 @@
 
 #include "objects/components/Component.h"
 
+#include <memory>
 #include <queue>
 
 #include <SFML/Graphics.hpp>
+
+#include "componentsystems/strategies/MovesStrategy.h"
 
 namespace TIE {
 
@@ -14,11 +17,11 @@ class MovesComponent : public Component {
 		MovesComponent() {};
 		virtual ~MovesComponent() {};
 
+		std::unique_ptr<MovesStrategy> movesStrategy = nullptr;
+
 		float speed = 0.0f;
 		float acceleration = 0.0f;
-		float deceleration = 0.0f;
 
-		bool rotates = true;
 		sf::Vector2f rotationalVelocity = sf::Vector2f(0, 0);
 		float rotationalAcceleration = 0.0f;
 
@@ -38,6 +41,10 @@ class MovesComponent : public Component {
 
 		const sf::Vector2f& getTargetPosition() {
 			return this->path.front();
+		};
+
+		const bool isOnLastPathNode() {
+			return this->path.size() == 1;
 		};
 };
 

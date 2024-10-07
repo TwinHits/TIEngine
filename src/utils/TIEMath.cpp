@@ -32,6 +32,9 @@ float TIE::Math::distanceBetweenTwoAngles(const float f1, const float f2) {
 	return fabsf(diff < -180 ? diff + 360 : diff);
 }
 
+float TIE::Math::distanceToStop(const float speed, const float deceleration) {
+	return (speed * speed) / (2 * deceleration);
+}
 
 float TIE::Math::angleBetweenTwoPoints(const sf::Vector2f& p1, const sf::Vector2f& p2) {
 	return TIE::Math::toDegrees(std::atan2(p2.y - p1.y, p2.x - p1.x));
