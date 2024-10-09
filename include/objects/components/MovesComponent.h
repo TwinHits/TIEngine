@@ -8,7 +8,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "componentsystems/strategies/MovesStrategy.h"
+#include "componentsystems/strategies/Strategy.h"
 
 namespace TIE {
 
@@ -17,7 +17,7 @@ class MovesComponent : public Component {
 		MovesComponent() {};
 		virtual ~MovesComponent() {};
 
-		std::unique_ptr<MovesStrategy> movesStrategy = nullptr;
+		std::unique_ptr<Strategy> movesStrategy = nullptr;
 
 		float speed = 0.0f;
 		float acceleration = 0.0f;

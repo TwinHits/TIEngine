@@ -1,16 +1,22 @@
 #ifndef MOVESSTRATEGY_H
 #define MOVESSTRATEGY_H
 
-#include "objects/tientities/TIEntity.h"
+#include "componentsystems/strategies/Strategy.h"
+
+#include "objects/components/MovesComponent.h"
+#include "objects/components/PositionComponent.h"
 
 namespace TIE {
 
-class MovesStrategy {
+class MovesStrategy : public Strategy {
     public:
         MovesStrategy() {};
         virtual ~MovesStrategy() {};
 
-        virtual bool execute(const float, TIEntity&) = 0;
+    protected:
+        virtual void accelerate(const float, MovesComponent&, PositionComponent&);
+        virtual void rotate(const float, MovesComponent&, PositionComponent&);
+        virtual bool move(const float, MovesComponent&, PositionComponent&);
 
 };
 

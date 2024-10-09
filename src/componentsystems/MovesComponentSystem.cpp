@@ -10,6 +10,7 @@
 #include "componentsystems/WireframeComponentSystem.h"
 #include "componentsystems/strategies/AcceleratedTurnMovesStrategy.h"
 #include "componentsystems/strategies/SnapTurnMovesStrategy.h"
+#include "componentsystems/strategies/SteadyMovesStrategy.h"
 #include "managers/ComponentSystemsManager.h"
 #include "managers/MessageManager.h"
 #include "managers/ScriptManager.h"
@@ -248,6 +249,8 @@ void MovesComponentSystem::assignMovesStrategyByName(MovesComponent& movesCompon
 		movesComponent.movesStrategy = std::make_unique<SnapTurnMovesStrategy>();
 	} else if (strategyName == AcceleratedTurnMovesStrategy::NAME) {
 		movesComponent.movesStrategy = std::make_unique<AcceleratedTurnMovesStrategy>();
+	} else if (strategyName == SteadyMovesStrategy::NAME) {
+		movesComponent.movesStrategy = std::make_unique<SteadyMovesStrategy>();
 	}
 }
 
