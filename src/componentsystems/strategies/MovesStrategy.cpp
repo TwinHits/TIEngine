@@ -1,7 +1,7 @@
-#include "componentsystems/strategies/MovesStrategy.h"
+/
 
 #include "componentsystems/MovesComponentSystem.h"
-#include "managers/SceneManager.h"
+#include "managers/LogManager.h"
 #include "utils/TIEMath.h"
 #include "utils/constants/TIEMathConstants.h"
 
@@ -38,8 +38,8 @@ void MovesStrategy::rotate(const float delta, MovesComponent& movesComponent, Po
         float distance = movesComponent.rotationalVelocity.x * delta;
         float newRotation = positionComponent.rotation + distance;
 
-        const float snapToRotationRadius = fabsf(movesComponent.rotationalVelocity.x / SceneManager::Instance()->getFPS());
-        if (Math::distanceBetweenTwoAngles(newRotation, movesComponent.targetRotation) <= snapToRotationRadius) {
+        const float snapToRotationRadiusDelta = fabsf(movesComponent.rotationalVelocity.x * delta);
+        if (Math::distanceBetweenTwoAngles(newRotation, movesComponent.targetRotation) <= snapToRotationRadiusDelta) {
             positionComponent.rotation = movesComponent.targetRotation;
         } else {
             positionComponent.rotation = newRotation;
@@ -55,7 +55,7 @@ bool MovesStrategy::move(const float delta, MovesComponent& movesComponent, Posi
         const sf::Vector2f distance = Math::translateVelocityByTime(velocity, delta);
         const sf::Vector2f newPosition = sf::Vector2f(positionComponent.position.x + distance.x, positionComponent.position.y + distance.y);
 
-        const float snapToPositionRadius = fabsf(movesComponent.speed / SceneManager::Instance()->getFPS());
+        const float snapToPositionRadius = fabsf(movesComponent.speed * delta);
         if (Math::distanceBetweenTwoPoints(newPosition, movesComponent.getTargetPosition()) <= snapToPositionRadius) {
             positionComponent.position = movesComponent.getTargetPosition();
             return true;
