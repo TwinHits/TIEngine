@@ -30,7 +30,7 @@ void SteadyMovesStrategy::accelerate(const float delta, MovesComponent& movesCom
 
 
 void SteadyMovesStrategy::accelerateRotation(const float delta, MovesComponent& movesComponent, PositionComponent& positionComponent) {
-    movesComponent.rotationalVelocity.x = movesComponent.targetRotationalSpeed;
+    movesComponent.rotationalVelocity.x = movesComponent.targetRotationalSpeed * movesComponent.rotationalVelocity.y;
 
 }
 

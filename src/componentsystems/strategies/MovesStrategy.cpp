@@ -1,6 +1,7 @@
 #include "componentsystems/strategies/MovesStrategy.h"
 
 #include "componentsystems/MovesComponentSystem.h"
+#include "managers/SceneManager.h"
 #include "utils/TIEMath.h"
 #include "utils/constants/TIEMathConstants.h"
 
@@ -19,7 +20,7 @@ void MovesStrategy::accelerate(const float delta, MovesComponent& movesComponent
         }
 
         // This used to be 1, I guess to allow inching forward to the distance if 
-        // the math stops short.
+        // the stopping distance math is short.
         float minimumSpeed = 0;
         movesComponent.speed += acceleration;
         movesComponent.speed = fmaxf(minimumSpeed, movesComponent.speed);
@@ -33,16 +34,14 @@ void MovesStrategy::accelerate(const float delta, MovesComponent& movesComponent
 
 void MovesStrategy::rotate(const float delta, MovesComponent& movesComponent, PositionComponent& positionComponent) {
     if (!MovesComponentSystem::Instance()->atTargetRotation(movesComponent, positionComponent)) {
+
         float distance = movesComponent.rotationalVelocity.x * delta;
         float newRotation = positionComponent.rotation + distance;
 
-        if (Math::areFloatsEqual(newRotation, movesComponent.targetRotation) ||
-            Math::isAngleBetweenAngles(movesComponent.targetRotation, positionComponent.rotation, newRotation) ||
-            Math::distanceBetweenTwoAngles(newRotation, movesComponent.targetRotation) < TIEMathConstants::FLOAT_COMPARISION_EPSILION
-            ) {
+        const float snapToRotationRadius = fabsf(movesComponent.rotationalVelocity.x / SceneManager::Instance()->getFPS());
+        if (Math::distanceBetweenTwoAngles(newRotation, movesComponent.targetRotation) <= snapToRotationRadius) {
             positionComponent.rotation = movesComponent.targetRotation;
-        }
-        else {
+        } else {
             positionComponent.rotation = newRotation;
         }
     }
@@ -50,15 +49,14 @@ void MovesStrategy::rotate(const float delta, MovesComponent& movesComponent, Po
 
 
 bool MovesStrategy::move(const float delta, MovesComponent& movesComponent, PositionComponent& positionComponent) {
-	if (movesComponent.speed > 0.0f) {
-        sf::Vector2f velocity = sf::Vector2f(movesComponent.speed, positionComponent.rotation);
-        sf::Vector2f distance = Math::translateVelocityByTime(velocity, delta);
-        sf::Vector2f newPosition = sf::Vector2f(positionComponent.position.x + distance.x, positionComponent.position.y + distance.y);
-        if (
-            Math::areVectorsEqual(newPosition, movesComponent.getTargetPosition()) || 
-            Math::isVectorBetweenVectors(positionComponent.position, newPosition, movesComponent.getTargetPosition()) || 
-            Math::distanceBetweenTwoPoints(newPosition, movesComponent.getTargetPosition()) < TIEMathConstants::FLOAT_COMPARISION_EPSILION
-		) {
+    if (movesComponent.speed > 0.0f) {
+
+        const sf::Vector2f velocity = sf::Vector2f(movesComponent.speed, positionComponent.rotation);
+        const sf::Vector2f distance = Math::translateVelocityByTime(velocity, delta);
+        const sf::Vector2f newPosition = sf::Vector2f(positionComponent.position.x + distance.x, positionComponent.position.y + distance.y);
+
+        const float snapToPositionRadius = fabsf(movesComponent.speed / SceneManager::Instance()->getFPS());
+        if (Math::distanceBetweenTwoPoints(newPosition, movesComponent.getTargetPosition()) <= snapToPositionRadius) {
             positionComponent.position = movesComponent.getTargetPosition();
             return true;
         } else {
