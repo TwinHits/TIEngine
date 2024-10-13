@@ -1,6 +1,4 @@
-#include "componentsystems/strategies/AcceleratedTurnMovesStrategy.h"
-
-#include <iostream>
+#include "componentsystems/strategies/moves/AcceleratedTurnMovesStrategy.h"
 
 #include "componentsystems/MovesComponentSystem.h"
 #include "componentsystems/PositionComponentSystem.h"

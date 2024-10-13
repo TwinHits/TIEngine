@@ -1,7 +1,7 @@
 #ifndef ACCELERATEDTURNMOVESSTRATEGY_H
 #define ACCELERATEDTURNMOVESSTRATEGY_H
 
-#include "componentsystems/strategies/MovesStrategy.h"
+#include "componentsystems/strategies/moves/MovesStrategy.h"
 
 namespace TIE {
 

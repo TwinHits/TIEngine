@@ -1,7 +1,7 @@
 #ifndef SNAPTURNMOVESSTRATEGY_H
 #define SNAPTURNMOVESSTRATEGY_H
 
-#include "componentsystems/strategies/MovesStrategy.h"
+#include "componentsystems/strategies/moves/MovesStrategy.h"
 
 namespace TIE {
 

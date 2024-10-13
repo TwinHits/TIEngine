@@ -1,4 +1,4 @@
-/
+#include "componentsystems/strategies/moves/MovesStrategy.h"
 
 #include "componentsystems/MovesComponentSystem.h"
 #include "managers/LogManager.h"

@@ -26,6 +26,7 @@ class MovesComponent : public Component {
 		float rotationalAcceleration = 0.0f;
 
 		std::queue<sf::Vector2f> path;
+		sf::Vector2f orbitAround = sf::Vector2f(0, 0);
 
 		float targetRotation = 0.0f;
 
