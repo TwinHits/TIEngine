@@ -1,4 +1,4 @@
-#include "componentsystems/strategies/path/PathStrategy.h"
+#include "componentsystems/strategies/paths/PathStrategy.h"
 
 using namespace TIE;
 
