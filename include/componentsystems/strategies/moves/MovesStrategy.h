@@ -4,6 +4,7 @@
 #include "componentsystems/strategies/Strategy.h"
 
 #include "objects/components/MovesComponent.h"
+#include "objects/components/PathsComponent.h"
 #include "objects/components/PositionComponent.h"
 
 namespace TIE {
@@ -14,9 +15,9 @@ class MovesStrategy : public Strategy {
         virtual ~MovesStrategy() {};
 
     protected:
-        virtual void accelerate(const float, MovesComponent&, PositionComponent&);
-        virtual void rotate(const float, MovesComponent&, PositionComponent&);
-        virtual bool move(const float, MovesComponent&, PositionComponent&);
+        virtual void accelerate(const float, MovesComponent&, PathsComponent&, PositionComponent&);
+        virtual void rotate(const float, MovesComponent&, PathsComponent&, PositionComponent&);
+        virtual bool move(const float, MovesComponent&, PathsComponent&, PositionComponent&);
 
 };
 

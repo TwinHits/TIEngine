@@ -2,10 +2,9 @@
 
 #include <cmath>
 #include <memory>
-#include <queue>
 
+#include "componentsystems/PathsComponentSystem.h"
 #include "componentsystems/PositionComponentSystem.h"
-#include "componentsystems/GridComponentSystem.h"
 #include "componentsystems/MessagesComponentSystem.h"
 #include "componentsystems/WireframeComponentSystem.h"
 #include "componentsystems/strategies/moves/AcceleratedTurnMovesStrategy.h"
@@ -27,11 +26,6 @@ MovesComponentSystem::MovesComponentSystem() {
 	ComponentSystemsManager::Instance()->registerComponentPropertyKey(MovesComponentSystem::ROTATES, this);
 	ComponentSystemsManager::Instance()->registerComponentPropertyKey(MovesComponentSystem::ROTATIONAL_SPEED, this);
 	ComponentSystemsManager::Instance()->registerComponentPropertyKey(MovesComponentSystem::ROTATIONAL_ACCELERATION, this);
-	ComponentSystemsManager::Instance()->registerComponentPropertyKey(MovesComponentSystem::DESTINATION, this);
-	ComponentSystemsManager::Instance()->registerComponentPropertyKey(MovesComponentSystem::DESTINATION_PATH, this);
-	ComponentSystemsManager::Instance()->registerComponentPropertyKey(MovesComponentSystem::DESTINATION_X, this);
-	ComponentSystemsManager::Instance()->registerComponentPropertyKey(MovesComponentSystem::DESTINATION_Y, this);
-	ComponentSystemsManager::Instance()->registerComponentPropertyKey(MovesComponentSystem::AT_DESTINATION, this);
 	ComponentSystemsManager::Instance()->registerComponentPropertyKey(MovesComponentSystem::TARGET_ROTATION, this);
 	ComponentSystemsManager::Instance()->registerComponentPropertyKey(MovesComponentSystem::AT_ROTATION, this);
 
@@ -41,11 +35,8 @@ MovesComponentSystem::MovesComponentSystem() {
 
 void MovesComponentSystem::update(const float delta) {
 	for (auto& c : components) {
-		if (!this->atTargetPosition(c.movesComponent, c.positionComponent)) {
-			bool atTargetPosition = c.movesComponent.movesStrategy->execute(delta, c.tientity);
-			if (atTargetPosition) {
-				MessagesComponentSystem::Instance()->sendMessage(Message(this->atDestinationMessageSubscription, c.tientity.getId(), c.tientity.getId()));
-			}
+		if (c.pathsComponent.hasPath()) {
+			c.movesComponent.movesStrategy->execute(delta, c.tientity);
 		}
 	}
 }
@@ -55,7 +46,13 @@ MovesComponent& MovesComponentSystem::addComponent(TIEntity& tientity) {
 	if (!tientity.hasComponent<MovesComponent>()) {
         MovesComponent& movesComponent = tientity.addComponent<MovesComponent>();
         PositionComponent& positionComponent = PositionComponentSystem::Instance()->addComponent(tientity);
-        this->components.push_back({ movesComponent, positionComponent, tientity });
+        PathsComponent& pathsComponent = PathsComponentSystem::Instance()->addComponent(tientity);
+        this->components.push_back({ 
+			movesComponent, 
+			positionComponent, 
+			pathsComponent, 
+			tientity,
+		});
         return movesComponent;
 	} else {
 		return *tientity.getComponent<MovesComponent>();
@@ -68,24 +65,11 @@ MovesComponent& MovesComponentSystem::addComponent(const TIEntityFactory& factor
 	PositionComponent& positionComponent = PositionComponentSystem::Instance()->addComponent(tientity);
 	const ScriptTableReader& reader = factory.getReader().getReader(MovesComponentSystem::MOVES);
 
-	const std::string& strategyName = reader.get<std::string>(MovesComponentSystem::STRATEGY, "SnapTurn");
+	const std::string& strategyName = reader.get<std::string>(MovesComponentSystem::STRATEGY, SnapTurnMovesStrategy::NAME);
 	this->assignMovesStrategyByName(movesComponent, strategyName);
 
 	const float& targetSpeed = reader.get<float>(MovesComponentSystem::SPEED, movesComponent.targetSpeed);
 	const float& acceleration = reader.get<float>(MovesComponentSystem::ACCELERATION, movesComponent.acceleration);
-
-	if (reader.hasKey(MovesComponentSystem::DESTINATION)) {
-		const ScriptTableReader& destinationReader = reader.getReader(MovesComponentSystem::DESTINATION);
-		float destinationX = destinationReader.get<float>(MovesComponentSystem::DESTINATION_X, 0);
-		float destinationY = destinationReader.get<float>(MovesComponentSystem::DESTINATION_Y, 0);
-		if (!destinationX) {
-			destinationX = positionComponent.position.x;
-		}
-		if (!destinationY) {
-			destinationY = positionComponent.position.y;
-		}
-		this->setTargetPosition(movesComponent, positionComponent, sf::Vector2f(destinationX, destinationY), tientity);
-	}
 
 	const float& targetRotationalSpeed = reader.get<float>(MovesComponentSystem::ROTATIONAL_SPEED, movesComponent.targetRotationalSpeed);
 	const float& rotationalAcceleraton = reader.get<float>(MovesComponentSystem::ROTATIONAL_ACCELERATION, movesComponent.rotationalAcceleration);
@@ -130,51 +114,8 @@ void MovesComponentSystem::setComponentProperty(const std::string& key, float va
     } else if (key == MovesComponentSystem::TARGET_ROTATION) {
 		movesComponent.targetRotation = Math::normalizeAngleDegrees(value);
         this->setTargetRotationDirection(movesComponent, *tientity.getComponent<PositionComponent>());
-    } else if (key == MovesComponentSystem::DESTINATION) {
-        this->setTargetPosition(tientity, value);
-    } else if (key == MovesComponentSystem::DESTINATION_X) {
-		if (movesComponent.hasTargetPosition()) {
-			this->setTargetPosition(tientity, sf::Vector2f(value, movesComponent.getTargetPosition().y));
-		} else {
-			PositionComponent& positionComponent = PositionComponentSystem::Instance()->addComponent(tientity);
-			this->setTargetPosition(tientity, sf::Vector2f(value, positionComponent.worldPosition.y));
-		}
-    } else if (key == MovesComponentSystem::DESTINATION_Y) {
-		if (movesComponent.hasTargetPosition()) {
-			this->setTargetPosition(tientity, sf::Vector2f(movesComponent.getTargetPosition().x, value));
-		} else {
-			PositionComponent& positionComponent = PositionComponentSystem::Instance()->addComponent(tientity);
-			this->setTargetPosition(tientity, sf::Vector2f(positionComponent.worldPosition.x, value));
-		}
     } else if (key == MovesComponentSystem::ROTATIONAL_ACCELERATION) {
         movesComponent.rotationalAcceleration = value;
-    }
-}
-
-
-void MovesComponentSystem::setComponentProperty(const std::string& key, const sf::Vector2f& value, TIEntity& tientity)  {
-	MovesComponent& movesComponent = this->addComponent(tientity);
-    if (key == MovesComponentSystem::DESTINATION) {
-        this->setTargetPosition(tientity, value);
-    }
-}
-
-
-void MovesComponentSystem::setComponentProperty(const std::string& key, const std::vector<sf::Vector2f>& value, TIEntity& tientity) {
-	MovesComponent& movesComponent = this->addComponent(tientity);
-    if (key == MovesComponentSystem::DESTINATION_PATH) {
-		movesComponent.path = std::queue<sf::Vector2f>();
-		for (auto& point : value) {
-			movesComponent.path.push(point);
-		}
-    }
-}
-
-
-void MovesComponentSystem::setComponentProperty(const std::string& key, const sf::Vector2i& value, TIEntity& tientity) {
-	MovesComponent& movesComponent = this->addComponent(tientity);
-    if (key == MovesComponentSystem::DESTINATION) {
-        this->setTargetPosition(tientity, sf::Vector2f(value.x, value.y));
     }
 }
 
@@ -182,21 +123,12 @@ void MovesComponentSystem::setComponentProperty(const std::string& key, const sf
 sol::object MovesComponentSystem::getComponentProperty(const std::string& key, TIEntity& tientity) {
 	MovesComponent* component = tientity.getComponent<MovesComponent>();
 	if (component != nullptr) {
-		if (key == MovesComponentSystem::AT_DESTINATION) {
-			return ScriptManager::Instance()->getObjectFromValue(this->atTargetPosition(tientity));
-		} else if (key == MovesComponentSystem::AT_ROTATION) {
+		if (key == MovesComponentSystem::AT_ROTATION) {
 			return ScriptManager::Instance()->getObjectFromValue(this->atTargetRotation(tientity));
 		} else if (key == MovesComponentSystem::SPEED) {
 			return ScriptManager::Instance()->getObjectFromValue(component->speed);
 		} else if (key == MovesComponentSystem::ROTATIONAL_SPEED) {
 			return ScriptManager::Instance()->getObjectFromValue(component->rotationalVelocity.x);
-		} else if (key == MovesComponentSystem::DESTINATION) {
-			if (component->hasTargetPosition()) {
-				return ScriptManager::Instance()->getObjectFromValue(component->getTargetPosition());
-			} else {
-				PositionComponent& positionComponent = PositionComponentSystem::Instance()->addComponent(tientity);
-				return ScriptManager::Instance()->getObjectFromValue(positionComponent.worldPosition);
-			}
 		} else if (key == MovesComponentSystem::TARGET_ROTATION) {
 			return ScriptManager::Instance()->getObjectFromValue(component->targetRotation);
 		} else if (key == MovesComponentSystem::ROTATIONAL_ACCELERATION) {
@@ -206,41 +138,6 @@ sol::object MovesComponentSystem::getComponentProperty(const std::string& key, T
 		}
 	}
 	return ScriptManager::Instance()->getObjectFromValue(nullptr);
-}
-
-
-void MovesComponentSystem::setTargetPosition(TIEntity& tientity, float distance) {
-	MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
-	PositionComponent* positionComponent = tientity.getComponent<PositionComponent>();
-	if (movesComponent != nullptr && positionComponent != nullptr) {
-
-		sf::Vector2f velocity = sf::Vector2f(distance, positionComponent->rotation);
-		sf::Vector2f distance = Math::translateVelocityByTime(velocity,  1);
-		sf::Vector2f destination = sf::Vector2f(positionComponent->position.x + distance.x, positionComponent->position.y + distance.y);
-
-		this->setTargetPosition(*movesComponent, *positionComponent, destination, tientity);
-	}
-}
-
-
-void MovesComponentSystem::setTargetPosition(TIEntity& tientity, const sf::Vector2f& targetPosition) {
-	MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
-	PositionComponent* positionComponent = tientity.getComponent<PositionComponent>();
-	if (movesComponent != nullptr && positionComponent != nullptr) {
-		return this->setTargetPosition(*movesComponent, *positionComponent, targetPosition, tientity);
-	}
-}
-
-
-void MovesComponentSystem::setTargetPosition(MovesComponent& movesComponent, PositionComponent& positionComponent, const sf::Vector2f& targetPosition, TIEntity& tientity) {
-    sf::Vector2f normalizedPosition = targetPosition;
-    if (WorldManager::Instance()->isGridConfigured()) {
-        normalizedPosition = GridComponentSystem::Instance()->normalizePositionToGrid(targetPosition);
-    }
-
-    movesComponent.path = {};
-    movesComponent.path.push(normalizedPosition);
-    this->setTargetRotation(movesComponent, positionComponent, tientity);
 }
 
 
@@ -256,14 +153,13 @@ void MovesComponentSystem::assignMovesStrategyByName(MovesComponent& movesCompon
 
 
 void MovesComponentSystem::setTargetRotation(MovesComponent& movesComponent, PositionComponent& positionComponent, TIEntity& tientity) {
-	if (movesComponent.hasTargetPosition()) {
-		float parentWorldRotation = 0;
-		if (tientity.getParent().hasComponent<PositionComponent>()) {
-			parentWorldRotation = tientity.getParent().getComponent<PositionComponent>()->worldRotation;
-		}
-		movesComponent.targetRotation = Math::angleBetweenTwoPoints(positionComponent.worldPosition, movesComponent.getTargetPosition()) - parentWorldRotation;
-		this->setTargetRotationDirection(movesComponent, positionComponent);
-	}
+	PathsComponent& pathsComponent = PathsComponentSystem::Instance()->addComponent(tientity);
+    float parentWorldRotation = 0;
+    if (tientity.getParent().hasComponent<PositionComponent>()) {
+        parentWorldRotation = tientity.getParent().getComponent<PositionComponent>()->worldRotation;
+    }
+    movesComponent.targetRotation = Math::angleBetweenTwoPoints(positionComponent.worldPosition, *pathsComponent.peekNextPathPosition()) - parentWorldRotation;
+    this->setTargetRotationDirection(movesComponent, positionComponent);
 }
 
 
@@ -272,59 +168,12 @@ void MovesComponentSystem::setTargetRotationDirection(MovesComponent& movesCompo
 }
 
 
-bool MovesComponentSystem::atTargetPosition(TIEntity& tientity) {
-    MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
-    PositionComponent* positionComponent = tientity.getComponent<PositionComponent>();
-    if (movesComponent != nullptr && positionComponent != nullptr) {
-		return this->atTargetPosition(*movesComponent, *positionComponent);
-	} else {
-		return false;
-	}
-}
-
-
-bool MovesComponentSystem::atTargetPosition(MovesComponent& movesComponent, PositionComponent& positionComponent) {
-	if (movesComponent.hasTargetPosition() && Math::areVectorsEqual(movesComponent.getTargetPosition(), positionComponent.position)) {
-		movesComponent.path.pop();
-	}
-	return !movesComponent.hasTargetPosition();
-}
-
-
-bool MovesComponentSystem::atTargetSpeed(MovesComponent& movesComponent) {
-	return Math::areFloatsEqual(movesComponent.speed, movesComponent.targetSpeed);
-}
-
-
 bool MovesComponentSystem::atTargetRotation(TIEntity& tientity) {
     MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
     PositionComponent* positionComponent = tientity.getComponent<PositionComponent>();
     if (movesComponent != nullptr && positionComponent != nullptr) {
-		return this->atTargetRotation(*movesComponent, *positionComponent);
+		return Math::areFloatsEqual(movesComponent->targetRotation, positionComponent->rotation);
 	} else {
 		return false;
 	}
-}
-
-
-bool MovesComponentSystem::atTargetRotation(MovesComponent& movesComponent, PositionComponent& positionComponent) {
-	return Math::areFloatsEqual(movesComponent.targetRotation, positionComponent.rotation);
-}
-
-
-std::pair<GlobalId, GlobalId> MovesComponentSystem::addWireframe(TIEntity& tientity) {
-	MovesComponent& movesComponent = this->addComponent(tientity);
-	PositionComponent& positionComponent = PositionComponentSystem::Instance()->addComponent(tientity);
-
-	const sf::Vector2f origin = sf::Vector2f(0, 0);
-	float distanceToTargetPosition = 0;
-    sf::FloatRect bounds = sf::FloatRect(0, 0, 0, 0);
-    float angleToTargetPosition = 0;
-    if (movesComponent.hasTargetPosition()) {
-        const sf::Vector2f& targetPosition = movesComponent.getTargetPosition();
-		distanceToTargetPosition = Math::distanceBetweenTwoPoints(positionComponent.worldPosition, targetPosition);
-		bounds = sf::FloatRect(0, 0, distanceToTargetPosition, 0);
-        angleToTargetPosition = Math::angleBetweenTwoPoints(positionComponent.worldPosition, targetPosition);
-	}
-	return WireframeComponentSystem::Instance()->createWireframe(tientity, bounds, origin, angleToTargetPosition);
 }

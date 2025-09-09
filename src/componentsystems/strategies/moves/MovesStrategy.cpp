@@ -1,6 +1,5 @@
 #include "componentsystems/strategies/moves/MovesStrategy.h"
 
-#include "componentsystems/MovesComponentSystem.h"
 #include "managers/LogManager.h"
 #include "utils/TIEMath.h"
 #include "utils/constants/TIEMathConstants.h"
@@ -8,32 +7,25 @@
 using namespace TIE;
 
 
-void MovesStrategy::accelerate(const float delta, MovesComponent& movesComponent, PositionComponent& positionComponent) {
-    if (!MovesComponentSystem::Instance()->atTargetPosition(movesComponent, positionComponent)) {
+void MovesStrategy::accelerate(const float delta, MovesComponent& movesComponent, PathsComponent& pathsComponent, PositionComponent& positionComponent) {
         float acceleration = movesComponent.acceleration * delta;
-        if (movesComponent.isOnLastPathNode()) {
+        if (pathsComponent.isOnLastPathPosition()) {
             float distanceToStop = Math::distanceToStop(movesComponent.speed, movesComponent.acceleration);
-            float distanceToTarget = Math::distanceBetweenTwoPoints(positionComponent.position, movesComponent.getTargetPosition());
+            float distanceToTarget = Math::distanceBetweenTwoPoints(positionComponent.position, *pathsComponent.peekNextPathPosition());
             if (distanceToTarget <= distanceToStop) {
                 acceleration *= -1;
             }
         }
 
-        // This used to be 1, I guess to allow inching forward to the distance if 
-        // the stopping distance math is short.
         float minimumSpeed = 0;
         movesComponent.speed += acceleration;
         movesComponent.speed = fmaxf(minimumSpeed, movesComponent.speed);
         movesComponent.speed = fminf(movesComponent.speed, movesComponent.targetSpeed);
-    }
-    else {
-        movesComponent.speed = 0.0f;
-    }
 }
 
 
-void MovesStrategy::rotate(const float delta, MovesComponent& movesComponent, PositionComponent& positionComponent) {
-    if (!MovesComponentSystem::Instance()->atTargetRotation(movesComponent, positionComponent)) {
+void MovesStrategy::rotate(const float delta, MovesComponent& movesComponent, PathsComponent& pathsComponent, PositionComponent& positionComponent) {
+    if (!Math::areFloatsEqual(movesComponent.targetRotation, positionComponent.rotation)) {
 
         float distance = movesComponent.rotationalVelocity.x * delta;
         float newRotation = positionComponent.rotation + distance;
@@ -48,16 +40,17 @@ void MovesStrategy::rotate(const float delta, MovesComponent& movesComponent, Po
 }
 
 
-bool MovesStrategy::move(const float delta, MovesComponent& movesComponent, PositionComponent& positionComponent) {
-    if (movesComponent.speed > 0.0f) {
+bool MovesStrategy::move(const float delta, MovesComponent& movesComponent, PathsComponent& pathsComponent, PositionComponent& positionComponent) {
+    if (pathsComponent.hasPath()) {
 
         const sf::Vector2f velocity = sf::Vector2f(movesComponent.speed, positionComponent.rotation);
         const sf::Vector2f distance = Math::translateVelocityByTime(velocity, delta);
         const sf::Vector2f newPosition = sf::Vector2f(positionComponent.position.x + distance.x, positionComponent.position.y + distance.y);
 
         const float snapToPositionRadius = fabsf(movesComponent.speed * delta);
-        if (Math::distanceBetweenTwoPoints(newPosition, movesComponent.getTargetPosition()) <= snapToPositionRadius) {
-            positionComponent.position = movesComponent.getTargetPosition();
+        if (Math::distanceBetweenTwoPoints(newPosition, *pathsComponent.peekNextPathPosition()) <= snapToPositionRadius) {
+            positionComponent.position = *pathsComponent.peekNextPathPosition();
+            pathsComponent.popNextPathPosition();
             return true;
         } else {
             positionComponent.position = newPosition;

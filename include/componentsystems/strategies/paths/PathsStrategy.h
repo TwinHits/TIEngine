@@ -9,7 +9,7 @@ class PathStrategy : public Strategy {
     public:
         PathStrategy() {};
 
-        bool execute(const float, TIEntity&);
+        virtual bool execute(const float, TIEntity&) = 0;
 
     private:
 };

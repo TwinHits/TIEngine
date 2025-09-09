@@ -1,7 +1,3 @@
-#include "componentsystems/strategies/paths/PathStrategy.h"
+#include "componentsystems/strategies/paths/GoToPathsStrategy.h"
 
 using namespace TIE;
-
-bool PathStrategy::execute(const float delta, TIEntity& tientity) { 
-    return false;
-}
