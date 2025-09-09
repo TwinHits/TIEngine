@@ -13,6 +13,7 @@ namespace TIE {
 		float normalizeAngleDegrees(const float);
 		float distanceBetweenTwoPoints(const sf::Vector2f&, const sf::Vector2f&);
 		float distanceBetweenTwoAngles(const float, const float);
+		float distanceToStop(const float, const float);
 		float angleBetweenTwoPoints(const sf::Vector2f&, const sf::Vector2f&);
 		sf::Vector2f translateVelocityByTime(const sf::Vector2f&, const float);
 		sf::Vector2f normalizePositionToGrid(const sf::Vector2f&, const sf::FloatRect&, const sf::Vector2f&);

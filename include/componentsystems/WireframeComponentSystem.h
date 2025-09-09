@@ -5,7 +5,7 @@
 #include "templates/Singleton.h"
 
 #include "objects/components/LineComponent.h"
-#include "objects/components/MovesComponent.h"
+#include "objects/components/PathsComponent.h"
 #include "objects/components/ShapeComponent.h"
 #include "objects/components/SpriteComponent.h"
 #include "objects/components/TextComponent.h"
@@ -29,7 +29,7 @@ class WireframeComponentSystem : public Singleton<WireframeComponentSystem>, pub
 		void addWireframe(TIEntity&, SpriteComponent&);
 		void addWireframe(TIEntity&, TextComponent&);
 		void addWireframe(TIEntity&, LineComponent&);
-		void addWireframe(TIEntity&, MovesComponent&);
+		void addWireframe(TIEntity&, PathsComponent&);
 			
 		std::pair<GlobalId, GlobalId> createWireframe(TIEntity&, const sf::FloatRect&, const sf::Vector2f&);
 		std::pair<GlobalId, GlobalId> createWireframe(TIEntity&, const sf::FloatRect&, const sf::Vector2f&, const float);
