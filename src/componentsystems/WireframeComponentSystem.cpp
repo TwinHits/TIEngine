@@ -1,7 +1,7 @@
 #include "componentsystems/WireframeComponentSystem.h" 
 
 #include "componentsystems/LineComponentSystem.h"
-#include "componentsystems/MovesComponentSystem.h"
+#include "componentsystems/PathsComponentSystem.h"
 #include "componentsystems/ShapeComponentSystem.h" 
 #include "componentsystems/SpriteComponentSystem.h" 
 #include "componentsystems/TextComponentSystem.h"
@@ -60,16 +60,16 @@ void WireframeComponentSystem::update(const float delta) {
 				}
             }
 
-			MovesComponent* movesComponent = c.tientity.getComponent<MovesComponent>();
-			if (movesComponent) {
-				const std::pair<GlobalId, GlobalId>* wireframeShapeIds = c.wireframeComponent.getWireframeShapeIds(movesComponent);
+			PathsComponent* pathsComponent = c.tientity.getComponent<PathsComponent>();
+			if (pathsComponent) {
+				const std::pair<GlobalId, GlobalId>* wireframeShapeIds = c.wireframeComponent.getWireframeShapeIds(pathsComponent);
 				if (wireframeShapeIds) {
 					sf::Shape* sizeWireframeShape = c.shapeComponent.getShape(wireframeShapeIds->second);
 					if (sizeWireframeShape) {
 						sf::RectangleShape* rectangleShape = dynamic_cast<sf::RectangleShape*>(sizeWireframeShape);
 						PositionComponent* positionComponent = c.tientity.getComponent<PositionComponent>();
-						if (movesComponent->hasTargetPosition() && positionComponent) {
-							const sf::Vector2f& targetPosition = movesComponent->getTargetPosition();
+						if (pathsComponent->hasPath() && positionComponent) {
+							const sf::Vector2f& targetPosition = *pathsComponent->peekNextPathPosition();
 							const float distanceToTargetPosition = Math::distanceBetweenTwoPoints(positionComponent->worldPosition, targetPosition);
 							const float angleToTargetPosition = Math::angleBetweenTwoPoints(positionComponent->worldPosition, targetPosition);
 							rectangleShape->setSize(sf::Vector2f(distanceToTargetPosition, 0));
@@ -118,9 +118,9 @@ WireframeComponent& WireframeComponentSystem::addComponent(const TIEntityFactory
 			this->addWireframe(tientity, *lineComponent);
 		}
 
-		MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
-		if (movesComponent) {
-			this->addWireframe(tientity, *movesComponent);
+		PathsComponent* pathsComponent = tientity.getComponent<PathsComponent>();
+		if (pathsComponent) {
+			this->addWireframe(tientity, *pathsComponent);
 		}
 	}
 
@@ -164,9 +164,9 @@ void WireframeComponentSystem::setComponentProperty(const std::string& key, bool
                 this->addWireframe(tientity, *lineComponent);
             }
 
-            MovesComponent* movesComponent = tientity.getComponent<MovesComponent>();
-            if (movesComponent) {
-                this->addWireframe(tientity, *movesComponent);
+            PathsComponent* pathsComponent = tientity.getComponent<PathsComponent>();
+            if (pathsComponent) {
+                this->addWireframe(tientity, *pathsComponent);
             }
 		}
     }
@@ -224,12 +224,12 @@ void WireframeComponentSystem::addWireframe(TIEntity& tientity, LineComponent& l
 }
 
 
-void WireframeComponentSystem::addWireframe(TIEntity& tientity, MovesComponent& movesComponent) {
+void WireframeComponentSystem::addWireframe(TIEntity& tientity, PathsComponent& pathsComponent) {
 	WireframeComponent& wireframeComponent = this->addComponent(tientity);
 	ShapeComponent& shapeComponent = ShapeComponentSystem::Instance()->addComponent(tientity);
 
-    std::pair<GlobalId, GlobalId> wireframeShapeIds = MovesComponentSystem::Instance()->addWireframe(tientity);
-    wireframeComponent.addWireframeShapeIds(&movesComponent, wireframeShapeIds);
+    std::pair<GlobalId, GlobalId> wireframeShapeIds = PathsComponentSystem::Instance()->addWireframe(tientity);
+    wireframeComponent.addWireframeShapeIds(&pathsComponent, wireframeShapeIds);
 	wireframeComponent.setShowWireframe(true);
 
 	shapeComponent.setDrawn(true);

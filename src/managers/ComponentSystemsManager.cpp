@@ -13,6 +13,7 @@
 #include "componentsystems/LineComponentSystem.h"
 #include "componentsystems/MessagesComponentSystem.h"
 #include "componentsystems/MovesComponentSystem.h"
+#include "componentsystems/PathsComponentSystem.h"
 #include "componentsystems/SelectableComponentSystem.h"
 #include "componentsystems/ShapeComponentSystem.h"
 #include "componentsystems/SpriteComponentSystem.h"
@@ -38,6 +39,7 @@ void ComponentSystemsManager::initialize() {
 
 	// Update Position Operations
 	this->componentSystems.push_back(PositionComponentSystem::Instance());
+	this->componentSystems.push_back(PathsComponentSystem::Instance());
 	this->componentSystems.push_back(MovesComponentSystem::Instance());
 
 	// Other Operations
